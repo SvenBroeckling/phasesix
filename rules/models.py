@@ -21,3 +21,20 @@ class Extension(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Skill(models.Model):
+    """
+    A URPG skill
+    """
+    __metaclass__ = TransMeta
+
+    name = models.CharField(_('name'), max_length=120)
+    extension = models.ForeignKey(Extension)
+    add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
+
+    class Meta:
+        translate = ('name',)
+
+    def __unicode__(self):
+        return self.name
