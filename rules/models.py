@@ -16,6 +16,8 @@ class Extension(models.Model, metaclass=TransMeta):
 
     class Meta:
         translate = ('name', 'short_name')
+        verbose_name = _('extension')
+        verbose_name_plural = _('extensions')
 
     def __unicode__(self):
         return self.name
@@ -32,6 +34,60 @@ class Skill(models.Model, metaclass=TransMeta):
 
     class Meta:
         translate = ('name',)
+        verbose_name = _('skill')
+        verbose_name_plural = _('skills')
+
+    def __unicode__(self):
+        return self.name
+
+
+class Knowledge(models.Model, metaclass=TransMeta):
+    """
+    A URPG skill
+    """
+
+    name = models.CharField(_('name'), max_length=120)
+    extension = models.ForeignKey(Extension, models.CASCADE)
+    add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
+
+    class Meta:
+        translate = ('name',)
+        verbose_name = _('knowledge')
+        verbose_name_plural = _('knowledge')
+
+    def __unicode__(self):
+        return self.name
+
+
+class Quirk(models.Model, metaclass=TransMeta):
+    """
+    A URPG quirk
+    """
+
+    name = models.CharField(_('name'), max_length=120)
+    extension = models.ForeignKey(Extension, models.CASCADE)
+
+    class Meta:
+        translate = ('name',)
+        verbose_name = _('quirk')
+        verbose_name_plural = _('quirks')
+
+    def __unicode__(self):
+        return self.name
+
+
+class Gift(models.Model, metaclass=TransMeta):
+    """
+    A URPG gift
+    """
+
+    name = models.CharField(_('name'), max_length=120)
+    extension = models.ForeignKey(Extension, models.CASCADE)
+
+    class Meta:
+        translate = ('name',)
+        verbose_name = _('gift')
+        verbose_name_plural = _('gifts')
 
     def __unicode__(self):
         return self.name

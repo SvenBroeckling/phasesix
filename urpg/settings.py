@@ -71,7 +71,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de'
+
+ugettext = lambda s: s # dummy ugettext function, as django's docs say
+
+LANGUAGES = (
+    ('de', ugettext('German')),
+    ('en', ugettext('English')),
+)
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
