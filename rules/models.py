@@ -6,12 +6,10 @@ from django.utils.translation import ugettext as _
 from transmeta import TransMeta
 
 
-class Extension(models.Model):
+class Extension(models.Model, metaclass=TransMeta):
     """
     A URPG source book extension
     """
-    __metaclass__ = TransMeta
-
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
     name = models.CharField(_('name'), max_length=120)
     short_name = models.CharField(_('short name'), max_length=20)
@@ -23,14 +21,13 @@ class Extension(models.Model):
         return self.name
 
 
-class Skill(models.Model):
+class Skill(models.Model, metaclass=TransMeta):
     """
     A URPG skill
     """
-    __metaclass__ = TransMeta
 
     name = models.CharField(_('name'), max_length=120)
-    extension = models.ForeignKey(Extension)
+    extension = models.ForeignKey(Extension, models.CASCADE)
     add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
 
     class Meta:
