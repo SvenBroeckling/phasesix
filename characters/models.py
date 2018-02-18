@@ -30,7 +30,7 @@ class Character(models.Model):
     gifts = models.ManyToManyField('rules.Gift', verbose_name=_('gifts'))
     quirks = models.ManyToManyField('rules.Quirk', verbose_name=_('quirks'))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -42,7 +42,7 @@ class CharacterSkill(models.Model):
     class Meta:
         ordering = ('skill__name_en',)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} {}".format(self.skill.name, self.value)
 
 
@@ -54,5 +54,5 @@ class CharacterKnowledge(models.Model):
     class Meta:
         ordering = ('knowledge__name_en',)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} {}".format(self.knowledge.name, self.value)
