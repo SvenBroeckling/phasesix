@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-02 19:15+0000\n"
-"PO-Revision-Date: 2018-05-02 21:15+0200\n"
+"POT-Creation-Date: 2018-05-02 19:23+0000\n"
+"PO-Revision-Date: 2018-05-02 21:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #: characters/models.py:9 rules/models.py:14 rules/models.py:30
-#: rules/models.py:48 rules/models.py:66 rules/models.py:100
+#: rules/models.py:48 rules/models.py:66 rules/models.py:97 rules/models.py:113
 msgid "name"
 msgstr "Name"
 
@@ -95,7 +95,7 @@ msgstr "Erweiterungen"
 msgid "add to all characters"
 msgstr "Zu allen Charakteren hinzufügen"
 
-#: rules/models.py:36 rules/models.py:131
+#: rules/models.py:36 rules/models.py:147
 msgid "skill"
 msgstr "Fertigkeit"
 
@@ -103,7 +103,7 @@ msgstr "Fertigkeit"
 msgid "skills"
 msgstr "Fertigkeiten"
 
-#: rules/models.py:54 rules/models.py:55 rules/models.py:143
+#: rules/models.py:54 rules/models.py:55 rules/models.py:159
 msgid "knowledge"
 msgstr "Wissen"
 
@@ -111,47 +111,63 @@ msgstr "Wissen"
 msgid "shadow"
 msgstr "Schatten"
 
+#: rules/models.py:98 rules/models.py:117
+msgid "description"
+msgstr "Beschreibung"
+
+#: rules/models.py:102
+msgid "template category"
+msgstr "Vorlagenkategorie"
+
 #: rules/models.py:103
+msgid "template categories"
+msgstr ""
+
+#: rules/models.py:115
+msgid "category"
+msgstr "Kategorie"
+
+#: rules/models.py:119
 msgid "cost"
 msgstr "Kosten"
 
-#: rules/models.py:107
+#: rules/models.py:123
 msgid "character template"
 msgstr "Charaktervorlage"
 
-#: rules/models.py:108
+#: rules/models.py:124
 msgid "character templates"
 msgstr "Charaktervorlagen"
 
-#: rules/models.py:115 rules/models.py:155
+#: rules/models.py:131 rules/models.py:171
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:117
+#: rules/models.py:133
 msgid "attribute"
 msgstr "Attribut"
 
-#: rules/models.py:119 rules/models.py:125
+#: rules/models.py:135 rules/models.py:141
 msgid "Leave empty if the knowledge or skill modifier is used."
 msgstr "Leer lassen wenn Wissens- oder Fertigkeitsmodifikatoren benutzt werden."
 
-#: rules/models.py:124
+#: rules/models.py:140
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: rules/models.py:132 rules/models.py:137
+#: rules/models.py:148 rules/models.py:153
 msgid "Leave empty if the attribute or knowledge modifier is used."
 msgstr "Leer lassen wenn Attribut- oder Wissensmodifikatoren benutzt werden."
 
-#: rules/models.py:136
+#: rules/models.py:152
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: rules/models.py:144 rules/models.py:149
+#: rules/models.py:160 rules/models.py:165
 msgid "Leave empty if the skill or attribute modifier is used."
 msgstr "Leer lassen wenn Fertigkeits- oder Attributsmodifikatoren benutzt werden."
 
-#: rules/models.py:148
+#: rules/models.py:164
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 

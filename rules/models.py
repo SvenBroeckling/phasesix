@@ -93,17 +93,33 @@ CHARACTER_ATTRIBUTE_CHOICES = (
 )
 
 
+class TemplateCategory(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=120)
+    description = models.TextField(_('description'), blank=True, null=True)
+
+    class Meta:
+        translate = ('name', 'description')
+        verbose_name = _('template category')
+        verbose_name_plural = _('template categories')
+
+    def __str__(self):
+        return self.name
+
+
 class Template(models.Model, metaclass=TransMeta):
     """
     A character creation template
     """
     name = models.CharField(_('name'), max_length=120)
     extension = models.ForeignKey(Extension, models.CASCADE)
+    category = models.ForeignKey(TemplateCategory, models.CASCADE, verbose_name=_('category'))
+
+    description = models.TextField(_('description'), blank=True, null=True)
 
     cost = models.IntegerField(verbose_name=_('cost'), default=1)
 
     class Meta:
-        translate = ('name',)
+        translate = ('name', 'description')
         verbose_name = _('character template')
         verbose_name_plural = _('character templates')
 
