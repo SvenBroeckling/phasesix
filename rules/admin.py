@@ -3,10 +3,24 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from rules.models import Skill, Extension, Quirk, Gift, Knowledge
+from rules.models import Skill, Extension, Shadow, Knowledge, Template, TemplateModifier, TemplateRequirement
+
+
+class TemplateModifierInline(admin.TabularInline):
+    model = TemplateModifier
+
+
+class TemplateRequirementInline(admin.TabularInline):
+    model = TemplateRequirement
+    fk_name = 'template'
+
+
+class TemplateAdmin(admin.ModelAdmin):
+    inlines = [TemplateModifierInline, TemplateRequirementInline]
+
 
 admin.site.register(Extension)
 admin.site.register(Skill)
 admin.site.register(Knowledge)
-admin.site.register(Quirk)
-admin.site.register(Gift)
+admin.site.register(Shadow)
+admin.site.register(Template, TemplateAdmin)

@@ -58,7 +58,7 @@ class Knowledge(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Quirk(models.Model, metaclass=TransMeta):
+class Shadow(models.Model, metaclass=TransMeta):
     """
     A URPG quirk
     """
@@ -68,25 +68,94 @@ class Quirk(models.Model, metaclass=TransMeta):
 
     class Meta:
         translate = ('name',)
-        verbose_name = _('quirk')
-        verbose_name_plural = _('quirks')
+        verbose_name = _('shadow')
+        verbose_name_plural = _('shadows')
 
     def __str__(self):
         return self.name
 
 
-class Gift(models.Model, metaclass=TransMeta):
-    """
-    A URPG gift
-    """
+CHARACTER_ATTRIBUTE_CHOICES = (
+    ('intelligence', _('intelligence')),
 
+    ('deftness', _('deftness')),
+    ('strength', _('strength')),
+    ('attractiveness', _('attractiveness')),
+    ('endurance', _('endurance')),
+    ('resistance', _('resistance')),
+    ('quickness', _('quickness')),
+
+    ('openness', _('openness')),
+    ('conscientiousness', _('conscientiousness')),
+    ('extraversion', _('extraversion')),
+    ('agreeableness', _('agreeableness')),
+    ('neuroticism', _('neuroticism')),
+)
+
+
+class Template(models.Model, metaclass=TransMeta):
+    """
+    A character creation template
+    """
     name = models.CharField(_('name'), max_length=120)
     extension = models.ForeignKey(Extension, models.CASCADE)
 
+    cost = models.IntegerField(verbose_name=_('cost'), default=1)
+
     class Meta:
         translate = ('name',)
-        verbose_name = _('gift')
-        verbose_name_plural = _('gifts')
+        verbose_name = _('character template')
+        verbose_name_plural = _('character templates')
 
     def __str__(self):
         return self.name
+
+
+class TemplateModifier(models.Model, metaclass=TransMeta):
+    template = models.ForeignKey(Template, verbose_name=_('template'), on_delete=models.CASCADE)
+    attribute = models.CharField(
+        verbose_name=_('attribute'),
+        max_length=40,
+        help_text=_('Leave empty if the knowledge or skill modifier is used.'),
+        choices=CHARACTER_ATTRIBUTE_CHOICES,
+        null=True,
+        blank=True)
+    attribute_modifier = models.IntegerField(
+        verbose_name=_('attribute modifier'),
+        help_text=_('Leave empty if the knowledge or skill modifier is used.'),
+        blank=True,
+        null=True)
+    skill = models.ForeignKey(
+        Skill,
+        on_delete=models.CASCADE,
+        verbose_name=_('skill'),
+        help_text=_('Leave empty if the attribute or knowledge modifier is used.'),
+        null=True,
+        blank=True)
+    skill_modifier = models.IntegerField(
+        verbose_name=_('skill modifier'),
+        help_text=_('Leave empty if the attribute or knowledge modifier is used.'),
+        blank=True,
+        null=True)
+    knowledge = models.ForeignKey(
+        Knowledge,
+        on_delete=models.CASCADE,
+        verbose_name=_('knowledge'),
+        help_text=_('Leave empty if the skill or attribute modifier is used.'),
+        null=True,
+        blank=True)
+    knowledge_modifier = models.IntegerField(
+        verbose_name=_('knowledge modifier'),
+        help_text=_('Leave empty if the skill or attribute modifier is used.'),
+        blank=True,
+        null=True)
+
+
+class TemplateRequirement(models.Model, metaclass=TransMeta):
+    template = models.ForeignKey(Template, verbose_name=_('template'), on_delete=models.CASCADE)
+    required_template = models.ForeignKey(
+        Template,
+        on_delete=models.CASCADE,
+        related_name='required_template_requirement_set',
+        blank=True,
+        null=True)

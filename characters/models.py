@@ -9,8 +9,6 @@ class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
 
     intelligence = models.IntegerField(_('intelligence'), default=0)
-    valour = models.IntegerField(_('valour'), default=0)
-    willpower = models.IntegerField(_('willpower'), default=0)
 
     # physis
     deftness = models.IntegerField(_('deftness'), default=1)
@@ -27,8 +25,7 @@ class Character(models.Model):
     agreeableness = models.IntegerField(_('agreeableness'), default=1)
     neuroticism = models.IntegerField(_('neuroticism'), default=1)
 
-    gifts = models.ManyToManyField('rules.Gift', verbose_name=_('gifts'))
-    quirks = models.ManyToManyField('rules.Quirk', verbose_name=_('quirks'))
+    shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'))
 
     def __str__(self):
         return self.name
