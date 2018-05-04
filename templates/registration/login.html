@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-6 offset-md-3">
+            <h1>Login</h1>
+            <form action="{% url 'login' %}" method="post">
+                {% bootstrap_form form %}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Anmelden</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

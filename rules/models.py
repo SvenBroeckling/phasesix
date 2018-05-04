@@ -76,20 +76,20 @@ class Shadow(models.Model, metaclass=TransMeta):
 
 
 CHARACTER_ATTRIBUTE_CHOICES = (
-    ('intelligence', _('intelligence')),
+    ('base_intelligence', _('intelligence')),
 
-    ('deftness', _('deftness')),
-    ('strength', _('strength')),
-    ('attractiveness', _('attractiveness')),
-    ('endurance', _('endurance')),
-    ('resistance', _('resistance')),
-    ('quickness', _('quickness')),
+    ('base_deftness', _('deftness')),
+    ('base_strength', _('strength')),
+    ('base_attractiveness', _('attractiveness')),
+    ('base_endurance', _('endurance')),
+    ('base_resistance', _('resistance')),
+    ('base_quickness', _('quickness')),
 
-    ('openness', _('openness')),
-    ('conscientiousness', _('conscientiousness')),
-    ('extraversion', _('extraversion')),
-    ('agreeableness', _('agreeableness')),
-    ('neuroticism', _('neuroticism')),
+    ('base_openness', _('openness')),
+    ('base_conscientiousness', _('conscientiousness')),
+    ('base_extraversion', _('extraversion')),
+    ('base_agreeableness', _('agreeableness')),
+    ('base_neuroticism', _('neuroticism')),
 )
 
 
