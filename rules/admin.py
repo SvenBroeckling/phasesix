@@ -18,6 +18,8 @@ class TemplateRequirementInline(admin.TabularInline):
 
 class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
+    list_display = ('name', 'extension', 'category')
+    list_filter = ('extension', 'category')
 
 
 admin.site.register(Extension)

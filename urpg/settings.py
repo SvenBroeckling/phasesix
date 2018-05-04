@@ -76,7 +76,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'de'
 
-ugettext = lambda s: s # dummy ugettext function, as django's docs say
+ugettext = lambda s: s  # dummy ugettext function, as django's docs say
 
 LANGUAGES = (
     ('de', ugettext('German')),
@@ -90,6 +90,7 @@ USE_L10N = True
 USE_TZ = True
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = "/"
 try:
     from .localsettings import *
 except ImportError:
