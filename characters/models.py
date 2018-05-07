@@ -25,6 +25,11 @@ class Character(models.Model):
     created_by = models.ForeignKey('auth.User', verbose_name=_('created by'), on_delete=models.CASCADE)
     base_intelligence = models.IntegerField(_('intelligence'), default=100)
 
+    # dice
+    base_bonus_dice = models.IntegerField(_('base bonus dice'), default=0)
+    base_destiny_dice = models.IntegerField(_('base destiny dice'), default=0)
+    base_rerolls = models.IntegerField(_('base rerolls'), default=0)
+
     # physis
     base_deftness = models.IntegerField(_('base deftness'), default=1)
     base_strength = models.IntegerField(_('base strength'), default=1)
@@ -49,6 +54,22 @@ class Character(models.Model):
         return reverse('characters:detail', kwargs={'pk': self.id})
 
     @property
+    def intelligence(self):
+        return self.base_intelligence
+
+    @property
+    def bonus_dice(self):
+        return self.base_bonus_dice
+
+    @property
+    def destiny_dice(self):
+        return self.base_destiny_dice
+
+    @property
+    def rerolls(self):
+        return self.base_rerolls
+
+    @property
     def deftness(self):
         return self.base_deftness
 
@@ -71,6 +92,26 @@ class Character(models.Model):
     @property
     def quickness(self):
         return self.base_quickness
+
+    @property
+    def openness(self):
+        return self.base_openness
+
+    @property
+    def conscientiousness(self):
+        return self.base_conscientiousness
+
+    @property
+    def extraversion(self):
+        return self.base_extraversion
+
+    @property
+    def agreeableness(self):
+        return self.base_agreeableness
+
+    @property
+    def neuroticism(self):
+        return self.base_neuroticism
 
 
 class CharacterSkill(models.Model):
@@ -99,3 +140,7 @@ class CharacterKnowledge(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.knowledge.name, self.value)
+
+    @property
+    def value(self):
+        return self.base_value
