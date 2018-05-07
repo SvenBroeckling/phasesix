@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    {% trans 'Attributes' %}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        {% trans 'Deftness' %}<label class="float-right">{{ object.deftness }}</label>
+                    </li>
+                    <li class="list-group-item">
+                        {% trans 'Strength' %}<label class="float-right">{{ object.strength }}</label>
+                    </li>
+                    <li class="list-group-item">
+                        {% trans 'Attractiveness' %}<label class="float-right">{{ object.attractiveness }}</label>
+                    </li>
+                    <li class="list-group-item">
+                        {% trans 'Endurance' %}<label class="float-right">{{ object.endurance }}</label>
+                    </li>
+                    <li class="list-group-item">
+                        {% trans 'Resistance' %}<label class="float-right">{{ object.resistance }}</label>
+                    </li>
+                    <li class="list-group-item">
+                        {% trans 'Quickness' %}<label class="float-right">{{ object.quickness }}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">{% trans "Skills" %}</div>
+                <ul class="list-group list-group-flush">
+                    {% for skill in object.characterskill_set.all %}
+                        <li class="list-group-item">{{ skill.skill }}<label class="float-right">{{ skill.value }}</label></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

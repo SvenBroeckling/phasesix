@@ -2,15 +2,28 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext as _
+
+from rules.models import Skill
+
+
+class CharacterQuerySet(models.QuerySet):
+    def create_random_character(self, user):
+        character = self.create(
+            name="A Random Guy",
+            created_by=user)
+        for skill in Skill.objects.filter(add_to_all_characters=True):
+            character.characterskill_set.create(skill=skill, base_value=1)
+        return character
 
 
 class Character(models.Model):
+    objects = CharacterQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=80)
-
     created_by = models.ForeignKey('auth.User', verbose_name=_('created by'), on_delete=models.CASCADE)
-
-    base_intelligence = models.IntegerField(_('intelligence'), default=0)
+    base_intelligence = models.IntegerField(_('intelligence'), default=100)
 
     # physis
     base_deftness = models.IntegerField(_('base deftness'), default=1)
@@ -32,6 +45,33 @@ class Character(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('characters:detail', kwargs={'pk': self.id})
+
+    @property
+    def deftness(self):
+        return self.base_deftness
+
+    @property
+    def strength(self):
+        return self.base_strength
+
+    @property
+    def attractiveness(self):
+        return self.base_attractiveness
+
+    @property
+    def endurance(self):
+        return self.base_endurance
+
+    @property
+    def resistance(self):
+        return self.base_resistance
+
+    @property
+    def quickness(self):
+        return self.base_quickness
+
 
 class CharacterSkill(models.Model):
     character = models.ForeignKey(Character, models.CASCADE)
@@ -39,10 +79,14 @@ class CharacterSkill(models.Model):
     base_value = models.IntegerField(_('base value'), default=0)
 
     class Meta:
-        ordering = ('skill__name_en',)
+        ordering = ('skill__name_de',)
 
     def __str__(self):
         return "{} {}".format(self.skill.name, self.value)
+
+    @property
+    def value(self):
+        return self.base_value
 
 
 class CharacterKnowledge(models.Model):
