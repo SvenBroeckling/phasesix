@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-02 19:23+0000\n"
-"PO-Revision-Date: 2018-05-02 21:23+0200\n"
+"POT-Creation-Date: 2018-05-07 16:03+0000\n"
+"PO-Revision-Date: 2018-05-07 18:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,66 +18,127 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: characters/models.py:9 rules/models.py:14 rules/models.py:30
+#: characters/models.py:24 rules/models.py:14 rules/models.py:30
 #: rules/models.py:48 rules/models.py:66 rules/models.py:97 rules/models.py:113
 msgid "name"
 msgstr "Name"
 
-#: characters/models.py:11 rules/models.py:79
+#: characters/models.py:25
+msgid "created by"
+msgstr ""
+
+#: characters/models.py:26 rules/models.py:79
 msgid "intelligence"
 msgstr "Intelligenz"
 
-#: characters/models.py:14 rules/models.py:81
-msgid "deftness"
-msgstr "Geschick"
+#: characters/models.py:29
+msgid "base deftness"
+msgstr "Geschick Basis"
 
-#: characters/models.py:15 rules/models.py:82
-msgid "strength"
-msgstr "Kraft"
+#: characters/models.py:30
+msgid "base strength"
+msgstr "Kraft Basis"
 
-#: characters/models.py:16 rules/models.py:83
-msgid "attractiveness"
-msgstr "Attraktivität"
+#: characters/models.py:31
+msgid "base attractiveness"
+msgstr "Attraktivität Basis"
 
-#: characters/models.py:17 rules/models.py:84
-msgid "endurance"
-msgstr "Ausdauer"
+#: characters/models.py:32
+msgid "base endurance"
+msgstr "Ausdauer Basis"
 
-#: characters/models.py:18 rules/models.py:85
-msgid "resistance"
-msgstr "Resistenz"
+#: characters/models.py:33
+msgid "base resistance"
+msgstr "Resistenz Basis"
 
-#: characters/models.py:19 rules/models.py:86
-msgid "quickness"
-msgstr "Schnelligkeit"
+#: characters/models.py:34
+msgid "base quickness"
+msgstr "Schnelligkeit Basis"
 
-#: characters/models.py:22 rules/models.py:88
-msgid "openness"
-msgstr "Offenheit"
+#: characters/models.py:37
+msgid "base openness"
+msgstr "Offenheit Basis"
 
-#: characters/models.py:23 rules/models.py:89
-msgid "conscientiousness"
-msgstr "Gewissenhaftigkeit"
+#: characters/models.py:38
+msgid "base conscientiousness"
+msgstr "Gewissenhaftigkeit Basis"
 
-#: characters/models.py:24 rules/models.py:90
-msgid "extraversion"
-msgstr "Extraversion"
+#: characters/models.py:39
+msgid "base extraversion"
+msgstr "Extraversion Basis"
 
-#: characters/models.py:25 rules/models.py:91
-msgid "agreeableness"
-msgstr "Verträglichkeit"
+#: characters/models.py:40
+msgid "base agreeableness"
+msgstr "Verträglichkeit Basis"
 
-#: characters/models.py:26 rules/models.py:92
-msgid "neuroticism"
-msgstr "Neurotizismus"
+#: characters/models.py:41
+msgid "base neuroticism"
+msgstr "Neurotizismus Basis"
 
-#: characters/models.py:28 rules/models.py:72
+#: characters/models.py:43 rules/models.py:72
 msgid "shadows"
 msgstr "Schatten"
 
-#: characters/models.py:37 characters/models.py:49
+#: characters/models.py:79 characters/models.py:95
 msgid "base value"
 msgstr "Basiswert"
+
+#: characters/templates/base.html:30
+msgid "Contact"
+msgstr ""
+
+#: characters/templates/base.html:32
+msgid "Random Character"
+msgstr "Zufälliger Charakter"
+
+#: characters/templates/base.html:33
+msgid "Admin"
+msgstr ""
+
+#: characters/templates/base.html:34
+#, python-format
+msgid "Logout %(t_user)s"
+msgstr ""
+
+#: characters/templates/base.html:36
+msgid "Login"
+msgstr ""
+
+#: characters/templates/characters/character_detail.html:9
+msgid "Attributes"
+msgstr "Attribute"
+
+#: characters/templates/characters/character_detail.html:13
+msgid "Deftness"
+msgstr "Geschick"
+
+#: characters/templates/characters/character_detail.html:16
+msgid "Strength"
+msgstr "Kraft"
+
+#: characters/templates/characters/character_detail.html:19
+msgid "Attractiveness"
+msgstr "Attraktivität"
+
+#: characters/templates/characters/character_detail.html:22
+msgid "Endurance"
+msgstr "Ausdauer"
+
+#: characters/templates/characters/character_detail.html:25
+msgid "Resistance"
+msgstr "Resistenz"
+
+#: characters/templates/characters/character_detail.html:28
+msgid "Quickness"
+msgstr "Schnelligkeit"
+
+#: characters/templates/characters/character_detail.html:36
+msgid "Skills"
+msgstr "Fertigkeiten"
+
+#: characters/templates/characters/random_character.html:7
+msgid "New Random Character"
+msgstr ""
 
 #: rules/models.py:13
 msgid "is mandatory"
@@ -110,6 +171,50 @@ msgstr "Wissen"
 #: rules/models.py:71
 msgid "shadow"
 msgstr "Schatten"
+
+#: rules/models.py:81
+msgid "deftness"
+msgstr "Geschick"
+
+#: rules/models.py:82
+msgid "strength"
+msgstr "Kraft"
+
+#: rules/models.py:83
+msgid "attractiveness"
+msgstr "Attraktivität"
+
+#: rules/models.py:84
+msgid "endurance"
+msgstr "Ausdauer"
+
+#: rules/models.py:85
+msgid "resistance"
+msgstr "Resistenz"
+
+#: rules/models.py:86
+msgid "quickness"
+msgstr "Schnelligkeit"
+
+#: rules/models.py:88
+msgid "openness"
+msgstr "Offenheit"
+
+#: rules/models.py:89
+msgid "conscientiousness"
+msgstr "Gewissenhaftigkeit"
+
+#: rules/models.py:90
+msgid "extraversion"
+msgstr "Extraversion"
+
+#: rules/models.py:91
+msgid "agreeableness"
+msgstr "Verträglichkeit"
+
+#: rules/models.py:92
+msgid "neuroticism"
+msgstr "Neurotizismus"
 
 #: rules/models.py:98 rules/models.py:117
 msgid "description"
@@ -171,11 +276,11 @@ msgstr "Leer lassen wenn Fertigkeits- oder Attributsmodifikatoren benutzt werden
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
-#: urpg/settings.py:79
+#: urpg/settings.py:82
 msgid "German"
 msgstr "Deutsch"
 
-#: urpg/settings.py:80
+#: urpg/settings.py:83
 msgid "English"
 msgstr "Englisch"
 
