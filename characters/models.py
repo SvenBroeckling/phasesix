@@ -8,6 +8,8 @@ from django.utils.translation import ugettext as _
 class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
 
+    created_by = models.ForeignKey('auth.User', verbose_name=_('created by'), on_delete=models.CASCADE)
+
     base_intelligence = models.IntegerField(_('intelligence'), default=0)
 
     # physis
