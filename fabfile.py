@@ -28,7 +28,7 @@ def dump_database():
 
 
 def load_database():
-    get('/home/sven/www/neuesvomtage.de/www/%s.sql.bz2' % project, '.')
+    get('/home/sven/www/urpg/www/%s.sql.bz2' % project, '.')
     local('dropdb -U %s %s' % (db_user, db_name))
     local("createdb -U %s -T template0 -E utf8 -O %s %s" % (db_user,
                                                             db_user,
@@ -43,7 +43,7 @@ def fetch_media():
 def update():
     dump_database()
     load_database()
-    fetch_media()
+    #fetch_media()
 
 
 def deploy():
