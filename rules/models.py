@@ -64,10 +64,11 @@ class Shadow(models.Model, metaclass=TransMeta):
     """
 
     name = models.CharField(_('name'), max_length=120)
+    description = models.TextField(_('description'), blank=True, null=True)
     extension = models.ForeignKey(Extension, models.CASCADE)
 
     class Meta:
-        translate = ('name',)
+        translate = ('name', 'description')
         verbose_name = _('shadow')
         verbose_name_plural = _('shadows')
 
@@ -77,6 +78,10 @@ class Shadow(models.Model, metaclass=TransMeta):
 
 CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_intelligence', _('intelligence')),
+
+    ('base_bonus_dice', _('bonus dice')),
+    ('base_destiny_dice', _('destiny dice')),
+    ('base_rerolls', _('rerolls')),
 
     ('base_deftness', _('deftness')),
     ('base_strength', _('strength')),
@@ -132,39 +137,39 @@ class TemplateModifier(models.Model, metaclass=TransMeta):
     attribute = models.CharField(
         verbose_name=_('attribute'),
         max_length=40,
-        help_text=_('Leave empty if the knowledge or skill modifier is used.'),
         choices=CHARACTER_ATTRIBUTE_CHOICES,
         null=True,
         blank=True)
     attribute_modifier = models.IntegerField(
         verbose_name=_('attribute modifier'),
-        help_text=_('Leave empty if the knowledge or skill modifier is used.'),
         blank=True,
         null=True)
     skill = models.ForeignKey(
         Skill,
         on_delete=models.CASCADE,
         verbose_name=_('skill'),
-        help_text=_('Leave empty if the attribute or knowledge modifier is used.'),
         null=True,
         blank=True)
     skill_modifier = models.IntegerField(
         verbose_name=_('skill modifier'),
-        help_text=_('Leave empty if the attribute or knowledge modifier is used.'),
         blank=True,
         null=True)
     knowledge = models.ForeignKey(
         Knowledge,
         on_delete=models.CASCADE,
         verbose_name=_('knowledge'),
-        help_text=_('Leave empty if the skill or attribute modifier is used.'),
         null=True,
         blank=True)
     knowledge_modifier = models.IntegerField(
         verbose_name=_('knowledge modifier'),
-        help_text=_('Leave empty if the skill or attribute modifier is used.'),
         blank=True,
         null=True)
+    shadow = models.ForeignKey(
+        Shadow,
+        on_delete=models.CASCADE,
+        verbose_name=_('shadow'),
+        null=True,
+        blank=True)
 
 
 class TemplateRequirement(models.Model, metaclass=TransMeta):

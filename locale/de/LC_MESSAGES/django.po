@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-07 16:55+0000\n"
-"PO-Revision-Date: 2018-05-07 18:58+0200\n"
+"POT-Creation-Date: 2018-05-07 19:28+0000\n"
+"PO-Revision-Date: 2018-05-07 21:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,82 +18,87 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: characters/models.py:24 rules/models.py:14 rules/models.py:30
-#: rules/models.py:48 rules/models.py:66 rules/models.py:97 rules/models.py:113
+#: characters/models.py:28 rules/models.py:14 rules/models.py:30
+#: rules/models.py:48 rules/models.py:66 rules/models.py:102
+#: rules/models.py:118
 msgid "name"
 msgstr "Name"
 
-#: characters/models.py:25
+#: characters/models.py:29
 msgid "created by"
 msgstr "Erzeugt von"
 
-#: characters/models.py:26 rules/models.py:79
+#: characters/models.py:30 rules/models.py:80
 msgid "intelligence"
 msgstr "Intelligenz"
 
-#: characters/models.py:29
+#: characters/models.py:33
 msgid "base bonus dice"
 msgstr "Bonuswürfel Basis"
 
-#: characters/models.py:30
+#: characters/models.py:34
 msgid "base destiny dice"
 msgstr "Schicksalswürfel Basis"
 
-#: characters/models.py:31
+#: characters/models.py:35
 msgid "base rerolls"
 msgstr "Wiederholungswürfel Basis"
 
-#: characters/models.py:34
+#: characters/models.py:38
 msgid "base deftness"
 msgstr "Geschick Basis"
 
-#: characters/models.py:35
+#: characters/models.py:39
 msgid "base strength"
 msgstr "Kraft Basis"
 
-#: characters/models.py:36
+#: characters/models.py:40
 msgid "base attractiveness"
 msgstr "Attraktivität Basis"
 
-#: characters/models.py:37
+#: characters/models.py:41
 msgid "base endurance"
 msgstr "Ausdauer Basis"
 
-#: characters/models.py:38
+#: characters/models.py:42
 msgid "base resistance"
 msgstr "Resistenz Basis"
 
-#: characters/models.py:39
+#: characters/models.py:43
 msgid "base quickness"
 msgstr "Schnelligkeit Basis"
 
-#: characters/models.py:42
+#: characters/models.py:46
 msgid "base openness"
 msgstr "Offenheit Basis"
 
-#: characters/models.py:43
+#: characters/models.py:47
 msgid "base conscientiousness"
 msgstr "Gewissenhaftigkeit Basis"
 
-#: characters/models.py:44
+#: characters/models.py:48
 msgid "base extraversion"
 msgstr "Extraversion Basis"
 
-#: characters/models.py:45
+#: characters/models.py:49
 msgid "base agreeableness"
 msgstr "Verträglichkeit Basis"
 
-#: characters/models.py:46
+#: characters/models.py:50
 msgid "base neuroticism"
 msgstr "Neurotizismus Basis"
 
-#: characters/models.py:48 rules/models.py:72
+#: characters/models.py:52 rules/models.py:73
 msgid "shadows"
 msgstr "Schatten"
 
-#: characters/models.py:120 characters/models.py:136
+#: characters/models.py:139 characters/models.py:157
 msgid "base value"
 msgstr "Basiswert"
+
+#: characters/models.py:175
+msgid "created at"
+msgstr "Erzeugt am"
 
 #: characters/templates/base.html:30
 msgid "Contact"
@@ -116,93 +121,101 @@ msgstr "%(t_user)s abmelden"
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/characters/character_detail.html:16
+#: characters/templates/characters/character_detail.html:18
 msgid "Persona"
 msgstr "Persona"
 
-#: characters/templates/characters/character_detail.html:20
+#: characters/templates/characters/character_detail.html:22
 msgid "Openness"
 msgstr "Offenheit"
 
-#: characters/templates/characters/character_detail.html:23
+#: characters/templates/characters/character_detail.html:25
 msgid "Conscientiousness"
 msgstr "Gewissenhaftigkeit"
 
-#: characters/templates/characters/character_detail.html:26
+#: characters/templates/characters/character_detail.html:28
 msgid "Extraversion"
 msgstr "Extraversion"
 
-#: characters/templates/characters/character_detail.html:29
+#: characters/templates/characters/character_detail.html:31
 msgid "Agreeableness"
 msgstr "Verträglichkeit"
 
-#: characters/templates/characters/character_detail.html:32
+#: characters/templates/characters/character_detail.html:34
 msgid "Neuroticism"
 msgstr "Neurotizismus"
 
-#: characters/templates/characters/character_detail.html:41
+#: characters/templates/characters/character_detail.html:43
 msgid "Physis"
 msgstr "Physis"
 
-#: characters/templates/characters/character_detail.html:45
+#: characters/templates/characters/character_detail.html:47
 msgid "Deftness"
 msgstr "Geschick"
 
-#: characters/templates/characters/character_detail.html:48
+#: characters/templates/characters/character_detail.html:50
 msgid "Strength"
 msgstr "Kraft"
 
-#: characters/templates/characters/character_detail.html:51
+#: characters/templates/characters/character_detail.html:53
 msgid "Attractiveness"
 msgstr "Attraktivität"
 
-#: characters/templates/characters/character_detail.html:54
+#: characters/templates/characters/character_detail.html:56
 msgid "Endurance"
 msgstr "Ausdauer"
 
-#: characters/templates/characters/character_detail.html:57
+#: characters/templates/characters/character_detail.html:59
 msgid "Resistance"
 msgstr "Resistenz"
 
-#: characters/templates/characters/character_detail.html:60
+#: characters/templates/characters/character_detail.html:62
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
 #: characters/templates/characters/character_detail.html:70
-msgid "IQ"
-msgstr "IQ"
-
-#: characters/templates/characters/character_detail.html:83
 msgid "Dice"
 msgstr "Würfel"
 
-#: characters/templates/characters/character_detail.html:85
+#: characters/templates/characters/character_detail.html:72
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
-#: characters/templates/characters/character_detail.html:86
+#: characters/templates/characters/character_detail.html:73
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
-#: characters/templates/characters/character_detail.html:87
+#: characters/templates/characters/character_detail.html:74
 msgid "Rerolls"
 msgstr "Wiederholungswürfel"
 
-#: characters/templates/characters/character_detail.html:94
-msgid "Skills"
-msgstr "Fertigkeiten"
+#: characters/templates/characters/character_detail.html:81
+msgid "IQ"
+msgstr "IQ"
 
-#: characters/templates/characters/character_detail.html:105
+#: characters/templates/characters/character_detail.html:92
 msgid "Knowledge"
 msgstr "Wissen"
 
-#: characters/templates/characters/character_detail.html:114
+#: characters/templates/characters/character_detail.html:101
 msgid "Shadows"
 msgstr "Schatten"
 
-#: characters/templates/characters/character_detail.html:123
+#: characters/templates/characters/character_detail.html:110
 msgid "Contacts"
 msgstr "Kontakte"
+
+#: characters/templates/characters/character_detail.html:123
+msgid "Modifiers"
+msgstr "Modifikatoren"
+
+#: characters/templates/characters/character_detail.html:144
+msgid "Requirements"
+msgstr "Vorraussetzungen"
+
+#: characters/templates/characters/character_detail.html:162
+msgid "Skills"
+msgstr "Fertigkeiten"
 
 #: characters/templates/characters/random_character.html:7
 msgid "New Random Character"
@@ -224,7 +237,7 @@ msgstr "Erweiterungen"
 msgid "add to all characters"
 msgstr "Zu allen Charakteren hinzufügen"
 
-#: rules/models.py:36 rules/models.py:147
+#: rules/models.py:36 rules/models.py:150
 msgid "skill"
 msgstr "Fertigkeit"
 
@@ -232,113 +245,113 @@ msgstr "Fertigkeit"
 msgid "skills"
 msgstr "Fertigkeiten"
 
-#: rules/models.py:54 rules/models.py:55 rules/models.py:159
+#: rules/models.py:54 rules/models.py:55 rules/models.py:160
 msgid "knowledge"
 msgstr "Wissen"
 
-#: rules/models.py:71
-msgid "shadow"
-msgstr "Schatten"
-
-#: rules/models.py:81
-msgid "deftness"
-msgstr "Geschick"
-
-#: rules/models.py:82
-msgid "strength"
-msgstr "Kraft"
-
-#: rules/models.py:83
-msgid "attractiveness"
-msgstr "Attraktivität"
-
-#: rules/models.py:84
-msgid "endurance"
-msgstr "Ausdauer"
-
-#: rules/models.py:85
-msgid "resistance"
-msgstr "Resistenz"
-
-#: rules/models.py:86
-msgid "quickness"
-msgstr "Schnelligkeit"
-
-#: rules/models.py:88
-msgid "openness"
-msgstr "Offenheit"
-
-#: rules/models.py:89
-msgid "conscientiousness"
-msgstr "Gewissenhaftigkeit"
-
-#: rules/models.py:90
-msgid "extraversion"
-msgstr "Extraversion"
-
-#: rules/models.py:91
-msgid "agreeableness"
-msgstr "Verträglichkeit"
-
-#: rules/models.py:92
-msgid "neuroticism"
-msgstr "Neurotizismus"
-
-#: rules/models.py:98 rules/models.py:117
+#: rules/models.py:67 rules/models.py:103 rules/models.py:122
 msgid "description"
 msgstr "Beschreibung"
 
-#: rules/models.py:102
+#: rules/models.py:72 rules/models.py:170
+msgid "shadow"
+msgstr "Schatten"
+
+#: rules/models.py:82
+msgid "bonus dice"
+msgstr "Bonuswürfel"
+
+#: rules/models.py:83
+msgid "destiny dice"
+msgstr "Schicksalswürfel"
+
+#: rules/models.py:84
+msgid "rerolls"
+msgstr "Wiederholungswürfel"
+
+#: rules/models.py:86
+msgid "deftness"
+msgstr "Geschick"
+
+#: rules/models.py:87
+msgid "strength"
+msgstr "Kraft"
+
+#: rules/models.py:88
+msgid "attractiveness"
+msgstr "Attraktivität"
+
+#: rules/models.py:89
+msgid "endurance"
+msgstr "Ausdauer"
+
+#: rules/models.py:90
+msgid "resistance"
+msgstr "Resistenz"
+
+#: rules/models.py:91
+msgid "quickness"
+msgstr "Schnelligkeit"
+
+#: rules/models.py:93
+msgid "openness"
+msgstr "Offenheit"
+
+#: rules/models.py:94
+msgid "conscientiousness"
+msgstr "Gewissenhaftigkeit"
+
+#: rules/models.py:95
+msgid "extraversion"
+msgstr "Extraversion"
+
+#: rules/models.py:96
+msgid "agreeableness"
+msgstr "Verträglichkeit"
+
+#: rules/models.py:97
+msgid "neuroticism"
+msgstr "Neurotizismus"
+
+#: rules/models.py:107
 msgid "template category"
 msgstr "Vorlagenkategorie"
 
-#: rules/models.py:103
+#: rules/models.py:108
 msgid "template categories"
 msgstr "Vorlagenkategorien"
 
-#: rules/models.py:115
+#: rules/models.py:120
 msgid "category"
 msgstr "Kategorie"
 
-#: rules/models.py:119
+#: rules/models.py:124
 msgid "cost"
 msgstr "Kosten"
 
-#: rules/models.py:123
+#: rules/models.py:128
 msgid "character template"
 msgstr "Charaktervorlage"
 
-#: rules/models.py:124
+#: rules/models.py:129
 msgid "character templates"
 msgstr "Charaktervorlagen"
 
-#: rules/models.py:131 rules/models.py:171
+#: rules/models.py:136 rules/models.py:176
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:133
+#: rules/models.py:138
 msgid "attribute"
 msgstr "Attribut"
 
-#: rules/models.py:135 rules/models.py:141
-msgid "Leave empty if the knowledge or skill modifier is used."
-msgstr "Leer lassen wenn Wissens- oder Fertigkeitsmodifikatoren benutzt werden."
-
-#: rules/models.py:140
+#: rules/models.py:144
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: rules/models.py:148 rules/models.py:153
-msgid "Leave empty if the attribute or knowledge modifier is used."
-msgstr "Leer lassen wenn Attribut- oder Wissensmodifikatoren benutzt werden."
-
-#: rules/models.py:152
+#: rules/models.py:154
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
-
-#: rules/models.py:160 rules/models.py:165
-msgid "Leave empty if the skill or attribute modifier is used."
-msgstr "Leer lassen wenn Fertigkeits- oder Attributsmodifikatoren benutzt werden."
 
 #: rules/models.py:164
 msgid "knowledge modifier"
@@ -351,6 +364,15 @@ msgstr "Deutsch"
 #: urpg/settings.py:83
 msgid "English"
 msgstr "Englisch"
+
+#~ msgid "Leave empty if the knowledge or skill modifier is used."
+#~ msgstr "Leer lassen wenn Wissens- oder Fertigkeitsmodifikatoren benutzt werden."
+
+#~ msgid "Leave empty if the attribute or knowledge modifier is used."
+#~ msgstr "Leer lassen wenn Attribut- oder Wissensmodifikatoren benutzt werden."
+
+#~ msgid "Leave empty if the skill or attribute modifier is used."
+#~ msgstr "Leer lassen wenn Fertigkeits- oder Attributsmodifikatoren benutzt werden."
 
 #~ msgid "Attributes"
 #~ msgstr "Attribute"

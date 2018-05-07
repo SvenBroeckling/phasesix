@@ -2,94 +2,162 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{{ object.name }}</div>
-                <img class="card-img-top" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    {% trans 'Persona' %}
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        {% trans 'Openness' %}<label class="float-right">{{ object.openness }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Conscientiousness' %}<label class="float-right">{{ object.conscientiousness }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Extraversion' %}<label class="float-right">{{ object.extraversion }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Agreeableness' %}<label class="float-right">{{ object.agreeableness }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Neuroticism' %}<label class="float-right">{{ object.neuroticism }}</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    {% trans 'Physis' %}
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        {% trans 'Deftness' %}<label class="float-right">{{ object.deftness }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Strength' %}<label class="float-right">{{ object.strength }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Attractiveness' %}<label class="float-right">{{ object.attractiveness }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Endurance' %}<label class="float-right">{{ object.endurance }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Resistance' %}<label class="float-right">{{ object.resistance }}</label>
-                    </li>
-                    <li class="list-group-item">
-                        {% trans 'Quickness' %}<label class="float-right">{{ object.quickness }}</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">{% trans 'IQ' %}</div>
-                <div class="card-body">
-                    <div class="progress" style="height: 25px">
-                        <div class="progress-bar" role="progressbar" style="width: {{ object.intelligence }}%;" aria-valuenow="{{ object.intelligence }}" aria-valuemin="0" aria-valuemax="100">{{ object.intelligence }}</div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <div class="card-header">{{ object.name }}</div>
+                        <img class="card-img-top" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
                     </div>
                 </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {% trans 'Persona' %}
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                {% trans 'Openness' %}<label class="float-right">{{ object.openness }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Conscientiousness' %}<label class="float-right">{{ object.conscientiousness }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Extraversion' %}<label class="float-right">{{ object.extraversion }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Agreeableness' %}<label class="float-right">{{ object.agreeableness }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Neuroticism' %}<label class="float-right">{{ object.neuroticism }}</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {% trans 'Physis' %}
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                {% trans 'Deftness' %}<label class="float-right">{{ object.deftness }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Strength' %}<label class="float-right">{{ object.strength }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Attractiveness' %}<label class="float-right">{{ object.attractiveness }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Endurance' %}<label class="float-right">{{ object.endurance }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Resistance' %}<label class="float-right">{{ object.resistance }}</label>
+                            </li>
+                            <li class="list-group-item">
+                                {% trans 'Quickness' %}<label class="float-right">{{ object.quickness }}</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <div class="card-header">{% trans "Dice" %}</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{% trans 'Bonus Dice' %}<label class="float-right">{{ object.bonus_dice }}</label></li>
+                            <li class="list-group-item">{% trans 'Destiny Dice' %}<label class="float-right">{{ object.destiny_dice }}</label></li>
+                            <li class="list-group-item">{% trans 'Rerolls' %}<label class="float-right">{{ object.rerolls }}</label></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="card-header">{% trans 'IQ' %}</div>
+                        <div class="card-body">
+                            <div class="progress" style="height: 25px">
+                                <div class="progress-bar" role="progressbar" style="width: {{ object.intelligence }}%;" aria-valuenow="{{ object.intelligence }}" aria-valuemin="0" aria-valuemax="100">{{ object.intelligence }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header">{% trans "Knowledge" %}</div>
+                        <ul class="list-group list-group-flush">
+                            {% for knowledge in object.characterknowledge_set.all %}
+                                <li class="list-group-item">{{ knowledge.knowledge }}<label class="float-right">{{ knowledge.value }}</label></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">{% trans "Shadows" %}</div>
+                        <ul class="list-group list-group-flush">
+                            {% for shadow in object.shadows.all %}
+                                <li class="list-group-item">{{ shadow }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">{% trans "Contacts" %}</div>
+                        <ul class="list-group list-group-flush">
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    {% for template in character.charactertemplate_set.all %}
+                    <div class="card mb-3">
+                        <div class="card-header">{{ template.template.category }}: {{ template }}</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>{% trans 'Modifiers' %}</h4>
+                                    <ul>
+                                        {% for mod in template.template.templatemodifier_set.all %}
+                                            {% if mod.attribute %}
+                                                <li>{{ mod.get_attribute_display }} {{ mod.attribute_modifier }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for mod in template.template.templatemodifier_set.all %}
+                                            {% if mod.skill %}
+                                                <li>{{ mod.skill }} {{ mod.skill_modifier }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for mod in template.template.templatemodifier_set.all %}
+                                            {% if mod.knowledge %}
+                                                <li>{{ mod.knowledge }} {{ mod.knowledge_modifier }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% if template.template.templaterequirement_set.exists %}
+                                <div class="col-md-6">
+                                    <h4>{% trans 'Requirements' %}</h4>
+                                    <ul>
+                                        {% for req in template.template.templaterequirement_set.all %}
+                                            <li>{{ req.required_template }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{% trans "Dice" %}</div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{% trans 'Bonus Dice' %}<label class="float-right">{{ object.bonus_dice }}</label></li>
-                    <li class="list-group-item">{% trans 'Destiny Dice' %}<label class="float-right">{{ object.destiny_dice }}</label></li>
-                    <li class="list-group-item">{% trans 'Rerolls' %}<label class="float-right">{{ object.rerolls }}</label></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card">
                 <div class="card-header">{% trans "Skills" %}</div>
                 <ul class="list-group list-group-flush">
@@ -100,30 +168,13 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{% trans "Knowledge" %}</div>
-                <ul class="list-group list-group-flush">
-                    {% for knowledge in object.characterknowledge_set.all %}
-                        <li class="list-group-item">{{ knowledge.knowledge }}<label class="float-right">{{ knowledge.value }}</label></li>
-                    {% endfor %}
-                </ul>
-            </div>
+    </div>
 
-            <div class="card mt-3">
-                <div class="card-header">{% trans "Shadows" %}</div>
-                <ul class="list-group list-group-flush">
-                    {% for shadow in object.shadows.all %}
-                        <li class="list-group-item">{{ shadow }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+    <div class="row mb-3">
+    </div>
 
-            <div class="card mt-3">
-                <div class="card-header">{% trans "Contacts" %}</div>
-                <ul class="list-group list-group-flush">
-                </ul>
-            </div>
-        </div>
+    <div class="row">
+
+
     </div>
 {% endblock %}
