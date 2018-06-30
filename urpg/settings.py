@@ -15,9 +15,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'simplemde',
+    'django_markdown2',
     'world',
     'rules',
     'characters',
+    'rulebook',
 ]
 
 MIDDLEWARE = [

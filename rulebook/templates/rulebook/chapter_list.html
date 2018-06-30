@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n static md2 %}
+
+{% block content %}
+    <h1>{% trans 'Rule book' %}</h1>
+    {% for object in object_list %}
+        <h2>{{ object.number }}. {{ object.name }}</h2>
+        <p>
+        {{ object.text|markdown }}
+        </p>
+    {% endfor %}
+{% endblock %}
