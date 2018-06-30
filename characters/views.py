@@ -2,9 +2,6 @@
 from __future__ import unicode_literals
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
-from django.views import View
 from django.views.generic import TemplateView, DetailView
 
 from characters.models import Character

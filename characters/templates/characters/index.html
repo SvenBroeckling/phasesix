@@ -1,1 +1,43 @@
 {% extends 'base.html' %}
+{% load i18n static %}
+
+{% block content %}
+    <div class="row mb-5 mt-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Phase Six</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                        <p>
+                            {% blocktrans %}
+                            Are you in need of a simple and quick ruleset to play your stories as a pen'n'paper rpg?
+                            <em>Phase Six</em> is a fast playing roleplay ruleset to be used in any setting.
+                            All you need to play is a handfull of regular six-sided dice and some paper.
+                            {% endblocktrans %}
+                        </p>
+                        <p>
+                            {% blocktrans %}
+                                This website lets you create and manage your characters as well as their equipment
+                                and possessions.  This makes it really easy to use a platform like
+                                <a href="https://roll20.net">Roll20</a> for your sessions.
+                                You can also export your character to a classic character sheet to play offline.
+                            {% endblocktrans %}
+                        </p>
+                        <p>
+                            {% blocktrans %}
+                            Start now and take a look at the game rules or create a character.
+                            {% endblocktrans %}
+                        </p>
+                    <a class="btn btn-outline-dark btn-primary btn-lg mt-4 mr-2">{% trans 'Have a look at the rules' %}</a>
+                    <a class="btn btn-outline-dark btn-lg mt-4">{% trans 'Create a character' %}</a>
+                </div>
+                <div class="col-md-6">
+                    <img class="img-fluid" src="{% static 'img/die.jpg' %}" alt="{% trans 'Die' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
