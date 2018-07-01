@@ -6,91 +6,131 @@
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/pulse/bootstrap.min.css">
-    <link href="{% static 'css/fontawesome-all.min.css' %}" type="text/css" rel="stylesheet" />
-    <link href="{% static 'css/theme.css' %}" type="text/css" rel="stylesheet" />
+    <link href="{% static 'css/fontawesome-all.min.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'css/theme.css' %}" type="text/css" rel="stylesheet"/>
     <title>Phase Six</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+<div class="container-fluid">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
-        <div class="row mt-3 mb-3">
-            <div class="col-md-4">
-                <a href="/"><h1>Phase Six</h1></a>
-            </div>
-            <div class="col-md-8">
-                <nav class="nav float-right">
+
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+        <a class="navbar-brand" href="/">Phase Six</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'characters:list' %}">{% trans 'Characters' %}</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="">{% trans 'Contact' %}</a>
-                    {% if user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'characters:random_character' %}">{% trans 'Random Character' %}</a>
-                        <a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
-                        <a class="nav-link" href="{% url 'logout' %}?next=/">{% blocktrans with t_user=user|capfirst %}Logout {{ t_user }}{% endblocktrans %}</a>
-                    {% else %}
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ user|capfirst }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item"
+                           href="{% url 'characters:random_character' %}">{% trans 'Random Character' %}</a>
+                        <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}?next=/">{% blocktrans with t_user=user|capfirst %}
+                            Logout {{ t_user }}{% endblocktrans %}</a>
+                    </div>
+                </li>
+                {% else %}
+                    <li class="nav-item active">
                         <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
-                    {% endif %}
-                </nav>
-            </div>
+                    </li>
+                {% endif %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'set_language' %}?next={{ request.path }}">
+                {% csrf_token %}
+                <button name="language" value="de"
+                        class="btn btn-outline-success my-2 my-sm-0{% if request.LANGUAGE_CODE == 'de' %} active{% endif %}">DE
+                </button>
+                <button name="language" value="en"
+                        class="btn btn-outline-success my-2 my-sm-0{% if request.LANGUAGE_CODE == 'en' %} active{% endif %}">EN
+                </button>
+            </form>
         </div>
-        {% block content %}{% endblock %}
+    </nav>
+
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            {% block content %}{% endblock %}
+        </div>
     </div>
+</div>
 
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/jquery.matchHeight.js' %}"></script>
-    <script src="{% static 'js/dropzone.min.js' %}"></script>
-    <script src="{% static 'js/featherlight.min.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/jquery.matchHeight.js' %}"></script>
+<script src="{% static 'js/dropzone.min.js' %}"></script>
+<script src="{% static 'js/featherlight.min.js' %}" type="text/javascript" charset="utf-8"></script>
 
-    <script>
-        $(document).ready(function () {
-            function getCookie(name) {
-                var cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = jQuery.trim(cookies[i]);
-                        // Does this cookie string begin with the name we want?
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
+<script>
+    $(document).ready(function () {
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
                     }
                 }
-                return cookieValue;
             }
+            return cookieValue;
+        }
 
-            var csrftoken = getCookie('csrftoken');
+        var csrftoken = getCookie('csrftoken');
 
-            function csrfSafeMethod(method) {
-                // these HTTP methods do not require CSRF protection
-                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
             }
-
-            $.ajaxSetup({
-                beforeSend: function (xhr, settings) {
-                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
-                }
-            });
-
-            $('.tag-delete').on('click', function(e){
-                if(confirm('Tag wirklich löschen? Es wird bei allen Bildern entfernt.')){
-                    $.post($(this).data('url'));
-                    $(this).parent().hide('slow');
-                }
-            })
         });
-    </script>
 
-    {% block javascript %}{% endblock %}
+        $('.tag-delete').on('click', function (e) {
+            if (confirm('Tag wirklich löschen? Es wird bei allen Bildern entfernt.')) {
+                $.post($(this).data('url'));
+                $(this).parent().hide('slow');
+            }
+        })
+    });
+</script>
+
+{% block javascript %}{% endblock %}
 </body>
 </html>

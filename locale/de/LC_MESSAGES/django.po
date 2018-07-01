@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-30 16:58+0000\n"
-"PO-Revision-Date: 2018-06-30 18:59+0200\n"
+"POT-Creation-Date: 2018-07-01 16:52+0000\n"
+"PO-Revision-Date: 2018-07-01 18:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
 
-#: characters/models.py:28 rules/models.py:14 rules/models.py:30
-#: rules/models.py:48 rules/models.py:66 rules/models.py:102
+#: characters/models.py:28 rulebook/models.py:14 rules/models.py:14
+#: rules/models.py:30 rules/models.py:48 rules/models.py:66 rules/models.py:102
 #: rules/models.py:118
 msgid "name"
 msgstr "Name"
@@ -105,19 +105,23 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #: characters/templates/base.html:32
+msgid "Rulebook"
+msgstr ""
+
+#: characters/templates/base.html:33
 msgid "Random Character"
 msgstr "Zufälliger Charakter"
 
-#: characters/templates/base.html:33
+#: characters/templates/base.html:34
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:34
+#: characters/templates/base.html:35
 #, python-format
 msgid "Logout %(t_user)s"
 msgstr "%(t_user)s abmelden"
 
-#: characters/templates/base.html:36
+#: characters/templates/base.html:37
 msgid "Login"
 msgstr "Anmelden"
 
@@ -234,7 +238,7 @@ msgstr ""
 "<em>Phase Six</em> ist ein schnell spielbares Rollenspiel Regelwerk welches "
 "in jedem Setting verwendet werden kann.\n"
 "Alles was du brauchst ist eine Handvoll normaler sechsseitiger Würfel und "
-"etwas papier."
+"etwas Papier."
 
 #: characters/templates/characters/index.html:22
 msgid ""
@@ -283,6 +287,26 @@ msgstr "Würfel"
 #: characters/templates/characters/random_character.html:7
 msgid "New Random Character"
 msgstr "Neuer Zufallscharakter"
+
+#: rulebook/models.py:13
+msgid "number"
+msgstr ""
+
+#: rulebook/models.py:15
+msgid "text"
+msgstr ""
+
+#: rulebook/models.py:20
+msgid "chapter"
+msgstr ""
+
+#: rulebook/models.py:21
+msgid "chapters"
+msgstr ""
+
+#: rulebook/templates/rulebook/chapter_list.html:5
+msgid "Rule book"
+msgstr ""
 
 #: rules/models.py:13
 msgid "is mandatory"
@@ -420,11 +444,11 @@ msgstr "Fertigkeitsmodifikator"
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
-#: urpg/settings.py:82
+#: urpg/settings.py:85
 msgid "German"
 msgstr "Deutsch"
 
-#: urpg/settings.py:83
+#: urpg/settings.py:86
 msgid "English"
 msgstr "Englisch"
 

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block content %}
+    <div class="row">
+        {% for object in object_list %}
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-header">{{ object.name }}</div>
+                    <a href="{{ object.get_absolute_url }}"><img class="card-img-top" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}"></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
