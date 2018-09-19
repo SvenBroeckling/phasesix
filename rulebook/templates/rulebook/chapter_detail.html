@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-9">
-            <h1><i class="fa fa-{{ object.fa_icon_class|default:"book" }}"></i> {{ object.name }}</h1>
+            <h1><i class="{{ object.fa_icon_class|default:"book" }}"></i> {{ object.name }}</h1>
             <p>
                 {{ object.text|markdown }}
             </p>
@@ -14,7 +14,7 @@
                 <div class="card pt-2 pb-2 mb-3">
                     <div class="card-body text-center">
                         <a href="{% url 'rulebook:detail' pk=chapter.pk %}">
-                            <i class="fa fa-{{ chapter.fa_icon_class|default:"book" }} fa-4x mb-3"></i>
+                            <i class="{{ chapter.fa_icon_class|default:"book" }} fa-4x mb-3"></i>
                             <h2>{{ chapter.number }}. {{ chapter.name }}</h2>
                         </a>
                     </div>
