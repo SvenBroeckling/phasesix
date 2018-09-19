@@ -3,10 +3,18 @@
 
 {% block content %}
     <h1>{% trans 'Rule book' %}</h1>
-    {% for object in object_list %}
-        <h2>{{ object.number }}. {{ object.name }}</h2>
-        <p>
-        {{ object.text|markdown }}
-        </p>
-    {% endfor %}
+    <div class="row">
+        {% for object in object_list %}
+        <div class="col-md-4">
+            <div class="card pt-4 pb-4">
+                <div class="card-body text-center">
+                    <a href="{% url 'rulebook:detail' pk=object.pk %}">
+                        <i class="fa fa-book fa-8x mb-3"></i>
+                        <h2>{{ object.number }}. {{ object.name }}</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

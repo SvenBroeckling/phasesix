@@ -6,5 +6,5 @@ app_name = 'rulebook'
 
 urlpatterns = [
     url('^$', views.IndexView.as_view(), name='index'),
-    # url('^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
+    url('^chapter/(?P<pk>\d+)$', views.ChapterDetailView.as_view(), name='detail'),
 ]
