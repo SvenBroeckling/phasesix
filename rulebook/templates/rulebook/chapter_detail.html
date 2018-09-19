@@ -11,12 +11,10 @@
         </div>
         <div class="col-md-3">
             {% for chapter in all_chapters %}
-                <div class="card pt-2 pb-2 mb-3">
+                <div class="card pt-1 pb-1 mb-3">
                     <div class="card-body text-center">
-                        <a href="{% url 'rulebook:detail' pk=chapter.pk %}">
-                            <i class="{{ chapter.fa_icon_class|default:"book" }} fa-4x mb-3"></i>
-                            <h2>{{ chapter.number }}. {{ chapter.name }}</h2>
-                        </a>
+                        <i class="{{ chapter.fa_icon_class|default:"book" }}"></i>
+                        <a href="{% url 'rulebook:detail' pk=chapter.pk %}">{{ chapter.name }}</a>
                     </div>
                 </div>
             {% endfor %}
