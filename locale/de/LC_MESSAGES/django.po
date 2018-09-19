@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-01 16:52+0000\n"
-"PO-Revision-Date: 2018-07-01 18:52+0200\n"
+"POT-Creation-Date: 2018-09-19 16:55+0000\n"
+"PO-Revision-Date: 2018-09-19 18:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: characters/models.py:28 rulebook/models.py:14 rules/models.py:14
 #: rules/models.py:30 rules/models.py:48 rules/models.py:66 rules/models.py:102
@@ -100,28 +100,40 @@ msgstr "Basiswert"
 msgid "created at"
 msgstr "Erzeugt am"
 
-#: characters/templates/base.html:30
+#: characters/templates/base.html:29
+msgid "Toggle navigation"
+msgstr "Navigation umschalten"
+
+#: characters/templates/base.html:36
+msgid "Rulebook"
+msgstr "Regelbuch"
+
+#: characters/templates/base.html:39
+msgid "Characters"
+msgstr "Charaktere"
+
+#: characters/templates/base.html:42
 msgid "Contact"
 msgstr "Kontakt"
 
-#: characters/templates/base.html:32
-msgid "Rulebook"
-msgstr ""
-
-#: characters/templates/base.html:33
+#: characters/templates/base.html:52
 msgid "Random Character"
 msgstr "Zufälliger Charakter"
 
-#: characters/templates/base.html:34
+#: characters/templates/base.html:53
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:35
+#: characters/templates/base.html:55
 #, python-format
-msgid "Logout %(t_user)s"
-msgstr "%(t_user)s abmelden"
+msgid ""
+"\n"
+"                            Logout %(t_user)s"
+msgstr ""
+"\n"
+"                            %(t_user)s abmelden"
 
-#: characters/templates/base.html:37
+#: characters/templates/base.html:61
 msgid "Login"
 msgstr "Anmelden"
 
@@ -290,23 +302,23 @@ msgstr "Neuer Zufallscharakter"
 
 #: rulebook/models.py:13
 msgid "number"
-msgstr ""
+msgstr "Nummer"
 
 #: rulebook/models.py:15
 msgid "text"
-msgstr ""
+msgstr "Text"
 
 #: rulebook/models.py:20
 msgid "chapter"
-msgstr ""
+msgstr "Kapitel"
 
 #: rulebook/models.py:21
 msgid "chapters"
-msgstr ""
+msgstr "Kapitel"
 
 #: rulebook/templates/rulebook/chapter_list.html:5
 msgid "Rule book"
-msgstr ""
+msgstr "Regelbuch"
 
 #: rules/models.py:13
 msgid "is mandatory"
@@ -444,13 +456,16 @@ msgstr "Fertigkeitsmodifikator"
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
-#: urpg/settings.py:85
+#: urpg/settings.py:86
 msgid "German"
 msgstr "Deutsch"
 
-#: urpg/settings.py:86
+#: urpg/settings.py:87
 msgid "English"
 msgstr "Englisch"
+
+#~ msgid "Logout %(t_user)s"
+#~ msgstr "%(t_user)s abmelden"
 
 #~ msgid "Leave empty if the knowledge or skill modifier is used."
 #~ msgstr ""
