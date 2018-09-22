@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-19 16:55+0000\n"
-"PO-Revision-Date: 2018-09-19 18:56+0200\n"
+"POT-Creation-Date: 2018-09-22 15:38+0000\n"
+"PO-Revision-Date: 2018-09-22 17:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -100,31 +100,35 @@ msgstr "Basiswert"
 msgid "created at"
 msgstr "Erzeugt am"
 
-#: characters/templates/base.html:29
+#: characters/templates/base.html:27
 msgid "Toggle navigation"
 msgstr "Navigation umschalten"
 
-#: characters/templates/base.html:36
+#: characters/templates/base.html:34
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:39
+#: characters/templates/base.html:37
+msgid "Templates"
+msgstr "Schablonen"
+
+#: characters/templates/base.html:40
 msgid "Characters"
 msgstr "Charaktere"
 
-#: characters/templates/base.html:42
+#: characters/templates/base.html:43
 msgid "Contact"
 msgstr "Kontakt"
 
-#: characters/templates/base.html:52
+#: characters/templates/base.html:53
 msgid "Random Character"
 msgstr "Zufälliger Charakter"
 
-#: characters/templates/base.html:53
+#: characters/templates/base.html:54
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:55
+#: characters/templates/base.html:56
 #, python-format
 msgid ""
 "\n"
@@ -133,7 +137,7 @@ msgstr ""
 "\n"
 "                            %(t_user)s abmelden"
 
-#: characters/templates/base.html:61
+#: characters/templates/base.html:62
 msgid "Login"
 msgstr "Anmelden"
 
@@ -221,15 +225,7 @@ msgstr "Schatten"
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: characters/templates/characters/character_detail.html:123
-msgid "Modifiers"
-msgstr "Modifikatoren"
-
-#: characters/templates/characters/character_detail.html:144
-msgid "Requirements"
-msgstr "Vorraussetzungen"
-
-#: characters/templates/characters/character_detail.html:162
+#: characters/templates/characters/character_detail.html:126
 msgid "Skills"
 msgstr "Fertigkeiten"
 
@@ -305,14 +301,18 @@ msgid "number"
 msgstr "Nummer"
 
 #: rulebook/models.py:15
+msgid "FA Icon Class"
+msgstr "FA Icon Klasse"
+
+#: rulebook/models.py:16
 msgid "text"
 msgstr "Text"
 
-#: rulebook/models.py:20
+#: rulebook/models.py:21
 msgid "chapter"
 msgstr "Kapitel"
 
-#: rulebook/models.py:21
+#: rulebook/models.py:22
 msgid "chapters"
 msgstr "Kapitel"
 
@@ -336,7 +336,7 @@ msgstr "Erweiterungen"
 msgid "add to all characters"
 msgstr "Zu allen Charakteren hinzufügen"
 
-#: rules/models.py:36 rules/models.py:150
+#: rules/models.py:36 rules/models.py:151
 msgid "skill"
 msgstr "Fertigkeit"
 
@@ -344,7 +344,7 @@ msgstr "Fertigkeit"
 msgid "skills"
 msgstr "Fertigkeiten"
 
-#: rules/models.py:54 rules/models.py:55 rules/models.py:160
+#: rules/models.py:54 rules/models.py:55 rules/models.py:161
 msgid "knowledge"
 msgstr "Wissen"
 
@@ -352,7 +352,7 @@ msgstr "Wissen"
 msgid "description"
 msgstr "Beschreibung"
 
-#: rules/models.py:72 rules/models.py:170
+#: rules/models.py:72 rules/models.py:171
 msgid "shadow"
 msgstr "Schatten"
 
@@ -430,31 +430,35 @@ msgstr "Kosten"
 
 #: rules/models.py:128
 msgid "character template"
-msgstr "Charaktervorlage"
+msgstr "Charakterschablone"
 
 #: rules/models.py:129
 msgid "character templates"
-msgstr "Charaktervorlagen"
+msgstr "Charakterschablonen"
 
-#: rules/models.py:136 rules/models.py:176
+#: rules/models.py:137 rules/models.py:177
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:138
+#: rules/models.py:139
 msgid "attribute"
 msgstr "Attribut"
 
-#: rules/models.py:144
+#: rules/models.py:145
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: rules/models.py:154
+#: rules/models.py:155
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: rules/models.py:164
+#: rules/models.py:165
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
+
+#: rules/templates/rules/_template_widget.html:25
+msgid "Requires"
+msgstr "Benötigt"
 
 #: urpg/settings.py:86
 msgid "German"
@@ -463,6 +467,9 @@ msgstr "Deutsch"
 #: urpg/settings.py:87
 msgid "English"
 msgstr "Englisch"
+
+#~ msgid "Modifiers"
+#~ msgstr "Modifikatoren"
 
 #~ msgid "Logout %(t_user)s"
 #~ msgstr "%(t_user)s abmelden"

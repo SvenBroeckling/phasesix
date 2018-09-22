@@ -1,0 +1,29 @@
+{% load i18n %}
+<div class="card mb-3">
+    <div class="card-header">
+        {{ template.category }}: {{ template }}
+        <span class="badge badge-dark float-right">{{ template.cost }}</span>
+    </div>
+    <div class="card-body">
+            {% for mod in template.templatemodifier_set.all %}
+                {% if mod.attribute %}
+                    {{ mod.get_attribute_display }} {{ mod.attribute_modifier }}<br>
+                {% endif %}
+            {% endfor %}
+            {% for mod in template.templatemodifier_set.all %}
+                {% if mod.skill %}
+                    {{ mod.skill }} {{ mod.skill_modifier }}<br>
+                {% endif %}
+            {% endfor %}
+            {% for mod in template.templatemodifier_set.all %}
+                {% if mod.knowledge %}
+                    {{ mod.knowledge }} {{ mod.knowledge_modifier }}<br>
+                {% endif %}
+            {% endfor %}
+            {% if template.templaterequirement_set.exists %}
+                {% for req in template.templaterequirement_set.all %}
+                    <span class="text-danger">{% trans 'Requires' %}</span> {{ req.required_template }}<br>
+                {% endfor %}
+            {% endif %}
+    </div>
+</div>

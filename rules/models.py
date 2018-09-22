@@ -127,6 +127,7 @@ class Template(models.Model, metaclass=TransMeta):
         translate = ('name', 'description')
         verbose_name = _('character template')
         verbose_name_plural = _('character templates')
+        ordering = ('category__id',)
 
     def __str__(self):
         return self.name

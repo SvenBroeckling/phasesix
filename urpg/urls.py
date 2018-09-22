@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('characters.urls', namespace='characters')),
     url(r'rulebook/', include('rulebook.urls', namespace='rulebook')),
+    url(r'rules/', include('rules.urls', namespace='rules')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 ]

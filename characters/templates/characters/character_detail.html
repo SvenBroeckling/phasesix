@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n rules_extras %}
 
 {% block content %}
     <div class="row">
@@ -115,43 +115,7 @@
 
                 <div class="col-md-4">
                     {% for template in character.charactertemplate_set.all %}
-                    <div class="card mb-3">
-                        <div class="card-header">{{ template.template.category }}: {{ template }}</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4>{% trans 'Modifiers' %}</h4>
-                                    <ul>
-                                        {% for mod in template.template.templatemodifier_set.all %}
-                                            {% if mod.attribute %}
-                                                <li>{{ mod.get_attribute_display }} {{ mod.attribute_modifier }}</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% for mod in template.template.templatemodifier_set.all %}
-                                            {% if mod.skill %}
-                                                <li>{{ mod.skill }} {{ mod.skill_modifier }}</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% for mod in template.template.templatemodifier_set.all %}
-                                            {% if mod.knowledge %}
-                                                <li>{{ mod.knowledge }} {{ mod.knowledge_modifier }}</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% if template.template.templaterequirement_set.exists %}
-                                <div class="col-md-6">
-                                    <h4>{% trans 'Requirements' %}</h4>
-                                    <ul>
-                                        {% for req in template.template.templaterequirement_set.all %}
-                                            <li>{{ req.required_template }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
-                            </div>
-                        </div>
-                    </div>
+                        {% template_widget template.template %}
                     {% endfor %}
                 </div>
             </div>
