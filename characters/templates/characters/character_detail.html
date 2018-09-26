@@ -15,159 +15,147 @@
                     <li class="list-group-item">{% trans 'Rerolls' %}<label class="float-right">{{ object.rerolls }}</label></li>
                 </ul>
             </div>
-            <button class="btn btn-block mt-3">{% trans 'Character' %}</button>
-            <button class="btn btn-block">{% trans 'Gear' %}</button>
-            <button class="btn btn-block">{% trans 'Background' %}</button>
+            <div class="nav nav-pills" role="tablist">
+                <a class="nav-link active btn-block" data-toggle="pill" href="#v-character" role="tab">{% trans 'Character' %}</a>
+                <a class="nav-link active btn-block" data-toggle="pill" href="#v-gear" role="tab">{% trans 'Gear' %}</a>
+                <a class="nav-link active btn-block" data-toggle="pill" href="#v-background" role="tab">{% trans 'Background' %}</a>
+            </div>
         </div>
         <div class="col-md-10">
-            <div class="row">
-                <div class="col-md-12 text-center mb-1">
-                    <h2>- {% trans 'Persona' %} -</h2>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Openness' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.openness %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Conscientiousness' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.conscientiousness %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Extraversion' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.extraversion %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Agreeableness' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.agreeableness %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Neuroticism' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.neuroticism %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'IQ' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.intelligence %}
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-12 text-center mb-1">
-                    <h2>- {% trans 'Physis' %} -</h2>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Deftness' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.deftness %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Strength' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.strength %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Attractiveness' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.attractiveness %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Endurance' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.endurance %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Resistance' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.resistance %}
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-2">
-                    {% trans 'Quickness' as attribute_name %}
-                    {% character_attribute_widget attribute_name object.quickness %}
-                </div>
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-md-4 text-center mb-1">
-                    <h2 class="mb-1">- {% trans 'Knowledge' %} -</h2>
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            {% for knowledge in object.characterknowledge_set.all %}
-                            {{ knowledge.knowledge }}: {{ knowledge.value }}<br>
-                            {% endfor %}
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="v-character" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12 text-center mb-1">
+                            <h2>- {% trans 'Persona' %} -</h2>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Openness' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.openness %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Conscientiousness' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.conscientiousness %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Extraversion' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.extraversion %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Agreeableness' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.agreeableness %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Neuroticism' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.neuroticism %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'IQ' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.intelligence %}
                         </div>
                     </div>
 
-                    {% if object.shadows.exists %}
-                    <h2 class="mb-1">- {% trans 'Shadows' %} -</h2>
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            {% for shadow in object.shadows.all %}
-                            {{ shadow }}<br>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endif %}
 
-                    {% if object.contacts.exists %}
-                    <h2 class="mb-1">- {% trans 'Contacts' %} -</h2>
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            {% for contact in object.contacts.all %}
-                            {{ contact }}<br>
-                            {% endfor %}
+                    <div class="row">
+                        <div class="col-md-12 text-center mb-1">
+                            <h2>- {% trans 'Physis' %} -</h2>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Deftness' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.deftness %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Strength' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.strength %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Attractiveness' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.attractiveness %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Endurance' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.endurance %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Resistance' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.resistance %}
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-xl-2">
+                            {% trans 'Quickness' as attribute_name %}
+                            {% character_attribute_widget attribute_name object.quickness %}
                         </div>
                     </div>
-                    {% endif %}
+
+                    <div class="row mt-2">
+                        <div class="col-md-4 text-center mb-1">
+                            <h2 class="mb-1">- {% trans 'Knowledge' %} -</h2>
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    {% for knowledge in object.characterknowledge_set.all %}
+                                    {{ knowledge.knowledge }}: {{ knowledge.value }}<br>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            {% if object.shadows.exists %}
+                            <h2 class="mb-1">- {% trans 'Shadows' %} -</h2>
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    {% for shadow in object.shadows.all %}
+                                    {{ shadow }}<br>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if object.contacts.exists %}
+                            <h2 class="mb-1">- {% trans 'Contacts' %} -</h2>
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    {% for contact in object.contacts.all %}
+                                    {{ contact }}<br>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4 mb-1">
+                            <h2 class="mb-1 text-center">- {% trans 'Mind Skills' %} -</h2>
+                            <table class="table">
+                                {% for skill in object.characterskill_set.mind_skills %}
+                                <tr>
+                                    <td>{{ skill.skill }}</td>
+                                    <td class="text-right">{{ skill.value }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+
+                        <div class="col-md-4 mb-1">
+                            <h2 class="text-center mb-1">- {% trans 'Practical Skills' %} -</h2>
+                            <table class="table">
+                                {% for skill in object.characterskill_set.practical_skills %}
+                                <tr>
+                                    <td>{{ skill.skill }}</td>
+                                    <td class="text-right">{{ skill.value }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-1">
-                    <h2 class="mb-1 text-center">- {% trans 'Mind Skills' %} -</h2>
-                    <table class="table">
-                        {% for skill in object.characterskill_set.mind_skills %}
-                        <tr>
-                            <td>{{ skill.skill }}</td>
-                            <td class="text-right">{{ skill.value }}</td>
-                        </tr>
+                <div class="tab-pane fade show" id="v-gear" role="tabpanel">
+                    <div class="col-md-4">
+                        {% for template in character.charactertemplate_set.all %}
+                            {% template_widget template.template %}
                         {% endfor %}
-                    </table>
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-1">
-                    <h2 class="text-center mb-1">- {% trans 'Practical Skills' %} -</h2>
-                    <table class="table">
-                        {% for skill in object.characterskill_set.practical_skills %}
-                        <tr>
-                            <td>{{ skill.skill }}</td>
-                            <td class="text-right">{{ skill.value }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+                <div class="tab-pane fade show" id="v-background" role="tabpanel">
                 </div>
             </div>
         </div>
     </div>
-    {% comment %}
-    <div class="row">
-        <div class="col-md-9">
-            <div class="row">
-
-
-                <div class="col-md-4">
-                    {% for template in character.charactertemplate_set.all %}
-                        {% template_widget template.template %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">{% trans "Skills" %}</div>
-                <ul class="list-group list-group-flush">
-                    {% for skill in object.characterskill_set.all %}
-                        <li class="list-group-item">{{ skill.skill }}<label class="float-right">{{ skill.value }}</label></li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-    </div>
-
-
-    {% endcomment %}
 {% endblock %}
