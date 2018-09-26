@@ -3,15 +3,18 @@
 
 {% block content %}
     <div class="row">
+        <div class="col-md-12" style="background-image: url(https://www.torgauer-brauhof.de/wp-content/uploads/2015/05/DSC5667.jpg)">
+            <img class="rounded-circle mb-2" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
+            <h3>{{ object.name }}</h3>
+
+        </div>
+    </div>
+    <div class="row">
+    </div>
+    {% comment %}
+    <div class="row">
         <div class="col-md-9">
             <div class="row">
-                <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <div class="card-header">{{ object.name }}</div>
-                        <img class="card-img-top" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
-                    </div>
-                </div>
-
                 <div class="col-md-3 mb-3">
                     <div class="card">
                         <div class="card-header">
@@ -141,4 +144,5 @@
 
 
     </div>
+    {% endcomment %}
 {% endblock %}
