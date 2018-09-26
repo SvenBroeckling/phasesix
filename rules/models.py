@@ -26,10 +26,13 @@ class Skill(models.Model, metaclass=TransMeta):
     """
     A URPG skill
     """
-
+    KIND_CHOICES = (
+        ('p', _('practical')),
+        ('m', _('mind')),
+    )
     name = models.CharField(_('name'), max_length=120)
+    kind = models.CharField(_('kind'), max_length=1, choices=KIND_CHOICES)
     extension = models.ForeignKey(Extension, models.CASCADE)
-    add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
 
     class Meta:
         translate = ('name',)

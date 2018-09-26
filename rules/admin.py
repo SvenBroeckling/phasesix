@@ -22,8 +22,13 @@ class TemplateAdmin(admin.ModelAdmin):
     list_filter = ('extension', 'category')
 
 
+class SkillAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'kind', 'extension')
+    list_editable = ('kind',)
+
+
 admin.site.register(Extension)
-admin.site.register(Skill)
+admin.site.register(Skill, SkillAdmin)
 admin.site.register(Knowledge)
 admin.site.register(Shadow)
 admin.site.register(TemplateCategory)

@@ -133,7 +133,17 @@ class Character(models.Model):
         return self.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
 
 
+class CharacterSkillQuerySet(models.QuerySet):
+    def mind_skills(self):
+        return self.filter(skill__kind='m')
+
+    def practical_skills(self):
+        return self.filter(skill__kind='p')
+
+
 class CharacterSkill(models.Model):
+    objects = CharacterSkillQuerySet.as_manager()
+
     character = models.ForeignKey(Character, models.CASCADE)
     skill = models.ForeignKey('rules.Skill', models.CASCADE)
     base_value = models.IntegerField(_('base value'), default=0)

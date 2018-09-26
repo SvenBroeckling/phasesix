@@ -116,9 +116,9 @@
                 </div>
 
                 <div class="col-md-4 mb-1">
-                    <h2 class="mb-1 text-center">- {% trans 'Skills' %} -</h2>
+                    <h2 class="mb-1 text-center">- {% trans 'Mind Skills' %} -</h2>
                     <table class="table">
-                        {% for skill in object.characterskill_set.all|slice:":10" %}
+                        {% for skill in object.characterskill_set.mind_skills %}
                         <tr>
                             <td>{{ skill.skill }}</td>
                             <td class="text-right">{{ skill.value }}</td>
@@ -128,9 +128,9 @@
                 </div>
 
                 <div class="col-md-4 mb-1">
-                    <h2 class="text-center mb-1">- {% trans 'Skills' %} -</h2>
+                    <h2 class="text-center mb-1">- {% trans 'Practical Skills' %} -</h2>
                     <table class="table">
-                        {% for skill in object.characterskill_set.all|slice:"10:" %}
+                        {% for skill in object.characterskill_set.practical_skills %}
                         <tr>
                             <td>{{ skill.skill }}</td>
                             <td class="text-right">{{ skill.value }}</td>
