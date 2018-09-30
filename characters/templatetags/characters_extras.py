@@ -13,7 +13,7 @@ def character_attribute_widget(name, attribute):
 
 
 @register.simple_tag
-def color_value_span(value, max_value, invert=False):
+def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     value = int(value)
     max_value = int(max_value)
     color_classes = [80, 60, 40, 20, 0, -20, -40, -60]
@@ -34,5 +34,8 @@ def color_value_span(value, max_value, invert=False):
     else:
         color_class = 0
     color_class = "p{}".format(color_class) if p >= 0 else "n{}".format(abs(color_class))
+
+    if algebraic_sign and value > 0:
+        value = "+{}".format(value)
 
     return mark_safe('<span title="max. %s" class="color-%s">%s</span>' % (max_value, color_class, value))
