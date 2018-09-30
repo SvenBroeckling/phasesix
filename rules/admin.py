@@ -18,8 +18,9 @@ class TemplateRequirementInline(admin.TabularInline):
 
 class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
-    list_display = ('name', 'extension', 'category')
+    list_display = ('name', 'cost', 'extension', 'category')
     list_filter = ('extension', 'category')
+    list_editable = ('category', 'cost')
 
 
 class SkillAdmin(admin.ModelAdmin):
