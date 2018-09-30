@@ -3,25 +3,25 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-2">
-            <div class="text-center">
-                <img class="rounded-circle mb-2 img-fluid" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
-                <h3>{{ object.name }}</h3>
-            </div>
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{% trans 'Bonus Dice' %}<label class="float-right">{{ object.bonus_dice }}</label></li>
-                    <li class="list-group-item">{% trans 'Destiny Dice' %}<label class="float-right">{{ object.destiny_dice }}</label></li>
-                    <li class="list-group-item">{% trans 'Rerolls' %}<label class="float-right">{{ object.rerolls }}</label></li>
-                </ul>
-            </div>
-            <div class="nav nav-pills" role="tablist">
-                <a class="nav-link active btn-block" data-toggle="pill" href="#v-character" role="tab">{% trans 'Character' %}</a>
-                <a class="nav-link active btn-block" data-toggle="pill" href="#v-gear" role="tab">{% trans 'Gear' %}</a>
-                <a class="nav-link active btn-block" data-toggle="pill" href="#v-background" role="tab">{% trans 'Background' %}</a>
-            </div>
+        <div class="col-md-10 offset-md-1 text-center">
+            <img class="rounded-circle mb-2 img-fluid" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
+            <h3>{{ object.name }}</h3>
         </div>
-        <div class="col-md-10">
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <ul class="nav nav-tabs nav-fill mb-4">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#v-character" role="tab">{% trans 'Character' %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#v-gear" role="tab">{% trans 'Gear' %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#v-background" role="tab">{% trans 'Background' %}</a>
+                </li>
+            </ul>
+
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="v-character" role="tabpanel">
                     <div class="row">
@@ -87,6 +87,45 @@
 
                     <div class="row mt-2">
                         <div class="col-md-4 mb-1">
+                            <h2 class="mb-1 text-center">- {% trans 'Mind Skills' %} -</h2>
+                            <table class="table">
+                                {% for skill in object.characterskill_set.mind_skills %}
+                                    <tr>
+                                        <td>{{ skill.skill }}</td>
+                                        <td class="text-right">{% color_value_span skill.value 6 %}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+
+                        <div class="col-md-4 mb-1">
+                            <h2 class="text-center mb-1">- {% trans 'Practical Skills' %} -</h2>
+                            <table class="table">
+                                {% for skill in object.characterskill_set.practical_skills %}
+                                    <tr>
+                                        <td>{{ skill.skill }}</td>
+                                        <td class="text-right">{% color_value_span skill.value 6 %}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div class="col-md-4 mb-1">
+                            <h2 class="text-center mb-1">- {% trans 'Dice' %} -</h2>
+                            <table class="table">
+                                <tr>
+                                    <td>{% trans 'Bonus Dice' %}</td>
+                                    <td>{% color_value_span object.bonus_dice 6 %}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Destiny Dice' %}</td>
+                                    <td>{% color_value_span object.destiny_dice 6 %}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans 'Rerolls' %}</td>
+                                    <td>{% color_value_span object.rerolls 6 %}</td>
+                                </tr>
+                            </table>
+
                             {% if object.characterknowledge_set.exists %}
                                 <h2 class="text-center mb-1">- {% trans 'Knowledge' %} -</h2>
                                 <table class="table">
@@ -122,41 +161,20 @@
                             {% endif %}
                         </div>
 
-                        <div class="col-md-4 mb-1">
-                            <h2 class="mb-1 text-center">- {% trans 'Mind Skills' %} -</h2>
-                            <table class="table">
-                                {% for skill in object.characterskill_set.mind_skills %}
-                                <tr>
-                                    <td>{{ skill.skill }}</td>
-                                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-
-                        <div class="col-md-4 mb-1">
-                            <h2 class="text-center mb-1">- {% trans 'Practical Skills' %} -</h2>
-                            <table class="table">
-                                {% for skill in object.characterskill_set.practical_skills %}
-                                <tr>
-                                    <td>{{ skill.skill }}</td>
-                                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
                     </div>
                 </div>
 
-                <div class="tab-pane fade show" id="v-gear" role="tabpanel">
-                    <div class="col-md-4">
+                <div class="tab-pane fade" id="v-gear" role="tabpanel">
+                </div>
+
+                <div class="tab-pane fade" id="v-background" role="tabpanel">
+                    <div class="row">
                         {% for template in character.charactertemplate_set.all %}
-                            {% template_widget template.template %}
+                            <div class="col-md-4">
+                                {% template_widget template.template %}
+                            </div>
                         {% endfor %}
                     </div>
-                </div>
-
-                <div class="tab-pane fade show" id="v-background" role="tabpanel">
                 </div>
             </div>
         </div>

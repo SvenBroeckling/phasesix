@@ -24,58 +24,70 @@
 
     <div class="row pt-3 pb-3">
         <div class="col-md-10 offset-md-1">
-            <ul class="nav float-right">
-                <li class="nav-item">
-                    <a href="/" class="nav-link"><b>Phase Six</b></a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ user|capfirst }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"
-                               href="{% url 'characters:random_character' %}">{% trans 'Random Character' %}</a>
-                            <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'logout' %}?next=/">
-                                {% blocktrans with t_user=user|capfirst %}
-                                    Logout {{ t_user }}{% endblocktrans %}</a>
-                        </div>
-                    </li>
-                {% else %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
-                    </li>
-                {% endif %}
-            </ul>
-            <form class="form-inline my-2 my-lg-0" method="post"
-                  action="{% url 'set_language' %}?next={{ request.path }}">
-                {% csrf_token %}
-                <button name="language" value="de"
-                        class="btn btn-outline-success my-2 my-sm-0{% if request.LANGUAGE_CODE == 'de' %} active{% endif %}">
-                    DE
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <a class="navbar-brand" href="/">Phase Six</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavBar"
+                        aria-controls="mainNavBar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <button name="language" value="en"
-                        class="btn btn-outline-success my-2 my-sm-0{% if request.LANGUAGE_CODE == 'en' %} active{% endif %}">
-                    EN
-                </button>
-            </form>
-            <hr>
+                <div class="collapse navbar-collapse" id="mainNavBar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'characters:list' %}">{% trans 'Characters' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">{% trans 'Contact' %}</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ user|capfirst }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item"
+                                       href="{% url 'characters:random_character' %}">{% trans 'Random Character' %}</a>
+                                    <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{% url 'logout' %}?next=/">
+                                        {% blocktrans with t_user=user|capfirst %}
+                                            Logout {{ t_user }}{% endblocktrans %}</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <form class="form-inline my-2 my-lg-0" method="post"
+                          action="{% url 'set_language' %}?next={{ request.path }}">
+                        {% csrf_token %}
+                        <button name="language" value="de"
+                                class="btn btn-sm btn-outline-success my-2 my-sm-0{% if request.LANGUAGE_CODE == 'de' %} active{% endif %}">
+                            DE
+                        </button>
+                        <button name="language" value="en"
+                                class="btn btn-sm btn-outline-success my-2 my-sm-0{% if request.LANGUAGE_CODE == 'en' %} active{% endif %}">
+                            EN
+                        </button>
+                    </form>
+                </div>
+            </nav>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-10 offset-md-1">
             {% block content %}{% endblock %}
-        </div>
-    </div>
-    <div class="row footer" style="background-color: #333">
-        <div class="col-md-10 offset-md-1 pt-5 pb-5">
-            <a href="{% url 'characters:list' %}">{% trans 'Characters' %}</a><br>
-            <a href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a><br>
-            <a href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a><br>
-            <a href="">{% trans 'Contact' %}</a>
         </div>
     </div>
 </div>

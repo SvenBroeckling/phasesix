@@ -33,6 +33,6 @@ def color_value_span(value, max_value, invert=False):
             break
     else:
         color_class = 0
-    color_class = "p{}".format(color_class) if p >= 0 else "n{}".format(color_class)
+    color_class = "p{}".format(color_class) if p >= 0 else "n{}".format(abs(color_class))
 
     return mark_safe('<span title="max. %s" class="color-%s">%s</span>' % (max_value, color_class, value))
