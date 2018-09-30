@@ -16,6 +16,7 @@ def character_attribute_widget(name, attribute):
 def color_value_span(value, max_value, invert=False):
     value = int(value)
     max_value = int(max_value)
+    color_classes = [80, 60, 40, 20, 0, -20, -40, -60]
 
     if invert:
         value = max_value - value
@@ -27,13 +28,11 @@ def color_value_span(value, max_value, invert=False):
 
     p = 100 if p > 100 else p
 
-    if p > 80:
-        color = '#47C040'
-    elif p > 60:
-        color = '#C0BC40'
-    elif p > 20:
-        color = '#ECA935'
+    for color_class in color_classes:
+        if p >= color_class:
+            break
     else:
-        color = '#EC4D35'
-    return mark_safe('<span title="max. %s" style="font-weight: bold; color:%s;">%s</span>' % (max_value, color, value))
+        color_class = 0
+    color_class = "p{}".format(color_class) if p >= 0 else "n{}".format(color_class)
 
+    return mark_safe('<span title="max. %s" class="color-%s">%s</span>' % (max_value, color_class, value))

@@ -25,17 +25,8 @@
     <div class="row pt-3 pb-3">
         <div class="col-md-10 offset-md-1">
             <ul class="nav float-right">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'characters:list' %}">{% trans 'Characters' %}</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="">{% trans 'Contact' %}</a>
+                <li class="nav-item">
+                    <a href="/" class="nav-link"><b>Phase Six</b></a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
@@ -77,6 +68,14 @@
     <div class="row">
         <div class="col-md-10 offset-md-1">
             {% block content %}{% endblock %}
+        </div>
+    </div>
+    <div class="row footer" style="background-color: #333">
+        <div class="col-md-10 offset-md-1 pt-5 pb-5">
+            <a href="{% url 'characters:list' %}">{% trans 'Characters' %}</a><br>
+            <a href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a><br>
+            <a href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a><br>
+            <a href="">{% trans 'Contact' %}</a>
         </div>
     </div>
 </div>

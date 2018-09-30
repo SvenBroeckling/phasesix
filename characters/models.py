@@ -14,7 +14,7 @@ class CharacterQuerySet(models.QuerySet):
         character = self.create(
             name="A Random Guy",
             created_by=user)
-        for skill in Skill.objects.filter(add_to_all_characters=True):
+        for skill in Skill.objects.all():
             character.characterskill_set.create(skill=skill, base_value=1)
         for i in range(5):
             template = Template.objects.order_by('?')[0]
