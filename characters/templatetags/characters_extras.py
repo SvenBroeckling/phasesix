@@ -14,8 +14,11 @@ def character_attribute_widget(name, attribute):
 
 @register.simple_tag
 def color_value_span(value, max_value, invert=False, algebraic_sign=False):
-    value = int(value)
-    max_value = int(max_value)
+    try:
+        value = int(value)
+        max_value = int(max_value)
+    except TypeError:
+        return mark_safe(value)
     color_classes = [80, 60, 40, 20, 0, -20, -40, -60]
 
     if invert:
