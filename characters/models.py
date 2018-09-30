@@ -27,6 +27,9 @@ class Character(models.Model):
 
     name = models.CharField(_('name'), max_length=80)
     created_by = models.ForeignKey('auth.User', verbose_name=_('created by'), on_delete=models.CASCADE)
+    lineage = models.ForeignKey(
+        'rules.Lineage', verbose_name=_('lineage'), null=True, blank=True, on_delete=models.SET_NULL)
+
     base_intelligence = models.IntegerField(_('intelligence'), default=100)
 
     # dice

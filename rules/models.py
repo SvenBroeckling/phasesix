@@ -22,6 +22,26 @@ class Extension(models.Model, metaclass=TransMeta):
         return self.name
 
 
+class Lineage(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=80)
+    description = models.TextField(_('description'), blank=True, null=True)
+
+    class Meta:
+        translate = ('name', 'description')
+        verbose_name = _('lineage')
+        verbose_name_plural = _('lineages')
+
+    def __str__(self):
+        return self.name
+
+
+class LineageTemplatePoints(models.Model):
+    lineage = models.ForeignKey(Lineage, verbose_name=_('lineage'), on_delete=models.CASCADE)
+    template_category = models.ForeignKey(
+        'rules.TemplateCategory', verbose_name=_('template category'), on_delete=models.CASCADE)
+    points = models.IntegerField(_('points'))
+
+
 class Skill(models.Model, metaclass=TransMeta):
     """
     A URPG skill

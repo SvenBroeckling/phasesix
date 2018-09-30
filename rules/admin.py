@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 from rules.models import Skill, Extension, Shadow, Knowledge, Template, TemplateModifier, TemplateRequirement, \
-    TemplateCategory
+    TemplateCategory, LineageTemplatePoints, Lineage
 
 
 class TemplateModifierInline(admin.TabularInline):
@@ -28,9 +28,17 @@ class SkillAdmin(admin.ModelAdmin):
     list_editable = ('kind',)
 
 
+class LineageTemplatePointsInline(admin.TabularInline):
+    model = LineageTemplatePoints
+
+
+class LineageAdmin(admin.ModelAdmin):
+    inlines = [LineageTemplatePointsInline]
+
 admin.site.register(Extension)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Knowledge)
 admin.site.register(Shadow)
 admin.site.register(TemplateCategory)
 admin.site.register(Template, TemplateAdmin)
+admin.site.register(Lineage, LineageAdmin)
