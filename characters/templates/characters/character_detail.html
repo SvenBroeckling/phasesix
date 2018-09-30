@@ -86,18 +86,21 @@
                     </div>
 
                     <div class="row mt-2">
-                        <div class="col-md-4 text-center mb-1">
-                            <h2 class="mb-1">- {% trans 'Knowledge' %} -</h2>
-                            <div class="card mb-2">
-                                <div class="card-body">
+                        <div class="col-md-4 mb-1">
+                            {% if object.characterknowledge_set.exists %}
+                                <h2 class="text-center mb-1">- {% trans 'Knowledge' %} -</h2>
+                                <table class="table">
                                     {% for knowledge in object.characterknowledge_set.all %}
-                                    {{ knowledge.knowledge }}: {{ knowledge.value }}<br>
+                                        <tr>
+                                            <td>{{ knowledge.knowledge }}</td>
+                                            <td class="text-right">{% color_value_span knowledge.value 6 %}</td>
+                                        </tr>
                                     {% endfor %}
-                                </div>
-                            </div>
+                                </table>
+                            {% endif %}
 
                             {% if object.shadows.exists %}
-                            <h2 class="mb-1">- {% trans 'Shadows' %} -</h2>
+                            <h2 class="text-center mb-1">- {% trans 'Shadows' %} -</h2>
                             <div class="card mb-2">
                                 <div class="card-body">
                                     {% for shadow in object.shadows.all %}
@@ -108,7 +111,7 @@
                             {% endif %}
 
                             {% if object.contacts.exists %}
-                            <h2 class="mb-1">- {% trans 'Contacts' %} -</h2>
+                            <h2 class="text-center mb-1">- {% trans 'Contacts' %} -</h2>
                             <div class="card mb-2">
                                 <div class="card-body">
                                     {% for contact in object.contacts.all %}
@@ -125,7 +128,7 @@
                                 {% for skill in object.characterskill_set.mind_skills %}
                                 <tr>
                                     <td>{{ skill.skill }}</td>
-                                    <td class="text-right">{{ skill.value }}</td>
+                                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -137,7 +140,7 @@
                                 {% for skill in object.characterskill_set.practical_skills %}
                                 <tr>
                                     <td>{{ skill.skill }}</td>
-                                    <td class="text-right">{{ skill.value }}</td>
+                                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
                                 </tr>
                                 {% endfor %}
                             </table>

@@ -1,6 +1,7 @@
+{% load characters_extras %}
 <div class="card mb-3">
     <div class="card-body text-center pt-1">
         <span class="attribute-heading">{{ name }}</span><br>
-        <span class="attribute-value">{{ attribute }}</span>
+        <span class="attribute-value">{% color_value_span attribute 6 %}</span>
     </div>
 </div>
