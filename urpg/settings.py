@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'simplemde',
     'django_markdown2',
+    'armory',
     'world',
     'rules',
     'characters',

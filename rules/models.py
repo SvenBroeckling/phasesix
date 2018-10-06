@@ -25,6 +25,7 @@ class Extension(models.Model, metaclass=TransMeta):
 class Lineage(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
+    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
 
     class Meta:
         translate = ('name', 'description')
