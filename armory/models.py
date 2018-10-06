@@ -14,7 +14,7 @@ class ItemType(models.Model, metaclass=TransMeta):
         verbose_name = _('item type')
         verbose_name_plural = _('item types')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -35,7 +35,7 @@ class Item(models.Model, metaclass=TransMeta):
         verbose_name = _('item')
         verbose_name_plural = _('items')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -48,17 +48,18 @@ class WeaponType(models.Model, metaclass=TransMeta):
         verbose_name = _('weapon type')
         verbose_name_plural = _('weapon types')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('world:weapontype_detail', kwargs={'pk': self.id})
+    # def get_absolute_url(self):
+    #     return reverse('armory:weapontype_detail', kwargs={'pk': self.id})
 
     def get_first_image(self):
         return self.weapon_set.earliest('id').image
 
 
 RANGE_CHOICES = (
+    ('-', _('hand to hand')),
     ('s', _('short')),
     ('m', _('mid')),
     ('l', _('long')),
@@ -74,7 +75,7 @@ class WeaponAttackMode(models.Model, metaclass=TransMeta):
         verbose_name = _('attack mode')
         verbose_name_plural = _('attack modes')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -95,7 +96,7 @@ class Weapon(models.Model, metaclass=TransMeta):
     type = models.ForeignKey(WeaponType, verbose_name=_('type'), on_delete=models.CASCADE)
 
     attacks_per_action = models.IntegerField(_('attacks per action'))
-    capacity = models.IntegerField(_('capacity'))
+    capacity = models.IntegerField(_('capacity'), null=True, blank=True)
     wound_bonus = models.IntegerField(_('wound bonus'), default=0)
     penetration = models.IntegerField(_('penetration'), default=0)
     recoil_control = models.IntegerField(_('recoil control'), default=0)
@@ -118,11 +119,11 @@ class Weapon(models.Model, metaclass=TransMeta):
         verbose_name = _('weapon')
         verbose_name_plural = _('weapons')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('world:weapon_detail', kwargs={'pk': self.id})
+    # def get_absolute_url(self):
+    #     return reverse('armory:weapon_detail', kwargs={'pk': self.id})
 
     def display_wound_bonus(self):
         if self.wound_bonus < 0:
@@ -144,7 +145,7 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
         verbose_name = _('weapon modification type')
         verbose_name_plural = _('weapon modification type')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -161,7 +162,7 @@ class WeaponModification(models.Model, metaclass=TransMeta):
         verbose_name = _('weapon modification')
         verbose_name_plural = _('weapon modification')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -196,5 +197,5 @@ class RiotGear(models.Model, metaclass=TransMeta):
         verbose_name = _('riot gear')
         verbose_name_plural = _('riot gear')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

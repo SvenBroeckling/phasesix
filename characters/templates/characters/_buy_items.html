@@ -1,0 +1,48 @@
+{% load i18n %}
+<div>
+
+    <ul class="nav nav-tabs" role="tablist">
+        {% for t in item_types %}
+            <li role="presentation" {% if forloop.first %} class="active" {% endif %}><a href="#i{{ t.id }}" aria-controls="home" role="tab"
+                                                                                         data-toggle="tab">{{ t }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+        {% for t in item_types %}
+            <div role="tabpanel" class="tab-pane active" id="i{{ t.id }}">
+                <div class="row">
+                    {% for item in t.item_set.all %}
+                        <div class="col-md-6">
+                            <div class="panel panel-default match-height">
+                                <div class="panel-heading">
+                                    <a href="{{ item.get_absolute_url }}">{{ item }}</a>
+                                    <form action="{% url 'characters:buy_item' pk=character.id item_pk=item.id %}" class="pull-right" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
+                                        <button class="btn btn-xs btn-primary pull-right {% if character.organization.cash < item.price %} disabled {% endif %}">{% trans 'Buy item' %} {{ item.price }} €</button>
+                                    </form>
+                                </div>
+                                <table class="table">
+                                    <tr>
+                                        <th>{% trans 'Weight' %}</th>
+                                        <td>{{ item.weight }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Concealment' %}</th>
+                                        <td>{{ item.concealment }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">{{ item.description }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>

@@ -165,6 +165,199 @@
                 </div>
 
                 <div class="tab-pane fade" id="v-gear" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">{% trans 'Riot gear' %}
+                                    {% if character.created_by == user %}
+                                        <button class="btn btn-primary btn-sm float-right buy-button"
+                                                data-buy-url="{% url 'characters:xhr_buy_riot_gear' pk=object.id %}"
+                                                data-modal-title="{% trans 'Buy riot gear' %}"
+                                                data-toggle="modal"
+                                                data-target=".creation-modal">{% trans 'Buy riot gear' %}
+                                        </button>
+                                    {% endif %}
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>{% trans 'Riot gear' %}</th>
+                                        <th title="{% trans 'Ballistic/Explosive' %}">{% trans 'Protection' %}</th>
+                                        <th>{% trans 'Weight' %}</th>
+                                        <th>{% trans 'Condition' %}</th>
+
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for r in character.characterriotgear_set.all %}
+                                        <tr>
+                                            <td>{{ r.riot_gear }}</td>
+                                            <td>{{ r.riot_gear.protection_ballistic }}/{{ r.riot_gear.protection_explosive }}</td>
+                                            <td>{{ r.riot_gear.weight }}</td>
+                                            <td>{{ r.condition }}</td>
+                                            <td>
+                                                {% if character.created_by == user %}
+                                                    <form action="{% url 'characters:sell_riot_gear' pk=character.id riot_gear_pk=r.id %}"
+                                                          class="pull-right" method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="riot_gear_id" value="{{ r.id }}">
+                                                        <button class="btn btn-xs btn-primary pull-right">{% trans 'Sell' %} {{ r.riot_gear.price }}
+                                                            €
+                                                        </button>
+                                                    </form>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">{% trans 'Items' %}
+                                    {% if character.created_by == user %}
+                                        <button class="btn btn-primary btn-xs pull-right buy-button"
+                                                data-buy-url="{% url 'characters:xhr_buy_items' pk=object.id %}"
+                                                data-modal-title="{% trans 'Buy items' %}"
+                                                data-toggle="modal"
+                                                data-target=".creation-modal">{% trans 'Buy items' %}</button>
+                                    {% endif %}
+                                </div>
+                                <table class="table">
+                                    {% for ci in character.characteritem_set.by_type %}
+                                        {% ifchanged ci.item.type %}
+                                            <tr>
+                                                <th>{{ ci.item.type }}</th>
+                                                <th>Con.</th>
+                                                <th>Weight</th>
+                                                <th>#</th>
+                                                <th></th>
+                                            </tr>
+                                        {% endifchanged %}
+                                        <tr>
+                                            <td><a tabindex="0" role="button" data-container="body" data-toggle="popover"
+                                                   data-trigger="focus" data-title="{{ ci.item }}"
+                                                   data-content="{{ ci.item.description }}">{{ ci.item }}</a></td>
+                                            <td>{{ ci.item.concealment }}</td>
+                                            <td>{{ ci.item.weight }}</td>
+                                            <td>{{ ci.quantity }}</td>
+                                            <td>
+                                                {% if character.created_by == user %}
+                                                    <form action="{% url 'characters:sell_item' pk=character.id item_pk=ci.id %}"
+                                                          class="pull-right" method="post">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-xs btn-primary pull-right">{% trans 'Sell' %} {{ ci.item.price }}
+                                                            €
+                                                        </button>
+                                                    </form>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if character.created_by == user %}
+                                <button
+                                        class="btn btn-primary buy-button"
+                                        data-buy-url="{% url 'characters:xhr_buy_weapons' pk=object.id %}"
+                                        data-toggle="modal"
+                                        data-modal-title="{% trans 'Buy weapons' %}"
+                                        data-target=".creation-modal">{% trans 'Buy weapons' %}</button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        {% for weapon in object.characterweapon_set.all %}
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="{{ weapon.weapon.get_absolute_url }}">{{ weapon.weapon }}</a>
+                                        {% if character.created_by == user %}
+                                            <form action="{% url 'characters:sell_weapon' pk=character.id weapon_pk=weapon.id %}"
+                                                  class="pull-right" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
+                                                <button class="btn btn-xs btn-primary pull-right">{% trans 'Sell' %} {{ weapon.weapon.price }}
+                                                    €
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th>{% trans 'Type' %}</th>
+                                            <td>{{ weapon.weapon.type }}</td>
+                                            <th>{% trans 'Shots / Action' %}</th>
+                                            <td>{{ weapon.weapon.shots_per_action }} {% display_modifications weapon 'shots_per_action' %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{% trans 'Range' %}</th>
+                                            <td>{{ weapon.weapon.get_range_lower_display }}
+                                                {% if weapon.weapon.range_upper %}-
+                                                    {{ weapon.weapon.get_range_upper_display }}{% endif %}</td>
+                                            <th>{% trans 'Accuracy' %}</th>
+                                            <td>{{ weapon.weapon.accuracy }} {% display_modifications weapon 'accuracy' %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{% trans 'Penetration' %}</th>
+                                            <td>{{ weapon.weapon.penetration }} {% display_modifications weapon 'penetration' %}</td>
+                                            <th>{% trans 'Wound bonus' %}</th>
+                                            <td>{{ weapon.weapon.display_wound_bonus }} {% display_modifications weapon 'wound_bonus' %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{% trans 'Recoil control' %}</th>
+                                            <td>{{ weapon.weapon.recoil_control }} {% display_modifications weapon 'recoil_control' %}</td>
+                                            <th>{% trans 'Concealment' %}</th>
+                                            <td>{{ weapon.weapon.concealment }} {% display_modifications weapon 'concealment' %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{% trans 'Reload actions' %}</th>
+                                            <td>{{ weapon.weapon.reload_actions }} {% display_modifications weapon 'reload_actions' %}</td>
+                                            <th>{% trans 'Capacity' %}</th>
+                                            <td>{{ weapon.weapon.capacity|default:"" }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{% trans 'Fire modes' %}</th>
+                                            <td>{{ weapon.weapon.fire_modes|default:"" }}</td>
+                                            <th>{% trans 'Weight' %}</th>
+                                            <td>{{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{% trans 'Modifications' %}</th>
+                                            <td>
+                                                {% for wm in weapon.modifications.all %}
+                                                    {{ wm }}<br>
+                                                {% endfor %}
+                                                <button
+                                                        class="btn btn-primary btn-xs buy-button"
+                                                        data-buy-url="{% url 'characters:xhr_buy_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                                        data-toggle="modal"
+                                                        data-modal-title="{% trans 'Buy weapon modification' %}"
+                                                        data-target=".creation-modal">{% trans 'Buy weapon modification' %}</button>
+                                            </td>
+                                            <th></th>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+
+                                    <img src="{{ MEDIA_URL }}{{ weapon.weapon.image }}" alt="{{ weapon }}"
+                                         class="img-responsive weapon-card-image">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
 
                 <div class="tab-pane fade" id="v-background" role="tabpanel">

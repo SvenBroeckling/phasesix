@@ -6,6 +6,7 @@ from django.db.models import Sum
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
+from armory.models import Weapon, RiotGear, Item
 from rules.models import Skill, Template, TemplateModifier
 
 
@@ -19,6 +20,13 @@ class CharacterQuerySet(models.QuerySet):
         for i in range(5):
             template = Template.objects.order_by('?')[0]
             character.add_template(template)
+        for i in range(2):
+            character.characterweapon_set.create(
+                weapon=Weapon.objects.order_by('?')[0])
+        character.characterriotgear_set.create(riot_gear=RiotGear.objects.order_by('?')[0])
+        for i in range(2):
+            character.characteritem_set.create(
+                item=Item.objects.order_by('?')[0])
         return character
 
 
@@ -192,4 +200,29 @@ class CharacterTemplate(models.Model):
 
     def __str__(self):
         return self.template.name
+
+
+class CharacterWeapon(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    weapon = models.ForeignKey('armory.Weapon', on_delete=models.CASCADE)
+    modifications = models.ManyToManyField('armory.WeaponModification')
+
+
+class CharacterRiotGear(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    riot_gear = models.ForeignKey('armory.RiotGear', on_delete=models.CASCADE)
+    condition = models.IntegerField(_('condition'), default=100)
+
+
+class CharacterItemQuerySet(models.QuerySet):
+    def by_type(self):
+        return self.order_by('item__type')
+
+
+class CharacterItem(models.Model):
+    objects = CharacterItemQuerySet.as_manager()
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
+    quantity = models.IntegerField(_('quantity'), default=1)
 

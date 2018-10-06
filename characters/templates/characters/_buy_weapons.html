@@ -1,0 +1,96 @@
+{% load i18n %}
+<div>
+    {% if character.characterweaponskill_set.exists %}
+
+    <ul class="nav nav-tabs" role="tablist">
+        {% for t in character.characterweaponskill_set.all %}
+            <li role="presentation" {% if forloop.first %} class="active" {% endif %}><a href="#w{{ t.type.id }}" aria-controls="home" role="tab"
+                                                      data-toggle="tab">{{ t.type }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+        {% for t in character.characterweaponskill_set.all %}
+            <div role="tabpanel" class="tab-pane active" id="w{{ t.type.id }}">
+                <div class="row">
+                    {% for weapon in t.type.weapon_set.with_price %}
+                        <div class="col-md-6">
+                            <div class="panel panel-default match-height">
+                                <div class="panel-heading">
+                                    <a href="{{ weapon.get_absolute_url }}">{{ weapon }}</a>
+                                    <form action="{% url 'characters:buy_weapon' pk=character.id weapon_pk=weapon.id %}" class="pull-right" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
+                                        <button class="btn btn-xs btn-primary pull-right {% if character.organization.cash < weapon.price %} disabled {% endif %}">{% trans 'Buy weapon' %} {{ weapon.price }} €</button>
+                                    </form>
+                                </div>
+                                <table class="table">
+                                    <tr>
+                                        <th>{% trans 'Type' %}</th>
+                                        <td>{{ weapon.type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Shots / Action' %}</th>
+                                        <td>{{ weapon.shots_per_action }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Range' %}</th>
+                                        <td>{{ weapon.get_range_lower_display }}
+                                            {% if weapon.range_upper %}-
+                                                {{ weapon.get_range_upper_display }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Accuracy' %}</th>
+                                        <td>{{ weapon.accuracy }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Penetration' %}</th>
+                                        <td>{{ weapon.penetration }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Wound bonus' %}</th>
+                                        <td>{{ weapon.display_wound_bonus }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Recoil control' %}</th>
+                                        <td>{{ weapon.recoil_control }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Concealment' %}</th>
+                                        <td>{{ weapon.concealment }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Reload actions' %}</th>
+                                        <td>{{ weapon.reload_actions }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Capacity' %}</th>
+                                        <td>{{ weapon.capacity|default:"" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Fire modes' %}</th>
+                                        <td>{{ weapon.fire_modes|default:"" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% trans 'Weight' %}</th>
+                                        <td>{{ weapon.weight }}</td>
+                                    </tr>
+                                </table>
+
+                                <img src="{{ MEDIA_URL }}{{ weapon.image }}" alt="{{ weapon }}"
+                                     class="img-responsive weapon-card-image">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+        {% blocktrans with t_character=character.name %}
+            {{ t_character }} has no weapon skills yet. Buy some weapon skills and try again.
+        {% endblocktrans %}
+    {% endif %}
+</div>

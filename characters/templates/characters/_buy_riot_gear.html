@@ -1,0 +1,39 @@
+{% load i18n %}
+<div class="row">
+{% for object in riot_gear %}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ object }}
+                    <form action="{% url 'characters:buy_riot_gear' pk=character.id riot_gear_pk=object.id %}" method="post" class="pull-right">
+                        {% csrf_token %}
+                        <input type="hidden" name="riot_gear_id" value="{{ object.id }}">
+                        <button class="btn btn-danger btn-xs pull-right {% if object.price > character.organization.cash %} disabled {% endif %}">
+                            {% trans 'Buy riot gear' %} {{ object.price }} €
+                        </button>
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th>{% trans 'Ballistic protection' %}</th>
+                            <td>{{ object.protection_ballistic }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans 'Explosive protection' %}</th>
+                            <td>{{ object.protection_explosive }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans 'Concealment' %}</th>
+                            <td>{{ object.concealment }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans 'Weight' %}</th>
+                            <td>{{ object.weight }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+{% endfor %}
+</div>
