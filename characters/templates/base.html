@@ -42,30 +42,24 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">{% trans 'Contact' %}</a>
-                        </li>
                         {% if user.is_authenticated %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ user|capfirst }}
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item"
-                                       href="{% url 'characters:random_character' %}">{% trans 'Random Character' %}</a>
-                                    <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{% url 'logout' %}?next=/">
-                                        {% blocktrans with t_user=user|capfirst %}
-                                            Logout {{ t_user }}{% endblocktrans %}</a>
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'characters:random_character' %}">{% trans 'Random Character' %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a>
                             </li>
                         {% else %}
                             <li class="nav-item active">
                                 <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
                             </li>
                         {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="">{% trans 'Contact' %}</a>
+                        </li>
                     </ul>
 
                     <form class="form-inline my-2 my-lg-0" method="post"
