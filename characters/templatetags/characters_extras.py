@@ -20,6 +20,7 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     except TypeError:
         return mark_safe(value)
     color_classes = [80, 60, 40, 20, 0, -20, -40, -60]
+    display_value = value
 
     if invert:
         value = max_value - value
@@ -39,9 +40,9 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     color_class = "p{}".format(color_class) if p >= 0 else "n{}".format(abs(color_class))
 
     if algebraic_sign and value > 0:
-        value = "+{}".format(value)
+        display_value = "+{}".format(display_value)
 
-    return mark_safe('<span title="max. %s" class="color-%s">%s</span>' % (max_value, color_class, value))
+    return mark_safe('<span title="max. %s" class="color-%s">%s</span>' % (max_value, color_class, display_value))
 
 @register.simple_tag
 def display_modifications(character_weapon, attribute):
