@@ -16,6 +16,11 @@ class TemplateRequirementInline(admin.TabularInline):
     fk_name = 'template'
 
 
+class TemplateCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'bg_color_class', 'fg_color_class')
+    list_editable = ('bg_color_class', 'fg_color_class')
+
+
 class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
     list_display = ('name', 'cost', 'extension', 'category')
@@ -39,6 +44,6 @@ admin.site.register(Extension)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Knowledge)
 admin.site.register(Shadow)
-admin.site.register(TemplateCategory)
+admin.site.register(TemplateCategory, TemplateCategoryAdmin)
 admin.site.register(Template, TemplateAdmin)
 admin.site.register(Lineage, LineageAdmin)

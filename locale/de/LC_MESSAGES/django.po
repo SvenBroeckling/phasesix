@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-10 21:20+0000\n"
-"PO-Revision-Date: 2018-10-10 23:21+0200\n"
+"POT-Creation-Date: 2018-10-10 21:38+0000\n"
+"PO-Revision-Date: 2018-10-10 23:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -22,15 +22,15 @@ msgstr ""
 #: armory/models.py:71 armory/models.py:93 armory/models.py:135
 #: armory/models.py:155 armory/models.py:187 characters/models.py:39
 #: rulebook/models.py:14 rules/models.py:14 rules/models.py:26
-#: rules/models.py:54 rules/models.py:72 rules/models.py:90 rules/models.py:126
-#: rules/models.py:142
+#: rules/models.py:54 rules/models.py:72 rules/models.py:90 rules/models.py:139
+#: rules/models.py:160
 msgid "name"
 msgstr "Name"
 
 #: armory/models.py:10 armory/models.py:23 armory/models.py:44
 #: armory/models.py:94 armory/models.py:136 armory/models.py:156
 #: armory/models.py:188 rules/models.py:27 rules/models.py:91
-#: rules/models.py:127 rules/models.py:146
+#: rules/models.py:145 rules/models.py:164
 msgid "description"
 msgstr "Beschreibung"
 
@@ -172,7 +172,7 @@ msgstr "Waffenmodifikationstyp"
 msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
-#: armory/models.py:175 rules/models.py:163
+#: armory/models.py:175 rules/models.py:181
 msgid "attribute"
 msgstr "Attribut"
 
@@ -284,35 +284,35 @@ msgstr "Zustand"
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/templates/base.html:44
+#: characters/templates/base.html:36
 msgid "Characters"
 msgstr "Charaktere"
 
-#: characters/templates/base.html:47
+#: characters/templates/base.html:39
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:50
+#: characters/templates/base.html:42
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:54
+#: characters/templates/base.html:46
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/base.html:57
+#: characters/templates/base.html:49
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:60
+#: characters/templates/base.html:52
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:64
+#: characters/templates/base.html:56
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:68
+#: characters/templates/base.html:60
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -517,6 +517,7 @@ msgid "Rerolls"
 msgstr "Wiederholungswürfel"
 
 #: characters/templates/characters/character_detail.html:135
+#: rules/templates/rules/_template_widget.html:20
 msgid "Knowledge"
 msgstr "Wissen"
 
@@ -725,9 +726,9 @@ msgstr "Erweiterungen"
 msgid "lineages"
 msgstr "Abstammungen"
 
-#: rules/models.py:42 rules/models.py:131
+#: rules/models.py:42 rules/models.py:149
 msgid "template category"
-msgstr "Vorlagenkategorie"
+msgstr "Schablonenkategorie"
 
 #: rules/models.py:43
 msgid "points"
@@ -745,7 +746,7 @@ msgstr "geistig"
 msgid "kind"
 msgstr "Art"
 
-#: rules/models.py:60 rules/models.py:175
+#: rules/models.py:60 rules/models.py:193
 msgid "skill"
 msgstr "Fertigkeit"
 
@@ -757,11 +758,11 @@ msgstr "Fertigkeiten"
 msgid "add to all characters"
 msgstr "Zu allen Charakteren hinzufügen"
 
-#: rules/models.py:78 rules/models.py:79 rules/models.py:185
+#: rules/models.py:78 rules/models.py:79 rules/models.py:203
 msgid "knowledge"
 msgstr "Wissen"
 
-#: rules/models.py:96 rules/models.py:195
+#: rules/models.py:96 rules/models.py:213
 msgid "shadow"
 msgstr "Schatten"
 
@@ -821,43 +822,63 @@ msgstr "Verträglichkeit"
 msgid "neuroticism"
 msgstr "Neurotizismus"
 
-#: rules/models.py:132
-msgid "template categories"
-msgstr "Vorlagenkategorien"
+#: rules/models.py:127
+msgid "None"
+msgstr ""
 
-#: rules/models.py:144
+#: rules/models.py:141
+msgid "bootstrap color class"
+msgstr ""
+
+#: rules/models.py:150
+msgid "template categories"
+msgstr "Schablonenkategorien"
+
+#: rules/models.py:162
 msgid "category"
 msgstr "Kategorie"
 
-#: rules/models.py:148
+#: rules/models.py:166
 msgid "cost"
 msgstr "Kosten"
 
-#: rules/models.py:152
+#: rules/models.py:170
 msgid "character template"
 msgstr "Charakterschablone"
 
-#: rules/models.py:153
+#: rules/models.py:171
 msgid "character templates"
 msgstr "Charakterschablonen"
 
-#: rules/models.py:161 rules/models.py:201
+#: rules/models.py:179 rules/models.py:219
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:169
+#: rules/models.py:187
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: rules/models.py:179
+#: rules/models.py:197
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: rules/models.py:189
+#: rules/models.py:207
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
+#: rules/templates/rules/_template_widget.html:10
+msgid "Attribute"
+msgstr "Attribut"
+
+#: rules/templates/rules/_template_widget.html:15
+msgid "Skill"
+msgstr "Fertigkeit"
+
 #: rules/templates/rules/_template_widget.html:25
+msgid "Shadow"
+msgstr "Schatten"
+
+#: rules/templates/rules/_template_widget.html:31
 msgid "Requires"
 msgstr "Benötigt"
 
@@ -893,9 +914,6 @@ msgstr "Englisch"
 #~ msgid "Leave empty if the skill or attribute modifier is used."
 #~ msgstr ""
 #~ "Leer lassen wenn Fertigkeits- oder Attributsmodifikatoren benutzt werden."
-
-#~ msgid "Attributes"
-#~ msgstr "Attribute"
 
 #~ msgid "valour"
 #~ msgstr "Tapferkeit"

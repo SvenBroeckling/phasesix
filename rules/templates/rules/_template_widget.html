@@ -1,26 +1,32 @@
 {% load i18n characters_extras %}
 <div class="card mb-3">
-    <div class="card-header">
+    <div class="card-header {{ template.category.get_bg_color_class }} {{ template.category.get_fg_color_class }}">
         {{ template.category }}: {{ template }}
         <span class="badge badge-dark float-right">{{ template.cost }}</span>
     </div>
     <div class="card-body">
             {% for mod in template.templatemodifier_set.all %}
                 {% if mod.attribute %}
-                    {{ mod.get_attribute_display }} {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
+                    <i class="fas fa-asterisk" title="{% trans 'Attribute' %}"></i> {{ mod.get_attribute_display }} {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
                 {% endif %}
             {% endfor %}
             {% for mod in template.templatemodifier_set.all %}
                 {% if mod.skill %}
-                    {{ mod.skill }} {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
+                    <i class="fas fa-hand-scissors" title="{% trans 'Skill' %}"></i> {{ mod.skill }} {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
                 {% endif %}
             {% endfor %}
             {% for mod in template.templatemodifier_set.all %}
                 {% if mod.knowledge %}
-                    {{ mod.knowledge }} {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
+                    <i class="fas fa-book" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }} {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
+                {% endif %}
+            {% endfor %}
+            {% for mod in template.templatemodifier_set.all %}
+                {% if mod.shadow %}
+                    <i class="fas fa-bullhorn" title="{% trans 'Shadow' %}"></i> {{ mod.shadow }}<br>
                 {% endif %}
             {% endfor %}
             {% if template.templaterequirement_set.exists %}
+                <br>
                 {% for req in template.templaterequirement_set.all %}
                     <span class="text-danger">{% trans 'Requires' %}</span> {{ req.required_template }}<br>
                 {% endfor %}

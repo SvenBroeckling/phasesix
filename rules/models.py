@@ -123,7 +123,32 @@ CHARACTER_ATTRIBUTE_CHOICES = (
 
 
 class TemplateCategory(models.Model, metaclass=TransMeta):
+    COLOR_CLASS_CHOICES = (
+        ('', _('None')),
+        ('primary', 'primary'),
+        ('secondary', 'secondary'),
+        ('success', 'success'),
+        ('danger', 'danger'),
+        ('warning', 'warning'),
+        ('info', 'info'),
+        ('light', 'light'),
+        ('dark', 'dark'),
+        ('muted', 'muted'),
+        ('white', 'white'),
+    )
     name = models.CharField(_('name'), max_length=120)
+    fg_color_class = models.CharField(
+        _('bootstrap color class'),
+        max_length=10,
+        blank=True,
+        choices=COLOR_CLASS_CHOICES,
+        default='')
+    bg_color_class = models.CharField(
+        _('bootstrap color class'),
+        max_length=10,
+        blank=True,
+        choices=COLOR_CLASS_CHOICES,
+        default='')
     description = models.TextField(_('description'), blank=True, null=True)
 
     class Meta:
@@ -133,6 +158,16 @@ class TemplateCategory(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def get_bg_color_class(self):
+        if self.bg_color_class:
+            return 'bg-{}'.format(self.bg_color_class)
+        return ''
+
+    def get_fg_color_class(self):
+        if self.fg_color_class:
+            return 'text-{}'.format(self.fg_color_class)
+        return ''
 
 
 class Template(models.Model, metaclass=TransMeta):
