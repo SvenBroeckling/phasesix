@@ -17,8 +17,8 @@ class CharacterListView(ListView):
     model = Character
 
 
-class RandomCharacterView(TemplateView):
-    template_name = 'characters/random_character.html'
+class CreateCharacterView(TemplateView):
+    template_name = 'characters/create_character.html'
 
     def post(self, request, *args, **kwargs):
         character = Character.objects.create_random_character(request.user)

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center mb-2">
+                <div class="card-header">
+                    {% trans 'Constructed Character' %}
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-user-secret fa-9x mb-4"></i>
+                    <p>
+                        {% trans 'Create a character by choosing your background step by step and buy templates for creation points.' %}
+                    </p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary disabled" disabled>{% trans 'New Constructed Character' %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center mb-2">
+                <div class="card-header">
+                    {% trans 'Draft Character' %}
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-sync-alt fa-9x mb-4"></i>
+                    <p>
+                        {% trans 'Draft one character template from three, and that multiple times. Useful for short fun sessions.' %}
+                    </p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary disabled" disabled>{% trans 'New Draft Character' %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center mb-2">
+                <div class="card-header">
+                    {% trans 'Random Character' %}
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-question fa-9x mb-4"></i>
+                    <p>
+                        {% trans 'Create a complete random character. Choose this for quick non player characters and such.' %}
+                    </p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">{% trans 'New Random Character' %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

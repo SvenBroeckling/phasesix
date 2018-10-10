@@ -6,20 +6,23 @@ from django.db.models import Sum
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
+import random
+
 from armory.models import Weapon, RiotGear, Item
-from rules.models import Skill, Template, TemplateModifier
+from rules.models import Skill, Template, TemplateModifier, TemplateCategory
 
 
 class CharacterQuerySet(models.QuerySet):
     def create_random_character(self, user):
         character = self.create(
             name="A Random Guy",
-            created_by=user)
+            created_by=user if user.is_authenticated else None)
         for skill in Skill.objects.all():
             character.characterskill_set.create(skill=skill, base_value=1)
-        for i in range(5):
-            template = Template.objects.order_by('?')[0]
-            character.add_template(template)
+
+        for tc in TemplateCategory.objects.all():
+            for i in range(random.randint(1, 3)):
+                character.add_template(tc.template_set.order_by('?')[0])
         for i in range(2):
             character.characterweapon_set.create(
                 weapon=Weapon.objects.order_by('?')[0])
@@ -34,7 +37,13 @@ class Character(models.Model):
     objects = CharacterQuerySet.as_manager()
 
     name = models.CharField(_('name'), max_length=80)
-    created_by = models.ForeignKey('auth.User', verbose_name=_('created by'), on_delete=models.CASCADE)
+    created_by = models.ForeignKey(
+        'auth.User',
+        verbose_name=_('created by'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        help_text=_('Characters without user will be cleaned daily.'))
     lineage = models.ForeignKey(
         'rules.Lineage', verbose_name=_('lineage'), null=True, blank=True, on_delete=models.SET_NULL)
 

@@ -6,6 +6,11 @@
         <div class="col-md-10 offset-md-1 text-center">
             <img class="rounded-circle mb-2 img-fluid" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
             <h3>{{ object.name }}</h3>
+            {% if not object.created_by %}
+                <div class="alert alert-danger" role="alert">
+                    {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="row mt-4">
