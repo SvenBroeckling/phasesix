@@ -17,8 +17,8 @@ class TemplateRequirementInline(admin.TabularInline):
 
 
 class TemplateCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'bg_color_class', 'fg_color_class')
-    list_editable = ('bg_color_class', 'fg_color_class')
+    list_display = ('name_de', 'name_en', 'bg_color_class', 'fg_color_class', 'sort_order')
+    list_editable = ('bg_color_class', 'fg_color_class', 'sort_order')
 
 
 class TemplateAdmin(admin.ModelAdmin):

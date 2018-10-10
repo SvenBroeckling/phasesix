@@ -43,9 +43,6 @@
                         </li>
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
                             </li>
                             <li class="nav-item">

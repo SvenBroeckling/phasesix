@@ -205,7 +205,7 @@ class CharacterTemplate(models.Model):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
 
     class Meta:
-        ordering = ('template__name_de',)
+        ordering = ('template__category__sort_order',)
 
     def __str__(self):
         return self.template.name

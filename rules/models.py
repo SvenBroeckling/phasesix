@@ -150,6 +150,7 @@ class TemplateCategory(models.Model, metaclass=TransMeta):
         choices=COLOR_CLASS_CHOICES,
         default='')
     description = models.TextField(_('description'), blank=True, null=True)
+    sort_order = models.IntegerField(_('sort order'), default=1000)
 
     class Meta:
         translate = ('name', 'description')
@@ -186,7 +187,7 @@ class Template(models.Model, metaclass=TransMeta):
         translate = ('name', 'description')
         verbose_name = _('character template')
         verbose_name_plural = _('character templates')
-        ordering = ('category__id',)
+        ordering = ('category__sort_order',)
 
     def __str__(self):
         return self.name
