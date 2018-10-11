@@ -4,18 +4,27 @@
 {% block content %}
     <div class="row">
         <div class="col-md-10 offset-md-1 text-center">
-            <img class="rounded-circle mb-2 img-fluid" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
-            <h3>{{ object.name }}</h3>
+            <div class="dropleft">
+                <img data-toggle="dropdown" class="rounded-circle mb-2 img-fluid touch-menu" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
+                <h3 data-toggle="dropdown" class="touch-menu">{{ object.name }}</h3>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"><i class="fas fa-image text-info"></i> {% trans 'Change Image' %}</a>
+                    <a class="dropdown-item" href="#"><i class="far fa-edit text-info"></i> {% trans 'Rename' %}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Delete' %}</a>
+                </div>
+
+            </div>
 
             <div class="dropdown">
+                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
+                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
                 <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
                 <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
                 <i data-toggle="dropdown" class="touch-menu far fa-heart fa-2x text-danger"></i>
                 <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-info"></i>
                 <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-info"></i>
-                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-info"></i>
                 <div class="dropdown-menu">
-                    <h6 class="dropdown-header">{% trans 'Wounds' %}</h6>
                     <a class="dropdown-item" href="#"><i class="fas fa-heart text-danger"></i> {% trans 'Heal Wound' %}</a>
                     <a class="dropdown-item" href="#"><i class="far fa-heart text-danger"></i> {% trans 'Take Damage' %}</a>
                     <a class="dropdown-item" href="#"><i class="fas fa-heart text-info"></i> {% trans 'Get Boost' %}</a>
