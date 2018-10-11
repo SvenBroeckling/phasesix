@@ -17,7 +17,7 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     try:
         value = int(value)
         max_value = int(max_value)
-    except TypeError:
+    except (TypeError, ValueError):
         return mark_safe(value)
     color_classes = [80, 60, 40, 20, 0, -20, -40, -60]
     display_value = value
@@ -46,6 +46,7 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
 
 @register.simple_tag
 def display_modifications(character_weapon, attribute):
+    return ''
     res = ''
     for wm in character_weapon.modifications.all():
         for wmm in wm.weaponmodificationattributechange_set.all():

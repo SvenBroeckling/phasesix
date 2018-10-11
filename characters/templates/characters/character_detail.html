@@ -196,180 +196,95 @@
 
                 <div class="tab-pane fade" id="v-gear" role="tabpanel">
                     <div class="row">
-                        <div class="col-md-7">
-                            {% comment %}
-                                    {% if character.created_by == user %}
-                                        <button class="btn btn-primary btn-sm float-right buy-button"
-                                                data-buy-url="{% url 'characters:xhr_buy_riot_gear' pk=object.id %}"
-                                                data-modal-title="{% trans 'Buy riot gear' %}"
-                                                data-toggle="modal"
-                                                data-target=".creation-modal">{% trans 'Buy riot gear' %}
-                                        </button>
-                                    {% endif %}
-                                    {% endcomment %}
+                        <div class="col-md-6">
                             <h2 class="mb-1 text-center">- {% trans 'Amor' %} -</h2>
-                            <div class="table-responsive-sm">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>{% trans 'Riot gear' %}</th>
-                                        <th title="{% trans 'Ballistic/Explosive' %}">{% trans 'Protection' %}</th>
-                                        <th>{% trans 'Weight' %}</th>
-                                        <th>{% trans 'Condition' %}</th>
-
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for r in character.characterriotgear_set.all %}
-                                        <tr>
-                                            <td>{{ r.riot_gear }}</td>
-                                            <td>{% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}</td>
-                                            <td>{{ r.riot_gear.weight }}</td>
-                                            <td>{% color_value_span r.condition 100 %}</td>
-                                            <td>
-                                                {% comment %}
-                                            {% if character.created_by == user %}
-                                                <form action="{% url 'characters:sell_riot_gear' pk=character.id riot_gear_pk=r.id %}"
-                                                      class="pull-right" method="post">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="riot_gear_id" value="{{ r.id }}">
-                                                    <button class="btn btn-sm btn-primary float-right">{% trans 'Sell' %} {{ r.riot_gear.price }} €</button>
-                                                </form>
-                                            {% endif %}
-                                            {% endcomment %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                {% for r in character.characterriotgear_set.all %}
+                                    <div class="col-md-6">
+                                        <div class="card mb-2">
+                                            <div class="card-header">
+                                                {{ r.riot_gear }}
+                                            </div>
+                                            <div class="card-body">
+                                                <i class="fas fa-shield-alt"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}<br>
+                                                <i class="fas fa-eye-slash"></i> {% trans 'Concealment' %}: {% color_value_span r.riot_gear.concealment 6 invert=True %}<br>
+                                                <i class="fas fa-balance-scale"></i> {% trans 'Weight' %}: {{ r.riot_gear.weight }}<br>
+                                                <i class="fas fa-asterisk"></i> {% trans 'Condition' %}: {% color_value_span r.condition 100 %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <h2 class="mb-1 text-center">- {% trans 'Items' %} -</h2>
-                            <div class="table-responsive-sm">
-                                <table class="table">
-                                    <tr>
-                                        <th>{{ ci.item.type }}</th>
-                                        <th>Con.</th>
-                                        <th>Weight</th>
-                                        <th>#</th>
-                                        <th></th>
-                                    </tr>
-                                    {% for ci in character.characteritem_set.by_type %}
-                                        <tr>
-                                            <td>{{ ci.item }}</td>
-                                            <td>{% color_value_span ci.item.concealment 6 invert=True %}</td>
-                                            <td>{{ ci.item.weight }}</td>
-                                            <td>{{ ci.quantity }}</td>
-                                            <td>
-                                                {% comment %}
-                                            {% if character.created_by == user %}
-                                                <form action="{% url 'characters:sell_item' pk=character.id item_pk=ci.id %}"
-                                                      class="pull-right" method="post">
-                                                    {% csrf_token %}
-                                                    <button class="btn btn-sm btn-primary float-right">{% trans 'Sell' %} {{ ci.item.price }} €</button>
-                                                </form>
-                                            {% endif %}
-                                            {% endcomment %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
+                            <div class="row">
+                                {% for ci in character.characteritem_set.by_type %}
+                                    <div class="col-md-6">
+                                        <div class="card mb-2">
+                                            <div class="card-header">
+                                                {{ ci.item }}
+                                                <span class="float-right small">{{ ci.item.type }}</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <i class="fas fa-eye-slash"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
+                                                <i class="fas fa-balance-scale"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
+                                                <i class="fas fa-asterisk"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
-                            {% comment %}
-                                    {% if character.created_by == user %}
-                                        <button class="btn btn-primary btn-xs pull-right buy-button"
-                                                data-buy-url="{% url 'characters:xhr_buy_items' pk=object.id %}"
-                                                data-modal-title="{% trans 'Buy items' %}"
-                                                data-toggle="modal"
-                                                data-target=".creation-modal">{% trans 'Buy items' %}</button>
-                                    {% endif %}
-                            {% endcomment %}
                         </div>
                     </div>
-
-                {% comment %}
-                    {% if character.created_by == user %}
-                        <button
-                                class="btn btn-primary buy-button"
-                                data-buy-url="{% url 'characters:xhr_buy_weapons' pk=object.id %}"
-                                data-toggle="modal"
-                                data-modal-title="{% trans 'Buy weapons' %}"
-                                data-target=".creation-modal">{% trans 'Buy weapons' %}</button>
-                    {% endif %}
-                {% endcomment %}
 
                     <div class="row">
-                        {% for weapon in object.characterweapon_set.all %}
-                            <div class="col-md-6">
-                                <h2 class="mb-1 text-center">- {{ weapon.weapon }} -</h2>
-                                <div class="table-responsive-sm">
-                                    <table class="table">
-                                        <tr>
-                                            <th>{% trans 'Type' %}</th>
-                                            <td>{{ weapon.weapon.type }}</td>
-                                            <th>{% trans 'Attacks / Action' %}</th>
-                                            <td>{% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{% trans 'Range' %}</th>
-                                            <td>{{ weapon.weapon.get_range_lower_display }}
-                                                {% if weapon.weapon.range_upper and weapon.weapon.range_upper != weapon.weapon.range_lower %}-
-                                                    {{ weapon.weapon.get_range_upper_display }}{% endif %}</td>
-                                            <th>{% trans 'Accuracy' %}</th>
-                                            <td>{% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{% trans 'Penetration' %}</th>
-                                            <td>{% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}</td>
-                                            <th>{% trans 'Wound bonus' %}</th>
-                                            <td>{% color_value_span weapon.weapon.wound_bonus 4 %} {% display_modifications weapon 'wound_bonus' %}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{% trans 'Recoil control' %}</th>
-                                            <td>{% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}</td>
-                                            <th>{% trans 'Concealment' %}</th>
-                                            <td>{% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}</td>
-                                        </tr>
-                                        {% if not weapon.weapon.is_hand_to_hand_weapon %}
-                                            <tr>
-                                                <th>{% trans 'Reload actions' %}</th>
-                                                <td>{% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}</td>
-                                                <th>{% trans 'Capacity' %}</th>
-                                                <td>{% color_value_span weapon.weapon.capacity 30 %}</td>
-                                            </tr>
-                                        {% endif %}
-                                        <tr>
-                                            <th>{% trans 'Attack modes' %}</th>
-                                            <td>{% for fm in weapon.weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}</td>
-                                            <th>{% trans 'Weight' %}</th>
-                                            <td>{{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>{% trans 'Modifications' %}</th>
-                                            <td>
-                                                {% for wm in weapon.modifications.all %}
-                                                    {{ wm }}<br>
-                                                {% endfor %}
-                                                {% comment %}
-                                            <button
-                                                    class="btn btn-primary btn-xs buy-button"
-                                                    data-buy-url="{% url 'characters:xhr_buy_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
-                                                    data-toggle="modal"
-                                                    data-modal-title="{% trans 'Buy weapon modification' %}"
-                                                    data-target=".creation-modal">{% trans 'Buy weapon modification' %}</button>
-                                                    {% endcomment %}
-                                            </td>
-                                            <th></th>
-                                            <td></td>
-                                        </tr>
-                                    </table>
+                        <div class="col-md-12">
+                            <h2 class="mb-1 text-center">- {% trans 'Weapons' %} -</h2>
+                            <div class="row">
+                                {% for weapon in object.characterweapon_set.all %}
+                                <div class="col-md-6">
+                                    <div class="card mb-2">
+                                        <div class="card-header">
+                                            {{ weapon.weapon }}
+                                            <span class="float-right small">{{ weapon.weapon.type }}</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <i class="fas fa-times"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}<br>
+                                                    <i class="fas fa-bullseye"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}<br>
+                                                    <i class="fas fa-angle-double-right"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
+                                                    <i class="fas fa-heart"></i> {% trans 'Wound bonus' %}: {% color_value_span weapon.weapon.wound_bonus 4 %} {% display_modifications weapon 'wound_bonus' %}<br>
+                                                    <i class="fas fa-clock"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
+                                                    <i class="fas fa-arrow-circle-left"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
+                                                    <i class="fas fa-arrows-alt-h"></i> {% trans 'Range' %}: {{ weapon.weapon.get_range_lower_display }}
+                                                    {% if weapon.weapon.range_upper and weapon.weapon.range_upper != weapon.weapon.range_lower %}-
+                                                        {{ weapon.weapon.get_range_upper_display }}{% endif %}<br>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <i class="fas fa-eye-slash"></i> {% trans 'Concealment' %}: {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}<br>
+                                                    <i class="fas fa-balance-scale"></i> {% trans 'Weight' %}: {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
+                                                    <i class="fas fa-list-ol"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}<br>
+                                                    {% if weapon.weapon.attack_modes.exists %}
+                                                        <br>
+                                                        {% for fm in weapon.weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
+                                                    {% endif %}
+                                                    {% if weapon.modifications.exists %}
+                                                        <br><br>
+                                                        {% for wm in weapon.modifications.all %}
+                                                            {{ wm }}<br>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
-
                 </div>
 
                 <div class="tab-pane fade" id="v-background" role="tabpanel">
