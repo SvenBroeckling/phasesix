@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load i18n rules_extras characters_extras %}
+
+{% block javascript %}
+    <script>
+        $(function(){
+            var template_count = parseInt($('.initial-data').data('initial-template-count'));
+            if (template_count > 9){
+                window.location = $('.initial-data').data('detail-url')
+            }
+
+            $('.row').on('click', '.draft-template', function(e){
+                var template_id = $(this).data('template-id');
+                var preview_url = $(this).data('preview-url');
+                var selected_templates_url = $(this).data('selected-templates-url');
+                $.post(
+                    $(this).data('add-url'),
+                    {template_id: template_id},
+                    function(data){
+                        $('.draft-template-list').html(data);
+                        $('.character-preview').load(preview_url);
+                        $('.selected-templates').load(selected_templates_url);
+                        template_count += 1;
+                        $('.template-number').text(template_count);
+                        if (template_count > 9){
+                            window.location = $('.initial-data').data('detail-url')
+                        }
+                    });
+                e.preventDefault();
+                return false;
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div
+            class="row initial-data"
+            data-initial-template-count="{{ object.charactertemplate_set.count }}"
+            data-detail-url="{% url 'characters:detail' pk=object.id %}">
+        <div class="col-md-12">
+            <h1 class="text-center">- {% trans 'Construct Character' %} -</h1>
+        </div>
+    </div>
+    <div class="row draft-template-list">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs nav-fill">
+                {% for tp in template_points %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ tp.template_category }} <span class="badge badge-info">{{ tp.points }}</span></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-9 character-preview">
+            {% include 'characters/fragments/character.html' %}
+        </div>
+        <div class="col-md-3">
+            <h2 class="text-center">- {% trans 'Templates' %} -</h2>
+            <div class="selected-templates">
+                {% include 'characters/_draft_selected_templates.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

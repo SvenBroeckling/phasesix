@@ -65,7 +65,7 @@ class CreateCharacterDataView(CreateView):
             return super().get_success_url()
         elif self.kwargs['mode'] == 'draft':
             return reverse('characters:create_character_draft', kwargs={'pk': self.object.id})
-        return super().get_success_url()
+        return reverse('characters:create_character_constructed', kwargs={'pk': self.object.id})
 
 
 class CreateCharacterDraftView(DetailView):
@@ -75,6 +75,16 @@ class CreateCharacterDraftView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['initial_templates'] = Template.objects.for_extension(self.object.extension.id).order_by('?')[:3]
+        return context
+
+
+class CreateCharacterConstructedView(DetailView):
+    template_name = 'characters/create_character_constructed.html'
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['template_points'] = self.object.lineage.lineagetemplatepoints_set.all()
         return context
 
 

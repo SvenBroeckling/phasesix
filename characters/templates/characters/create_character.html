@@ -13,10 +13,14 @@
                     <p>
                         {% trans 'Create a character by choosing your background step by step and buy templates for creation points.' %}
                     </p>
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary disabled" disabled>{% trans 'New Constructed Character' %}</button>
-                    </form>
+                    <div class="dropdown">
+                        <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Constructed Character' %}</button>
+                        <div class="dropdown-menu">
+                            {% for extension in extensions %}
+                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='constructed' %}" class="dropdown-item">{{ extension }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

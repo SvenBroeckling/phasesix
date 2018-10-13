@@ -27,6 +27,12 @@ urlpatterns = [
         views.XhrDraftAddTemplateView.as_view(),
         name='xhr_draft_add_template'),
 
+    # constructed
+    url(
+        '^new/constructed/(?P<pk>\d+)$',
+        views.CreateCharacterConstructedView.as_view(),
+        name='create_character_constructed'),
+
     url('^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
 
 

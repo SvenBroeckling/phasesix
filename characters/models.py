@@ -14,7 +14,7 @@ from rules.models import Skill, Template, TemplateModifier, TemplateCategory
 
 class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
-    creation_mode = models.CharField(_('creation mode'), max_length=10, default='random')
+    creation_mode = models.CharField(_('creation mode'), max_length=12, default='random')
     created_by = models.ForeignKey(
         'auth.User',
         verbose_name=_('created by'),
