@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.db.models import Sum
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 import random
 
@@ -22,6 +22,9 @@ class Character(models.Model):
         blank=True,
         null=True,
         help_text=_('Characters without user will be cleaned daily.'))
+
+    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+
     lineage = models.ForeignKey(
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
 

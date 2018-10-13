@@ -22,10 +22,10 @@
                         $('.selected-templates').load(selected_templates_url);
                         template_count += 1;
                         $('.template-number').text(template_count);
+                        if (template_count > 9){
+                            window.location = $('.initial-data').data('detail-url')
+                        }
                     });
-                if (template_count > 9){
-                    window.location = $('.initial-data').data('detail-url')
-                }
                 e.preventDefault();
                 return false;
             })

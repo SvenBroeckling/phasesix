@@ -1,8 +1,9 @@
 from django.db import models
-from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from transmeta import TransMeta
+
+from rules.models import ExtensionSelectQuerySet
 
 
 class ItemType(models.Model, metaclass=TransMeta):
@@ -19,6 +20,8 @@ class ItemType(models.Model, metaclass=TransMeta):
 
 
 class Item(models.Model, metaclass=TransMeta):
+    objects = ExtensionSelectQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
     type = models.ForeignKey(ItemType, verbose_name=_('type'), on_delete=models.CASCADE)
@@ -79,7 +82,7 @@ class WeaponAttackMode(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class WeaponQuerySet(models.QuerySet):
+class WeaponQuerySet(ExtensionSelectQuerySet):
     def with_price(self):
         return self.exclude(price=0).order_by('price')
 
@@ -150,6 +153,8 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
 
 
 class WeaponModification(models.Model, metaclass=TransMeta):
+    objects = ExtensionSelectQuerySet.as_manager()
+
     extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
     available_for_weapon_types = models.ManyToManyField(WeaponType)
     name = models.CharField(_('name'), max_length=40)
@@ -183,6 +188,8 @@ class WeaponModificationAttributeChange(models.Model):
 
 
 class RiotGear(models.Model, metaclass=TransMeta):
+    objects = ExtensionSelectQuerySet.as_manager()
+
     extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)

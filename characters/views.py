@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -9,7 +10,7 @@ from django.views.generic import TemplateView, DetailView, ListView, CreateView
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
-from rules.models import Extension, Template
+from rules.models import Extension, Template, Lineage
 
 
 class IndexView(TemplateView):
@@ -25,7 +26,7 @@ class CreateCharacterView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['extensions'] = Extension.objects.all()
+        context['extensions'] = Extension.objects.exclude(is_mandatory=True)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -35,7 +36,7 @@ class CreateCharacterView(TemplateView):
 
 class CreateCharacterDataView(CreateView):
     model = Character
-    fields = 'name', 'lineage'
+    fields = 'name', 'lineage', 'extension'
 
     def post(self, request, *args, **kwargs):
         res = super().post(request, *args, **kwargs)
@@ -49,6 +50,15 @@ class CreateCharacterDataView(CreateView):
 
         self.object.save()
         return res
+
+    def get_initial(self):
+        lineages = Lineage.objects.filter(
+            Q(extension__id=self.kwargs['extension_pk']) |
+            Q(extension__id__in=Extension.objects.filter(is_mandatory=True)))
+        return {
+            'extension': self.kwargs['extension_pk'],
+            'lineage': lineages.earliest('id')
+        }
 
     def get_success_url(self):
         if self.kwargs['mode'] == 'random':
@@ -64,7 +74,7 @@ class CreateCharacterDraftView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['initial_templates'] = Template.objects.order_by('?')[:3]
+        context['initial_templates'] = Template.objects.for_extension(self.object.extension.id).order_by('?')[:3]
         return context
 
 
@@ -75,7 +85,7 @@ class XhrDraftAddTemplateView(View):
             template = Template.objects.get(id=request.POST.get('template_id'))
             character.add_template(template)
 
-        templates = Template.objects.exclude(
+        templates = Template.objects.for_extension(character.extension.id).exclude(
             id__in=[i.template.id for i in character.charactertemplate_set.all()])
         return render(
             request,

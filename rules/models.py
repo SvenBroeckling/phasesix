@@ -2,8 +2,17 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
+
+
+class ExtensionSelectQuerySet(models.QuerySet):
+    def for_extension(self, extension_id):
+        return self.filter(
+            Q(extension__id=extension_id) |
+            Q(extension__id__in=Extension.objects.filter(is_mandatory=True))
+        )
 
 
 class Extension(models.Model, metaclass=TransMeta):
@@ -23,6 +32,8 @@ class Extension(models.Model, metaclass=TransMeta):
 
 
 class Lineage(models.Model, metaclass=TransMeta):
+    objects = ExtensionSelectQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
     extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
@@ -47,6 +58,8 @@ class Skill(models.Model, metaclass=TransMeta):
     """
     A URPG skill
     """
+    objects = ExtensionSelectQuerySet.as_manager()
+
     KIND_CHOICES = (
         ('p', _('practical')),
         ('m', _('mind')),
@@ -69,6 +82,8 @@ class Knowledge(models.Model, metaclass=TransMeta):
     A URPG skill
     """
 
+    objects = ExtensionSelectQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=120)
     extension = models.ForeignKey(Extension, models.CASCADE)
     add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
@@ -86,6 +101,7 @@ class Shadow(models.Model, metaclass=TransMeta):
     """
     A URPG quirk
     """
+    objects = ExtensionSelectQuerySet.as_manager()
 
     name = models.CharField(_('name'), max_length=120)
     description = models.TextField(_('description'), blank=True, null=True)
@@ -175,6 +191,8 @@ class Template(models.Model, metaclass=TransMeta):
     """
     A character creation template
     """
+    objects = ExtensionSelectQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=120)
     extension = models.ForeignKey(Extension, models.CASCADE)
     category = models.ForeignKey(TemplateCategory, models.CASCADE, verbose_name=_('category'))
