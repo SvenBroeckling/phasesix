@@ -4,6 +4,11 @@
 {% block javascript %}
     <script>
         $(function(){
+            var template_count = parseInt($('.initial-data').data('initial-template-count'));
+            if (template_count > 9){
+                window.location = $('.initial-data').data('detail-url')
+            }
+
             $('.row').on('click', '.draft-template', function(e){
                 var template_id = $(this).data('template-id');
                 var preview_url = $(this).data('preview-url');
@@ -15,7 +20,12 @@
                         $('.draft-template-list').html(data);
                         $('.character-preview').load(preview_url);
                         $('.selected-templates').load(selected_templates_url);
+                        template_count += 1;
+                        $('.template-number').text(template_count);
                     });
+                if (template_count > 9){
+                    window.location = $('.initial-data').data('detail-url')
+                }
                 e.preventDefault();
                 return false;
             })
@@ -24,9 +34,12 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+    <div
+            class="row initial-data"
+            data-initial-template-count="{{ object.charactertemplate_set.count }}"
+            data-detail-url="{% url 'characters:detail' pk=object.id %}">
         <div class="col-md-12">
-            <h1 class="text-center">{% trans 'Draft Character' %}</h1>
+            <h1 class="text-center">- {% trans 'Draft Character' %} (<span class="template-number">{{ object.charactertemplate_set.count }}</span>/10) -</h1>
         </div>
     </div>
     <div class="row draft-template-list">
