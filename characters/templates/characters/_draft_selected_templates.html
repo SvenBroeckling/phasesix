@@ -1,0 +1,7 @@
+{% load rules_extras %}
+{% for template in templates %}
+    {% template_widget template.template %}
+{% endfor %}
+{% for template in object.charactertemplate_set.all %}
+    {% template_widget template.template %}
+{% endfor %}

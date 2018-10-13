@@ -1,0 +1,138 @@
+{% load characters_extras rules_extras i18n %}
+<div class="row">
+    <div class="col-md-12 text-center mb-1">
+        <h2>- {% trans 'Persona' %} -</h2>
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Openness' as attribute_name %}
+        {% character_attribute_widget attribute_name object.openness %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Conscientiousness' as attribute_name %}
+        {% character_attribute_widget attribute_name object.conscientiousness %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Extraversion' as attribute_name %}
+        {% character_attribute_widget attribute_name object.extraversion %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Agreeableness' as attribute_name %}
+        {% character_attribute_widget attribute_name object.agreeableness %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Neuroticism' as attribute_name %}
+        {% character_attribute_widget attribute_name object.neuroticism %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'IQ' as attribute_name %}
+        {% character_attribute_widget attribute_name object.intelligence %}
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 text-center mb-1">
+        <h2>- {% trans 'Physis' %} -</h2>
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Deftness' as attribute_name %}
+        {% character_attribute_widget attribute_name object.deftness %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Strength' as attribute_name %}
+        {% character_attribute_widget attribute_name object.strength %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Attractiveness' as attribute_name %}
+        {% character_attribute_widget attribute_name object.attractiveness %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Endurance' as attribute_name %}
+        {% character_attribute_widget attribute_name object.endurance %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Resistance' as attribute_name %}
+        {% character_attribute_widget attribute_name object.resistance %}
+    </div>
+    <div class="col-sm-6 col-md-4 col-xl-2">
+        {% trans 'Quickness' as attribute_name %}
+        {% character_attribute_widget attribute_name object.quickness %}
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-md-4 mb-1">
+        <h2 class="mb-1 text-center">- {% trans 'Mind Skills' %} -</h2>
+        <table class="table">
+            {% for skill in object.characterskill_set.mind_skills %}
+                <tr>
+                    <td>{{ skill.skill }}</td>
+                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="col-md-4 mb-1">
+        <h2 class="text-center mb-1">- {% trans 'Practical Skills' %} -</h2>
+        <table class="table">
+            {% for skill in object.characterskill_set.practical_skills %}
+                <tr>
+                    <td>{{ skill.skill }}</td>
+                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-md-4 mb-1">
+        <h2 class="text-center mb-1">- {% trans 'Dice' %} -</h2>
+        <table class="table">
+            <tr>
+                <td>{% trans 'Bonus Dice' %}</td>
+                <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Destiny Dice' %}</td>
+                <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Rerolls' %}</td>
+                <td class="text-right">{% color_value_span object.rerolls 6 %}</td>
+            </tr>
+        </table>
+
+        {% if object.characterknowledge_set.exists %}
+            <h2 class="text-center mb-1">- {% trans 'Knowledge' %} -</h2>
+            <table class="table">
+                {% for knowledge in object.characterknowledge_set.all %}
+                    <tr>
+                        <td>{{ knowledge.knowledge }}</td>
+                        <td class="text-right">{% color_value_span knowledge.value 6 %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        {% if object.shadows.exists %}
+            <h2 class="text-center mb-1">- {% trans 'Shadows' %} -</h2>
+            <div class="card mb-2">
+                <div class="card-body">
+                    {% for shadow in object.shadows.all %}
+                        {{ shadow }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if object.contacts.exists %}
+            <h2 class="text-center mb-1">- {% trans 'Contacts' %} -</h2>
+            <div class="card mb-2">
+                <div class="card-body">
+                    {% for contact in object.contacts.all %}
+                        {{ contact }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

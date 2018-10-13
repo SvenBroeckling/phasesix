@@ -30,10 +30,14 @@
                     <p>
                         {% trans 'Draft one character template from three, and that multiple times. Useful for short fun sessions.' %}
                     </p>
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary disabled" disabled>{% trans 'New Draft Character' %}</button>
-                    </form>
+                    <div class="dropdown">
+                        <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Draft Character' %}</button>
+                        <div class="dropdown-menu">
+                            {% for extension in extensions %}
+                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='draft' %}" class="dropdown-item">{{ extension }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,10 +51,14 @@
                     <p>
                         {% trans 'Create a complete random character. Choose this for quick non player characters and such.' %}
                     </p>
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">{% trans 'New Random Character' %}</button>
-                    </form>
+                    <div class="dropdown">
+                        <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Random Character' %}</button>
+                        <div class="dropdown-menu">
+                            {% for extension in extensions %}
+                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='random' %}" class="dropdown-item">{{ extension }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

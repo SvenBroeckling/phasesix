@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
+from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView, DetailView, ListView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
+from rules.models import Extension, Template
 
 
 class IndexView(TemplateView):
@@ -20,15 +23,90 @@ class CharacterListView(ListView):
 class CreateCharacterView(TemplateView):
     template_name = 'characters/create_character.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['extensions'] = Extension.objects.all()
+        return context
+
     def post(self, request, *args, **kwargs):
         character = Character.objects.create_random_character(request.user)
         return HttpResponseRedirect(character.get_absolute_url())
+
+
+class CreateCharacterDataView(CreateView):
+    model = Character
+    fields = 'name', 'lineage'
+
+    def post(self, request, *args, **kwargs):
+        res = super().post(request, *args, **kwargs)
+        self.object.created_by = request.user if request.user.is_authenticated else None
+        self.object.creation_mode = kwargs['mode']
+
+        if kwargs['mode'] == 'random':
+            self.object.fill_random()
+        else:
+            self.object.fill_basics()
+
+        self.object.save()
+        return res
+
+    def get_success_url(self):
+        if self.kwargs['mode'] == 'random':
+            return super().get_success_url()
+        elif self.kwargs['mode'] == 'draft':
+            return reverse('characters:create_character_draft', kwargs={'pk': self.object.id})
+        return super().get_success_url()
+
+
+class CreateCharacterDraftView(DetailView):
+    template_name = 'characters/create_character_draft.html'
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['initial_templates'] = Template.objects.order_by('?')[:3]
+        return context
+
+
+class XhrDraftAddTemplateView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
+            template = Template.objects.get(id=request.POST.get('template_id'))
+            character.add_template(template)
+
+        templates = Template.objects.exclude(
+            id__in=[i.template.id for i in character.charactertemplate_set.all()])
+        return render(
+            request,
+            'characters/_draft_template_list.html',
+            {
+                'initial_templates': templates.order_by('?')[:3],
+                'object': character,
+            }
+        )
+
+
+class XhrDraftPreviewView(DetailView):
+    model = Character
+    template_name = 'characters/fragments/character.html'
+
+
+class XhrDraftPreviewSelectedTemplatesView(TemplateView):
+    model = Character
+    template_name = 'characters/_draft_selected_templates.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['templates'] = Character.objects.get(id=kwargs['pk']).charactertemplate_set.order_by('-id')
+        return context
 
 
 class CharacterDetailView(DetailView):
     model = Character
 
 # gear
+
 
 class XhrBuyWeaponsView(TemplateView):
     template_name = 'characters/_buy_weapons.html'

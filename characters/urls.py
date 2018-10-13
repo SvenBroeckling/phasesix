@@ -8,7 +8,25 @@ app_name = 'characters'
 urlpatterns = [
     url('^$', views.IndexView.as_view(), name='index'),
     url('^list/$', views.CharacterListView.as_view(), name='list'),
+
     url('^new/$', views.CreateCharacterView.as_view(), name='create_character'),
+    url(
+        '^new/data/(?P<extension_pk>\d+)/(?P<mode>\w+)/$',
+        views.CreateCharacterDataView.as_view(),
+        name='create_character_data'),
+
+    # draft
+    url('^new/draft/(?P<pk>\d+)$', views.CreateCharacterDraftView.as_view(), name='create_character_draft'),
+    url('^new/draft/preview/(?P<pk>\d+)$', views.XhrDraftPreviewView.as_view(), name='xhr_draft_preview'),
+    url(
+        '^new/draft/templates/(?P<pk>\d+)$',
+        views.XhrDraftPreviewSelectedTemplatesView.as_view(),
+        name='xhr_draft_preview_selected_templates'),
+    url(
+        '^new/draft/add_template/(?P<pk>\d+)$',
+        views.XhrDraftAddTemplateView.as_view(),
+        name='xhr_draft_add_template'),
+
     url('^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
 
 

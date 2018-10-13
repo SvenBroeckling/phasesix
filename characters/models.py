@@ -12,31 +12,9 @@ from armory.models import Weapon, RiotGear, Item
 from rules.models import Skill, Template, TemplateModifier, TemplateCategory
 
 
-class CharacterQuerySet(models.QuerySet):
-    def create_random_character(self, user):
-        character = self.create(
-            name="A Random Guy",
-            created_by=user if user.is_authenticated else None)
-        for skill in Skill.objects.all():
-            character.characterskill_set.create(skill=skill, base_value=1)
-
-        for tc in TemplateCategory.objects.all():
-            for i in range(random.randint(1, 3)):
-                character.add_template(tc.template_set.order_by('?')[0])
-        for i in range(2):
-            character.characterweapon_set.create(
-                weapon=Weapon.objects.order_by('?')[0])
-        character.characterriotgear_set.create(riot_gear=RiotGear.objects.order_by('?')[0])
-        for i in range(2):
-            character.characteritem_set.create(
-                item=Item.objects.order_by('?')[0])
-        return character
-
-
 class Character(models.Model):
-    objects = CharacterQuerySet.as_manager()
-
     name = models.CharField(_('name'), max_length=80)
+    creation_mode = models.CharField(_('creation mode'), max_length=10, default='random')
     created_by = models.ForeignKey(
         'auth.User',
         verbose_name=_('created by'),
@@ -45,7 +23,7 @@ class Character(models.Model):
         null=True,
         help_text=_('Characters without user will be cleaned daily.'))
     lineage = models.ForeignKey(
-        'rules.Lineage', verbose_name=_('lineage'), null=True, blank=True, on_delete=models.SET_NULL)
+        'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
 
     base_intelligence = models.IntegerField(_('intelligence'), default=100)
 
@@ -151,6 +129,23 @@ class Character(models.Model):
     @property
     def neuroticism(self):
         return self.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
+
+    def fill_basics(self):
+        for skill in Skill.objects.all():
+            self.characterskill_set.create(skill=skill, base_value=1)
+            self.save()
+
+    def fill_random(self):
+        self.fill_basics()
+        for tc in TemplateCategory.objects.all():
+            for i in range(random.randint(1, 3)):
+                self.add_template(tc.template_set.order_by('?')[0])
+        for i in range(2):
+            self.characterweapon_set.create(weapon=Weapon.objects.order_by('?')[0])
+        self.characterriotgear_set.create(riot_gear=RiotGear.objects.order_by('?')[0])
+        for i in range(2):
+            self.characteritem_set.create(item=Item.objects.order_by('?')[0])
+        pass
 
 
 class CharacterSkillQuerySet(models.QuerySet):
