@@ -11,7 +11,7 @@ urlpatterns = [
     url('^list/$', views.CharacterListView.as_view(), name='list'),
 
     url(
-        '^new/data/(?P<pk>\d+)/(?P<mode>\w+)/$',
+        '^health/(?P<pk>\d+)/(?P<mode>\w+)/$',
         views.CharacterModifyHealthView.as_view(),
         name='modify_health'),
 
