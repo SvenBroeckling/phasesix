@@ -120,7 +120,7 @@
                                                     <i class="fas fa-times"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}<br>
                                                     <i class="fas fa-bullseye"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}<br>
                                                     <i class="fas fa-angle-double-right"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
-                                                    <i class="fas fa-heart"></i> {% trans 'Wound bonus' %}: {% color_value_span weapon.weapon.wound_bonus 4 %} {% display_modifications weapon 'wound_bonus' %}<br>
+                                                    <i class="fas fa-heart"></i> {% trans 'Wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
                                                     <i class="fas fa-clock"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
                                                     <i class="fas fa-arrow-circle-left"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
                                                     <i class="fas fa-arrows-alt-h"></i> {% trans 'Range' %}: {{ weapon.weapon.get_range_lower_display }}

@@ -100,7 +100,7 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     attacks_per_action = models.IntegerField(_('attacks per action'))
     capacity = models.IntegerField(_('capacity'), null=True, blank=True)
-    wound_bonus = models.IntegerField(_('wound bonus'), default=0)
+    wounds = models.IntegerField(_('wound bonus'), default=0)
     penetration = models.IntegerField(_('penetration'), default=0)
     recoil_control = models.IntegerField(_('recoil control'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
@@ -128,10 +128,10 @@ class Weapon(models.Model, metaclass=TransMeta):
     # def get_absolute_url(self):
     #     return reverse('armory:weapon_detail', kwargs={'pk': self.id})
 
-    def display_wound_bonus(self):
-        if self.wound_bonus < 0:
-            return '-' * abs(self.wound_bonus)
-        return '+' * self.wound_bonus
+    def display_wounds(self):
+        if self.wounds < 0:
+            return '-' * abs(self.wounds)
+        return '+' * self.wounds
 
 
 class WeaponModificationType(models.Model, metaclass=TransMeta):
@@ -173,7 +173,7 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 
 class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTES = [
-        'attacks_per_action', 'ammunition', 'wound_bonus', 'penetration',
+        'attacks_per_action', 'ammunition', 'wounds', 'penetration',
         'accuracy', 'weight', 'recoil_control', 'concealment', 'reload_actions']
     ATTRIBUTE_CHOICES = zip(ATTRIBUTES, ATTRIBUTES)
     weapon_modification = models.ForeignKey(WeaponModification, on_delete=models.CASCADE)
