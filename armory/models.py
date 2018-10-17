@@ -100,7 +100,7 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     attacks_per_action = models.IntegerField(_('attacks per action'))
     capacity = models.IntegerField(_('capacity'), null=True, blank=True)
-    wounds = models.IntegerField(_('wound bonus'), default=0)
+    wounds = models.IntegerField(_('wounds'), default=0)
     penetration = models.IntegerField(_('penetration'), default=0)
     recoil_control = models.IntegerField(_('recoil control'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)

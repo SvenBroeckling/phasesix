@@ -23,7 +23,10 @@ class Character(models.Model):
         null=True,
         help_text=_('Characters without user will be cleaned daily.'))
 
-    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    extension = models.ForeignKey(
+        'rules.Extension',
+        on_delete=models.CASCADE,
+        limit_choices_to={'is_mandatory': False})
 
     lineage = models.ForeignKey(
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
