@@ -7,6 +7,7 @@ app_name = 'characters'
 
 urlpatterns = [
     url('^$', views.IndexView.as_view(), name='index'),
+    url('^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
     url('^list/$', views.CharacterListView.as_view(), name='list'),
 
     url('^new/$', views.CreateCharacterView.as_view(), name='create_character'),
@@ -17,7 +18,10 @@ urlpatterns = [
 
     # draft
     url('^new/draft/(?P<pk>\d+)$', views.CreateCharacterDraftView.as_view(), name='create_character_draft'),
-    url('^new/draft/preview/(?P<pk>\d+)$', views.XhrDraftPreviewView.as_view(), name='xhr_draft_preview'),
+    url(
+        '^new/draft/preview/(?P<pk>\d+)$',
+        views.XhrCreateCharacterPreviewView.as_view(),
+        name='xhr_create_character_preview'),
     url(
         '^new/draft/templates/(?P<pk>\d+)$',
         views.XhrDraftPreviewSelectedTemplatesView.as_view(),
@@ -32,9 +36,14 @@ urlpatterns = [
         '^new/constructed/(?P<pk>\d+)$',
         views.CreateCharacterConstructedView.as_view(),
         name='create_character_constructed'),
-
-    url('^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
-
+    url(
+        '^new/constructed/add_template/(?P<pk>\d+)$',
+        views.XhrConstructedAddTemplateView.as_view(),
+        name='xhr_constructed_add_template'),
+    url(
+        '^new/constructed/remove_template/(?P<pk>\d+)$',
+        views.XhrConstructedRemoveTemplateView.as_view(),
+        name='xhr_constructed_remove_template'),
 
     # gear
     url(

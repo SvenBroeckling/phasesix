@@ -7,7 +7,7 @@
     <div class="card-body">
             {% for mod in template.templatemodifier_set.all %}
                 {% if mod.attribute %}
-                    <i class="fas fa-asterisk" title="{% trans 'Attribute' %}"></i> {{ mod.get_attribute_display }} {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
+                    <i class="fas fa-asterisk" title="{% trans 'Attribute' %}"></i> {{ mod.get_attribute_display|capfirst }} {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
                 {% endif %}
             {% endfor %}
             {% for mod in template.templatemodifier_set.all %}

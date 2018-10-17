@@ -68,6 +68,11 @@ class CreateCharacterDataView(CreateView):
         return reverse('characters:create_character_constructed', kwargs={'pk': self.object.id})
 
 
+class XhrCreateCharacterPreviewView(DetailView):
+    model = Character
+    template_name = 'characters/fragments/character.html'
+
+
 class CreateCharacterDraftView(DetailView):
     template_name = 'characters/create_character_draft.html'
     model = Character
@@ -75,16 +80,6 @@ class CreateCharacterDraftView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['initial_templates'] = Template.objects.for_extension(self.object.extension.id).order_by('?')[:3]
-        return context
-
-
-class CreateCharacterConstructedView(DetailView):
-    template_name = 'characters/create_character_constructed.html'
-    model = Character
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['template_points'] = self.object.lineage.lineagetemplatepoints_set.all()
         return context
 
 
@@ -107,11 +102,6 @@ class XhrDraftAddTemplateView(View):
         )
 
 
-class XhrDraftPreviewView(DetailView):
-    model = Character
-    template_name = 'characters/fragments/character.html'
-
-
 class XhrDraftPreviewSelectedTemplatesView(TemplateView):
     model = Character
     template_name = 'characters/_draft_selected_templates.html'
@@ -122,8 +112,45 @@ class XhrDraftPreviewSelectedTemplatesView(TemplateView):
         return context
 
 
+class CreateCharacterConstructedView(DetailView):
+    template_name = 'characters/create_character_constructed.html'
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['template_points'] = self.object.lineage.lineagetemplatepoints_set.all()
+        context['character_template_ids'] = [
+            ct.template.id for ct in self.object.charactertemplate_set.all()]
+        return context
+
+
+class XhrConstructedAddTemplateView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+
+        if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
+            template = Template.objects.get(id=request.POST.get('template_id'))
+            character.add_template(template)
+
+        # return the remaining template points
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrConstructedRemoveTemplateView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+
+        if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
+            template = Template.objects.get(id=request.POST.get('template_id'))
+            character.remove_template(template)
+
+        # return the remaining template points
+        return JsonResponse({'status': 'ok'})
+
+
 class CharacterDetailView(DetailView):
     model = Character
+
 
 # gear
 
@@ -276,4 +303,3 @@ class BuyWeaponModificationView(View):
         character.organization.save()
         character.save()
         return HttpResponseRedirect(character.get_absolute_url())
-

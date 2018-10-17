@@ -72,6 +72,14 @@ class Character(models.Model):
                 if tm.shadow is not None:
                     self.shadows.add(tm.shadow)
 
+    def remove_template(self, template):
+        self.charactertemplate_set.filter(template=template).delete()
+        for tm in template.templatemodifier_set.all():
+            if tm.knowledge is not None:
+                self.characterknowledge_set.filter(knowledge=tm.knowledge).delete()
+            if tm.shadow is not None:
+                self.shadows.add(tm.shadow)
+
 
     @property
     def intelligence(self):

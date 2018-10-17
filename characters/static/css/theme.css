@@ -69,3 +69,13 @@ a:hover {
 .draft-template{
     cursor: pointer;
 }
+
+.constructed-template {
+    cursor: pointer;
+}
+
+.constructed-template.selected div.card {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(245,5,65,1);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(245,5,65,1);
+    box-shadow: 10px 10px 5px 0px rgba(245,5,65,1);
+}
