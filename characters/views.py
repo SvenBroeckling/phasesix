@@ -21,6 +21,29 @@ class CharacterListView(ListView):
     model = Character
 
 
+class CharacterDetailView(DetailView):
+    model = Character
+
+
+class CharacterModifyHealthView(View):
+    def get(self, request, *args, **kwargs):
+        # TODO: Change this to Xhr/Fragments
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.created_by == request.user or \
+            not request.user.is_authenticated and character.created_by is None:
+            if self.kwargs['mode'] == 'heal':
+                if character.health < character.max_health:
+                    character.health += 1
+            elif self.kwargs['mode'] == 'wound':
+                if character.boost > 0:
+                    character.boost -= 1
+                elif character.health > 0:
+                    character.health -= 1
+            elif self.kwargs['mode'] == 'boost':
+                character.boost += 1
+            character.save()
+        return HttpResponseRedirect(character.get_absolute_url())
+
 class CreateCharacterView(TemplateView):
     template_name = 'characters/create_character.html'
 
@@ -146,10 +169,6 @@ class XhrConstructedRemoveTemplateView(View):
 
         # return the remaining template points
         return JsonResponse({'status': 'ok'})
-
-
-class CharacterDetailView(DetailView):
-    model = Character
 
 
 # gear

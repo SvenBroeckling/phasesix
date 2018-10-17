@@ -29,6 +29,10 @@ class Character(models.Model):
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
 
     base_intelligence = models.IntegerField(_('intelligence'), default=100)
+    base_max_health = models.IntegerField(_('max health'), default=6)
+
+    health = models.IntegerField(_('health'), default=6)
+    boost = models.IntegerField(_('boost'), default=0)
 
     # dice
     base_bonus_dice = models.IntegerField(_('base bonus dice'), default=0)
@@ -78,12 +82,16 @@ class Character(models.Model):
             if tm.knowledge is not None:
                 self.characterknowledge_set.filter(knowledge=tm.knowledge).delete()
             if tm.shadow is not None:
-                self.shadows.add(tm.shadow)
+                self.shadows.remove(tm.shadow)
 
 
     @property
     def intelligence(self):
         return self.base_intelligence + self.get_attribute_modifier('base_intelligence')
+
+    @property
+    def max_health(self):
+        return self.base_max_health + self.get_attribute_modifier('base_max_health')
 
     @property
     def bonus_dice(self):
@@ -140,6 +148,15 @@ class Character(models.Model):
     @property
     def neuroticism(self):
         return self.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
+
+    def get_full_heart_range(self):
+        return range(self.health)
+
+    def get_empty_heart_range(self):
+        return range(self.max_health - self.health)
+
+    def get_boost_range(self):
+        return range(self.boost)
 
     def fill_basics(self):
         for skill in Skill.objects.all():

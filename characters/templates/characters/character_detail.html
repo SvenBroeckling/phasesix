@@ -16,19 +16,8 @@
 
             </div>
 
-            <div class="dropdown">
-                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
-                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
-                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
-                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-danger"></i>
-                <i data-toggle="dropdown" class="touch-menu far fa-heart fa-2x text-danger"></i>
-                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-info"></i>
-                <i data-toggle="dropdown" class="touch-menu fas fa-heart fa-2x text-info"></i>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#"><i class="fas fa-heart text-danger"></i> {% trans 'Heal Wound' %}</a>
-                    <a class="dropdown-item" href="#"><i class="far fa-heart text-danger"></i> {% trans 'Take Damage' %}</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-heart text-info"></i> {% trans 'Get Boost' %}</a>
-                </div>
+            <div class="fragment health-fragment">
+                {% include 'characters/fragments/health.html' %}
             </div>
 
             {% if not object.created_by %}

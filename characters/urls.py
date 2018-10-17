@@ -10,6 +10,14 @@ urlpatterns = [
     url('^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
     url('^list/$', views.CharacterListView.as_view(), name='list'),
 
+    url(
+        '^new/data/(?P<pk>\d+)/(?P<mode>\w+)/$',
+        views.CharacterModifyHealthView.as_view(),
+        name='modify_health'),
+
+    # health
+
+    # new character
     url('^new/$', views.CreateCharacterView.as_view(), name='create_character'),
     url(
         '^new/data/(?P<extension_pk>\d+)/(?P<mode>\w+)/$',

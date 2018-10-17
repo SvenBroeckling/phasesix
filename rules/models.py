@@ -118,6 +118,7 @@ class Shadow(models.Model, metaclass=TransMeta):
 
 CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_intelligence', _('intelligence')),
+    ('base_max_health', _('max health')),
 
     ('base_bonus_dice', _('bonus dice')),
     ('base_destiny_dice', _('destiny dice')),
