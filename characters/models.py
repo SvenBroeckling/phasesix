@@ -165,6 +165,16 @@ class Character(models.Model):
     def get_boost_range(self):
         return range(self.boost)
 
+    def get_ballistic_protection_range(self):
+        return range(
+            self.characterriotgear_set.aggregate(
+                Sum('riot_gear__protection_ballistic'))['riot_gear__protection_ballistic__sum'] or 0)
+
+    def get_explosive_protection_range(self):
+        return range(
+            self.characterriotgear_set.aggregate(
+                Sum('riot_gear__protection_explosive'))['riot_gear__protection_explosive__sum'] or 0)
+
     def fill_basics(self):
         for skill in Skill.objects.all():
             self.characterskill_set.create(skill=skill, base_value=1)

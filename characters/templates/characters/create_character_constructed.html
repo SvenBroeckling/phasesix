@@ -62,14 +62,16 @@
                 <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}">
                     <div class="row">
                         {% for i in tp.template_category.template_set.all %}
-                            <div class="col-md-4 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
-                                data-template-id="{{ i.id }}"
-                                data-tp-id="{{ tp.id }}"
-                                data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
-                                data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
-                                data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
-                                {% template_widget i %}
-                            </div>
+                            {% if i.extension in object.extensions.all or i.extension.is_mandatory %}
+                                <div class="col-md-4 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                                    data-template-id="{{ i.id }}"
+                                    data-tp-id="{{ tp.id }}"
+                                    data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
+                                    data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
+                                    data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
+                                    {% template_widget i %}
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>

@@ -6,7 +6,12 @@
     $(function(){
         $('.buy-button').on('click', function () {
             $('.character-modal-container').load($(this).data('url'));
-            $('.modal-header h4').text($(this).data('modal-title'));
+            $('.modal-header h5').text($(this).data('modal-title'));
+        });
+
+        $('.modal-trigger-link').on('click', function () {
+            $('.character-modal-container').load($(this).data('url'));
+            $('.modal-header h5').text($(this).data('modal-title'));
         });
     })
     </script>
@@ -49,6 +54,15 @@
 
             <div class="fragment health-fragment">
                 {% include 'characters/fragments/health.html' %}
+            </div>
+
+            <div>
+                {% for i in object.get_ballistic_protection_range %}
+                    <i class="fas fa-shield-alt fa-2x text-success"></i>
+                {% endfor %}
+                {% for i in object.get_explosive_protection_range %}
+                    <i class="fas fa-shield-alt fa-2x text-success"></i>
+                {% endfor %}
             </div>
 
             {% if not object.created_by %}

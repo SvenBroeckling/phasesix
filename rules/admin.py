@@ -25,7 +25,7 @@ class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
     list_display = ('name', 'cost', 'extension', 'category')
     list_filter = ('extension', 'category')
-    list_editable = ('category', 'cost')
+    list_editable = ('category', 'cost', 'extension')
 
 
 class SkillAdmin(admin.ModelAdmin):

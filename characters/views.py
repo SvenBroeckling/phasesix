@@ -215,9 +215,10 @@ class XhrAddRiotGearView(TemplateView):
     template_name = 'characters/_add_riot_gear.html'
 
     def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
         context = super(XhrAddRiotGearView, self).get_context_data(**kwargs)
-        context['character'] = Character.objects.get(id=kwargs['pk'])
-        context['riot_gear'] = RiotGear.objects.all()
+        context['character'] = character
+        context['riot_gear'] = RiotGear.objects.for_extensions(character.extensions)
         return context
 
 
@@ -245,9 +246,10 @@ class XhrAddItemsView(TemplateView):
     template_name = 'characters/_add_items.html'
 
     def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
         context = super(XhrAddItemsView, self).get_context_data(**kwargs)
-        context['character'] = Character.objects.get(id=kwargs['pk'])
-        context['item_types'] = ItemType.objects.all()
+        context['character'] = character
+        context['item_types'] = ItemType.objects.for_extensions(character.extensions)
         return context
 
 

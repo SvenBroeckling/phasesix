@@ -1,37 +1,25 @@
-{% load i18n %}
+{% load i18n characters_extras rules_extras %}
 <div class="row">
-{% for object in riot_gear %}
+
+
+{% for r in riot_gear %}
         <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ object }}
-                    <form action="{% url 'characters:buy_riot_gear' pk=character.id riot_gear_pk=object.id %}" method="post" class="pull-right">
+            <div class="card mb-2">
+                <div class="card-header">
+                    <i class="{{ r.extension.fa_icon_class }}" title="{{ r.extension }}"></i>
+                    {{ r }}
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.protection_ballistic 7 %}/{% color_value_span r.protection_explosive 7 %}<br>
+                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.concealment 6 invert=True %}<br>
+                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.weight }}<br>
+                    <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=r.id %}" method="post" class="float-right">
                         {% csrf_token %}
-                        <input type="hidden" name="riot_gear_id" value="{{ object.id }}">
-                        <button class="btn btn-danger btn-xs pull-right {% if object.price > character.organization.cash %} disabled {% endif %}">
-                            {% trans 'Buy riot gear' %} {{ object.price }} €
+                        <input type="hidden" name="riot_gear_id" value="{{ r.id }}">
+                        <button type="submit" class="btn btn-primary btn-sm float-right">
+                            {% trans 'Add riot gear' %}
                         </button>
                     </form>
-                </div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr>
-                            <th>{% trans 'Ballistic protection' %}</th>
-                            <td>{{ object.protection_ballistic }}</td>
-                        </tr>
-                        <tr>
-                            <th>{% trans 'Explosive protection' %}</th>
-                            <td>{{ object.protection_explosive }}</td>
-                        </tr>
-                        <tr>
-                            <th>{% trans 'Concealment' %}</th>
-                            <td>{{ object.concealment }}</td>
-                        </tr>
-                        <tr>
-                            <th>{% trans 'Weight' %}</th>
-                            <td>{{ object.weight }}</td>
-                        </tr>
-                    </table>
                 </div>
             </div>
         </div>

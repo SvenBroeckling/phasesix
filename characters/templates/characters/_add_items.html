@@ -1,44 +1,40 @@
-{% load i18n %}
+{% load characters_extras rules_extras i18n %}
 <div>
 
     <ul class="nav nav-tabs" role="tablist">
         {% for t in item_types %}
-            <li role="presentation" {% if forloop.first %} class="active" {% endif %}><a href="#i{{ t.id }}" aria-controls="home" role="tab"
-                                                                                         data-toggle="tab">{{ t }}</a>
+            <li class="nav-item {% if forloop.first %}active{% endif %}">
+                <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab" data-toggle="tab">{{ t }}</a>
             </li>
         {% endfor %}
     </ul>
 
     <div class="tab-content">
         {% for t in item_types %}
-            <div role="tabpanel" class="tab-pane active" id="i{{ t.id }}">
+            <div role="tabpanel" class="tab-pane {% if forloop.first %}active{% endif %}" id="i{{ t.id }}">
                 <div class="row">
                     {% for item in t.item_set.all %}
-                        <div class="col-md-6">
-                            <div class="panel panel-default match-height">
-                                <div class="panel-heading">
-                                    <a href="{{ item.get_absolute_url }}">{{ item }}</a>
-                                    <form action="{% url 'characters:buy_item' pk=character.id item_pk=item.id %}" class="pull-right" method="post">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
-                                        <button class="btn btn-xs btn-primary pull-right {% if character.organization.cash < item.price %} disabled {% endif %}">{% trans 'Buy item' %} {{ item.price }} €</button>
-                                    </form>
+                        {% if item.extension in character.extensions.all or item.extension.is_mandatory %}
+                            <div class="col-md-6">
+                                <div class="card mb-2">
+                                    <div class="card-header">
+                                        <i class="{{ item.extension.fa_icon_class }}" title="{{ item.extension }}"></i>
+                                        {{ item }}
+                                        <span class="float-right small">{{ item.type }}</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span item.concealment 6 invert=True %}<br>
+                                        <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
+                                        <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span item.price 500 invert=True %} €
+                                        <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}" class="float-right" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                                            <button class="btn btn-sm btn-primary float-right">{% trans 'Add item' %}</button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <table class="table">
-                                    <tr>
-                                        <th>{% trans 'Weight' %}</th>
-                                        <td>{{ item.weight }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>{% trans 'Concealment' %}</th>
-                                        <td>{{ item.concealment }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">{{ item.description }}</td>
-                                    </tr>
-                                </table>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

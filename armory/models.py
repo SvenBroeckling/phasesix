@@ -7,7 +7,17 @@ from transmeta import TransMeta
 from rules.models import ExtensionSelectQuerySet, Extension
 
 
+class ItemTypeQuerySet(models.QuerySet):
+    def for_extensions(self, extension_rm):
+        return self.filter(
+            Q(item__extension__id__in=extension_rm.all()) |
+            Q(item__extension__id__in=Extension.objects.filter(is_mandatory=True))
+        ).distinct()
+
+
 class ItemType(models.Model, metaclass=TransMeta):
+    objects = ItemTypeQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'), blank=True, null=True)
 

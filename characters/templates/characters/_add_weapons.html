@@ -52,10 +52,10 @@
                                                         {{ wm }}<br>
                                                     {% endfor %}
                                                 {% endif %}
-                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="pull-right" method="post">
+                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-right" method="post">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
-                                                    <button class="btn btn-sm btn-primary pull-right">{% trans 'Add weapon' %}</button>
+                                                    <button class="btn btn-sm btn-primary float-right">{% trans 'Add weapon' %}</button>
                                                 </form>
                                             </div>
                                         </div>
