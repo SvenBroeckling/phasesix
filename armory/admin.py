@@ -6,7 +6,8 @@ from armory.models import WeaponModificationAttributeChange, WeaponType, Weapon,
 
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
-        'name_en', 'capacity', 'attacks_per_action', 'wounds', 'recoil_control', 'penetration', 'weight', 'price',
+        'name_en', 'capacity', 'attacks_per_action', 'wounds',
+        'recoil_control', 'penetration', 'weight', 'price', 'extension',
         )
     list_editable = (
         'attacks_per_action', 'capacity', 'wounds', 'recoil_control', 'penetration', 'weight', 'price')
