@@ -54,6 +54,9 @@ class LineageTemplatePoints(models.Model):
         'rules.TemplateCategory', verbose_name=_('template category'), on_delete=models.CASCADE)
     points = models.IntegerField(_('points'))
 
+    class Meta:
+        ordering = ('template_category__sort_order',)
+
 
 class Skill(models.Model, metaclass=TransMeta):
     """

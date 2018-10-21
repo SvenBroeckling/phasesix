@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -150,10 +150,16 @@ class XhrConstructedAddTemplateView(View):
 
         if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
             template = Template.objects.get(id=request.POST.get('template_id'))
+            available_points = character.lineage.lineagetemplatepoints_set.get(
+                template_category=template.category).points
+            spent_points = character.charactertemplate_set.filter(
+                template__category=template.category).aggregate(Sum('template__cost'))['template__cost__sum'] or 0
+            if spent_points + template.cost > available_points:
+                return JsonResponse({'status': 'notenoughpoints'})
             character.add_template(template)
+            return JsonResponse({'status': 'ok', 'remaining_points': available_points - spent_points - template.cost})
 
-        # return the remaining template points
-        return JsonResponse({'status': 'ok'})
+        return JsonResponse({'status': 'noop'})
 
 
 class XhrConstructedRemoveTemplateView(View):
@@ -163,9 +169,13 @@ class XhrConstructedRemoveTemplateView(View):
         if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
             template = Template.objects.get(id=request.POST.get('template_id'))
             character.remove_template(template)
+            available_points = character.lineage.lineagetemplatepoints_set.get(
+                template_category=template.category).points
+            spent_points = character.charactertemplate_set.filter(
+                template__category=template.category).aggregate(Sum('template__cost'))['template__cost__sum'] or 0
+            return JsonResponse({'status': 'ok', 'remaining_points': available_points - spent_points})
 
-        # return the remaining template points
-        return JsonResponse({'status': 'ok'})
+        return JsonResponse({'status': 'noop'})
 
 
 # gear

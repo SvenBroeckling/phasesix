@@ -13,16 +13,24 @@
                         template_div.data('remove-url'),
                         {template_id: template_id},
                         function(data){
-                            template_div.removeClass('selected');
-                            $('.character-preview').load(preview_url);
+                            if(data.status === 'ok'){
+                                $('.tp-points-' + template_div.data('tp-id')).text(data.remaining_points);
+                                template_div.removeClass('selected');
+                                $('.character-preview').load(preview_url);
+                            } else {
+                            }
                         });
                 } else {
                     $.post(
                         template_div.data('add-url'),
                         {template_id: template_id},
                         function(data){
-                            template_div.addClass('selected');
-                            $('.character-preview').load(preview_url);
+                            if(data.status === 'ok') {
+                                $('.tp-points-' + template_div.data('tp-id')).text(data.remaining_points);
+                                template_div.addClass('selected');
+                                $('.character-preview').load(preview_url);
+                            } else {
+                            }
                         });
                 }
                 e.preventDefault();
@@ -44,7 +52,7 @@
                 {% for tp in template_points %}
                     <li class="nav-item">
                         <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#tp{{ tp.id }}">{{ tp.template_category }}
-                            <span class="badge badge-info tp-points" data-tp-id="{{ tp.id }}">{{ tp.points }}</span></a>
+                            <span class="badge badge-info tp-points-{{ tp.id }}">{% character_remaining_template_points object tp.template_category %}</span></a>
                     </li>
                 {% endfor %}
             </ul>
@@ -56,6 +64,7 @@
                         {% for i in tp.template_category.template_set.all %}
                             <div class="col-md-4 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
                                 data-template-id="{{ i.id }}"
+                                data-tp-id="{{ tp.id }}"
                                 data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
                                 data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
                                 data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">

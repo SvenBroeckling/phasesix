@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.template import Library
 from django.utils.safestring import mark_safe
 
@@ -44,6 +45,7 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
 
     return mark_safe('<span title="max. %s" class="color-%s">%s</span>' % (max_value, color_class, display_value))
 
+
 @register.simple_tag
 def display_modifications(character_weapon, attribute):
     return ''
@@ -57,3 +59,12 @@ def display_modifications(character_weapon, attribute):
                     css_class = 'text-danger' if wmm.modifier < 0 else 'text-success'
                 res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.modifier)
     return mark_safe(res)
+
+@register.simple_tag
+def character_remaining_template_points(character, template_category):
+    available_points = character.lineage.lineagetemplatepoints_set.get(
+        template_category=template_category).points
+    spent_points = character.charactertemplate_set.filter(
+        template__category=template_category).aggregate(Sum('template__cost'))['template__cost__sum'] or 0
+    return available_points - spent_points
+
