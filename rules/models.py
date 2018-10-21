@@ -8,9 +8,9 @@ from transmeta import TransMeta
 
 
 class ExtensionSelectQuerySet(models.QuerySet):
-    def for_extension(self, extension_id):
+    def for_extensions(self, extension_rm):
         return self.filter(
-            Q(extension__id=extension_id) |
+            Q(extension__id__in=extension_rm.all()) |
             Q(extension__id__in=Extension.objects.filter(is_mandatory=True))
         )
 
@@ -20,6 +20,7 @@ class Extension(models.Model, metaclass=TransMeta):
     A URPG source book extension
     """
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
+    fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fa fa-book')
     name = models.CharField(_('name'), max_length=120)
 
     class Meta:

@@ -62,13 +62,14 @@
                                     <div class="col-md-6 dropright">
                                         <div class="card mb-2 touch-menu" data-toggle="dropdown">
                                             <div class="card-header">
+                                                <i class="{{ r.riot_gear.extension.fa_icon_class }}" title="{{ r.riot_gear.extension }}"></i>
                                                 {{ r.riot_gear }}
                                             </div>
                                             <div class="card-body">
-                                                <i class="fas fa-shield-alt"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}<br>
-                                                <i class="fas fa-eye-slash"></i> {% trans 'Concealment' %}: {% color_value_span r.riot_gear.concealment 6 invert=True %}<br>
-                                                <i class="fas fa-balance-scale"></i> {% trans 'Weight' %}: {{ r.riot_gear.weight }}<br>
-                                                <i class="fas fa-asterisk"></i> {% trans 'Condition' %}: {% color_value_span r.condition 100 %}
+                                                <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}<br>
+                                                <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.riot_gear.concealment 6 invert=True %}<br>
+                                                <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.riot_gear.weight }}<br>
+                                                <i class="fas fa-asterisk fa-fw"></i> {% trans 'Condition' %}: {% color_value_span r.condition 100 %}
                                             </div>
                                         </div>
                                         <div class="dropdown-menu">
@@ -88,13 +89,14 @@
                                     <div class="col-md-6">
                                         <div class="card mb-2">
                                             <div class="card-header">
+                                                <i class="{{ ci.item.extension.fa_icon_class }}" title="{{ ci.item.extension }}"></i>
                                                 {{ ci.item }}
                                                 <span class="float-right small">{{ ci.item.type }}</span>
                                             </div>
                                             <div class="card-body">
-                                                <i class="fas fa-eye-slash"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
-                                                <i class="fas fa-balance-scale"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
-                                                <i class="fas fa-asterisk"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
+                                                <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
+                                                <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
+                                                <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
                                             </div>
                                         </div>
                                     </div>
@@ -111,29 +113,30 @@
                                 <div class="col-md-6">
                                     <div class="card mb-2">
                                         <div class="card-header">
+                                            <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
                                             {{ weapon.weapon }}
                                             <span class="float-right small">{{ weapon.weapon.type }}</span>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <i class="fas fa-times"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}<br>
-                                                    <i class="fas fa-bullseye"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}<br>
-                                                    <i class="fas fa-angle-double-right"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
-                                                    <i class="fas fa-heart"></i> {% trans 'Wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
+                                                    <i class="fas fa-times fa-fw"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}<br>
+                                                    <i class="fas fa-bullseye fa-fw"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}<br>
+                                                    <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
+                                                    <i class="fas fa-heart fa-fw"></i> {% trans 'Wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
                                                     {% if not weapon.weapon.is_hand_to_hand_weapon %}
-                                                    <i class="fas fa-clock"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
-                                                    <i class="fas fa-arrow-circle-left"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
+                                                    <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
+                                                    <i class="fas fa-arrow-circle-left fa-fw"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
                                                     {% endif %}
-                                                    <i class="fas fa-arrows-alt-h"></i> {% trans 'Range' %}: {{ weapon.weapon.get_range_lower_display }}
+                                                    <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.get_range_lower_display }}
                                                     {% if weapon.weapon.range_upper and weapon.weapon.range_upper != weapon.weapon.range_lower %}-
                                                         {{ weapon.weapon.get_range_upper_display }}{% endif %}<br>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <i class="fas fa-eye-slash"></i> {% trans 'Concealment' %}: {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}<br>
-                                                    <i class="fas fa-balance-scale"></i> {% trans 'Weight' %}: {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
+                                                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}<br>
+                                                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
                                                     {% if not weapon.weapon.is_hand_to_hand_weapon %}
-                                                    <i class="fas fa-list-ol"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}<br>
+                                                    <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}<br>
                                                     {% endif %}
                                                     {% if weapon.weapon.attack_modes.exists %}
                                                         <br>

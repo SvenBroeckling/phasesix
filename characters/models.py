@@ -23,10 +23,7 @@ class Character(models.Model):
         null=True,
         help_text=_('Characters without user will be cleaned daily.'))
 
-    extension = models.ForeignKey(
-        'rules.Extension',
-        on_delete=models.CASCADE,
-        limit_choices_to={'is_mandatory': False})
+    extensions = models.ManyToManyField('rules.Extension', limit_choices_to={'is_mandatory': False})
 
     lineage = models.ForeignKey(
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
@@ -170,12 +167,12 @@ class Character(models.Model):
         self.fill_basics()
         for tc in TemplateCategory.objects.all():
             for i in range(random.randint(1, 3)):
-                self.add_template(tc.template_set.order_by('?')[0])
-        for i in range(2):
-            self.characterweapon_set.create(weapon=Weapon.objects.order_by('?')[0])
-        self.characterriotgear_set.create(riot_gear=RiotGear.objects.order_by('?')[0])
-        for i in range(2):
-            self.characteritem_set.create(item=Item.objects.order_by('?')[0])
+                self.add_template(tc.template_set.all().for_extensions(self.extensions).order_by('?')[0])
+        for i in range(random.randint(2, 4)):
+            self.characterweapon_set.create(weapon=Weapon.objects.for_extensions(self.extensions).order_by('?')[0])
+        self.characterriotgear_set.create(riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?')[0])
+        for i in range(random.randint(2, 4)):
+            self.characteritem_set.create(item=Item.objects.for_extensions(self.extensions).order_by('?')[0])
         pass
 
 

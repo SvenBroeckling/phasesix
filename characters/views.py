@@ -44,6 +44,7 @@ class CharacterModifyHealthView(View):
             character.save()
         return HttpResponseRedirect(character.get_absolute_url())
 
+
 class CreateCharacterView(TemplateView):
     template_name = 'characters/create_character.html'
 
@@ -52,14 +53,10 @@ class CreateCharacterView(TemplateView):
         context['extensions'] = Extension.objects.exclude(is_mandatory=True)
         return context
 
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.create_random_character(request.user)
-        return HttpResponseRedirect(character.get_absolute_url())
-
 
 class CreateCharacterDataView(CreateView):
     model = Character
-    fields = 'name', 'lineage', 'extension'
+    fields = 'name', 'lineage', 'extensions'
 
     def post(self, request, *args, **kwargs):
         res = super().post(request, *args, **kwargs)
@@ -79,7 +76,7 @@ class CreateCharacterDataView(CreateView):
             Q(extension__id=self.kwargs['extension_pk']) |
             Q(extension__id__in=Extension.objects.filter(is_mandatory=True)))
         return {
-            'extension': self.kwargs['extension_pk'],
+            'extensions': self.kwargs['extension_pk'],
             'lineage': lineages.earliest('id')
         }
 
@@ -102,7 +99,7 @@ class CreateCharacterDraftView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['initial_templates'] = Template.objects.for_extension(self.object.extension.id).order_by('?')[:3]
+        context['initial_templates'] = Template.objects.for_extensions(self.object.extensions).order_by('?')[:3]
         return context
 
 
@@ -113,7 +110,7 @@ class XhrDraftAddTemplateView(View):
             template = Template.objects.get(id=request.POST.get('template_id'))
             character.add_template(template)
 
-        templates = Template.objects.for_extension(character.extension.id).exclude(
+        templates = Template.objects.for_extensions(character.extensions).exclude(
             id__in=[i.template.id for i in character.charactertemplate_set.all()])
         return render(
             request,
