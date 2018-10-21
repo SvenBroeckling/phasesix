@@ -24,6 +24,7 @@ class Extension(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=120)
 
     class Meta:
+        ordering = ('id',)
         translate = ('name',)
         verbose_name = _('extension')
         verbose_name_plural = _('extensions')
