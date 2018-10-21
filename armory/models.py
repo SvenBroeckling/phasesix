@@ -62,8 +62,8 @@ class WeaponType(models.Model, metaclass=TransMeta):
 
 
 RANGE_CHOICES = (
-    ('-', _('hand to hand - short')),
-    ('+', _('hand to hand - long')),
+    ('-', _('hand to hand 1m')),
+    ('+', _('hand to hand 2m')),
     ('s', _('short')),
     ('m', _('mid')),
     ('l', _('long')),
