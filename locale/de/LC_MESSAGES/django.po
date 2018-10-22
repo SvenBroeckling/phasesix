@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-21 15:06+0000\n"
-"PO-Revision-Date: 2018-10-21 17:06+0200\n"
+"POT-Creation-Date: 2018-10-22 19:21+0000\n"
+"PO-Revision-Date: 2018-10-22 21:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,16 +21,16 @@ msgstr ""
 #: armory/models.py:10 armory/models.py:25 armory/models.py:46
 #: armory/models.py:75 armory/models.py:97 armory/models.py:139
 #: armory/models.py:161 armory/models.py:195 characters/models.py:16
-#: rulebook/models.py:14 rules/models.py:24 rules/models.py:38
-#: rules/models.py:68 rules/models.py:88 rules/models.py:107
-#: rules/models.py:157 rules/models.py:198
+#: rulebook/models.py:14 rules/models.py:24 rules/models.py:39
+#: rules/models.py:72 rules/models.py:92 rules/models.py:111
+#: rules/models.py:161 rules/models.py:202
 msgid "name"
 msgstr "Name"
 
 #: armory/models.py:11 armory/models.py:26 armory/models.py:47
 #: armory/models.py:98 armory/models.py:140 armory/models.py:162
-#: armory/models.py:196 rules/models.py:39 rules/models.py:108
-#: rules/models.py:170 rules/models.py:202
+#: armory/models.py:196 rules/models.py:40 rules/models.py:112
+#: rules/models.py:174 rules/models.py:206
 msgid "description"
 msgstr "Beschreibung"
 
@@ -176,7 +176,7 @@ msgstr "Waffenmodifikationstyp"
 msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
-#: armory/models.py:181 rules/models.py:219
+#: armory/models.py:181 rules/models.py:223
 msgid "attribute"
 msgstr "Attribut"
 
@@ -208,15 +208,15 @@ msgstr "Erzeugt von"
 msgid "Characters without user will be cleaned daily."
 msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 
-#: characters/models.py:29 rules/models.py:44 rules/models.py:52
+#: characters/models.py:29 rules/models.py:45 rules/models.py:53
 msgid "lineage"
 msgstr "Abstammung"
 
-#: characters/models.py:31 rules/models.py:121
+#: characters/models.py:31 rules/models.py:125
 msgid "intelligence"
 msgstr "Intelligenz"
 
-#: characters/models.py:32 rules/models.py:122
+#: characters/models.py:32 rules/models.py:126
 msgid "max health"
 msgstr "Maximale Lebenspunkte"
 
@@ -284,7 +284,7 @@ msgstr "Verträglichkeit Basis"
 msgid "base neuroticism"
 msgstr "Neurotizismus Basis"
 
-#: characters/models.py:57 rules/models.py:114
+#: characters/models.py:57 rules/models.py:118
 msgid "shadows"
 msgstr "Schatten"
 
@@ -304,32 +304,36 @@ msgstr "Zustand"
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/templates/base.html:36
+#: characters/templates/base.html:28
 msgid "Characters"
 msgstr "Charaktere"
 
-#: characters/templates/base.html:39
+#: characters/templates/base.html:31
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:42
+#: characters/templates/base.html:34
 #: characters/templates/characters/create_character_draft.html:54
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:46
+#: characters/templates/base.html:37
+msgid "CombatSim"
+msgstr "CombatSim"
+
+#: characters/templates/base.html:41
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:49
+#: characters/templates/base.html:44
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:53
+#: characters/templates/base.html:48
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:57
+#: characters/templates/base.html:52
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -395,11 +399,15 @@ msgstr "Genauigkeit"
 
 #: characters/templates/characters/_buy_weapons.html:48
 #: characters/templates/characters/character_detail.html:125
+#: gmtools/templates/gmtools/combat_sim_results.html:10
+#: gmtools/templates/gmtools/combat_sim_results.html:17
 msgid "Penetration"
 msgstr "Durchschlag"
 
 #: characters/templates/characters/_buy_weapons.html:52
 #: characters/templates/characters/character_detail.html:126
+#: gmtools/templates/gmtools/combat_sim_results.html:10
+#: gmtools/templates/gmtools/combat_sim_results.html:17
 msgid "Wounds"
 msgstr "Wunden"
 
@@ -474,6 +482,8 @@ msgid "Add Armor"
 msgstr "Rüstung hinzufügen"
 
 #: characters/templates/characters/character_detail.html:69
+#: gmtools/templates/gmtools/combat_sim_results.html:11
+#: gmtools/templates/gmtools/combat_sim_results.html:18
 msgid "Protection"
 msgstr "Schutz"
 
@@ -566,11 +576,11 @@ msgstr ""
 msgid "New Random Character"
 msgstr "Neuer Zufallscharakter"
 
-#: characters/templates/characters/create_character_constructed.html:38
+#: characters/templates/characters/create_character_constructed.html:46
 msgid "Construct Character"
 msgstr "Charakter konstruieren"
 
-#: characters/templates/characters/create_character_constructed.html:69
+#: characters/templates/characters/create_character_constructed.html:78
 msgid "Done"
 msgstr "Fertig"
 
@@ -742,6 +752,71 @@ msgstr "Erstelle einen Charakter"
 msgid "Die"
 msgstr "Würfel"
 
+#: gmtools/forms.py:10
+msgid "no cover"
+msgstr "Keine Deckung"
+
+#: gmtools/forms.py:15
+msgid "Health"
+msgstr "Lebenspunkte"
+
+#: gmtools/forms.py:16
+msgid "Attack value"
+msgstr "Angriffswert"
+
+#: gmtools/forms.py:17
+msgid "Cover"
+msgstr "Deckung"
+
+#: gmtools/forms.py:18
+msgid "Weapon"
+msgstr "Waffe"
+
+#: gmtools/forms.py:19
+msgid "Armor"
+msgstr "Rüstung"
+
+#: gmtools/templates/gmtools/combat_sim.html:18
+msgid "Iterations"
+msgstr "Iterationen"
+
+#: gmtools/templates/gmtools/combat_sim.html:21
+msgid "Fight!"
+msgstr "Kämpft!"
+
+#: gmtools/templates/gmtools/combat_sim_results.html:23
+msgid "Results"
+msgstr "Ergebnisse"
+
+#: gmtools/templates/gmtools/combat_sim_results.html:25
+#: gmtools/templates/gmtools/combat_sim_results.html:81
+msgid "Back to selection"
+msgstr "Zurück zur Auswahl"
+
+#: gmtools/templates/gmtools/combat_sim_results.html:42
+msgid "Round"
+msgstr "Runde"
+
+#: gmtools/views.py:74
+msgid "You have to select weapons."
+msgstr "Du musst Waffen wählen."
+
+#: gmtools/views.py:90
+msgid "attack roll"
+msgstr "Angriffswurf"
+
+#: gmtools/views.py:111
+msgid "cover roll"
+msgstr "Deckungswurf"
+
+#: gmtools/views.py:133
+msgid "armor roll"
+msgstr "Rüstungswurf"
+
+#: gmtools/views.py:140
+msgid "damage"
+msgstr "Schaden"
+
 #: rulebook/models.py:13
 msgid "number"
 msgstr "Nummer"
@@ -770,159 +845,159 @@ msgstr "Regelbuch"
 msgid "is mandatory"
 msgstr "Ist Pflicht"
 
-#: rules/models.py:28
+#: rules/models.py:29
 msgid "extension"
 msgstr "Erweiterung"
 
-#: rules/models.py:29
+#: rules/models.py:30
 msgid "extensions"
 msgstr "Erweiterungen"
 
-#: rules/models.py:45
+#: rules/models.py:46
 msgid "lineages"
 msgstr "Abstammungen"
 
-#: rules/models.py:54 rules/models.py:175
+#: rules/models.py:55 rules/models.py:179
 msgid "template category"
 msgstr "Schablonenkategorie"
 
-#: rules/models.py:55
+#: rules/models.py:56
 msgid "points"
 msgstr "Punkte"
 
-#: rules/models.py:65
+#: rules/models.py:69
 msgid "practical"
 msgstr "praktisch"
 
-#: rules/models.py:66
+#: rules/models.py:70
 msgid "mind"
 msgstr "geistig"
 
-#: rules/models.py:69
+#: rules/models.py:73
 msgid "kind"
 msgstr "Art"
 
-#: rules/models.py:74 rules/models.py:231
+#: rules/models.py:78 rules/models.py:235
 msgid "skill"
 msgstr "Fertigkeit"
 
-#: rules/models.py:75
+#: rules/models.py:79
 msgid "skills"
 msgstr "Fertigkeiten"
 
-#: rules/models.py:90
+#: rules/models.py:94
 msgid "add to all characters"
 msgstr "Zu allen Charakteren hinzufügen"
 
-#: rules/models.py:94 rules/models.py:95 rules/models.py:241
+#: rules/models.py:98 rules/models.py:99 rules/models.py:245
 msgid "knowledge"
 msgstr "Wissen"
 
-#: rules/models.py:113 rules/models.py:251
+#: rules/models.py:117 rules/models.py:255
 msgid "shadow"
 msgstr "Schatten"
 
-#: rules/models.py:124
+#: rules/models.py:128
 msgid "bonus dice"
 msgstr "Bonuswürfel"
 
-#: rules/models.py:125
+#: rules/models.py:129
 msgid "destiny dice"
 msgstr "Schicksalswürfel"
 
-#: rules/models.py:126
+#: rules/models.py:130
 msgid "rerolls"
 msgstr "Wiederholungswürfel"
 
-#: rules/models.py:128
+#: rules/models.py:132
 msgid "deftness"
 msgstr "Geschick"
 
-#: rules/models.py:129
+#: rules/models.py:133
 msgid "strength"
 msgstr "Kraft"
 
-#: rules/models.py:130
+#: rules/models.py:134
 msgid "attractiveness"
 msgstr "Attraktivität"
 
-#: rules/models.py:131
+#: rules/models.py:135
 msgid "endurance"
 msgstr "Ausdauer"
 
-#: rules/models.py:132
+#: rules/models.py:136
 msgid "resistance"
 msgstr "Resistenz"
 
-#: rules/models.py:133
+#: rules/models.py:137
 msgid "quickness"
 msgstr "Schnelligkeit"
 
-#: rules/models.py:135
+#: rules/models.py:139
 msgid "openness"
 msgstr "Offenheit"
 
-#: rules/models.py:136
+#: rules/models.py:140
 msgid "conscientiousness"
 msgstr "Gewissenhaftigkeit"
 
-#: rules/models.py:137
+#: rules/models.py:141
 msgid "extraversion"
 msgstr "Extraversion"
 
-#: rules/models.py:138
+#: rules/models.py:142
 msgid "agreeableness"
 msgstr "Verträglichkeit"
 
-#: rules/models.py:139
+#: rules/models.py:143
 msgid "neuroticism"
 msgstr "Neurotizismus"
 
-#: rules/models.py:145
+#: rules/models.py:149
 msgid "None"
 msgstr "Keine"
 
-#: rules/models.py:159 rules/models.py:165
+#: rules/models.py:163 rules/models.py:169
 msgid "bootstrap color class"
 msgstr "Bootstrap Farbklasse"
 
-#: rules/models.py:171
+#: rules/models.py:175
 msgid "sort order"
 msgstr "Sortierreihenfolge"
 
-#: rules/models.py:176
+#: rules/models.py:180
 msgid "template categories"
 msgstr "Schablonenkategorien"
 
-#: rules/models.py:200
+#: rules/models.py:204
 msgid "category"
 msgstr "Kategorie"
 
-#: rules/models.py:204
+#: rules/models.py:208
 msgid "cost"
 msgstr "Kosten"
 
-#: rules/models.py:208
+#: rules/models.py:212
 msgid "character template"
 msgstr "Charakterschablone"
 
-#: rules/models.py:209
+#: rules/models.py:213
 msgid "character templates"
 msgstr "Charakterschablonen"
 
-#: rules/models.py:217 rules/models.py:257
+#: rules/models.py:221 rules/models.py:261
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:225
+#: rules/models.py:229
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: rules/models.py:235
+#: rules/models.py:239
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: rules/models.py:245
+#: rules/models.py:249
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
@@ -942,11 +1017,11 @@ msgstr "Schatten"
 msgid "Requires"
 msgstr "Benötigt"
 
-#: urpg/settings.py:88
+#: urpg/settings.py:89
 msgid "German"
 msgstr "Deutsch"
 
-#: urpg/settings.py:89
+#: urpg/settings.py:90
 msgid "English"
 msgstr "Englisch"
 
@@ -961,9 +1036,6 @@ msgstr "Englisch"
 
 #~ msgid "Ballistic/Explosive"
 #~ msgstr "Ballistisch/Explosiv"
-
-#~ msgid "Attack modes"
-#~ msgstr "Angriffsmodi"
 
 #~ msgid "Modifications"
 #~ msgstr "Modifikatoren"

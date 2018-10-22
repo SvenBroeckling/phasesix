@@ -1,4 +1,4 @@
-{% load static i18n %}<!doctype html>
+{% load static i18n bootstrap4 %}<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -12,14 +12,6 @@
 
 <body>
 <div class="container-fluid">
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
 
     <div class="row pt-3 pb-3">
         <div class="col-md-10 offset-md-1">
@@ -40,6 +32,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'gmtools:combat_sim' %}">{% trans 'CombatSim' %}</a>
                         </li>
                         {% if user.is_authenticated %}
                             <li class="nav-item">
@@ -77,6 +72,7 @@
 
     <div class="row">
         <div class="col-md-10 offset-md-1">
+            {% bootstrap_messages messages %}
             {% block content %}{% endblock %}
         </div>
     </div>

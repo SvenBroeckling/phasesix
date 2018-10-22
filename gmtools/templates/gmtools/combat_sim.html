@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n bootstrap4 %}
+
+{% block javascript %}{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+    {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                {% bootstrap_form dummy_form_1 %}
+            </div>
+            <div class="col-md-6">
+                {% bootstrap_form dummy_form_2 %}
+            </div>
+            <div class="col-md-12">
+                <div class="form-group mb-2">
+                    <label for="id_iterations">{% trans 'Iterations' %}</label>
+                    <input type="number" class="form-control" name="iterations" id="id_iterations" placeholder="Iterations" value="50">
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">{% trans 'Fight!' %}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

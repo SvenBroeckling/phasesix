@@ -60,6 +60,7 @@ def display_modifications(character_weapon, attribute):
                 res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.modifier)
     return mark_safe(res)
 
+
 @register.simple_tag
 def character_remaining_template_points(character, template_category):
     available_points = character.lineage.lineagetemplatepoints_set.get(

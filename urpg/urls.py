@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^', include('characters.urls', namespace='characters')),
     url(r'rulebook/', include('rulebook.urls', namespace='rulebook')),
     url(r'rules/', include('rules.urls', namespace='rules')),
+    url(r'gmtools/', include('gmtools.urls', namespace='gmtools')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
