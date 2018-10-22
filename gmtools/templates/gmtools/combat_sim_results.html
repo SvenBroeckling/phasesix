@@ -20,64 +20,73 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h1 class="mt-3">{% trans 'Results' %}</h1>
+            <div class="text-center">
+                {% trans 'Wins Player 1' %}: {{ statistics.wins_d1 }}<br>
+                {% trans 'Wins Player 2' %}: {{ statistics.wins_d2 }}<br>
+                {% trans 'Draws' %}: {{ statistics.draws }}<br>
+                {% trans 'Longest Round' %}: {{ statistics.longest_round }}<br>
+                <a href="{% url 'gmtools:combat_sim' %}" class="btn btn-primary mt-2">{% trans 'Back to selection' %}</a>
+            </div>
 
-            <a href="{% url 'gmtools:combat_sim' %}" class="btn btn-primary mb-2">{% trans 'Back to selection' %}</a>
-            <div class="accordion" id="accordion">
-                {% for r in results %}
-                    <div class="card">
-                        <div class="card-header" id="heading{{ forloop.counter }}">
-                            <h5 class="mb-0 text-center">
-                                <span class="float-left">
-                                    {% for i in r.d1_health %}
-                                        <i class="fas fa-heart fa-2x text-danger"></i>
-                                    {% endfor %}
-                                    {% for i in r.d1_empty_health %}
-                                        <i class="far fa-heart fa-2x text-danger"></i>
-                                    {% endfor %}
-                                </span>
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                        data-target="#collapse{{ forloop.counter }}"
-                                        aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
-                                    {% trans 'Round' %} {{ forloop.counter }}
-                                </button>
-                                <span class="float-right">
-                                    {% for i in r.d2_health %}
-                                        <i class="fas fa-heart fa-2x text-danger"></i>
-                                    {% endfor %}
-                                    {% for i in r.d2_empty_health %}
-                                        <i class="far fa-heart fa-2x text-danger"></i>
-                                    {% endfor %}
-                                </span>
-                            </h5>
-                        </div>
 
-                        <div id="collapse{{ forloop.counter }}" class="collapse"
-                             aria-labelledby="heading{{ forloop.counter }}"
-                             data-parent="#accordion">
-                            <div class="card-body">
-                                {% for a in r.actions %}
-                                    {% if a.switch_attacker %}
-                                        <div class="row">
-                                            <div class="col-md-12"><hr></div>
-                                        </div>
-                                    {% else %}
-                                        <div class="row">
-                                            <div class="col-md-12 {% if a.active_character == dummy_2 %}text-right{% endif %}">
-                                                {{ a.damage|default:"" }}
-                                                {{ a.mode }}
-                                                {% for die,success in a.dice %}
-                                                    <span class="{% if success %}text-success{% else %}text-danger{% endif %}">{{ die }}</span>
-                                                {% endfor %}
+            {% for results in fights %}
+                <h2 class="mt-5">{% trans 'Fight' %} {{ forloop.counter }}</h2>
+                <div class="accordion mb-3" id="accordion{{ forloop.counter }}">
+                    {% for r in results %}
+                        <div class="card">
+                            <div class="card-header" id="heading{{ forloop.counter }}">
+                                <h5 class="mb-0 text-center">
+                                    <span class="float-left">
+                                        {% for i in r.d1_health %}
+                                            <i class="fas fa-heart fa-2x text-danger"></i>
+                                        {% endfor %}
+                                        {% for i in r.d1_empty_health %}
+                                            <i class="far fa-heart fa-2x text-danger"></i>
+                                        {% endfor %}
+                                    </span>
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapse{{ forloop.counter }}"
+                                            aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                                        {% trans 'Round' %} {{ forloop.counter }}
+                                    </button>
+                                    <span class="float-right">
+                                        {% for i in r.d2_health %}
+                                            <i class="fas fa-heart fa-2x text-danger"></i>
+                                        {% endfor %}
+                                        {% for i in r.d2_empty_health %}
+                                            <i class="far fa-heart fa-2x text-danger"></i>
+                                        {% endfor %}
+                                    </span>
+                                </h5>
+                            </div>
+
+                            <div id="collapse{{ forloop.counter }}" class="collapse"
+                                 aria-labelledby="heading{{ forloop.counter }}"
+                                 data-parent="#accordion{{ forloop.parentloop.counter }}">
+                                <div class="card-body">
+                                    {% for a in r.actions %}
+                                        {% if a.switch_attacker %}
+                                            <div class="row">
+                                                <div class="col-md-12"><hr></div>
                                             </div>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
+                                        {% else %}
+                                            <div class="row">
+                                                <div class="col-md-12 {% if a.active_character is dummy_2 %}text-right{% endif %}">
+                                                    {{ a.damage|default:"" }}
+                                                    {{ a.mode }}
+                                                    {% for die,success in a.dice %}
+                                                        <span class="{% if success %}text-success{% else %}text-danger{% endif %}">{{ die }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
             <a href="{% url 'gmtools:combat_sim' %}" class="btn btn-primary mt-2">{% trans 'Back to selection' %}</a>
         </div>
     </div>

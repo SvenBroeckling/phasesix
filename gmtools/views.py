@@ -20,7 +20,6 @@ class CombatSimView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        results = []
 
         form_1 = CombatSimDummyForm(request.POST, prefix='dummy_form_1')
         form_2 = CombatSimDummyForm(request.POST, prefix='dummy_form_2')
@@ -29,50 +28,74 @@ class CombatSimView(TemplateView):
             d1 = form_1.cleaned_data
             d2 = form_2.cleaned_data
 
-            d1_max_health = d1['health']
-            d2_max_health = d2['health']
-            d1_health = d1['health']
-            d2_health = d2['health']
-
+            statistics = {
+                'wins_d1': 0,
+                'wins_d2': 0,
+                'draws': 0,
+                'longest_round': 0,
+            }
+            fights = []
             for i in range(iterations):
-                actions = []
-
-                hits = self.attack_roll(actions, d1, d2)
-                if hits > 0:
-                    hits = self.cover_roll(actions, d1, d2, hits)
-                wounds = self.armor_roll(actions, d1, d2, hits)
-                d2_health -= wounds * d1['weapon'].wounds
-                if d2_health < 0:
-                    d2_health = 0
-
-                actions.append({'switch_attacker': True})
-
-                if d2_health > 0:
-                    hits = self.attack_roll(actions, d2, d1)
-                    if hits > 0:
-                        hits = self.cover_roll(actions, d2, d1, hits)
-                    wounds = self.armor_roll(actions, d2, d1, hits)
-                    d1_health -= wounds * d2['weapon'].wounds
-                    if d1_health < 0:
-                        d1_health = 0
-
-                results.append({
-                    'd1_health': range(d1_health),
-                    'd1_empty_health': range(d1_max_health - d1_health),
-                    'd2_health': range(d2_health),
-                    'd2_empty_health': range(d2_max_health - d2_health),
-                    'actions': actions[:]
-                })
-
-                if d1_health <= 0 or d2_health <= 0:
-                    break
+                fights.append(self.fight(d1, d2, statistics))
 
             return render(
                 request,
                 'gmtools/combat_sim_results.html',
-                {'dummy_1': d1, 'dummy_2': d2, 'results': results})
+                {'dummy_1': d1, 'dummy_2': d2, 'fights': fights, 'statistics': statistics})
         messages.error(self.request, _('You have to select weapons.'))
         return HttpResponseRedirect(reverse('gmtools:combat_sim'))
+
+    def fight(self, d1, d2, statistics):
+        results = []
+
+        d1_max_health = d1['health']
+        d2_max_health = d2['health']
+        d1_health = d1['health']
+        d2_health = d2['health']
+
+        for i in range(50):
+            actions = []
+
+            hits = self.attack_roll(actions, d1, d2)
+            if hits > 0:
+                hits = self.cover_roll(actions, d1, d2, hits)
+            wounds = self.armor_roll(actions, d1, d2, hits)
+            d2_health -= wounds * d1['weapon'].wounds
+            if d2_health < 0:
+                d2_health = 0
+
+            actions.append({'switch_attacker': True})
+
+            if d2_health > 0:
+                hits = self.attack_roll(actions, d2, d1)
+                if hits > 0:
+                    hits = self.cover_roll(actions, d2, d1, hits)
+                wounds = self.armor_roll(actions, d2, d1, hits)
+                d1_health -= wounds * d2['weapon'].wounds
+                if d1_health < 0:
+                    d1_health = 0
+
+            results.append({
+                'd1_health': range(d1_health),
+                'd1_empty_health': range(d1_max_health - d1_health),
+                'd2_health': range(d2_health),
+                'd2_empty_health': range(d2_max_health - d2_health),
+                'actions': actions[:]
+            })
+
+            if d1_health <= 0 or d2_health <= 0:
+                if len(results) > statistics['longest_round']:
+                    statistics['longest_round'] = len(results)
+                if d1_health <= 0 and d2_health <= 0:
+                    statistics['draws'] += 1
+                elif d1_health <= 0:
+                    statistics['wins_d2'] += 1
+                elif d2_health <= 0:
+                    statistics['wins_d1'] += 1
+                break
+
+        return results
+
 
     @staticmethod
     def attack_roll(actions, attacker, defender):
@@ -97,6 +120,9 @@ class CombatSimView(TemplateView):
     def cover_roll(actions, attacker, defender, hits):
         if not hits:
             return 0
+        if int(defender['cover']) > 6:
+            return hits
+
         dice = []
         prevented = 0
         for i in range(hits):
