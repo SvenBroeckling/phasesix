@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-22 19:21+0000\n"
-"PO-Revision-Date: 2018-10-22 21:22+0200\n"
+"POT-Creation-Date: 2018-10-22 20:01+0000\n"
+"PO-Revision-Date: 2018-10-22 22:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -752,68 +752,93 @@ msgstr "Erstelle einen Charakter"
 msgid "Die"
 msgstr "Würfel"
 
-#: gmtools/forms.py:10
+#: gmtools/forms.py:7
 msgid "no cover"
 msgstr "Keine Deckung"
 
 #: gmtools/forms.py:15
-msgid "Health"
-msgstr "Lebenspunkte"
-
-#: gmtools/forms.py:16
-msgid "Attack value"
-msgstr "Angriffswert"
-
-#: gmtools/forms.py:17
-msgid "Cover"
-msgstr "Deckung"
-
-#: gmtools/forms.py:18
 msgid "Weapon"
 msgstr "Waffe"
 
-#: gmtools/forms.py:19
+#: gmtools/forms.py:16
 msgid "Armor"
 msgstr "Rüstung"
 
-#: gmtools/templates/gmtools/combat_sim.html:18
+#: gmtools/forms.py:17
+msgid "Attack value"
+msgstr "Angriffswert"
+
+#: gmtools/forms.py:18
+msgid "Cover"
+msgstr "Deckung"
+
+#: gmtools/forms.py:19
+msgid "Health"
+msgstr "Lebenspunkte"
+
+#: gmtools/templates/gmtools/combat_sim.html:11
+msgid "Player 1"
+msgstr "Spieler 1"
+
+#: gmtools/templates/gmtools/combat_sim.html:15
+msgid "Player 2"
+msgstr "Spieler 2"
+
+#: gmtools/templates/gmtools/combat_sim.html:20
+#: gmtools/templates/gmtools/combat_sim.html:21
 msgid "Iterations"
 msgstr "Iterationen"
 
-#: gmtools/templates/gmtools/combat_sim.html:21
+#: gmtools/templates/gmtools/combat_sim.html:23
 msgid "Fight!"
 msgstr "Kämpft!"
 
-#: gmtools/templates/gmtools/combat_sim_results.html:23
-msgid "Results"
-msgstr "Ergebnisse"
+#: gmtools/templates/gmtools/combat_sim_results.html:24
+msgid "Wins Player 1"
+msgstr "Gewinne Spieler 1"
 
 #: gmtools/templates/gmtools/combat_sim_results.html:25
-#: gmtools/templates/gmtools/combat_sim_results.html:81
+msgid "Wins Player 2"
+msgstr "Gewinne Spieler 2"
+
+#: gmtools/templates/gmtools/combat_sim_results.html:26
+msgid "Draws"
+msgstr "Unentschieden"
+
+#: gmtools/templates/gmtools/combat_sim_results.html:27
+msgid "Longest Round"
+msgstr "Längste Runde"
+
+#: gmtools/templates/gmtools/combat_sim_results.html:28
+#: gmtools/templates/gmtools/combat_sim_results.html:90
 msgid "Back to selection"
 msgstr "Zurück zur Auswahl"
 
-#: gmtools/templates/gmtools/combat_sim_results.html:42
+#: gmtools/templates/gmtools/combat_sim_results.html:33
+msgid "Fight"
+msgstr "Kampf"
+
+#: gmtools/templates/gmtools/combat_sim_results.html:50
 msgid "Round"
 msgstr "Runde"
 
-#: gmtools/views.py:74
+#: gmtools/views.py:45
 msgid "You have to select weapons."
 msgstr "Du musst Waffen wählen."
 
-#: gmtools/views.py:90
+#: gmtools/views.py:113
 msgid "attack roll"
 msgstr "Angriffswurf"
 
-#: gmtools/views.py:111
+#: gmtools/views.py:137
 msgid "cover roll"
 msgstr "Deckungswurf"
 
-#: gmtools/views.py:133
+#: gmtools/views.py:159
 msgid "armor roll"
 msgstr "Rüstungswurf"
 
-#: gmtools/views.py:140
+#: gmtools/views.py:166
 msgid "damage"
 msgstr "Schaden"
 
@@ -1024,6 +1049,9 @@ msgstr "Deutsch"
 #: urpg/settings.py:90
 msgid "English"
 msgstr "Englisch"
+
+#~ msgid "Results"
+#~ msgstr "Ergebnisse"
 
 #~ msgid "hand to hand - short"
 #~ msgstr "Nahkampf - kurz"
