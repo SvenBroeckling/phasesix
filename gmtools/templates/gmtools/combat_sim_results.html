@@ -25,6 +25,7 @@
                 {% trans 'Wins Player 2' %}: {{ statistics.wins_d2 }}<br>
                 {% trans 'Draws' %}: {{ statistics.draws }}<br>
                 {% trans 'Longest Round' %}: {{ statistics.longest_round }}<br>
+                {% trans 'Average Round' %}: {{ statistics.average_round_length|floatformat:2 }}<br>
                 <a href="{% url 'gmtools:combat_sim' %}" class="btn btn-primary mt-2">{% trans 'Back to selection' %}</a>
             </div>
 

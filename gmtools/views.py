@@ -28,13 +28,22 @@ class CombatSimView(TemplateView):
             d1 = form_1.cleaned_data
             d2 = form_2.cleaned_data
 
-            statistics = {
-                'wins_d1': 0,
-                'wins_d2': 0,
-                'draws': 0,
-                'longest_round': 0,
-            }
+            class Statistics(object):
+                def __init__(self):
+                    self.wins_d1 = 0
+                    self.wins_d2 = 0
+                    self.draws = 0
+                    self.round_lengths = []
+
+                def longest_round(self):
+                    return max(self.round_lengths)
+
+                def average_round_length(self):
+                    return float(sum(self.round_lengths)) / float(len(self.round_lengths))
+
             fights = []
+            statistics = Statistics()
+
             for i in range(iterations):
                 fights.append(self.fight(d1, d2, statistics))
 
@@ -84,14 +93,13 @@ class CombatSimView(TemplateView):
             })
 
             if d1_health <= 0 or d2_health <= 0:
-                if len(results) > statistics['longest_round']:
-                    statistics['longest_round'] = len(results)
+                statistics.round_lengths.append(len(results))
                 if d1_health <= 0 and d2_health <= 0:
-                    statistics['draws'] += 1
+                    statistics.draws += 1
                 elif d1_health <= 0:
-                    statistics['wins_d2'] += 1
+                    statistics.wins_d2 += 1
                 elif d2_health <= 0:
-                    statistics['wins_d1'] += 1
+                    statistics.wins_d1 += 1
                 break
 
         return results
