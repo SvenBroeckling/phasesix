@@ -1,0 +1,17 @@
+{% load characters_extras rules_extras i18n %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-1 text-center">- {% trans 'Background' %} -</h2>
+    </div>
+    {% for template in character.charactertemplate_set.all %}
+        <div class="col-md-4">
+            {% template_widget template.template %}
+        </div>
+    {% endfor %}
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-1 text-center">- {% trans 'Advancement' %} -</h2>
+        soon...
+    </div>
+</div>
