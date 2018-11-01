@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.contrib.auth.decorators import login_required
 
 from characters import views
 
@@ -55,52 +54,52 @@ urlpatterns = [
 
     # gear
     url(
-        '^xhr_buy_weapons/(?P<pk>\d+)$',
-        views.XhrBuyWeaponsView.as_view(),
-        name='xhr_buy_weapons'),
+        '^xhr_add_weapons/(?P<pk>\d+)$',
+        views.XhrAddWeaponsView.as_view(),
+        name='xhr_add_weapons'),
 
     url(
-        '^buy_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
-        views.BuyWeaponView.as_view(),
-        name='buy_weapon'),
+        '^add_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
+        views.AddWeaponView.as_view(),
+        name='add_weapon'),
     url(
-        '^sell_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
-        views.SellWeaponView.as_view(),
-        name='sell_weapon'),
+        '^remove_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
+        views.RemoveWeaponView.as_view(),
+        name='remove_weapon'),
 
     url(
-        '^xhr_buy_riot_gear/(?P<pk>\d+)$',
-        views.XhrBuyRiotGearView.as_view(),
-        name='xhr_buy_riot_gear'),
+        '^xhr_add_riot_gear/(?P<pk>\d+)$',
+        views.XhrAddRiotGearView.as_view(),
+        name='xhr_add_riot_gear'),
     url(
-        '^buy_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
-        views.BuyRiotGearView.as_view(),
-        name='buy_riot_gear'),
+        '^add_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
+        views.AddRiotGearView.as_view(),
+        name='add_riot_gear'),
     url(
-        '^sell_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
-        views.SellRiotGearView.as_view(),
-        name='sell_riot_gear'),
+        '^remove_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
+        views.RemoveRiotGearView.as_view(),
+        name='remove_riot_gear'),
 
     url(
-        '^xhr_buy_items/(?P<pk>\d+)$',
-        views.XhrBuyItemsView.as_view(),
-        name='xhr_buy_items'),
+        '^xhr_add_items/(?P<pk>\d+)$',
+        views.XhrAddItemsView.as_view(),
+        name='xhr_add_items'),
     url(
-        '^buy_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
-        views.BuyItemView.as_view(),
-        name='buy_item'),
+        '^add_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
+        views.AddItemView.as_view(),
+        name='add_item'),
     url(
-        '^sell_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
-        views.SellItemView.as_view(),
-        name='sell_item'),
+        '^remove_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
+        views.RemoveItemView.as_view(),
+        name='remove_item'),
 
     url(
-        '^xhr_buy_weapon_modifications/(?P<pk>\d+)$',
-        views.XhrBuyWeaponModView.as_view(),
-        name='xhr_buy_weapon_modifications'),
+        '^xhr_add_weapon_modifications/(?P<pk>\d+)$',
+        views.XhrAddWeaponModView.as_view(),
+        name='xhr_add_weapon_modifications'),
     url(
-        '^buy_weapon_modification/(?P<pk>\d+)/(?P<weapon_modification_pk>\d+)/(?P<weapon_pk>\d+)$',
-        views.BuyWeaponModificationView.as_view(),
-        name='buy_weapon_modification'),
+        '^add_weapon_modification/(?P<pk>\d+)/(?P<weapon_modification_pk>\d+)/(?P<weapon_pk>\d+)$',
+        views.AddWeaponModificationView.as_view(),
+        name='add_weapon_modification'),
 
 ]

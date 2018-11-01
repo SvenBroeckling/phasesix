@@ -59,6 +59,13 @@ class Character(models.Model):
     def __str__(self):
         return self.name
 
+    def may_edit(self, user):
+        if self.created_by == user:
+            return True
+        if not self.created_by:
+            return True
+        return False
+
     def get_absolute_url(self):
         return reverse('characters:detail', kwargs={'pk': self.id})
 

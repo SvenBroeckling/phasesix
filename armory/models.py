@@ -1,9 +1,10 @@
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from transmeta import TransMeta
 
-from rules.models import ExtensionSelectQuerySet
+from rules.models import ExtensionSelectQuerySet, Extension
 
 
 class ItemType(models.Model, metaclass=TransMeta):
@@ -42,7 +43,17 @@ class Item(models.Model, metaclass=TransMeta):
         return self.name
 
 
+class WeaponTypeQuerySet(models.QuerySet):
+    def for_extensions(self, extension_rm):
+        return self.filter(
+            Q(weapon__extension__id__in=extension_rm.all()) |
+            Q(weapon__extension__id__in=Extension.objects.filter(is_mandatory=True))
+        ).distinct()
+
+
 class WeaponType(models.Model, metaclass=TransMeta):
+    objects = WeaponTypeQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'), blank=True, null=True)
 

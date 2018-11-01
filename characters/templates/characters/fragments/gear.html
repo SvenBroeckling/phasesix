@@ -31,9 +31,23 @@
                         <a class="dropdown-item" href="#"><i class="fas fa-plus text-info"></i> {% trans 'Add Armor' %}</a>
                     </div>
                 </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            {% trans 'Armor' %}
+                        </div>
+                        <div class="card-body">
+                            <h2>{% trans 'No armor yet' %}</h2>
+                            <p>{% trans 'This character has no amor yet.' %}</p>
+                            <button class="btn btn-primary">{% trans 'Add Armor' %}</button>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
+
     <div class="col-md-6">
         <h2 class="mb-1 text-center">- {% trans 'Items' %} -</h2>
         <div class="row">
@@ -52,14 +66,27 @@
                         </div>
                     </div>
                 </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            {% trans 'Items' %}
+                        </div>
+                        <div class="card-body">
+                            <h2>{% trans 'No items yet' %}</h2>
+                            <p>{% trans 'This character has no items yet.' %}</p>
+                            <button class="btn btn-primary disabled" disabled>{% trans 'Add Items' %}</button>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <h2 class="mb-1 text-center">- {% trans 'Weapons' %} -</h2>
+    <div class="col-md-12 mb-4">
+        <h2 class="mb-1 text-center mt-3">- {% trans 'Weapons' %} -</h2>
         <div class="row">
             {% for weapon in object.characterweapon_set.all %}
                 <div class="col-md-6">
@@ -102,6 +129,24 @@
                                     {% endif %}
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            {% trans 'Weapons' %}
+                        </div>
+                        <div class="card-body">
+                            <h2>{% trans 'No weapons yet' %}</h2>
+                            <p>{% trans 'This character has no weapons yet.' %}</p>
+                            <button
+                                    class="btn btn-primary buy-button"
+                                    data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                                    data-toggle="modal"
+                                    data-modal-title="{% trans 'Add weapon' %}"
+                                    data-target=".character-modal">{% trans 'Add weapon' %}</button>
                         </div>
                     </div>
                 </div>

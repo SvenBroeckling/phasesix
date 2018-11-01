@@ -1,12 +1,43 @@
 {% extends 'base.html' %}
 {% load i18n rules_extras characters_extras %}
 
+{% block javascript %}
+    <script>
+    $(function(){
+        $('.buy-button').on('click', function () {
+            $('.character-modal-container').load($(this).data('url'));
+            $('.modal-header h4').text($(this).data('modal-title'));
+        });
+    })
+    </script>
+{% endblock %}
+
 {% block content %}
+
+    <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog" aria-labelledby="character-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body character-modal-container">
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                    <span class="sr-only">{% trans 'Loading' %}...</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-10 offset-md-1 text-center">
             <div class="dropleft">
                 <img data-toggle="dropdown" class="rounded-circle mb-2 img-fluid touch-menu" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
-                <h3 data-toggle="dropdown" class="touch-menu">{{ object.name }}</h3>
+                <h3>{{ object.name }}</h3>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#"><i class="fas fa-image text-info"></i> {% trans 'Change Image' %}</a>
                     <a class="dropdown-item" href="#"><i class="far fa-edit text-info"></i> {% trans 'Rename' %}</a>

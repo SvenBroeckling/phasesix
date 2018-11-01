@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView, DetailView, ListView, CreateView
 
-from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification
+from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
 from rules.models import Extension, Template, Lineage
 
@@ -29,8 +29,7 @@ class CharacterModifyHealthView(View):
     def get(self, request, *args, **kwargs):
         # TODO: Change this to Xhr/Fragments
         character = Character.objects.get(id=kwargs['pk'])
-        if character.created_by == request.user or \
-            not request.user.is_authenticated and character.created_by is None:
+        if character.may_edit(request.user):
             if self.kwargs['mode'] == 'heal':
                 if character.health < character.max_health:
                     character.health += 1
@@ -106,7 +105,7 @@ class CreateCharacterDraftView(DetailView):
 class XhrDraftAddTemplateView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
+        if character.may_edit(request.user):
             template = Template.objects.get(id=request.POST.get('template_id'))
             character.add_template(template)
 
@@ -148,7 +147,7 @@ class XhrConstructedAddTemplateView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
 
-        if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
+        if character.may_edit(request.user):
             template = Template.objects.get(id=request.POST.get('template_id'))
             available_points = character.lineage.lineagetemplatepoints_set.get(
                 template_category=template.category).points
@@ -166,7 +165,7 @@ class XhrConstructedRemoveTemplateView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
 
-        if character.created_by == request.user or not request.user.is_authenticated and character.created_by is None:
+        if character.may_edit(request.user):
             template = Template.objects.get(id=request.POST.get('template_id'))
             character.remove_template(template)
             available_points = character.lineage.lineagetemplatepoints_set.get(
@@ -181,96 +180,83 @@ class XhrConstructedRemoveTemplateView(View):
 # gear
 
 
-class XhrBuyWeaponsView(TemplateView):
-    template_name = 'characters/_buy_weapons.html'
+class XhrAddWeaponsView(TemplateView):
+    template_name = 'characters/_add_weapons.html'
 
     def get_context_data(self, **kwargs):
-        context = super(XhrBuyWeaponsView, self).get_context_data(**kwargs)
-        context['character'] = Character.objects.get(id=kwargs['pk'])
+        character = Character.objects.get(id=kwargs['pk'])
+        context = super(XhrAddWeaponsView, self).get_context_data(**kwargs)
+        context['character'] = character
+        context['weapon_types'] = WeaponType.objects.for_extensions(character.extensions)
         return context
 
 
-class BuyWeaponView(View):
+class AddWeaponView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         weapon = Weapon.objects.get(id=kwargs['weapon_pk'])
-        if character.organization.cash < weapon.price or character.created_by != request.user:
+        if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
         character.characterweapon_set.create(weapon=weapon)
-        character.organization.cash -= weapon.price
-        character.organization.save()
-        character.save()
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class SellWeaponView(View):
+class RemoveWeaponView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
-        if character.created_by != request.user:
+        if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
-
-        character.organization.cash += weapon.weapon.price
-        for wm in weapon.modifications.all():
-            character.organization.cash += wm.price
-        character.organization.save()
-        character.save()
         weapon.delete()
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class XhrBuyRiotGearView(TemplateView):
-    template_name = 'characters/_buy_riot_gear.html'
+class XhrAddRiotGearView(TemplateView):
+    template_name = 'characters/_add_riot_gear.html'
 
     def get_context_data(self, **kwargs):
-        context = super(XhrBuyRiotGearView, self).get_context_data(**kwargs)
+        context = super(XhrAddRiotGearView, self).get_context_data(**kwargs)
         context['character'] = Character.objects.get(id=kwargs['pk'])
         context['riot_gear'] = RiotGear.objects.all()
         return context
 
 
-class BuyRiotGearView(View):
+class AddRiotGearView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         riot_gear = RiotGear.objects.get(id=kwargs['riot_gear_pk'])
-        if character.organization.cash < riot_gear.price or character.created_by != request.user:
+        if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
         character.characterriotgear_set.create(riot_gear=riot_gear)
-        character.organization.cash -= riot_gear.price
-        character.organization.save()
-        character.save()
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class SellRiotGearView(View):
+class RemoveRiotGearView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        if character.created_by != request.user:
+        if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
         riot_gear = CharacterRiotGear.objects.get(id=kwargs['riot_gear_pk'])
-        character.organization.cash += riot_gear.riot_gear.price
-        character.organization.save()
-        character.save()
         riot_gear.delete()
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class XhrBuyItemsView(TemplateView):
-    template_name = 'characters/_buy_items.html'
+class XhrAddItemsView(TemplateView):
+    template_name = 'characters/_add_items.html'
 
     def get_context_data(self, **kwargs):
-        context = super(XhrBuyItemsView, self).get_context_data(**kwargs)
+        context = super(XhrAddItemsView, self).get_context_data(**kwargs)
         context['character'] = Character.objects.get(id=kwargs['pk'])
         context['item_types'] = ItemType.objects.all()
         return context
 
 
-class BuyItemView(View):
+class AddItemView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         item = Item.objects.get(id=kwargs['item_pk'])
 
-        if character.organization.cash < item.price or character.created_by != request.user:
+        if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
 
         if character.characteritem_set.filter(item=item).exists():
@@ -279,21 +265,15 @@ class BuyItemView(View):
             ci.save()
         else:
             character.characteritem_set.create(item=item)
-        character.organization.cash -= item.price
-        character.organization.save()
-        character.save()
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class SellItemView(View):
+class RemoveItemView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        if character.created_by != request.user:
+        if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
         item = CharacterItem.objects.get(id=kwargs['item_pk'])
-        character.organization.cash += item.item.price
-        character.organization.save()
-        character.save()
         if item.quantity > 1:
             item.quantity -= 1
             item.save()
@@ -302,30 +282,26 @@ class SellItemView(View):
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class XhrBuyWeaponModView(TemplateView):
-    template_name = 'characters/_buy_weapon_mod.html'
+class XhrAddWeaponModView(TemplateView):
+    template_name = 'characters/_add_weapon_mod.html'
 
     def get_context_data(self, **kwargs):
-        context = super(XhrBuyWeaponModView, self).get_context_data(**kwargs)
+        context = super(XhrAddWeaponModView, self).get_context_data(**kwargs)
         context['character'] = Character.objects.get(id=kwargs['pk'])
         context['weapon'] = CharacterWeapon.objects.get(id=self.request.GET.get('weapon_id'))
         context['weapon_modification_types'] = WeaponModificationType.objects.all()
         return context
 
 
-class BuyWeaponModificationView(View):
+class AddWeaponModificationView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         weapon_modification = WeaponModification.objects.get(id=kwargs['weapon_modification_pk'])
         weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
 
-        if character.organization.cash < weapon_modification.price or character.created_by != request.user:
+        if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
 
         if weapon.weapon.type in weapon_modification.available_for_weapon_types.all():
             weapon.modifications.add(weapon_modification)
-
-        character.organization.cash -= weapon_modification.price
-        character.organization.save()
-        character.save()
         return HttpResponseRedirect(character.get_absolute_url())
