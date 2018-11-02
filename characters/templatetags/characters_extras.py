@@ -48,7 +48,6 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
 
 @register.simple_tag
 def display_modifications(character_weapon, attribute):
-    return ''
     res = ''
     for wm in character_weapon.modifications.all():
         for wmm in wm.weaponmodificationattributechange_set.all():
