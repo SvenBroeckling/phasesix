@@ -13,6 +13,16 @@
             $('.character-modal-container').load($(this).data('url'));
             $('.modal-header h5').text($(this).data('modal-title'));
         });
+
+        // save bootstrap tabs
+        $('a[data-toggle="tab"]').on('click', function (e) {
+            window.localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+
+        var activeTab = window.localStorage.getItem('activeTab');
+        if (activeTab) {
+            $('a[href="' + activeTab + '"]').tab('show');
+        }
     })
     </script>
 {% endblock %}
