@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n static %}
+{% load i18n static thumbnail %}
 
 {% block content %}
     <div class="row">
@@ -7,7 +7,16 @@
             <div class="col-md-3 mb-3">
                 <a href="{{ object.get_absolute_url }}">
                     <div class="text-center">
-                        <img class="rounded-circle mb-2 img-fluid" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
+                        {% thumbnail object.image "200x200" crop="center" as im %}
+                        <img
+                                class="rounded-circle mb-2 img-fluid"
+                                {% if object.image %}
+                                src="{{ MEDIA_URL }}{{ im.url }}"
+                                {% else %}
+                                src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045"
+                                {% endif %}
+                                alt="{{ object.name }}">
+                        {% endthumbnail %}
                         <h3>{{ object.name }}</h3>
                     </div>
                 </a>

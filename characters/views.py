@@ -9,6 +9,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView, ListView, CreateView
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType
+from characters.forms import CharacterImageForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
 from rules.models import Extension, Template, Lineage
 
@@ -176,6 +177,27 @@ class XhrConstructedRemoveTemplateView(View):
 
         return JsonResponse({'status': 'noop'})
 
+
+class XhrChangeImageView(TemplateView):
+    template_name = 'characters/_change_image.html'
+
+    def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        context = super(XhrChangeImageView, self).get_context_data(**kwargs)
+        context['character'] = character
+        context['form'] = CharacterImageForm(instance=character)
+        return context
+
+
+class ChangeImageView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if not character.may_edit(request.user):
+            return HttpResponseRedirect(character.get_absolute_url())
+        form = CharacterImageForm(request.POST, instance=character, files=request.FILES)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(character.get_absolute_url())
 
 # gear
 

@@ -52,6 +52,16 @@ urlpatterns = [
         views.XhrConstructedRemoveTemplateView.as_view(),
         name='xhr_constructed_remove_template'),
 
+    # Images etc
+    url(
+        '^xhr_change_image/(?P<pk>\d+)$',
+        views.XhrChangeImageView.as_view(),
+        name='xhr_change_image'),
+    url(
+        '^change_image/(?P<pk>\d+)$',
+        views.ChangeImageView.as_view(),
+        name='change_image'),
+
     # gear
     url(
         '^xhr_add_weapons/(?P<pk>\d+)$',

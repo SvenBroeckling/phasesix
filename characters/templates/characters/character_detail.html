@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n rules_extras characters_extras %}
+{% load i18n rules_extras characters_extras thumbnail %}
 
 {% block javascript %}
     <script>
@@ -51,11 +51,27 @@
     <div class="row">
         <div class="col-md-10 offset-md-1 text-center">
             <div class="dropleft">
-                <img data-toggle="dropdown" class="rounded-circle mb-2 img-fluid touch-menu" src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045" alt="{{ object.name }}">
+                {% thumbnail character.image "200x200" crop="center" as im %}
+                <img
+                        data-toggle="dropdown"
+                        class="rounded-circle mb-2 img-fluid touch-menu"
+                        {% if character.image %}
+                        src="{{ MEDIA_URL }}{{ im.url }}"
+                        {% else %}
+                        src="https://vignette.wikia.nocookie.net/thebiglebowski/images/7/7e/The_Dude.jpeg/revision/latest?cb=20111216183045"
+                        {% endif %}
+                        alt="{{ object.name }}">
+                {% endthumbnail %}
                 <h3>{{ object.name }}</h3>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#"><i class="fas fa-image text-info"></i> {% trans 'Change Image' %}</a>
-                    <a class="dropdown-item" href="#"><i class="far fa-edit text-info"></i> {% trans 'Rename' %}</a>
+                    <a
+                            class="dropdown-item modal-trigger-link"
+                            data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
+                            data-toggle="modal"
+                            data-target=".character-modal"
+                            data-modal-title="{% trans 'Add Modification' %}"
+                            href=""><i class="fas fa-image text-info"></i> {% trans 'Change Image' %}</a>
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Delete' %}</a>
                 </div>

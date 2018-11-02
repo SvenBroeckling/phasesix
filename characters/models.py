@@ -14,6 +14,7 @@ from rules.models import Skill, Template, TemplateModifier, TemplateCategory
 
 class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
+    image = models.ImageField(_('image'), upload_to='character_images', blank=True, null=True)
     creation_mode = models.CharField(_('creation mode'), max_length=12, default='random')
     created_by = models.ForeignKey(
         'auth.User',
