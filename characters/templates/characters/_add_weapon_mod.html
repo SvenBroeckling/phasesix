@@ -19,7 +19,7 @@
                                 <div class="panel panel-default match-height">
                                     <div class="panel-heading">
                                         {{ wm }}
-                                        <form action="{% url 'characters:buy_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}" class="pull-right" method="post">
+                                        <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}" class="pull-right" method="post">
                                             {% csrf_token %}
                                             <button class="btn btn-xs btn-primary pull-right {% if character.organization.cash < wm.price %} disabled {% endif %}">{% trans 'Buy modification' %} {{ wm.price }} €</button>
                                         </form>

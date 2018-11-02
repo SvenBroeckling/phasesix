@@ -16,8 +16,8 @@
 
         <div class="row">
             {% for weapon in object.characterweapon_set.all %}
-                <div class="col-md-12">
-                    <div class="card mb-2">
+                <div class="col-md-12 dropdown">
+                    <div class="card mb-2 touch-menu" data-toggle="dropdown">
                         <div class="card-header">
                             <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
                             {{ weapon.weapon }}
@@ -57,6 +57,26 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="dropdown-menu">
+                        <a
+                                class="dropdown-item modal-trigger-link"
+                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Add Modification' %}"
+                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                        <div class="dropdown-divider"></div>
+                        <a
+                                class="dropdown-item modal-trigger-link"
+                                data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Add Weapon' %}"
+                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
                     </div>
                 </div>
             {% empty %}
