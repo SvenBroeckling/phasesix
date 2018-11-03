@@ -37,13 +37,13 @@ def load_database():
 
 
 def fetch_media():
-    local('rsync -avz %s:%s/site_media .' % (env.hosts[0], env.cwd))
+    local('rsync -avz %s:%s/media_files .' % (env.hosts[0], env.cwd))
 
 
 def update():
     dump_database()
     load_database()
-    #fetch_media()
+    fetch_media()
 
 
 def deploy():
