@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="{% static 'css/bootstrap.min.css' %}?123" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}?123" rel="stylesheet" title="main">
     <link href="{% static 'css/fontawesome-all.min.css' %}" type="text/css" rel="stylesheet"/>
     <link href="{% static 'css/theme.css' %}" type="text/css" rel="stylesheet"/>
     <title>Phase Six</title>
@@ -50,6 +50,35 @@
                         {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="">{% trans 'Contact' %}</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item dropdown" id="theme-dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> Theme<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cerulean/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cerulan</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cosmo/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cosmo</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cyborg</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Darkly</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Flatly</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/journal/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Journal</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/litera/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Litera</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lumen</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lux/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lux</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/materia/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Materia</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/minty/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Minty</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/pulse/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Pulse</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sandstone/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sandstone</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/simplex/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Simplex</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sketchy/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sketchy</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/slate/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Slate</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/solar/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Solar</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/spacelab/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Spacelab</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/superhero/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Superhero</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/united/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> United</a></li>
+                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/yeti/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Yeti</a></li>
+                            </ul>
                         </li>
                     </ul>
 
@@ -119,12 +148,14 @@
             }
         });
 
-        $('.tag-delete').on('click', function (e) {
-            if (confirm('Tag wirklich löschen? Es wird bei allen Bildern entfernt.')) {
-                $.post($(this).data('url'));
-                $(this).parent().hide('slow');
-            }
+        $('body').on('click', '.change-style-menu-item', function(e){
+            var theme = $(this).attr('rel');
+            $('link[title="main"]').attr('href', theme);
+            localStorage.theme = theme;
         })
+        if(localStorage.theme) {
+            $('link[title="main"]').attr('href', localStorage.theme);
+        }
     });
 </script>
 
