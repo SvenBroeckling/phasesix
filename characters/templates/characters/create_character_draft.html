@@ -29,24 +29,46 @@
                 e.preventDefault();
                 return false;
             })
+
+            $('#switch-preview').on('change', function(){
+                if($(this).prop('checked')) {
+                    $('.draft-template-list').addClass('d-none');
+                    $('.draft-preview').removeClass('d-none');
+                } else {
+                    $('.draft-preview').addClass('d-none');
+                    $('.draft-template-list').removeClass('d-none');
+                }
+            });
         })
     </script>
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <div class="float-left mr-2 text-center">
+                <h2><span class="badge badge-info"><span class="template-number">{{ object.charactertemplate_set.count }}</span>/10</span></h2>{% trans "Draft Templates"%}
+                <div class="form-group mt-4">
+                    <span class="switch switch-sm">
+                        <input type="checkbox" class="switch" id="switch-preview">
+                        <label for="switch-preview">{% trans "Preview" %}</label>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div
             class="row initial-data"
             data-initial-template-count="{{ object.charactertemplate_set.count }}"
             data-detail-url="{% url 'characters:detail' pk=object.id %}">
-        <div class="col-md-12">
-            <h1 class="text-center">- {% trans 'Draft Character' %} (<span class="template-number">{{ object.charactertemplate_set.count }}</span>/10) -</h1>
-        </div>
     </div>
+
     <div class="row draft-template-list">
         {% include 'characters/_draft_template_list.html' %}
     </div>
-    <hr>
-    <div class="row">
+
+    <div class="row draft-preview d-none">
         <div class="col-md-9 character-preview">
             {% include 'characters/fragments/character.html' %}
         </div>
