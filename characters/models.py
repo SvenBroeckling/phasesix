@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import random
+
 from django.db import models
 from django.db.models import Sum
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-import random
-
-from armory.models import Weapon, RiotGear, Item
-from rules.models import Skill, Template, TemplateModifier, TemplateCategory
+from armory.models import Item, RiotGear, Weapon
+from rules.models import Skill, Template, TemplateCategory, TemplateModifier
 
 
 class Character(models.Model):
@@ -92,6 +92,13 @@ class Character(models.Model):
             if tm.shadow is not None:
                 self.shadows.remove(tm.shadow)
 
+    @property
+    def remaining_template_points(self):
+        template_points = self.lineage.lineagetemplatepoints_set.aggregate(
+            Sum('points'))['points__sum'] or 0
+        spent_points = self.charactertemplate_set.aggregate(
+            Sum('template__cost'))['template__cost__sum'] or 0
+        return template_points - spent_points
 
     @property
     def intelligence(self):
@@ -275,4 +282,3 @@ class CharacterItem(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
     quantity = models.IntegerField(_('quantity'), default=1)
-

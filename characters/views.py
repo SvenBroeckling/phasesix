@@ -150,14 +150,11 @@ class XhrConstructedAddTemplateView(View):
 
         if character.may_edit(request.user):
             template = Template.objects.get(id=request.POST.get('template_id'))
-            available_points = character.lineage.lineagetemplatepoints_set.get(
-                template_category=template.category).points
-            spent_points = character.charactertemplate_set.filter(
-                template__category=template.category).aggregate(Sum('template__cost'))['template__cost__sum'] or 0
-            if spent_points + template.cost > available_points:
+            remaining_points = character.remaining_template_points
+            if template.cost > remaining_points:
                 return JsonResponse({'status': 'notenoughpoints'})
             character.add_template(template)
-            return JsonResponse({'status': 'ok', 'remaining_points': available_points - spent_points - template.cost})
+            return JsonResponse({'status': 'ok', 'remaining_points': remaining_points - template.cost})
 
         return JsonResponse({'status': 'noop'})
 
@@ -169,11 +166,7 @@ class XhrConstructedRemoveTemplateView(View):
         if character.may_edit(request.user):
             template = Template.objects.get(id=request.POST.get('template_id'))
             character.remove_template(template)
-            available_points = character.lineage.lineagetemplatepoints_set.get(
-                template_category=template.category).points
-            spent_points = character.charactertemplate_set.filter(
-                template__category=template.category).aggregate(Sum('template__cost'))['template__cost__sum'] or 0
-            return JsonResponse({'status': 'ok', 'remaining_points': available_points - spent_points})
+            return JsonResponse({'status': 'ok', 'remaining_points': character.remaining_template_points})
 
         return JsonResponse({'status': 'noop'})
 

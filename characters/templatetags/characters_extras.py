@@ -58,13 +58,3 @@ def display_modifications(character_weapon, attribute):
                     css_class = 'text-danger' if wmm.modifier < 0 else 'text-success'
                 res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.modifier)
     return mark_safe(res)
-
-
-@register.simple_tag
-def character_remaining_template_points(character, template_category):
-    available_points = character.lineage.lineagetemplatepoints_set.get(
-        template_category=template_category).points
-    spent_points = character.charactertemplate_set.filter(
-        template__category=template_category).aggregate(Sum('template__cost'))['template__cost__sum'] or 0
-    return available_points - spent_points
-

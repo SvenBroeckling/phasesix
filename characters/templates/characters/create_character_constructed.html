@@ -14,10 +14,11 @@
                         {template_id: template_id},
                         function(data){
                             if(data.status === 'ok'){
-                                $('.tp-points-' + template_div.data('tp-id')).text(data.remaining_points);
+                                $('.template-points').text(data.remaining_points);
                                 template_div.removeClass('selected');
                                 $('.character-preview').load(preview_url);
                             } else {
+                                // shake
                             }
                         });
                 } else {
@@ -26,7 +27,7 @@
                         {template_id: template_id},
                         function(data){
                             if(data.status === 'ok') {
-                                $('.tp-points-' + template_div.data('tp-id')).text(data.remaining_points);
+                                $('.template-points').text(data.remaining_points);
                                 template_div.addClass('selected');
                                 $('.character-preview').load(preview_url);
                             } else {
@@ -35,28 +36,52 @@
                 }
                 e.preventDefault();
                 return false;
-            })
+            });
+
+            $('#switch-preview').on('change', function(){
+                if($(this).prop('checked')) {
+                    $('.draft-template-list').addClass('d-none');
+                    $('.draft-preview').removeClass('d-none');
+                } else {
+                    $('.draft-preview').addClass('d-none');
+                    $('.draft-template-list').removeClass('d-none');
+                }
+            });
         })
     </script>
 {% endblock %}
 
 {% block content %}
-    <div class="row initial-data" data-detail-url="{% url 'characters:detail' pk=object.id %}">
-        <div class="col-md-12">
-            <h1 class="text-center">- {% trans 'Construct Character' %} -</h1>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <div class="float-left mr-2 text-center">
+                <h2><span class="badge badge-info template-points">{{ character.remaining_template_points }}</span></h2>{% trans "Character Points "%}
+                <div class="form-group mt-4">
+                    <span class="switch switch-sm">
+                        <input type="checkbox" class="switch" id="switch-preview">
+                        <label for="switch-preview">{% trans "Preview" %}</label>
+                    </span>
+                    <a href="{{ object.get_absolute_url }}" class="btn btn-success btn-block btn-sm">{% trans 'Finish Character' %}</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row draft-template-list">
+
+    <div class="row initial-data" data-detail-url="{% url 'characters:detail' pk=object.id %}"></div>
+
+    <div class="row draft-template-list mt-4">
         <div class="col-md-12">
             <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
                 {% for tp in template_points %}
                     <li class="nav-item">
-                        <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#tp{{ tp.id }}">{{ tp.template_category }}
-                            <span class="badge badge-info tp-points-{{ tp.id }}">{% character_remaining_template_points object tp.template_category %}</span></a>
+                        <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#tp{{ tp.id }}">
+                            {{ tp.template_category }}
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
+
         <div class="col-md-12 tab-content">
             {% for tp in template_points %}
                 <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}">
@@ -77,10 +102,9 @@
                 </div>
             {% endfor %}
         </div>
-        <a href="{{ object.get_absolute_url }}" class="btn btn-primary btn-block">{% trans 'Done' %}</a>
     </div>
-    <hr>
-    <div class="row">
+
+    <div class="row draft-preview d-none mt-4">
         <div class="col-md-12 character-preview">
             {% include 'characters/fragments/character.html' %}
         </div>
