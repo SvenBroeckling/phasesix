@@ -44,27 +44,23 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12 mb-3">
-            <div class="float-left mr-2 text-center">
-                <h2><span class="badge badge-info"><span class="template-number">{{ object.charactertemplate_set.count }}</span>/10</span></h2>{% trans "Draft Templates"%}
-                <div class="form-group mt-4">
-                    <span class="switch switch-sm">
-                        <input type="checkbox" class="switch" id="switch-preview">
-                        <label for="switch-preview">{% trans "Preview" %}</label>
-                    </span>
-                </div>
+    <div
+        class="row initial-data"
+        data-initial-template-count="{{ object.charactertemplate_set.count }}"
+        data-detail-url="{% url 'characters:detail' pk=object.id %}">
+
+        <div class="col-md-12">
+            <div class="form-group float-right">
+                <span class="switch switch-sm float-right">
+                    <input type="checkbox" class="switch" id="switch-preview">
+                    <label for="switch-preview">{% trans "Preview" %}</label>
+                </span>
             </div>
+            <h2><span class="badge badge-info h2"><span class="template-number">{{ object.charactertemplate_set.count }}</span>/10</span> {% trans "Draft Templates"%}</h2>
         </div>
     </div>
 
-    <div
-            class="row initial-data"
-            data-initial-template-count="{{ object.charactertemplate_set.count }}"
-            data-detail-url="{% url 'characters:detail' pk=object.id %}">
-    </div>
-
-    <div class="row draft-template-list">
+    <div class="row draft-template-list mt-4">
         {% include 'characters/_draft_template_list.html' %}
     </div>
 

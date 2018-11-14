@@ -52,22 +52,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12 mb-3">
-            <div class="float-left mr-2 text-center">
-                <h2><span class="badge badge-info template-points">{{ character.remaining_template_points }}</span></h2>{% trans "Character Points "%}
-                <div class="form-group mt-4">
-                    <span class="switch switch-sm">
-                        <input type="checkbox" class="switch" id="switch-preview">
-                        <label for="switch-preview">{% trans "Preview" %}</label>
-                    </span>
-                    <a href="{{ object.get_absolute_url }}" class="btn btn-success btn-block btn-sm">{% trans 'Finish Character' %}</a>
-                </div>
+
+    <div class="row initial-data">
+        <div class="col-md-12">
+            <div class="form-group float-right">
+                <span class="switch switch-sm float-right">
+                    <input type="checkbox" class="switch" id="switch-preview">
+                    <label for="switch-preview">{% trans "Preview" %}</label>
+                </span>
             </div>
+            <h2><span class="badge badge-info template-points h2">{{ character.remaining_template_points }}</span> {% trans "Character Points "%}</h2>
+            <a class="btn btn-success" href="{{ character.get_absolute_url }}">{% trans 'Finish Character' %}</a>
         </div>
     </div>
-
-    <div class="row initial-data" data-detail-url="{% url 'characters:detail' pk=object.id %}"></div>
 
     <div class="row draft-template-list mt-4">
         <div class="col-md-12">
