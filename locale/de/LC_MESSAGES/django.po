@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-13 23:42+0000\n"
-"PO-Revision-Date: 2018-11-14 00:42+0100\n"
+"POT-Creation-Date: 2018-11-14 16:01+0000\n"
+"PO-Revision-Date: 2018-11-14 17:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -304,38 +304,42 @@ msgstr "Zustand"
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/templates/base.html:29
+#: characters/templates/base.html:30
+msgid "Reference"
+msgstr "Referenz"
+
+#: characters/templates/base.html:32
 msgid "Characters"
 msgstr "Charaktere"
 
-#: characters/templates/base.html:32
+#: characters/templates/base.html:33
 msgid "Rulebook"
 msgstr "Regelbuch"
 
 #: characters/templates/base.html:35
-#: characters/templates/characters/create_character_draft.html:54
+#: characters/templates/characters/create_character_draft.html:76
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:38
+#: characters/templates/base.html:36
 msgid "CombatSim"
 msgstr "CombatSim"
 
-#: characters/templates/base.html:42
+#: characters/templates/base.html:41
+msgid "Contact"
+msgstr "Kontakt"
+
+#: characters/templates/base.html:50
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:45
+#: characters/templates/base.html:51
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:49
+#: characters/templates/base.html:56
 msgid "Login"
 msgstr "Anmelden"
-
-#: characters/templates/base.html:53
-msgid "Contact"
-msgstr "Kontakt"
 
 #: characters/templates/characters/_add_items.html:26
 #: characters/templates/characters/_add_riot_gear.html:14
@@ -484,6 +488,11 @@ msgstr "Neuer Charakter"
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
+#: characters/templates/characters/contact.html:20
+#: characters/templates/characters/index.html:38
+msgid "Die"
+msgstr "Würfel"
+
 #: characters/templates/characters/create_character.html:9
 msgid "Constructed Character"
 msgstr "Konstruierter Charakter"
@@ -501,7 +510,6 @@ msgid "New Constructed Character"
 msgstr "Neuer konstruierter Charakter"
 
 #: characters/templates/characters/create_character.html:30
-#: characters/templates/characters/create_character_draft.html:42
 msgid "Draft Character"
 msgstr "Charakter ziehen"
 
@@ -538,12 +546,17 @@ msgid "Character Points "
 msgstr "Charakterpunkte"
 
 #: characters/templates/characters/create_character_constructed.html:62
+#: characters/templates/characters/create_character_draft.html:54
 msgid "Preview"
 msgstr "Vorschau"
 
 #: characters/templates/characters/create_character_constructed.html:64
 msgid "Finish Character"
 msgstr "Charakter fertigstellen"
+
+#: characters/templates/characters/create_character_draft.html:50
+msgid "Draft Templates"
+msgstr "Schablonen"
 
 #: characters/templates/characters/fragments/advancement.html:14
 msgid "Advancement"
@@ -795,10 +808,6 @@ msgstr "Schau in die Regeln"
 #: characters/templates/characters/index.html:35
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
-
-#: characters/templates/characters/index.html:38
-msgid "Die"
-msgstr "Würfel"
 
 #: gmtools/forms.py:7
 msgid "no cover"

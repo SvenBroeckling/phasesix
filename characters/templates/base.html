@@ -25,65 +25,67 @@
                 </button>
                 <div class="collapse navbar-collapse" id="mainNavBar">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'characters:list' %}">{% trans 'Characters' %}</a>
+
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{% trans 'Reference' %}</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'characters:list' %}">{% trans 'Characters' %}</a>
+                                <a class="dropdown-item" href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a>
+                                <div class="dropdown-divider"></div> 
+                                <a class="dropdown-item" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
+                                <a class="dropdown-item" href="{% url 'gmtools:combat_sim' %}">{% trans 'CombatSim' %}</a>
+                            </div>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a>
+                            <a class="nav-link" href="{% url 'contact' %}">{% trans 'Contact' %}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'gmtools:combat_sim' %}">{% trans 'CombatSim' %}</a>
-                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav justify-content-end">
                         {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a>
+                            <li class="nav-item dropdown" id="theme-dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> {{ request.user|capfirst }}</b></a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a>
+                                </div>
                             </li>
                         {% else %}
                             <li class="nav-item active">
                                 <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
                             </li>
                         {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="">{% trans 'Contact' %}</a>
-                        </li>
-                    </ul>
 
-                    <ul class="navbar-nav justify-content-end">
                         <li class="nav-item dropdown" id="theme-dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> Theme<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cerulean/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cerulan</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cosmo/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cosmo</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cyborg</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Darkly</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Flatly</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/journal/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Journal</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/litera/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Litera</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lumen</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lux/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lux</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/materia/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Materia</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/minty/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Minty</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/pulse/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Pulse</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sandstone/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sandstone</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/simplex/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Simplex</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sketchy/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sketchy</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/slate/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Slate</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/solar/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Solar</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/spacelab/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Spacelab</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/superhero/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Superhero</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/united/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> United</a></li>
-                            <li><a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/yeti/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Yeti</a></li>
-                            </ul>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> Theme</b></a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cerulean/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cerulan</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cosmo/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cosmo</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cyborg</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Darkly</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Flatly</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/journal/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Journal</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/litera/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Litera</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lumen</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lux/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lux</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/materia/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Materia</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/minty/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Minty</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/pulse/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Pulse</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sandstone/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sandstone</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/simplex/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Simplex</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sketchy/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sketchy</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/slate/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Slate</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/solar/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Solar</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/spacelab/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Spacelab</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/superhero/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Superhero</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/united/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> United</a>
+                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/yeti/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Yeti</a>
+                            </div>
                         </li>
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0" method="post"
+                    <form class="form-inline my-2 my-lg-0 ml-3" method="post"
                           action="{% url 'set_language' %}?next={{ request.path }}">
                         {% csrf_token %}
                         <button name="language" value="de"
@@ -117,6 +119,10 @@
 <script src="{% static 'js/featherlight.min.js' %}" type="text/javascript" charset="utf-8"></script>
 
 <script>
+    if(localStorage.theme) {
+        $('link[title="main"]').attr('href', localStorage.theme);
+    }
+
     $(document).ready(function () {
         function getCookie(name) {
             var cookieValue = null;
@@ -154,9 +160,6 @@
             $('link[title="main"]').attr('href', theme);
             localStorage.theme = theme;
         })
-        if(localStorage.theme) {
-            $('link[title="main"]').attr('href', localStorage.theme);
-        }
     });
 </script>
 

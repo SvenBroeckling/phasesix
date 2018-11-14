@@ -5,9 +5,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.views.static import serve
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^contact/', TemplateView.as_view(template_name="characters/contact.html"), name="contact"),
     url(r'^', include('characters.urls', namespace='characters')),
     url(r'rulebook/', include('rulebook.urls', namespace='rulebook')),
     url(r'rules/', include('rules.urls', namespace='rules')),
@@ -17,6 +19,7 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += [url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})]
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
+    urlpatterns += [url(r'^media/(?P<path>.*)$', serve,
+                        {'document_root': settings.MEDIA_ROOT})]
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
