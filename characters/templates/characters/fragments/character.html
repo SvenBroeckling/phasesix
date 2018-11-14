@@ -21,7 +21,7 @@
     </div>
     <div class="col-sm-6 col-md-4 col-xl-2">
         {% trans 'Neuroticism' as attribute_name %}
-        {% character_attribute_widget attribute_name object.neuroticism %}
+        {% character_attribute_widget attribute_name object.neuroticism invert=True %}
     </div>
     <div class="col-sm-6 col-md-4 col-xl-2">
         {% trans 'IQ' as attribute_name %}
@@ -85,6 +85,21 @@
         </table>
     </div>
     <div class="col-md-4 mb-1">
+        {% if object.shadows.exists %}
+            <h2 class="text-center mb-1">- {% trans 'Shadows' %} -</h2>
+            <table class="table">
+                {% for shadow in object.shadows.all %}
+                    <tr>
+                        {% if shadow.description %}
+                            <td><a role="button" tabindex="0" data-toggle="popover" data-trigger="focus" title="{{ shadow }}" data-content="{{ shadow.description }}">{{ shadow }}</a></td>
+                        {% else %}
+                            <td>{{ shadow }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
         <h2 class="text-center mb-1">- {% trans 'Dice' %} -</h2>
         <table class="table">
             <tr>
@@ -111,17 +126,6 @@
                     </tr>
                 {% endfor %}
             </table>
-        {% endif %}
-
-        {% if object.shadows.exists %}
-            <h2 class="text-center mb-1">- {% trans 'Shadows' %} -</h2>
-            <div class="card mb-2">
-                <div class="card-body">
-                    {% for shadow in object.shadows.all %}
-                        {{ shadow }}<br>
-                    {% endfor %}
-                </div>
-            </div>
         {% endif %}
 
         {% if object.contacts.exists %}

@@ -6,10 +6,11 @@ register = Library()
 
 
 @register.inclusion_tag('characters/_character_attribute_widget.html')
-def character_attribute_widget(name, attribute):
+def character_attribute_widget(name, attribute, invert=False):
     return {
         'name': name,
         'attribute': attribute,
+        'invert': invert,
     }
 
 

@@ -23,6 +23,8 @@
         if (activeTab) {
             $('a[href="' + activeTab + '"]').tab('show');
         }
+
+        $('[data-toggle="popover"]').popover();
     })
     </script>
 {% endblock %}
