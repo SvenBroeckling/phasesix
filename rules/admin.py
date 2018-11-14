@@ -26,6 +26,7 @@ class TemplateAdmin(admin.ModelAdmin):
     list_display = ('name', 'cost', 'extension', 'category')
     list_filter = ('extension', 'category')
     list_editable = ('category', 'cost', 'extension')
+    save_as = True
 
 
 class SkillAdmin(admin.ModelAdmin):
