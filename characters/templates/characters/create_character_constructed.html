@@ -4,6 +4,43 @@
 {% block javascript %}
     <script>
         $(function(){
+            var timer = null;
+
+            $('#id_q').on('keyup', function(e){
+                var q = $(this).val();
+
+                function updateTabs(){
+                    $('.tab-pane').each(function(index){
+                        var elem = $(this);
+                        var ct = elem.find('.constructed-template:not(.d-none)');
+                        if(ct.length === 0) {
+                            elem.addClass('d-none');
+                            $(elem.data('rel')).addClass('disabled');
+                        } else {
+                            elem.removeClass('d-none');
+                            $(elem.data('rel')).removeClass('disabled');
+                        }
+                        $('a[data-toggle="tab"]:not(.disabled):first').tab('show');
+                    })
+                }
+
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(function(){
+                    $('.constructed-template').each(function(index){
+                        if($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                            $(this).removeClass('d-none');
+                        } else {
+                            $(this).addClass('d-none');
+                        };
+                    });
+                    updateTabs();
+                    //history.replaceState({q: q}, '', '?q=' + q);
+                }, 10);
+            });
+
+
             $('.row').on('click', '.constructed-template', function(e){
                 var template_div = $(this);
                 var template_id = template_div.data('template-id');
@@ -60,9 +97,11 @@
                     <input type="checkbox" class="switch" id="switch-preview">
                     <label for="switch-preview">{% trans "Preview" %}</label>
                 </span>
+                <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
             </div>
             <h2><span class="badge badge-info template-points h2">{{ character.remaining_template_points }}</span> {% trans "Character Points "%}</h2>
             <a class="btn btn-success" href="{{ character.get_absolute_url }}">{% trans 'Finish Character' %}</a>
+        <hr>
         </div>
     </div>
 
@@ -71,7 +110,7 @@
             <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
                 {% for tp in template_points %}
                     <li class="nav-item">
-                        <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#tp{{ tp.id }}">
+                        <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
                             {{ tp.template_category }}
                         </a>
                     </li>
@@ -81,7 +120,7 @@
 
         <div class="col-md-12 tab-content">
             {% for tp in template_points %}
-                <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}">
+                <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
                     <div class="row">
                         {% for i in tp.template_category.template_set.all %}
                             {% if i.extension in object.extensions.all or i.extension.is_mandatory %}
