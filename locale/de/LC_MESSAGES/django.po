@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-14 16:01+0000\n"
-"PO-Revision-Date: 2018-11-14 17:01+0100\n"
+"POT-Creation-Date: 2018-11-19 14:38+0000\n"
+"PO-Revision-Date: 2018-11-19 15:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -317,7 +317,7 @@ msgid "Rulebook"
 msgstr "Regelbuch"
 
 #: characters/templates/base.html:35
-#: characters/templates/characters/create_character_draft.html:76
+#: characters/templates/characters/create_character_draft.html:72
 msgid "Templates"
 msgstr "Schablonen"
 
@@ -329,15 +329,15 @@ msgstr "CombatSim"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: characters/templates/base.html:50
+#: characters/templates/base.html:51
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:51
+#: characters/templates/base.html:53
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:56
+#: characters/templates/base.html:58 templates/registration/login.html:11
 msgid "Login"
 msgstr "Anmelden"
 
@@ -437,29 +437,29 @@ msgstr "Waffe hinzufügen"
 msgid "Save"
 msgstr "Speichern"
 
-#: characters/templates/characters/character_detail.html:42
+#: characters/templates/characters/character_detail.html:44
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/characters/character_detail.html:45
+#: characters/templates/characters/character_detail.html:47
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/characters/character_detail.html:76
+#: characters/templates/characters/character_detail.html:78
 #: characters/templates/characters/fragments/gear.html:68
 #: characters/templates/characters/fragments/gear.html:69
 msgid "Add Modification"
 msgstr "Modifikatoren hinzufügen"
 
-#: characters/templates/characters/character_detail.html:77
+#: characters/templates/characters/character_detail.html:79
 msgid "Change Image"
 msgstr "Charakterbild"
 
-#: characters/templates/characters/character_detail.html:80
+#: characters/templates/characters/character_detail.html:82
 msgid "Delete"
 msgstr "Löschen"
 
-#: characters/templates/characters/character_detail.html:103
+#: characters/templates/characters/character_detail.html:105
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -467,15 +467,15 @@ msgstr ""
 "Dieser Charakter wurde erschaffen ohne dass jemand angemeldet war. Er wird "
 "morgen gelöscht sein."
 
-#: characters/templates/characters/character_detail.html:112
+#: characters/templates/characters/character_detail.html:114
 msgid "Character"
 msgstr "Charakter"
 
-#: characters/templates/characters/character_detail.html:115
+#: characters/templates/characters/character_detail.html:117
 msgid "Gear"
 msgstr "Ausrüstung"
 
-#: characters/templates/characters/character_detail.html:118
+#: characters/templates/characters/character_detail.html:120
 #: characters/templates/characters/fragments/advancement.html:4
 msgid "Background"
 msgstr "Werdegang"
@@ -490,6 +490,9 @@ msgstr "Charakter erstellen"
 
 #: characters/templates/characters/contact.html:20
 #: characters/templates/characters/index.html:38
+#: templates/django_registration/activation_complete.html:21
+#: templates/django_registration/activation_failed.html:22
+#: templates/django_registration/registration_complete.html:22
 msgid "Die"
 msgstr "Würfel"
 
@@ -541,20 +544,25 @@ msgstr ""
 msgid "New Random Character"
 msgstr "Neuer Zufallscharakter"
 
-#: characters/templates/characters/create_character_constructed.html:58
-msgid "Character Points "
-msgstr "Charakterpunkte"
-
-#: characters/templates/characters/create_character_constructed.html:62
-#: characters/templates/characters/create_character_draft.html:54
+#: characters/templates/characters/create_character_constructed.html:98
+#: characters/templates/characters/create_character_draft.html:56
 msgid "Preview"
 msgstr "Vorschau"
 
-#: characters/templates/characters/create_character_constructed.html:64
+#: characters/templates/characters/create_character_constructed.html:100
+#: rules/templates/rules/template_list.html:44
+msgid "Search"
+msgstr "Suchen"
+
+#: characters/templates/characters/create_character_constructed.html:102
+msgid "Character Points "
+msgstr "Charakterpunkte"
+
+#: characters/templates/characters/create_character_constructed.html:103
 msgid "Finish Character"
 msgstr "Charakter fertigstellen"
 
-#: characters/templates/characters/create_character_draft.html:50
+#: characters/templates/characters/create_character_draft.html:59
 msgid "Draft Templates"
 msgstr "Schablonen"
 
@@ -626,32 +634,32 @@ msgstr "Geistige Fertigkeiten"
 msgid "Practical Skills"
 msgstr "Praxisfertigkeiten"
 
-#: characters/templates/characters/fragments/character.html:88
+#: characters/templates/characters/fragments/character.html:89
+msgid "Shadows"
+msgstr "Schatten"
+
+#: characters/templates/characters/fragments/character.html:103
 msgid "Dice"
 msgstr "Würfel"
 
-#: characters/templates/characters/fragments/character.html:91
+#: characters/templates/characters/fragments/character.html:106
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
-#: characters/templates/characters/fragments/character.html:95
+#: characters/templates/characters/fragments/character.html:110
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
-#: characters/templates/characters/fragments/character.html:99
+#: characters/templates/characters/fragments/character.html:114
 msgid "Rerolls"
 msgstr "Wiederholungswürfel"
 
-#: characters/templates/characters/fragments/character.html:105
+#: characters/templates/characters/fragments/character.html:120
 #: rules/templates/rules/_template_widget.html:21
 msgid "Knowledge"
 msgstr "Wissen"
 
-#: characters/templates/characters/fragments/character.html:117
-msgid "Shadows"
-msgstr "Schatten"
-
-#: characters/templates/characters/fragments/character.html:128
+#: characters/templates/characters/fragments/character.html:132
 msgid "Contacts"
 msgstr "Kontakte"
 
@@ -1104,11 +1112,112 @@ msgstr "Schatten"
 msgid "Requires"
 msgstr "Benötigt"
 
-#: urpg/settings.py:90
+#: templates/django_registration/activation_complete.html:9
+#: templates/django_registration/registration_complete.html:9
+msgid "Thanks!"
+msgstr "Danke!"
+
+#: templates/django_registration/activation_complete.html:15
+msgid ""
+"\n"
+"                            Your account is now active.\n"
+"                        "
+msgstr ""
+"\n"
+"\t\t\tDein Konto ist jetzt aktiv."
+
+#: templates/django_registration/activation_email_body.txt:1
+msgid "Hello"
+msgstr "Hallo"
+
+#: templates/django_registration/activation_email_body.txt:2
+msgid ""
+"\n"
+"welcome to Phase Six! To activate your account and create characters use the "
+"following link:\n"
+msgstr ""
+"\n"
+"willkommen bei Phase Six! Benutze den folgenden Link um dein Konto zu "
+"aktivieren:\n"
+
+#: templates/django_registration/activation_email_body.txt:6
+#, python-format
+msgid ""
+"\n"
+"The link will expire in %(t_days)s days.\n"
+msgstr ""
+"\n"
+"Der Link wird in %(t_days)s ungültig.\n"
+
+#: templates/django_registration/activation_email_subject.txt:1
+msgid "Welcome to Phase Six"
+msgstr "Willkommen bei Phase Six"
+
+#: templates/django_registration/activation_failed.html:9
+msgid "Oh no!"
+msgstr "Oh nein!"
+
+#: templates/django_registration/activation_failed.html:15
+msgid ""
+"\n"
+"                            There was an error activating your account. "
+"Maybe the activation link is too old.\n"
+"                            Try to register again.\n"
+"                        "
+msgstr ""
+"\n"
+"\t\t\tEs gab einen Fehler beim Aktivieren deines Kontos. Vielleicht war der "
+"Link zu alt.\n"
+"\t\t\tVersuch dich noch einmal zu registrieren"
+
+#: templates/django_registration/registration_complete.html:15
+msgid ""
+"\n"
+"                            Your registration is almost complete. Check your "
+"inbox for an activation mail and\n"
+"                            use the link inside to activate your account.\n"
+"                        "
+msgstr ""
+"\n"
+"\t\t\t\tDeine Registrierung ist fast abgeschlossen. Schau in deinem Postfach "
+"nach einer \n"
+"\t\t\t\tAktivierungsmail und benutze den Link darin um dein Konto zu "
+"aktivieren."
+
+#: templates/django_registration/registration_form.html:5
+msgid "Create an account"
+msgstr "Konto erstellen"
+
+#: templates/django_registration/registration_form.html:7
+msgid ""
+"\n"
+"        You have to create an account to create persistent characters and "
+"(some day) manage adventures, write in the\n"
+"        forums or do many more things. Choose an username and a password, "
+"and enter your mail address to\n"
+"        create an account.\n"
+"    "
+msgstr ""
+"\n"
+"\tDu musst ein Konto anlegen um beständige Charaktere zu erschaffen und "
+"(eines Tages) Abenteuer zu verwalten,\n"
+"\tim Forum zu schreiben und viele weitere Dinge zu tun. Wähle einen "
+"Benutzernamen und ein Passwort, und gib\n"
+"\tdeine EMail Adresse an um ein Konto anzulegen."
+
+#: templates/django_registration/registration_form.html:16
+msgid "Register"
+msgstr "Registrieren"
+
+#: templates/registration/login.html:12
+msgid "Create Account"
+msgstr "Konto erstellen"
+
+#: urpg/settings.py:93
 msgid "German"
 msgstr "Deutsch"
 
-#: urpg/settings.py:91
+#: urpg/settings.py:94
 msgid "English"
 msgstr "Englisch"
 

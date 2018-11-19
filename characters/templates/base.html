@@ -47,7 +47,9 @@
                             <li class="nav-item dropdown" id="theme-dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> {{ request.user|capfirst }}</b></a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                                    {% if user.is_staff %}
+                                        <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a>
                                 </div>
                             </li>

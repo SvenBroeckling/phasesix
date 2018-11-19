@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n %}
+
+{% block content %}
+    <h1>{% trans 'Create an account' %}</h1>
+    <p>
+    {% blocktrans %}
+        You have to create an account to create persistent characters and (some day) manage adventures, write in the
+        forums or do many more things. Choose an username and a password, and enter your mail address to
+        create an account.
+    {% endblocktrans %}
+    </p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
+    </form>
+{% endblock %}
