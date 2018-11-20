@@ -29,6 +29,8 @@
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{% trans 'Play' %}</a>
                             <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'characters:list' %}">{% trans 'Characters' %}</a>
                                 <a class="dropdown-item" href="{% url 'rulebook:index' %}">{% trans 'Rulebook' %}</a>
                                 <div class="dropdown-divider"></div> 
