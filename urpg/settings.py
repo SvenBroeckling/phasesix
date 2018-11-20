@@ -95,6 +95,8 @@ LANGUAGES = (
 )
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
+DEFAULT_FROM_EMAIL = 'game@phasesix.org <Phase Six>'
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
