@@ -1,25 +1,23 @@
 {% load characters_extras rules_extras i18n %}
 <div class="row">
     <div class="col-md-4">
-        <h2 class="text-center">- {% trans 'Actions' %} -</h2>
+        <h2 class="mb-2">{% trans 'Actions' %}</h2>
         <table class="table">
-            <table class="table">
-                <tr>
-                    <td>{% trans 'Actions' %}</td>
-                    <td class="text-right">{% color_value_span object.actions 5 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Bonus Dice' %} ({% trans 'Bonus Action' %})</td>
-                    <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Destiny Dice' %} ({% trans 'Steal Action' %})</td>
-                    <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
-                </tr>
-            </table>
+            <tr>
+                <td>{% trans 'Actions' %}</td>
+                <td class="text-right">{% color_value_span object.actions 5 %}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Bonus Dice' %} ({% trans 'Bonus Action' %})</td>
+                <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Destiny Dice' %} ({% trans 'Steal Action' %})</td>
+                <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
+            </tr>
         </table>
 
-        <h2 class="text-center">- {% trans 'Skills' %} -</h2>
+        <h2 class="mb-2">{% trans 'Skills' %}</h2>
         <table class="table">
             {% for skill in object.characterskill_set.combat_skills %}
                 <tr>
@@ -29,7 +27,7 @@
             {% endfor %}
         </table>
 
-        <h2 class="text-center">- {% trans 'Rolls' %} -</h2>
+        <h2 class="mb-2">{% trans 'Rolls' %}</h2>
         <table class="table">
             <tr>
                 <td>{% trans 'Attack Roll' %}</td>
@@ -51,23 +49,20 @@
     </div>
 
     <div class="col-md-8 mb-4">
-        <div class="dropdown">
-            <h2 data-toggle="dropdown" class="mb-1 text-center touch-menu">- {% trans 'Weapons' %} -</h2>
-            <div class="dropdown-menu">
-                <a
-                        class="dropdown-item modal-trigger-link"
-                        data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                        data-toggle="modal"
-                        data-target=".character-modal"
-                        data-modal-title="{% trans 'Add Weapon' %}"
-                        href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
-            </div>
-        </div>
+        <h2 class="mb-2">{% trans 'Weapons' %}
+            <button
+                    title="{% trans 'Add weapon' %}"
+                    class="btn btn-primary buy-button float-right"
+                    data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                    data-toggle="modal"
+                    data-modal-title="{% trans 'Add weapon' %}"
+                    data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
+        </h2>
 
         <div class="row">
             {% for weapon in object.characterweapon_set.all %}
-                <div class="col-md-12 dropdown">
-                    <div class="card mb-2 touch-menu" data-toggle="dropdown">
+                <div class="col-md-12">
+                    <div class="card mb-2">
                         <div class="card-header">
                             <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
                             {{ weapon.weapon }}
@@ -106,27 +101,29 @@
                                     {% endif %}
                                 </div>
                             </div>
+                            <div class="dropdown">
+                                <button data-toggle="dropdown" class="btn btn-primary buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Action' %}</button>
+                                <div class="dropdown-menu">
+                                    <a
+                                            class="dropdown-item modal-trigger-link"
+                                            data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                            data-toggle="modal"
+                                            data-target=".character-modal"
+                                            data-modal-title="{% trans 'Add Modification' %}"
+                                            href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a
+                                            class="dropdown-item modal-trigger-link"
+                                            data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                                            data-toggle="modal"
+                                            data-target=".character-modal"
+                                            data-modal-title="{% trans 'Add Weapon' %}"
+                                            href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="dropdown-menu">
-                        <a
-                                class="dropdown-item modal-trigger-link"
-                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
-                                data-modal-title="{% trans 'Add Modification' %}"
-                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
-                        <a class="dropdown-item" href="#"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
-                        <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
-                        <div class="dropdown-divider"></div>
-                        <a
-                                class="dropdown-item modal-trigger-link"
-                                data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
-                                data-modal-title="{% trans 'Add Weapon' %}"
-                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
                     </div>
                 </div>
             {% empty %}

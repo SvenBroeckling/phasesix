@@ -1,7 +1,7 @@
 {% load characters_extras rules_extras i18n %}
 <div class="row">
-    <div class="col-md-12 text-center mb-1">
-        <h2>- {% trans 'Persona' %} -</h2>
+    <div class="col-md-12 mb-2">
+        <h2>{% trans 'Persona' %}</h2>
     </div>
     <div class="col-sm-6 col-md-4 col-xl-2">
         {% trans 'Openness' as attribute_name %}
@@ -31,8 +31,8 @@
 
 
 <div class="row">
-    <div class="col-md-12 text-center mb-1">
-        <h2>- {% trans 'Physis' %} -</h2>
+    <div class="col-md-12 mb-2">
+        <h2>{% trans 'Physis' %}</h2>
     </div>
     <div class="col-sm-6 col-md-4 col-xl-2">
         {% trans 'Deftness' as attribute_name %}
@@ -62,7 +62,7 @@
 
 <div class="row mt-2">
     <div class="col-md-4 mb-1">
-        <h2 class="mb-1 text-center">- {% trans 'Mind Skills' %} -</h2>
+        <h2 class="mb-2">{% trans 'Mind Skills' %}</h2>
         <table class="table">
             {% for skill in object.characterskill_set.mind_skills %}
                 <tr>
@@ -74,7 +74,7 @@
     </div>
 
     <div class="col-md-4 mb-1">
-        <h2 class="text-center mb-1">- {% trans 'Practical Skills' %} -</h2>
+        <h2 class="mb-2">{% trans 'Practical Skills' %}</h2>
         <table class="table">
             {% for skill in object.characterskill_set.practical_skills %}
                 <tr>
@@ -84,9 +84,10 @@
             {% endfor %}
         </table>
     </div>
+
     <div class="col-md-4 mb-1">
         {% if object.shadows.exists %}
-            <h2 class="text-center mb-1">- {% trans 'Shadows' %} -</h2>
+            <h2 class="mb-2">{% trans 'Shadows' %}</h2>
             <table class="table">
                 {% for shadow in object.shadows.all %}
                     <tr>
@@ -100,7 +101,7 @@
             </table>
         {% endif %}
 
-        <h2 class="text-center mb-1">- {% trans 'Dice' %} -</h2>
+        <h2 class="mb-2">{% trans 'Dice' %}</h2>
         <table class="table">
             <tr>
                 <td>{% trans 'Bonus Dice' %}</td>
@@ -117,7 +118,7 @@
         </table>
 
         {% if object.characterknowledge_set.exists %}
-            <h2 class="text-center mb-1">- {% trans 'Knowledge' %} -</h2>
+            <h2 class="mb-2">{% trans 'Knowledge' %}</h2>
             <table class="table">
                 {% for knowledge in object.characterknowledge_set.all %}
                     <tr>
@@ -129,7 +130,7 @@
         {% endif %}
 
         {% if object.contacts.exists %}
-            <h2 class="text-center mb-1">- {% trans 'Contacts' %} -</h2>
+            <h2 class="mb-2">{% trans 'Contacts' %}</h2>
             <div class="card mb-2">
                 <div class="card-body">
                     {% for contact in object.contacts.all %}
