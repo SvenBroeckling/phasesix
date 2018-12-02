@@ -1,6 +1,6 @@
 {% load characters_extras rules_extras i18n %}
 <div class="row">
-    <div class="col-md-12 mb-4">
+    <div class="col-md-8 mb-4">
         <div class="dropdown">
             <h2 data-toggle="dropdown" class="mb-1 text-center touch-menu">- {% trans 'Weapons' %} -</h2>
             <div class="dropdown-menu">
@@ -99,6 +99,37 @@
                 </div>
             {% endfor %}
         </div>
+    </div>
+
+    <div class="col-md-4">
+        <h2 class="text-center">- {% trans 'Skills' %} -</h2>
+        <table class="table">
+            {% for skill in object.characterskill_set.combat_skills %}
+                <tr>
+                    <td>{{ skill.skill }}</td>
+                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h2 class="text-center">- {% trans 'Rolls' %} -</h2>
+        <table class="table">
+            <tr>
+                <td>{% trans 'Attack Roll' %}</td>
+                <td>7 - {% trans 'Skill' %} - {% trans 'Weapon Accuracy' %}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Cover Roll' %}</td>
+                <td>
+                    4+ - {% trans 'Mostly covered' %}<br>
+                    5+ - {% trans 'Half cover' %}<br>
+                    6+ - {% trans 'Minimal cover' %}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Armor roll' %}</td>
+                <td>7 - {% trans 'Armor value' %} + {% trans 'penetration' %}</td>
+            </tr>
+        </table>
     </div>
 </div>
 

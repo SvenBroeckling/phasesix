@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 08:13+0000\n"
-"PO-Revision-Date: 2018-11-20 09:12+0100\n"
+"POT-Creation-Date: 2018-12-02 11:55+0000\n"
+"PO-Revision-Date: 2018-12-02 12:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,16 +21,16 @@ msgstr ""
 #: armory/models.py:21 armory/models.py:36 armory/models.py:67
 #: armory/models.py:96 armory/models.py:118 armory/models.py:160
 #: armory/models.py:182 armory/models.py:216 characters/models.py:16
-#: rulebook/models.py:14 rules/models.py:24 rules/models.py:39
-#: rules/models.py:72 rules/models.py:92 rules/models.py:111
-#: rules/models.py:161 rules/models.py:202
+#: forum/models.py:13 forum/models.py:28 rulebook/models.py:14
+#: rules/models.py:24 rules/models.py:39 rules/models.py:72 rules/models.py:93
+#: rules/models.py:112 rules/models.py:162 rules/models.py:203
 msgid "name"
 msgstr "Name"
 
 #: armory/models.py:22 armory/models.py:37 armory/models.py:68
 #: armory/models.py:119 armory/models.py:161 armory/models.py:183
-#: armory/models.py:217 rules/models.py:40 rules/models.py:112
-#: rules/models.py:174 rules/models.py:206
+#: armory/models.py:217 rules/models.py:40 rules/models.py:113
+#: rules/models.py:175 rules/models.py:207
 msgid "description"
 msgstr "Beschreibung"
 
@@ -127,7 +127,7 @@ msgstr "Kapazität"
 msgid "wounds"
 msgstr "Wunden"
 
-#: armory/models.py:126
+#: armory/models.py:126 characters/templates/characters/fragments/gear.html:130
 msgid "penetration"
 msgstr "Durchschlag"
 
@@ -176,7 +176,7 @@ msgstr "Waffenmodifikationstyp"
 msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
-#: armory/models.py:202 rules/models.py:223
+#: armory/models.py:202 rules/models.py:224
 msgid "attribute"
 msgstr "Attribut"
 
@@ -212,11 +212,11 @@ msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 msgid "lineage"
 msgstr "Abstammung"
 
-#: characters/models.py:32 rules/models.py:125
+#: characters/models.py:32 rules/models.py:126
 msgid "intelligence"
 msgstr "Intelligenz"
 
-#: characters/models.py:33 rules/models.py:126
+#: characters/models.py:33 rules/models.py:127
 msgid "max health"
 msgstr "Maximale Lebenspunkte"
 
@@ -284,23 +284,24 @@ msgstr "Verträglichkeit Basis"
 msgid "base neuroticism"
 msgstr "Neurotizismus Basis"
 
-#: characters/models.py:58 rules/models.py:118
+#: characters/models.py:58 rules/models.py:119
 msgid "shadows"
 msgstr "Schatten"
 
-#: characters/models.py:217 characters/models.py:235
+#: characters/models.py:220 characters/models.py:238
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:253
+#: characters/models.py:256 forum/models.py:12 forum/models.py:25
+#: forum/models.py:38
 msgid "created at"
 msgstr "Erzeugt am"
 
-#: characters/models.py:271
+#: characters/models.py:274
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:284
+#: characters/models.py:287
 msgid "quantity"
 msgstr "Menge"
 
@@ -350,8 +351,8 @@ msgstr "Anmelden"
 #: characters/templates/characters/_add_riot_gear.html:14
 #: characters/templates/characters/_add_weapons.html:40
 #: characters/templates/characters/fragments/gear.html:42
-#: characters/templates/characters/fragments/gear.html:131
-#: characters/templates/characters/fragments/gear.html:194
+#: characters/templates/characters/fragments/gear.html:162
+#: characters/templates/characters/fragments/gear.html:225
 msgid "Concealment"
 msgstr "Verborgenheit"
 
@@ -359,24 +360,24 @@ msgstr "Verborgenheit"
 #: characters/templates/characters/_add_riot_gear.html:15
 #: characters/templates/characters/_add_weapons.html:41
 #: characters/templates/characters/fragments/gear.html:43
-#: characters/templates/characters/fragments/gear.html:132
-#: characters/templates/characters/fragments/gear.html:195
+#: characters/templates/characters/fragments/gear.html:163
+#: characters/templates/characters/fragments/gear.html:226
 msgid "Weight"
 msgstr "Gewicht"
 
 #: characters/templates/characters/_add_items.html:28
-#: characters/templates/characters/fragments/gear.html:196
+#: characters/templates/characters/fragments/gear.html:227
 msgid "Value"
 msgstr "Wert"
 
 #: characters/templates/characters/_add_items.html:32
-#: characters/templates/characters/fragments/gear.html:213
-#: characters/templates/characters/fragments/gear.html:214
+#: characters/templates/characters/fragments/gear.html:244
+#: characters/templates/characters/fragments/gear.html:245
 msgid "Add item"
 msgstr "Gegenstand hinzufügen"
 
 #: characters/templates/characters/_add_riot_gear.html:13
-#: characters/templates/characters/fragments/gear.html:130
+#: characters/templates/characters/fragments/gear.html:161
 #: gmtools/templates/gmtools/combat_sim_results.html:11
 #: gmtools/templates/gmtools/combat_sim_results.html:26
 msgid "Protection"
@@ -677,12 +678,12 @@ msgid "Add Weapon"
 msgstr "Waffe hinzufügen"
 
 #: characters/templates/characters/fragments/gear.html:70
-#: characters/templates/characters/fragments/gear.html:137
+#: characters/templates/characters/fragments/gear.html:168
 msgid "Damage"
 msgstr "Schaden"
 
 #: characters/templates/characters/fragments/gear.html:71
-#: characters/templates/characters/fragments/gear.html:138
+#: characters/templates/characters/fragments/gear.html:169
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -694,56 +695,101 @@ msgstr "Noch keine Waffen"
 msgid "This character has no weapons yet."
 msgstr "Dieser Charakter hat noch keine Waffen"
 
-#: characters/templates/characters/fragments/gear.html:109
+#: characters/templates/characters/fragments/gear.html:105
+msgid "Skills"
+msgstr "Fertigkeiten"
+
+#: characters/templates/characters/fragments/gear.html:114
+msgid "Rolls"
+msgstr "Würfe"
+
+#: characters/templates/characters/fragments/gear.html:117
+msgid "Attack Roll"
+msgstr "Angriffswurf"
+
+#: characters/templates/characters/fragments/gear.html:118
+#: rules/templates/rules/_template_widget.html:16
+msgid "Skill"
+msgstr "Fertigkeit"
+
+#: characters/templates/characters/fragments/gear.html:118
+msgid "Weapon Accuracy"
+msgstr "Waffengenauigkeit"
+
+#: characters/templates/characters/fragments/gear.html:121
+msgid "Cover Roll"
+msgstr "Deckungswurf"
+
+#: characters/templates/characters/fragments/gear.html:123
+msgid "Mostly covered"
+msgstr "Größtenteils verdeckt"
+
+#: characters/templates/characters/fragments/gear.html:124
+msgid "Half cover"
+msgstr "Halbe Deckung"
+
+#: characters/templates/characters/fragments/gear.html:125
+msgid "Minimal cover"
+msgstr "Minimale Deckung"
+
+#: characters/templates/characters/fragments/gear.html:129
+msgid "Armor roll"
+msgstr "Rüstungswurf"
+
+#: characters/templates/characters/fragments/gear.html:130
+msgid "Armor value"
+msgstr "Rüstungswert"
+
+#: characters/templates/characters/fragments/gear.html:140
 msgid "Amor"
 msgstr "Rüstung"
 
-#: characters/templates/characters/fragments/gear.html:116
-#: characters/templates/characters/fragments/gear.html:117
-#: characters/templates/characters/fragments/gear.html:145
-#: characters/templates/characters/fragments/gear.html:146
-#: characters/templates/characters/fragments/gear.html:162
+#: characters/templates/characters/fragments/gear.html:147
+#: characters/templates/characters/fragments/gear.html:148
+#: characters/templates/characters/fragments/gear.html:176
+#: characters/templates/characters/fragments/gear.html:177
+#: characters/templates/characters/fragments/gear.html:193
 msgid "Add Armor"
 msgstr "Rüstung hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:133
+#: characters/templates/characters/fragments/gear.html:164
 msgid "Condition"
 msgstr "Zustand"
 
-#: characters/templates/characters/fragments/gear.html:153 gmtools/forms.py:16
+#: characters/templates/characters/fragments/gear.html:184 gmtools/forms.py:16
 msgid "Armor"
 msgstr "Rüstung"
 
-#: characters/templates/characters/fragments/gear.html:156
+#: characters/templates/characters/fragments/gear.html:187
 msgid "No armor yet"
 msgstr "Noch keine Rüstung"
 
-#: characters/templates/characters/fragments/gear.html:157
+#: characters/templates/characters/fragments/gear.html:188
 msgid "This character has no amor yet."
 msgstr "Dieser Charakter hat noch keine Rüstung."
 
-#: characters/templates/characters/fragments/gear.html:163
+#: characters/templates/characters/fragments/gear.html:194
 msgid "Add armor"
 msgstr "Rüstung hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:173
 #: characters/templates/characters/fragments/gear.html:204
+#: characters/templates/characters/fragments/gear.html:235
 msgid "Items"
 msgstr "Gegenstände"
 
-#: characters/templates/characters/fragments/gear.html:180
+#: characters/templates/characters/fragments/gear.html:211
 msgid "Add Items"
 msgstr "Gegenstände hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:181
+#: characters/templates/characters/fragments/gear.html:212
 msgid "Add Item"
 msgstr "Gegenstand hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:207
+#: characters/templates/characters/fragments/gear.html:238
 msgid "No items yet"
 msgstr "Noch keine Gegenstände"
 
-#: characters/templates/characters/fragments/gear.html:208
+#: characters/templates/characters/fragments/gear.html:239
 msgid "This character has no items yet."
 msgstr "Dieser Charakter hat noch keine Gegenstände."
 
@@ -817,6 +863,38 @@ msgstr "Schau in die Regeln"
 #: characters/templates/characters/index.html:35
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
+
+#: forum/models.py:6 urpg/settings.py:94
+msgid "German"
+msgstr "Deutsch"
+
+#: forum/models.py:7 urpg/settings.py:95
+msgid "English"
+msgstr "Englisch"
+
+#: forum/models.py:14
+msgid "language"
+msgstr "Sprache"
+
+#: forum/models.py:15
+msgid "is staff only"
+msgstr "Nur Mitarbeiter"
+
+#: forum/models.py:41 rulebook/models.py:16
+msgid "text"
+msgstr "Text"
+
+#: forum/templates/forum/index.html:13
+msgid "Latest Post"
+msgstr "Letzter Beitrag"
+
+#: forum/templates/forum/index.html:13
+msgid "by"
+msgstr "von"
+
+#: forum/templates/forum/index.html:16
+msgid "No posts yet."
+msgstr "Noch keine Beiträge."
 
 #: gmtools/forms.py:7
 msgid "no cover"
@@ -921,10 +999,6 @@ msgstr "Nummer"
 msgid "FA Icon Class"
 msgstr "FA Icon Klasse"
 
-#: rulebook/models.py:16
-msgid "text"
-msgstr "Text"
-
 #: rulebook/models.py:21
 msgid "chapter"
 msgstr "Kapitel"
@@ -953,7 +1027,7 @@ msgstr "Erweiterungen"
 msgid "lineages"
 msgstr "Abstammungen"
 
-#: rules/models.py:55 rules/models.py:179
+#: rules/models.py:55 rules/models.py:180
 msgid "template category"
 msgstr "Schablonenkategorie"
 
@@ -973,137 +1047,137 @@ msgstr "geistig"
 msgid "kind"
 msgstr "Art"
 
-#: rules/models.py:78 rules/models.py:235
+#: rules/models.py:75
+msgid "show on combat tab"
+msgstr "auf Kampftab zeigen"
+
+#: rules/models.py:79 rules/models.py:236
 msgid "skill"
 msgstr "Fertigkeit"
 
-#: rules/models.py:79
+#: rules/models.py:80
 msgid "skills"
 msgstr "Fertigkeiten"
 
-#: rules/models.py:94
+#: rules/models.py:95
 msgid "add to all characters"
 msgstr "Zu allen Charakteren hinzufügen"
 
-#: rules/models.py:98 rules/models.py:99 rules/models.py:245
+#: rules/models.py:99 rules/models.py:100 rules/models.py:246
 msgid "knowledge"
 msgstr "Wissen"
 
-#: rules/models.py:117 rules/models.py:255
+#: rules/models.py:118 rules/models.py:256
 msgid "shadow"
 msgstr "Schatten"
 
-#: rules/models.py:128
+#: rules/models.py:129
 msgid "bonus dice"
 msgstr "Bonuswürfel"
 
-#: rules/models.py:129
+#: rules/models.py:130
 msgid "destiny dice"
 msgstr "Schicksalswürfel"
 
-#: rules/models.py:130
+#: rules/models.py:131
 msgid "rerolls"
 msgstr "Wiederholungswürfel"
 
-#: rules/models.py:132
+#: rules/models.py:133
 msgid "deftness"
 msgstr "Geschick"
 
-#: rules/models.py:133
+#: rules/models.py:134
 msgid "strength"
 msgstr "Kraft"
 
-#: rules/models.py:134
+#: rules/models.py:135
 msgid "attractiveness"
 msgstr "Attraktivität"
 
-#: rules/models.py:135
+#: rules/models.py:136
 msgid "endurance"
 msgstr "Ausdauer"
 
-#: rules/models.py:136
+#: rules/models.py:137
 msgid "resistance"
 msgstr "Resistenz"
 
-#: rules/models.py:137
+#: rules/models.py:138
 msgid "quickness"
 msgstr "Schnelligkeit"
 
-#: rules/models.py:139
+#: rules/models.py:140
 msgid "openness"
 msgstr "Offenheit"
 
-#: rules/models.py:140
+#: rules/models.py:141
 msgid "conscientiousness"
 msgstr "Gewissenhaftigkeit"
 
-#: rules/models.py:141
+#: rules/models.py:142
 msgid "extraversion"
 msgstr "Extraversion"
 
-#: rules/models.py:142
+#: rules/models.py:143
 msgid "agreeableness"
 msgstr "Verträglichkeit"
 
-#: rules/models.py:143
+#: rules/models.py:144
 msgid "neuroticism"
 msgstr "Neurotizismus"
 
-#: rules/models.py:149
+#: rules/models.py:150
 msgid "None"
 msgstr "Keine"
 
-#: rules/models.py:163 rules/models.py:169
+#: rules/models.py:164 rules/models.py:170
 msgid "bootstrap color class"
 msgstr "Bootstrap Farbklasse"
 
-#: rules/models.py:175
+#: rules/models.py:176
 msgid "sort order"
 msgstr "Sortierreihenfolge"
 
-#: rules/models.py:180
+#: rules/models.py:181
 msgid "template categories"
 msgstr "Schablonenkategorien"
 
-#: rules/models.py:204
+#: rules/models.py:205
 msgid "category"
 msgstr "Kategorie"
 
-#: rules/models.py:208
+#: rules/models.py:209
 msgid "cost"
 msgstr "Kosten"
 
-#: rules/models.py:212
+#: rules/models.py:213
 msgid "character template"
 msgstr "Charakterschablone"
 
-#: rules/models.py:213
+#: rules/models.py:214
 msgid "character templates"
 msgstr "Charakterschablonen"
 
-#: rules/models.py:221 rules/models.py:261
+#: rules/models.py:222 rules/models.py:262
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:229
+#: rules/models.py:230
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: rules/models.py:239
+#: rules/models.py:240
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: rules/models.py:249
+#: rules/models.py:250
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
 #: rules/templates/rules/_template_widget.html:11
 msgid "Attribute"
 msgstr "Attribut"
-
-#: rules/templates/rules/_template_widget.html:16
-msgid "Skill"
-msgstr "Fertigkeit"
 
 #: rules/templates/rules/_template_widget.html:26
 msgid "Shadow"
@@ -1213,14 +1287,6 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
-
-#: urpg/settings.py:93
-msgid "German"
-msgstr "Deutsch"
-
-#: urpg/settings.py:94
-msgid "English"
-msgstr "Englisch"
 
 #~ msgid "Reference"
 #~ msgstr "Referenz"

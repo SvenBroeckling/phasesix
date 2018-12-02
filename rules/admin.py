@@ -30,8 +30,8 @@ class TemplateAdmin(admin.ModelAdmin):
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'kind', 'extension')
-    list_editable = ('kind',)
+    list_display = ('name_de', 'name_en', 'kind', 'extension', 'show_on_combat_tab')
+    list_editable = ('kind', 'show_on_combat_tab')
 
 
 class LineageTemplatePointsInline(admin.TabularInline):
@@ -40,6 +40,7 @@ class LineageTemplatePointsInline(admin.TabularInline):
 
 class LineageAdmin(admin.ModelAdmin):
     inlines = [LineageTemplatePointsInline]
+
 
 admin.site.register(Extension)
 admin.site.register(Skill, SkillAdmin)

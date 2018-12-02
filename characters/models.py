@@ -208,6 +208,9 @@ class CharacterSkillQuerySet(models.QuerySet):
     def practical_skills(self):
         return self.filter(skill__kind='p')
 
+    def combat_skills(self):
+        return self.filter(skill__show_on_combat_tab=True)
+
 
 class CharacterSkill(models.Model):
     objects = CharacterSkillQuerySet.as_manager()
