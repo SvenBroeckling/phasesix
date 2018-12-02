@@ -1,6 +1,24 @@
 {% load characters_extras rules_extras i18n %}
 <div class="row">
     <div class="col-md-4">
+        <h2 class="text-center">- {% trans 'Actions' %} -</h2>
+        <table class="table">
+            <table class="table">
+                <tr>
+                    <td>{% trans 'Actions' %}</td>
+                    <td class="text-right">{% color_value_span object.actions 5 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Bonus Dice' %} ({% trans 'Bonus Action' %})</td>
+                    <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Destiny Dice' %} ({% trans 'Steal Action' %})</td>
+                    <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
+                </tr>
+            </table>
+        </table>
+
         <h2 class="text-center">- {% trans 'Skills' %} -</h2>
         <table class="table">
             {% for skill in object.characterskill_set.combat_skills %}
@@ -10,6 +28,7 @@
                 </tr>
             {% endfor %}
         </table>
+
         <h2 class="text-center">- {% trans 'Rolls' %} -</h2>
         <table class="table">
             <tr>

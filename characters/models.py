@@ -93,6 +93,10 @@ class Character(models.Model):
                 self.shadows.remove(tm.shadow)
 
     @property
+    def actions(self):
+        return 1 + ((self.quickness + self.deftness) / 2)
+
+    @property
     def remaining_template_points(self):
         template_points = self.lineage.lineagetemplatepoints_set.aggregate(
             Sum('points'))['points__sum'] or 0
