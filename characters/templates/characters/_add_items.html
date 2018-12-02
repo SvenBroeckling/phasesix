@@ -23,6 +23,7 @@
                                         <span class="float-right small">{{ item.type }}</span>
                                     </div>
                                     <div class="card-body">
+                                        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
                                         <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span item.concealment 6 invert=True %}<br>
                                         <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
                                         <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span item.price 500 invert=True %} €

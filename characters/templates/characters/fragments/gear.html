@@ -84,10 +84,11 @@
                     <div class="card mb-2">
                         <div class="card-header">
                             <i class="{{ ci.item.extension.fa_icon_class }}" title="{{ ci.item.extension }}"></i>
-                            {{ ci.item }}
+                            {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}{% endif %} {{ ci.item }}
                             <span class="float-right small">{{ ci.item.type }}</span>
                         </div>
                         <div class="card-body">
+                            {% if ci.item.description %}<p>{{ ci.item.description }}</p>{% endif %}
                             <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
                             <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
                             <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
