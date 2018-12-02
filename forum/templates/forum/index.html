@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    {% for board in staff_boards %}
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ board.get_absolute_url }}">
+                    <h2>{{ board }}</h2>
+                </a>
+                {% if board.thread_set.exists %}
+                    {% with post=board.latest_thread.latest_post %}
+                        {% trans 'Latest Post' %}: {{ post.created_at|date:"d.m.Y h:i:s" }} {% trans 'by' %} {{ post.created_by }}
+                    {% endwith %}
+                {% else %}
+                    {% trans 'No posts yet.' %}
+                {% endif %}
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

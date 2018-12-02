@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^contact/', TemplateView.as_view(template_name="characters/contact.html"), name="contact"),
     url(r'^', include('characters.urls', namespace='characters')),
+    url(r'forum/', include('forum.urls', namespace='forum')),
     url(r'rulebook/', include('rulebook.urls', namespace='rulebook')),
     url(r'rules/', include('rules.urls', namespace='rules')),
     url(r'gmtools/', include('gmtools.urls', namespace='gmtools')),

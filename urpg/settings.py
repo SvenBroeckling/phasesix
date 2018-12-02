@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'rules',
     'characters',
     'rulebook',
+    'forum',
 ]
 
 MIDDLEWARE = [
