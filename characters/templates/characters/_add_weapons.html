@@ -2,7 +2,7 @@
 <div>
     <ul class="nav nav-tabs">
         {% for t in weapon_types %}
-            <li {% if forloop.first %} class="active nav-item" {% endif %}>
+            <li class="{% if forloop.first %}active{% endif %} nav-item">
                 <a class="nav-link" href="#w{{ t.id }}" aria-controls="home" role="tab" data-toggle="tab">{{ t }}</a>
             </li>
         {% endfor %}

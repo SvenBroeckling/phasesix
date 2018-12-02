@@ -303,10 +303,12 @@ class XhrAddWeaponModView(TemplateView):
     template_name = 'characters/_add_weapon_mod.html'
 
     def get_context_data(self, **kwargs):
+        character =  Character.objects.get(id=kwargs['pk'])
         context = super(XhrAddWeaponModView, self).get_context_data(**kwargs)
-        context['character'] = Character.objects.get(id=kwargs['pk'])
+        context['character'] = character
         context['weapon'] = CharacterWeapon.objects.get(id=self.request.GET.get('weapon_id'))
-        context['weapon_modification_types'] = WeaponModificationType.objects.all()
+        context['weapon_modification_types'] = WeaponModificationType.objects.for_extensions(
+            character.extensions)
         return context
 
 

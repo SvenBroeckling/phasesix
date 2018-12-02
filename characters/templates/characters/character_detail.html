@@ -116,6 +116,9 @@
                     <a class="nav-link" data-toggle="tab" href="#v-gear" role="tab">{% trans 'Gear' %}</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#v-combat" role="tab">{% trans 'Combat' %}</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#v-background" role="tab">{% trans 'Background' %}</a>
                 </li>
             </ul>
@@ -127,6 +130,10 @@
 
                 <div class="tab-pane fade" id="v-gear" role="tabpanel">
                     {% include 'characters/fragments/gear.html' %}
+                </div>
+
+                <div class="tab-pane fade" id="v-combat" role="tabpanel">
+                    {% include 'characters/fragments/combat.html' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-background" role="tabpanel">

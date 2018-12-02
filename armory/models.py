@@ -156,7 +156,17 @@ class Weapon(models.Model, metaclass=TransMeta):
         return '+' * self.wounds
 
 
+class WeaponModificationTypeQuerySet(models.QuerySet):
+    def for_extensions(self, extension_rm):
+        return self.filter(
+            Q(weaponmodification__extension__id__in=extension_rm.all()) |
+            Q(weaponmodification__extension__id__in=Extension.objects.filter(is_mandatory=True))
+        ).distinct()
+
+
 class WeaponModificationType(models.Model, metaclass=TransMeta):
+    objects = WeaponModificationTypeQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=20)
     description = models.TextField(_('description'), blank=True, null=True)
     unique_equip = models.BooleanField(
@@ -203,7 +213,7 @@ class WeaponModificationAttributeChange(models.Model):
     modifier = models.IntegerField(_('modifier'), default=0)
 
     def get_attribute_display(self):
-        return Weapon._meta.get_field(self.attribute).verbose_name
+        return _(Weapon._meta.get_field(self.attribute).verbose_name)
 
     def get_modifier_display(self):
         return "%+d" % self.modifier
