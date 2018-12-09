@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 FORUM_LANGUAGE_CHOICES = (
@@ -17,6 +18,9 @@ class Board(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('forum:board_detail', kwargs={'pk': self.id})
+
     def latest_thread(self):
         return self.thread_set.latest('created_at')
 
@@ -30,6 +34,9 @@ class Thread(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('forum:thread_detail', kwargs={'pk': self.id})
+
     def latest_post(self):
         return self.post_set.latest('created_at')
 
@@ -39,4 +46,3 @@ class Post(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     text = models.TextField(_('text'))
-

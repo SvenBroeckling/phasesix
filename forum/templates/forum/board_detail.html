@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n bootstrap4 %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ object.name }}</h1>
+            {% if board.thread_set.exists %}
+                {% with post=board.latest_thread.latest_post %}
+                    {% trans 'Latest Post' %}: {{ post.created_at|date:"d.m.Y h:i:s" }} {% trans 'by' %} {{ post.created_by }}
+                {% endwith %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group" role="group">
+                <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Create Thread' %}</a>
+            </div>
+
+            <div class="collapse" id="new-thread-collapse">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-outline-primary btn-sm mb-4">{% trans 'Create Thread' %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

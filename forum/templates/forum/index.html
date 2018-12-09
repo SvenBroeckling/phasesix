@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    {% for board in staff_boards %}
+    {% for board in boards %}
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ board.get_absolute_url }}">
