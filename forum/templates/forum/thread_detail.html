@@ -1,13 +1,54 @@
 {% extends 'base.html' %}
 {% load i18n bootstrap4 md2 static %}
 
+{% block javascript %}
+    <script>
+        $(function(){
+            $('#switch-subscribe').on('change', function(e){
+                $.post(
+                    $(this).data('url'),
+                    {
+                        value: $(this).prop('checked'),
+                        object: $(this).data('object')
+                    },
+                    function(data) {
+
+                    }
+                )
+            })
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
+    {% if user.is_authenticated %}
+        <div class="row">
+            <div class="col-md-12">
+                <span class="switch switch-sm float-right">
+                    <input
+                            type="checkbox"
+                            class="switch"
+                            {% if is_subscribed %}checked{% endif %}
+                            {% if is_subscribed_to_board %}
+                            disabled="disabled"
+                            {% endif %}
+                            id="switch-subscribe"
+                            data-url="{% url 'forum:subscribe' mode="thread" %}"
+                            data-object="{{ object.id }}">
+                    <label for="switch-subscribe">
+                        {% if is_subscribed_to_board %}
+                            {% trans 'You are subscribed to the board' %}
+                        {% else %}
+                            {% trans "Subscribe" %}
+                        {% endif %}
+                    </label>
+                </span>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-12">
-            <span class="switch switch-sm float-right">
-                <input type="checkbox" class="switch" id="switch-subscribe">
-                <label for="switch-subscribe">{% trans "Subscribe" %}</label>
-            </span>
             <h1 class="mb-0">
                 <a href="{% url 'forum:index' %}">{% trans 'Forum' %}</a> /
                 <a href="{{ object.board.get_absolute_url }}">{{ object.board.name }}</a>
@@ -16,23 +57,25 @@
             </h1>
         </div>
 
-        <div class="col-md-12">
-            <div class="btn-group" role="group">
-                <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Answer Thread' %}</a>
-            </div>
+        {% if user.is_authenticated %}
+            <div class="col-md-12">
+                <div class="btn-group" role="group">
+                    <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Answer Thread' %}</a>
+                </div>
 
-            <div class="collapse card" id="new-thread-collapse">
-                <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        <div class="btn-group" role="group">
-                            <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Answer Thread' %}</button>
-                        </div>
-                    </form>
+                <div class="collapse card" id="new-thread-collapse">
+                    <div class="card-body">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <div class="btn-group" role="group">
+                                <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Answer Thread' %}</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
         <div class="col-md-12">
             {% for post in object.post_set.all %}
@@ -56,22 +99,25 @@
             {% endfor %}
         </div>
 
-        <div class="col-md-12">
-            <div class="btn-group" role="group">
-                <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse-bottom">{% trans 'Answer Thread' %}</a>
-            </div>
+        {% if user.is_authenticated %}
+            <div class="col-md-12">
+                <div class="btn-group" role="group">
+                    <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse-bottom">{% trans 'Answer Thread' %}</a>
+                </div>
 
-            <div class="collapse card" id="new-thread-collapse-bottom">
-                <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        <div class="btn-group" role="group">
-                            <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Answer Thread' %}</button>
-                        </div>
-                    </form>
+                <div class="collapse card" id="new-thread-collapse-bottom">
+                    <div class="card-body">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <div class="btn-group" role="group">
+                                <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Answer Thread' %}</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
+
     </div>
 {% endblock %}

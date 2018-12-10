@@ -1,5 +1,6 @@
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormMixin
 from django.contrib import messages
@@ -21,6 +22,13 @@ class IndexView(TemplateView):
 class BoardDetailView(FormMixin, DetailView):
     model = Board
     form_class = NewThreadForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['is_subscribed'] = self.object.boardsubscription_set.filter(
+                user=self.request.user).exists()
+        return context
 
     def get(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -56,6 +64,15 @@ class ThreadDetailView(FormMixin, DetailView):
     model = Thread
     form_class = NewPostForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['is_subscribed'] = self.object.threadsubscription_set.filter(
+                user=self.request.user).exists()
+            context['is_subscribed_to_board'] = self.object.board.boardsubscription_set.filter(
+                user=self.request.user).exists()
+        return context
+
     def get(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.board.is_staff_only:
@@ -80,3 +97,23 @@ class ThreadDetailView(FormMixin, DetailView):
             return HttpResponseRedirect(obj.get_absolute_url())
         else:
             return self.form_invalid(form)
+
+
+class SubscribeView(View):
+    def post(self, request, *args, **kwargs):
+        if kwargs['mode'] == 'thread':
+            if request.POST.get('value', '') == 'true':
+                request.user.threadsubscription_set.create(
+                    thread=Thread.objects.get(id=request.POST.get('object')))
+            else:
+                request.user.threadsubscription_set.filter(
+                    thread__id=request.POST.get('object')).delete()
+        else:
+            if request.POST.get('value', '') == 'true':
+                request.user.boardsubscription_set.create(
+                    board=Board.objects.get(id=request.POST.get('object')))
+            else:
+                request.user.boardsubscription_set.filter(
+                    board__id=request.POST.get('object')).delete()
+
+        return JsonResponse({'status': 'ok'})

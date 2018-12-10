@@ -9,6 +9,22 @@ FORUM_LANGUAGE_CHOICES = (
 )
 
 
+class ForumSettings(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+class BoardSubscription(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    board = models.ForeignKey('Board', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+
+
+class ThreadSubscription(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    thread = models.ForeignKey('Thread', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+
+
 class Board(models.Model):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     name = models.CharField(_('name'), max_length=60)

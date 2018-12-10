@@ -1,33 +1,67 @@
 {% extends 'base.html' %}
 {% load i18n bootstrap4 static %}
 
+{% block javascript %}
+    <script>
+        $(function(){
+            $('#switch-subscribe').on('change', function(e){
+                $.post(
+                    $(this).data('url'),
+                    {
+                        value: $(this).prop('checked'),
+                        object: $(this).data('object')
+                    },
+                    function(data) {
+
+                    }
+                )
+            })
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
+    {% if user.is_authenticated %}
+        <div class="row">
+            <div class="col-md-12">
+                <span class="switch switch-sm float-right">
+                    <input
+                            type="checkbox"
+                            {% if is_subscribed %}checked{% endif %}
+                            class="switch"
+                            id="switch-subscribe"
+                            data-url="{% url 'forum:subscribe' mode="board" %}"
+                            data-object="{{ object.id }}">
+                    <label for="switch-subscribe">{% trans "Subscribe" %}</label>
+                </span>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-12">
-            <span class="switch switch-sm float-right">
-                <input type="checkbox" class="switch" id="switch-subscribe">
-                <label for="switch-subscribe">{% trans "Subscribe" %}</label>
-            </span>
             <h1><a href="{% url 'forum:index' %}">{% trans 'Forum' %}</a> / {{ object.name }}</h1>
         </div>
 
-        <div class="col-md-12">
-            <div class="btn-group" role="group">
-                <a href="" class="mb-3 mt-0" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Create new Thread' %}</a>
-            </div>
+        {% if user.is_authenticated %}
+            <div class="col-md-12">
+                <div class="btn-group" role="group">
+                    <a href="" class="mb-3 mt-0" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Create new Thread' %}</a>
+                </div>
 
-            <div class="collapse card" id="new-thread-collapse">
-                <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        <div class="btn-group" role="group">
-                            <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Create Thread' %}</button>
-                        </div>
-                    </form>
+                <div class="collapse card" id="new-thread-collapse">
+                    <div class="card-body">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <div class="btn-group" role="group">
+                                <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Create Thread' %}</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
         <div class="col-md-12">
             {% for thread in object.thread_set.all %}
