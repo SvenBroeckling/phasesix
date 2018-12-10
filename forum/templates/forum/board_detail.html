@@ -53,6 +53,7 @@
                     <div class="card-body">
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
+                            <small class="float-right"><a href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
                             {% bootstrap_form form %}
                             <div class="btn-group" role="group">
                                 <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Create Thread' %}</button>

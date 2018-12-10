@@ -55,7 +55,7 @@ class BoardDetailView(FormMixin, DetailView):
             post = thread.post_set.create(
                 text=form.cleaned_data['text'],
                 created_by=request.user)
-            obj.notify_subscribers(post)
+            thread.notify_subscribers(post)
             return HttpResponseRedirect(thread.get_absolute_url())
         else:
             return self.form_invalid(form)
