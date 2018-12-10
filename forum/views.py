@@ -25,7 +25,7 @@ class BoardDetailView(FormMixin, DetailView):
     def get(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.is_staff_only:
-            if not request.user.is_authenticated or request.user.is_staff:
+            if not request.user.is_authenticated or not request.user.is_staff:
                 messages.error(request, _('You have no access to this forum'))
                 return HttpResponseRedirect(reverse('forum:index'))
         return super().get(request, *args, **kwargs)
@@ -59,7 +59,7 @@ class ThreadDetailView(FormMixin, DetailView):
     def get(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.board.is_staff_only:
-            if not request.user.is_authenticated or request.user.is_staff:
+            if not request.user.is_authenticated or not request.user.is_staff:
                 messages.error(request, _('You have no access to this forum'))
                 return HttpResponseRedirect(reverse('forum:index'))
         return super().get(request, *args, **kwargs)
