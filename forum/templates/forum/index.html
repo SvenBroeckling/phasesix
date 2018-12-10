@@ -2,21 +2,28 @@
 {% load i18n %}
 
 {% block content %}
-    {% for board in boards %}
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ board.get_absolute_url }}">
-                    <h2>{{ board }}</h2>
-                </a>
-                {% if board.thread_set.exists %}
-                    {% with post=board.latest_thread.latest_post %}
-                        {% trans 'Latest Post' %}: {{ post.created_at|date:"d.m.Y h:i:s" }} {% trans 'by' %} {{ post.created_by }}
-                    {% endwith %}
-                {% else %}
-                    {% trans 'No posts yet.' %}
-                {% endif %}
-            </div>
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <h1>{% trans 'Forum' %}</h1>
         </div>
-        <hr>
+    </div>
+    {% for board in boards %}
+        {% if not board.is_staff_only or request.user.is_staff %}
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ board.get_absolute_url }}">
+                        <h2>{{ board }}</h2>
+                    </a>
+                    {% if board.thread_set.exists %}
+                        {% with post=board.latest_thread.latest_post %}
+                            {% trans 'Latest Post' %}: <a href="{{ post.thread.get_absolute_url }}">{{ post.thread.name }}</a> {% trans 'by' %} {{ post.created_by }}  <small class="text-muted">{{ post.created_at|date:"d.m.Y h:i:s" }}</small>
+                        {% endwith %}
+                    {% else %}
+                        {% trans 'No posts yet.' %}
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+        {% endif %}
     {% endfor %}
 {% endblock %}

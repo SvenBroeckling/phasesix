@@ -1,34 +1,48 @@
 {% extends 'base.html' %}
-{% load i18n bootstrap4 %}
+{% load i18n bootstrap4 static %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <h1>{{ object.name }}</h1>
-            {% if board.thread_set.exists %}
-                {% with post=board.latest_thread.latest_post %}
-                    {% trans 'Latest Post' %}: {{ post.created_at|date:"d.m.Y h:i:s" }} {% trans 'by' %} {{ post.created_by }}
-                {% endwith %}
-            {% endif %}
+            <span class="switch switch-sm float-right">
+                <input type="checkbox" class="switch" id="switch-subscribe">
+                <label for="switch-subscribe">{% trans "Subscribe" %}</label>
+            </span>
+            <h1><a href="{% url 'forum:index' %}">{% trans 'Forum' %}</a> / {{ object.name }}</h1>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-md-12">
             <div class="btn-group" role="group">
-                <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Create Thread' %}</a>
+                <a href="" class="mb-3 mt-0" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Create new Thread' %}</a>
             </div>
 
-            <div class="collapse" id="new-thread-collapse">
-                <form action="" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    <div class="btn-group" role="group">
-                        <button type="submit" class="btn btn-outline-primary btn-sm mb-4">{% trans 'Create Thread' %}</button>
-                    </div>
-                </form>
+            <div class="collapse card" id="new-thread-collapse">
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="btn-group" role="group">
+                            <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Create Thread' %}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+
+        <div class="col-md-12">
+            {% for thread in object.thread_set.all %}
+                {% with post=thread.latest_post %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2><a href="{{ thread.get_absolute_url }}">{{ thread.name }}</a></h2>
+                            {% trans 'Latest Post' %}: <a href="{{ post.thread.get_absolute_url }}">{{ post.thread.name }}</a> {% trans 'by' %} {{ post.created_by }}  <small class="text-muted">{{ post.created_at|date:"d.m.Y h:i:s" }}</small>
+                        </div>
+                    </div>
+                {% endwith %}
+                <hr>
+            {% endfor %}
+        </div>
     </div>
+
 
 {% endblock %}
