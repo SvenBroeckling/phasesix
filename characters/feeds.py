@@ -12,7 +12,7 @@ class LatestNewAdmin(Feed):
     link = '/'
 
     def title(self):
-        return _('Phase Six latest Objects')
+        return _('Phase Six latest additions')
 
     def description(self):
         return _('New Items, Templates and other things from Phase Six')
@@ -51,6 +51,9 @@ class LatestNewAdmin(Feed):
 
 
 class LatestModifiedAdmin(LatestNewAdmin):
+
+    def title(self):
+        return _('Phase Six latest updates')
 
     def items(self):
         objects = itertools.chain(
