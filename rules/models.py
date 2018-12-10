@@ -22,6 +22,8 @@ class Extension(models.Model, metaclass=TransMeta):
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fa fa-book')
     name = models.CharField(_('name'), max_length=120)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     class Meta:
         ordering = ('id',)
@@ -39,6 +41,8 @@ class Lineage(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
     extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     class Meta:
         translate = ('name', 'description')
@@ -92,6 +96,8 @@ class Knowledge(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=120)
     extension = models.ForeignKey(Extension, models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
 
     class Meta:
@@ -111,6 +117,8 @@ class Shadow(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=120)
     description = models.TextField(_('description'), blank=True, null=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     extension = models.ForeignKey(Extension, models.CASCADE)
 
     class Meta:
@@ -202,6 +210,8 @@ class Template(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=120)
     extension = models.ForeignKey(Extension, models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     category = models.ForeignKey(TemplateCategory, models.CASCADE, verbose_name=_('category'))
 
     description = models.TextField(_('description'), blank=True, null=True)

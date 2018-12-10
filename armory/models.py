@@ -20,6 +20,8 @@ class ItemType(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'), blank=True, null=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     class Meta:
         translate = ('name', 'description')
@@ -40,6 +42,8 @@ class Item(models.Model, metaclass=TransMeta):
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
     concealment = models.IntegerField(_('concealment'), default=0)
     extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     image = models.ImageField(
         _('image'), max_length=256, upload_to='item_images/', null=True, blank=True)
@@ -66,6 +70,8 @@ class WeaponType(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'), blank=True, null=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     class Meta:
         translate = ('name', 'description')
@@ -113,6 +119,8 @@ class Weapon(models.Model, metaclass=TransMeta):
     objects = WeaponQuerySet.as_manager()
 
     extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     is_hand_to_hand_weapon = models.BooleanField(
         _('is hand to hand weapon'), default=False)
     name = models.CharField(_('name'), max_length=256)
@@ -223,6 +231,8 @@ class RiotGear(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)

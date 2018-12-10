@@ -7,7 +7,12 @@ from django.urls import path
 from django.views.static import serve
 from django.views.generic import TemplateView
 
+from characters.feeds import LatestNewAdmin
+
 urlpatterns = [
+    url(r'feeds/new_admin/$', LatestNewAdmin()),
+    url(r'feeds/modified_admin/$', LatestNewAdmin()),
+
     url(r'^admin/', admin.site.urls),
     url(r'^contact/', TemplateView.as_view(template_name="characters/contact.html"), name="contact"),
     url(r'^', include('characters.urls', namespace='characters')),
