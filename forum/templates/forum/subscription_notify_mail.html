@@ -1,0 +1,20 @@
+{% load i18n %}{% trans 'Hello,' %}
+{% blocktrans with user_t=post.created_by thread_t=post.thread.name %}
+{{ user_t }} wrote a post in the thread {{ thread_t }}. Use the link
+below the message text to answer the post.
+{% endblocktrans %}
+
+-----
+{{ post.text }}
+-----
+
+http://phasesix.org{% url 'forum:thread_detail' pk=post.thread.id %}
+
+{% blocktrans %}
+Unsubscribe the threads or boards in the phase six forums to unsubscribe
+from this emails.
+
+Cheers
+{% endblocktrans %}
+
+

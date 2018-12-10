@@ -52,9 +52,10 @@ class BoardDetailView(FormMixin, DetailView):
                 board=obj,
                 name=form.cleaned_data['name'],
                 created_by=request.user)
-            thread.post_set.create(
+            post = thread.post_set.create(
                 text=form.cleaned_data['text'],
                 created_by=request.user)
+            obj.notify_subscribers(post)
             return HttpResponseRedirect(thread.get_absolute_url())
         else:
             return self.form_invalid(form)
@@ -91,9 +92,10 @@ class ThreadDetailView(FormMixin, DetailView):
             return HttpResponseForbidden()
 
         if form.is_valid():
-            obj.post_set.create(
+            post = obj.post_set.create(
                 text=form.cleaned_data['text'],
                 created_by=request.user)
+            obj.notify_subscribers(post)
             return HttpResponseRedirect(obj.get_absolute_url())
         else:
             return self.form_invalid(form)

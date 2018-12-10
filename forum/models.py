@@ -1,5 +1,8 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from django.db import models
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -55,6 +58,21 @@ class Thread(models.Model):
 
     def latest_post(self):
         return self.post_set.latest('created_at')
+
+    def notify_subscribers(self, post):
+        subscribers = [s.user.email for s in self.threadsubscription_set.all()]
+        subscribers += [s.user.email for s in self.board.boardsubscription_set.all()]
+        subscribers = set([s for s in subscribers if s])
+        for s in subscribers:
+            send_mail(
+                _('PhaseSix Forum: %(user)s answered to the thread %(thread)s') % {
+                    'user': post.created_by,
+                    'thread': self,
+                },
+                render_to_string('forum/subscription_notify_mail.html', {'post': post}),
+                settings.DEFAULT_FROM_EMAIL,
+                [s],
+                fail_silently=True)
 
 
 class Post(models.Model):
