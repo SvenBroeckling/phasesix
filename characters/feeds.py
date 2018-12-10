@@ -68,5 +68,5 @@ class LatestModifiedAdmin(LatestNewAdmin):
             Weapon.objects.order_by('modified_at')[:20],
             RiotGear.objects.order_by('modified_at')[:20],
         )
-        objects = reversed(sorted(objects, key=lambda x: x.created_at))
+        objects = reversed(sorted(objects, key=lambda x: x.modified_at))
         return objects
