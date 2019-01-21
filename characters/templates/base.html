@@ -10,6 +10,25 @@
     <link href="{% static 'css/switch.css' %}" type="text/css" rel="stylesheet"/>
     <link href="{% static 'css/simplemde.min.css' %}" type="text/css" rel="stylesheet"/>
     <title>Phase Six</title>
+
+
+    <!-- Matomo -->
+    <script type="text/javascript">
+      var _paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["setCookieDomain", "*.phasesix.org"]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//piwik.nimbostratus.de/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '8']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//piwik.nimbostratus.de/matomo.php?idsite=8&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+    <!-- End Matomo Code -->
 </head>
 
 <body>
@@ -44,7 +63,7 @@
                             <a class="nav-link" href="{% url 'forum:index' %}">{% trans 'Forum' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'contact' %}">{% trans 'Contact' %}</a>
+                            <a class="nav-link" href="{% url 'contact' %}">{% trans 'Contact / Privacy' %}</a>
                         </li>
                     </ul>
 
