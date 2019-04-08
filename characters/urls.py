@@ -10,6 +10,11 @@ urlpatterns = [
     url('^list/$', views.CharacterListView.as_view(), name='list'),
 
     url(
+        r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<fragment_name>[a-z_]+)$',
+        views.XhrDetailFragmentView.as_view(),
+        name='xhr_detail_fragment'),
+
+    url(
         '^health/(?P<pk>\d+)/(?P<mode>\w+)/$',
         views.CharacterModifyHealthView.as_view(),
         name='modify_health'),

@@ -26,6 +26,18 @@ class CharacterDetailView(DetailView):
     model = Character
 
 
+class XhrDetailFragmentView(DetailView):
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['fragment_name'] = self.kwargs['fragment_name']
+        return context
+
+    def get_template_names(self):
+        return ['characters/fragments/' + self.kwargs['fragment_name'] + '.html']
+
+
 class CharacterModifyHealthView(View):
     def get(self, request, *args, **kwargs):
         # TODO: Change this to Xhr/Fragments

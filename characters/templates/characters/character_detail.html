@@ -14,6 +14,15 @@
             $('.modal-header h5').text($(this).data('modal-title'));
         });
 
+        function refresh_fragments() {
+            $('.fragment').each(function (index) {
+                $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
+                    $(this).children(':first').unwrap(); // keep the original fragment container
+                    $('[data-toggle="popover"]').popover();
+                })
+            });
+        }
+
         // save bootstrap tabs
         $('a[data-toggle="tab"]').on('click', function (e) {
             window.localStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -84,9 +93,7 @@
                     </div>
                 </div>
 
-                <div class="fragment health-fragment">
-                    {% include 'characters/fragments/health.html' %}
-                </div>
+                {% detail_fragment 'health' %}
 
                 <div>
                     {% for i in object.get_ballistic_protection_range %}
@@ -177,19 +184,19 @@
 
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="v-character" role="tabpanel">
-                    {% include 'characters/fragments/character.html' %}
+                    {% detail_fragment 'character' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-gear" role="tabpanel">
-                    {% include 'characters/fragments/gear.html' %}
+                    {% detail_fragment 'gear' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-combat" role="tabpanel">
-                    {% include 'characters/fragments/combat.html' %}
+                    {% detail_fragment 'combat' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-background" role="tabpanel">
-                    {% include 'characters/fragments/advancement.html' %}
+                    {% detail_fragment 'advancement' %}
                 </div>
             </div>
         </div>

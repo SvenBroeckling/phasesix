@@ -1,4 +1,7 @@
+{% extends 'characters/fragments/fragment_base.html' %}
 {% load characters_extras rules_extras i18n %}
+
+{% block fragment %}
 <div class="row">
     <div class="col-md-4">
         <h2 class="mb-2">{% trans 'Actions' %}</h2>
@@ -148,5 +151,5 @@
         </div>
     </div>
 </div>
-
+{% endblock %}
 

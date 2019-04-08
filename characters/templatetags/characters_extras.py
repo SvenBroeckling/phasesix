@@ -1,5 +1,6 @@
 from django.db.models import Sum
 from django.template import Library
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 register = Library()
@@ -59,3 +60,10 @@ def display_modifications(character_weapon, attribute):
                     css_class = 'text-danger' if wmm.modifier < 0 else 'text-success'
                 res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.modifier)
     return mark_safe(res)
+
+
+@register.simple_tag(takes_context=True)
+def detail_fragment(context, fragment_name):
+    context = context.flatten()
+    context['fragment_name'] = fragment_name
+    return render_to_string('characters/fragments/' + fragment_name + '.html', context=context)

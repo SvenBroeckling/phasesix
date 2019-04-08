@@ -1,4 +1,7 @@
+{% extends 'characters/fragments/fragment_base.html' %}
 {% load characters_extras rules_extras i18n %}
+
+{% block fragment %}
 <div class="row">
     <div class="col-md-12 mb-2">
         <h2>{% trans 'Persona' %}</h2>
@@ -85,3 +88,4 @@
         </table>
     </div>
 </div>
+{% endblock %}
