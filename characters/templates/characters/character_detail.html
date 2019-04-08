@@ -50,65 +50,116 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-10 offset-md-1 text-center">
-            <div class="dropleft">
-                {% if character.image %}
-                    {% thumbnail character.image "200x200" crop="center" as im %}
-                    <img
-                            data-toggle="dropdown"
-                            class="rounded-circle mb-2 img-fluid touch-menu"
-                            src="{{ MEDIA_URL }}{{ im.url }}"
-                            alt="{{ object.name }}">
-                    {% endthumbnail %}
-                {% else %}
-                    <img
-                            data-toggle="dropdown"
-                            class="rounded-circle mb-2 img-fluid touch-menu"
-                            src="{% static 'img/silhuette.png' %}"
-                            alt="{{ object.name }}">
-                {% endif %}
-                <h3>{{ object.name }}</h3>
-                <div class="dropdown-menu">
-                    <a
-                            class="dropdown-item modal-trigger-link"
-                            data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
-                            data-toggle="modal"
-                            data-target=".character-modal"
-                            data-modal-title="{% trans 'Add Modification' %}"
-                            href=""><i class="fas fa-image text-info"></i> {% trans 'Change Image' %}</a>
+    <div class="row mt-4">
+        <div class="col-md-2">
+            <div class="text-center">
+                <div class="dropleft">
+                    {% if character.image %}
+                        {% thumbnail character.image "200x200" crop="center" as im %}
+                            <img
+                                    data-toggle="dropdown"
+                                    class="rounded-circle mb-2 img-fluid touch-menu"
+                                    src="{{ MEDIA_URL }}{{ im.url }}"
+                                    alt="{{ object.name }}">
+                        {% endthumbnail %}
+                    {% else %}
+                        <img
+                                data-toggle="dropdown"
+                                class="rounded-circle mb-2 img-fluid touch-menu"
+                                src="{% static 'img/silhuette.png' %}"
+                                alt="{{ object.name }}">
+                    {% endif %}
+                    <h3>{{ object.name }}</h3>
+                    <div class="dropdown-menu">
+                        <a
+                                class="dropdown-item modal-trigger-link"
+                                data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Add Modification' %}"
+                                href=""><i class="fas fa-image text-info"></i> {% trans 'Change Image' %}</a>
 
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Delete' %}</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Delete' %}</a>
+                    </div>
                 </div>
 
+                <div class="fragment health-fragment">
+                    {% include 'characters/fragments/health.html' %}
+                </div>
+
+                <div>
+                    {% for i in object.get_ballistic_protection_range %}
+                        <i class="fas fa-shield-alt fa-2x text-success mb-4"></i>
+                    {% endfor %}
+                </div>
+
+                {% if not object.created_by %}
+                    <div class="alert alert-danger" role="alert">
+                        {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
+                    </div>
+                {% endif %}
             </div>
 
-            <div class="fragment health-fragment">
-                {% include 'characters/fragments/health.html' %}
-            </div>
+            <h2 class="mb-2">{% trans 'Dice' %}</h2>
+            <table class="table">
+                <tr>
+                    <td>{% trans 'Bonus Dice' %}</td>
+                    <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Destiny Dice' %}</td>
+                    <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Rerolls' %}</td>
+                    <td class="text-right">{% color_value_span object.rerolls 6 %}</td>
+                </tr>
+            </table>
 
-            <div>
-                {% for i in object.get_ballistic_protection_range %}
-                    <i class="fas fa-shield-alt fa-2x text-success mb-4"></i>
-                {% endfor %}
-            {% comment %}
-                {% for i in object.get_explosive_protection_range %}
-                    <i class="fas fa-shield-alt fa-2x text-success"></i>
-                {% endfor %}
-            {% endcomment %}
-            </div>
+            {% if object.shadows.exists %}
+                <h2 class="mb-2">{% trans 'Shadows' %}</h2>
+                <table class="table">
+                    {% for shadow in object.shadows.all %}
+                        <tr>
+                            {% if shadow.description %}
+                                <td><a role="button" tabindex="0" data-toggle="popover" data-trigger="focus" title="{{ shadow }}" data-content="{{ shadow.description }}">{{ shadow }}</a></td>
+                            {% else %}
+                                <td>{{ shadow }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
 
-            {% if not object.created_by %}
-                <div class="alert alert-danger" role="alert">
-                    {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
+            {% if object.characterknowledge_set.exists %}
+                <h2 class="mb-2">{% trans 'Knowledge' %}</h2>
+                <table class="table">
+                    {% for knowledge in object.characterknowledge_set.all %}
+                        <tr>
+                            <td>{{ knowledge.knowledge }}</td>
+                            <td class="text-right">{% color_value_span knowledge.value 6 %}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+
+            {% if object.contacts.exists %}
+                <h2 class="mb-2">{% trans 'Contacts' %}</h2>
+                <div class="card mb-2">
+                    <div class="card-body">
+                        {% for contact in object.contacts.all %}
+                            {{ contact }}<br>
+                        {% endfor %}
+                    </div>
                 </div>
             {% endif %}
-        </div>
-    </div>
 
-    <div class="row mt-4">
-        <div class="col-md-10 offset-md-1">
+
+
+        </div>
+
+        <div class="col-md-10">
             <ul class="nav nav-tabs nav-fill mb-4">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#v-character" role="tab">{% trans 'Character' %}</a>
