@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/united/bootstrap.min.css" rel="stylesheet" title="main">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" title="main">
     <link href="{% static 'css/fontawesome-all.min.css' %}" type="text/css" rel="stylesheet"/>
     <link href="{% static 'css/theme.css' %}?1" type="text/css" rel="stylesheet"/>
     <link href="{% static 'css/switch.css' %}" type="text/css" rel="stylesheet"/>
@@ -84,34 +84,6 @@
                             </li>
                         {% endif %}
 
-                        <li class="nav-item dropdown" id="theme-dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> Theme</b></a>
-                            <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cerulean/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cerulan</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cosmo/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cosmo</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Cyborg</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Darkly</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Flatly</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/journal/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Journal</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/litera/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Litera</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lumen</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lux/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Lux</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/materia/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Materia</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/minty/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Minty</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/pulse/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Pulse</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sandstone/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sandstone</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/simplex/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Simplex</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/sketchy/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Sketchy</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/slate/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Slate</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/solar/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Solar</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/spacelab/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Spacelab</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/superhero/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Superhero</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/united/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> United</a>
-                                <a href="#" class="dropdown-item change-style-menu-item" rel="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/yeti/bootstrap.min.css"><i class="icon-fixed-width icon-pencil"></i> Yeti</a>
-                            </div>
-                        </li>
-                    </ul>
-
                     <form class="form-inline my-2 my-lg-0 ml-3" method="post"
                           action="{% url 'set_language' %}?next={{ request.path }}">
                         {% csrf_token %}
@@ -182,13 +154,6 @@
                 }
             }
         });
-
-        $('body').on('click', '.change-style-menu-item', function(e){
-            var theme = $(this).attr('rel');
-            $('link[title="main"]').attr('href', theme);
-            localStorage.theme = theme;
-        })
-
 
         // simplemde
         $('textarea').each(function (idx, elem) {
