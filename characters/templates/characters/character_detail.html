@@ -14,6 +14,14 @@
             $('.modal-header h5').text($(this).data('modal-title'));
         });
 
+        $('body').on('click', '.action-link', function(e){
+            $.post($(this).attr('href'), function(data){
+                refresh_fragments();
+            });
+            e.preventDefault();
+            return false;
+        });
+
         function refresh_fragments() {
             $('.fragment').each(function (index) {
                 $(this).load($(this).data('fragment-url'), function (response, status, xhr) {

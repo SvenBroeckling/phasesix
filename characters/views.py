@@ -25,6 +25,11 @@ class CharacterListView(ListView):
 class CharacterDetailView(DetailView):
     model = Character
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['may_edit'] = self.object.may_edit(self.request.user)
+        return context
+
 
 class XhrDetailFragmentView(DetailView):
     model = Character
@@ -32,6 +37,7 @@ class XhrDetailFragmentView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['fragment_name'] = self.kwargs['fragment_name']
+        context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 
     def get_template_names(self):
@@ -39,8 +45,7 @@ class XhrDetailFragmentView(DetailView):
 
 
 class CharacterModifyHealthView(View):
-    def get(self, request, *args, **kwargs):
-        # TODO: Change this to Xhr/Fragments
+    def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         if character.may_edit(request.user):
             if self.kwargs['mode'] == 'heal':
@@ -54,7 +59,7 @@ class CharacterModifyHealthView(View):
             elif self.kwargs['mode'] == 'boost':
                 character.boost += 1
             character.save()
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
 
 
 class CreateCharacterView(TemplateView):

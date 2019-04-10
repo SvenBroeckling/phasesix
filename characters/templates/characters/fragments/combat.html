@@ -53,6 +53,7 @@
 
     <div class="col-md-8 mb-4">
         <h2 class="mb-2">{% trans 'Weapons' %}
+            {% if may_edit %}
             <button
                     title="{% trans 'Add weapon' %}"
                     class="btn btn-primary buy-button float-right"
@@ -60,6 +61,7 @@
                     data-toggle="modal"
                     data-modal-title="{% trans 'Add weapon' %}"
                     data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
+            {% endif %}
         </h2>
 
         <div class="row">
@@ -104,6 +106,8 @@
                                     {% endif %}
                                 </div>
                             </div>
+
+                            {% if may_edit %}
                             <div class="dropdown">
                                 <button data-toggle="dropdown" class="btn btn-primary buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Action' %}</button>
                                 <div class="dropdown-menu">
@@ -126,6 +130,7 @@
                                             href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -138,12 +143,14 @@
                         <div class="card-body">
                             <h2>{% trans 'No weapons yet' %}</h2>
                             <p>{% trans 'This character has no weapons yet.' %}</p>
+                            {% if may_edit %}
                             <button
                                     class="btn btn-primary buy-button float-right"
                                     data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
                                     data-toggle="modal"
                                     data-modal-title="{% trans 'Add weapon' %}"
                                     data-target=".character-modal">{% trans 'Add weapon' %}</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
