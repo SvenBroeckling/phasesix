@@ -24,6 +24,7 @@ class Extension(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=120)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+    is_epoch = models.BooleanField(_('is epoch'), default=True)
 
     class Meta:
         ordering = ('id',)
