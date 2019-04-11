@@ -7,6 +7,10 @@ from rules.models import Skill, Extension, Shadow, Knowledge, Template, Template
     TemplateCategory, LineageTemplatePoints, Lineage
 
 
+class ExtensionAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'is_mandatory', 'fa_icon_class', 'is_epoch')
+
+
 class TemplateModifierInline(admin.TabularInline):
     model = TemplateModifier
 
@@ -42,7 +46,7 @@ class LineageAdmin(admin.ModelAdmin):
     inlines = [LineageTemplatePointsInline]
 
 
-admin.site.register(Extension)
+admin.site.register(Extension, ExtensionAdmin)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Knowledge)
 admin.site.register(Shadow)
