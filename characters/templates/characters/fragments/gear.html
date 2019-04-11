@@ -35,8 +35,8 @@
                             <div class="dropdown">
                                 <button data-toggle="dropdown" class="btn btn-primary buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Action' %}</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
+                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
                                     <div class="dropdown-divider"></div>
                                     <a
                                             class="dropdown-item modal-trigger-link"
@@ -106,7 +106,7 @@
                             <div class="downdown">
                                 <button data-toggle="dropdown" class="btn btn-primary buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Action' %}</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Remove / Use' %}</a>
+                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove / Use' %}</a>
                                 </div>
                             </div>
                             {% endif %}

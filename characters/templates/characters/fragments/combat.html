@@ -94,6 +94,8 @@
                                     {% if not weapon.weapon.is_hand_to_hand_weapon %}
                                         <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}<br>
                                     {% endif %}
+                                    <br>
+                                    <i class="fas fa-wrench fa-fw"></i> {% trans 'Condition' %}: {% color_value_span weapon.condition 100 %}<br>
                                     {% if weapon.weapon.attack_modes.exists %}
                                         <br>
                                         {% for fm in weapon.weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
@@ -118,8 +120,8 @@
                                             data-target=".character-modal"
                                             data-modal-title="{% trans 'Add Modification' %}"
                                             href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
+                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
                                     <div class="dropdown-divider"></div>
                                     <a
                                             class="dropdown-item modal-trigger-link"

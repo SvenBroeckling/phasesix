@@ -270,6 +270,10 @@ class CharacterWeapon(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     weapon = models.ForeignKey('armory.Weapon', on_delete=models.CASCADE)
     modifications = models.ManyToManyField('armory.WeaponModification')
+    condition = models.IntegerField(default=100)
+
+    class Meta:
+        ordering = ('weapon__id',)
 
 
 class CharacterRiotGear(models.Model):

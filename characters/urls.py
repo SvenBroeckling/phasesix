@@ -78,9 +78,13 @@ urlpatterns = [
         views.AddWeaponView.as_view(),
         name='add_weapon'),
     url(
-        '^remove_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
-        views.RemoveWeaponView.as_view(),
-        name='remove_weapon'),
+        '^xhr_remove_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
+        views.XhrRemoveWeaponView.as_view(),
+        name='xhr_remove_weapon'),
+    url(
+        '^xhr_damage_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
+        views.XhrDamageWeaponView.as_view(),
+        name='xhr_damage_weapon'),
 
     url(
         '^xhr_add_riot_gear/(?P<pk>\d+)$',
@@ -91,9 +95,13 @@ urlpatterns = [
         views.AddRiotGearView.as_view(),
         name='add_riot_gear'),
     url(
-        '^remove_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
-        views.RemoveRiotGearView.as_view(),
-        name='remove_riot_gear'),
+        '^xhr_remove_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
+        views.XhrRemoveRiotGearView.as_view(),
+        name='xhr_remove_riot_gear'),
+    url(
+        '^xhr_damage_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
+        views.XhrDamageRiotGearView.as_view(),
+        name='xhr_damage_riot_gear'),
 
     url(
         '^xhr_add_items/(?P<pk>\d+)$',
@@ -104,9 +112,9 @@ urlpatterns = [
         views.AddItemView.as_view(),
         name='add_item'),
     url(
-        '^remove_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
-        views.RemoveItemView.as_view(),
-        name='remove_item'),
+        '^xhr_remove_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
+        views.XhrRemoveItemView.as_view(),
+        name='xhr_remove_item'),
 
     url(
         '^xhr_add_weapon_modifications/(?P<pk>\d+)$',

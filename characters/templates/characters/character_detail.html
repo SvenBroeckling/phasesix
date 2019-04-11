@@ -4,17 +4,19 @@
 {% block javascript %}
     <script>
     $(function(){
-        $('.buy-button').on('click', function () {
+        var body = $('body');
+
+        body.on('click', '.buy-button', function (e) {
             $('.character-modal-container').load($(this).data('url'));
             $('.modal-header h5').text($(this).data('modal-title'));
         });
 
-        $('.modal-trigger-link').on('click', function () {
+        body.on('click', '.modal-trigger-link', function (e) {
             $('.character-modal-container').load($(this).data('url'));
             $('.modal-header h5').text($(this).data('modal-title'));
         });
 
-        $('body').on('click', '.action-link', function(e){
+        body.on('click', '.action-link', function(e){
             $.post($(this).attr('href'), function(data){
                 refresh_fragments();
             });

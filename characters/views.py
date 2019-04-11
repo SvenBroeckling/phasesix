@@ -233,14 +233,25 @@ class AddWeaponView(View):
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class RemoveWeaponView(View):
+class XhrRemoveWeaponView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
         if not character.may_edit(request.user):
-            return HttpResponseRedirect(character.get_absolute_url())
+            return JsonResponse({'status': 'forbidden'})
         weapon.delete()
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrDamageWeaponView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        weapon.condition -= 10
+        weapon.save()
+        return JsonResponse({'status': 'ok'})
 
 
 class XhrAddRiotGearView(TemplateView):
@@ -264,14 +275,25 @@ class AddRiotGearView(View):
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class RemoveRiotGearView(View):
+class XhrRemoveRiotGearView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         if not character.may_edit(request.user):
-            return HttpResponseRedirect(character.get_absolute_url())
+            return JsonResponse({'status': 'forbidden'})
         riot_gear = CharacterRiotGear.objects.get(id=kwargs['riot_gear_pk'])
         riot_gear.delete()
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrDamageRiotGearView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        riot_gear = CharacterRiotGear.objects.get(id=kwargs['riot_gear_pk'])
+        riot_gear.condition -= 10
+        riot_gear.save()
+        return JsonResponse({'status': 'ok'})
 
 
 class XhrAddItemsView(TemplateView):
@@ -302,18 +324,18 @@ class AddItemView(View):
         return HttpResponseRedirect(character.get_absolute_url())
 
 
-class RemoveItemView(View):
+class XhrRemoveItemView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         if not character.may_edit(request.user):
-            return HttpResponseRedirect(character.get_absolute_url())
+            return JsonResponse({'status': 'forbidden'})
         item = CharacterItem.objects.get(id=kwargs['item_pk'])
         if item.quantity > 1:
             item.quantity -= 1
             item.save()
         else:
             item.delete()
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
 
 
 class XhrAddWeaponModView(TemplateView):
