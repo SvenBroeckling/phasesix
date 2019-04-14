@@ -195,8 +195,9 @@ class Character(models.Model):
     def fill_random(self):
         self.fill_basics()
         for tc in TemplateCategory.objects.all():
-            for i in range(random.randint(1, 3)):
-                self.add_template(tc.template_set.all().for_extensions(self.extensions).order_by('?')[0])
+            if tc.template_set.all().for_extensions(self.extensions).exists():
+                for i in range(random.randint(1, 3)):
+                    self.add_template(tc.template_set.all().for_extensions(self.extensions).order_by('?')[0])
         for i in range(random.randint(2, 4)):
             self.characterweapon_set.create(weapon=Weapon.objects.for_extensions(self.extensions).order_by('?')[0])
         self.characterriotgear_set.create(riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?')[0])

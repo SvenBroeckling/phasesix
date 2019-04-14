@@ -6,10 +6,10 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView, DetailView, ListView, CreateView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType
-from characters.forms import CharacterImageForm
+from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
 from rules.models import Extension, Template, Lineage
 
@@ -71,35 +71,39 @@ class CreateCharacterView(TemplateView):
         return context
 
 
-class CreateCharacterDataView(CreateView):
-    model = Character
-    fields = 'name', 'lineage', 'extensions'
+class CreateCharacterDataView(FormView):
+    form_class = CreateCharacterForm
+    template_name = 'characters/character_form.html'
 
-    def post(self, request, *args, **kwargs):
-        res = super().post(request, *args, **kwargs)
-        self.object.created_by = request.user if request.user.is_authenticated else None
-        self.object.creation_mode = kwargs['mode']
+    def form_valid(self, form):
+        self.object = Character.objects.create(name=form.cleaned_data['name'], lineage=form.cleaned_data['lineage'])
+        self.object.extensions.add(form.cleaned_data['epoch'])
+        for e in form.cleaned_data['extensions']:
+            self.object.extensions.add(e)
+        self.object.created_by = self.request.user if self.request.user.is_authenticated else None
+        self.object.creation_mode = self.kwargs['mode']
+        self.object.save()
 
-        if kwargs['mode'] == 'random':
+        if self.kwargs['mode'] == 'random':
             self.object.fill_random()
         else:
             self.object.fill_basics()
-
         self.object.save()
-        return res
+
+        return super().form_valid(form)
 
     def get_initial(self):
         lineages = Lineage.objects.filter(
             Q(extension__id=self.kwargs['extension_pk']) |
             Q(extension__id__in=Extension.objects.filter(is_mandatory=True)))
         return {
-            'extensions': self.kwargs['extension_pk'],
+            'epoch': self.kwargs['extension_pk'],
             'lineage': lineages.earliest('id')
         }
 
     def get_success_url(self):
         if self.kwargs['mode'] == 'random':
-            return super().get_success_url()
+            return reverse('characters:detail', kwargs={'pk': self.object.id})
         elif self.kwargs['mode'] == 'draft':
             return reverse('characters:create_character_draft', kwargs={'pk': self.object.id})
         return reverse('characters:create_character_constructed', kwargs={'pk': self.object.id})
