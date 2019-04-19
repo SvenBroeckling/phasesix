@@ -10,14 +10,16 @@
             </p>
         </div>
         <div class="col-md-3">
-            {% for chapter in all_chapters %}
-                <div class="card pt-1 pb-1 mb-3">
-                    <div class="card-body text-center">
-                        <i class="{{ chapter.fa_icon_class|default:"book" }}"></i>
-                        <a href="{% url 'rulebook:detail' pk=chapter.pk %}">{{ chapter.name }}</a>
-                    </div>
-                </div>
-            {% endfor %}
+            <div class="card border-0">
+                <ul class="list-group list-group-flush">
+                    {% for chapter in all_chapters %}
+                        <li class="list-group-item">
+                            <i class="{{ chapter.fa_icon_class|default:"book" }} fa-fw"></i>
+                            <a class="mb-5" href="{% url 'rulebook:detail' pk=chapter.pk %}">{{ chapter.name }}</a><br>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}
