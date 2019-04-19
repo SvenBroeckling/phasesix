@@ -15,7 +15,7 @@
                     {% for chapter in all_chapters %}
                         <li class="list-group-item">
                             <i class="{{ chapter.fa_icon_class|default:"book" }} fa-fw"></i>
-                            <a class="mb-5" href="{% url 'rulebook:detail' pk=chapter.pk %}">{{ chapter.name }}</a><br>
+                            <a class="mb-5 no-decoration" href="{% url 'rulebook:detail' pk=chapter.pk %}">{{ chapter.name }}</a><br>
                         </li>
                     {% endfor %}
                 </ul>
