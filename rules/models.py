@@ -135,6 +135,9 @@ CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_intelligence', _('intelligence')),
     ('base_max_health', _('max health')),
 
+    ('base_max_arcana', _('max arcana')),
+    ('base_spell_points', _('spell points')),
+
     ('base_bonus_dice', _('bonus dice')),
     ('base_destiny_dice', _('destiny dice')),
     ('base_rerolls', _('rerolls')),

@@ -87,6 +87,8 @@ class CreateCharacterDataView(FormView):
         if self.kwargs['mode'] == 'random':
             self.object.fill_random()
             self.object.set_initial_reputation()
+            self.object.health = self.object.max_health
+            self.object.arcana = self.object.max_arcana
         else:
             self.object.fill_basics()
         self.object.save()
@@ -127,6 +129,9 @@ class CreateCharacterDraftView(DetailView):
     def post(self, request, *args, **kwargs):
         obj = Character.objects.get(id=kwargs['pk'])
         obj.set_initial_reputation()
+        obj.health = obj.max_health
+        obj.arcana = obj.max_arcana
+        obj.save()
         return HttpResponseRedirect(obj.get_absolute_url())
 
 
@@ -173,6 +178,9 @@ class CreateCharacterConstructedView(DetailView):
     def post(self, request, *args, **kwargs):
         obj = Character.objects.get(id=kwargs['pk'])
         obj.set_initial_reputation(obj.reputation_spent + obj.remaining_template_points)
+        obj.health = obj.max_health
+        obj.arcana = obj.max_arcana
+        obj.save()
         return HttpResponseRedirect(obj.get_absolute_url())
 
 

@@ -37,6 +37,11 @@ class Character(models.Model):
     health = models.IntegerField(_('health'), default=6)
     boost = models.IntegerField(_('boost'), default=0)
 
+    # magic extension
+    base_max_arcana = models.IntegerField(_('max arcana'), default=3)
+    arcana = models.IntegerField(_('arcana'), default=3)
+    base_spell_points = models.IntegerField(_('spell points'), default=0)
+
     # dice
     base_bonus_dice = models.IntegerField(_('base bonus dice'), default=0)
     base_destiny_dice = models.IntegerField(_('base destiny dice'), default=0)
@@ -95,6 +100,14 @@ class Character(models.Model):
                 self.shadows.remove(tm.shadow)
 
     @property
+    def spell_points_spent(self):
+        return 0
+
+    @property
+    def spell_points_available(self):
+        return self.spell_points - self.spell_points_spent
+
+    @property
     def reputation_spent(self):
         ts = self.charactertemplate_set.aggregate(Sum('template__cost'))
         return ts['template__cost__sum'] if ts is not None else 0
@@ -123,12 +136,20 @@ class Character(models.Model):
         return template_points - spent_points
 
     @property
+    def spell_points(self):
+        return self.base_spell_points + self.get_attribute_modifier('base_spell_points')
+
+    @property
     def intelligence(self):
         return self.base_intelligence + self.get_attribute_modifier('base_intelligence')
 
     @property
     def max_health(self):
         return self.base_max_health + self.get_attribute_modifier('base_max_health')
+
+    @property
+    def max_arcana(self):
+        return self.base_max_arcana + self.get_attribute_modifier('base_max_arcana')
 
     @property
     def bonus_dice(self):
@@ -194,6 +215,9 @@ class Character(models.Model):
 
     def get_boost_range(self):
         return range(self.boost)
+
+    def get_arcana_range(self):
+        return range(self.arcana)
 
     def get_ballistic_protection_range(self):
         return range(

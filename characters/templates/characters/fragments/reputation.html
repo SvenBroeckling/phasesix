@@ -4,16 +4,31 @@
 {% block fragment %}
     {% if may_edit %}
         <button
-                class="btn btn-primary btn-block mb-3 modal-trigger-link"
+                class="btn btn-primary btn-block mb-3 mt-3 modal-trigger-link"
                 data-toggle="modal"
                 data-target=".character-modal"
                 data-modal-title="{% trans 'Reputation' %}"
                 data-url="{% url 'characters:xhr_reputation' object.id %}">
-             <i class="fa fa-eye text-warning"></i> {% trans 'Reputation' %} {{ object.reputation_available }}
+             <i class="fa fa-eye text-info"></i> {% trans 'Reputation' %} {{ object.reputation_available }}
         </button>
     {% else %}
-        <div class="card mb-2 p-2 text-center">
-            <i class="fa fa-eye text-warning"></i> {% trans 'Reputation' %} {{ object.reputation_available }}
+        <div class="card mb-3 mt-3 p-2 text-center">
+            <i class="fa fa-eye text-info"></i> {% trans 'Reputation' %} {{ object.reputation_available }}
+        </div>
+    {% endif %}
+
+    {% if may_edit %}
+        <button
+                class="btn btn-primary btn-block mb-3 mt-3 modal-trigger-link"
+                data-toggle="modal"
+                data-target=".character-modal"
+                data-modal-title="{% trans 'Spell Points' %}"
+                data-url="{% url 'characters:xhr_reputation' object.id %}">
+            <i class="fa fa-magic text-warning"></i> {% trans 'Spell Points' %} {{ object.spell_points_available }}
+        </button>
+    {% else %}
+        <div class="card mb-3 mt-3 p-2 text-center">
+            <i class="fa fa-magic text-warning"></i> {% trans 'Spell Points' %} {{ object.spell_points_available }}
         </div>
     {% endif %}
 {% endblock %}
