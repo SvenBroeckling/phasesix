@@ -69,8 +69,10 @@
                                 $('.character-preview').load(preview_url);
                             } else {
                                 template_div.addClass('notenoughpoints');
+                                $('.template-points').addClass('animated wobble');
                                 setTimeout(function(){
                                     template_div.removeClass('notenoughpoints');
+                                    $('.template-points').removeClass('animated wobble');
                                 }, 500);
                             }
                         });

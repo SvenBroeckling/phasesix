@@ -70,7 +70,7 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-2">
+        <div class="col-lg-2 col-md-3">
             <div class="text-center">
                 <div class="dropleft">
                     {% if character.image %}
@@ -111,72 +111,35 @@
                     {% endfor %}
                 </div>
 
-                {% if not object.created_by %}
-                    <div class="alert alert-danger" role="alert">
-                        {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
-                    </div>
-                {% endif %}
             </div>
 
-            <h2 class="mb-2">{% trans 'Dice' %}</h2>
-            <table class="table">
-                <tr>
-                    <td>{% trans 'Bonus Dice' %}</td>
-                    <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Destiny Dice' %}</td>
-                    <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Rerolls' %}</td>
-                    <td class="text-right">{% color_value_span object.rerolls 6 %}</td>
-                </tr>
-            </table>
+            <div class="card mb-3">
+                <div class="card-body text-center pt-1">
+                    <span class="attribute-heading">{% trans 'Bonus Dice' %}</span><br>
+                    <span class="attribute-value">{% color_value_span object.bonus_dice 6 %}</span>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body text-center pt-1">
+                    <span class="attribute-heading">{% trans 'Destiny Dice' %}</span><br>
+                    <span class="attribute-value">{% color_value_span object.destiny_dice 6 %}</span>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body text-center pt-1">
+                    <span class="attribute-heading">{% trans 'Rerolls' %}</span><br>
+                    <span class="attribute-value">{% color_value_span object.rerolls 6 %}</span>
+                </div>
+            </div>
+        </div>
 
-            {% if object.shadows.exists %}
-                <h2 class="mb-2">{% trans 'Shadows' %}</h2>
-                <table class="table">
-                    {% for shadow in object.shadows.all %}
-                        <tr>
-                            {% if shadow.description %}
-                                <td><a role="button" tabindex="0" data-toggle="popover" data-trigger="focus" title="{{ shadow }}" data-content="{{ shadow.description }}">{{ shadow }}</a></td>
-                            {% else %}
-                                <td>{{ shadow }}</td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-
-            {% if object.characterknowledge_set.exists %}
-                <h2 class="mb-2">{% trans 'Knowledge' %}</h2>
-                <table class="table">
-                    {% for knowledge in object.characterknowledge_set.all %}
-                        <tr>
-                            <td>{{ knowledge.knowledge }}</td>
-                            <td class="text-right">{% color_value_span knowledge.value 6 %}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-
-            {% if object.contacts.exists %}
-                <h2 class="mb-2">{% trans 'Contacts' %}</h2>
-                <div class="card mb-2">
-                    <div class="card-body">
-                        {% for contact in object.contacts.all %}
-                            {{ contact }}<br>
-                        {% endfor %}
-                    </div>
+        <div class="col-lg-10 col-md-9">
+            {% if not object.created_by %}
+                <div class="alert alert-danger" role="alert">
+                    {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
                 </div>
             {% endif %}
 
-
-
-        </div>
-
-        <div class="col-md-10">
             <ul class="nav nav-tabs nav-fill mb-4">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#v-character" role="tab">{% trans 'Character' %}</a>

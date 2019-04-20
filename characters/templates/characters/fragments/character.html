@@ -88,4 +88,37 @@
         </table>
     </div>
 </div>
+
+<div class="row mt-2">
+    {% if object.shadows.exists %}
+        <div class="col-md-6 mt-1">
+            <h2 class="mb-2">{% trans 'Shadows' %}</h2>
+            <table class="table">
+                {% for shadow in object.shadows.all %}
+                    <tr>
+                        {% if shadow.description %}
+                            <td><a role="button" tabindex="0" data-toggle="popover" data-trigger="focus" title="{{ shadow }}" data-content="{{ shadow.description }}">{{ shadow }}</a></td>
+                        {% else %}
+                            <td>{{ shadow }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
+    {% if object.characterknowledge_set.exists %}
+        <div class="col-md-6 mt-1">
+            <h2 class="mb-2">{% trans 'Knowledge' %}</h2>
+            <table class="table">
+                {% for knowledge in object.characterknowledge_set.all %}
+                    <tr>
+                        <td>{{ knowledge.knowledge }}</td>
+                        <td class="text-right">{% color_value_span knowledge.value 6 %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

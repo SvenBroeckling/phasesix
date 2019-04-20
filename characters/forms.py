@@ -19,4 +19,5 @@ class CreateCharacterForm(forms.Form):
         label=_('Epoch'))
     extensions = forms.ModelMultipleChoiceField(
         queryset=Extension.objects.filter(is_epoch=False, is_mandatory=False),
-        label=_('Extensions'))
+        label=_('Extensions'),
+        required=False)
