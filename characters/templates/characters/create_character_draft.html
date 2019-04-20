@@ -23,7 +23,7 @@
                         template_count += 1;
                         $('.template-number').text(template_count);
                         if (template_count > 9){
-                            window.location = $('.initial-data').data('detail-url')
+                            $('form.finish-form').submit();
                         }
                     });
                 e.preventDefault();
@@ -49,6 +49,9 @@
         data-initial-template-count="{{ object.charactertemplate_set.count }}"
         data-detail-url="{% url 'characters:detail' pk=object.id %}">
 
+        <form class="finish-form" action="{% url 'characters:create_character_draft' pk=object.id %}" method="post">
+            {% csrf_token %}
+        </form>
         <div class="col-md-12">
             <div class="form-group float-right">
                 <span class="switch switch-sm float-right">

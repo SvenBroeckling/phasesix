@@ -9,11 +9,11 @@
                 data-target=".character-modal"
                 data-modal-title="{% trans 'Reputation' %}"
                 data-url="{% url 'characters:xhr_reputation' object.id %}">
-             <i class="fa fa-eye text-warning"></i> {% trans 'Reputation' %} {{ object.reputation_spent }}/{{ object.reputation }}
+             <i class="fa fa-eye text-warning"></i> {% trans 'Reputation' %} {{ object.reputation_available }}
         </button>
     {% else %}
         <div class="card mb-2 p-2 text-center">
-            <i class="fa fa-eye text-warning"></i> {% trans 'Reputation' %} {{ object.reputation_spent }}/{{ object.reputation }}
+            <i class="fa fa-eye text-warning"></i> {% trans 'Reputation' %} {{ object.reputation_available }}
         </div>
     {% endif %}
 {% endblock %}

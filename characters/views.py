@@ -86,6 +86,7 @@ class CreateCharacterDataView(FormView):
 
         if self.kwargs['mode'] == 'random':
             self.object.fill_random()
+            self.object.set_initial_reputation()
         else:
             self.object.fill_basics()
         self.object.save()
@@ -122,6 +123,11 @@ class CreateCharacterDraftView(DetailView):
         context = super().get_context_data(**kwargs)
         context['initial_templates'] = Template.objects.for_extensions(self.object.extensions).order_by('?')[:3]
         return context
+
+    def post(self, request, *args, **kwargs):
+        obj = Character.objects.get(id=kwargs['pk'])
+        obj.set_initial_reputation()
+        return HttpResponseRedirect(obj.get_absolute_url())
 
 
 class XhrDraftAddTemplateView(View):
@@ -163,6 +169,11 @@ class CreateCharacterConstructedView(DetailView):
         context['character_template_ids'] = [
             ct.template.id for ct in self.object.charactertemplate_set.all()]
         return context
+
+    def post(self, request, *args, **kwargs):
+        obj = Character.objects.get(id=kwargs['pk'])
+        obj.set_initial_reputation(obj.reputation_spent + obj.remaining_template_points)
+        return HttpResponseRedirect(obj.get_absolute_url())
 
 
 class XhrConstructedAddTemplateView(View):

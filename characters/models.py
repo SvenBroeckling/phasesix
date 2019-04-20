@@ -30,7 +30,6 @@ class Character(models.Model):
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
 
     reputation = models.IntegerField(_('reputation'), default=0)
-    reputation_spent = models.IntegerField(_('reputation spent'), default=0)
 
     base_intelligence = models.IntegerField(_('intelligence'), default=100)
     base_max_health = models.IntegerField(_('max health'), default=6)
@@ -94,6 +93,22 @@ class Character(models.Model):
                 self.characterknowledge_set.filter(knowledge=tm.knowledge).delete()
             if tm.shadow is not None:
                 self.shadows.remove(tm.shadow)
+
+    @property
+    def reputation_spent(self):
+        ts = self.charactertemplate_set.aggregate(Sum('template__cost'))
+        return ts['template__cost__sum'] if ts is not None else 0
+
+    @property
+    def reputation_available(self):
+        return self.reputation - self.reputation_spent
+
+    def set_initial_reputation(self, initial_reputation=None):
+        """Sets the reputation to the initial reputation, or to the spent reputation
+        if no initial reputation is given (for draft and random characters) to start
+        a new character with 0 reputation available"""
+        self.reputation = self.reputation_spent if initial_reputation is None else initial_reputation
+        self.save()
 
     @property
     def actions(self):
@@ -206,7 +221,6 @@ class Character(models.Model):
         self.characterriotgear_set.create(riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?')[0])
         for i in range(random.randint(2, 4)):
             self.characteritem_set.create(item=Item.objects.for_extensions(self.extensions).order_by('?')[0])
-        pass
 
 
 class CharacterSkillQuerySet(models.QuerySet):

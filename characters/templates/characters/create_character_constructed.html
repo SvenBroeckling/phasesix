@@ -106,7 +106,11 @@
                 <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
             </div>
             <h2><span class="badge badge-info template-points h2">{{ character.remaining_template_points }}</span> {% trans "Character Points "%}</h2>
-            <a class="btn btn-success" href="{{ character.get_absolute_url }}">{% trans 'Finish Character' %}</a>
+            <p class="text-muted">{% trans 'Excess points will become the new characters initial reputation.' %}</p>
+            <form action="{% url 'characters:create_character_constructed' pk=character.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">{% trans 'Finish Character' %}</button>
+            </form>
         <hr>
         </div>
     </div>
