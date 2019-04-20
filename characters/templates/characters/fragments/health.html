@@ -2,23 +2,29 @@
 {% load i18n %}
 
 {% block fragment %}
-<div class="{% if may_edit %}dropdown{% endif %} mb-2">
-    {% for i in object.get_full_heart_range %}
-        <i {% if may_edit %}data-toggle="dropdown"{% endif %} class="touch-menu fas fa-heart fa-2x text-danger"></i>
-    {% endfor %}
-    {% for i in object.get_empty_heart_range %}
-        <i {% if may_edit %}data-toggle="dropdown"{% endif %} class="touch-menu far fa-heart fa-2x text-danger"></i>
-    {% endfor %}
-    {% for i in object.get_boost_range %}
-        <i {% if may_edit %}data-toggle="dropdown"{% endif %} class="touch-menu fas fa-heart fa-2x text-info"></i>
-    {% endfor %}
+    <div class="{% if may_edit %}dropdown{% endif %} mb-2">
+        {% for i in object.get_full_heart_range %}
+            <i {% if may_edit %}data-toggle="dropdown"{% endif %} class="touch-menu fas fa-heart fa-2x text-danger"></i>
+        {% endfor %}
+        {% for i in object.get_empty_heart_range %}
+            <i {% if may_edit %}data-toggle="dropdown"{% endif %} class="touch-menu far fa-heart fa-2x text-danger"></i>
+        {% endfor %}
+        {% for i in object.get_boost_range %}
+            <i {% if may_edit %}data-toggle="dropdown"{% endif %} class="touch-menu fas fa-heart fa-2x text-info"></i>
+        {% endfor %}
 
-    {% if may_edit %}
-    <div class="dropdown-menu">
-        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i class="fas fa-heart text-danger"></i> {% trans 'Heal Wound' %}</a>
-        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i class="far fa-heart text-danger"></i> {% trans 'Take Damage' %}</a>
-        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i class="fas fa-heart text-info"></i> {% trans 'Get Boost' %}</a>
+        {% if may_edit %}
+        <div class="dropdown-menu">
+            <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i class="fas fa-heart text-danger"></i> {% trans 'Heal Wound' %}</a>
+            <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i class="far fa-heart text-danger"></i> {% trans 'Take Damage' %}</a>
+            <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i class="fas fa-heart text-info"></i> {% trans 'Get Boost' %}</a>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
-</div>
+
+    <div>
+        {% for i in object.get_ballistic_protection_range %}
+            <i class="fas fa-shield-alt fa-2x text-success mb-4"></i>
+        {% endfor %}
+    </div>
 {% endblock %}
