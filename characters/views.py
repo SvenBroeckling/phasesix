@@ -213,8 +213,30 @@ class ChangeImageView(View):
             form.save()
         return HttpResponseRedirect(character.get_absolute_url())
 
-# gear
+# reputation
 
+class XhrReputationView(TemplateView):
+    template_name = 'characters/_reputation.html'
+
+    def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        context = super(XhrReputationView, self).get_context_data(**kwargs)
+        context['object'] = character
+        return context
+
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        operation = request.POST.get('operation', 'noop')
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        print(request.POST)
+        if operation == 'add':
+            character.reputation += int(request.POST.get('reputation', 0))
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
+# gear
 
 class XhrAddWeaponsView(TemplateView):
     template_name = 'characters/_add_weapons.html'

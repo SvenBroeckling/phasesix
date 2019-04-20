@@ -67,6 +67,12 @@ urlpatterns = [
         views.ChangeImageView.as_view(),
         name='change_image'),
 
+    # reputation
+    url(
+        '^xhr_reputation/(?P<pk>\d+)$',
+        views.XhrReputationView.as_view(),
+        name='xhr_reputation'),
+
     # gear
     url(
         '^xhr_add_weapons/(?P<pk>\d+)$',

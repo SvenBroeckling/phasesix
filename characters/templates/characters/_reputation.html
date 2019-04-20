@@ -1,0 +1,84 @@
+{% load bootstrap4 i18n %}
+
+<script>
+    $(function(){
+
+        function checkReputationCosts(remaining_reputation) {
+            $('button[data-reputation-cost]').each(function(idx){
+                elem = $(this);
+                if(parseInt(elem.data('reputation-cost'), 10) > remaining_reputation){
+                    elem.addClass('disabled', 'disabled');
+                    elem.prop('disabled', 'disabled');
+                } else {
+                    elem.removeClass('disabled', 'disabled');
+                    elem.prop('disabled', false)
+                }
+            })
+        }
+        checkReputationCosts($('#reputation').data('initial-reputation'));
+
+        $('.add-form').on('submit', function(e){
+            var form = $(this);
+            var btn = form.find('button');
+            var original_btn_html = btn.html();
+
+            if (btn.data('flash-message')){
+                btn.text(btn.data('flash-message'));
+            } else {
+                btn.text('Hinzugefügt');
+            }
+            setTimeout(function(){btn.html(original_btn_html)}, 1000);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize()
+            }).done(function(data){
+                if(data.new_value){
+                    var span = btn.parent().parent().find('span');
+                    span.text(data.new_value);
+                    span.fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+                }
+                if(data.remaining_reputation) {
+                    checkReputationCosts(data.remaining_reputation);
+                }
+            });
+            e.preventDefault();
+            return false;
+        });
+    })
+</script>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" href="#reputation" aria-controls="reputation" role="tab"
+           data-toggle="tab">Reputation</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="reputation" data-initial-reputation="{{ initial_reputation }}">
+        <p class="pt-2">
+            {% blocktrans %}
+                Reputation represents the characters degree of popularity. Reputation may be
+                spent to get new character templates.
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans %}
+                The game master distributes reputation after each game session and for
+                special events.
+            {% endblocktrans %}
+        </p>
+        <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post" class="add-form">
+            {% csrf_token %}
+            <input type="hidden" name="operation" value="add">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Reputation"
+                       aria-label="Reputation" name="reputation">
+                <div class="input-group-append">
+                    <button type="submit" name="add_reputation" class="btn btn-dark" type="button"><i class="fa fa-eye text-warning"></i> Hinzufügen</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

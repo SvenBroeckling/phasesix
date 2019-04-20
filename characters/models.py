@@ -29,6 +29,9 @@ class Character(models.Model):
     lineage = models.ForeignKey(
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
 
+    reputation = models.IntegerField(_('reputation'), default=0)
+    reputation_spent = models.IntegerField(_('reputation spent'), default=0)
+
     base_intelligence = models.IntegerField(_('intelligence'), default=100)
     base_max_health = models.IntegerField(_('max health'), default=6)
 

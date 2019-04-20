@@ -24,6 +24,10 @@
             return false;
         });
 
+        $('#character-modal').on('hidden.bs.modal', function(e){
+            refresh_fragments();
+        });
+
         function refresh_fragments() {
             $('.fragment').each(function (index) {
                 $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
@@ -51,7 +55,7 @@
 {% block content %}
 
     <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog" aria-labelledby="character-modal">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modal</h5>
@@ -59,8 +63,10 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body character-modal-container">
-                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-                    <span class="sr-only">{% trans 'Loading' %}...</span>
+                    <div class="text-center">
+                        <i class="fa fa-cog fa-spin fa-5x fa-fw"></i>
+                        <span class="sr-only">{% trans 'Loading' %}...</span>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
@@ -110,8 +116,9 @@
                         <i class="fas fa-shield-alt fa-2x text-success mb-4"></i>
                     {% endfor %}
                 </div>
-
             </div>
+
+            {% detail_fragment 'reputation' %}
 
             <div class="card mb-3">
                 <div class="card-body text-center pt-1">
