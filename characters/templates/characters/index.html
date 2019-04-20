@@ -6,11 +6,11 @@
         <div class="col-md-8 offset-md-2 index-lead">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Phase Six</h1>
+                    <h1 class="mb-4">Phase Six</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-sm-12 col-lg-6 col-md-12">
                         <p>
                             {% blocktrans %}
                             Are you in need of a simple and quick ruleset to play your stories as a pen'n'paper rpg?
@@ -34,7 +34,7 @@
                     <a href="{% url 'rulebook:detail' pk=1 %}" class="btn btn-primary btn-lg mt-4 mr-2">{% trans 'Have a look at the rules' %}</a>
                     <a href="{% url 'characters:create_character' %}" class="btn btn-outline-dark btn-lg mt-4">{% trans 'Create a character' %}</a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6 d-sm-none d-md-none d-lg-block">
                     <img class="img-fluid" src="{% static 'img/die.jpg' %}" alt="{% trans 'Die' %}">
                 </div>
             </div>
