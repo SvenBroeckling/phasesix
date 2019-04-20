@@ -33,7 +33,7 @@
                             $(this).removeClass('d-none');
                         } else {
                             $(this).addClass('d-none');
-                        };
+                        }
                     });
                     updateTabs();
                     //history.replaceState({q: q}, '', '?q=' + q);
@@ -68,6 +68,10 @@
                                 template_div.addClass('selected');
                                 $('.character-preview').load(preview_url);
                             } else {
+                                template_div.addClass('notenoughpoints');
+                                setTimeout(function(){
+                                    template_div.removeClass('notenoughpoints');
+                                }, 500);
                             }
                         });
                 }
