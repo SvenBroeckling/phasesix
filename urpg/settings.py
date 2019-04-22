@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'characters',
     'rulebook',
     'forum',
+    'magic',
 ]
 
 MIDDLEWARE = [

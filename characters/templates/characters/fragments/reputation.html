@@ -23,8 +23,8 @@
                     class="btn btn-primary btn-block mb-3 mt-3 modal-trigger-link"
                     data-toggle="modal"
                     data-target=".character-modal"
-                    data-modal-title="{% trans 'Spell Points' %}"
-                    data-url="{% url 'characters:xhr_reputation' object.id %}">
+                    data-modal-title="{% trans 'Create a spell' %}"
+                    data-url="{% url 'magic:xhr_spell' object.id %}">
                 <i class="fa fa-magic text-warning"></i> {% trans 'Spell Points' %} {{ object.spell_points_available }}
             </button>
         {% else %}

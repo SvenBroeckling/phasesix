@@ -234,6 +234,7 @@ class ChangeImageView(View):
 
 # reputation
 
+
 class XhrReputationView(TemplateView):
     template_name = 'characters/_reputation.html'
 
@@ -248,7 +249,6 @@ class XhrReputationView(TemplateView):
         operation = request.POST.get('operation', 'noop')
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
-        print(request.POST)
         if operation == 'add':
             character.reputation += int(request.POST.get('reputation', 0))
             character.save()
