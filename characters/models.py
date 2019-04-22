@@ -100,6 +100,13 @@ class Character(models.Model):
                 self.shadows.remove(tm.shadow)
 
     @property
+    def extension_enabled(self):
+        res = {}
+        for e in self.extensions.all():
+            res[e.identifier] = True
+        return res
+
+    @property
     def spell_points_spent(self):
         return 0
 

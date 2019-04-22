@@ -28,9 +28,11 @@
         {% endfor %}
     </div>
 
+    {% if object.extension_enabled.magic %}
     <div>
         {% for i in object.get_arcana_range %}
             <i {% if may_edit %}data-toggle="dropdown"{% endif %} class="touch-menu fas fa-magic fa-2x text-warning"></i>
         {% endfor %}
     </div>
+    {% endif %}
 {% endblock %}
