@@ -38,7 +38,7 @@ class Character(models.Model):
     boost = models.IntegerField(_('boost'), default=0)
 
     # magic extension
-    base_max_arcana = models.IntegerField(_('max arcana'), default=3)
+    base_max_arcana = models.IntegerField(_('max arcana'), default=0)
     arcana = models.IntegerField(_('arcana'), default=3)
     base_spell_points = models.IntegerField(_('spell points'), default=0)
 

@@ -22,6 +22,7 @@ class Extension(models.Model, metaclass=TransMeta):
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fa fa-book')
     name = models.CharField(_('name'), max_length=120)
+    identifier = models.CharField(_('name'), max_length=20)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     is_epoch = models.BooleanField(_('is epoch'), default=True)
