@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 20:58+0000\n"
-"PO-Revision-Date: 2019-04-22 22:59+0200\n"
+"POT-Creation-Date: 2019-04-22 21:26+0000\n"
+"PO-Revision-Date: 2019-04-22 23:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,7 +21,9 @@ msgstr ""
 #: armory/models.py:21 armory/models.py:38 armory/models.py:71
 #: armory/models.py:102 armory/models.py:126 armory/models.py:178
 #: armory/models.py:200 armory/models.py:236 characters/models.py:16
-#: forum/models.py:33 forum/models.py:51 rulebook/models.py:14
+#: forum/models.py:33 forum/models.py:51 magic/models.py:7 magic/models.py:21
+#: magic/models.py:35 magic/models.py:49 magic/models.py:63 magic/models.py:77
+#: magic/models.py:91 magic/models.py:106 rulebook/models.py:14
 #: rules/models.py:24 rules/models.py:43 rules/models.py:78 rules/models.py:99
 #: rules/models.py:120 rules/models.py:175 rules/models.py:216
 msgid "name"
@@ -138,7 +140,7 @@ msgstr "Angriffe pro Aktion"
 msgid "capacity"
 msgstr "Kapazität"
 
-#: armory/models.py:133
+#: armory/models.py:133 magic/models.py:93
 msgid "wounds"
 msgstr "Wunden"
 
@@ -915,6 +917,9 @@ msgid "Reputation"
 msgstr "Reputation"
 
 #: characters/templates/characters/fragments/reputation.html:26
+msgid "Create a spell"
+msgstr "Erstelle einen Zauber"
+
 #: characters/templates/characters/fragments/reputation.html:28
 #: characters/templates/characters/fragments/reputation.html:32
 msgid "Spell Points"
@@ -990,11 +995,11 @@ msgstr "Würfel"
 msgid "Text"
 msgstr "Text"
 
-#: forum/models.py:10 urpg/settings.py:94
+#: forum/models.py:10 urpg/settings.py:95
 msgid "German"
 msgstr "Deutsch"
 
-#: forum/models.py:11 urpg/settings.py:95
+#: forum/models.py:11 urpg/settings.py:96
 msgid "English"
 msgstr "Englisch"
 
@@ -1190,6 +1195,76 @@ msgstr "Rüstungswurf"
 msgid "damage"
 msgstr "Schaden"
 
+#: magic/models.py:8 magic/models.py:22 magic/models.py:36 magic/models.py:50
+#: magic/models.py:64 magic/models.py:78 magic/models.py:92 magic/models.py:107
+#: rules/models.py:224
+msgid "cost"
+msgstr "Kosten"
+
+#: magic/models.py:13
+msgid "spell cost"
+msgstr "Zauber Kosten"
+
+#: magic/models.py:14
+msgid "spell costs"
+msgstr "Zauber Kosten"
+
+#: magic/models.py:27
+msgid "spell range"
+msgstr "Zauber Reichweite"
+
+#: magic/models.py:28
+msgid "spell ranges"
+msgstr "Zauber Reichweiten"
+
+#: magic/models.py:41
+msgid "spell area of effect"
+msgstr "Zauber Effektbereich"
+
+#: magic/models.py:42
+msgid "spell areas of effect"
+msgstr "Zauber Effektbereiche"
+
+#: magic/models.py:55
+msgid "spell component"
+msgstr "Zauber Komponente"
+
+#: magic/models.py:56
+msgid "spell components"
+msgstr "Zauber Komponenten"
+
+#: magic/models.py:69
+msgid "spell casting time"
+msgstr "Zauber Spruchzeit"
+
+#: magic/models.py:70
+msgid "spell casting times"
+msgstr "Zauber Spruchzeiten"
+
+#: magic/models.py:83
+msgid "spell type"
+msgstr "Zaubertyp"
+
+#: magic/models.py:84
+msgid "spell types"
+msgstr "Zaubertypen"
+
+#: magic/models.py:98
+msgid "spell power"
+msgstr "Zauberstärke"
+
+#: magic/models.py:99
+msgid "spell powers"
+msgstr "Zauberstärken"
+
+#: magic/models.py:112
+msgid "spell flavour"
+msgstr "Zauber Variante"
+
+#: magic/models.py:113
+msgid "spell flavours"
+msgstr "Zaubervarianten"
+
 #: rulebook/models.py:13
 msgid "number"
 msgstr "Nummer"
@@ -1353,10 +1428,6 @@ msgstr "Schablonenkategorien"
 #: rules/models.py:220
 msgid "category"
 msgstr "Kategorie"
-
-#: rules/models.py:224
-msgid "cost"
-msgstr "Kosten"
 
 #: rules/models.py:228
 msgid "character template"
@@ -1585,9 +1656,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "valour"
 #~ msgstr "Tapferkeit"
-
-#~ msgid "willpower"
-#~ msgstr "Willenskraft"
 
 #~ msgid "gifts"
 #~ msgstr "Gaben"
