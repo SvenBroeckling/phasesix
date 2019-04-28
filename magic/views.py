@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from characters.models import Character
 from magic.forms import SpellForm
 from magic.models import SpellFlavour, SpellType, SpellCost, SpellCastingTime, SpellPower, SpellRange, \
-    SpellAreaOfEffect, SpellAreaOfEffectRange, SpellComponents
+    SpellAreaOfEffect, SpellAreaOfEffectRange, SpellComponents, SpellRule
 
 
 class XhrSpellView(TemplateView):
@@ -31,6 +31,13 @@ class XhrSpellSummaryView(TemplateView):
         getdata = self.request.GET
         context = super().get_context_data(**kwargs)
 
+        try:
+            spell_rule = SpellRule.objects.get(
+                power__id=getdata.get('power'),
+                flavour__id=getdata.get('flavour'))
+        except SpellRule.DoesNotExist:
+            spell_rule = None
+
         selections = {
             'flavour': SpellFlavour.objects.get(id=getdata.get('flavour')),
             'type': SpellType.objects.get(id=getdata.get('type')),
@@ -50,6 +57,7 @@ class XhrSpellSummaryView(TemplateView):
             'name': getdata.get('name'),
             'description': getdata.get('description'),
             'spell_points': spell_points,
+            'spell_rule': spell_rule,
         })
         context.update(selections)
 

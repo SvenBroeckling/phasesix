@@ -1,8 +1,17 @@
 {% load i18n characters_extras %}
 
 <h2>{% if name %}{{ name }}{% else %}{% trans 'Unnamed Spell' %}{% endif %}</h2>
-{% trans 'Spell Points' %}: {% color_value_span spell_points 40 invert=True %}
+
+{% if spell_rule %}
+    <p class="text-muted">
+        {{ spell_rule.rule_text }}
+    </p>
+{% endif %}
+
 <p class="text-muted">{{ description|linebreaksbr }}</p>
+
+{% trans 'Spell Points' %}: {% color_value_span spell_points 40 invert=True %}
+
 <i class="fas fa-fw fa-question"></i> {{ flavour }}<br>
 <i class="fas fa-fw fa-fire"></i> {{ type }}<br>
 <i class="fas fa-fw fa-magic"></i> {{ cost }}<br>

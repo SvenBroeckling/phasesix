@@ -1,11 +1,17 @@
 from django.contrib import admin
 
 from magic.models import SpellCost, SpellRange, SpellAreaOfEffect, SpellComponents, SpellCastingTime, SpellType, \
-    SpellPower, SpellFlavour, SpellAreaOfEffectRange
+    SpellPower, SpellFlavour, SpellAreaOfEffectRange, SpellRule
+
 
 class SpellComponentAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'cost')
     list_editable = ('cost',)
+
+
+class SpellRuleAdmin(admin.ModelAdmin):
+    list_display = ('flavour', 'power', 'rule_text_de', 'rule_text_en')
+    list_filter = ('flavour', 'power')
 
 
 admin.site.register(SpellCost, SpellComponentAdmin)
@@ -17,4 +23,4 @@ admin.site.register(SpellCastingTime, SpellComponentAdmin)
 admin.site.register(SpellType, SpellComponentAdmin)
 admin.site.register(SpellPower, SpellComponentAdmin)
 admin.site.register(SpellFlavour, SpellComponentAdmin)
-
+admin.site.register(SpellRule, SpellRuleAdmin)
