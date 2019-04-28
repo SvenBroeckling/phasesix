@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView
 
 from characters.models import Character
+from magic.forms import SpellForm
 
 
 class XhrSpellView(TemplateView):
@@ -11,6 +12,7 @@ class XhrSpellView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         context = super(XhrSpellView, self).get_context_data(**kwargs)
         context['object'] = character
+        context['form'] = SpellForm()
         return context
 
     def post(self, request, *args, **kwargs):

@@ -1,1 +1,15 @@
-Hello
+{% load bootstrap4 characters_extras %}
+
+<div class="row">
+    <div class="col-md-8">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h2>Unnamed Spell</h2>
+        Cost: {% color_value_span 10 10 invert=True %}
+
+    </div>
+</div>

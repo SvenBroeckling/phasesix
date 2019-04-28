@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
@@ -115,3 +116,21 @@ class SpellFlavour(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+
+class Spell(models.Model):
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+
+    name = models.CharField(_('name'), max_length=80)
+    description = models.TextField(_('description'))
+
+    cost = models.ForeignKey(SpellCost, on_delete=models.CASCADE)
+    flavour = models.ForeignKey(SpellFlavour, on_delete=models.CASCADE)
+    power = models.ForeignKey(SpellPower, on_delete=models.CASCADE)
+    type = models.ForeignKey(SpellType, on_delete=models.CASCADE)
+    casting_time = models.ForeignKey(SpellCastingTime, on_delete=models.CASCADE)
+    components = models.ForeignKey(SpellComponents, on_delete=models.CASCADE)
+    area_of_effect = models.ForeignKey(SpellAreaOfEffect, on_delete=models.CASCADE)
+    range = models.ForeignKey(SpellRange, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
