@@ -56,7 +56,7 @@
             {% if may_edit %}
             <button
                     title="{% trans 'Add weapon' %}"
-                    class="btn btn-primary buy-button float-right"
+                    class="btn btn-primary btn-sm buy-button float-right"
                     data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
                     data-toggle="modal"
                     data-modal-title="{% trans 'Add weapon' %}"
@@ -69,9 +69,34 @@
                 <div class="col-md-12">
                     <div class="card mb-2">
                         <div class="card-header">
+                            {% if may_edit %}
+                                <div class="dropdown float-right">
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a
+                                                class="dropdown-item modal-trigger-link"
+                                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                                data-toggle="modal"
+                                                data-target=".character-modal"
+                                                data-modal-title="{% trans 'Add Modification' %}"
+                                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
+                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
+                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a
+                                                class="dropdown-item modal-trigger-link"
+                                                data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                                                data-toggle="modal"
+                                                data-target=".character-modal"
+                                                data-modal-title="{% trans 'Add Weapon' %}"
+                                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+
                             <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
-                            {{ weapon.weapon }}
-                            <span class="float-right small">{{ weapon.weapon.type }}</span>
+                            {{ weapon.weapon }}<br>
+                            <span class="text-muted">{{ weapon.weapon.type }}</span>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -109,30 +134,6 @@
                                 </div>
                             </div>
 
-                            {% if may_edit %}
-                            <div class="dropdown">
-                                <button data-toggle="dropdown" class="btn btn-primary buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Action' %}</button>
-                                <div class="dropdown-menu">
-                                    <a
-                                            class="dropdown-item modal-trigger-link"
-                                            data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
-                                            data-toggle="modal"
-                                            data-target=".character-modal"
-                                            data-modal-title="{% trans 'Add Modification' %}"
-                                            href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
-                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
-                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a
-                                            class="dropdown-item modal-trigger-link"
-                                            data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                                            data-toggle="modal"
-                                            data-target=".character-modal"
-                                            data-modal-title="{% trans 'Add Weapon' %}"
-                                            href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
-                                </div>
-                            </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -147,7 +148,7 @@
                             <p>{% trans 'This character has no weapons yet.' %}</p>
                             {% if may_edit %}
                             <button
-                                    class="btn btn-primary buy-button float-right"
+                                    class="btn btn-primary btn-sm buy-button float-right"
                                     data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
                                     data-toggle="modal"
                                     data-modal-title="{% trans 'Add weapon' %}"

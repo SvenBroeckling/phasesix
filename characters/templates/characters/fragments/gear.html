@@ -9,7 +9,7 @@
             {% if may_edit %}
             <button
                     title="{% trans 'Add armor' %}"
-                    class="btn btn-primary buy-button float-right"
+                    class="btn btn-primary btn-sm buy-button float-right"
                     data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
                     data-toggle="modal"
                     data-modal-title="{% trans 'Add Armor' %}"
@@ -22,6 +22,23 @@
                 <div class="col-md-12">
                     <div class="card mb-2">
                         <div class="card-header">
+                            {% if may_edit %}
+                                <div class="dropdown float-right">
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
+                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a
+                                                class="dropdown-item modal-trigger-link"
+                                                data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
+                                                data-toggle="modal"
+                                                data-target=".character-modal"
+                                                data-modal-title="{% trans 'Add Armor' %}"
+                                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Armor' %}</a>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <i class="{{ r.riot_gear.extension.fa_icon_class }}" title="{{ r.riot_gear.extension }}"></i>
                             {{ r.riot_gear }}
                         </div>
@@ -30,24 +47,6 @@
                             <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.riot_gear.concealment 6 invert=True %}<br>
                             <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.riot_gear.weight }}<br>
                             <i class="fas fa-asterisk fa-fw"></i> {% trans 'Condition' %}: {% color_value_span r.condition 100 %}
-
-                            {% if may_edit %}
-                            <div class="dropdown">
-                                <button data-toggle="dropdown" class="btn btn-primary buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Action' %}</button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
-                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a
-                                            class="dropdown-item modal-trigger-link"
-                                            data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                                            data-toggle="modal"
-                                            data-target=".character-modal"
-                                            data-modal-title="{% trans 'Add Armor' %}"
-                                            href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Armor' %}</a>
-                                </div>
-                            </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -62,7 +61,7 @@
                             <p>{% trans 'This character has no amor yet.' %}</p>
                             {% if may_edit %}
                             <button
-                                    class="btn btn-primary buy-button float-right"
+                                    class="btn btn-primary btn-sm buy-button float-right"
                                     data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
                                     data-toggle="modal"
                                     data-modal-title="{% trans 'Add Armor' %}"
@@ -79,7 +78,7 @@
             <h2 class="mb-2">{% trans 'Items' %}
                 {% if may_edit %}
                 <button
-                        class="btn btn-primary buy-button float-right"
+                        class="btn btn-primary btn-sm buy-button float-right"
                         title="{% trans 'Add Item' %}"
                         data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
                         data-toggle="modal"
@@ -93,23 +92,23 @@
                 <div class="col-md-12">
                     <div class="card mb-2">
                         <div class="card-header">
+                            {% if may_edit %}
+                                <div class="downdown float-right">
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove / Use' %}</a>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <i class="{{ ci.item.extension.fa_icon_class }}" title="{{ ci.item.extension }}"></i>
-                            {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
-                            <span class="float-right small">{{ ci.item.type }}</span>
+                            {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}<br>
+                            <span class="text-muted small">{{ ci.item.type }}</span>
                         </div>
                         <div class="card-body">
                             {% if ci.item.description %}<p>{{ ci.item.description }}</p>{% endif %}
                             <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
                             <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
                             <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
-                            {% if may_edit %}
-                            <div class="downdown">
-                                <button data-toggle="dropdown" class="btn btn-primary buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Action' %}</button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove / Use' %}</a>
-                                </div>
-                            </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -124,7 +123,7 @@
                             <p>{% trans 'This character has no items yet.' %}</p>
                             {% if may_edit %}
                             <button
-                                    class="btn btn-primary buy-button float-right"
+                                    class="btn btn-primary btn-sm buy-button float-right"
                                     data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
                                     data-toggle="modal"
                                     data-modal-title="{% trans 'Add item' %}"
