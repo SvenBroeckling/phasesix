@@ -32,7 +32,7 @@
                             {% endblocktrans %}
                         </p>
                     <a href="{% url 'rulebook:detail' pk=1 %}" class="btn btn-primary btn-lg mt-4 mr-2">{% trans 'Have a look at the rules' %}</a>
-                    <a href="{% url 'characters:create_character' %}" class="btn btn-outline-dark btn-lg mt-4">{% trans 'Create a character' %}</a>
+                    <a href="{% url 'characters:create_character' %}" class="btn btn-secondary btn-lg mt-4">{% trans 'Create a character' %}</a>
                 </div>
                 <div class="col-lg-6 d-sm-none d-md-none d-lg-block">
                     <img class="img-fluid" src="{% static 'img/die.jpg' %}" alt="{% trans 'Die' %}">
