@@ -46,6 +46,20 @@ class SpellAreaOfEffect(models.Model, metaclass=TransMeta):
         return self.name
 
 
+class SpellAreaOfEffectRange(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=30)
+    cost = models.IntegerField(_('cost'), default=0)
+
+    class Meta:
+        ordering = ('id',)
+        translate = ('name',)
+        verbose_name = _('spell area of effect range')
+        verbose_name_plural = _('spell areas of effect range')
+
+    def __str__(self):
+        return self.name
+
+
 class SpellComponents(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=30)
     cost = models.IntegerField(_('cost'), default=0)
@@ -118,19 +132,52 @@ class SpellFlavour(models.Model, metaclass=TransMeta):
 
 
 class Spell(models.Model):
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_('created by'))
 
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'))
 
-    cost = models.ForeignKey(SpellCost, on_delete=models.CASCADE)
-    flavour = models.ForeignKey(SpellFlavour, on_delete=models.CASCADE)
-    power = models.ForeignKey(SpellPower, on_delete=models.CASCADE)
-    type = models.ForeignKey(SpellType, on_delete=models.CASCADE)
-    casting_time = models.ForeignKey(SpellCastingTime, on_delete=models.CASCADE)
-    components = models.ForeignKey(SpellComponents, on_delete=models.CASCADE)
-    area_of_effect = models.ForeignKey(SpellAreaOfEffect, on_delete=models.CASCADE)
-    range = models.ForeignKey(SpellRange, on_delete=models.CASCADE)
+    cost = models.ForeignKey(
+        SpellCost,
+        on_delete=models.CASCADE,
+        verbose_name=_('cost'))
+    flavour = models.ForeignKey(
+        SpellFlavour,
+        on_delete=models.CASCADE,
+        verbose_name=_('flavour'))
+    power = models.ForeignKey(
+        SpellPower,
+        on_delete=models.CASCADE,
+        verbose_name=_('power'))
+    type = models.ForeignKey(
+        SpellType,
+        on_delete=models.CASCADE,
+        verbose_name=_('type'))
+    casting_time = models.ForeignKey(
+        SpellCastingTime,
+        on_delete=models.CASCADE,
+        verbose_name=_('casting time'))
+    components = models.ForeignKey(
+        SpellComponents,
+        on_delete=models.CASCADE,
+        verbose_name=_('components'))
+    area_of_effect = models.ForeignKey(
+        SpellAreaOfEffect,
+        on_delete=models.CASCADE,
+        verbose_name=_('area of effect'))
+    area_of_effect_range = models.ForeignKey(
+        SpellAreaOfEffectRange,
+        on_delete=models.CASCADE,
+        verbose_name=_('area of effect range'))
+    range = models.ForeignKey(
+        SpellRange,
+        on_delete=models.CASCADE,
+        verbose_name=_('range'))
 
     def __str__(self):
         return self.name

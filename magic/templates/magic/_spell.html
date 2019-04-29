@@ -1,15 +1,67 @@
-{% load bootstrap4 characters_extras %}
+{% load bootstrap4 characters_extras i18n %}
+
+<script>
+    $(function(){
+        function refresh_summary(){
+            var form = $('form');
+            var container = $('.summary-container');
+            var url = container.data('summary-url');
+
+            $.get(
+                url,
+                form.serialize(),
+                function(data){
+                    container.html(data);
+                }
+            )
+        }
+        refresh_summary();
+
+        $('input,select,textarea').on('change', function(e){
+            refresh_summary();
+        })
+    })
+</script>
 
 <div class="row">
-    <div class="col-md-8">
-        <form action="" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-        </form>
+    <div class="col-md-4 summary-container" data-summary-url="{% url 'magic:xhr_spell_summary' %}">
+        <h2>{% trans 'Unnamed Spell' %}</h2>
+        {% trans 'Spell Points' %}: {% color_value_span 10 10 invert=True %}
     </div>
-    <div class="col-md-4">
-        <h2>Unnamed Spell</h2>
-        Cost: {% color_value_span 10 10 invert=True %}
-
+    <div class="col-md-8">
+        <form action="{% url 'magic:xhr_spell' pk=object.id %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_field form.name %}
+            {% bootstrap_field form.description %}
+            <div class="row">
+                <div class="col-md-6">
+                    {% bootstrap_field form.flavour %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.type %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.cost %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.casting_time %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.power %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.range %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.area_of_effect %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.area_of_effect_range %}
+                </div>
+                <div class="col-md-12">
+                    {% bootstrap_field form.components %}
+                </div>
+            </div>
+        </form>
     </div>
 </div>

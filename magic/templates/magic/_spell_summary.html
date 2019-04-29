@@ -1,0 +1,14 @@
+{% load i18n characters_extras %}
+
+<h2>{% if name %}{{ name }}{% else %}{% trans 'Unnamed Spell' %}{% endif %}</h2>
+{% trans 'Spell Points' %}: {% color_value_span spell_points 40 invert=True %}
+<p class="text-muted">{{ description|linebreaksbr }}</p>
+<i class="fas fa-fw fa-question"></i> {{ flavour }}<br>
+<i class="fas fa-fw fa-fire"></i> {{ type }}<br>
+<i class="fas fa-fw fa-magic"></i> {{ cost }}<br>
+<i class="fas fa-fw fa-clock"></i> {{ casting_time }}<br>
+<i class="fas fa-fw fa-adjust"></i> {{ power }}<br>
+<i class="fas fa-fw fa-arrows-alt-h"></i> {{ range }}<br>
+<i class="far fa-fw fa-circle"></i> {{ area_of_effect }}<br>
+<i class="fas fa-fw fa-arrows-alt"></i> {{ area_of_effect_range }}<br>
+<i class="fas fa-fw fa-box"></i> {{ components }}<br>

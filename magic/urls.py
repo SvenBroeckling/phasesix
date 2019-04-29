@@ -9,4 +9,8 @@ urlpatterns = [
         '^xhr_spell/(?P<pk>\d+)$',
         views.XhrSpellView.as_view(),
         name='xhr_spell'),
+    url(
+        '^xhr_spell_summary/$',
+        views.XhrSpellSummaryView.as_view(),
+        name='xhr_spell_summary'),
 ]
