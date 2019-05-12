@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import random
+from decimal import Decimal
 
 from django.db import models
 from django.db.models import Sum
@@ -14,20 +15,28 @@ from rules.models import Skill, Template, TemplateCategory, TemplateModifier
 
 class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
-    image = models.ImageField(_('image'), upload_to='character_images', blank=True, null=True)
-    creation_mode = models.CharField(_('creation mode'), max_length=12, default='random')
+    image = models.ImageField(
+        _('image'), upload_to='character_images', blank=True, null=True
+    )
+    creation_mode = models.CharField(
+        _('creation mode'), max_length=12, default='random'
+    )
     created_by = models.ForeignKey(
         'auth.User',
         verbose_name=_('created by'),
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        help_text=_('Characters without user will be cleaned daily.'))
+        help_text=_('Characters without user will be cleaned daily.'),
+    )
 
-    extensions = models.ManyToManyField('rules.Extension', limit_choices_to={'is_mandatory': False})
+    extensions = models.ManyToManyField(
+        'rules.Extension', limit_choices_to={'is_mandatory': False}
+    )
 
     lineage = models.ForeignKey(
-        'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE)
+        'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE
+    )
 
     reputation = models.IntegerField(_('reputation'), default=0)
 
@@ -78,7 +87,9 @@ class Character(models.Model):
         return reverse('characters:detail', kwargs={'pk': self.id})
 
     def get_attribute_modifier(self, attribute_name):
-        q = TemplateModifier.objects.filter(template__charactertemplate__in=self.charactertemplate_set.all())
+        q = TemplateModifier.objects.filter(
+            template__charactertemplate__in=self.charactertemplate_set.all()
+        )
         q = q.filter(attribute=attribute_name).aggregate(Sum('attribute_modifier'))
         return q['attribute_modifier__sum'] or 0
 
@@ -127,7 +138,9 @@ class Character(models.Model):
         """Sets the reputation to the initial reputation, or to the spent reputation
         if no initial reputation is given (for draft and random characters) to start
         a new character with 0 reputation available"""
-        self.reputation = self.reputation_spent if initial_reputation is None else initial_reputation
+        self.reputation = (
+            self.reputation_spent if initial_reputation is None else initial_reputation
+        )
         self.save()
 
     @property
@@ -136,10 +149,18 @@ class Character(models.Model):
 
     @property
     def remaining_template_points(self):
-        template_points = self.lineage.lineagetemplatepoints_set.aggregate(
-            Sum('points'))['points__sum'] or 0
-        spent_points = self.charactertemplate_set.aggregate(
-            Sum('template__cost'))['template__cost__sum'] or 0
+        template_points = (
+            self.lineage.lineagetemplatepoints_set.aggregate(Sum('points'))[
+                'points__sum'
+            ]
+            or 0
+        )
+        spent_points = (
+            self.charactertemplate_set.aggregate(Sum('template__cost'))[
+                'template__cost__sum'
+            ]
+            or 0
+        )
         return template_points - spent_points
 
     @property
@@ -180,7 +201,9 @@ class Character(models.Model):
 
     @property
     def attractiveness(self):
-        return self.base_attractiveness + self.get_attribute_modifier('base_attractiveness')
+        return self.base_attractiveness + self.get_attribute_modifier(
+            'base_attractiveness'
+        )
 
     @property
     def endurance(self):
@@ -200,7 +223,9 @@ class Character(models.Model):
 
     @property
     def conscientiousness(self):
-        return self.base_conscientiousness + self.get_attribute_modifier('base_conscientiousness')
+        return self.base_conscientiousness + self.get_attribute_modifier(
+            'base_conscientiousness'
+        )
 
     @property
     def extraversion(self):
@@ -208,7 +233,9 @@ class Character(models.Model):
 
     @property
     def agreeableness(self):
-        return self.base_agreeableness + self.get_attribute_modifier('base_agreeableness')
+        return self.base_agreeableness + self.get_attribute_modifier(
+            'base_agreeableness'
+        )
 
     @property
     def neuroticism(self):
@@ -229,12 +256,18 @@ class Character(models.Model):
     def get_ballistic_protection_range(self):
         return range(
             self.characterriotgear_set.aggregate(
-                Sum('riot_gear__protection_ballistic'))['riot_gear__protection_ballistic__sum'] or 0)
+                Sum('riot_gear__protection_ballistic')
+            )['riot_gear__protection_ballistic__sum']
+            or 0
+        )
 
     def get_explosive_protection_range(self):
         return range(
             self.characterriotgear_set.aggregate(
-                Sum('riot_gear__protection_explosive'))['riot_gear__protection_explosive__sum'] or 0)
+                Sum('riot_gear__protection_explosive')
+            )['riot_gear__protection_explosive__sum']
+            or 0
+        )
 
     def fill_basics(self):
         for skill in Skill.objects.all():
@@ -246,12 +279,22 @@ class Character(models.Model):
         for tc in TemplateCategory.objects.all():
             if tc.template_set.all().for_extensions(self.extensions).exists():
                 for i in range(random.randint(1, 3)):
-                    self.add_template(tc.template_set.all().for_extensions(self.extensions).order_by('?')[0])
+                    self.add_template(
+                        tc.template_set.all()
+                        .for_extensions(self.extensions)
+                        .order_by('?')[0]
+                    )
         for i in range(random.randint(2, 4)):
-            self.characterweapon_set.create(weapon=Weapon.objects.for_extensions(self.extensions).order_by('?')[0])
-        self.characterriotgear_set.create(riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?')[0])
+            self.characterweapon_set.create(
+                weapon=Weapon.objects.for_extensions(self.extensions).order_by('?')[0]
+            )
+        self.characterriotgear_set.create(
+            riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?')[0]
+        )
         for i in range(random.randint(2, 4)):
-            self.characteritem_set.create(item=Item.objects.for_extensions(self.extensions).order_by('?')[0])
+            self.characteritem_set.create(
+                item=Item.objects.for_extensions(self.extensions).order_by('?')[0]
+            )
 
 
 class CharacterSkillQuerySet(models.QuerySet):
@@ -263,6 +306,12 @@ class CharacterSkillQuerySet(models.QuerySet):
 
     def combat_skills(self):
         return self.filter(skill__show_on_combat_tab=True)
+
+    def ranged_combat_skill(self):
+        return self.get(skill__name_en='Shooting')
+
+    def hand_to_hand_combat_skill(self):
+        return self.get(skill__name_en='Hand to Hand Combat')
 
 
 class CharacterSkill(models.Model):
@@ -280,7 +329,9 @@ class CharacterSkill(models.Model):
 
     @property
     def value(self):
-        q = TemplateModifier.objects.filter(template__charactertemplate__in=self.character.charactertemplate_set.all())
+        q = TemplateModifier.objects.filter(
+            template__charactertemplate__in=self.character.charactertemplate_set.all()
+        )
         q = q.filter(skill=self.skill).aggregate(Sum('skill_modifier'))
         return self.base_value + (q['skill_modifier__sum'] or 0)
 
@@ -298,7 +349,9 @@ class CharacterKnowledge(models.Model):
 
     @property
     def value(self):
-        q = TemplateModifier.objects.filter(template__charactertemplate__in=self.character.charactertemplate_set.all())
+        q = TemplateModifier.objects.filter(
+            template__charactertemplate__in=self.character.charactertemplate_set.all()
+        )
         q = q.filter(knowledge=self.knowledge).aggregate(Sum('knowledge_modifier'))
         return self.base_value + (q['knowledge_modifier__sum'] or 0)
 
@@ -323,6 +376,34 @@ class CharacterWeapon(models.Model):
 
     class Meta:
         ordering = ('weapon__id',)
+
+    def attack_roll(self):
+        mods = Decimal(0)
+        for wm in self.modifications.all():
+            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='accuracy'):
+                mods += wmm.modifier
+
+        skill = self.character.characterskill_set.ranged_combat_skill()
+        if self.weapon.is_hand_to_hand_weapon:
+            skill = self.character.characterskill_set.hand_to_hand_combat_skill()
+        return 7 - skill.value - mods - self.weapon.accuracy
+
+    def penetration(self):
+        pen = self.weapon.penetration
+        mods = 0
+        for wm in self.modifications.all():
+            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='penetration'):
+                mods += wmm.modifier
+        return pen + mods
+
+    def wounds_range(self):
+        wounds = self.weapon.wounds
+        mods = 0
+        for wm in self.modifications.all():
+            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='wounds'):
+                mods += wmm.modifier
+        return range(wounds + mods)
+
 
 
 class CharacterRiotGear(models.Model):
