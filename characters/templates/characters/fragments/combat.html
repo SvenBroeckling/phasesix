@@ -4,7 +4,6 @@
 {% block fragment %}
 <div class="row">
     <div class="col-md-3">
-        <h2 class="mb-2">{% trans 'Actions' %}</h2>
         <div class="d-flex justify-content-between mb-4">
             <div class="bg-dark p-3 text-center rounded-circle">
                 <div>
@@ -59,8 +58,9 @@
     </div>
 
     <div class="col-md-9 mb-4">
-        <table class="table table-hover">
-            <thead>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
                 <tr>
                     <th>
                         {% trans 'Action' %}<br>
@@ -68,7 +68,7 @@
                     </th>
                     <th>
                         {% trans 'Roll' %}<br>
-                        <small>{% trans 'Time' %}</small>
+                        <small>{% trans 'Per Action' %}</small>
                     </th>
                     <th>
                         {% trans 'Damage' %}<br>
@@ -79,32 +79,32 @@
                         <small>{% trans 'Area of effect' %}</small>
                     </th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 {% for w in object.characterweapon_set.all %}
-                <tr>
-                    <td>
-                        {{ w.weapon }}<br>
-                        <small>{{ w.weapon.type }}</small>
-                    </td>
-                    <td>
-                        {% color_value_span w.attack_roll 7 %}+
-                        <br>
-                        <small>{% color_value_span w.weapon.attacks_per_action 5 %} {% trans 'Attacks' %}</small>
-                    </td>
-                    <td>
-                        {% for i in w.wounds_range %}
-                            <i class="fas fa-heart text-danger"></i>
-                        {% endfor %}
-                        <br>
-                        {% color_value_span w.penetration 3 %}
-                    </td>
-                    <td>
-                        {{ w.weapon.get_range_lower_display }}
-                        {% if w.weapon.range_upper and w.weapon.range_upper != w.weapon.range_lower %}-
-                                    {{ w.weapon.get_range_upper_display }}{% endif %}
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            {{ w.weapon }}<br>
+                            <small>{{ w.weapon.type }}</small>
+                        </td>
+                        <td>
+                            {% color_value_span w.attack_roll 7 %}+
+                            <br>
+                            <small>{% color_value_span w.weapon.attacks_per_action 5 %} {% trans 'Attacks' %}</small>
+                        </td>
+                        <td>
+                            {% for i in w.wounds_range %}
+                                <i class="fas fa-heart text-danger"></i>
+                            {% endfor %}
+                            <br>
+                            {% color_value_span w.penetration 3 %}
+                        </td>
+                        <td>
+                            {{ w.weapon.get_range_lower_display }}
+                            {% if w.weapon.range_upper and w.weapon.range_upper != w.weapon.range_lower %}-
+                                {{ w.weapon.get_range_upper_display }}{% endif %}
+                        </td>
+                    </tr>
                 {% endfor %}
                 <tr>
                     <td>
@@ -113,15 +113,16 @@
                     </td>
                     <td>
                         -<br>
-                        {% trans '1m per Action' %}
+                        {% trans '1m' %}
                     </td>
                     <td></td>
                     <td>
                         {% trans '1 Meter' %}
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}
