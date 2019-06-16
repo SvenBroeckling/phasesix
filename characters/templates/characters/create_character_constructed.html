@@ -131,10 +131,10 @@
         <div class="col-md-12 tab-content">
             {% for tp in template_points %}
                 <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
-                    <div class="row">
+                    <div class="card-columns">
                         {% for i in tp.template_category.template_set.all %}
                             {% if i.extension in object.extensions.all or i.extension.is_mandatory %}
-                                <div class="col-md-4 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                                <div class="constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
                                     data-template-id="{{ i.id }}"
                                     data-tp-id="{{ tp.id }}"
                                     data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"

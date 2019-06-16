@@ -12,7 +12,7 @@
                 clearTimeout(timer);
             }
             timer = setTimeout(function(){
-                $('.template-col').each(function(index){
+                $('.template').each(function(index){
                     if($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
                         $(this).removeClass('d-none');
                     } else {
@@ -26,7 +26,7 @@
         var matches = /q=([^&#=]*)/.exec(window.location.search);
         if(matches[1]) {
             $('#id_q').val(matches[1]);
-            $('.template-col').each(function(index){
+            $('.template').each(function(index){
                 if($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
                     $(this).removeClass('d-none');
                 } else {
@@ -44,11 +44,9 @@
             <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
         </div>
     </div>
-    <div class="row">
+    <div class="card-columns">
         {% for object in object_list %}
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 template-col">
-                {% template_widget object %}
-            </div>
+            {% template_widget object %}
         {% endfor %}
     </div>
 {% endblock %}
