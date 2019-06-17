@@ -30,7 +30,7 @@ class XhrSpellFlavourOptionsView(View):
         st = SpellType.objects.get(id=request.GET.get('pk'))
         return HttpResponse(
             "".join([
-                '<option value="{}">{}</option>'.format(s.id, s.name)
+                '<option value="{}">{}</option>'.format(s.id, str(s))
                 for s in st.spellflavour_set.all()
             ])
         )
