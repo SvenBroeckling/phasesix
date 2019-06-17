@@ -405,7 +405,6 @@ class CharacterWeapon(models.Model):
         return range(wounds + mods)
 
 
-
 class CharacterRiotGear(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     riot_gear = models.ForeignKey('armory.RiotGear', on_delete=models.CASCADE)
@@ -422,4 +421,8 @@ class CharacterItem(models.Model):
 
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
-    quantity = models.IntegerField(_('quantity'), default=1)
+
+
+class CharacterSpell(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    spell = models.ForeignKey('magic.Spell', on_delete=models.CASCADE)

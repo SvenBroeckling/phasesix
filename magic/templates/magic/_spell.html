@@ -1,47 +1,88 @@
 {% load bootstrap4 characters_extras i18n %}
 
 <script>
-    $(function(){
-        function refresh_summary(){
-            var form = $('form');
-            var container = $('.summary-container');
-            var url = container.data('summary-url');
+    $(function () {
+        function refresh_summary() {
+            let form = $('form');
+            let container = $('.summary-container');
+            let url = container.data('summary-url');
 
             $.get(
                 url,
                 form.serialize(),
-                function(data){
+                function (data) {
                     container.html(data);
                 }
             )
         }
-        refresh_summary();
 
-        $('input,select,textarea').on('change', function(e){
+        function spell_valid() {
+            let container = $('.summary-container');
+            let url = container.data('spellcost-url');
+            let cost = 0;
+            let available = container.data('spell-points');
+            let description = $('#id_description').val();
+            let name = $('#id_name').val();
+
+            $.get(url, $('form').serialize(), function(data){
+                cost = parseInt(data.cost);
+                if (cost > 0 && cost <= available && description && name) {
+                    $('#submit-button').prop('disabled', '');
+                    $('.a-nsp').addClass('d-none');
+                    $('.a-osp').addClass('d-none');
+                    $('.a-desc').addClass('d-none');
+                } else {
+                    $('#submit-button').prop('disabled', 'disabled');
+                    if (cost <= 0) {
+                        $('.a-nsp').removeClass('d-none');
+                    }
+                    if (cost > available) {
+                        $('.a-osp').removeClass('d-none');
+                    }
+                    if (!description || !name) {
+                        $('.a-desc').removeClass('d-none');
+                    }
+                }
+            });
+        }
+
+        refresh_summary();
+        spell_valid();
+
+        $('input,select,textarea').on('change keyup', function (e) {
             refresh_summary();
+            spell_valid();
         });
 
-        $('#id_type').on('change', function(){
-            var url = $('.summary-container').data('flavour-url');
-            $.get(url, {pk: $(this).val()}, function(data){
-                var flavour = $('#id_flavour')
+        $('#id_type').on('change', function () {
+            let url = $('.summary-container').data('flavour-url');
+            $.get(url, {pk: $(this).val()}, function (data) {
+                let flavour = $('#id_flavour');
                 flavour.html(data);
                 flavour.val(flavour.find('option:first').attr('value'));
+                flavour.change();
             });
         })
     })
 </script>
 
-<div class="row">
-    <div
-            class="col-md-4 summary-container"
-            data-summary-url="{% url 'magic:xhr_spell_summary' %}"
-            data-flavour-url="{% url 'magic:xhr_spell_flavour' %}">
-        <h2>{% trans 'Unnamed Spell' %}</h2>
-        {% trans 'Spell Points' %}: {% color_value_span 10 10 invert=True %}
-    </div>
-    <div class="col-md-8">
-        <form action="{% url 'magic:xhr_spell' pk=object.id %}" method="post">
+<form action="{% url 'magic:xhr_spell' pk=object.id %}" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <div
+                    class="summary-container"
+                    data-summary-url="{% url 'magic:xhr_spell_summary' %}"
+                    data-flavour-url="{% url 'magic:xhr_spell_flavour' %}"
+                    data-spellcost-url="{% url 'magic:xhr_spell_cost' %}"
+                    data-spell-points="{{ object.spell_points_available }}">
+            </div>
+            <input id="submit-button" type="submit" class="btn btn-primary btn-block mt-3" value="{% trans 'Create Spell' %}">
+            <div class="alert alert-danger mt-2 d-none a-osp">{% trans 'Not enough spell points' %}</div>
+            <div class="alert alert-danger mt-2 d-none a-nsp">{% trans "It's not possible to create a spell with zero or negative cost." %}</div>
+            <div class="alert alert-danger mt-2 d-none a-desc">{% trans "Your Spell needs a description an a name." %}</div>
+        </div>
+
+        <div class="col-md-8">
             {% csrf_token %}
             {% bootstrap_field form.name %}
             {% bootstrap_field form.description %}
@@ -74,6 +115,6 @@
                     {% bootstrap_field form.components %}
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>

@@ -12,12 +12,10 @@
 
 {% trans 'Spell Points' %}: {% color_value_span spell_points 40 invert=True %}<br><br>
 
-<i class="fas fa-fw fa-question"></i> {{ flavour.name }}<br>
-<i class="fas fa-fw fa-fire"></i> {{ type.name }}<br>
+<i class="fas fa-fw fa-fire"></i> {{ flavour.name }} ({{ type.name }})<br>
 <i class="fas fa-fw fa-magic"></i> {{ cost.name }}<br>
 <i class="fas fa-fw fa-clock"></i> {{ casting_time.name }}<br>
 <i class="fas fa-fw fa-adjust"></i> {{ power.name }}<br>
 <i class="fas fa-fw fa-arrows-alt-h"></i> {{ range.name }}<br>
-<i class="far fa-fw fa-circle"></i> {{ area_of_effect.name }}<br>
-<i class="fas fa-fw fa-arrows-alt"></i> {{ area_of_effect_range.name }}<br>
+<i class="far fa-fw fa-circle"></i> {{ area_of_effect.name }} {{ area_of_effect_range.name }}<br>
 <i class="fas fa-fw fa-box"></i> {{ components.name }}<br>

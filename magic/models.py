@@ -129,7 +129,9 @@ class SpellPower(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell powers')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellFlavour(models.Model, metaclass=TransMeta):
