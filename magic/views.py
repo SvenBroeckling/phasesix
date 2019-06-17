@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.views import View
 from django.views.generic import TemplateView
 
 from characters.models import Character
@@ -22,6 +23,17 @@ class XhrSpellView(TemplateView):
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
         return JsonResponse({'status': 'ok'})
+
+
+class XhrSpellFlavourOptionsView(View):
+    def get(self, request, *args, **kwargs):
+        st = SpellType.objects.get(id=request.GET.get('pk'))
+        return HttpResponse(
+            "".join([
+                '<option value="{}">{}</option>'.format(s.id, s.name)
+                for s in st.spellflavour_set.all()
+            ])
+        )
 
 
 class XhrSpellSummaryView(TemplateView):

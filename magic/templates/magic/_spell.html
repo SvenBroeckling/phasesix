@@ -19,12 +19,24 @@
 
         $('input,select,textarea').on('change', function(e){
             refresh_summary();
+        });
+
+        $('#id_type').on('change', function(){
+            var url = $('.summary-container').data('flavour-url');
+            $.get(url, {pk: $(this).val()}, function(data){
+                var flavour = $('#id_flavour')
+                flavour.html(data);
+                flavour.val(flavour.find('option:first').attr('value'));
+            });
         })
     })
 </script>
 
 <div class="row">
-    <div class="col-md-4 summary-container" data-summary-url="{% url 'magic:xhr_spell_summary' %}">
+    <div
+            class="col-md-4 summary-container"
+            data-summary-url="{% url 'magic:xhr_spell_summary' %}"
+            data-flavour-url="{% url 'magic:xhr_spell_flavour' %}">
         <h2>{% trans 'Unnamed Spell' %}</h2>
         {% trans 'Spell Points' %}: {% color_value_span 10 10 invert=True %}
     </div>
@@ -35,10 +47,10 @@
             {% bootstrap_field form.description %}
             <div class="row">
                 <div class="col-md-6">
-                    {% bootstrap_field form.flavour %}
+                    {% bootstrap_field form.type %}
                 </div>
                 <div class="col-md-6">
-                    {% bootstrap_field form.type %}
+                    {% bootstrap_field form.flavour %}
                 </div>
                 <div class="col-md-6">
                     {% bootstrap_field form.cost %}

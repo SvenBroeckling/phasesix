@@ -10,6 +10,10 @@ urlpatterns = [
         views.XhrSpellView.as_view(),
         name='xhr_spell'),
     url(
+        '^xhr_spell_flavour/$',
+        views.XhrSpellFlavourOptionsView.as_view(),
+        name='xhr_spell_flavour'),
+    url(
         '^xhr_spell_summary/$',
         views.XhrSpellSummaryView.as_view(),
         name='xhr_spell_summary'),

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from magic.models import Spell
 
@@ -16,5 +17,9 @@ class SpellForm(forms.ModelForm):
         model = Spell
         exclude = ('created_by',)
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 4}),
+            'description': forms.Textarea(
+                attrs={
+                    'rows': 4,
+                    'placeholder': _('Description / Additional Rules'),
+                }),
         }

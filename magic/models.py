@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, activate
 from transmeta import TransMeta
 
 
@@ -15,7 +16,9 @@ class SpellCost(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell costs')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellRange(models.Model, metaclass=TransMeta):
@@ -29,7 +32,9 @@ class SpellRange(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell ranges')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellAreaOfEffect(models.Model, metaclass=TransMeta):
@@ -43,7 +48,9 @@ class SpellAreaOfEffect(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell areas of effect')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellAreaOfEffectRange(models.Model, metaclass=TransMeta):
@@ -57,7 +64,9 @@ class SpellAreaOfEffectRange(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell areas of effect range')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellComponents(models.Model, metaclass=TransMeta):
@@ -71,7 +80,9 @@ class SpellComponents(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell components')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellCastingTime(models.Model, metaclass=TransMeta):
@@ -85,7 +96,9 @@ class SpellCastingTime(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell casting times')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellType(models.Model, metaclass=TransMeta):
@@ -99,7 +112,9 @@ class SpellType(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell types')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellPower(models.Model, metaclass=TransMeta):
@@ -118,6 +133,10 @@ class SpellPower(models.Model, metaclass=TransMeta):
 
 
 class SpellFlavour(models.Model, metaclass=TransMeta):
+    spell_type = models.ForeignKey(
+        SpellType,
+        on_delete=models.CASCADE,
+        verbose_name=_('Spell Type'))
     name = models.CharField(_('name'), max_length=30)
     cost = models.IntegerField(_('cost'), default=0)
 
@@ -128,7 +147,11 @@ class SpellFlavour(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('spell flavours')
 
     def __str__(self):
-        return _("{} ({} Points)").format(self.name, self.cost)
+        if get_language() not in ['de', 'en']:
+            activate('en')
+        if self.cost:
+            return _("{} ({} Points)").format(self.name, self.cost)
+        return self.name
 
 
 class SpellRule(models.Model, metaclass=TransMeta):
