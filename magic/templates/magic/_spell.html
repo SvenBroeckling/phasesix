@@ -3,9 +3,9 @@
 <script>
     $(function () {
         function refresh_summary() {
-            let form = $('form');
-            let container = $('.summary-container');
-            let url = container.data('summary-url');
+            var form = $('form');
+            var container = $('.summary-container');
+            var url = container.data('summary-url');
 
             $.get(
                 url,
@@ -17,12 +17,12 @@
         }
 
         function spell_valid() {
-            let container = $('.summary-container');
-            let url = container.data('spellcost-url');
-            let cost = 0;
-            let available = container.data('spell-points');
-            let description = $('#id_description').val();
-            let name = $('#id_name').val();
+            var container = $('.summary-container');
+            var url = container.data('spellcost-url');
+            var cost = 0;
+            var available = container.data('spell-points');
+            var description = $('#id_description').val();
+            var name = $('#id_name').val();
 
             $.get(url, $('form').serialize(), function(data){
                 cost = parseInt(data.cost);
@@ -55,9 +55,9 @@
         });
 
         $('#id_type').on('change', function () {
-            let url = $('.summary-container').data('flavour-url');
+            var url = $('.summary-container').data('flavour-url');
             $.get(url, {pk: $(this).val()}, function (data) {
-                let flavour = $('#id_flavour');
+                var flavour = $('#id_flavour');
                 flavour.html(data);
                 flavour.val(flavour.find('option:first').attr('value'));
                 flavour.change();

@@ -1,6 +1,8 @@
-from django.http import JsonResponse, HttpResponse
+from django.contrib import messages
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView
+from django.utils.translation import ugettext_lazy as _
 
 from characters.models import Character, CharacterSpell
 from magic.forms import SpellForm
@@ -36,6 +38,9 @@ class XhrSpellView(TemplateView):
         ])
         if cost <= character.spell_points_available:
             spell = Spell.objects.create(
+                created_by=request.user if request.user.is_authenticated else None,
+                name=request.POST.get('name'),
+                description=request.POST.get('description'),
                 flavour=SpellFlavour.objects.get(id=request.POST.get('flavour')),
                 type=SpellType.objects.get(id=request.POST.get('type')),
                 cost=SpellCost.objects.get(id=request.POST.get('cost')),
@@ -49,7 +54,8 @@ class XhrSpellView(TemplateView):
                 spell=spell,
                 character=character)
 
-        return JsonResponse({'status': 'ok'})
+        messages.info(self.request, _('Spell created.'))
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrSpellFlavourOptionsView(View):

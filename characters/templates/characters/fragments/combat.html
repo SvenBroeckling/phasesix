@@ -68,7 +68,7 @@
                     </th>
                     <th>
                         {% trans 'Roll' %}<br>
-                        <small>{% trans 'Per Action' %}</small>
+                        <small>{% trans 'Time' %}</small>
                     </th>
                     <th>
                         {% trans 'Damage' %}<br>
@@ -84,13 +84,13 @@
                 {% for w in object.characterweapon_set.all %}
                     <tr>
                         <td>
-                            {{ w.weapon }}<br>
+                            <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}<br>
                             <small>{{ w.weapon.type }}</small>
                         </td>
                         <td>
                             {% color_value_span w.attack_roll 7 %}+
                             <br>
-                            <small>{% color_value_span w.weapon.attacks_per_action 5 %} {% trans 'Attacks' %}</small>
+                            <small>{% color_value_span w.weapon.attacks_per_action 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
                         </td>
                         <td>
                             {% for i in w.wounds_range %}
@@ -106,9 +106,29 @@
                         </td>
                     </tr>
                 {% endfor %}
+                {% for s in object.characterspell_set.all %}
+                    <tr>
+                        <td>
+                            <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
+                            <small>{{ s.spell.type.name }} - {{ s.spell.flavour.name }}</small>
+                        </td>
+                        <td>
+                            {% color_value_span 4 4 %}+<br>
+                            <small>{% color_value_span s.spell.casting_time 1 %}</small>
+                        </td>
+                        <td>
+                            {{ s.spell.power }}<br>
+                            <small>{{ s.spell.components }}</small>
+                        </td>
+                        <td>
+                            {{ s.spell.range }}<br>
+                            <small>{{ s.spell.area_of_effect }} - {{ s.spell.area_of_effect_range }}</small>
+                        </td>
+                    </tr>
+                {% endfor %}
                 <tr>
                     <td>
-                        {% trans "Walk" %}<br>
+                        <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
                     <td>
