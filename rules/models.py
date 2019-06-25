@@ -187,6 +187,7 @@ class TemplateCategory(models.Model, metaclass=TransMeta):
         default='')
     description = models.TextField(_('description'), blank=True, null=True)
     sort_order = models.IntegerField(_('sort order'), default=1000)
+    allow_for_reputation = models.BooleanField(_('Allow for reputation'), default=True)
 
     class Meta:
         translate = ('name', 'description')

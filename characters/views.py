@@ -242,6 +242,10 @@ class XhrReputationView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         context = super(XhrReputationView, self).get_context_data(**kwargs)
         context['object'] = character
+        context['template_points'] = character.lineage.lineagetemplatepoints_set.filter(
+            template_category__allow_for_reputation=True)
+        context['character_template_ids'] = [
+            ct.template.id for ct in character.charactertemplate_set.all()]
         return context
 
     def post(self, request, *args, **kwargs):

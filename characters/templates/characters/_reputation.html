@@ -1,4 +1,4 @@
-{% load bootstrap4 i18n %}
+{% load bootstrap4 i18n rules_extras %}
 
 <script>
     $(function(){
@@ -52,6 +52,13 @@
     <li class="nav-item">
         <a class="nav-link active" href="#reputation" aria-controls="reputation" role="tab"
            data-toggle="tab">Reputation</a>
+        {% for tp in template_points %}
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
+                    {{ tp.template_category }}
+                </a>
+            </li>
+        {% endfor %}
     </li>
 </ul>
 
@@ -81,4 +88,23 @@
             </div>
         </form>
     </div>
+
+    {% for tp in template_points %}
+        <div class="tab-pane fade" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
+            <div class="card-columns">
+                {% for i in tp.template_category.template_set.all %}
+                    {% if i.extension in object.extensions.all or i.extension.is_mandatory %}
+                        <div class="constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                             data-template-id="{{ i.id }}"
+                             data-tp-id="{{ tp.id }}"
+                             data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
+                             data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
+                             data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
+                            {% template_widget i %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 </div>

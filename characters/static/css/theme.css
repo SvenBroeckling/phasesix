@@ -100,3 +100,13 @@ a[data-toggle="popover"] {
     color: #ddd;
 }
 
+/* Scroll only modal body */
+
+.modal-dialog {
+    overflow-y: initial !important;
+}
+
+.modal-body {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+}
