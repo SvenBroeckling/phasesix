@@ -41,7 +41,8 @@ class Item(models.Model, metaclass=TransMeta):
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
     concealment = models.IntegerField(_('concealment'), default=0)
-    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
@@ -118,7 +119,8 @@ class WeaponQuerySet(ExtensionSelectQuerySet):
 class Weapon(models.Model, metaclass=TransMeta):
     objects = WeaponQuerySet.as_manager()
 
-    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     is_hand_to_hand_weapon = models.BooleanField(
@@ -195,7 +197,8 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
 class WeaponModification(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
-    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     available_for_weapon_types = models.ManyToManyField(WeaponType)
     name = models.CharField(_('name'), max_length=40)
     description = models.TextField(_('description'), blank=True, null=True)
@@ -230,7 +233,8 @@ class WeaponModificationAttributeChange(models.Model):
 class RiotGear(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
-    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     name = models.CharField(_('name'), max_length=256)

@@ -42,7 +42,8 @@ class Lineage(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
-    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE)
+    extension = models.ForeignKey('rules.Extension', on_delete=models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
@@ -77,7 +78,8 @@ class Skill(models.Model, metaclass=TransMeta):
     )
     name = models.CharField(_('name'), max_length=120)
     kind = models.CharField(_('kind'), max_length=1, choices=KIND_CHOICES)
-    extension = models.ForeignKey(Extension, models.CASCADE)
+    extension = models.ForeignKey(Extension, models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     show_on_combat_tab = models.BooleanField(_('show on combat tab'), default=False)
 
     class Meta:
@@ -97,7 +99,8 @@ class Knowledge(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     name = models.CharField(_('name'), max_length=120)
-    extension = models.ForeignKey(Extension, models.CASCADE)
+    extension = models.ForeignKey(Extension, models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
@@ -121,7 +124,8 @@ class Shadow(models.Model, metaclass=TransMeta):
     description = models.TextField(_('description'), blank=True, null=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
-    extension = models.ForeignKey(Extension, models.CASCADE)
+    extension = models.ForeignKey(Extension, models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
 
     class Meta:
         translate = ('name', 'description')
@@ -215,7 +219,8 @@ class Template(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     name = models.CharField(_('name'), max_length=120)
-    extension = models.ForeignKey(Extension, models.CASCADE)
+    extension = models.ForeignKey(Extension, models.CASCADE, related_name="+")
+    extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     category = models.ForeignKey(TemplateCategory, models.CASCADE, verbose_name=_('category'))
