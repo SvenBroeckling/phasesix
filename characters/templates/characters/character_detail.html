@@ -117,15 +117,17 @@
             {% detail_fragment 'reputation' %}
 
             <div class="card mb-3">
-                <div class="card-body text-center pt-1">
+                <div class="card-body text-center pt-2">
                     <span class="attribute-heading">{% trans 'Bonus Dice' %}</span><br>
                     <span class="attribute-value">{% color_value_span object.bonus_dice 6 %}</span>
+                    <button class="btn btn-primary btn-sm btn-block d-block">{% trans 'Take extra Action' %}</button>
                 </div>
             </div>
             <div class="card mb-3">
                 <div class="card-body text-center pt-1">
                     <span class="attribute-heading">{% trans 'Destiny Dice' %}</span><br>
                     <span class="attribute-value">{% color_value_span object.destiny_dice 6 %}</span>
+                    <button class="btn btn-primary btn-sm btn-block d-block">{% trans 'Steal Action' %}</button>
                 </div>
             </div>
             <div class="card mb-3">

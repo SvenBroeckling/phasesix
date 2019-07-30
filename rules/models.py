@@ -220,12 +220,14 @@ class Template(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     category = models.ForeignKey(TemplateCategory, models.CASCADE, verbose_name=_('category'))
 
-    description = models.TextField(_('description'), blank=True, null=True)
+    rules = models.TextField(_('rules'), blank=True, null=True)
+    quote = models.TextField(_('quote'), blank=True, null=True)
+    quote_author = models.CharField(_('quote author'), max_length=50, null=True, blank=True)
 
     cost = models.IntegerField(verbose_name=_('cost'), default=1)
 
     class Meta:
-        translate = ('name', 'description')
+        translate = ('name', 'rules')
         verbose_name = _('character template')
         verbose_name_plural = _('character templates')
         ordering = ('category__sort_order',)

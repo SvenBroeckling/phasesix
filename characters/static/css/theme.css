@@ -96,8 +96,15 @@ a[data-toggle="popover"] {
 
 /* Rules */
 
-.rules h1, .rules h2, .rules h3, .rules h4, .rules h5 {
-    color: #ddd;
+
+@media only screen and (min-width: 600px) {
+    .rules .columns {
+        column-count: 2;
+    }
+}
+
+.rules p:empty {
+    display: none;
 }
 
 /* Scroll only modal body */

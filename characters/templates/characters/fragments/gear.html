@@ -5,17 +5,7 @@
 <div class="row">
     <div class="col-md-6">
 
-        <h2 class="mb-0">{% trans 'Amor' %}
-            {% if may_edit %}
-            <button
-                    title="{% trans 'Add armor' %}"
-                    class="btn btn-primary btn-sm buy-button float-right"
-                    data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                    data-toggle="modal"
-                    data-modal-title="{% trans 'Add Armor' %}"
-                    data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
-            {% endif %}
-        </h2>
+        <h2 class="mb-0">{% trans 'Amor' %}</h2>
 
         <div class="row">
             {% for r in character.characterriotgear_set.all %}
@@ -52,38 +42,32 @@
                 </div>
             {% empty %}
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card mb-2">
                         <div class="card-header">
                             {% trans 'Armor' %}
                         </div>
                         <div class="card-body">
                             <h2>{% trans 'No armor yet' %}</h2>
                             <p>{% trans 'This character has no amor yet.' %}</p>
-                            {% if may_edit %}
-                            <button
-                                    class="btn btn-primary btn-sm buy-button float-right"
-                                    data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                                    data-toggle="modal"
-                                    data-modal-title="{% trans 'Add Armor' %}"
-                                    data-target=".character-modal">{% trans 'Add armor' %}</button>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
+
+            {% if may_edit %}
+                <div class="col-12">
+                    <button
+                            title="{% trans 'Add armor' %}"
+                            class="btn btn-primary btn-sm buy-button"
+                            data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
+                            data-toggle="modal"
+                            data-modal-title="{% trans 'Add Armor' %}"
+                            data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add Armor' %}</button>
+                </div>
+            {% endif %}
         </div>
 
-        <h2 class="mb-0 mt-4">{% trans 'Weapons' %}
-            {% if may_edit %}
-                <button
-                        title="{% trans 'Add weapon' %}"
-                        class="btn btn-primary btn-sm buy-button float-right"
-                        data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                        data-toggle="modal"
-                        data-modal-title="{% trans 'Add weapon' %}"
-                        data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
-            {% endif %}
-        </h2>
+        <h2 class="mb-0 mt-4">{% trans 'Weapons' %}</h2>
 
         <div class="row">
             {% for weapon in object.characterweapon_set.all %}
@@ -160,41 +144,36 @@
                 </div>
             {% empty %}
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card mb-2">
                         <div class="card-header">
                             {% trans 'Weapons' %}
                         </div>
                         <div class="card-body">
                             <h2>{% trans 'No weapons yet' %}</h2>
                             <p>{% trans 'This character has no weapons yet.' %}</p>
-                            {% if may_edit %}
-                                <button
-                                        class="btn btn-primary btn-sm buy-button float-right"
-                                        data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                                        data-toggle="modal"
-                                        data-modal-title="{% trans 'Add weapon' %}"
-                                        data-target=".character-modal">{% trans 'Add weapon' %}</button>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
+
+            {% if may_edit %}
+                <div class="col-12">
+                    <button
+                            title="{% trans 'Add weapon' %}"
+                            class="btn btn-primary btn-sm buy-button"
+                            data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                            data-toggle="modal"
+                            data-modal-title="{% trans 'Add weapon' %}"
+                            data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add Weapon' %}</button>
+                </div>
+            {% endif %}
+
         </div>
 
     </div>
 
     <div class="col-md-6">
-            <h2 class="mb-0">{% trans 'Items' %}
-                {% if may_edit %}
-                <button
-                        class="btn btn-primary btn-sm buy-button float-right"
-                        title="{% trans 'Add Item' %}"
-                        data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
-                        data-toggle="modal"
-                        data-modal-title="{% trans 'Add item' %}"
-                        data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
-                {% endif %}
-            </h2>
+            <h2 class="mb-0">{% trans 'Items' %} </h2>
 
         <div class="row">
             {% for ci in character.characteritem_set.by_type %}
@@ -223,25 +202,28 @@
                 </div>
             {% empty %}
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card mb-2">
                         <div class="card-header">
                             {% trans 'Items' %}
                         </div>
                         <div class="card-body">
                             <h2>{% trans 'No items yet' %}</h2>
                             <p>{% trans 'This character has no items yet.' %}</p>
-                            {% if may_edit %}
-                            <button
-                                    class="btn btn-primary btn-sm buy-button float-right"
-                                    data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
-                                    data-toggle="modal"
-                                    data-modal-title="{% trans 'Add item' %}"
-                                    data-target=".character-modal">{% trans 'Add item' %}</button>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
+            {% if may_edit %}
+                <div class="col-12">
+                    <button
+                            class="btn btn-primary btn-sm buy-button"
+                            title="{% trans 'Add Item' %}"
+                            data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
+                            data-toggle="modal"
+                            data-modal-title="{% trans 'Add item' %}"
+                            data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add Item' %}</button>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

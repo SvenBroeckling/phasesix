@@ -64,8 +64,8 @@
 </div>
 
 <div class="row mt-2">
-    <div class="col-md-6 mb-1">
-        <h2 class="mb-2">{% trans 'Mind Skills' %}</h2>
+    <div class="col-md-4">
+        <h2 class="mb-2">{% trans 'Skills' %}</h2>
         <table class="table">
             {% for skill in object.characterskill_set.mind_skills %}
                 <tr>
@@ -76,8 +76,8 @@
         </table>
     </div>
 
-    <div class="col-md-6 mb-1">
-        <h2 class="mb-2">{% trans 'Practical Skills' %}</h2>
+    <div class="col-md-4">
+        <h2 class="mb-md-2 d-sm-none d-md-block d-xl-block">&nbsp;</h2>
         <table class="table">
             {% for skill in object.characterskill_set.practical_skills %}
                 <tr>
@@ -87,11 +87,9 @@
             {% endfor %}
         </table>
     </div>
-</div>
 
-<div class="row mt-2">
-    {% if object.shadows.exists %}
-        <div class="col-md-6 mt-1">
+    <div class="col-md-4">
+        {% if object.shadows.exists %}
             <h2 class="mb-2">{% trans 'Shadows' %}</h2>
             <table class="table">
                 {% for shadow in object.shadows.all %}
@@ -104,11 +102,9 @@
                     </tr>
                 {% endfor %}
             </table>
-        </div>
-    {% endif %}
+        {% endif %}
 
-    {% if object.characterknowledge_set.exists %}
-        <div class="col-md-6 mt-1">
+        {% if object.characterknowledge_set.exists %}
             <h2 class="mb-2">{% trans 'Knowledge' %}</h2>
             <table class="table">
                 {% for knowledge in object.characterknowledge_set.all %}
@@ -118,7 +114,7 @@
                     </tr>
                 {% endfor %}
             </table>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

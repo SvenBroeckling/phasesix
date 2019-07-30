@@ -6,8 +6,8 @@
         <span class="badge badge-dark float-right">{{ template.cost }}</span>
     </div>
     <div class="card-body">
-            {% if template.description %}
-                <p class="text-muted">{{ template.description }}</p>
+            {% if template.rules %}
+                <p>{{ template.rules }}</p>
             {% endif %}
 
             {% for mod in template.templatemodifier_set.all %}
@@ -35,6 +35,10 @@
                 {% for req in template.templaterequirement_set.all %}
                     <span class="text-danger">{% trans 'Requires' %}</span> {{ req.required_template }}<br>
                 {% endfor %}
+            {% endif %}
+
+            {% if template.quote %}
+                <p class="text-muted pt-3"><i>{{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>
             {% endif %}
     </div>
 </div>

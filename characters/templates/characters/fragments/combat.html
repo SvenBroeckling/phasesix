@@ -4,22 +4,6 @@
 {% block fragment %}
 <div class="row">
     <div class="col-md-3">
-        <div class="d-flex justify-content-between mb-4">
-            <div class="bg-dark p-3 text-center rounded-circle">
-                <div>
-                    <span class="h2">{% color_value_span object.actions 5 %}</span><br>{% trans 'Actions' %}
-                </div>
-            </div>
-            <div class="bg-dark p-3 text-center rounded-circle">
-                <span class="h2">{% color_value_span object.bonus_dice 5 %}</span><br>{% trans 'Bonus' %}
-                <button class="btn btn-sm btn-block mt-2">{% trans 'Use' %}</button>
-            </div>
-            <div class="bg-dark p-3 text-center rounded-circle">
-                <span class="h2">{% color_value_span object.destiny_dice 5 %}</span><br>{% trans 'Steal' %}
-                <button class="btn btn-sm btn-block mt-2">{% trans 'Use' %}</button>
-            </div>
-        </div>
-
         <table class="table">
             {% for skill in object.characterskill_set.combat_skills %}
                 <tr>
