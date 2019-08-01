@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load i18n characters_extras %}
+
+{% block javascript %}
+    <script>
+    $(function(){
+        $('table').on('click', '.set-epoch', function(e){
+            var elem = $(this);
+            $.post(
+                elem.attr('href'),
+                {
+                    'type': elem.data('type'),
+                    'object': elem.data('object'),
+                    'extension': elem.data('extension'),
+                },
+                function(data) {
+                    elem.html(data);
+                }
+            );
+            e.preventDefault();
+            return false;
+        })
+    })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered tableFixHead">
+        <thead>
+            <tr>
+                <th>{% trans 'Template' %}</th>
+                {% for e in extensions %}
+                    <th {% if not e.is_epoch %}class="bg-dark"{% endif %}>{{ e.name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in templates %}
+                <tr>
+                    <td>{{ t }}</td>
+                    {% for e in extensions %}
+                        <td {% if not e.is_epoch %}class="bg-dark"{% endif %}>
+                            <a
+                                    href="{% url 'gmtools:extension_grid' %}"
+                                    class="set-epoch"
+                                    data-object="{{ t.id }}"
+                                    data-extension="{{ e.id }}"
+                                    data-type="template">
+                            {% if e in t.extensions.all %}
+                                <i class="fas fa-check text-success"></i>
+                            {% else %}
+                                <i class="fas fa-times text-danger"></i>
+                            {% endif %}
+                            </a>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

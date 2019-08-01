@@ -56,7 +56,6 @@
                                 <a class="dropdown-item" href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rulebook' %}</a>
                                 <div class="dropdown-divider"></div> 
                                 <a class="dropdown-item" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
-                                <a class="dropdown-item" href="{% url 'gmtools:combat_sim' %}">{% trans 'CombatSim' %}</a>
                             </div>
                         </li>
 
@@ -75,6 +74,8 @@
                                 <div class="dropdown-menu">
                                     {% if user.is_staff %}
                                         <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:combat_sim' %}">{% trans 'Combat Sim' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' %}">{% trans 'Extension Grid' %}</a>
                                     {% endif %}
                                     <a class="dropdown-item" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a>
                                 </div>

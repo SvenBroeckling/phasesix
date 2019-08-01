@@ -1,6 +1,7 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
@@ -8,6 +9,31 @@ from django.contrib import messages
 import random
 
 from gmtools.forms import CombatSimDummyForm
+from rules.models import Extension, Template
+
+
+class ExtensionGrid(TemplateView):
+    template_name = 'gmtools/extension_grid.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['extensions'] = Extension.objects.all()
+        context['templates'] = Template.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('type') == 'template':
+            obj = Template.objects.get(id=request.POST.get('object'))
+        else:
+            return HttpResponse(mark_safe('<i class="fas fa-question text-warning"></i>'))
+        extension = Extension.objects.get(id=request.POST.get('extension'))
+
+        if extension in obj.extensions.all():
+            obj.extensions.remove(extension)
+            return HttpResponse(mark_safe('<i class="fas fa-times text-danger"></i>'))
+        else:
+            obj.extensions.add(extension)
+            return HttpResponse(mark_safe('<i class="fas fa-check text-success"></i>'))
 
 
 class CombatSimView(TemplateView):

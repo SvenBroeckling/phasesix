@@ -117,3 +117,8 @@ a[data-toggle="popover"] {
     height: calc(100vh - 200px);
     overflow-y: auto;
 }
+
+/* Fixed head table */
+
+.tableFixHead          { overflow-y: auto; height: 100px; }
+.tableFixHead thead th { position: sticky; top: 0; }
