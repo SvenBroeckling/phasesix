@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'simplemde',
     'django_markdown2',
+    'inline_admin_panel',
     'gmtools',
     'armory',
     'world',
