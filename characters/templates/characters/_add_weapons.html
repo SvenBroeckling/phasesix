@@ -13,12 +13,17 @@
             <div role="tabpanel" class="tab-pane {% if forloop.first %}show active{% endif %}" id="w{{ t.id }}">
                 <div class="row">
                     {% for weapon in t.weapon_set.with_price %}
-                        {% if weapon.extension in character.extensions.all or weapon.extension.is_mandatory %}
+                        {% has_extensions weapon character.extensions.all as has_extensions %}
+                        {% if has_extensions %}
                             <div class="col-md-12">
                                 <div class="card mb-2">
-                                    <div class="card-header">
-                                        <i class="{{ weapon.extension.fa_icon_class }}" title="{{ weapon.extension }}"></i>
-                                        {{ weapon }}
+                                    <div class="card-header text-center">
+                                        <span class="float-left">
+                                            {% for e in weapon.extensions.all %}
+                                                <i class="{{ e.fa_icon_class }}" title="{{ e }}"></i>
+                                            {% endfor %}
+                                        </span>
+                                        <span>{{ weapon }}</span>
                                         <span class="float-right small">{{ weapon.type }}</span>
                                     </div>
                                     <div class="card-body">

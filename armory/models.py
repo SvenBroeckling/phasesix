@@ -10,8 +10,8 @@ from rules.models import ExtensionSelectQuerySet, Extension
 class ItemTypeQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
-            Q(item__extension__id__in=extension_rm.all()) |
-            Q(item__extension__id__in=Extension.objects.filter(is_mandatory=True))
+            Q(item__extensions__id__in=extension_rm.all()) |
+            Q(item__extensions__id__in=Extension.objects.filter(is_mandatory=True))
         ).distinct()
 
 
@@ -61,8 +61,8 @@ class Item(models.Model, metaclass=TransMeta):
 class WeaponTypeQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
-            Q(weapon__extension__id__in=extension_rm.all()) |
-            Q(weapon__extension__id__in=Extension.objects.filter(is_mandatory=True))
+            Q(weapon__extensions__id__in=extension_rm.all()) |
+            Q(weapon__extensions__id__in=Extension.objects.filter(is_mandatory=True))
         ).distinct()
 
 
@@ -169,8 +169,8 @@ class Weapon(models.Model, metaclass=TransMeta):
 class WeaponModificationTypeQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
-            Q(weaponmodification__extension__id__in=extension_rm.all()) |
-            Q(weaponmodification__extension__id__in=Extension.objects.filter(is_mandatory=True))
+            Q(weaponmodification__extensions__id__in=extension_rm.all()) |
+            Q(weaponmodification__extensions__id__in=Extension.objects.filter(is_mandatory=True))
         ).distinct()
 
 

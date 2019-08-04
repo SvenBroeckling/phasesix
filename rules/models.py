@@ -10,8 +10,8 @@ from transmeta import TransMeta
 class ExtensionSelectQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
-            Q(extension__id__in=extension_rm.all()) |
-            Q(extension__id__in=Extension.objects.filter(is_mandatory=True))
+            Q(extensions__id__in=extension_rm.all()) |
+            Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
         )
 
 

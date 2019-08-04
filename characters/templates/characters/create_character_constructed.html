@@ -133,7 +133,8 @@
                 <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
                     <div class="card-columns">
                         {% for i in tp.template_category.template_set.all %}
-                            {% if i.extension in object.extensions.all or i.extension.is_mandatory %}
+                            {% has_extensions i object.extensions.all as has_extension %}
+                            {% if has_extension %}
                                 <div class="constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
                                     data-template-id="{{ i.id }}"
                                     data-tp-id="{{ tp.id }}"

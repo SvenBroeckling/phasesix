@@ -1,8 +1,12 @@
 {% load i18n characters_extras %}
 <div class="card mb-3 template">
-    <div class="card-header {{ template.category.get_bg_color_class }} {{ template.category.get_fg_color_class }}">
-        <i class="{{ template.extension.fa_icon_class }}" title="{{ template.extension }}"></i>
-        {{ template.category }}: {{ template }}
+    <div class="card-header text-center {{ template.category.get_bg_color_class }} {{ template.category.get_fg_color_class }}">
+        <span class="float-left">
+            {% for e in template.extensions.all %}
+                <i class="{{ e.fa_icon_class }}" title="{{ e }}"></i>
+            {% endfor %}
+        </span>
+        <span>{{ template.category }}: {{ template }}</span>
         <span class="badge badge-dark float-right">{{ template.cost }}</span>
     </div>
     <div class="card-body">

@@ -14,12 +14,17 @@
             <div role="tabpanel" class="tab-pane {% if forloop.first %}active{% endif %}" id="i{{ t.id }}">
                 <div class="row">
                     {% for item in t.item_set.all %}
-                        {% if item.extension in character.extensions.all or item.extension.is_mandatory %}
+                        {% has_extensions item character.extensions.all as has_extensions %}
+                        {% if has_extensions %}
                             <div class="col-md-6">
                                 <div class="card mb-2">
-                                    <div class="card-header">
-                                        <i class="{{ item.extension.fa_icon_class }}" title="{{ item.extension }}"></i>
-                                        {{ item }}
+                                    <div class="card-header text-center">
+                                        <span class="float-left">
+                                            {% for e in item.extensions.all %}
+                                                <i class="{{ e.fa_icon_class }}" title="{{ e }}"></i>
+                                            {% endfor %}
+                                        </span>
+                                        <span>{{ item }}</span>
                                         <span class="float-right small">{{ item.type }}</span>
                                     </div>
                                     <div class="card-body">

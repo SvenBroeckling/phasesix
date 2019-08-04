@@ -97,8 +97,8 @@ class CreateCharacterDataView(FormView):
 
     def get_initial(self):
         lineages = Lineage.objects.filter(
-            Q(extension__id=self.kwargs['extension_pk']) |
-            Q(extension__id__in=Extension.objects.filter(is_mandatory=True)))
+            Q(extensions__id=self.kwargs['extension_pk']) |
+            Q(extensions__id__in=Extension.objects.filter(is_mandatory=True)))
         return {
             'epoch': self.kwargs['extension_pk'],
             'lineage': lineages.earliest('id')

@@ -67,3 +67,12 @@ def detail_fragment(context, fragment_name):
     context = context.flatten()
     context['fragment_name'] = fragment_name
     return render_to_string('characters/fragments/' + fragment_name + '.html', context=context)
+
+
+@register.simple_tag
+def has_extensions(template, extensions):
+    for e in template.extensions.all():
+        if e in extensions or e.is_mandatory:
+            return True
+    return False
+
