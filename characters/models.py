@@ -420,6 +420,7 @@ class CharacterItem(models.Model):
     objects = CharacterItemQuerySet.as_manager()
 
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    quantity = models.IntegerField(_('Quantity'), default=1)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
 
 

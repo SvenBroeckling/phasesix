@@ -27,14 +27,14 @@ class TemplateCategoryAdmin(admin.ModelAdmin):
 
 class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
-    list_display = ('name', 'cost', 'extension', 'category')
-    list_filter = ('extension', 'category')
-    list_editable = ('category', 'cost', 'extension')
+    list_display = ('name', 'cost', 'category')
+    list_filter = ('extensions', 'category')
+    list_editable = ('category', 'cost')
     save_as = True
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'kind', 'extension', 'show_on_combat_tab')
+    list_display = ('name_de', 'name_en', 'kind', 'show_on_combat_tab')
     list_editable = ('kind', 'show_on_combat_tab')
 
 

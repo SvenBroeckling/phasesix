@@ -7,15 +7,15 @@ from armory.models import WeaponModificationAttributeChange, WeaponType, Weapon,
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
         'name_en', 'capacity', 'attacks_per_action', 'wounds',
-        'recoil_control', 'penetration', 'weight', 'price', 'extension',
+        'recoil_control', 'penetration', 'weight', 'price',
         )
     list_editable = (
         'attacks_per_action', 'capacity', 'wounds', 'recoil_control', 'penetration', 'weight', 'price')
-    list_filter = ('type', 'extension', 'is_hand_to_hand_weapon')
+    list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon')
     fieldsets = [
         (None, {
             'fields': (
-                ('name_en', 'name_de', 'extension', 'is_hand_to_hand_weapon'),
+                ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
                 ('type', 'attacks_per_action', 'capacity', 'wounds', 'penetration', 'weight'),
                 ('range_lower', 'range_upper', 'recoil_control', 'concealment', 'accuracy', 'price'),
                 ('description_en', 'description_de', 'attack_modes'),
@@ -27,13 +27,13 @@ class WeaponAdmin(admin.ModelAdmin):
 
 class RiotGearAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'weight', 'price', 'protection_ballistic',
-                    'protection_explosive', 'concealment', 'extension')
+                    'protection_explosive', 'concealment')
     list_editable = ('weight', 'price', 'protection_ballistic', 'protection_explosive', 'concealment')
-    list_filter = ('extension',)
+    list_filter = ('extensions',)
     fieldsets = [
         (None, {
             'fields': (
-                ('name_en', 'name_de', 'extension'),
+                ('name_en', 'name_de', 'extensions'),
                 ('price', 'weight'),
                 ('protection_ballistic', 'protection_explosive', 'concealment'),
                 ('description_en', 'description_de'),
@@ -44,9 +44,9 @@ class RiotGearAdmin(admin.ModelAdmin):
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = (
-        'name_de', 'name_en', 'type', 'weight', 'price', 'concealment', 'extension')
+        'name_de', 'name_en', 'type', 'weight', 'price', 'concealment')
     list_editable = ('concealment', 'type')
-    list_filter = ('type', 'extension')
+    list_filter = ('type', 'extensions')
 
 
 class WeaponTypeAdmin(admin.ModelAdmin):
