@@ -70,12 +70,20 @@
                     <ul class="navbar-nav justify-content-end">
                         {% if user.is_authenticated %}
                             <li class="nav-item dropdown" id="theme-dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> {{ request.user|capfirst }}</b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="icon-cogs icon-large"></i> {{ request.user|capfirst }}</a>
                                 <div class="dropdown-menu">
                                     {% if user.is_staff %}
                                         <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+                                        <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{% url 'gmtools:combat_sim' %}">{% trans 'Combat Sim' %}</a>
-                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' %}">{% trans 'Extension Grid' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='template' %}">{% trans 'Template Grid' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='lineage' %}">{% trans 'Lineage Grid' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='skill' %}">{% trans 'Skill Grid' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='item' %}">{% trans 'Item Grid' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='weapon' %}">{% trans 'Weapon Grid' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='weaponmodification' %}">{% trans 'Weapon Mod Grid' %}</a>
+                                        <a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Riot Gear Grid' %}</a>
+                                        <div class="dropdown-divider"></div>
                                     {% endif %}
                                     <a class="dropdown-item" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a>
                                 </div>

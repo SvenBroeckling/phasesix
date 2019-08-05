@@ -8,8 +8,9 @@ from django.contrib import messages
 
 import random
 
+from armory.models import Item, Weapon, WeaponModification, RiotGear
 from gmtools.forms import CombatSimDummyForm
-from rules.models import Extension, Template
+from rules.models import Extension, Template, Lineage, Skill
 
 
 class ExtensionGrid(TemplateView):
@@ -18,12 +19,45 @@ class ExtensionGrid(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['extensions'] = Extension.objects.all()
-        context['templates'] = Template.objects.all()
+        context['type'] = kwargs.get('type')
+        if kwargs.get('type') == 'template':
+            context['object_list'] = Template.objects.all()
+            context['admin_url'] = 'admin:rules_template_change'
+        elif kwargs.get('type') == 'lineage':
+            context['object_list'] = Lineage.objects.all()
+            context['admin_url'] = 'admin:rules_lineage_change'
+        elif kwargs.get('type') == 'skill':
+            context['object_list'] = Skill.objects.all()
+            context['admin_url'] = 'admin:rules_skill_change'
+        elif kwargs.get('type') == 'item':
+            context['object_list'] = Item.objects.all()
+            context['admin_url'] = 'admin:armory_item_change'
+        elif kwargs.get('type') == 'weapon':
+            context['object_list'] = Weapon.objects.all()
+            context['admin_url'] = 'admin:armory_weapon_change'
+        elif kwargs.get('type') == 'weaponmodification':
+            context['object_list'] = WeaponModification.objects.all()
+            context['admin_url'] = 'admin:armory_weaponmodification_change'
+        elif kwargs.get('type') == 'riotgear':
+            context['object_list'] = RiotGear.objects.all()
+            context['admin_url'] = 'admin:armory_riotgear_change'
         return context
 
     def post(self, request, *args, **kwargs):
-        if request.POST.get('type') == 'template':
+        if kwargs.get('type') == 'template':
             obj = Template.objects.get(id=request.POST.get('object'))
+        elif kwargs.get('type') == 'lineage':
+            obj = Lineage.objects.get(id=request.POST.get('object'))
+        elif kwargs.get('type') == 'skill':
+            obj = Skill.objects.get(id=request.POST.get('object'))
+        elif kwargs.get('type') == 'item':
+            obj = Item.objects.get(id=request.POST.get('object'))
+        elif kwargs.get('type') == 'weapon':
+            obj = Weapon.objects.get(id=request.POST.get('object'))
+        elif kwargs.get('type') == 'weaponmodification':
+            obj = WeaponModification.objects.get(id=request.POST.get('object'))
+        elif kwargs.get('type') == 'riotgear':
+            obj = RiotGear.objects.get(id=request.POST.get('object'))
         else:
             return HttpResponse(mark_safe('<i class="fas fa-question text-warning"></i>'))
         extension = Extension.objects.get(id=request.POST.get('extension'))

@@ -121,4 +121,8 @@ a[data-toggle="popover"] {
 /* Fixed head table */
 
 .tableFixHead          { overflow-y: auto; height: 100px; }
-.tableFixHead thead th { position: sticky; top: 0; }
+.tableFixHead thead th { position: sticky; top: 60px; }
+
+.table-hover-tr tr:hover td {
+    background-color: silver;
+}

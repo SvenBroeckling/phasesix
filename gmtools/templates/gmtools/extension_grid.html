@@ -9,7 +9,6 @@
             $.post(
                 elem.attr('href'),
                 {
-                    'type': elem.data('type'),
                     'object': elem.data('object'),
                     'extension': elem.data('extension'),
                 },
@@ -25,7 +24,7 @@
 {% endblock %}
 
 {% block content %}
-    <table class="table table-bordered tableFixHead">
+    <table class="table table-bordered table-hover-tr tableFixHead">
         <thead>
             <tr>
                 <th>{% trans 'Template' %}</th>
@@ -35,17 +34,20 @@
             </tr>
         </thead>
         <tbody>
-            {% for t in templates %}
+            {% for t in object_list %}
                 <tr>
-                    <td>{{ t }}</td>
+                    <td>
+                        <a href="{% url admin_url object_id=t.id %}">
+                            {{ t }}
+                        </a>
+                    </td>
                     {% for e in extensions %}
                         <td {% if not e.is_epoch %}class="bg-dark"{% endif %}>
                             <a
-                                    href="{% url 'gmtools:extension_grid' %}"
+                                    href="{% url 'gmtools:extension_grid' type=type %}"
                                     class="set-epoch"
                                     data-object="{{ t.id }}"
-                                    data-extension="{{ e.id }}"
-                                    data-type="template">
+                                    data-extension="{{ e.id }}">
                             {% if e in t.extensions.all %}
                                 <i class="fas fa-check text-success"></i>
                             {% else %}
