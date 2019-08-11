@@ -26,9 +26,10 @@ class Extension(models.Model, metaclass=TransMeta):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     is_epoch = models.BooleanField(_('is epoch'), default=True)
+    ordering = models.IntegerField(_('ordering'), default=100)
 
     class Meta:
-        ordering = ('id',)
+        ordering = ('ordering',)
         translate = ('name',)
         verbose_name = _('extension')
         verbose_name_plural = _('extensions')
