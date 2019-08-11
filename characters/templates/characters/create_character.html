@@ -17,7 +17,7 @@
                         <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Constructed Character' %}</button>
                         <div class="dropdown-menu">
                             {% for extension in extensions %}
-                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='constructed' %}" class="dropdown-item">{{ extension }}</a>
+                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='constructed' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
                             {% endfor %}
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Draft Character' %}</button>
                         <div class="dropdown-menu">
                             {% for extension in extensions %}
-                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='draft' %}" class="dropdown-item">{{ extension }}</a>
+                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='draft' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
                             {% endfor %}
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                         <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Random Character' %}</button>
                         <div class="dropdown-menu">
                             {% for extension in extensions %}
-                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='random' %}" class="dropdown-item">{{ extension }}</a>
+                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='random' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
                             {% endfor %}
                         </div>
                     </div>
