@@ -14,13 +14,13 @@
                         <div class="card-header">
                             {% if may_edit %}
                                 <div class="dropdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm modal-trigger float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
                                         <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
                                         <div class="dropdown-divider"></div>
                                         <a
-                                                class="dropdown-item modal-trigger-link"
+                                                class="dropdown-item modal-trigger"
                                                 data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
                                                 data-toggle="modal"
                                                 data-target=".character-modal"
@@ -58,7 +58,7 @@
                 <div class="col-12">
                     <button
                             title="{% trans 'Add armor' %}"
-                            class="btn btn-primary btn-sm buy-button"
+                            class="btn btn-primary btn-sm modal-trigger"
                             data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
                             data-toggle="modal"
                             data-modal-title="{% trans 'Add Armor' %}"
@@ -76,10 +76,10 @@
                         <div class="card-header">
                             {% if may_edit %}
                                 <div class="dropdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm modal-trigger float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a
-                                                class="dropdown-item modal-trigger-link"
+                                                class="dropdown-item modal-trigger"
                                                 data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
                                                 data-toggle="modal"
                                                 data-target=".character-modal"
@@ -89,7 +89,7 @@
                                         <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
                                         <div class="dropdown-divider"></div>
                                         <a
-                                                class="dropdown-item modal-trigger-link"
+                                                class="dropdown-item modal-trigger"
                                                 data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
                                                 data-toggle="modal"
                                                 data-target=".character-modal"
@@ -160,7 +160,7 @@
                 <div class="col-12">
                     <button
                             title="{% trans 'Add weapon' %}"
-                            class="btn btn-primary btn-sm buy-button"
+                            class="btn btn-primary btn-sm modal-trigger"
                             data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
                             data-toggle="modal"
                             data-modal-title="{% trans 'Add weapon' %}"
@@ -182,7 +182,7 @@
                         <div class="card-header">
                             {% if may_edit %}
                                 <div class="downdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm buy-button float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm modal-trigger float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove / Use' %}</a>
                                     </div>
@@ -216,7 +216,7 @@
             {% if may_edit %}
                 <div class="col-12">
                     <button
-                            class="btn btn-primary btn-sm buy-button"
+                            class="btn btn-primary btn-sm modal-trigger"
                             title="{% trans 'Add Item' %}"
                             data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
                             data-toggle="modal"

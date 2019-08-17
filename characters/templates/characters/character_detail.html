@@ -8,12 +8,7 @@
     $(function(){
         var body = $('body');
 
-        body.on('click', '.buy-button', function (e) {
-            $('.character-modal-container').load($(this).data('url'));
-            $('.modal-header h5').text($(this).data('modal-title'));
-        });
-
-        body.on('click', '.modal-trigger-link', function (e) {
+        body.on('click', '.modal-trigger', function (e) {
             $('.character-modal-container').load($(this).data('url'));
             $('.modal-header h5').text($(this).data('modal-title'));
         });
@@ -99,7 +94,7 @@
                     <h3>{{ object.name }}</h3>
                     <div class="dropdown-menu">
                         <a
-                                class="dropdown-item modal-trigger-link"
+                                class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
                                 data-toggle="modal"
                                 data-target=".character-modal"
