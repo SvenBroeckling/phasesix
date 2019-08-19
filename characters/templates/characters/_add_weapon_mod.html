@@ -1,40 +1,46 @@
-{% load i18n %}
+{% load i18n characters_extras %}
 <div>
 
     <ul class="nav nav-tabs" role="tablist">
         {% for t in weapon_modification_types %}
-            <li class="{% if forloop.first %}active{% endif %} nav-item">
-                <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab" data-toggle="tab">{{ t }}</a>
-            </li>
+            {% weaponmodification_type_valid_for_weapon t weapon.weapon as wmt %}
+            {% if wmt %}
+                <li class="{% if forloop.first %}active{% endif %} nav-item">
+                    <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab" data-toggle="tab">{{ t }}</a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 
     <div class="tab-content">
         {% for t in weapon_modification_types %}
-            <div role="tabpanel" class="tab-pane {% if forloop.first %} active {% endif %}" id="i{{ t.id }}">
-                <div class="row">
-                    {% for wm in t.weaponmodification_set.all %}
-                        {% if weapon.weapon.type in wm.available_for_weapon_types.all %}
-                            <div class="col-md-6">
-                                <div class="card match-height">
-                                    <div class="card-header">
-                                        {{ wm }}
-                                    </div>
-                                    <div class="card-body">
-                                        {% for wma in wm.weaponmodificationattributechange_set.all %}
-                                        {{ wma.get_attribute_display|capfirst }}: {{ wma.get_modifier_display }}<br>
-                                        {% endfor %}
-                                        <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}" class="float-right" method="post">
-                                            {% csrf_token %}
-                                            <button class="btn btn-sm btn-primary float-right">{% trans 'Add modification' %}</button>
-                                        </form>
+            {% weaponmodification_type_valid_for_weapon t weapon.weapon as wmt %}
+            {% if wmt %}
+                <div role="tabpanel" class="tab-pane {% if forloop.first %} active {% endif %}" id="i{{ t.id }}">
+                    <div class="row">
+                        {% for wm in t.weaponmodification_set.all %}
+                            {% if weapon.weapon.type in wm.available_for_weapon_types.all %}
+                                <div class="col-md-6">
+                                    <div class="card match-height">
+                                        <div class="card-header">
+                                            {{ wm }}
+                                        </div>
+                                        <div class="card-body">
+                                            {% for wma in wm.weaponmodificationattributechange_set.all %}
+                                            {{ wma.get_attribute_display|capfirst }}: {{ wma.get_modifier_display }}<br>
+                                            {% endfor %}
+                                            <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}" class="float-right" method="post">
+                                                {% csrf_token %}
+                                                <button class="btn btn-sm btn-primary float-right">{% trans 'Add modification' %}</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         {% endfor %}
     </div>
 

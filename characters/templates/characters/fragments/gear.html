@@ -14,7 +14,7 @@
                         <div class="card-header">
                             {% if may_edit %}
                                 <div class="dropdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm modal-trigger float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
                                         <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
@@ -76,10 +76,12 @@
                         <div class="card-header">
                             {% if may_edit %}
                                 <div class="dropdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm modal-trigger float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a
-                                                class="dropdown-item modal-trigger"
+                                                {% if not has_valid_wm %}disabled="disabled"{% endif %}
+                                                class="dropdown-item modal-trigger {% if not has_valid_wm %}disabled{% endif %}"
                                                 data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
                                                 data-toggle="modal"
                                                 data-target=".character-modal"
@@ -182,7 +184,7 @@
                         <div class="card-header">
                             {% if may_edit %}
                                 <div class="downdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm modal-trigger float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
+                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove / Use' %}</a>
                                     </div>

@@ -3,6 +3,8 @@ from django.template import Library
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
+from armory.models import WeaponModification, WeaponModificationType
+
 register = Library()
 
 
@@ -76,3 +78,20 @@ def has_extensions(template, extensions):
             return True
     return False
 
+
+@register.simple_tag
+def weaponmodification_type_valid_for_weapon(wmt, weapon):
+    for wm in wmt.weaponmodification_set.all():
+        if weapon.type in wm.available_for_weapon_types.all():
+            return True
+    return False
+
+@register.simple_tag
+def has_valid_weaponmodifications(weapon, character):
+    for wmt in WeaponModificationType.objects.all():
+        for wm in wmt.weaponmodification_set.all():
+            if weapon.type in wm.available_for_weapon_types.all():
+                return True
+    return False
+
+    return False

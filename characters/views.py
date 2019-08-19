@@ -392,11 +392,14 @@ class XhrAddWeaponModView(TemplateView):
 
     def get_context_data(self, **kwargs):
         character =  Character.objects.get(id=kwargs['pk'])
+        weapon = CharacterWeapon.objects.get(id=self.request.GET.get('weapon_id'))
         context = super(XhrAddWeaponModView, self).get_context_data(**kwargs)
         context['character'] = character
-        context['weapon'] = CharacterWeapon.objects.get(id=self.request.GET.get('weapon_id'))
+        context['weapon'] = weapon
         context['weapon_modification_types'] = WeaponModificationType.objects.for_extensions(
-            character.extensions)
+            character.extensions).filter(
+            weaponmodification__in=WeaponModification.objects.for_extensions(
+                character.extensions))
         return context
 
 
@@ -410,5 +413,6 @@ class AddWeaponModificationView(View):
             return HttpResponseRedirect(character.get_absolute_url())
 
         if weapon.weapon.type in weapon_modification.available_for_weapon_types.all():
+            weapon.modifications.filter(type=weapon_modification.type).delete()
             weapon.modifications.add(weapon_modification)
         return HttpResponseRedirect(character.get_absolute_url())
