@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n bootstrap4 md2 static %}
+{% load i18n bootstrap4 rules_extras static %}
 
 {% block javascript %}
     <script>
@@ -92,7 +92,7 @@
                         </small>
                     </div>
                     <div class="col-md-10">
-                        {{ post.text|markdown }}
+                        {{ post.text|urpg_markup }}
                     </div>
                 </div>
                 <hr>

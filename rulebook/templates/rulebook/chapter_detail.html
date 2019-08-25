@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% load i18n static md2 %}
+{% load i18n static rules_extras %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-9 rules">
             <h1><i class="{{ object.fa_icon_class|default:"book" }}"></i> {{ object.name }}</h1>
             <div class="columns">
-                {{ object.text|markdown }}
+                {{ object.text|urpg_markup }}
             </div>
         </div>
         <div class="col-md-3">
