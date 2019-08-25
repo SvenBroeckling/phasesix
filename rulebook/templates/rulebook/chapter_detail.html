@@ -1,10 +1,28 @@
 {% extends 'base.html' %}
 {% load i18n static rules_extras %}
 
+{% block belownav %}
+    {% if object.image %}
+    <style>
+        .belowhead-img {
+            height: 36vh;
+            background-position: center;
+            background-size: cover;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+    </style>
+    <div class="belowhead-img mb-5" style="background-image: url({{ object.image.url }})">
+        &nbsp;
+    </div>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-md-9 rules">
             <h1><i class="{{ object.fa_icon_class|default:"book" }}"></i> {{ object.name }}</h1>
+            <br>
             <div class="columns">
                 {{ object.text|urpg_markup }}
             </div>
