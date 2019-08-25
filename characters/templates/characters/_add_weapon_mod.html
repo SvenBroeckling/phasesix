@@ -1,6 +1,32 @@
 {% load i18n characters_extras %}
-<div>
 
+<script>
+    $(function(){
+        $('.add-form').on('submit', function(e){
+            var form = $(this);
+            var btn = form.find('button');
+            var original_btn_html = btn.html();
+
+            btn.text(btn.data('msg'));
+            btn.addClass('btn-success');
+
+            setTimeout(function () {
+                btn.html(original_btn_html);
+                btn.removeClass('btn-success');
+            }, 1000);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize()
+            });
+            e.preventDefault();
+            return false;
+        });
+    })
+</script>
+
+
+<div>
     <ul class="nav nav-tabs" role="tablist">
         {% for t in weapon_modification_types %}
             {% weaponmodification_type_valid_for_weapon t weapon.weapon as wmt %}
@@ -29,9 +55,9 @@
                                             {% for wma in wm.weaponmodificationattributechange_set.all %}
                                             {{ wma.get_attribute_display|capfirst }}: {{ wma.get_modifier_display }}<br>
                                             {% endfor %}
-                                            <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}" class="float-right" method="post">
+                                            <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}" class="float-right add-form" method="post">
                                                 {% csrf_token %}
-                                                <button class="btn btn-sm btn-primary float-right">{% trans 'Add modification' %}</button>
+                                                <button class="btn btn-sm btn-primary float-right" data-msg="{% trans 'Added' %}">{% trans 'Add modification' %}</button>
                                             </form>
                                         </div>
                                     </div>
@@ -43,5 +69,4 @@
             {% endif %}
         {% endfor %}
     </div>
-
 </div>

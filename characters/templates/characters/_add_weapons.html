@@ -1,4 +1,30 @@
 {% load characters_extras rules_extras i18n %}
+
+<script>
+    $(function(){
+        $('.add-form').on('submit', function(e){
+            var form = $(this);
+            var btn = form.find('button');
+            var original_btn_html = btn.html();
+
+            btn.text(btn.data('msg'));
+            btn.addClass('btn-success');
+
+            setTimeout(function () {
+                btn.html(original_btn_html);
+                btn.removeClass('btn-success');
+            }, 1000);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize()
+            });
+            e.preventDefault();
+            return false;
+        });
+    })
+</script>
+
 <div>
     <ul class="nav nav-tabs">
         {% for t in weapon_types %}
@@ -51,10 +77,10 @@
                                                     <br>
                                                     {% for fm in weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
                                                 {% endif %}
-                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-right" method="post">
+                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-right add-form" method="post">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
-                                                    <button class="btn btn-sm btn-primary float-right">{% trans 'Add weapon' %}</button>
+                                                    <button class="btn btn-sm btn-primary float-right" data-msg="{% trans 'Added' %}">{% trans 'Add weapon' %}</button>
                                                 </form>
                                             </div>
                                         </div>

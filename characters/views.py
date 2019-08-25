@@ -277,9 +277,9 @@ class AddWeaponView(View):
         character = Character.objects.get(id=kwargs['pk'])
         weapon = Weapon.objects.get(id=kwargs['weapon_pk'])
         if not character.may_edit(request.user):
-            return HttpResponseRedirect(character.get_absolute_url())
+            return JsonResponse({'status': 'forbidden'})
         character.characterweapon_set.create(weapon=weapon)
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
 
 
 class XhrRemoveWeaponView(View):
@@ -319,9 +319,9 @@ class AddRiotGearView(View):
         character = Character.objects.get(id=kwargs['pk'])
         riot_gear = RiotGear.objects.get(id=kwargs['riot_gear_pk'])
         if not character.may_edit(request.user):
-            return HttpResponseRedirect(character.get_absolute_url())
+            return JsonResponse({'status': 'forbidden'})
         character.characterriotgear_set.create(riot_gear=riot_gear)
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
 
 
 class XhrRemoveRiotGearView(View):
@@ -362,7 +362,7 @@ class AddItemView(View):
         item = Item.objects.get(id=kwargs['item_pk'])
 
         if not character.may_edit(request.user):
-            return HttpResponseRedirect(character.get_absolute_url())
+            return JsonResponse({'status': 'forbidden'})
 
         if character.characteritem_set.filter(item=item).exists():
             ci = character.characteritem_set.filter(item=item).latest('id')
@@ -370,7 +370,7 @@ class AddItemView(View):
             ci.save()
         else:
             character.characteritem_set.create(item=item)
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
 
 
 class XhrRemoveItemView(View):
@@ -410,9 +410,10 @@ class AddWeaponModificationView(View):
         weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
 
         if not character.may_edit(request.user):
-            return HttpResponseRedirect(character.get_absolute_url())
+            return JsonResponse({'status': 'forbidden'})
 
         if weapon.weapon.type in weapon_modification.available_for_weapon_types.all():
             weapon.modifications.filter(type=weapon_modification.type).delete()
             weapon.modifications.add(weapon_modification)
-        return HttpResponseRedirect(character.get_absolute_url())
+        return JsonResponse({'status': 'ok'})
+
