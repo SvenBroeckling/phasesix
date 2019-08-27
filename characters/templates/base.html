@@ -93,6 +93,7 @@
                                 <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
                             </li>
                         {% endif %}
+                    </ul>
 
                     <form class="form-inline my-2 my-lg-0 ml-3" method="post"
                           action="{% url 'set_language' %}?next={{ request.path }}">
