@@ -8,7 +8,7 @@ from rules.models import Skill, Extension, Shadow, Knowledge, Template, Template
 
 
 class ExtensionAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'is_mandatory', 'fa_icon_class', 'is_epoch', 'ordering')
+    list_display = ('name_de', 'name_en', 'is_mandatory', 'fa_icon_class', 'is_epoch', 'ordering', 'image')
     list_editable = ('ordering',)
 
 
