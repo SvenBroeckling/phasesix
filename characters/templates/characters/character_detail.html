@@ -52,7 +52,16 @@
 {% block belownav %}
     <div
             class="row character-info-row"
-            style="{% if character.backdrop_image %}background-image: url({{ character.backdrop_image.url }}){% else %}background-color: silver{% endif %}">
+            style="
+                    {% if character.backdrop_image %}
+                        background-image: url({{ character.backdrop_image.url }})
+                    {% else %}
+                        {% if character.get_epoch.image %}
+                            background-image: url({{ character.get_epoch.image.url }})
+                        {% else %}
+                            background-color: silver
+                        {% endif %}
+                    {% endif %}">
 
         <div class="col-md-10 offset-md-1 d-flex justify-content-between pt-3 pb-3">
             <div class="{% if may_edit %}dropdown{% endif %}">

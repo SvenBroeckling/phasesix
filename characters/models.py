@@ -115,6 +115,9 @@ class Character(models.Model):
             if tm.shadow is not None:
                 self.shadows.remove(tm.shadow)
 
+    def get_epoch(self):
+        return self.extensions.filter(is_mandatory=False, is_epoch=True).earliest('id')
+
     @property
     def extension_enabled(self):
         res = {}

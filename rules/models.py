@@ -23,6 +23,9 @@ class Extension(models.Model, metaclass=TransMeta):
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fa fa-book')
     name = models.CharField(_('name'), max_length=120)
     identifier = models.CharField(_('identifier'), max_length=20)
+    image = models.ImageField(
+        _('image'), upload_to='extension_images', blank=True, null=True
+    )
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     is_epoch = models.BooleanField(_('is epoch'), default=True)
