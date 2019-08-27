@@ -53,8 +53,8 @@
                                 {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
                                 <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i></a>
                                 <a class="float-right action-link ml-1" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i></a>
+                                {% if has_valid_wm %}
                                 <a
-                                        {% if not has_valid_wm %}disabled="disabled"{% endif %}
                                         class="modal-trigger float-right {% if not has_valid_wm %}disabled{% endif %}"
                                         data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
                                         title="{% trans 'Add Modification' %}"
@@ -62,6 +62,7 @@
                                         data-target=".character-modal"
                                         data-modal-title="{% trans 'Add Modification' %}"
                                         href=""><i class="fas fa-plus text-info"></i></a>
+                                {% endif %}
                             {% endif %}
                             <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
                             {{ weapon.weapon }}<br>

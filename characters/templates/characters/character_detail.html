@@ -159,31 +159,9 @@
 
     <div class="row mt-4">
         <div class="col-lg-2 col-md-3">
-            <div class="text-center">
-                {% detail_fragment 'health' %}
-            </div>
-
+            {% detail_fragment 'health' %}
             {% detail_fragment 'reputation' %}
-
-            <div class="card mb-3">
-                <div class="card-body text-center pt-2">
-                    <span class="attribute-heading">{% trans 'Bonus Dice' %}</span><br>
-                    <span class="attribute-value">{% color_value_span object.bonus_dice 6 %}</span>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-body text-center pt-1">
-                    <span class="attribute-heading">{% trans 'Destiny Dice' %}</span><br>
-                    <span class="attribute-value">{% color_value_span object.destiny_dice 6 %}</span>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-body text-center pt-1">
-                    <span class="attribute-heading">{% trans 'Rerolls' %}</span><br>
-                    <span class="attribute-value">{% color_value_span object.rerolls 6 %}</span>
-                </div>
-            </div>
-
+            {% detail_fragment 'dice' %}
         </div>
 
         <div class="col-lg-10 col-md-9">

@@ -90,7 +90,7 @@ def weaponmodification_type_valid_for_weapon(wmt, weapon):
 
 @register.simple_tag
 def has_valid_weaponmodifications(weapon, character):
-    for wmt in WeaponModificationType.objects.all():
+    for wmt in WeaponModificationType.objects.for_extensions(character.extensions):
         for wm in wmt.weaponmodification_set.all():
             if weapon.type in wm.available_for_weapon_types.all():
                 return True
@@ -100,8 +100,5 @@ def has_valid_weaponmodifications(weapon, character):
 def template_category_string(character, template_category):
     tc = character.charactertemplate_set.filter(template__category__id=template_category)
     return mark_safe(
-        '<span class="text-{}">{}</span>'.format(
-            TemplateCategory.objects.get(id=template_category).bg_color_class,
-            ", ".join([str(t.template) for t in tc])
-        )
+        '<span class="text-light">{}</span>'.format(", ".join([str(t.template) for t in tc]))
     )
