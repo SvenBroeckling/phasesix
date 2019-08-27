@@ -49,8 +49,84 @@
     </script>
 {% endblock %}
 
-{% block content %}
+{% block belownav %}
+    <div
+            class="row character-info-row"
+            style="{% if character.backdrop_image %}background-image: url({{ character.backdrop_image.url }}){% else %}background-color: silver{% endif %}">
 
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pt-3 pb-3">
+            <div class="{% if may_edit %}dropdown{% endif %}">
+                {% if character.image %}
+                    {% thumbnail character.image "120x120" crop="center" as im %}
+                        <img
+                                {% if may_edit %}data-toggle="dropdown"{% endif %}
+                                class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
+                                src="{{ MEDIA_URL }}{{ im.url }}"
+                                alt="{{ object.name }}">
+                    {% endthumbnail %}
+                {% else %}
+                    <img
+                            class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
+                            {% if may_edit %}data-toggle="dropdown"{% endif %}
+                            width="120" height="120"
+                            src="{% static 'img/silhuette.png' %}"
+                            alt="{{ object.name }}">
+                {% endif %}
+
+                {% if may_edit %}
+                    <div class="dropdown-menu">
+                        <a
+                                class="dropdown-item modal-trigger"
+                                data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Name / Images' %}"
+                                href=""><i class="fas fa-image text-info"></i> {% trans 'Name / Images' %}</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i class="fas fa-heart text-danger"></i> {% trans 'Heal Wound' %}</a>
+                        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i class="far fa-heart text-danger"></i> {% trans 'Take Damage' %}</a>
+                        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i class="fas fa-heart text-info"></i> {% trans 'Get Boost' %}</a>
+                        <div class="dropdown-divider"></div>
+                        <a
+                                class="dropdown-item modal-trigger"
+                                data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Add Armor' %}"
+                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Armor' %}</a>
+                        <a
+                                class="dropdown-item modal-trigger"
+                                data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Add Weapon' %}"
+                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
+                        <a
+                                class="dropdown-item modal-trigger"
+                                data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
+                                title="{% trans 'Add Item' %}"
+                                data-toggle="modal"
+                                data-modal-title="{% trans 'Add item' %}"
+                                data-target=".character-modal"
+                                href=""><i class="fa fa-plus text-info"></i> {% trans 'Add Item' %}</a>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Delete' %}</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="pl-4 text-right">
+                <h3 class="mb-0">{{ object.name }}</h3>
+                <small>{% template_category_string object 3 %}</small><br>
+                <small>{% template_category_string object 2 %}</small><br>
+                <small>{% template_category_string object 6 %}</small><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
     <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog" aria-labelledby="character-modal">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -75,37 +151,6 @@
     <div class="row mt-4">
         <div class="col-lg-2 col-md-3">
             <div class="text-center">
-                <div class="dropleft">
-                    {% if character.image %}
-                        {% thumbnail character.image "200x200" crop="center" as im %}
-                            <img
-                                    data-toggle="dropdown"
-                                    class="rounded-circle mb-2 img-fluid touch-menu"
-                                    src="{{ MEDIA_URL }}{{ im.url }}"
-                                    alt="{{ object.name }}">
-                        {% endthumbnail %}
-                    {% else %}
-                        <img
-                                data-toggle="dropdown"
-                                class="rounded-circle mb-2 img-fluid touch-menu"
-                                src="{% static 'img/silhuette.png' %}"
-                                alt="{{ object.name }}">
-                    {% endif %}
-                    <h3>{{ object.name }}</h3>
-                    <div class="dropdown-menu">
-                        <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
-                                data-modal-title="{% trans 'Add Modification' %}"
-                                href=""><i class="fas fa-image text-info"></i> {% trans 'Change Image' %}</a>
-
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Delete' %}</a>
-                    </div>
-                </div>
-
                 {% detail_fragment 'health' %}
             </div>
 
@@ -115,14 +160,12 @@
                 <div class="card-body text-center pt-2">
                     <span class="attribute-heading">{% trans 'Bonus Dice' %}</span><br>
                     <span class="attribute-value">{% color_value_span object.bonus_dice 6 %}</span>
-                    <button class="btn btn-primary btn-sm btn-block d-block">{% trans 'Take extra Action' %}</button>
                 </div>
             </div>
             <div class="card mb-3">
                 <div class="card-body text-center pt-1">
                     <span class="attribute-heading">{% trans 'Destiny Dice' %}</span><br>
                     <span class="attribute-value">{% color_value_span object.destiny_dice 6 %}</span>
-                    <button class="btn btn-primary btn-sm btn-block d-block">{% trans 'Steal Action' %}</button>
                 </div>
             </div>
             <div class="card mb-3">
@@ -131,6 +174,7 @@
                     <span class="attribute-value">{% color_value_span object.rerolls 6 %}</span>
                 </div>
             </div>
+
         </div>
 
         <div class="col-lg-10 col-md-9">

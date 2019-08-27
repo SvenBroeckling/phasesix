@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from armory.models import WeaponModification, WeaponModificationType
+from rules.models import TemplateCategory
 
 register = Library()
 
@@ -86,6 +87,7 @@ def weaponmodification_type_valid_for_weapon(wmt, weapon):
             return True
     return False
 
+
 @register.simple_tag
 def has_valid_weaponmodifications(weapon, character):
     for wmt in WeaponModificationType.objects.all():
@@ -94,4 +96,12 @@ def has_valid_weaponmodifications(weapon, character):
                 return True
     return False
 
-    return False
+@register.simple_tag
+def template_category_string(character, template_category):
+    tc = character.charactertemplate_set.filter(template__category__id=template_category)
+    return mark_safe(
+        '<span class="text-{}">{}</span>'.format(
+            TemplateCategory.objects.get(id=template_category).bg_color_class,
+            ", ".join([str(t.template) for t in tc])
+        )
+    )

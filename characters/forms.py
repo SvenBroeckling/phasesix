@@ -8,7 +8,7 @@ from rules.models import Lineage, Extension
 class CharacterImageForm(forms.ModelForm):
     class Meta:
         model = Character
-        fields = ('image', 'name')
+        fields = ('name', 'description', 'image', 'backdrop_image')
 
 
 class CreateCharacterForm(forms.Form):

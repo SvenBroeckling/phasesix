@@ -18,6 +18,11 @@ class Character(models.Model):
     image = models.ImageField(
         _('image'), upload_to='character_images', blank=True, null=True
     )
+    backdrop_image = models.ImageField(
+        _('backdrop image'), upload_to='character_backdrop_images', blank=True, null=True
+    )
+    description = models.TextField(_('description'), blank=True, null=True)
+
     creation_mode = models.CharField(
         _('creation mode'), max_length=12, default='random'
     )

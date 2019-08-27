@@ -13,21 +13,8 @@
                     <div class="card mb-2">
                         <div class="card-header">
                             {% if may_edit %}
-                                <div class="dropdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
-                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a
-                                                class="dropdown-item modal-trigger"
-                                                data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                                                data-toggle="modal"
-                                                data-target=".character-modal"
-                                                data-modal-title="{% trans 'Add Armor' %}"
-                                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Armor' %}</a>
-                                    </div>
-                                </div>
+                                <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i></a>
+                                <a class="float-right action-link" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i></a>
                             {% endif %}
                             <i class="{{ r.riot_gear.extension.fa_icon_class }}" title="{{ r.riot_gear.extension }}"></i>
                             {{ r.riot_gear }}
@@ -53,18 +40,6 @@
                     </div>
                 </div>
             {% endfor %}
-
-            {% if may_edit %}
-                <div class="col-12">
-                    <button
-                            title="{% trans 'Add armor' %}"
-                            class="btn btn-primary btn-sm modal-trigger"
-                            data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                            data-toggle="modal"
-                            data-modal-title="{% trans 'Add Armor' %}"
-                            data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add Armor' %}</button>
-                </div>
-            {% endif %}
         </div>
 
         <h2 class="mb-0 mt-4">{% trans 'Weapons' %}</h2>
@@ -75,32 +50,19 @@
                     <div class="card mb-2">
                         <div class="card-header">
                             {% if may_edit %}
-                                <div class="dropdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
-                                    {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a
-                                                {% if not has_valid_wm %}disabled="disabled"{% endif %}
-                                                class="dropdown-item modal-trigger {% if not has_valid_wm %}disabled{% endif %}"
-                                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
-                                                data-toggle="modal"
-                                                data-target=".character-modal"
-                                                data-modal-title="{% trans 'Add Modification' %}"
-                                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
-                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i> {% trans 'Damage' %}</a>
-                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a
-                                                class="dropdown-item modal-trigger"
-                                                data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                                                data-toggle="modal"
-                                                data-target=".character-modal"
-                                                data-modal-title="{% trans 'Add Weapon' %}"
-                                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
-                                    </div>
-                                </div>
+                                {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
+                                <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i></a>
+                                <a class="float-right action-link ml-1" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i></a>
+                                <a
+                                        {% if not has_valid_wm %}disabled="disabled"{% endif %}
+                                        class="modal-trigger float-right {% if not has_valid_wm %}disabled{% endif %}"
+                                        data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                        title="{% trans 'Add Modification' %}"
+                                        data-toggle="modal"
+                                        data-target=".character-modal"
+                                        data-modal-title="{% trans 'Add Modification' %}"
+                                        href=""><i class="fas fa-plus text-info"></i></a>
                             {% endif %}
-
                             <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
                             {{ weapon.weapon }}<br>
                             <span class="text-muted">{{ weapon.weapon.type }}</span>
@@ -157,21 +119,7 @@
                     </div>
                 </div>
             {% endfor %}
-
-            {% if may_edit %}
-                <div class="col-12">
-                    <button
-                            title="{% trans 'Add weapon' %}"
-                            class="btn btn-primary btn-sm modal-trigger"
-                            data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                            data-toggle="modal"
-                            data-modal-title="{% trans 'Add weapon' %}"
-                            data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add Weapon' %}</button>
-                </div>
-            {% endif %}
-
         </div>
-
     </div>
 
     <div class="col-md-6">
@@ -183,12 +131,7 @@
                     <div class="card mb-2">
                         <div class="card-header">
                             {% if may_edit %}
-                                <div class="downdown float-right">
-                                    <button data-toggle="dropdown" class="btn btn-primary btn-sm float-right"><i class="fa fa-edit"></i> {% trans 'Change' %}</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item action-link" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i> {% trans 'Remove / Use' %}</a>
-                                    </div>
-                                </div>
+                                <a class="float-right action-link" title="{% trans 'Remove / Use' %}" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i></a>
                             {% endif %}
                             <i class="{{ ci.item.extension.fa_icon_class }}" title="{{ ci.item.extension }}"></i>
                             {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}<br>
@@ -215,17 +158,6 @@
                     </div>
                 </div>
             {% endfor %}
-            {% if may_edit %}
-                <div class="col-12">
-                    <button
-                            class="btn btn-primary btn-sm modal-trigger"
-                            title="{% trans 'Add Item' %}"
-                            data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
-                            data-toggle="modal"
-                            data-modal-title="{% trans 'Add item' %}"
-                            data-target=".character-modal"><i class="fa fa-plus"></i> {% trans 'Add Item' %}</button>
-                </div>
-            {% endif %}
         </div>
     </div>
 </div>
