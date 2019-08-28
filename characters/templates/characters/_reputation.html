@@ -1,4 +1,4 @@
-{% load bootstrap4 i18n rules_extras %}
+{% load bootstrap4 i18n rules_extras characters_extras %}
 
 <script>
     $(function(){
@@ -64,36 +64,41 @@
 
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="reputation" data-initial-reputation="{{ initial_reputation }}">
-        <p class="pt-2">
-            {% blocktrans %}
-                Reputation represents the characters degree of popularity. Reputation may be
-                spent to get new character templates.
-            {% endblocktrans %}
-        </p>
-        <p>
-            {% blocktrans %}
-                The game master distributes reputation after each game session and for
-                special events.
-            {% endblocktrans %}
-        </p>
-        <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post" class="add-form">
-            {% csrf_token %}
-            <input type="hidden" name="operation" value="add">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Reputation"
-                       aria-label="Reputation" name="reputation">
-                <div class="input-group-append">
-                    <button type="submit" name="add_reputation" class="btn btn-dark" type="button"><i class="fa fa-eye text-warning"></i> Hinzufügen</button>
-                </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p class="pt-2 mt-md-5">
+                    {% blocktrans %}
+                        Reputation represents the characters degree of popularity. Reputation may be
+                        spent to get new character templates.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans %}
+                        The game master distributes reputation after each game session and for
+                        special events.
+                    {% endblocktrans %}
+                </p>
+                <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post" class="add-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="operation" value="add">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Reputation"
+                               aria-label="Reputation" name="reputation">
+                        <div class="input-group-append">
+                            <button type="submit" name="add_reputation" class="btn btn-dark" type="button"><i class="fa fa-eye text-warning"></i> Hinzufügen</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 
     {% for tp in template_points %}
         <div class="tab-pane fade" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
             <div class="card-columns">
                 {% for i in tp.template_category.template_set.all %}
-                    {% if i.extension in object.extensions.all or i.extension.is_mandatory %}
+                    {% has_extensions i object.extensions.all as has_ext %}
+                    {% if has_ext %}
                         <div class="constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
                              data-template-id="{{ i.id }}"
                              data-tp-id="{{ tp.id }}"
