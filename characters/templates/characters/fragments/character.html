@@ -2,66 +2,86 @@
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
-<div class="row">
-    <div class="col-md-12 mb-2">
-        <h2>{% trans 'Persona' %}</h2>
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Openness' as attribute_name %}
-        {% character_attribute_widget attribute_name object.openness %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Conscientiousness' as attribute_name %}
-        {% character_attribute_widget attribute_name object.conscientiousness %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Extraversion' as attribute_name %}
-        {% character_attribute_widget attribute_name object.extraversion %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Agreeableness' as attribute_name %}
-        {% character_attribute_widget attribute_name object.agreeableness %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Neuroticism' as attribute_name %}
-        {% character_attribute_widget attribute_name object.neuroticism invert=True %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'IQ' as attribute_name %}
-        {% character_attribute_widget attribute_name object.intelligence %}
-    </div>
-</div>
+    <div class="row">
 
+        <div class="col-md-4">
+            <h2 class="mb-2">{% trans 'Persona' %}</h2>
+            <table class="table">
+                <tr>
+                    <td>{% trans 'Openness' %}</td>
+                    <td class="text-right">{% color_value_span object.openness 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Conscientiousness' %}</td>
+                    <td class="text-right">{% color_value_span object.conscientiousness 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Extraversion' %}</td>
+                    <td class="text-right">{% color_value_span object.extraversion 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Agreeableness' %}</td>
+                    <td class="text-right">{% color_value_span object.agreeableness 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Neuroticism' %}</td>
+                    <td class="text-right">{% color_value_span object.neuroticism 6 invert=True %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'IQ' %}</td>
+                    <td class="text-right">{% color_value_span object.intelligence 100 %}</td>
+                </tr>
+            </table>
+        </div>
 
-<div class="row">
-    <div class="col-md-12 mb-2">
-        <h2>{% trans 'Physis' %}</h2>
+        <div class="col-md-4">
+            <h2 class="mb-2">{% trans 'Physis' %}</h2>
+            <table class="table">
+                <tr>
+                    <td>{% trans 'Deftness' %}</td>
+                    <td class="text-right">{% color_value_span object.deftness 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Strength' %}</td>
+                    <td class="text-right">{% color_value_span object.strength 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Attractiveness' %}</td>
+                    <td class="text-right">{% color_value_span object.attractiveness 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Endurance' %}</td>
+                    <td class="text-right">{% color_value_span object.endurance 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Resistance' %}</td>
+                    <td class="text-right">{% color_value_span object.resistance 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Quickness' %}</td>
+                    <td class="text-right">{% color_value_span object.quickness 100 %}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <h2 class="mb-2">{% trans 'Dice' %}</h2>
+            <table class="table">
+                <tr>
+                    <td>{% trans 'Bonus Dice' %}</td>
+                    <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Destiny Dice' %}</td>
+                    <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'Rerolls' %}</td>
+                    <td class="text-right">{% color_value_span object.rerolls 6 %}</td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Deftness' as attribute_name %}
-        {% character_attribute_widget attribute_name object.deftness %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Strength' as attribute_name %}
-        {% character_attribute_widget attribute_name object.strength %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Attractiveness' as attribute_name %}
-        {% character_attribute_widget attribute_name object.attractiveness %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Endurance' as attribute_name %}
-        {% character_attribute_widget attribute_name object.endurance %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Resistance' as attribute_name %}
-        {% character_attribute_widget attribute_name object.resistance %}
-    </div>
-    <div class="col-sm-6 col-md-4 col-xl-2">
-        {% trans 'Quickness' as attribute_name %}
-        {% character_attribute_widget attribute_name object.quickness %}
-    </div>
-</div>
 
 <div class="row mt-2">
     <div class="col-md-4">

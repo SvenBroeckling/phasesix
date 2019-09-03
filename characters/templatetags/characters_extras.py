@@ -9,15 +9,6 @@ from rules.models import TemplateCategory
 register = Library()
 
 
-@register.inclusion_tag('characters/_character_attribute_widget.html')
-def character_attribute_widget(name, attribute, invert=False):
-    return {
-        'name': name,
-        'attribute': attribute,
-        'invert': invert,
-    }
-
-
 @register.simple_tag
 def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     try:
@@ -95,6 +86,7 @@ def has_valid_weaponmodifications(weapon, character):
             if weapon.type in wm.available_for_weapon_types.all():
                 return True
     return False
+
 
 @register.simple_tag
 def template_category_string(character, template_category):

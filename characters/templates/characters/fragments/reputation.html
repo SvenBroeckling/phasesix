@@ -4,7 +4,7 @@
 {% block fragment %}
     {% if may_edit %}
         <button
-                class="btn btn-primary btn-block mb-3 mt-3 modal-trigger"
+                class="btn btn-outline-dark btn-block mb-3 mt-3 modal-trigger"
                 data-toggle="modal"
                 data-target=".character-modal"
                 data-modal-title="{% trans 'Reputation' %}"
@@ -20,7 +20,7 @@
     {% if object.extension_enabled.magic %}
         {% if may_edit %}
             <button
-                    class="btn btn-primary btn-block mb-3 mt-3 modal-trigger"
+                    class="btn btn-outline-dark btn-block mb-3 mt-3 modal-trigger"
                     data-toggle="modal"
                     data-target=".character-modal"
                     data-modal-title="{% trans 'Create a spell' %}"

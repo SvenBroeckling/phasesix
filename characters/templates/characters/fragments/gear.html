@@ -2,164 +2,108 @@
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
-<div class="row">
-    <div class="col-md-6">
+    <h2 class="mb-2">{% trans 'Gear' %}</h2>
 
-        <h2 class="mb-0">{% trans 'Amor' %}</h2>
+    <div class="card-columns">
+        {% for r in character.characterriotgear_set.all %}
+            <div class="card mb-2">
+                <div class="card-header bg-info">
+                    {% if may_edit %}
+                        <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i></a>
+                        <a class="float-right action-link" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i></a>
+                    {% endif %}
+                    <i class="{{ r.riot_gear.extension.fa_icon_class }}" title="{{ r.riot_gear.extension }}"></i>
+                    {{ r.riot_gear }}<br>
+                    <span class="small">{% trans 'Riot Gear' %}</span>
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}<br>
+                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.riot_gear.concealment 6 invert=True %}<br>
+                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.riot_gear.weight }}<br>
+                    <i class="fas fa-asterisk fa-fw"></i> {% trans 'Condition' %}: {% color_value_span r.condition 100 %}
+                </div>
+            </div>
+        {% endfor %}
 
-        <div class="row">
-            {% for r in character.characterriotgear_set.all %}
-                <div class="col-md-12">
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {% if may_edit %}
-                                <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i></a>
-                                <a class="float-right action-link" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i></a>
+        {% for weapon in object.characterweapon_set.all %}
+            <div class="card mb-2">
+                <div class="card-header bg-danger">
+                    {% if may_edit %}
+                        {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
+                        <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i></a>
+                        <a class="float-right action-link ml-1" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i></a>
+                        {% if has_valid_wm %}
+                        <a
+                                class="modal-trigger float-right {% if not has_valid_wm %}disabled{% endif %}"
+                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                title="{% trans 'Add Modification' %}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Add Modification' %}"
+                                href=""><i class="fas fa-plus text-info"></i></a>
+                        {% endif %}
+                    {% endif %}
+                    <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
+                    {{ weapon.weapon }}<br>
+                    <span class="small">{{ weapon.weapon.type }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <i class="fas fa-times fa-fw"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}<br>
+                            <i class="fas fa-bullseye fa-fw"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}<br>
+                            <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
+                            <i class="fas fa-heart fa-fw"></i> {% trans 'Wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
+                            {% if not weapon.weapon.is_hand_to_hand_weapon %}
+                                <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
+                                <i class="fas fa-arrow-circle-left fa-fw"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
                             {% endif %}
-                            <i class="{{ r.riot_gear.extension.fa_icon_class }}" title="{{ r.riot_gear.extension }}"></i>
-                            {{ r.riot_gear }}
+                            <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.get_range_lower_display }}
+                            {% if weapon.weapon.range_upper and weapon.weapon.range_upper != weapon.weapon.range_lower %}-
+                                {{ weapon.weapon.get_range_upper_display }}{% endif %}<br>
                         </div>
-                        <div class="card-body">
-                            <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}<br>
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.riot_gear.concealment 6 invert=True %}<br>
-                            <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.riot_gear.weight }}<br>
-                            <i class="fas fa-asterisk fa-fw"></i> {% trans 'Condition' %}: {% color_value_span r.condition 100 %}
-                        </div>
-                    </div>
-                </div>
-            {% empty %}
-                <div class="col-md-12">
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {% trans 'Armor' %}
-                        </div>
-                        <div class="card-body">
-                            <h2>{% trans 'No armor yet' %}</h2>
-                            <p>{% trans 'This character has no amor yet.' %}</p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-
-        <h2 class="mb-0 mt-4">{% trans 'Weapons' %}</h2>
-
-        <div class="row">
-            {% for weapon in object.characterweapon_set.all %}
-                <div class="col-md-12">
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {% if may_edit %}
-                                {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
-                                <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i></a>
-                                <a class="float-right action-link ml-1" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i></a>
-                                {% if has_valid_wm %}
-                                <a
-                                        class="modal-trigger float-right {% if not has_valid_wm %}disabled{% endif %}"
-                                        data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
-                                        title="{% trans 'Add Modification' %}"
-                                        data-toggle="modal"
-                                        data-target=".character-modal"
-                                        data-modal-title="{% trans 'Add Modification' %}"
-                                        href=""><i class="fas fa-plus text-info"></i></a>
-                                {% endif %}
+                        <div class="col-md-6">
+                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}<br>
+                            <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
+                            {% if not weapon.weapon.is_hand_to_hand_weapon %}
+                                <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}<br>
                             {% endif %}
-                            <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
-                            {{ weapon.weapon }}<br>
-                            <span class="text-muted">{{ weapon.weapon.type }}</span>
+                            <br>
+                            <i class="fas fa-wrench fa-fw"></i> {% trans 'Condition' %}: {% color_value_span weapon.condition 100 %}<br>
+                            {% if weapon.weapon.attack_modes.exists %}
+                                <br>
+                                {% for fm in weapon.weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
+                            {% endif %}
+                            {% if weapon.modifications.exists %}
+                                <br><br>
+                                {% for wm in weapon.modifications.all %}
+                                    {{ wm }}<br>
+                                {% endfor %}
+                            {% endif %}
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <i class="fas fa-times fa-fw"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}<br>
-                                    <i class="fas fa-bullseye fa-fw"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}<br>
-                                    <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
-                                    <i class="fas fa-heart fa-fw"></i> {% trans 'Wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
-                                    {% if not weapon.weapon.is_hand_to_hand_weapon %}
-                                        <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
-                                        <i class="fas fa-arrow-circle-left fa-fw"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
-                                    {% endif %}
-                                    <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.get_range_lower_display }}
-                                    {% if weapon.weapon.range_upper and weapon.weapon.range_upper != weapon.weapon.range_lower %}-
-                                        {{ weapon.weapon.get_range_upper_display }}{% endif %}<br>
-                                </div>
-                                <div class="col-md-6">
-                                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}<br>
-                                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
-                                    {% if not weapon.weapon.is_hand_to_hand_weapon %}
-                                        <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}<br>
-                                    {% endif %}
-                                    <br>
-                                    <i class="fas fa-wrench fa-fw"></i> {% trans 'Condition' %}: {% color_value_span weapon.condition 100 %}<br>
-                                    {% if weapon.weapon.attack_modes.exists %}
-                                        <br>
-                                        {% for fm in weapon.weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
-                                    {% endif %}
-                                    {% if weapon.modifications.exists %}
-                                        <br><br>
-                                        {% for wm in weapon.modifications.all %}
-                                            {{ wm }}<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                            </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
 
-                        </div>
-                    </div>
+        {% for ci in character.characteritem_set.by_type %}
+            <div class="card mb-2">
+                <div class="card-header">
+                    {% if may_edit %}
+                        <a class="float-right action-link" title="{% trans 'Remove / Use' %}" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i></a>
+                    {% endif %}
+                    <i class="{{ ci.item.extension.fa_icon_class }}" title="{{ ci.item.extension }}"></i>
+                    {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}<br>
+                    <span class="text-muted small">{{ ci.item.type }}</span>
                 </div>
-            {% empty %}
-                <div class="col-md-12">
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {% trans 'Weapons' %}
-                        </div>
-                        <div class="card-body">
-                            <h2>{% trans 'No weapons yet' %}</h2>
-                            <p>{% trans 'This character has no weapons yet.' %}</p>
-                        </div>
-                    </div>
+                <div class="card-body">
+                    {% if ci.item.description %}<p>{{ ci.item.description }}</p>{% endif %}
+                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
+                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
+                    <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
+
     </div>
-
-    <div class="col-md-6">
-            <h2 class="mb-0">{% trans 'Items' %} </h2>
-
-        <div class="row">
-            {% for ci in character.characteritem_set.by_type %}
-                <div class="col-md-12">
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {% if may_edit %}
-                                <a class="float-right action-link" title="{% trans 'Remove / Use' %}" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i></a>
-                            {% endif %}
-                            <i class="{{ ci.item.extension.fa_icon_class }}" title="{{ ci.item.extension }}"></i>
-                            {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}<br>
-                            <span class="text-muted small">{{ ci.item.type }}</span>
-                        </div>
-                        <div class="card-body">
-                            {% if ci.item.description %}<p>{{ ci.item.description }}</p>{% endif %}
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
-                            <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
-                            <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
-                        </div>
-                    </div>
-                </div>
-            {% empty %}
-                <div class="col-md-12">
-                    <div class="card mb-2">
-                        <div class="card-header">
-                            {% trans 'Items' %}
-                        </div>
-                        <div class="card-body">
-                            <h2>{% trans 'No items yet' %}</h2>
-                            <p>{% trans 'This character has no items yet.' %}</p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
 {% endblock %}

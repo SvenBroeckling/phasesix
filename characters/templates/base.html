@@ -112,7 +112,10 @@
         </div>
     </div>
 
-    {% block belownav %}{% endblock %}
+    {% block belownav %}
+        <div class="default-belownav"></div>
+    {% endblock %}
+
     <div class="row">
         <div class="col-md-10 offset-md-1">
             {% bootstrap_messages messages %}

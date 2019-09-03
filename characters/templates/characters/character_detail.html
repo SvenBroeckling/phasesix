@@ -63,7 +63,8 @@
                         {% endif %}
                     {% endif %}">
 
-        <div class="col-md-10 offset-md-1 d-flex justify-content-between pt-3 pb-3">
+        <div class="pixel-overlay"></div>
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
             <div class="{% if may_edit %}dropdown{% endif %}">
                 {% if character.image %}
                     {% thumbnail character.image "120x120" crop="center" as im %}
@@ -125,6 +126,8 @@
                 {% endif %}
             </div>
 
+            {% detail_fragment 'health' %}
+
             <div class="pl-4 text-right">
                 <h3 class="mb-0">{{ object.name }}</h3>
                 <small>{% template_category_string object 3 %}</small><br>
@@ -158,10 +161,21 @@
     </div>
 
     <div class="row mt-4">
+
         <div class="col-lg-2 col-md-3">
-            {% detail_fragment 'health' %}
+
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" data-toggle="pill" href="#v-character"
+                   role="tab" aria-controls="v-character" aria-selected="true"><i class="fas fa-fw fa-male"></i> {% trans 'Character' %}</a>
+                <a class="nav-link" data-toggle="pill" href="#v-gear" role="tab" aria-controls="v-gear"
+                   aria-selected="true"><i class="fas fa-suitcase fa-fw"></i> {% trans 'Gear' %}</a>
+                <a class="nav-link" data-toggle="pill" href="#v-combat" role="tab" aria-controls="v-combat"
+                   aria-selected="true"><i class="fas fa-fw fa-chess-pawn"></i> {% trans 'Combat' %}</a>
+                <a class="nav-link" data-toggle="pill" href="#v-background" role="tab" aria-controls="v-background"
+                   aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i> {% trans 'Background' %}</a>
+            </div>
+
             {% detail_fragment 'reputation' %}
-            {% detail_fragment 'dice' %}
         </div>
 
         <div class="col-lg-10 col-md-9">
@@ -170,21 +184,6 @@
                     {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
                 </div>
             {% endif %}
-
-            <ul class="nav nav-tabs nav-fill mb-4">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#v-character" role="tab">{% trans 'Character' %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#v-gear" role="tab">{% trans 'Gear' %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#v-combat" role="tab">{% trans 'Combat' %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#v-background" role="tab">{% trans 'Background' %}</a>
-                </li>
-            </ul>
 
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="v-character" role="tabpanel">
