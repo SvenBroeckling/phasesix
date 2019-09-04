@@ -35,7 +35,7 @@
         }
 
         // save bootstrap tabs
-        $('a[data-toggle="tab"]').on('click', function (e) {
+        $('a[data-toggle="pill"]').on('click', function (e) {
             window.localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
 
@@ -63,7 +63,6 @@
                         {% endif %}
                     {% endif %}">
 
-        <div class="pixel-overlay"></div>
         <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
             <div class="{% if may_edit %}dropdown{% endif %}">
                 {% if character.image %}
