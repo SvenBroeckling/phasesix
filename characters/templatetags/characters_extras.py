@@ -89,8 +89,8 @@ def has_valid_weaponmodifications(weapon, character):
 
 
 @register.simple_tag
-def template_category_string(character, template_category):
+def template_category_string(character, template_category, css="text-light"):
     tc = character.charactertemplate_set.filter(template__category__id=template_category)
     return mark_safe(
-        '<span class="text-light">{}</span>'.format(", ".join([str(t.template) for t in tc]))
+        '<span class="{}">{}</span>'.format(css, ", ".join([str(t.template) for t in tc]))
     )

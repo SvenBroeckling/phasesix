@@ -1,26 +1,30 @@
 {% extends 'base.html' %}
-{% load i18n static thumbnail %}
+{% load i18n static thumbnail characters_extras %}
 
 {% block content %}
-    <div class="row">
+    <div class="row character-list">
         {% for object in object_list %}
             <div class="col-md-3 mb-3">
                 <a href="{{ object.get_absolute_url }}">
-                    <div class="text-center">
-                        {% if object.image %}
-                            {% thumbnail object.image "100x100" crop="center" as im %}
-                            <img
-                                    class="rounded-circle mb-2 img-fluid"
-                                    src="{{ MEDIA_URL }}{{ im.url }}"
-                                    alt="{{ object.name }}">
-                            {% endthumbnail %}
-                        {% else %}
-                            <img
-                                    class="rounded-circle mb-2 img-fluid"
-                                    src="{% static 'img/silhuette.png' %}"
-                                    alt="{{ object.name }}">
-                        {% endif %}
-                        <h3>{{ object.name }}</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            {% if object.image %}
+                                {% thumbnail object.image "120x120" crop="center" as im %}
+                                    <img
+                                            class="img-fluid rounded float-left mr-3"
+                                            src="{{ MEDIA_URL }}{{ im.url }}"
+                                            alt="{{ object.name }}">
+                                {% endthumbnail %}
+                            {% else %}
+                                <img
+                                        class="img-fluid rounded float-left mr-3"
+                                        height="120" width="120"
+                                        src="{% static 'img/silhuette.png' %}"
+                                        alt="{{ object.name }}">
+                            {% endif %}
+                            <h3>{{ object.name }}</h3>
+                            <small>{% template_category_string object 3 "text-dark" %}</small><br>
+                        </div>
                     </div>
                 </a>
             </div>
