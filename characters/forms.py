@@ -12,7 +12,7 @@ class CharacterImageForm(forms.ModelForm):
 
 
 class CreateCharacterForm(forms.Form):
-    name = forms.CharField(label=_('Name'))
+    name = forms.CharField(label=_('Name'), max_length=80)
     lineage = forms.ModelChoiceField(queryset=Lineage.objects.all())
     epoch = forms.ModelChoiceField(
         queryset=Extension.objects.filter(is_epoch=True, is_mandatory=False),
