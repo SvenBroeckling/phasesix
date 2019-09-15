@@ -23,6 +23,7 @@
 
         $('#character-modal').on('hidden.bs.modal', function(e){
             refresh_fragments();
+            $('.character-modal-container').html('');
         });
 
         function refresh_fragments() {

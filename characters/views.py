@@ -256,7 +256,12 @@ class XhrReputationView(TemplateView):
         if operation == 'add':
             character.reputation += int(request.POST.get('reputation', 0))
             character.save()
-        return JsonResponse({'status': 'ok'})
+        if operation == 'add-template':
+            template = Template.objects.get(id=request.POST.get('template_id'))
+            if not template.cost <= character.reputation_available:
+                return JsonResponse({'status': 'notenoughpoints'})
+            character.add_template(template)
+        return JsonResponse({'status': 'ok', 'remaining_reputation': character.reputation_available})
 
 
 # gear

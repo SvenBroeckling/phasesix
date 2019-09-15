@@ -72,6 +72,11 @@ a[data-toggle="popover"] {
     cursor: pointer;
 }
 
+.constructed-template.disabled div.card {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
 .constructed-template.selected div.card {
     background-color: lightgreen;
 }

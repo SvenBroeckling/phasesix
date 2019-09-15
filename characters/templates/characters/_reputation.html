@@ -4,40 +4,53 @@
     $(function(){
 
         function checkReputationCosts(remaining_reputation) {
-            $('button[data-reputation-cost]').each(function(idx){
+            $('.constructed-template').each(function(idx){
                 elem = $(this);
                 if(parseInt(elem.data('reputation-cost'), 10) > remaining_reputation){
-                    elem.addClass('disabled', 'disabled');
-                    elem.prop('disabled', 'disabled');
+                    elem.addClass('disabled');
                 } else {
-                    elem.removeClass('disabled', 'disabled');
-                    elem.prop('disabled', false)
+                    elem.removeClass('disabled');
                 }
             })
         }
         checkReputationCosts($('#reputation').data('initial-reputation'));
+
+        $('.constructed-template').on('click', function(e){
+            var elem = $(this);
+            if(!elem.hasClass('disabled')) {
+                if(confirm(elem.data('select-message'))) {
+                    $.post(
+                        elem.data('add-url'),
+                        {
+                            operation: 'add-template',
+                            template_id: elem.data('template-id')
+                        },
+                        function(data) {
+                            if(data.status === 'ok') {
+                                elem.hide('slow');
+                                checkReputationCosts(data.remaining_reputation);
+                            } else {
+
+                            }
+                        }
+                    )
+                }
+            }
+        });
 
         $('.add-form').on('submit', function(e){
             var form = $(this);
             var btn = form.find('button');
             var original_btn_html = btn.html();
 
-            if (btn.data('flash-message')){
-                btn.text(btn.data('flash-message'));
-            } else {
-                btn.text('Hinzugefügt');
-            }
+            btn.text(btn.data('flash-message'));
             setTimeout(function(){btn.html(original_btn_html)}, 1000);
+
             $.ajax({
                 url: form.attr('action'),
                 type: 'POST',
                 data: form.serialize()
             }).done(function(data){
-                if(data.new_value){
-                    var span = btn.parent().parent().find('span');
-                    span.text(data.new_value);
-                    span.fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-                }
                 if(data.remaining_reputation) {
                     checkReputationCosts(data.remaining_reputation);
                 }
@@ -63,7 +76,7 @@
 </ul>
 
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="reputation" data-initial-reputation="{{ initial_reputation }}">
+    <div role="tabpanel" class="tab-pane active" id="reputation" data-initial-reputation="{{ object.reputation_available }}">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <p class="pt-2 mt-md-5">
@@ -85,7 +98,7 @@
                         <input type="text" class="form-control" placeholder="Reputation"
                                aria-label="Reputation" name="reputation">
                         <div class="input-group-append">
-                            <button type="submit" name="add_reputation" class="btn btn-dark" type="button"><i class="fa fa-eye text-warning"></i> Hinzufügen</button>
+                            <button type="submit" name="add_reputation" class="btn btn-dark" type="button" data-flash-message="{% trans 'Added' %}"><i class="fa fa-eye text-warning"></i> Hinzufügen</button>
                         </div>
                     </div>
                 </form>
@@ -98,13 +111,13 @@
             <div class="card-columns">
                 {% for i in tp.template_category.template_set.all %}
                     {% has_extensions i object.extensions.all as has_ext %}
-                    {% if has_ext %}
-                        <div class="constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                    {% if has_ext and not i.id in character_template_ids %}
+                        <div class="constructed-template"
+                             data-select-message="{% trans 'Select Template for Reputation?' %}"
+                             data-reputation-cost="{{ i.cost }}"
                              data-template-id="{{ i.id }}"
                              data-tp-id="{{ tp.id }}"
-                             data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
-                             data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
-                             data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
+                             data-add-url="{% url 'characters:xhr_reputation' pk=object.id %}">
                             {% template_widget i %}
                         </div>
                     {% endif %}
