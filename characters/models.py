@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import random
+import math
 from decimal import Decimal
 
 from django.db import models
@@ -154,6 +155,18 @@ class Character(models.Model):
     @property
     def actions(self):
         return 1 + ((self.quickness + self.deftness) / 2)
+
+    @property
+    def combat_walking_range(self):
+        return self.quickness
+
+    @property
+    def combat_running_range(self):
+        return self.combat_walking_range * 2
+
+    @property
+    def combat_crawling_range(self):
+        return math.ceil(self.combat_walking_range / 2)
 
     @property
     def remaining_template_points(self):

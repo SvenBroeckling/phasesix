@@ -85,6 +85,20 @@ a[data-toggle="popover"] {
     text-decoration: none;
 }
 
+/* Card columns */
+
+@media only screen and (max-width: 768px) {
+    .card-columns {
+        column-count: 1;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
 /* Rules */
 
 

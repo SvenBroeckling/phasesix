@@ -9,8 +9,8 @@
             <div class="card mb-2">
                 <div class="card-header bg-info">
                     {% if may_edit %}
-                        <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash text-danger"></i></a>
-                        <a class="float-right action-link" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times text-warning"></i></a>
+                        <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-trash"></i></a>
+                        <a class="float-right action-link" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i class="fas fa-times"></i></a>
                     {% endif %}
                     <i class="{{ r.riot_gear.extension.fa_icon_class }}" title="{{ r.riot_gear.extension }}"></i>
                     {{ r.riot_gear }}<br>
@@ -30,8 +30,8 @@
                 <div class="card-header bg-danger">
                     {% if may_edit %}
                         {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
-                        <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash text-danger"></i></a>
-                        <a class="float-right action-link ml-1" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times text-warning"></i></a>
+                        <a class="float-right action-link ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash"></i></a>
+                        <a class="float-right action-link ml-1" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times"></i></a>
                         {% if has_valid_wm %}
                         <a
                                 class="modal-trigger float-right {% if not has_valid_wm %}disabled{% endif %}"
@@ -40,7 +40,7 @@
                                 data-toggle="modal"
                                 data-target=".character-modal"
                                 data-modal-title="{% trans 'Add Modification' %}"
-                                href=""><i class="fas fa-plus text-info"></i></a>
+                                href=""><i class="fas fa-plus"></i></a>
                         {% endif %}
                     {% endif %}
                     <i class="{{ weapon.weapon.extension.fa_icon_class }}" title="{{ weapon.weapon.extension }}"></i>
@@ -90,7 +90,7 @@
             <div class="card mb-2">
                 <div class="card-header">
                     {% if may_edit %}
-                        <a class="float-right action-link" title="{% trans 'Remove / Use' %}" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash text-danger"></i></a>
+                        <a class="float-right action-link" title="{% trans 'Remove / Use' %}" href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i class="fas fa-trash"></i></a>
                     {% endif %}
                     <i class="{{ ci.item.extension.fa_icon_class }}" title="{{ ci.item.extension }}"></i>
                     {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}<br>

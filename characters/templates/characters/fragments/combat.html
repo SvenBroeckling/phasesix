@@ -3,45 +3,7 @@
 
 {% block fragment %}
 <div class="row">
-    <div class="col-md-3">
-        <table class="table">
-            {% for skill in object.characterskill_set.combat_skills %}
-                <tr>
-                    <td>{{ skill.skill }}</td>
-                    <td class="text-right">{% color_value_span skill.value 6 %}</td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <td>{% trans 'Quickness' %}</td>
-                <td class="text-right">{% color_value_span object.quickness 6 %}</td>
-            </tr>
-        </table>
-
-        <div class="card">
-            <div class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <div class="h4">{% trans "Attack Roll" %}</div>
-                    <div class="text-muted ml-4">7 - {% trans 'Skill' %} - {% trans 'Weapon Accuracy' %}</div>
-                </li>
-                <li class="list-group-item">
-                    <div class="h4">{% trans 'Cover Roll' %}</div>
-                    <div class="text-muted ml-4">
-                    4+ - {% trans 'Mostly covered' %}<br>
-                    5+ - {% trans 'Half cover or prone' %}<br>
-                    6+ - {% trans 'Minimal cover' %}
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="h4">{% trans 'Armor roll' %}</div>
-                    <div class="text-muted ml-4">
-                        7 - {% trans 'Armor value' %} + {% trans 'penetration' %}
-                    </div>
-                </li>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-9 mb-4">
+    <div class="col-12 col-xl-9 mb-4">
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -115,17 +77,90 @@
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td>
-                        -<br>
-                        {% trans '1m' %}
-                    </td>
+                    <td></td>
                     <td></td>
                     <td>
-                        {% trans '1 Meter' %}
+                        {% color_value_span object.combat_walking_range 4 %} {% trans 'Meter' %}
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <i class="fas fa-user-shield text-warning"></i> {% trans "Run" %}<br>
+                        <small>{% trans 'Movement' %}</small>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        {% color_value_span object.combat_running_range 4 %} {% trans 'Meter' %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fas fa-user-shield text-warning"></i> {% trans "Crawl" %}<br>
+                        <small>{% trans 'Movement' %}</small>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        {% color_value_span object.combat_crawling_range 4 %} {% trans 'Meter' %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fas fa-user-shield text-warning"></i> {% trans "Change Stance" %}<br>
+                        <small>{% trans 'Movement' %}</small>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-3">
+        <div class="row">
+            <div class="col-md-6 col-xl-12">
+                <table class="table">
+                    {% for skill in object.characterskill_set.combat_skills %}
+                        <tr>
+                            <td>{{ skill.skill }}</td>
+                            <td class="text-right">{% color_value_span skill.value 6 %}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>{% trans 'Quickness' %}</td>
+                        <td class="text-right">{% color_value_span object.quickness 6 %}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-6 col-xl-12">
+                <div class="card mb-5">
+                    <div class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="h4">{% trans "Attack Roll" %}</div>
+                            <div class="text-muted ml-4">7 - {% trans 'Skill' %} - {% trans 'Weapon Accuracy' %}</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="h4">{% trans 'Cover Roll' %}</div>
+                            <div class="text-muted ml-4">
+                                4+ - {% trans 'Mostly covered' %}<br>
+                                5+ - {% trans 'Half cover or prone' %}<br>
+                                6+ - {% trans 'Minimal cover' %}
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="h4">{% trans 'Armor roll' %}</div>
+                            <div class="text-muted ml-4">
+                                7 - {% trans 'Armor value' %} + {% trans 'penetration' %}
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
