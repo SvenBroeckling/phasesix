@@ -154,7 +154,7 @@ class Character(models.Model):
 
     @property
     def actions(self):
-        return 1 + ((self.quickness + self.deftness) / 2)
+        return 1 + math.ceil((self.quickness + self.deftness) / 2)
 
     @property
     def combat_walking_range(self):
