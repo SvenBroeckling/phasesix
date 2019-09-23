@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-15 12:35+0000\n"
-"PO-Revision-Date: 2019-09-15 14:35+0200\n"
+"POT-Creation-Date: 2019-09-23 22:25+0000\n"
+"PO-Revision-Date: 2019-09-24 00:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -149,7 +149,7 @@ msgid "wounds"
 msgstr "Wunden"
 
 #: armory/models.py:134
-#: characters/templates/characters/fragments/combat.html:158
+#: characters/templates/characters/fragments/combat.html:174
 msgid "penetration"
 msgstr "Durchschlag"
 
@@ -415,42 +415,32 @@ msgid "Combat Sim"
 msgstr "CombatSim"
 
 #: characters/templates/base.html:79
-#, fuzzy
-#| msgid "Templates"
 msgid "Template Grid"
-msgstr "Schablonen"
+msgstr "Schablonengrid"
 
 #: characters/templates/base.html:80
-#, fuzzy
-#| msgid "lineage"
 msgid "Lineage Grid"
-msgstr "Abstammung"
+msgstr "Abstammungsgrid"
 
 #: characters/templates/base.html:81
-#, fuzzy
-#| msgid "Skill"
 msgid "Skill Grid"
-msgstr "Fertigkeit"
+msgstr "Fertigkeitsgrid"
 
 #: characters/templates/base.html:82
 msgid "Item Grid"
-msgstr ""
+msgstr "Gegenstandsgrid"
 
 #: characters/templates/base.html:83
-#, fuzzy
-#| msgid "Weapon"
 msgid "Weapon Grid"
-msgstr "Waffe"
+msgstr "Waffengrid"
 
 #: characters/templates/base.html:84
 msgid "Weapon Mod Grid"
-msgstr ""
+msgstr "Waffenmodifikationsgrid"
 
 #: characters/templates/base.html:85
-#, fuzzy
-#| msgid "Riot gear"
 msgid "Riot Gear Grid"
-msgstr "Rüstung"
+msgstr "Rüstungsgrid"
 
 #: characters/templates/base.html:88
 msgid "Logout"
@@ -463,23 +453,23 @@ msgstr "Anmelden"
 #: characters/templates/characters/_add_items.html:57
 #: characters/templates/characters/_add_riot_gear.html:39
 #: characters/templates/characters/_add_weapons.html:71
-#: characters/templates/characters/fragments/gear.html:21
-#: characters/templates/characters/fragments/gear.html:66
-#: characters/templates/characters/fragments/gear.html:101
+#: characters/templates/characters/fragments/gear.html:30
+#: characters/templates/characters/fragments/gear.html:75
+#: characters/templates/characters/fragments/gear.html:110
 msgid "Concealment"
 msgstr "Verborgenheit"
 
 #: characters/templates/characters/_add_items.html:58
 #: characters/templates/characters/_add_riot_gear.html:40
 #: characters/templates/characters/_add_weapons.html:72
-#: characters/templates/characters/fragments/gear.html:22
-#: characters/templates/characters/fragments/gear.html:67
-#: characters/templates/characters/fragments/gear.html:102
+#: characters/templates/characters/fragments/gear.html:31
+#: characters/templates/characters/fragments/gear.html:76
+#: characters/templates/characters/fragments/gear.html:111
 msgid "Weight"
 msgstr "Gewicht"
 
 #: characters/templates/characters/_add_items.html:59
-#: characters/templates/characters/fragments/gear.html:103
+#: characters/templates/characters/fragments/gear.html:112
 msgid "Value"
 msgstr "Wert"
 
@@ -487,17 +477,17 @@ msgstr "Wert"
 #: characters/templates/characters/_add_riot_gear.html:44
 #: characters/templates/characters/_add_weapon_mod.html:60
 #: characters/templates/characters/_add_weapons.html:83
-#: characters/templates/characters/_reputation.html:99
+#: characters/templates/characters/fragments/advancement.html:29
 msgid "Added"
 msgstr "Hinzugefügt"
 
 #: characters/templates/characters/_add_items.html:63
-#: characters/templates/characters/character_detail.html:119
+#: characters/templates/characters/character_detail.html:140
 msgid "Add item"
 msgstr "Gegenstand hinzufügen"
 
 #: characters/templates/characters/_add_riot_gear.html:38
-#: characters/templates/characters/fragments/gear.html:20
+#: characters/templates/characters/fragments/gear.html:29
 #: gmtools/templates/gmtools/combat_sim_results.html:11
 #: gmtools/templates/gmtools/combat_sim_results.html:26
 msgid "Protection"
@@ -512,46 +502,46 @@ msgid "Add modification"
 msgstr "Modifikation hinzufügen"
 
 #: characters/templates/characters/_add_weapons.html:58
-#: characters/templates/characters/fragments/gear.html:53
+#: characters/templates/characters/fragments/gear.html:62
 msgid "Attacks / Action"
 msgstr "Angriffe pro Aktion"
 
 #: characters/templates/characters/_add_weapons.html:59
-#: characters/templates/characters/fragments/gear.html:54
+#: characters/templates/characters/fragments/gear.html:63
 msgid "Accuracy"
 msgstr "Genauigkeit"
 
 #: characters/templates/characters/_add_weapons.html:60
 #: characters/templates/characters/fragments/combat.html:21
-#: characters/templates/characters/fragments/gear.html:55
+#: characters/templates/characters/fragments/gear.html:64
 msgid "Penetration"
 msgstr "Durchschlag"
 
 #: characters/templates/characters/_add_weapons.html:61
-#: characters/templates/characters/fragments/gear.html:56
+#: characters/templates/characters/fragments/gear.html:65
 #: gmtools/templates/gmtools/combat_sim_results.html:10
 #: gmtools/templates/gmtools/combat_sim_results.html:25
 msgid "Wounds"
 msgstr "Wunden"
 
 #: characters/templates/characters/_add_weapons.html:63
-#: characters/templates/characters/fragments/gear.html:58
+#: characters/templates/characters/fragments/gear.html:67
 msgid "Reload actions"
 msgstr "Nachladeaktionen"
 
 #: characters/templates/characters/_add_weapons.html:64
-#: characters/templates/characters/fragments/gear.html:59
+#: characters/templates/characters/fragments/gear.html:68
 msgid "Recoil control"
 msgstr "Rückstoßkontrolle"
 
 #: characters/templates/characters/_add_weapons.html:66
 #: characters/templates/characters/fragments/combat.html:24
-#: characters/templates/characters/fragments/gear.html:61
+#: characters/templates/characters/fragments/gear.html:70
 msgid "Range"
 msgstr "Reichweite"
 
 #: characters/templates/characters/_add_weapons.html:74
-#: characters/templates/characters/fragments/gear.html:69
+#: characters/templates/characters/fragments/gear.html:78
 msgid "Capacity"
 msgstr "Kapazität"
 
@@ -563,97 +553,55 @@ msgstr "Waffe hinzufügen"
 msgid "Save"
 msgstr "Speichern"
 
-#: characters/templates/characters/_reputation.html:81
-msgid ""
-"\n"
-"                        Reputation represents the characters degree of "
-"popularity. Reputation may be\n"
-"                        spent to get new character templates.\n"
-"                    "
-msgstr ""
-"\n"
-"\tReputation stellt die Bekanntheit des Charakters dar. Reputation kann\n"
-"\tausgegeben werden um neue Charakterschablonen hinzuzufügen."
-
-#: characters/templates/characters/_reputation.html:87
-msgid ""
-"\n"
-"                        The game master distributes reputation after each "
-"game session and for\n"
-"                        special events.\n"
-"                    "
-msgstr ""
-"\n"
-"\tDer Spielleiter verteilt Reputation nach jeder Spielsitzung und für\n"
-"\tbesondere Anlässe."
-
-#: characters/templates/characters/_reputation.html:114
+#: characters/templates/characters/_reputation.html:63
 msgid "Select Template for Reputation?"
 msgstr "Schablone für Reputation auswählen?"
 
-#: characters/templates/characters/character_detail.html:93
-#: characters/templates/characters/character_detail.html:94
+#: characters/templates/characters/character_detail.html:114
+#: characters/templates/characters/character_detail.html:115
 msgid "Name / Images"
 msgstr "Name / Bilder"
 
-#: characters/templates/characters/character_detail.html:96
+#: characters/templates/characters/character_detail.html:117
 msgid "Heal Wound"
 msgstr "Wunde heilen"
 
-#: characters/templates/characters/character_detail.html:97
+#: characters/templates/characters/character_detail.html:118
 msgid "Take Damage"
 msgstr "Schaden nehmen"
 
-#: characters/templates/characters/character_detail.html:98
+#: characters/templates/characters/character_detail.html:119
 msgid "Get Boost"
 msgstr "Boost hinzufügen"
 
-#: characters/templates/characters/character_detail.html:105
-#: characters/templates/characters/character_detail.html:106
+#: characters/templates/characters/character_detail.html:126
+#: characters/templates/characters/character_detail.html:127
 msgid "Add Armor"
 msgstr "Rüstung hinzufügen"
 
-#: characters/templates/characters/character_detail.html:112
-#: characters/templates/characters/character_detail.html:113
+#: characters/templates/characters/character_detail.html:133
+#: characters/templates/characters/character_detail.html:134
 msgid "Add Weapon"
 msgstr "Waffe hinzufügen"
 
-#: characters/templates/characters/character_detail.html:117
-#: characters/templates/characters/character_detail.html:121
+#: characters/templates/characters/character_detail.html:138
+#: characters/templates/characters/character_detail.html:142
 msgid "Add Item"
 msgstr "Gegenstand hinzufügen"
 
-#: characters/templates/characters/character_detail.html:124
+#: characters/templates/characters/character_detail.html:145
 msgid "Delete"
 msgstr "Löschen"
 
-#: characters/templates/characters/character_detail.html:153
+#: characters/templates/characters/character_detail.html:174
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/characters/character_detail.html:157
+#: characters/templates/characters/character_detail.html:178
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/characters/character_detail.html:169
-msgid "Character"
-msgstr "Charakter"
-
-#: characters/templates/characters/character_detail.html:171
-#: characters/templates/characters/fragments/gear.html:5
-msgid "Gear"
-msgstr "Ausrüstung"
-
-#: characters/templates/characters/character_detail.html:173
-msgid "Combat"
-msgstr "Kampf"
-
-#: characters/templates/characters/character_detail.html:175
-#: characters/templates/characters/fragments/advancement.html:5
-msgid "Background"
-msgstr "Werdegang"
-
-#: characters/templates/characters/character_detail.html:184
+#: characters/templates/characters/character_detail.html:193
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -740,6 +688,70 @@ msgstr "Charakter fertigstellen"
 msgid "Draft Templates"
 msgstr "Schablonen"
 
+#: characters/templates/characters/fragments/advancement.html:7
+#: characters/templates/characters/fragments/advancement.html:53
+msgid "Reputation"
+msgstr "Reputation"
+
+#: characters/templates/characters/fragments/advancement.html:11
+msgid ""
+"\n"
+"                            Reputation represents the characters degree of "
+"popularity. Reputation may be\n"
+"                            spent to get new character templates.\n"
+"                        "
+msgstr ""
+"\n"
+"\tReputation stellt die Bekanntheit des Charakters dar. Reputation kann\n"
+"\tausgegeben werden um neue Charakterschablonen hinzuzufügen."
+
+#: characters/templates/characters/fragments/advancement.html:17
+msgid ""
+"\n"
+"                            The game master distributes reputation after "
+"each game session and for\n"
+"                            special events.\n"
+"                        "
+msgstr ""
+"\n"
+"\tDer Spielleiter verteilt Reputation nach jeder Spielsitzung und für\n"
+"\tbesondere Anlässe."
+
+#: characters/templates/characters/fragments/advancement.html:38
+msgid "Advancement"
+msgstr "Weiterentwicklung"
+
+#: characters/templates/characters/fragments/advancement.html:43
+msgid ""
+"\n"
+"                            You have unspent reputation points. Use them to "
+"add new templates to your\n"
+"                            character and advance in your professions.\n"
+"                        "
+msgstr ""
+"\n"
+"Du hast verfügbare Reputationspunkte. Benutze sie um neue "
+"Charakterschablonen zu\n"
+"deinem Charakter hinzuzufügen."
+
+#: characters/templates/characters/fragments/advancement.html:55
+msgid "Add character templates"
+msgstr "Charakterschablonen hinzufügen"
+
+#: characters/templates/characters/fragments/advancement.html:61
+msgid ""
+"\n"
+"                                You don't have unspent reputation points.\n"
+"                            "
+msgstr ""
+"\n"
+"Du hast keine verfügbaren Reputationspunkte."
+
+#: characters/templates/characters/fragments/advancement.html:73
+#: characters/templates/characters/fragments/menu.html:21
+msgid "Background"
+msgstr "Werdegang"
+
 #: characters/templates/characters/fragments/character.html:8
 msgid "Persona"
 msgstr "Persona"
@@ -793,7 +805,7 @@ msgid "Resistance"
 msgstr "Resistenz"
 
 #: characters/templates/characters/fragments/character.html:61
-#: characters/templates/characters/fragments/combat.html:134
+#: characters/templates/characters/fragments/combat.html:150
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
@@ -802,10 +814,12 @@ msgid "Dice"
 msgstr "Würfel"
 
 #: characters/templates/characters/fragments/character.html:71
+#: characters/templates/characters/fragments/combat.html:132
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
 #: characters/templates/characters/fragments/character.html:75
+#: characters/templates/characters/fragments/combat.html:136
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
@@ -843,8 +857,8 @@ msgid "Time"
 msgstr "Zeit"
 
 #: characters/templates/characters/fragments/combat.html:20
-#: characters/templates/characters/fragments/gear.html:13
-#: characters/templates/characters/fragments/gear.html:34
+#: characters/templates/characters/fragments/gear.html:22
+#: characters/templates/characters/fragments/gear.html:43
 msgid "Damage"
 msgstr "Schaden"
 
@@ -889,81 +903,103 @@ msgstr "Robben"
 msgid "Change Stance"
 msgstr "Stellung ändern"
 
-#: characters/templates/characters/fragments/combat.html:144
+#: characters/templates/characters/fragments/combat.html:128
+msgid "Actions"
+msgstr "Aktionen"
+
+#: characters/templates/characters/fragments/combat.html:160
 msgid "Attack Roll"
 msgstr "Angriffswurf"
 
-#: characters/templates/characters/fragments/combat.html:145
+#: characters/templates/characters/fragments/combat.html:161
 #: rules/templates/rules/_template_widget.html:24
 msgid "Skill"
 msgstr "Fertigkeit"
 
-#: characters/templates/characters/fragments/combat.html:145
+#: characters/templates/characters/fragments/combat.html:161
 msgid "Weapon Accuracy"
 msgstr "Waffengenauigkeit"
 
-#: characters/templates/characters/fragments/combat.html:148
+#: characters/templates/characters/fragments/combat.html:164
 msgid "Cover Roll"
 msgstr "Deckungswurf"
 
-#: characters/templates/characters/fragments/combat.html:150
+#: characters/templates/characters/fragments/combat.html:166
 msgid "Mostly covered"
 msgstr "Größtenteils verdeckt"
 
-#: characters/templates/characters/fragments/combat.html:151
+#: characters/templates/characters/fragments/combat.html:167
 msgid "Half cover or prone"
 msgstr "Halbe Deckung oder liegend"
 
-#: characters/templates/characters/fragments/combat.html:152
+#: characters/templates/characters/fragments/combat.html:168
 msgid "Minimal cover"
 msgstr "Minimale Deckung"
 
-#: characters/templates/characters/fragments/combat.html:156
+#: characters/templates/characters/fragments/combat.html:172
 msgid "Armor roll"
 msgstr "Rüstungswurf"
 
-#: characters/templates/characters/fragments/combat.html:158
+#: characters/templates/characters/fragments/combat.html:174
 msgid "Armor value"
 msgstr "Rüstungswert"
 
+#: characters/templates/characters/fragments/gear.html:5
+#: characters/templates/characters/fragments/menu.html:9
+msgid "Gear"
+msgstr "Ausrüstung"
+
+#: characters/templates/characters/fragments/gear.html:11
+msgid "No gear yet"
+msgstr "Noch keine Ausrüstung"
+
 #: characters/templates/characters/fragments/gear.html:12
-#: characters/templates/characters/fragments/gear.html:33
+msgid "Add some with the character menu."
+msgstr "Füge einige mit dem Charaktermenü hinzu."
+
+#: characters/templates/characters/fragments/gear.html:21
+#: characters/templates/characters/fragments/gear.html:42
 msgid "Remove"
 msgstr "Entfernen"
 
-#: characters/templates/characters/fragments/gear.html:17
+#: characters/templates/characters/fragments/gear.html:26
 msgid "Riot Gear"
 msgstr "Rüstung"
 
-#: characters/templates/characters/fragments/gear.html:23
-#: characters/templates/characters/fragments/gear.html:72
+#: characters/templates/characters/fragments/gear.html:32
+#: characters/templates/characters/fragments/gear.html:81
 msgid "Condition"
 msgstr "Zustand"
 
-#: characters/templates/characters/fragments/gear.html:39
-#: characters/templates/characters/fragments/gear.html:42
+#: characters/templates/characters/fragments/gear.html:48
+#: characters/templates/characters/fragments/gear.html:51
 msgid "Add Modification"
 msgstr "Modifikatoren hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:93
+#: characters/templates/characters/fragments/gear.html:102
 msgid "Remove / Use"
 msgstr "Entfernen / Benutzen"
 
-#: characters/templates/characters/fragments/reputation.html:10
-#: characters/templates/characters/fragments/reputation.html:12
-#: characters/templates/characters/fragments/reputation.html:16
-msgid "Reputation"
-msgstr "Reputation"
-
-#: characters/templates/characters/fragments/reputation.html:26
+#: characters/templates/characters/fragments/magic.html:11
 msgid "Create a spell"
 msgstr "Erstelle einen Zauber"
 
-#: characters/templates/characters/fragments/reputation.html:28
-#: characters/templates/characters/fragments/reputation.html:32
+#: characters/templates/characters/fragments/magic.html:13
 #: magic/templates/magic/_spell_summary.html:13
 msgid "Spell Points"
 msgstr "Zauberpunkte"
+
+#: characters/templates/characters/fragments/menu.html:7
+msgid "Character"
+msgstr "Charakter"
+
+#: characters/templates/characters/fragments/menu.html:11
+msgid "Combat"
+msgstr "Kampf"
+
+#: characters/templates/characters/fragments/menu.html:14
+msgid "Magic"
+msgstr "Magie"
 
 #: characters/templates/characters/index.html:11
 msgid ""
@@ -1736,9 +1772,6 @@ msgstr "Konto erstellen"
 #~ msgid "Change"
 #~ msgstr "Ändern"
 
-#~ msgid "No armor yet"
-#~ msgstr "Noch keine Rüstung"
-
 #~ msgid "This character has no amor yet."
 #~ msgstr "Dieser Charakter hat noch keine Rüstung."
 
@@ -1769,9 +1802,6 @@ msgstr "Konto erstellen"
 #~ msgid "Practical Skills"
 #~ msgstr "Praxisfertigkeiten"
 
-#~ msgid "Actions"
-#~ msgstr "Aktionen"
-
 #~ msgid "Bonus"
 #~ msgstr "Bonus"
 
@@ -1789,9 +1819,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "Add"
 #~ msgstr "Hinzufügen"
-
-#~ msgid "Advancement"
-#~ msgstr "Weiterentwicklung"
 
 #~ msgid "Bonus Action"
 #~ msgstr "Bonusaktion"
