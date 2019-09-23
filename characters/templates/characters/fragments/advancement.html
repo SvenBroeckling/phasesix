@@ -2,10 +2,80 @@
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
-    <h2 class="mb-2">{% trans 'Background' %}</h2>
-    <div class="card-columns">
-        {% for template in character.charactertemplate_set.all %}
-            {% template_widget template.template %}
-        {% endfor %}
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-2">{% trans 'Reputation' %}</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                        {% blocktrans %}
+                            Reputation represents the characters degree of popularity. Reputation may be
+                            spent to get new character templates.
+                        {% endblocktrans %}
+                    </p>
+                    <p>
+                        {% blocktrans %}
+                            The game master distributes reputation after each game session and for
+                            special events.
+                        {% endblocktrans %}
+                    </p>
+                    <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post" class="add-reputation-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="operation" value="add">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Reputation"
+                                   aria-label="Reputation" name="reputation">
+                            <div class="input-group-append">
+                                <button type="submit" name="add_reputation" class="btn btn-dark" type="button" data-flash-message="{% trans 'Added' %}"><i class="fa fa-eye text-warning"></i> Hinzufügen</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h2>{% trans 'Advancement' %}</h2>
+            <div class="card">
+                <div class="card-body">
+                    {% if character.reputation_available %}
+                        <p>
+                        {% blocktrans %}
+                            You have unspent reputation points. Use them to add new templates to your
+                            character and advance in your professions.
+                        {% endblocktrans %}
+                        </p>
+                        {% if may_edit %}
+                            <button
+                                    class="btn btn-dark btn-block mb-3 mt-3 modal-trigger"
+                                    data-toggle="modal"
+                                    data-target=".character-modal"
+                                    data-modal-title="{% trans 'Reputation' %}"
+                                    data-url="{% url 'characters:xhr_reputation' object.id %}">
+                            {% trans 'Add character templates' %}
+                            </button>
+                        {% endif%}
+
+                    {% else %}
+                        <p>
+                            {% blocktrans %}
+                                You don't have unspent reputation points.
+                            {% endblocktrans %}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-2 mt-3">{% trans 'Background' %}</h2>
+            <div class="card-columns">
+                {% for template in character.charactertemplate_set.all %}
+                    {% template_widget template.template %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}
