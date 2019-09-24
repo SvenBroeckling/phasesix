@@ -2,6 +2,8 @@
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
+
+    {% if may_edit %}
     <div class="row">
         <div class="col-md-6">
             <h2 class="mb-2">{% trans 'Reputation' %}</h2>
@@ -67,6 +69,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-12">
