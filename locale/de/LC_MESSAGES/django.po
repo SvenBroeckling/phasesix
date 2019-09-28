@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-23 22:25+0000\n"
-"PO-Revision-Date: 2019-09-24 00:26+0200\n"
+"POT-Creation-Date: 2019-09-28 19:21+0000\n"
+"PO-Revision-Date: 2019-09-28 21:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -20,8 +20,7 @@ msgstr ""
 
 #: armory/models.py:21 armory/models.py:38 armory/models.py:71
 #: armory/models.py:102 armory/models.py:126 armory/models.py:178
-#: armory/models.py:200 armory/models.py:236 campaigns/models.py:6
-#: campaigns/models.py:29 campaigns/models.py:37 characters/models.py:18
+#: armory/models.py:200 armory/models.py:236 characters/models.py:18
 #: forum/models.py:33 forum/models.py:51 magic/models.py:9 magic/models.py:25
 #: magic/models.py:41 magic/models.py:57 magic/models.py:73 magic/models.py:89
 #: magic/models.py:105 magic/models.py:121 magic/models.py:142
@@ -78,9 +77,8 @@ msgstr "Preis"
 msgid "concealment"
 msgstr "Verborgenheit"
 
-#: armory/models.py:49 armory/models.py:148 campaigns/models.py:8
-#: campaigns/models.py:39 characters/models.py:20 rulebook/models.py:16
-#: rules/models.py:27
+#: armory/models.py:49 armory/models.py:148 characters/models.py:20
+#: rulebook/models.py:16 rules/models.py:27
 msgid "image"
 msgstr "Bild"
 
@@ -218,22 +216,6 @@ msgstr "Explosivschutz"
 msgid "riot gear"
 msgstr "Rüstung"
 
-#: campaigns/models.py:11 characters/models.py:23
-msgid "backdrop image"
-msgstr "Hintergrundbild"
-
-#: campaigns/models.py:13
-msgid "abstract"
-msgstr "Zusammenfassung"
-
-#: campaigns/models.py:17 characters/models.py:32 magic/models.py:184
-msgid "created by"
-msgstr "Erzeugt von"
-
-#: campaigns/models.py:30 forum/models.py:82 rulebook/models.py:17
-msgid "text"
-msgstr "Text"
-
 #: characters/feeds.py:15
 msgid "Phase Six latest additions"
 msgstr "Phase Six letzte Neuerungen"
@@ -258,9 +240,17 @@ msgstr "Epoche"
 msgid "Extensions"
 msgstr "Erweiterungen"
 
+#: characters/models.py:23
+msgid "backdrop image"
+msgstr "Hintergrundbild"
+
 #: characters/models.py:28
 msgid "creation mode"
 msgstr "Erschaffungsmodus"
+
+#: characters/models.py:32 magic/models.py:184
+msgid "created by"
+msgstr "Erzeugt von"
 
 #: characters/models.py:36
 msgid "Characters without user will be cleaned daily."
@@ -477,7 +467,7 @@ msgstr "Wert"
 #: characters/templates/characters/_add_riot_gear.html:44
 #: characters/templates/characters/_add_weapon_mod.html:60
 #: characters/templates/characters/_add_weapons.html:83
-#: characters/templates/characters/fragments/advancement.html:29
+#: characters/templates/characters/fragments/advancement.html:33
 msgid "Added"
 msgstr "Hinzugefügt"
 
@@ -688,66 +678,64 @@ msgstr "Charakter fertigstellen"
 msgid "Draft Templates"
 msgstr "Schablonen"
 
-#: characters/templates/characters/fragments/advancement.html:7
-#: characters/templates/characters/fragments/advancement.html:53
+#: characters/templates/characters/fragments/advancement.html:9
+#: characters/templates/characters/fragments/advancement.html:51
 msgid "Reputation"
 msgstr "Reputation"
 
-#: characters/templates/characters/fragments/advancement.html:11
+#: characters/templates/characters/fragments/advancement.html:13
 msgid ""
 "\n"
-"                            Reputation represents the characters degree of "
-"popularity. Reputation may be\n"
-"                            spent to get new character templates.\n"
-"                        "
+"                                Reputation represents the characters degree "
+"of popularity. Reputation may be\n"
+"                                spent to get new character templates.\n"
+"                            "
 msgstr ""
 "\n"
 "\tReputation stellt die Bekanntheit des Charakters dar. Reputation kann\n"
 "\tausgegeben werden um neue Charakterschablonen hinzuzufügen."
 
-#: characters/templates/characters/fragments/advancement.html:17
+#: characters/templates/characters/fragments/advancement.html:19
 msgid ""
 "\n"
-"                            The game master distributes reputation after "
+"                                The game master distributes reputation after "
 "each game session and for\n"
-"                            special events.\n"
-"                        "
+"                                special events.\n"
+"                            "
 msgstr ""
 "\n"
 "\tDer Spielleiter verteilt Reputation nach jeder Spielsitzung und für\n"
 "\tbesondere Anlässe."
 
-#: characters/templates/characters/fragments/advancement.html:38
-msgid "Advancement"
-msgstr "Weiterentwicklung"
-
-#: characters/templates/characters/fragments/advancement.html:43
+#: characters/templates/characters/fragments/advancement.html:41
 msgid ""
 "\n"
-"                            You have unspent reputation points. Use them to "
-"add new templates to your\n"
-"                            character and advance in your professions.\n"
-"                        "
+"                                    You have unspent reputation points. Use "
+"them to add new templates to your\n"
+"                                    character and advance in your "
+"professions.\n"
+"                                "
 msgstr ""
 "\n"
 "Du hast verfügbare Reputationspunkte. Benutze sie um neue "
 "Charakterschablonen zu\n"
 "deinem Charakter hinzuzufügen."
 
-#: characters/templates/characters/fragments/advancement.html:55
+#: characters/templates/characters/fragments/advancement.html:53
 msgid "Add character templates"
 msgstr "Charakterschablonen hinzufügen"
 
-#: characters/templates/characters/fragments/advancement.html:61
+#: characters/templates/characters/fragments/advancement.html:59
 msgid ""
 "\n"
-"                                You don't have unspent reputation points.\n"
-"                            "
+"                                    You don't have unspent reputation "
+"points.\n"
+"                                "
 msgstr ""
 "\n"
 "Du hast keine verfügbaren Reputationspunkte."
 
-#: characters/templates/characters/fragments/advancement.html:73
+#: characters/templates/characters/fragments/advancement.html:72
 #: characters/templates/characters/fragments/menu.html:21
 msgid "Background"
 msgstr "Werdegang"
@@ -1088,6 +1076,10 @@ msgstr "Nur Mitarbeiter"
 #, python-format
 msgid "PhaseSix Forum: %(user)s answered to the thread %(thread)s"
 msgstr "PhaseSix Forum: %(user)s hat auf das Thema %(thread)s geantwortet"
+
+#: forum/models.py:82 rulebook/models.py:17
+msgid "text"
+msgstr "Text"
 
 #: forum/templates/forum/board_detail.html:35
 #: forum/templates/forum/thread_detail.html:42
@@ -1756,6 +1748,12 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "abstract"
+#~ msgstr "Zusammenfassung"
+
+#~ msgid "Advancement"
+#~ msgstr "Weiterentwicklung"
 
 #~ msgid "Take extra Action"
 #~ msgstr "Extra Aktion"
