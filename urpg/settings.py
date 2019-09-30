@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'sorl.thumbnail',
     'bootstrap4',
+    'compressor',
     'simplemde',
     'inline_admin_panel',
     'gmtools',
@@ -62,6 +63,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILE_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 ]
 
 WSGI_APPLICATION = 'urpg.wsgi.application'
