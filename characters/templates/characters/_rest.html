@@ -14,18 +14,16 @@
                 max="10"
                 min="3"
                 value="3"
+                data-slider-value="3"
                 data-slider-ticks="[3, 4, 5, 6, 7, 8, 9, 10]"
                 data-slider-ticks-labels='["3", "4", "5", "6", "7", "8", "9", "10"]'>
         <br>
         <button class="btn btn-primary">{% trans 'Take a rest' %}</button>
         <br>
         <div class="rest-results mt-4">
-            <span class="d-none" data-val="3"><i class="fas fa-heart fa-4x text-info"></i></span>
+            <span data-val="3"><i class="fas fa-heart fa-4x text-info"></i></span>
             {% if object.extension_enabled.horror %}
-                <span class="d-none fa-stack fa-2x" data-val="4">
-                    <i class="fas fa-bug fa-stack-1x text-success"></i>
-                    <i class="fas fa-ban fa-stack-2x text-danger"></i>
-                </span>
+                <span class="d-none" data-val="4"><i class="fas fa-bug fa-4x text-success"></i></span>
             {% endif %}
             {% if object.extension_enabled.magic %}
                 <span class="d-none" data-val="4"><i class="fas fa-magic fa-4x text-warning"></i></span>
@@ -36,10 +34,7 @@
             {% endif %}
             <span class="d-none" data-val="8"><i class="fas fa-heart fa-4x text-info"></i></span>
             {% if object.extension_enabled.horror %}
-                <span class="d-none fa-stack fa-2x" data-val="8">
-                    <i class="fas fa-bug fa-stack-1x text-success"></i>
-                    <i class="fas fa-ban fa-stack-2x text-danger"></i>
-                </span>
+                <span class="d-none" data-val="8"><i class="fas fa-bug fa-4x text-success"></i></span>
             {% endif %}
             {% if object.extension_enabled.magic %}
                 <span class="d-none" data-val="8"><i class="fas fa-magic fa-4x text-warning"></i></span>
@@ -65,6 +60,7 @@
             $('#rest-hours-input').slider({
                 ticks: [3, 4, 5, 6, 7, 8, 9, 10],
                 ticks_labels: ["3", "4", "5", "6", "7", "8", "9", "10"],
+                value: 3
             })
         }, 300);
 
@@ -77,6 +73,6 @@
                     $(this).addClass('d-none');
                 }
             })
-        })
+        });
     })
 </script>
