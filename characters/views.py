@@ -44,6 +44,16 @@ class XhrDetailFragmentView(DetailView):
         return ['characters/fragments/' + self.kwargs['fragment_name'] + '.html']
 
 
+class XhrCharacterRestView(TemplateView):
+    template_name = 'characters/_rest.html'
+
+    def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['object'] = character
+        return context
+
+
 class CharacterModifyHealthView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])

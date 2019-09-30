@@ -14,12 +14,15 @@ urlpatterns = [
         views.XhrDetailFragmentView.as_view(),
         name='xhr_detail_fragment'),
 
+    # health
     url(
         '^health/(?P<pk>\d+)/(?P<mode>\w+)/$',
         views.CharacterModifyHealthView.as_view(),
         name='modify_health'),
-
-    # health
+    url(
+        '^rest/(?P<pk>\d+)/$',
+        views.XhrCharacterRestView.as_view(),
+        name='xhr_rest'),
 
     # new character
     url('^new/$', views.CreateCharacterView.as_view(), name='create_character'),

@@ -108,11 +108,11 @@
                     <div class="dropdown-menu">
                         <a
                                 class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
+                                data-url="{% url 'characters:xhr_rest' pk=object.id %}"
                                 data-toggle="modal"
                                 data-target=".character-modal"
-                                data-modal-title="{% trans 'Name / Images' %}"
-                                href=""><i class="fas fa-image text-info"></i> {% trans 'Name / Images' %}</a>
+                                data-modal-title="{% trans 'Rest' %}"
+                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Rest' %}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i class="fas fa-heart text-danger"></i> {% trans 'Heal Wound' %}</a>
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i class="far fa-heart text-danger"></i> {% trans 'Take Damage' %}</a>
@@ -142,6 +142,13 @@
                                 href=""><i class="fa fa-plus text-info"></i> {% trans 'Add Item' %}</a>
 
                         <div class="dropdown-divider"></div>
+                        <a
+                                class="dropdown-item modal-trigger"
+                                data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
+                                data-toggle="modal"
+                                data-target=".character-modal"
+                                data-modal-title="{% trans 'Name / Images' %}"
+                                href=""><i class="fas fa-image text-info"></i> {% trans 'Name / Images' %}</a>
                         <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> {% trans 'Delete' %}</a>
                     </div>
                 {% endif %}

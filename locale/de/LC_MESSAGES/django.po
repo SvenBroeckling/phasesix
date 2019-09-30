@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-28 19:21+0000\n"
-"PO-Revision-Date: 2019-09-28 21:21+0200\n"
+"POT-Creation-Date: 2019-09-30 12:34+0000\n"
+"PO-Revision-Date: 2019-09-30 14:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -20,7 +20,8 @@ msgstr ""
 
 #: armory/models.py:21 armory/models.py:38 armory/models.py:71
 #: armory/models.py:102 armory/models.py:126 armory/models.py:178
-#: armory/models.py:200 armory/models.py:236 characters/models.py:18
+#: armory/models.py:200 armory/models.py:236 campaigns/models.py:6
+#: campaigns/models.py:29 campaigns/models.py:37 characters/models.py:18
 #: forum/models.py:33 forum/models.py:51 magic/models.py:9 magic/models.py:25
 #: magic/models.py:41 magic/models.py:57 magic/models.py:73 magic/models.py:89
 #: magic/models.py:105 magic/models.py:121 magic/models.py:142
@@ -77,8 +78,9 @@ msgstr "Preis"
 msgid "concealment"
 msgstr "Verborgenheit"
 
-#: armory/models.py:49 armory/models.py:148 characters/models.py:20
-#: rulebook/models.py:16 rules/models.py:27
+#: armory/models.py:49 armory/models.py:148 campaigns/models.py:8
+#: campaigns/models.py:39 characters/models.py:20 rulebook/models.py:16
+#: rules/models.py:27
 msgid "image"
 msgstr "Bild"
 
@@ -216,6 +218,22 @@ msgstr "Explosivschutz"
 msgid "riot gear"
 msgstr "Rüstung"
 
+#: campaigns/models.py:11 characters/models.py:23
+msgid "backdrop image"
+msgstr "Hintergrundbild"
+
+#: campaigns/models.py:13
+msgid "abstract"
+msgstr "Zusammenfassung"
+
+#: campaigns/models.py:17 characters/models.py:32 magic/models.py:184
+msgid "created by"
+msgstr "Erzeugt von"
+
+#: campaigns/models.py:30 forum/models.py:82 rulebook/models.py:17
+msgid "text"
+msgstr "Text"
+
 #: characters/feeds.py:15
 msgid "Phase Six latest additions"
 msgstr "Phase Six letzte Neuerungen"
@@ -240,17 +258,9 @@ msgstr "Epoche"
 msgid "Extensions"
 msgstr "Erweiterungen"
 
-#: characters/models.py:23
-msgid "backdrop image"
-msgstr "Hintergrundbild"
-
 #: characters/models.py:28
 msgid "creation mode"
 msgstr "Erschaffungsmodus"
-
-#: characters/models.py:32 magic/models.py:184
-msgid "created by"
-msgstr "Erzeugt von"
 
 #: characters/models.py:36
 msgid "Characters without user will be cleaned daily."
@@ -364,79 +374,79 @@ msgstr "Zustand"
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/templates/base.html:51
+#: characters/templates/base.html:52
 msgid "Play"
 msgstr "Spielen"
 
-#: characters/templates/base.html:53
+#: characters/templates/base.html:54
 #: characters/templates/characters/character_form.html:11
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/base.html:55
+#: characters/templates/base.html:56
 msgid "Characters"
 msgstr "Charaktere"
 
-#: characters/templates/base.html:56
+#: characters/templates/base.html:57
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:58
+#: characters/templates/base.html:59
 #: characters/templates/characters/create_character_draft.html:75
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:63 forum/templates/forum/board_detail.html:43
+#: characters/templates/base.html:64 forum/templates/forum/board_detail.html:43
 #: forum/templates/forum/index.html:7
 #: forum/templates/forum/thread_detail.html:53
 msgid "Forum"
 msgstr "Forum"
 
-#: characters/templates/base.html:66
+#: characters/templates/base.html:67
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
-#: characters/templates/base.html:76
+#: characters/templates/base.html:77
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:78
+#: characters/templates/base.html:79
 msgid "Combat Sim"
 msgstr "CombatSim"
 
-#: characters/templates/base.html:79
+#: characters/templates/base.html:80
 msgid "Template Grid"
 msgstr "Schablonengrid"
 
-#: characters/templates/base.html:80
+#: characters/templates/base.html:81
 msgid "Lineage Grid"
 msgstr "Abstammungsgrid"
 
-#: characters/templates/base.html:81
+#: characters/templates/base.html:82
 msgid "Skill Grid"
 msgstr "Fertigkeitsgrid"
 
-#: characters/templates/base.html:82
+#: characters/templates/base.html:83
 msgid "Item Grid"
 msgstr "Gegenstandsgrid"
 
-#: characters/templates/base.html:83
+#: characters/templates/base.html:84
 msgid "Weapon Grid"
 msgstr "Waffengrid"
 
-#: characters/templates/base.html:84
+#: characters/templates/base.html:85
 msgid "Weapon Mod Grid"
 msgstr "Waffenmodifikationsgrid"
 
-#: characters/templates/base.html:85
+#: characters/templates/base.html:86
 msgid "Riot Gear Grid"
 msgstr "Rüstungsgrid"
 
-#: characters/templates/base.html:88
+#: characters/templates/base.html:89
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:93 templates/registration/login.html:11
+#: characters/templates/base.html:94 templates/registration/login.html:11
 msgid "Login"
 msgstr "Anmelden"
 
@@ -547,10 +557,27 @@ msgstr "Speichern"
 msgid "Select Template for Reputation?"
 msgstr "Schablone für Reputation auswählen?"
 
+#: characters/templates/characters/_rest.html:6
+msgid ""
+"\n"
+"                Take a rest to refresh your health and endurance. The number "
+"of wounds healed\n"
+"                depends on the length of the rest.\n"
+"            "
+msgstr ""
+"\n"
+"\tMache eine Rast um Wunden zu heilen und dich zu erholen. Die Anzahl der zu "
+"heilenden Wunden\n"
+"\thängt von der Länge der Rast ab."
+
+#: characters/templates/characters/_rest.html:20
+msgid "Take a rest"
+msgstr "Rast"
+
 #: characters/templates/characters/character_detail.html:114
 #: characters/templates/characters/character_detail.html:115
-msgid "Name / Images"
-msgstr "Name / Bilder"
+msgid "Rest"
+msgstr "Rast"
 
 #: characters/templates/characters/character_detail.html:117
 msgid "Heal Wound"
@@ -579,19 +606,24 @@ msgstr "Waffe hinzufügen"
 msgid "Add Item"
 msgstr "Gegenstand hinzufügen"
 
-#: characters/templates/characters/character_detail.html:145
+#: characters/templates/characters/character_detail.html:150
+#: characters/templates/characters/character_detail.html:151
+msgid "Name / Images"
+msgstr "Name / Bilder"
+
+#: characters/templates/characters/character_detail.html:152
 msgid "Delete"
 msgstr "Löschen"
 
-#: characters/templates/characters/character_detail.html:174
+#: characters/templates/characters/character_detail.html:181
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/characters/character_detail.html:178
+#: characters/templates/characters/character_detail.html:185
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/characters/character_detail.html:193
+#: characters/templates/characters/character_detail.html:200
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -1076,10 +1108,6 @@ msgstr "Nur Mitarbeiter"
 #, python-format
 msgid "PhaseSix Forum: %(user)s answered to the thread %(thread)s"
 msgstr "PhaseSix Forum: %(user)s hat auf das Thema %(thread)s geantwortet"
-
-#: forum/models.py:82 rulebook/models.py:17
-msgid "text"
-msgstr "Text"
 
 #: forum/templates/forum/board_detail.html:35
 #: forum/templates/forum/thread_detail.html:42
@@ -1748,9 +1776,6 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
-
-#~ msgid "abstract"
-#~ msgstr "Zusammenfassung"
 
 #~ msgid "Advancement"
 #~ msgstr "Weiterentwicklung"
