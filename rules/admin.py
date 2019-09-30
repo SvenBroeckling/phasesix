@@ -28,6 +28,7 @@ class TemplateCategoryAdmin(admin.ModelAdmin):
 
 class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
+    search_fields = ('name_de', 'name_en')
     list_display = ('name', 'cost', 'category')
     list_filter = ('extensions', 'category')
     list_editable = ('category', 'cost')
