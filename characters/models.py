@@ -77,7 +77,7 @@ class Character(models.Model):
     base_agreeableness = models.IntegerField(_('base agreeableness'), default=1)
     base_neuroticism = models.IntegerField(_('base neuroticism'), default=1)
 
-    shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'))
+    shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
 
     def __str__(self):
         return self.name
