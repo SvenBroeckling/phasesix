@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap4 i18n %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{% url 'campaigns:create' %}" method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <button class="btn btn-primary">{% trans 'Create campaign' %}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

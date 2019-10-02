@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'rulebook',
     'forum',
     'magic',
-#    'campaigns',
+    'campaigns',
 ]
 
 MIDDLEWARE = [

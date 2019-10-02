@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n static thumbnail characters_extras %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'campaigns:create' %}" class="btn btn-primary btn-lg float-right mb-2">{% trans 'Create a campaign' %}</a>
+        </div>
+    </div>
+    <div class="row character-list">
+        {% for object in object_list %}
+            <div class="col-md-3 mb-3">
+                <a href="{{ object.get_absolute_url }}">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            {% if object.image %}
+                                {% thumbnail object.image "120x120" crop="center" as im %}
+                                    <img
+                                            class="img-fluid rounded float-left mr-3"
+                                            src="{{ MEDIA_URL }}{{ im.url }}"
+                                            alt="{{ object.name }}">
+                                {% endthumbnail %}
+                            {% endif %}
+                            <h3>{{ object.name }}</h3>
+                            <small>{{ object.epoch }}</small><br>
+                            {% trans 'GM' %}: {{ object.created_by|default:"" }}<br>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

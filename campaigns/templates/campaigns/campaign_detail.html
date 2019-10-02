@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n thumbnail static %}
+
+{% block title %}{{ object }} - {{ block.super }}{% endblock %}
+
+{% block belownav %}
+    <div
+            class="row campaign-info-row"
+            style="
+                    {% if object.backdrop_image %}
+                        background-image: url({{ object.backdrop_image.url }})
+                    {% else %}
+                        {% if object.epoch.image %}
+                            background-image: url({{ object.epoch.image.url }})
+                        {% else %}
+                            background-color: silver
+                        {% endif %}
+                    {% endif %}">
+
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <div class="{% if may_edit %}dropdown{% endif %}">
+                {% if object.image %}
+                    {% thumbnail object.image "120x120" crop="center" as im %}
+                        <img
+                                {% if may_edit %}data-toggle="dropdown"{% endif %}
+                                class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
+                                src="{{ MEDIA_URL }}{{ im.url }}"
+                                alt="{{ object.name }}">
+                    {% endthumbnail %}
+                {% else %}
+                    <img
+                            class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
+                            {% if may_edit %}data-toggle="dropdown"{% endif %}
+                            width="120" height="120"
+                            src="{% static 'img/silhuette.png' %}"
+                            alt="{{ object.name }}">
+                {% endif %}
+
+                {% if may_edit %}
+                    <div class="dropdown-menu">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="pl-4 text-right">
+                <h3 class="mb-0">{{ object.name }}</h3>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^contact/', TemplateView.as_view(template_name="characters/contact.html"), name="contact"),
     url(r'^', include('characters.urls', namespace='characters')),
+    url(r'campaigns/', include('campaigns.urls', namespace='campaigns')),
     url(r'magic/', include('magic.urls', namespace='magic')),
     url(r'forum/', include('forum.urls', namespace='forum')),
     url(r'rulebook/', include('rulebook.urls', namespace='rulebook')),

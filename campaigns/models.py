@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -18,10 +19,21 @@ class Campaign(models.Model):
         on_delete=models.CASCADE
     )
 
+    epoch = models.ForeignKey(
+        'rules.Extension', limit_choices_to={'is_epoch': True}, on_delete=models.CASCADE,
+        related_name="campaign_epoch_set",
+        verbose_name=_('Epoch')
+    )
     extensions = models.ManyToManyField(
-        'rules.Extension', limit_choices_to={'is_mandatory': False}
+        'rules.Extension', limit_choices_to={'is_mandatory': False, 'is_epoch': False}
     )
     forbidden_templates = models.ManyToManyField('rules.Template')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('campaigns:detail', kwargs={'pk': self.id})
 
 
 class Scene(models.Model):
