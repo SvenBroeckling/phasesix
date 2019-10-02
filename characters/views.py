@@ -19,7 +19,13 @@ class IndexView(TemplateView):
 
 
 class CharacterListView(ListView):
-    model = Character
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            if user.is_staff:
+                return Character.objects.all()
+            return Character.objects.filter(created_by=user)
+        return Character.objects.filter(created_by__isnull=True)
 
 
 class CharacterDetailView(DetailView):
