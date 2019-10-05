@@ -50,4 +50,26 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row mt-4">
+
+        <div class="col-lg-2 col-md-3">
+            <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" data-toggle="pill" href="#v-campaign"
+                   role="tab" aria-controls="v-campaign" aria-selected="true"><i class="fas fa-fw fa-map"></i>&nbsp;{% trans 'Campaign' %}</a>
+            </div>
+        </div>
+
+        <div class="col-lg-10 col-md-9">
+            {% if not object.created_by %}
+                <div class="alert alert-danger" role="alert">
+                    {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
+                </div>
+            {% endif %}
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="v-character" role="tabpanel">
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

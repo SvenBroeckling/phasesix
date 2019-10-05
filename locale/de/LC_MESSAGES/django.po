@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-02 11:34+0000\n"
-"PO-Revision-Date: 2019-10-02 13:34+0200\n"
+"POT-Creation-Date: 2019-10-04 11:14+0000\n"
+"PO-Revision-Date: 2019-10-04 13:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -20,8 +20,8 @@ msgstr ""
 
 #: armory/models.py:21 armory/models.py:38 armory/models.py:71
 #: armory/models.py:102 armory/models.py:126 armory/models.py:178
-#: armory/models.py:200 armory/models.py:236 campaigns/models.py:6
-#: campaigns/models.py:29 campaigns/models.py:37 characters/models.py:18
+#: armory/models.py:200 armory/models.py:236 campaigns/models.py:7
+#: campaigns/models.py:41 campaigns/models.py:49 characters/models.py:18
 #: forum/models.py:33 forum/models.py:51 magic/models.py:9 magic/models.py:25
 #: magic/models.py:41 magic/models.py:57 magic/models.py:73 magic/models.py:89
 #: magic/models.py:105 magic/models.py:121 magic/models.py:142
@@ -78,8 +78,8 @@ msgstr "Preis"
 msgid "concealment"
 msgstr "Verborgenheit"
 
-#: armory/models.py:49 armory/models.py:148 campaigns/models.py:8
-#: campaigns/models.py:39 characters/models.py:20 rulebook/models.py:16
+#: armory/models.py:49 armory/models.py:148 campaigns/models.py:9
+#: campaigns/models.py:51 characters/models.py:20 rulebook/models.py:16
 #: rules/models.py:27
 msgid "image"
 msgstr "Bild"
@@ -218,21 +218,37 @@ msgstr "Explosivschutz"
 msgid "riot gear"
 msgstr "Rüstung"
 
-#: campaigns/models.py:11 characters/models.py:23
+#: campaigns/models.py:12 characters/models.py:23
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
-#: campaigns/models.py:13
+#: campaigns/models.py:14
 msgid "abstract"
 msgstr "Zusammenfassung"
 
-#: campaigns/models.py:17 characters/models.py:32 magic/models.py:184
+#: campaigns/models.py:18 characters/models.py:32 magic/models.py:184
 msgid "created by"
 msgstr "Erzeugt von"
 
-#: campaigns/models.py:30 forum/models.py:82 rulebook/models.py:17
+#: campaigns/models.py:25 characters/forms.py:19
+msgid "Epoch"
+msgstr "Epoche"
+
+#: campaigns/models.py:42 forum/models.py:82 rulebook/models.py:17
 msgid "text"
 msgstr "Text"
+
+#: campaigns/templates/campaigns/campaign_form.html:10
+msgid "Create campaign"
+msgstr "Kampagne erstellen"
+
+#: campaigns/templates/campaigns/campaign_list.html:7
+msgid "Create a campaign"
+msgstr "Erstelle eine Kampagne"
+
+#: campaigns/templates/campaigns/campaign_list.html:26
+msgid "GM"
+msgstr "SL"
 
 #: characters/feeds.py:15
 msgid "Phase Six latest additions"
@@ -249,10 +265,6 @@ msgstr "Phase Six letzte Aktualisierungen"
 #: characters/forms.py:15 forum/forms.py:6
 msgid "Name"
 msgstr "Name"
-
-#: characters/forms.py:19
-msgid "Epoch"
-msgstr "Epoche"
 
 #: characters/forms.py:22
 msgid "Extensions"
@@ -388,65 +400,69 @@ msgid "My Characters"
 msgstr "Meine Charaktere"
 
 #: characters/templates/base.html:59
+msgid "My Campaigns"
+msgstr "Meine Kampagnen"
+
+#: characters/templates/base.html:60
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:61
+#: characters/templates/base.html:62
 #: characters/templates/characters/create_character_draft.html:75
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:66 forum/templates/forum/board_detail.html:43
+#: characters/templates/base.html:67 forum/templates/forum/board_detail.html:43
 #: forum/templates/forum/index.html:7
 #: forum/templates/forum/thread_detail.html:53
 msgid "Forum"
 msgstr "Forum"
 
-#: characters/templates/base.html:69
+#: characters/templates/base.html:70
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
-#: characters/templates/base.html:79
+#: characters/templates/base.html:80
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:81
+#: characters/templates/base.html:82
 msgid "Combat Sim"
 msgstr "CombatSim"
 
-#: characters/templates/base.html:82
+#: characters/templates/base.html:83
 msgid "Template Grid"
 msgstr "Schablonengrid"
 
-#: characters/templates/base.html:83
+#: characters/templates/base.html:84
 msgid "Lineage Grid"
 msgstr "Abstammungsgrid"
 
-#: characters/templates/base.html:84
+#: characters/templates/base.html:85
 msgid "Skill Grid"
 msgstr "Fertigkeitsgrid"
 
-#: characters/templates/base.html:85
+#: characters/templates/base.html:86
 msgid "Item Grid"
 msgstr "Gegenstandsgrid"
 
-#: characters/templates/base.html:86
+#: characters/templates/base.html:87
 msgid "Weapon Grid"
 msgstr "Waffengrid"
 
-#: characters/templates/base.html:87
+#: characters/templates/base.html:88
 msgid "Weapon Mod Grid"
 msgstr "Waffenmodifikationsgrid"
 
-#: characters/templates/base.html:88
+#: characters/templates/base.html:89
 msgid "Riot Gear Grid"
 msgstr "Rüstungsgrid"
 
-#: characters/templates/base.html:91
+#: characters/templates/base.html:92
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:96 templates/registration/login.html:11
+#: characters/templates/base.html:97 templates/registration/login.html:11
 msgid "Login"
 msgstr "Anmelden"
 
