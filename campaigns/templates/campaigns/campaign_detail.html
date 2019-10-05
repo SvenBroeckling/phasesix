@@ -1,75 +1,22 @@
-{% extends 'base.html' %}
-{% load i18n thumbnail static %}
+{% extends 'campaigns/campaign_base.html' %}
+{% load rules_extras i18n %}
 
-{% block title %}{{ object }} - {{ block.super }}{% endblock %}
-
-{% block belownav %}
-    <div
-            class="row campaign-info-row"
-            style="
-                    {% if object.backdrop_image %}
-                        background-image: url({{ object.backdrop_image.url }})
-                    {% else %}
-                        {% if object.epoch.image %}
-                            background-image: url({{ object.epoch.image.url }})
-                        {% else %}
-                            background-color: silver
-                        {% endif %}
-                    {% endif %}">
-
-        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-            <div class="{% if may_edit %}dropdown{% endif %}">
-                {% if object.image %}
-                    {% thumbnail object.image "120x120" crop="center" as im %}
-                        <img
-                                {% if may_edit %}data-toggle="dropdown"{% endif %}
-                                class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
-                                src="{{ MEDIA_URL }}{{ im.url }}"
-                                alt="{{ object.name }}">
-                    {% endthumbnail %}
-                {% else %}
-                    <img
-                            class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
-                            {% if may_edit %}data-toggle="dropdown"{% endif %}
-                            width="120" height="120"
-                            src="{% static 'img/silhuette.png' %}"
-                            alt="{{ object.name }}">
-                {% endif %}
-
-                {% if may_edit %}
-                    <div class="dropdown-menu">
+{% block campaign_content %}
+    <div class="row">
+        <div class="col-md-6">
+            {{ object.abstract|urpg_markup }}
+        </div>
+        {% if may_edit %}
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        {% trans 'Invite Link' %}
                     </div>
-                {% endif %}
-            </div>
-
-            <div class="pl-4 text-right">
-                <h3 class="mb-0">{{ object.name }}</h3>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-
-{% block content %}
-    <div class="row mt-4">
-
-        <div class="col-lg-2 col-md-3">
-            <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" data-toggle="pill" href="#v-campaign"
-                   role="tab" aria-controls="v-campaign" aria-selected="true"><i class="fas fa-fw fa-map"></i>&nbsp;{% trans 'Campaign' %}</a>
-            </div>
-        </div>
-
-        <div class="col-lg-10 col-md-9">
-            {% if not object.created_by %}
-                <div class="alert alert-danger" role="alert">
-                    {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
-                </div>
-            {% endif %}
-
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="v-character" role="tabpanel">
+                    <div class="card-body">
+                        <a href="{{ object.get_invite_link }}">{{ object.get_invite_link }}</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}

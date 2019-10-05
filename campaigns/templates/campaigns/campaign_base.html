@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load i18n thumbnail static rules_extras %}
+
+{% block title %}{{ object }} - {{ block.super }}{% endblock %}
+
+{% block belownav %}
+    <div
+            class="row campaign-info-row"
+            style="
+                    {% if object.backdrop_image %}
+                        background-image: url({{ object.backdrop_image.url }})
+                    {% else %}
+                        {% if object.epoch.image %}
+                            background-image: url({{ object.epoch.image.url }})
+                        {% else %}
+                            background-color: silver
+                        {% endif %}
+                    {% endif %}">
+        <div class="col-md-10 offset-md-1 info mt-4">
+            <h1>{{ object.name }}</h1>
+            {% trans 'A campaign by' %} {{ object.created_by }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row mt-4">
+
+        <div class="col-lg-2 col-md-3">
+            <div class="nav flex-column nav-pills mb-2" aria-orientation="vertical">
+                <a class="nav-link {% if active_tab == 'detail' %}active{% endif %}" href="{% url 'campaigns:detail' pk=object.id %}">
+                    <i class="fas fa-fw fa-map"></i>&nbsp;{% trans 'Campaign' %}
+                </a>
+            {% if may_edit %}
+                <a class="nav-link {% if active_tab == 'update' %}active{% endif %}" href="{% url 'campaigns:update' pk=object.id %}">
+                    <i class="fas fa-fw fa-edit"></i>&nbsp;{% trans 'Edit' %}
+                </a>
+                <a class="nav-link {% if active_tab == 'scenes' %}active{% endif %}" href="{% url 'campaigns:update' pk=object.id %}">
+                    <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Scenes' %}
+                </a>
+            {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-10 col-md-9">
+            {% block campaign_content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

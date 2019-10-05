@@ -1,10 +1,8 @@
-from django.db.models import Sum
 from django.template import Library
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
-from armory.models import WeaponModification, WeaponModificationType
-from rules.models import TemplateCategory
+from armory.models import WeaponModificationType
 
 register = Library()
 

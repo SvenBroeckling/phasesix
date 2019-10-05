@@ -1,0 +1,10 @@
+{% extends 'campaigns/campaign_base.html' %}
+{% load rules_extras bootstrap4 i18n %}
+
+{% block campaign_content %}
+    <form action="{% url 'campaigns:update' pk=object.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">{% trans 'Save Campaign' %}</button>
+    </form>
+{% endblock %}

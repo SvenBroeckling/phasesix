@@ -1,6 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+
+import hashlib
 
 
 class Campaign(models.Model):
@@ -25,7 +28,7 @@ class Campaign(models.Model):
         verbose_name=_('Epoch')
     )
     extensions = models.ManyToManyField(
-        'rules.Extension', limit_choices_to={'is_mandatory': False, 'is_epoch': False}
+        'rules.Extension', limit_choices_to={'is_mandatory': False, 'is_epoch': False}, blank=True
     )
     forbidden_templates = models.ManyToManyField('rules.Template')
 
@@ -34,6 +37,15 @@ class Campaign(models.Model):
 
     def get_absolute_url(self):
         return reverse('campaigns:detail', kwargs={'pk': self.id})
+
+    def get_campaign_hash(self):
+        return hashlib.md5(
+            "{}{}{}".format(self.id, self.name, self.created_by.id).encode('utf-8')
+        ).hexdigest()
+
+    def get_invite_link(self):
+        return settings.BASE_URL + reverse('campaigns:invitation',
+                                           kwargs={'pk': self.id, 'hash': self.get_campaign_hash()})
 
 
 class Scene(models.Model):
