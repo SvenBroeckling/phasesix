@@ -1,7 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, TemplateView
 
+from campaigns.forms import SceneForm
 from campaigns.models import Campaign
 
 
@@ -55,3 +57,24 @@ class CampaignInvitationView(CampaignMixin, DetailView):
     model = Campaign
     template_name = 'campaigns/campaign_invitation.html'
     active_tab = 'detail'
+
+
+class CampaignScenesView(CampaignMixin, DetailView):
+    template_name = 'campaigns/campaign_scenes.html'
+    model = Campaign
+    active_tab = 'scenes'
+
+    def post(self, request, *args, **kwargs):
+        form = SceneForm(request.POST)
+        campaign = Campaign.objects.get(id=request.POST.get('campaign'))
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.campaign = campaign
+            obj.save()
+
+        return HttpResponseRedirect(reverse('campaigns:scenes', kwargs={'pk': campaign.id}))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = SceneForm
+        return context

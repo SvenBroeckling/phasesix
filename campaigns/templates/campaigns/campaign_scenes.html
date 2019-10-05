@@ -1,0 +1,24 @@
+{% extends 'campaigns/campaign_base.html' %}
+{% load rules_extras i18n bootstrap4 %}
+
+{% block campaign_content %}
+    <h2>{% trans 'Scenes' %}</h2>
+    {% for scene in object.scene_set.all %}
+        <div class="card mb-3">
+            <div class="card-header">
+                {{ scene.name }}
+            </div>
+            <div class="card-body">
+                {{ scene.text|urpg_markup }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <h2>{% trans 'Add Scene' %}</h2>
+    <form action="{% url 'campaigns:scenes' pk=object.id %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="hidden" name="campaign" id="id_campaign" value="{{ object.id }}">
+        <button class="btn btn-primary" type="submit">{% trans 'Add Scene' %}</button>
+    </form>
+{% endblock %}
