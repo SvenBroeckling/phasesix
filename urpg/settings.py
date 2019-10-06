@@ -4,6 +4,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = 'http://phasesix.org'
 SECRET_KEY = 'p&90ws3x7(hi+$+v4=(5ni@@3$uqgdpg$s*=w@8yl-w12)0%&$'
 
+ADMINS = [('Sven', 'sven@broeckling.de')]
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
