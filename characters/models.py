@@ -137,7 +137,8 @@ class Character(models.Model):
     @property
     def reputation_spent(self):
         ts = self.charactertemplate_set.aggregate(Sum('template__cost'))
-        return ts['template__cost__sum'] if ts is not None else 0
+        tc = ts['template__cost__sum'] if ts is not None else 0
+        return tc or 0
 
     @property
     def reputation_available(self):
