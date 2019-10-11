@@ -120,8 +120,8 @@
 
                         {% if object.extension_enabled.horror %}
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i class="fas fa-bomb text-warning"></i> {% trans 'Gain Stress' %}</a>
-                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i class="fas fa-bomb text-info"></i> {% trans 'Remove Stress' %}</a>
+                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i class="fas fa-meh text-warning"></i> {% trans 'Gain Stress' %}</a>
+                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i class="far fa-meh text-info"></i> {% trans 'Remove Stress' %}</a>
                         {% endif %}
 
                         <div class="dropdown-divider"></div>

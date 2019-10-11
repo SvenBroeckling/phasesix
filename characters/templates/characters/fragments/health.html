@@ -32,7 +32,10 @@
         {% if object.extension_enabled.horror %}
             <div>
                 {% for i in object.get_stress_range %}
-                    <i class="fas fa-bomb fa-2x text-warning"></i>
+                    <i class="fas fa-meh fa-2x text-warning"></i>
+                {% endfor %}
+                {% for i in object.get_available_stress_range %}
+                    <i class="far fa-meh fa-2x text-warning"></i>
                 {% endfor %}
             </div>
         {% endif %}

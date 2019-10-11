@@ -75,6 +75,9 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_agreeableness = models.IntegerField(_('base agreeableness'), default=1)
     base_neuroticism = models.IntegerField(_('base neuroticism'), default=1)
 
+    # horror
+    base_max_stress = models.IntegerField(_('max stress'), default=6)
+
     class Meta:
         translate = ('name', 'description')
         verbose_name = _('lineage')
@@ -184,6 +187,8 @@ CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_extraversion', _('extraversion')),
     ('base_agreeableness', _('agreeableness')),
     ('base_neuroticism', _('neuroticism')),
+
+    ('base_max_stress', _('max stress')),
 )
 
 

@@ -172,6 +172,10 @@ class Character(models.Model):
         return self.lineage.base_max_health + self.get_attribute_modifier('base_max_health')
 
     @property
+    def max_stress(self):
+        return self.lineage.base_max_stress + self.get_attribute_modifier('base_max_stress')
+
+    @property
     def max_arcana(self):
         return self.lineage.base_max_arcana + self.get_attribute_modifier('base_max_arcana')
 
@@ -245,6 +249,9 @@ class Character(models.Model):
 
     def get_boost_range(self):
         return range(self.boost)
+
+    def get_available_stress_range(self):
+        return range(self.max_stress - self.stress)
 
     def get_stress_range(self):
         return range(self.stress)

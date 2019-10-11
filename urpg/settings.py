@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rulebook',
     'forum',
     'magic',
+    'horror',
     'campaigns',
 ]
 
