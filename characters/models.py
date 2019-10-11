@@ -16,13 +16,13 @@ from rules.models import Skill, Template, TemplateCategory, TemplateModifier
 
 class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
+    description = models.TextField(_('description'), blank=True, null=True)
     image = models.ImageField(
         _('image'), upload_to='character_images', blank=True, null=True
     )
     backdrop_image = models.ImageField(
         _('backdrop image'), upload_to='character_backdrop_images', blank=True, null=True
     )
-    description = models.TextField(_('description'), blank=True, null=True)
 
     creation_mode = models.CharField(
         _('creation mode'), max_length=12, default='random'
@@ -45,37 +45,9 @@ class Character(models.Model):
     )
 
     reputation = models.IntegerField(_('reputation'), default=0)
-
-    base_intelligence = models.IntegerField(_('intelligence'), default=100)
-    base_max_health = models.IntegerField(_('max health'), default=6)
-
     health = models.IntegerField(_('health'), default=6)
     boost = models.IntegerField(_('boost'), default=0)
-
-    # magic extension
-    base_max_arcana = models.IntegerField(_('max arcana'), default=0)
     arcana = models.IntegerField(_('arcana'), default=3)
-    base_spell_points = models.IntegerField(_('spell points'), default=0)
-
-    # dice
-    base_bonus_dice = models.IntegerField(_('base bonus dice'), default=0)
-    base_destiny_dice = models.IntegerField(_('base destiny dice'), default=0)
-    base_rerolls = models.IntegerField(_('base rerolls'), default=0)
-
-    # physis
-    base_deftness = models.IntegerField(_('base deftness'), default=1)
-    base_strength = models.IntegerField(_('base strength'), default=1)
-    base_attractiveness = models.IntegerField(_('base attractiveness'), default=1)
-    base_endurance = models.IntegerField(_('base endurance'), default=1)
-    base_resistance = models.IntegerField(_('base resistance'), default=1)
-    base_quickness = models.IntegerField(_('base quickness'), default=1)
-
-    # persona
-    base_openness = models.IntegerField(_('base openness'), default=1)
-    base_conscientiousness = models.IntegerField(_('base conscientiousness'), default=1)
-    base_extraversion = models.IntegerField(_('base extraversion'), default=1)
-    base_agreeableness = models.IntegerField(_('base agreeableness'), default=1)
-    base_neuroticism = models.IntegerField(_('base neuroticism'), default=1)
 
     shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
 
@@ -187,81 +159,81 @@ class Character(models.Model):
 
     @property
     def spell_points(self):
-        return self.base_spell_points + self.get_attribute_modifier('base_spell_points')
+        return self.lineage.base_spell_points + self.get_attribute_modifier('base_spell_points')
 
     @property
     def intelligence(self):
-        return self.base_intelligence + self.get_attribute_modifier('base_intelligence')
+        return self.lineage.base_intelligence + self.get_attribute_modifier('base_intelligence')
 
     @property
     def max_health(self):
-        return self.base_max_health + self.get_attribute_modifier('base_max_health')
+        return self.lineage.base_max_health + self.get_attribute_modifier('base_max_health')
 
     @property
     def max_arcana(self):
-        return self.base_max_arcana + self.get_attribute_modifier('base_max_arcana')
+        return self.lineage.base_max_arcana + self.get_attribute_modifier('base_max_arcana')
 
     @property
     def bonus_dice(self):
-        return self.base_bonus_dice + self.get_attribute_modifier('base_bonus_dice')
+        return self.lineage.base_bonus_dice + self.get_attribute_modifier('base_bonus_dice')
 
     @property
     def destiny_dice(self):
-        return self.base_destiny_dice + self.get_attribute_modifier('base_destiny_dice')
+        return self.lineage.base_destiny_dice + self.get_attribute_modifier('base_destiny_dice')
 
     @property
     def rerolls(self):
-        return self.base_rerolls + self.get_attribute_modifier('base_rerolls')
+        return self.lineage.base_rerolls + self.get_attribute_modifier('base_rerolls')
 
     @property
     def deftness(self):
-        return self.base_deftness + self.get_attribute_modifier('base_deftness')
+        return self.lineage.base_deftness + self.get_attribute_modifier('base_deftness')
 
     @property
     def strength(self):
-        return self.base_strength + self.get_attribute_modifier('base_strength')
+        return self.lineage.base_strength + self.get_attribute_modifier('base_strength')
 
     @property
     def attractiveness(self):
-        return self.base_attractiveness + self.get_attribute_modifier(
+        return self.lineage.base_attractiveness + self.get_attribute_modifier(
             'base_attractiveness'
         )
 
     @property
     def endurance(self):
-        return self.base_endurance + self.get_attribute_modifier('base_endurance')
+        return self.lineage.base_endurance + self.get_attribute_modifier('base_endurance')
 
     @property
     def resistance(self):
-        return self.base_resistance + self.get_attribute_modifier('base_resistance')
+        return self.lineage.base_resistance + self.get_attribute_modifier('base_resistance')
 
     @property
     def quickness(self):
-        return self.base_quickness + self.get_attribute_modifier('base_quickness')
+        return self.lineage.base_quickness + self.get_attribute_modifier('base_quickness')
 
     @property
     def openness(self):
-        return self.base_openness + self.get_attribute_modifier('base_openness')
+        return self.lineage.base_openness + self.get_attribute_modifier('base_openness')
 
     @property
     def conscientiousness(self):
-        return self.base_conscientiousness + self.get_attribute_modifier(
+        return self.lineage.base_conscientiousness + self.get_attribute_modifier(
             'base_conscientiousness'
         )
 
     @property
     def extraversion(self):
-        return self.base_extraversion + self.get_attribute_modifier('base_extraversion')
+        return self.lineage.base_extraversion + self.get_attribute_modifier('base_extraversion')
 
     @property
     def agreeableness(self):
-        return self.base_agreeableness + self.get_attribute_modifier(
+        return self.lineage.base_agreeableness + self.get_attribute_modifier(
             'base_agreeableness'
         )
 
     @property
     def neuroticism(self):
-        return self.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
+        return self.lineage.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
 
     def get_full_heart_range(self):
         return range(self.health)

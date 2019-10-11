@@ -50,6 +50,31 @@ class Lineage(models.Model, metaclass=TransMeta):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
+    base_intelligence = models.IntegerField(_('intelligence'), default=100)
+    base_max_health = models.IntegerField(_('max health'), default=6)
+
+    base_max_arcana = models.IntegerField(_('max arcana'), default=0)
+    base_spell_points = models.IntegerField(_('spell points'), default=0)
+
+    base_bonus_dice = models.IntegerField(_('base bonus dice'), default=0)
+    base_destiny_dice = models.IntegerField(_('base destiny dice'), default=0)
+    base_rerolls = models.IntegerField(_('base rerolls'), default=0)
+
+    # physis
+    base_deftness = models.IntegerField(_('base deftness'), default=1)
+    base_strength = models.IntegerField(_('base strength'), default=1)
+    base_attractiveness = models.IntegerField(_('base attractiveness'), default=1)
+    base_endurance = models.IntegerField(_('base endurance'), default=1)
+    base_resistance = models.IntegerField(_('base resistance'), default=1)
+    base_quickness = models.IntegerField(_('base quickness'), default=1)
+
+    # persona
+    base_openness = models.IntegerField(_('base openness'), default=1)
+    base_conscientiousness = models.IntegerField(_('base conscientiousness'), default=1)
+    base_extraversion = models.IntegerField(_('base extraversion'), default=1)
+    base_agreeableness = models.IntegerField(_('base agreeableness'), default=1)
+    base_neuroticism = models.IntegerField(_('base neuroticism'), default=1)
+
     class Meta:
         translate = ('name', 'description')
         verbose_name = _('lineage')
