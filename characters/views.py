@@ -60,6 +60,19 @@ class XhrCharacterRestView(TemplateView):
         return context
 
 
+class CharacterModifyStressView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.may_edit(request.user):
+            if self.kwargs['mode'] == 'gain':
+                character.stress += 1
+            elif self.kwargs['mode'] == 'remove':
+                if character.stress > 0:
+                    character.stress -= 1
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
 class CharacterModifyHealthView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])

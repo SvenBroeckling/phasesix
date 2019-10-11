@@ -28,5 +28,13 @@
                 {% endfor %}
             </div>
         {% endif %}
+
+        {% if object.extension_enabled.horror %}
+            <div>
+                {% for i in object.get_stress_range %}
+                    <i class="fas fa-bomb fa-2x text-warning"></i>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

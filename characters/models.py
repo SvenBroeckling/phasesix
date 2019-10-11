@@ -45,9 +45,11 @@ class Character(models.Model):
     )
 
     reputation = models.IntegerField(_('reputation'), default=0)
+
     health = models.IntegerField(_('health'), default=6)
     boost = models.IntegerField(_('boost'), default=0)
     arcana = models.IntegerField(_('arcana'), default=3)
+    stress = models.IntegerField(_('stress'), default=0)
 
     shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
 
@@ -243,6 +245,9 @@ class Character(models.Model):
 
     def get_boost_range(self):
         return range(self.boost)
+
+    def get_stress_range(self):
+        return range(self.stress)
 
     def get_arcana_range(self):
         return range(self.arcana)

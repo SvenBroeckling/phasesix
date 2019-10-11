@@ -117,7 +117,15 @@
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i class="fas fa-heart text-danger"></i> {% trans 'Heal Wound' %}</a>
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i class="far fa-heart text-danger"></i> {% trans 'Take Damage' %}</a>
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i class="fas fa-heart text-info"></i> {% trans 'Get Boost' %}</a>
+
+                        {% if object.extension_enabled.horror %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i class="fas fa-bomb text-warning"></i> {% trans 'Gain Stress' %}</a>
+                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i class="fas fa-bomb text-info"></i> {% trans 'Remove Stress' %}</a>
+                        {% endif %}
+
                         <div class="dropdown-divider"></div>
+
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"

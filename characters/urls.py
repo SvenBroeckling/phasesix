@@ -24,6 +24,12 @@ urlpatterns = [
         views.XhrCharacterRestView.as_view(),
         name='xhr_rest'),
 
+    # horror
+    url(
+        r'^stress/(?P<pk>\d+)/(?P<mode>\w+)/$',
+        views.CharacterModifyStressView.as_view(),
+        name='modify_stress'),
+
     # new character
     url(r'^new/$', views.CreateCharacterView.as_view(), name='create_character'),
     url(
