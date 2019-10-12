@@ -11,7 +11,7 @@
                 <i class="far fa-heart text-danger" data-toggle="popover" data-trigger="hover" title="{% trans 'Wound' %}" data-content="{% trans 'A wound taken. This empty heart can be restored at a hospital.' %}"></i>
             {% endfor %}
             {% for i in object.get_boost_range %}
-                <i class="fas fa-heart text-info" data-toggle="popover" data-trigger="hover" title="{% trans 'Boost' %}" data-content="{% trans 'A temporary boost, given by first aid or medicine.' %}"></i>
+                <i class="fas fa-heart text-info" data-toggle="popover" data-trigger="hover" title="{% trans 'Boost' %}" data-content="{% trans 'A temporary boost, given by first aid or medicine. If you take damage this will expanded first.' %}"></i>
             {% endfor %}
         </div>
 

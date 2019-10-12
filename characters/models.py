@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from armory.models import Item, RiotGear, Weapon
+from horror.models import QuirkModifier
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier
 
 
@@ -68,11 +69,14 @@ class Character(models.Model):
         return reverse('characters:detail', kwargs={'pk': self.id})
 
     def get_attribute_modifier(self, attribute_name):
-        q = TemplateModifier.objects.filter(
-            template__charactertemplate__in=self.charactertemplate_set.all()
-        )
-        q = q.filter(attribute=attribute_name).aggregate(Sum('attribute_modifier'))
-        return q['attribute_modifier__sum'] or 0
+        m = TemplateModifier.objects.filter(
+            template__charactertemplate__in=self.charactertemplate_set.all(),
+            attribute=attribute_name).aggregate(Sum('attribute_modifier'))
+
+        q = QuirkModifier.objects.filter(
+            quirk__in=self.quirks.all(),
+            attribute=attribute_name).aggregate(Sum('attribute_modifier'))
+        return (m['attribute_modifier__sum'] or 0) + (q['attribute_modifier__sum'] or 0)
 
     def add_template(self, template):
         if not self.charactertemplate_set.filter(template=template).exists():
@@ -336,11 +340,12 @@ class CharacterSkill(models.Model):
 
     @property
     def value(self):
-        q = TemplateModifier.objects.filter(
-            template__charactertemplate__in=self.character.charactertemplate_set.all()
-        )
-        q = q.filter(skill=self.skill).aggregate(Sum('skill_modifier'))
-        return self.base_value + (q['skill_modifier__sum'] or 0)
+        s = TemplateModifier.objects.filter(
+            template__charactertemplate__in=self.character.charactertemplate_set.all(),
+            skill=self.skill).aggregate(Sum('skill_modifier'))
+        q = QuirkModifier.objects.filter(
+            quirk__in=self.character.quirks.all()).aggregate(Sum('skill_modifier'))
+        return self.base_value + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
 
 
 class CharacterKnowledge(models.Model):
