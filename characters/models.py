@@ -52,6 +52,7 @@ class Character(models.Model):
     stress = models.IntegerField(_('stress'), default=0)
 
     shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
+    quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
 
     def __str__(self):
         return self.name

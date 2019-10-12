@@ -3,6 +3,7 @@ from transmeta import TransMeta
 
 from django.utils.translation import ugettext_lazy as _
 
+from characters.templatetags.characters_extras import color_value_span
 from rules.models import CHARACTER_ATTRIBUTE_CHOICES, Skill
 
 
@@ -31,6 +32,19 @@ class Quirk(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def get_modifier_summary_html(self):
+        html = ''
+        for m in self.quirkmodifier_set.all():
+            if m.attribute:
+                html += '<i class="fas fa-asterisk"></i> {} {}<br>'.format(
+                    m.get_attribute_display(),
+                    color_value_span(m.attribute_modifier, 3, algebraic_sign=True))
+            if m.skill:
+                html += '<i class="fas fa-hand-scissors"></i> {} {}<br>'.format(
+                    m.skill,
+                    color_value_span(m.skill_modifier, 3, algebraic_sign=True))
+        return html
 
 
 class QuirkModifier(models.Model, metaclass=TransMeta):

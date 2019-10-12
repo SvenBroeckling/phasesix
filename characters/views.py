@@ -11,6 +11,7 @@ from django.views.generic import TemplateView, DetailView, ListView, CreateView,
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
+from horror.models import QuirkCategory
 from rules.models import Extension, Template, Lineage
 
 
@@ -66,6 +67,10 @@ class CharacterModifyStressView(View):
         if character.may_edit(request.user):
             if self.kwargs['mode'] == 'gain':
                 character.stress += 1
+                if character.stress >= character.max_stress:
+                    quirk = QuirkCategory.objects.order_by('?')[0].quirk_set.order_by('?')[0]
+                    character.quirks.add(quirk)
+                    character.stress = 0
             elif self.kwargs['mode'] == 'remove':
                 if character.stress > 0:
                     character.stress -= 1
