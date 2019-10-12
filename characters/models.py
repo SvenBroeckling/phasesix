@@ -344,7 +344,8 @@ class CharacterSkill(models.Model):
             template__charactertemplate__in=self.character.charactertemplate_set.all(),
             skill=self.skill).aggregate(Sum('skill_modifier'))
         q = QuirkModifier.objects.filter(
-            quirk__in=self.character.quirks.all()).aggregate(Sum('skill_modifier'))
+            quirk__in=self.character.quirks.all(),
+            skill=self.skill).aggregate(Sum('skill_modifier'))
         return self.base_value + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
 
 
