@@ -20,7 +20,7 @@ class QuirkCategory(models.Model, metaclass=TransMeta):
 
 
 class Quirk(models.Model, metaclass=TransMeta):
-    name = models.CharField(_('name'), max_length=30)
+    name = models.CharField(_('name'), max_length=60)
     category = models.ForeignKey(QuirkCategory, verbose_name=_("category"), on_delete=models.CASCADE)
 
     class Meta:
