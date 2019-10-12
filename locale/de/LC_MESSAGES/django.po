@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 20:22+0000\n"
-"PO-Revision-Date: 2019-10-11 16:10+0200\n"
+"POT-Creation-Date: 2019-10-12 21:18+0000\n"
+"PO-Revision-Date: 2019-10-12 23:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,9 +21,9 @@ msgstr ""
 #: armory/models.py:21 armory/models.py:38 armory/models.py:71
 #: armory/models.py:102 armory/models.py:126 armory/models.py:178
 #: armory/models.py:200 armory/models.py:236 campaigns/models.py:10
-#: campaigns/models.py:53 campaigns/models.py:61 characters/models.py:18
-#: forum/models.py:33 forum/models.py:51 horror/models.py:10
-#: horror/models.py:23 magic/models.py:9 magic/models.py:25 magic/models.py:41
+#: campaigns/models.py:53 campaigns/models.py:61 characters/models.py:19
+#: forum/models.py:33 forum/models.py:51 horror/models.py:11
+#: horror/models.py:24 magic/models.py:9 magic/models.py:25 magic/models.py:41
 #: magic/models.py:57 magic/models.py:73 magic/models.py:89 magic/models.py:105
 #: magic/models.py:121 magic/models.py:142 magic/models.py:186
 #: rulebook/models.py:14 rules/models.py:24 rules/models.py:47
@@ -34,13 +34,13 @@ msgstr "Name"
 
 #: armory/models.py:22 armory/models.py:39 armory/models.py:72
 #: armory/models.py:127 armory/models.py:179 armory/models.py:201
-#: armory/models.py:237 characters/models.py:19 magic/models.py:187
+#: armory/models.py:237 characters/models.py:20 magic/models.py:187
 #: rules/models.py:48 rules/models.py:153 rules/models.py:222
 msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:23 armory/models.py:45 armory/models.py:73
-#: armory/models.py:122 armory/models.py:234 characters/models.py:368
+#: armory/models.py:122 armory/models.py:234 characters/models.py:374
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:79 rules/models.py:29 rules/models.py:50 rules/models.py:133
 #: rules/models.py:154 rules/models.py:253
@@ -80,7 +80,7 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:49 armory/models.py:148 campaigns/models.py:12
-#: campaigns/models.py:63 characters/models.py:21 rulebook/models.py:16
+#: campaigns/models.py:63 characters/models.py:22 rulebook/models.py:16
 #: rules/models.py:27
 msgid "image"
 msgstr "Bild"
@@ -199,7 +199,7 @@ msgstr "Waffenmodifikationstyp"
 msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
-#: armory/models.py:220 horror/models.py:39 rules/models.py:276
+#: armory/models.py:220 horror/models.py:53 rules/models.py:276
 msgid "attribute"
 msgstr "Attribut"
 
@@ -219,7 +219,7 @@ msgstr "Explosivschutz"
 msgid "riot gear"
 msgstr "Rüstung"
 
-#: campaigns/models.py:15 characters/models.py:24
+#: campaigns/models.py:15 characters/models.py:25
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
@@ -227,7 +227,7 @@ msgstr "Hintergrundbild"
 msgid "abstract"
 msgstr "Zusammenfassung"
 
-#: campaigns/models.py:21 characters/models.py:32 magic/models.py:184
+#: campaigns/models.py:21 characters/models.py:33 magic/models.py:184
 msgid "created by"
 msgstr "Erzeugt von"
 
@@ -305,51 +305,55 @@ msgstr "Name"
 msgid "Extensions"
 msgstr "Erweiterungen"
 
-#: characters/models.py:28
+#: characters/models.py:29
 msgid "creation mode"
 msgstr "Erschaffungsmodus"
 
-#: characters/models.py:36
+#: characters/models.py:37
 msgid "Characters without user will be cleaned daily."
 msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 
-#: characters/models.py:44 rules/models.py:83 rules/models.py:91
+#: characters/models.py:45 rules/models.py:83 rules/models.py:91
 msgid "lineage"
 msgstr "Abstammung"
 
-#: characters/models.py:47
+#: characters/models.py:48
 msgid "reputation"
 msgstr "Reputation"
 
-#: characters/models.py:49
+#: characters/models.py:50
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: characters/models.py:50
+#: characters/models.py:51
 msgid "boost"
 msgstr "Boost"
 
-#: characters/models.py:51
+#: characters/models.py:52
 msgid "arcana"
 msgstr "Arkana"
 
-#: characters/models.py:52
+#: characters/models.py:53
 msgid "stress"
 msgstr "Stress"
 
-#: characters/models.py:54 rules/models.py:161
+#: characters/models.py:55 rules/models.py:161
 msgid "shadows"
 msgstr "Schatten"
 
-#: characters/models.py:328 characters/models.py:348
+#: characters/models.py:56 horror/models.py:31
+msgid "quirks"
+msgstr "Eigenarten"
+
+#: characters/models.py:333 characters/models.py:354
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:417
+#: characters/models.py:423
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:429
+#: characters/models.py:435
 msgid "Quantity"
 msgstr "Menge"
 
@@ -606,11 +610,11 @@ msgstr "Name / Bilder"
 msgid "Delete"
 msgstr "Löschen"
 
-#: characters/templates/characters/character_detail.html:189
+#: characters/templates/characters/character_detail.html:187
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/characters/character_detail.html:193
+#: characters/templates/characters/character_detail.html:191
 msgid "Close"
 msgstr "Schließen"
 
@@ -996,6 +1000,80 @@ msgstr "Modifikatoren hinzufügen"
 msgid "Remove / Use"
 msgstr "Entfernen / Benutzen"
 
+#: characters/templates/characters/fragments/health.html:8 gmtools/forms.py:19
+msgid "Health"
+msgstr "Lebenspunkte"
+
+#: characters/templates/characters/fragments/health.html:8
+msgid ""
+"A full heart. This can compensate a wound. Use the character menu to take a "
+"wound."
+msgstr ""
+"Ein volles Herz. Dieses kann eine Wunde kompensieren. Benutze das "
+"Charaktermenü um Wunden zu erhalten."
+
+#: characters/templates/characters/fragments/health.html:11
+msgid "Wound"
+msgstr "Wunde"
+
+#: characters/templates/characters/fragments/health.html:11
+msgid "A wound taken. This empty heart can be restored at a hospital."
+msgstr ""
+"Eine hingenommene Wunde. Dieses leere Herzkann in einem Krankenhaus "
+"wiederhergestellt werden."
+
+#: characters/templates/characters/fragments/health.html:14
+msgid "Boost"
+msgstr "Boost"
+
+#: characters/templates/characters/fragments/health.html:14
+msgid ""
+"A temporary boost, given by first aid or medicine. If you take damage this "
+"will expanded first."
+msgstr ""
+"Ein zeitweiser Boost, durch Medizin oder Erste Hilfe verursacht. Wenn du "
+"Schaden nimmst wird dieses zuerst entfernt."
+
+#: characters/templates/characters/fragments/health.html:20
+msgid "Ballistic Protection"
+msgstr "Ballistischer Schutz"
+
+#: characters/templates/characters/fragments/health.html:20
+msgid "Protects you from ballistic shots at the defense roll."
+msgstr "Schützt dich vor ballistischen Schüssen beim Verteidigungswurf."
+
+#: characters/templates/characters/fragments/health.html:27
+msgid "Arcana"
+msgstr "Arkana"
+
+#: characters/templates/characters/fragments/health.html:27
+msgid "Use this to cast spells at the magic or combat tab."
+msgstr "Benutze dies um Zauber im Magie oder Kampftab zu sprechen."
+
+#: characters/templates/characters/fragments/health.html:35
+msgid "Stress"
+msgstr "Stress"
+
+#: characters/templates/characters/fragments/health.html:35
+msgid ""
+"This is your stress level. You will geht a quirk if it reaches your stress "
+"maximum."
+msgstr ""
+"Dies ist dein Stresslevel. wenn du das Maximum an Stress erreichst wirst du "
+"einen Tick bekommen."
+
+#: characters/templates/characters/fragments/health.html:38
+msgid "Possible Stress"
+msgstr "Möglicher Stress"
+
+#: characters/templates/characters/fragments/health.html:38
+msgid ""
+"This is possible stress your can cope with. You will get a quirk if all "
+"slots are filled."
+msgstr ""
+"Dies ist der mögliche Stress mit dem du umgehen kannst. Du wirst einen Tick "
+"erhalten wenn alle Plätze gefüllt sind."
+
 #: characters/templates/characters/fragments/magic.html:11
 msgid "Create a spell"
 msgstr "Erstelle einen Zauber"
@@ -1201,10 +1279,6 @@ msgstr "Angriffswert"
 msgid "Cover"
 msgstr "Deckung"
 
-#: gmtools/forms.py:19
-msgid "Health"
-msgstr "Lebenspunkte"
-
 #: gmtools/templates/gmtools/combat_sim.html:11
 msgid "Player 1"
 msgstr "Spieler 1"
@@ -1284,39 +1358,31 @@ msgstr "Rüstungswurf"
 msgid "damage"
 msgstr "Schaden"
 
-#: horror/models.py:15
-#, fuzzy
-#| msgid "category"
-msgid "quirk category"
-msgstr "Kategorie"
-
 #: horror/models.py:16
-#, fuzzy
-#| msgid "template categories"
-msgid "quirk categories"
-msgstr "Schablonenkategorien"
+msgid "quirk category"
+msgstr "Tick Kategorie"
 
-#: horror/models.py:24 rules/models.py:255
+#: horror/models.py:17
+msgid "quirk categories"
+msgstr "Tick Kategorien"
+
+#: horror/models.py:25 rules/models.py:255
 msgid "category"
 msgstr "Kategorie"
 
-#: horror/models.py:29 horror/models.py:37
+#: horror/models.py:30 horror/models.py:51
 msgid "quirk"
 msgstr "Eigenart"
 
-#: horror/models.py:30
-msgid "quirks"
-msgstr "Eigenarten"
-
-#: horror/models.py:45 rules/models.py:282
+#: horror/models.py:59 rules/models.py:282
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: horror/models.py:51 rules/models.py:117 rules/models.py:288
+#: horror/models.py:65 rules/models.py:117 rules/models.py:288
 msgid "skill"
 msgstr "Fertigkeit"
 
-#: horror/models.py:55 rules/models.py:292
+#: horror/models.py:69 rules/models.py:292
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
@@ -1595,10 +1661,8 @@ msgid "base neuroticism"
 msgstr "Neurotizismus Basis"
 
 #: rules/models.py:79 rules/models.py:191
-#, fuzzy
-#| msgid "stress"
 msgid "max stress"
-msgstr "Stress"
+msgstr "Maximaler Stress"
 
 #: rules/models.py:84
 msgid "lineages"
@@ -1971,9 +2035,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "Buy riot gear"
 #~ msgstr "Rüstung kaufen"
-
-#~ msgid "Ballistic protection"
-#~ msgstr "Ballistischer Schutz"
 
 #~ msgid "Explosive protection"
 #~ msgstr "Explosivschutz"
