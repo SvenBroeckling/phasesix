@@ -2,29 +2,29 @@
 {% load i18n %}
 
 {% block fragment %}
-    <div class="text-center mt-3">
-        <div class="mb-2">
+    <div class="text-center mb-3">
+        <div>
             {% for i in object.get_full_heart_range %}
-                <i class="fas fa-heart fa-2x text-danger"></i>
+                <i class="fas fa-heart text-danger"></i>
             {% endfor %}
             {% for i in object.get_empty_heart_range %}
-                <i class="far fa-heart fa-2x text-danger"></i>
+                <i class="far fa-heart text-danger"></i>
             {% endfor %}
             {% for i in object.get_boost_range %}
-                <i class="fas fa-heart fa-2x text-info"></i>
+                <i class="fas fa-heart text-info"></i>
             {% endfor %}
         </div>
 
         <div>
             {% for i in object.get_ballistic_protection_range %}
-                <i class="fas fa-shield-alt fa-2x text-success mb-4"></i>
+                <i class="fas fa-shield-alt text-success mb-4"></i>
             {% endfor %}
         </div>
 
         {% if object.extension_enabled.magic %}
             <div>
                 {% for i in object.get_arcana_range %}
-                    <i class="fas fa-magic fa-2x text-warning"></i>
+                    <i class="fas fa-magic text-warning"></i>
                 {% endfor %}
             </div>
         {% endif %}
@@ -32,10 +32,10 @@
         {% if object.extension_enabled.horror %}
             <div>
                 {% for i in object.get_stress_range %}
-                    <i class="fas fa-meh fa-2x text-warning"></i>
+                    <i class="fas fa-meh text-warning"></i>
                 {% endfor %}
                 {% for i in object.get_available_stress_range %}
-                    <i class="far fa-meh fa-2x text-warning"></i>
+                    <i class="far fa-meh text-warning"></i>
                 {% endfor %}
             </div>
         {% endif %}

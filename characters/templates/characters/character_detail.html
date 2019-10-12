@@ -162,8 +162,6 @@
                 {% endif %}
             </div>
 
-            {% detail_fragment 'health' %}
-
             <div class="pl-4 text-right">
                 <h3 class="mb-0">{{ object.name }}</h3>
                 <small>{% template_category_string object 3 %}</small><br>
@@ -199,6 +197,8 @@
     <div class="row mt-4">
 
         <div class="col-lg-2 col-md-3">
+            {% detail_fragment 'health' %}
+
             {% detail_fragment 'menu' %}
         </div>
 
