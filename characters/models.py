@@ -264,7 +264,7 @@ class Character(models.Model):
 
     @property
     def neuroticism_roll(self):
-        return 5 + self.neuroticism if self.neuroticism <= 5 else 0
+        return 5 + self.neuroticism if self.neuroticism > -5 else 0
 
     def get_full_heart_range(self):
         return range(self.health)
