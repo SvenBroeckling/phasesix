@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 20:50+0000\n"
-"PO-Revision-Date: 2019-11-15 21:49+0100\n"
+"POT-Creation-Date: 2019-11-15 22:40+0000\n"
+"PO-Revision-Date: 2019-11-15 23:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -439,25 +439,25 @@ msgstr "Anmelden"
 #: characters/templates/characters/_add_items.html:57
 #: characters/templates/characters/_add_riot_gear.html:39
 #: characters/templates/characters/_add_weapons.html:71
-#: characters/templates/characters/fragments/gear.html:30
-#: characters/templates/characters/fragments/gear.html:75
-#: characters/templates/characters/fragments/gear.html:110
+#: characters/templates/characters/fragments/gear.html:33
+#: characters/templates/characters/fragments/gear.html:100
+#: characters/templates/characters/fragments/gear.html:187
 msgid "Concealment"
 msgstr "Verborgenheit"
 
 #: characters/templates/characters/_add_items.html:58
 #: characters/templates/characters/_add_riot_gear.html:40
 #: characters/templates/characters/_add_weapons.html:72
-#: characters/templates/characters/fragments/gear.html:31
-#: characters/templates/characters/fragments/gear.html:76
-#: characters/templates/characters/fragments/gear.html:111
+#: characters/templates/characters/fragments/gear.html:34
+#: characters/templates/characters/fragments/gear.html:101
+#: characters/templates/characters/fragments/gear.html:188
 msgid "Weight"
 msgstr "Gewicht"
 
 #: characters/templates/characters/_add_items.html:59
 #: characters/templates/characters/fragments/character.html:12
 #: characters/templates/characters/fragments/character.html:54
-#: characters/templates/characters/fragments/gear.html:112
+#: characters/templates/characters/fragments/gear.html:189
 msgid "Value"
 msgstr "Wert"
 
@@ -470,12 +470,13 @@ msgid "Added"
 msgstr "Hinzugefügt"
 
 #: characters/templates/characters/_add_items.html:63
-#: characters/templates/characters/character_detail.html:148
+#: characters/templates/characters/fragments/gear.html:169
+#: characters/templates/characters/fragments/gear.html:207
 msgid "Add item"
 msgstr "Gegenstand hinzufügen"
 
 #: characters/templates/characters/_add_riot_gear.html:38
-#: characters/templates/characters/fragments/gear.html:29
+#: characters/templates/characters/fragments/gear.html:32
 #: gmtools/templates/gmtools/combat_sim_results.html:11
 #: gmtools/templates/gmtools/combat_sim_results.html:26
 msgid "Protection"
@@ -490,46 +491,46 @@ msgid "Add modification"
 msgstr "Modifikation hinzufügen"
 
 #: characters/templates/characters/_add_weapons.html:58
-#: characters/templates/characters/fragments/gear.html:62
+#: characters/templates/characters/fragments/gear.html:87
 msgid "Attacks / Action"
 msgstr "Angriffe pro Aktion"
 
 #: characters/templates/characters/_add_weapons.html:59
-#: characters/templates/characters/fragments/gear.html:63
+#: characters/templates/characters/fragments/gear.html:88
 msgid "Accuracy"
 msgstr "Genauigkeit"
 
 #: characters/templates/characters/_add_weapons.html:60
 #: characters/templates/characters/fragments/combat.html:21
-#: characters/templates/characters/fragments/gear.html:64
+#: characters/templates/characters/fragments/gear.html:89
 msgid "Penetration"
 msgstr "Durchschlag"
 
 #: characters/templates/characters/_add_weapons.html:61
-#: characters/templates/characters/fragments/gear.html:65
+#: characters/templates/characters/fragments/gear.html:90
 #: gmtools/templates/gmtools/combat_sim_results.html:10
 #: gmtools/templates/gmtools/combat_sim_results.html:25
 msgid "Wounds"
 msgstr "Wunden"
 
 #: characters/templates/characters/_add_weapons.html:63
-#: characters/templates/characters/fragments/gear.html:67
+#: characters/templates/characters/fragments/gear.html:92
 msgid "Reload actions"
 msgstr "Nachladeaktionen"
 
 #: characters/templates/characters/_add_weapons.html:64
-#: characters/templates/characters/fragments/gear.html:68
+#: characters/templates/characters/fragments/gear.html:93
 msgid "Recoil control"
 msgstr "Rückstoßkontrolle"
 
 #: characters/templates/characters/_add_weapons.html:66
 #: characters/templates/characters/fragments/combat.html:24
-#: characters/templates/characters/fragments/gear.html:70
+#: characters/templates/characters/fragments/gear.html:95
 msgid "Range"
 msgstr "Reichweite"
 
 #: characters/templates/characters/_add_weapons.html:74
-#: characters/templates/characters/fragments/gear.html:78
+#: characters/templates/characters/fragments/gear.html:103
 msgid "Capacity"
 msgstr "Kapazität"
 
@@ -587,39 +588,24 @@ msgstr "Stress hinzufügen"
 msgid "Remove Stress"
 msgstr "Stress entfernen"
 
+#: characters/templates/characters/character_detail.html:133
 #: characters/templates/characters/character_detail.html:134
-#: characters/templates/characters/character_detail.html:135
-msgid "Add Armor"
-msgstr "Rüstung hinzufügen"
-
-#: characters/templates/characters/character_detail.html:141
-#: characters/templates/characters/character_detail.html:142
-msgid "Add Weapon"
-msgstr "Waffe hinzufügen"
-
-#: characters/templates/characters/character_detail.html:146
-#: characters/templates/characters/character_detail.html:150
-msgid "Add Item"
-msgstr "Gegenstand hinzufügen"
-
-#: characters/templates/characters/character_detail.html:158
-#: characters/templates/characters/character_detail.html:159
 msgid "Name / Images"
 msgstr "Name / Bilder"
 
-#: characters/templates/characters/character_detail.html:160
+#: characters/templates/characters/character_detail.html:135
 msgid "Delete"
 msgstr "Löschen"
 
-#: characters/templates/characters/character_detail.html:187
+#: characters/templates/characters/character_detail.html:162
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/characters/character_detail.html:191
+#: characters/templates/characters/character_detail.html:166
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/characters/character_detail.html:208
+#: characters/templates/characters/character_detail.html:183
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -888,8 +874,8 @@ msgid "Time"
 msgstr "Zeit"
 
 #: characters/templates/characters/fragments/combat.html:20
-#: characters/templates/characters/fragments/gear.html:22
-#: characters/templates/characters/fragments/gear.html:43
+#: characters/templates/characters/fragments/gear.html:40
+#: characters/templates/characters/fragments/gear.html:136
 msgid "Damage"
 msgstr "Schaden"
 
@@ -975,41 +961,63 @@ msgstr "Rüstungswurf"
 msgid "Armor value"
 msgstr "Rüstungswert"
 
-#: characters/templates/characters/fragments/gear.html:5
-#: characters/templates/characters/fragments/menu.html:9
-msgid "Gear"
-msgstr "Ausrüstung"
+#: characters/templates/characters/fragments/gear.html:15
+#: characters/templates/characters/fragments/gear.html:54
+msgid "Add Armor"
+msgstr "Rüstung hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:11
-msgid "No gear yet"
-msgstr "Noch keine Ausrüstung"
-
-#: characters/templates/characters/fragments/gear.html:12
-msgid "Add some with the character menu."
-msgstr "Füge einige mit dem Charaktermenü hinzu."
-
-#: characters/templates/characters/fragments/gear.html:21
-#: characters/templates/characters/fragments/gear.html:42
-msgid "Remove"
-msgstr "Entfernen"
-
-#: characters/templates/characters/fragments/gear.html:26
-msgid "Riot Gear"
+#: characters/templates/characters/fragments/gear.html:18 gmtools/forms.py:16
+msgid "Armor"
 msgstr "Rüstung"
 
-#: characters/templates/characters/fragments/gear.html:32
-#: characters/templates/characters/fragments/gear.html:81
+#: characters/templates/characters/fragments/gear.html:35
+#: characters/templates/characters/fragments/gear.html:106
 msgid "Condition"
 msgstr "Zustand"
 
-#: characters/templates/characters/fragments/gear.html:48
-#: characters/templates/characters/fragments/gear.html:51
+#: characters/templates/characters/fragments/gear.html:39
+#: characters/templates/characters/fragments/gear.html:135
+msgid "Remove"
+msgstr "Entfernen"
+
+#: characters/templates/characters/fragments/gear.html:55
+msgid "No armor yet."
+msgstr "Noch keine Rüstung."
+
+#: characters/templates/characters/fragments/gear.html:68
+#: characters/templates/characters/fragments/gear.html:150
+msgid "Add Weapon"
+msgstr "Waffe hinzufügen"
+
+#: characters/templates/characters/fragments/gear.html:71
+msgid "Weapons"
+msgstr "Waffen"
+
+#: characters/templates/characters/fragments/gear.html:129
+#: characters/templates/characters/fragments/gear.html:132
 msgid "Add Modification"
 msgstr "Modifikatoren hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:102
+#: characters/templates/characters/fragments/gear.html:151
+msgid "No weapons yet."
+msgstr "Noch keine Waffen."
+
+#: characters/templates/characters/fragments/gear.html:167
+#: characters/templates/characters/fragments/gear.html:203
+msgid "Add Item"
+msgstr "Gegenstand hinzufügen"
+
+#: characters/templates/characters/fragments/gear.html:173
+msgid "Items"
+msgstr "Gegenstände"
+
+#: characters/templates/characters/fragments/gear.html:195
 msgid "Remove / Use"
 msgstr "Entfernen / Benutzen"
+
+#: characters/templates/characters/fragments/gear.html:209
+msgid "No items yet."
+msgstr "Noch keine Gegenstände."
 
 #: characters/templates/characters/fragments/health.html:8 gmtools/forms.py:19
 msgid "Health"
@@ -1097,6 +1105,10 @@ msgstr "Zauberpunkte"
 #: characters/templates/characters/fragments/menu.html:7
 msgid "Character"
 msgstr "Charakter"
+
+#: characters/templates/characters/fragments/menu.html:9
+msgid "Gear"
+msgstr "Ausrüstung"
 
 #: characters/templates/characters/fragments/menu.html:11
 msgid "Combat"
@@ -1277,10 +1289,6 @@ msgstr "Keine Deckung"
 #: gmtools/forms.py:15
 msgid "Weapon"
 msgstr "Waffe"
-
-#: gmtools/forms.py:16
-msgid "Armor"
-msgstr "Rüstung"
 
 #: gmtools/forms.py:17
 msgid "Attack value"
@@ -1926,6 +1934,12 @@ msgstr "Registrieren"
 msgid "Create Account"
 msgstr "Konto erstellen"
 
+#~ msgid "Add some with the character menu."
+#~ msgstr "Füge einige mit dem Charaktermenü hinzu."
+
+#~ msgid "Riot Gear"
+#~ msgstr "Rüstung"
+
 #~ msgid "number"
 #~ msgstr "Nummer"
 
@@ -1962,20 +1976,8 @@ msgstr "Konto erstellen"
 #~ msgid "Add armor"
 #~ msgstr "Rüstung hinzufügen"
 
-#~ msgid "Weapons"
-#~ msgstr "Waffen"
-
-#~ msgid "No weapons yet"
-#~ msgstr "Noch keine Waffen"
-
 #~ msgid "This character has no weapons yet."
 #~ msgstr "Dieser Charakter hat noch keine Waffen"
-
-#~ msgid "Items"
-#~ msgstr "Gegenstände"
-
-#~ msgid "No items yet"
-#~ msgstr "Noch keine Gegenstände"
 
 #~ msgid "This character has no items yet."
 #~ msgstr "Dieser Charakter hat noch keine Gegenstände."

@@ -125,31 +125,6 @@
                         {% endif %}
 
                         <div class="dropdown-divider"></div>
-
-                        <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
-                                data-modal-title="{% trans 'Add Armor' %}"
-                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Armor' %}</a>
-                        <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
-                                data-modal-title="{% trans 'Add Weapon' %}"
-                                href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Weapon' %}</a>
-                        <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
-                                title="{% trans 'Add Item' %}"
-                                data-toggle="modal"
-                                data-modal-title="{% trans 'Add item' %}"
-                                data-target=".character-modal"
-                                href=""><i class="fa fa-plus text-info"></i> {% trans 'Add Item' %}</a>
-
-                        <div class="dropdown-divider"></div>
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
