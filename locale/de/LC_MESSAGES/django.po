@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-12 21:18+0000\n"
-"PO-Revision-Date: 2019-10-12 23:22+0200\n"
+"POT-Creation-Date: 2019-11-15 20:50+0000\n"
+"PO-Revision-Date: 2019-11-15 21:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: armory/models.py:21 armory/models.py:38 armory/models.py:71
 #: armory/models.py:102 armory/models.py:126 armory/models.py:178
@@ -26,9 +26,9 @@ msgstr ""
 #: horror/models.py:24 magic/models.py:9 magic/models.py:25 magic/models.py:41
 #: magic/models.py:57 magic/models.py:73 magic/models.py:89 magic/models.py:105
 #: magic/models.py:121 magic/models.py:142 magic/models.py:186
-#: rulebook/models.py:14 rules/models.py:24 rules/models.py:47
-#: rules/models.py:110 rules/models.py:131 rules/models.py:152
-#: rules/models.py:209 rules/models.py:251
+#: rules/models.py:24 rules/models.py:47 rules/models.py:110
+#: rules/models.py:131 rules/models.py:152 rules/models.py:209
+#: rules/models.py:251
 msgid "name"
 msgstr "Name"
 
@@ -40,7 +40,7 @@ msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:23 armory/models.py:45 armory/models.py:73
-#: armory/models.py:122 armory/models.py:234 characters/models.py:374
+#: armory/models.py:122 armory/models.py:234 characters/models.py:385
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:79 rules/models.py:29 rules/models.py:50 rules/models.py:133
 #: rules/models.py:154 rules/models.py:253
@@ -80,8 +80,7 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:49 armory/models.py:148 campaigns/models.py:12
-#: campaigns/models.py:63 characters/models.py:22 rulebook/models.py:16
-#: rules/models.py:27
+#: campaigns/models.py:63 characters/models.py:22 rules/models.py:27
 msgid "image"
 msgstr "Bild"
 
@@ -235,7 +234,7 @@ msgstr "Erzeugt von"
 msgid "Epoch"
 msgstr "Epoche"
 
-#: campaigns/models.py:54 forum/models.py:82 rulebook/models.py:17
+#: campaigns/models.py:54 forum/models.py:82
 msgid "text"
 msgstr "Text"
 
@@ -345,15 +344,15 @@ msgstr "Schatten"
 msgid "quirks"
 msgstr "Eigenarten"
 
-#: characters/models.py:333 characters/models.py:354
+#: characters/models.py:343 characters/models.py:365
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:423
+#: characters/models.py:434
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:435
+#: characters/models.py:446
 msgid "Quantity"
 msgstr "Menge"
 
@@ -456,6 +455,8 @@ msgid "Weight"
 msgstr "Gewicht"
 
 #: characters/templates/characters/_add_items.html:59
+#: characters/templates/characters/fragments/character.html:12
+#: characters/templates/characters/fragments/character.html:54
 #: characters/templates/characters/fragments/gear.html:112
 msgid "Value"
 msgstr "Wert"
@@ -772,90 +773,104 @@ msgstr ""
 msgid "Background"
 msgstr "Werdegang"
 
-#: characters/templates/characters/fragments/character.html:8
+#: characters/templates/characters/fragments/character.html:11
 msgid "Persona"
 msgstr "Persona"
 
-#: characters/templates/characters/fragments/character.html:11
+#: characters/templates/characters/fragments/character.html:13
+#: characters/templates/characters/fragments/character.html:55
+#: characters/templates/characters/fragments/combat.html:16
+msgid "Roll"
+msgstr "Wurf"
+
+#: characters/templates/characters/fragments/character.html:17
 msgid "Openness"
 msgstr "Offenheit"
 
-#: characters/templates/characters/fragments/character.html:15
+#: characters/templates/characters/fragments/character.html:22
 msgid "Conscientiousness"
 msgstr "Gewissenhaftigkeit"
 
-#: characters/templates/characters/fragments/character.html:19
+#: characters/templates/characters/fragments/character.html:27
 msgid "Extraversion"
 msgstr "Extraversion"
 
-#: characters/templates/characters/fragments/character.html:23
+#: characters/templates/characters/fragments/character.html:32
 msgid "Agreeableness"
 msgstr "Verträglichkeit"
 
-#: characters/templates/characters/fragments/character.html:27
+#: characters/templates/characters/fragments/character.html:37
 msgid "Neuroticism"
 msgstr "Neurotizismus"
 
-#: characters/templates/characters/fragments/character.html:31
+#: characters/templates/characters/fragments/character.html:42
 msgid "IQ"
 msgstr "IQ"
 
-#: characters/templates/characters/fragments/character.html:38
+#: characters/templates/characters/fragments/character.html:53
 msgid "Physis"
 msgstr "Physis"
 
-#: characters/templates/characters/fragments/character.html:41
+#: characters/templates/characters/fragments/character.html:59
 msgid "Deftness"
 msgstr "Geschick"
 
-#: characters/templates/characters/fragments/character.html:45
+#: characters/templates/characters/fragments/character.html:64
 msgid "Strength"
 msgstr "Kraft"
 
-#: characters/templates/characters/fragments/character.html:49
+#: characters/templates/characters/fragments/character.html:69
 msgid "Attractiveness"
 msgstr "Attraktivität"
 
-#: characters/templates/characters/fragments/character.html:53
+#: characters/templates/characters/fragments/character.html:74
 msgid "Endurance"
 msgstr "Ausdauer"
 
-#: characters/templates/characters/fragments/character.html:57
+#: characters/templates/characters/fragments/character.html:79
 msgid "Resistance"
 msgstr "Resistenz"
 
-#: characters/templates/characters/fragments/character.html:61
+#: characters/templates/characters/fragments/character.html:84
 #: characters/templates/characters/fragments/combat.html:150
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
-#: characters/templates/characters/fragments/character.html:68
+#: characters/templates/characters/fragments/character.html:95
+#: characters/templates/characters/fragments/character.html:121
+#: characters/templates/characters/fragments/character.html:138
+#: characters/templates/characters/fragments/character.html:175
 msgid "Dice"
 msgstr "Würfel"
 
-#: characters/templates/characters/fragments/character.html:71
+#: characters/templates/characters/fragments/character.html:96
+msgid "Amount"
+msgstr "Menge"
+
+#: characters/templates/characters/fragments/character.html:100
 #: characters/templates/characters/fragments/combat.html:132
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
-#: characters/templates/characters/fragments/character.html:75
+#: characters/templates/characters/fragments/character.html:104
 #: characters/templates/characters/fragments/combat.html:136
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
-#: characters/templates/characters/fragments/character.html:79
+#: characters/templates/characters/fragments/character.html:108
 msgid "Rerolls"
 msgstr "Wiederholungswürfel"
 
-#: characters/templates/characters/fragments/character.html:88
+#: characters/templates/characters/fragments/character.html:120
+#: characters/templates/characters/fragments/character.html:137
 msgid "Skills"
 msgstr "Fertigkeiten"
 
-#: characters/templates/characters/fragments/character.html:113
+#: characters/templates/characters/fragments/character.html:155
 msgid "Shadows"
 msgstr "Schatten"
 
-#: characters/templates/characters/fragments/character.html:128
+#: characters/templates/characters/fragments/character.html:174
 #: rules/templates/rules/_template_widget.html:29
 msgid "Knowledge"
 msgstr "Wissen"
@@ -867,10 +882,6 @@ msgstr "Aktion"
 #: characters/templates/characters/fragments/combat.html:13
 msgid "Type"
 msgstr "Typ"
-
-#: characters/templates/characters/fragments/combat.html:16
-msgid "Roll"
-msgstr "Wurf"
 
 #: characters/templates/characters/fragments/combat.html:17
 msgid "Time"
@@ -1544,29 +1555,13 @@ msgstr "Unbenannter Zauber"
 msgid "Spell created."
 msgstr "Zauber erschaffen."
 
-#: rulebook/models.py:13
-msgid "number"
-msgstr "Nummer"
-
-#: rulebook/models.py:15 rules/models.py:23
-msgid "FA Icon Class"
-msgstr "FA Icon Klasse"
-
-#: rulebook/models.py:22
-msgid "chapter"
-msgstr "Kapitel"
-
-#: rulebook/models.py:23
-msgid "chapters"
-msgstr "Kapitel"
-
-#: rulebook/templates/rulebook/chapter_list.html:5
-msgid "Rule book"
-msgstr "Regelbuch"
-
 #: rules/models.py:22
 msgid "is mandatory"
 msgstr "Ist Pflicht"
+
+#: rules/models.py:23
+msgid "FA Icon Class"
+msgstr "FA Icon Klasse"
 
 #: rules/models.py:25
 msgid "identifier"
@@ -1930,6 +1925,18 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "number"
+#~ msgstr "Nummer"
+
+#~ msgid "chapter"
+#~ msgstr "Kapitel"
+
+#~ msgid "chapters"
+#~ msgstr "Kapitel"
+
+#~ msgid "Rule book"
+#~ msgstr "Regelbuch"
 
 #~ msgid "Advancement"
 #~ msgstr "Weiterentwicklung"
