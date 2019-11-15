@@ -1,0 +1,530 @@
+<html lang="de">
+    <head>
+        <title>PhaseSix Regeln</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Viga&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="font/css/all.css">
+
+        <style>
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+
+            :lang(de) {
+                prince-hyphenate-patterns: url("hyph/hyph-de-1996.pat");
+            }
+
+            body {
+                font-family: 'Crimson Text';
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Viga';
+            }
+
+            h2 {
+                margin-bottom: 1cm;
+            }
+
+            .chapter-text h3, .chapter-text h4, .chapter-text h5, .chapter-text h6 {
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            .chapter-text p {
+                margin-top: 3mm;
+            }
+
+            .chapter {
+                page-break-before: always;
+            }
+
+            .page {
+                page-break-before: always;
+            }
+
+            .chapter-text {
+                column-count: 2;
+                column-gap: 1cm;
+                text-align: justify;
+            }
+
+            .chapter-image {
+                position: relative;
+                height: 10cm;
+                width: 21cm;
+                margin: -1cm -1cm 1cm -1cm;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .chapter-text img {
+                width: 9cm;
+            }
+
+            .text-danger {
+                color: red;
+            }
+
+            .text-info {
+                color: skyblue;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="page">
+ Hello
+</div>
+
+    
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/character.jpg)">
+                &nbsp;
+            </div>
+            <h2>Der Charakter</h2>
+            <div class="chapter-text">
+                <p>Um ein Phase Six Abenteuer zu bestehen erstellt jeder Spieler einen Charakter, den er in dem Abenteuer spielt. Das Leben des Charakters wird komplett auf seinem Charakterbogen dargestellt, der alle relevanten Werte enthält.</p>
+<p>Das Kapitel <em>Einen Charakter erstellen</em> geht genau darauf ein wie ein neuer Charakter erschaffen wird. In diesem Teil soll es um die grundlegenden Eigenschaften gehen, welche einen Charakter in PhaseSix ausmachen. </p>
+<h3>Persona</h3>
+<p>Die Werte unter Persona beziehen sich auf die psychologischen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Bei jedem Wurf auf Physiswerte oder Fertigkeiten wird einer der Personawerte hinzugenommen, je nach Situation.</p>
+<h4>Offenheit</h4>
+<p>Offenheit beschreibt die Offenheit gegenüber neuen Erfahrungen und Eindrücken. Ein Charakter mit schwach ausgeprägter Offenheit ist eher <em>konservativ</em> gegenüber neuem. Stark ausgeprägte Offenheit sorgt dafür dass der Charakter eher <em>neugierig</em> oder auch <em>erfinderisch</em> ist.</p>
+<h4>Gewissenhaftigkeit</h4>
+<p>Wie gewissenhaft geht der Charakter an Aufgaben oder Tätigkeiten heran? Schwach ausgeprägte Gewissenhaftigkeit macht den Charakter <em>nachlässig</em>, während stark ausgeprägte Gewissenhaftigkeit für eine <em>organisierte</em>, <em>effektive</em> Herangehensweise sorgt.</p>
+<h4>Extraversion</h4>
+<p>Dieser Wert stellt das zwischenmenschliche Verhalten des Charakters dar. Ein Charakter mit schwach ausgeprägter Extraversion ist eher <em>zurückhaltend</em> und <em>reserviert</em>, während eine stark ausgeprägte Extraversion für <em>Geselligkeit</em> steht.</p>
+<h4>Verträglichkeit</h4>
+<p>Auch Verträglichkeit bezieht sich auf das zwischenmenschliche Verhalten des Charakters. Wenig ausgeprägte Verträglichkeit steht für <em>antagonistisches</em>, <em>wettbewerbsorientiertes</em> Verhalten, eine stark ausgeprägte Verträglichkeit bedeutet dass der Charakter <em>kooperativ</em> und <em>mitfühlend</em> ist.</p>
+<h4>Neurotizismus</h4>
+<p>Neurotizismus steht für die emotionale Labilität des Charakters. Ein hoher Neurotizismuswert steht für ein starkes Empfinden von negativen Gefühlen wie <em>Angst</em>, <em>Anspannung</em>, <em>Trauer</em>, aber auch <em>Unsicherheit</em> und <em>Verlegenheit</em>. Charaktere mit niedrigem Neurotizismus-Wert sind eher <em>entspannt</em>, sie erleben negative Erlebnisse <em>stabiler</em> und sind eher <em>zufrieden</em>.</p>
+<p><strong><em>Achtung</em></strong>: Ein höherer Neurotizismus ist schlecht für die Würfe des Charakters. Im Gegensatz zu allen anderen Personawerten wird Neurotizismus von den Proben abgezogen und nicht als Bonus gewertet.</p>
+<h3>Physis</h3>
+<p>Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters. Auf diese Werte wird bei Proben direkt geworfen, wobei jeweils ein situationsabhängiger Persona Wert hinzugenommen wird (s. Würfe und Proben). </p>
+<h4>Geschick</h4>
+<p>Dieser Wert beschreibt sowohl das köperliche Gechick des Charakters als auch die Fingerfertigkeit.</p>
+<h4>Kraft</h4>
+<p>Kraft ist die reine Stärke des Charakters und kommt immer dann zur Anwendung wenn es darum geht mit reiner Muskelkraft etwas zu bewegen.</p>
+<h4>Attraktivität</h4>
+<p>Mit der Attraktivität wird dargestellt wie charismatisch der Charakter ist. Dabei muss ein hoher Wert nicht unbedingt für Schönheit stehen, es kann auch ein Charakter mit markantem Aussehen Attraktiv sein.</p>
+<h4>Ausdauer</h4>
+<p>Ausdauer ist die körperliche Ausdauer des Charakters, also nicht im Sinne von Geduld (dies ist eher <em>Gewissenhaftigkeit</em> unter Persona). Dieser Wert kommt also bei einem Dauerlauf oder einer lange dauernden, anstrengenden Tätigkeit zum Tragen. </p>
+<h4>Resistenz</h4>
+<p>Sowohl die Fähigkeit Verletzungen oder auch Schmerzen auszuhalten oder abzuwenden, als auch die Resistenz gegen Krankheiten, Gifte oder Umwelteinflüsse wie Hitze oder Kälte fließen in diesem Wert zusammen. </p>
+<h4>Schnelligkeit</h4>
+<p>Schnelligkeit ist sowohl die Geschwindigkeit mit der der Charakter sich bewegen kann, als auch die Fähigkeit schnell auf etwas zu reagieren.</p>
+<h3>Würfel</h3>
+<p>Jeder Charakter kann eine Anzahl an <em>Bonuswürfeln</em>, <em>Schicksalswürfeln</em> oder <em>Wiederholungswürfeln</em> haben. Alle drei haben unterschiedliche Verwendungen (s. Würfe und Proben), stellen jedoch immer einen Vorteil für den Charakter dar, welcher während des Spiels eingesetzt werden kann. </p>
+<p>Alle drei Würfelarten werden zu Beginn einer Spielsitzung aufgefrischt, also auf das Maximum des Charakters gesetzt. </p>
+<h3>Fertigkeiten</h3>
+<p>Komplexere Handlungen oder Kenntnisse werden durch <em>Fertigkeiten</em> beschrieben. Alle Charaktere haben die selben Fertigkeiten mit unterschiedlichen Werten, so kann der Spielleiter sicher sein dass ein Spieler einen Wurf auf eine Fertigkeit auch sicher machen kann. </p>
+<p>Auf Fertigkeiten wird wie auch bei den Physiswerten immer in Verbindung mit einem Personawert geworfen. Dieser Personawert ergibt sich aus der jeweiligen Situation und wird vom Spielleiter festgelegt.</p>
+<h3>Wissen</h3>
+<p>Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Auch auf Wissen wird immer in Verbindung mit einem Personawert geworfen.</p>
+<h3>Schatten</h3>
+<p>Ein Charakter kann besondere Eigenschaften haben, die ihn außerhalb seiner körperlichen oder psychischen Eigenschaften beeinflussen. Jeder <em>Schatten</em> bringt eine eigene Beschreibung oder Regel mit. So kann ein Charakter z.B. einen Rivalen haben oder obrigkeitshörig sein. Auf Schatten wird nicht geworfen, Schatten haben auch keine Werte.</p>
+            </div>
+        </div>
+    
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/create.jpg)">
+                &nbsp;
+            </div>
+            <h2>Einen Charakter erstellen</h2>
+            <div class="chapter-text">
+                <p>Um einen Charakter zu erstellen stellst du den Werdegang anhand von
+<em>Schablonen</em> zusammen. Es gibt keine fertigen Charakterklassen oder
+-profile, statt dessen wird der Charakter frei konstruiert.</p>
+<h3>Abstammung und Werdegangspunkte</h3>
+<p>Ein Phase Six Charakter hat immer eine Abstammung. Für alle Menschen
+(und somit für die meisten Abenteuer) ist dies die Abstammung "Mensch",
+es kann aber in anderen Settings auch Elfen, Zwerge, Androiden
+oder Roboter geben. </p>
+<p>Die Abstammung gibt vor wieviele <em>Werdegangspunkte</em> der Charakter hat.
+Mit diesen Werdegangspunkten können bei der Charaktererschaffung
+Schablonen zusammengestellt werden, die den Werdegang und somit alle
+Werte des Charakters ausmachen. </p>
+<h3>Erweiterungen und Epochen</h3>
+<p>Zu Beginn einer PhaseSix Kampagne oder eines Abenteuers legt der 
+Spielleiter die Epoche fest, in der das Abenteuer spielt. PhaseSix hat 
+verschiedene irdische Epochen zur Auswahl:</p>
+<ul>
+<li>Die klassische Antike</li>
+<li>Mittelalter, Wikinger und Kreuzzüge</li>
+<li>Viktorianisches Zeitalter und der Wilde Westen</li>
+<li>Imperialismus und Weltkriege</li>
+<li>Moderne Zeit</li>
+<li>Science Fiction</li>
+</ul>
+<p>Die Epochen legen neben den Schablonen auch die Ausrüstung fest, die 
+Charaktere erlangen können. Mittelalter, Wikinger und Kreuzzüge lässt
+sich so auch für ein Fantasy Setting verwenden, welches nicht auf der 
+Erde spielt.</p>
+<p>Zudem gibt es frei wählbare Erweiterungen, welche für ein Scenario oder
+ein Abenteuer vom Spielleiter gewählt werden können. Diese fügen dem 
+Spiel spezielle Regeln, Gegenstände und Schablonen hinzu. Die besonderen
+Erweiterungen sind:</p>
+<ul>
+<li>Magie</li>
+<li>Horror</li>
+<li>Körpermodifikationen</li>
+</ul>
+<h3>Schablonen</h3>
+<p>Eine Schablone ist eine bestimmte Station im Leben des Charakters.
+Jede Schablone ist einem der Bereiche <em>Bildung</em>, <em>Beruf</em>, <em>Talent</em>,
+<em>Interessen</em> oder <em>Charakter</em> zugeordnet. </p>
+<p><img alt="Schablone" src="img/template.png" title="Schablone" /></p>
+<p>Jede Schablone verändert dabei eine kleine Zahl an Eigenschaften und
+Fertigkeiten des Charakters zum Positiven oder Negativen, und kann
+Wissen oder Schatten mit sich bringen. Zudem können Schablonen
+eigene Regeln beinhalten, welche der Charakter dann übernimmt. Die 
+Schablone <em>Blutmagie</em> aus der Magie-Erweiterung bringt zum Beispiel
+die Regel auch Wunden statt Arkana für das Ausführen von Zaubern
+zu verwenden.</p>
+<p>Eine Schablone kann auch von einer anderen abhängen, so benötigt
+die Schablone <em>Militärakademie</em> zum Beispiel den Beruf <em>Soldat</em>.</p>
+<p>Jede Schablone ist eine gewisse Zahl an Werdegangspunkten wert.
+Dies ist die Anzahl der Punkte die aufgewendet werden müssen um die
+Schablone in den eigenen Werdegang zu übernehmen. </p>
+<p><img alt="Schablone" src="img/template1.png" title="Schablone" /></p>
+<h3>Schablonen zusammenstellen</h3>
+<p>Um einen Charakter zu erschaffen wählst du so lange Schablonen aus der
+gewählten Epoche und eventuellen Erweiterungen bis
+keine Werdegangspunkte mehr übrig sind, oder du mit dem Charakter
+zufrieden bist. Diese Schablonen können beliebig aus allen
+Kategorien zusammengestellt werden. So kann man auch mehrere Berufe 
+wählen, dies sind im Werdegang des Charakters alle Berufe die er einmal
+ausgeführt hat, oder sogar noch parallel ausübt. </p>
+<p>Die Attribute, Fertigkeiten, Schatten und das Wissen der Schablonen
+werden zusammengerechnet und auf den Startwert 1 im Charakterbogen 
+addiert. Hierbei können alle Werte auch negativ werden (siehe Würfe
+unr Proben)</p>
+<h3>Den Charakter fertigstellen</h3>
+<p>Bist du mit der Zusammenstellung der Schablonen zufrieden, so kannst
+du den Charakter einfach als <em>fertig</em> erklären. Sollten noch
+Werdegangspunkte übrig und nicht ausgegeben sein so werden diese zur
+<em>Reputation</em> des Charakters (siehe Steigern). Es gehen also keine Punkte
+verloren. </p>
+            </div>
+        </div>
+    
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/rolls.jpg)">
+                &nbsp;
+            </div>
+            <h2>Würfe und Proben</h2>
+            <div class="chapter-text">
+                <p>Immer wenn ein Charakter eine Handlung mit ungewissem Ausgang durchführt wird mit Würfeln auf einen passenden Wert geworfen. Der Ausgang des Wurfes zeigt auf ob und wie gut die Handlung gelungen ist.</p>
+<p>Für alle Würfe werden sechsseitige Würfel verwendet. Die Anzahl der Würfel richtet sich nach dem Wert des Charakters in der betreffenden Eigenschaft, dazu kommen evtl. Bonuswürfel oder Schicksalswürfel. </p>
+<p>Bei <strong>jedem</strong> Wurf wirft der Spieler so viele Würfel wie die betreffende Eigenschaft <strong>plus</strong> eine vom Spielleiter festgelegte Persona-Eigenschaft ausmachen. Dabei richtet sich die Persona-Eigenschaft nach der Situation und wird jeweils anders vom Spielleiter festgelegt. </p>
+<h3>Schwierigkeitsgrade</h3>
+<p>Es gibt 4 Schwierigkeitsgrade bei Würfen, <em>leicht</em>, <em>normal</em>, <em>schwer</em> und <em>sehr schwer</em>.</p>
+<p>Die ersten drei Grade bestimmen welches Würfelergebnis ein Erfolg ist. Bei einer leichten Probe sind Würfel mit einem Ergbenis von 4, 5 und 6 ein Erfolg. Bei einer normalen Probe sind es Ergebnisse von 5 und 6, und bei einer schweren Probe gelten nur Ergebnisse von 6 als Erfolg. </p>
+<p>In der Regel reicht ein Erfolg aus um die Probe gelingen zu lassen. Bei einer <em>sehr schweren</em> Probe benötigt der Charakter 2 Erfolge mit einem Ergebnis von 6 für das Gelingen.</p>
+<p>Auch wenn ein Erfolg für das Gelingen der Probe in der Regel ausreicht bedeuten mehr Erfolge jedoch ein besseres Gelingen. Würfelergebnisse von 1 wiegen keine Erfolge auf und werden einfach ignoriert.</p>
+<h3>Bonuswürfel</h3>
+<p>Ein Charakter kann eine Anzahl an Bonuswürfeln haben. Diese werden durch die Schablonen (siehe <em>Einen Charakter erstellen</em>) festgelegt werden. Von den Bonuswürfeln kann eine beliebige Anzahl <strong>vor</strong> dem Wurf zu den zu werfenden Würfeln hinzugenommen werden. So ist es auch möglich einen Wurf zu machen wenn die Summe aus Wert und Persona-Eigenschaft 0 oder weniger ergibt.</p>
+<p>Die Bonuswürfel frischen sich zu Beginn jeder Spielsitzung auf ihr Maximum auf. </p>
+<h3>Wiederholungswürfel</h3>
+<p>Wiederholungswürfel funktionieren ähnlich wie Bonuswürfel, werden jedoch nicht zu einem Wurf hinzugenommen sondern im Nachhinein angewandt. Für je einen Wiederholungswürfel kann einer der Würfel eines Wurfes erneut geworfen werden. So ist es also nicht möglich einen Wurf auf 0 oder weniger erfolgreich zu bestehen.</p>
+<p>Wiederholungswürfel frischen sich auch zu Beginn jeder Spielsitzung auf ihr Maximum auf.</p>
+<h3>Schicksalswürfel</h3>
+<p>In der Regel bekommt der Charakter Schicksalswürfel mit seinem Werdegang, allerdings kann der Spielleiter auch einzelne Schicksalswürfel für besondere Aktionen oder bei besonderen Gelegenheiten vergeben.</p>
+<p>Schicksalswürfel können sowohl als Bonus- als aus als Wiederholungswürfel eingesetzt werden. Auf einem Schicksalswürfel ist ein Ergebnis von 4 <strong>immer</strong> ein Erfolg, unabhängig vom Schwierigkeitsgrad der Probe.</p>
+            </div>
+        </div>
+    
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/combat.jpg)">
+                &nbsp;
+            </div>
+            <h2>Der Kampf</h2>
+            <div class="chapter-text">
+                <p>Wenn es zum Kampf kommt verläuft das Spiel in Runden.</p>
+<h3>Beginn des Kampfes</h3>
+<p>Sobald sich ein Konflikt ergibt wird die Zeit eingefroren, und die Gruppe bestimmt die Reihenfolge in der die Teilnehmer des Kampfes agieren. </p>
+<p>Hierzu wirft jeder Teilnehmer auf einen W6, und addiert den <em>Schnelligkeitswert</em> hinzu. Der Teilnehmer mit dem höchsten Ergebnis beginnt den Kampf, alle Weiteren folgen in der Reihenfolge ihrer Ergebnisse. </p>
+<p>Haben zwei Teilnehmer das selbe Ergebnis, so entscheidet zunächst der Wert <em>Schnelligkeit</em>, und falls dieser auch identisch ist der <em>Geschickwert</em>.</p>
+<h3>Ablauf der Runden</h3>
+<p>Der Kampf ist in <em>Kampfrunden</em> aufgeteilt. In jeder Kampfrunde bekommt jeder Teilnehmer einmal die <em>Initiative</em>, d.h. er ist am Zug und kann bestimmen welche <em>Aktionen</em> er ausführt. </p>
+<p>Hat der letzte Teilnehmer agiert beginnt die nächste <em>Kampfrunde</em> mit dem ersten Teilnehmer. </p>
+<h3>Akteur und Aktionen</h3>
+<p>Ist ein Teilnehmer am Zug so hat er die <em>Initiative</em>, er ist in diesem Moment der <em>Akteur</em>.</p>
+<p>Zu Beginn des Zuges frischen sich die <em>Aktionen</em> des Teilnehmers auf. Die Anzahl der Aktionen des Spielers ist der Durchschnitt aus <em>Schnelligkeit</em> und <em>Geschick</em> plus 1. Wenn dieses Ergebnis negativ sein sollte hat der Teilnehmer trotzdem eine Aktion pro Runde, ist also nur sehr langsam. </p>
+<p>"Auffrischen" bedeutet also dass alle Aktionen wieder verfügbar sind. Wenn der Teilnehmer zuvor Aktionen verbraucht hat, etwa durch Handlungen in früheren Kampfrunden, setzt er seine verfügbaren Handlungen wieder auf das Maximum.</p>
+<p>Sind die Aktionen aufgefrischt kann der Teilnehmer im Kampf handeln. Dazu führt er nacheinander Handlungen aus, wobei jede Handlung eine gewisse Zahl an <em>Aktionen</em> in Anspruch nimmt. Handlungen können u.A. folgende sein:</p>
+<ul>
+<li>Mit einer Waffe angreifen (so viele Angriffe wie bei "Angriffe / Aktion" angegeben ist)</li>
+<li>Mit einer Waffe oder einem Gegenstand <em>parieren</em></li>
+<li>Eine Waffe nachladen</li>
+<li>Einen Gegenstand benutzen</li>
+<li>"Schnelligkeit" Meter gehen (und dabei eine weitere Handlung ausführen ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)</li>
+<li>"Schnelligkeit"*2 Meter rennen</li>
+<li>"Schnelligkeit"/2 Meter robben</li>
+</ul>
+<p>Aktionen sollten nicht zusammen, sondern immer nacheinander ausgeführt werden, da es mögliche Reaktionen gibt.</p>
+<h3>Reaktionen</h3>
+<p>Agiert ein <em>Akteur</em> im Kampf, so können alle Teilnehmer, die den <em>Akteur</em> wahrnehmen, auf diese Aktion reagieren.</p>
+<p>Um auf eine Aktion zu reagieren zu können müssen folgende Bedingungen erfüllt sein:</p>
+<ul>
+<li>Der reagierende Teilnehmer muss den <em>Akteur</em> direkt wahrnehmen, also hören, sehen oder auf andere Art von seiner Aktion Kenntnis erlangen.</li>
+<li>Der reagierende Teilnehmer hat noch unverbrauchte <em>Aktionen</em> </li>
+</ul>
+<p>Die Reaktion wird direkt nach der Aktion des <em>Akteurs</em> ausgeführt, findet aber praktisch gleichzeitig statt. Es kann immer nur eine <em>Reaktion</em> eines Teilnehmers auf eine <em>Aktion</em> folgen. Es können jedoch beliebig viele Teilnehmer auf den <em>Akteur</em> reagieren, wenn sie dessen <em>Aktion</em> wahrnehmen. </p>
+<p>Jede <em>Reaktion</em> verringert die verfügbaren <em>Aktionen</em> des reagierenden Teilnehmers um eins.</p>
+<h3>Aktionen durch Bonuswürfel</h3>
+<p>Bonus- und Schicksalswürfel können im Kampf verwendet werden um Aktionen zu erlangen oder zu stehlen.</p>
+<p>Um eine zusätzliche Aktion zu erlangen kann ein <em>Bonuswürfel</em> für die Spielsitzung abgezogen werden. Die zusätzliche Aktion steht sofort zur Verfügung. </p>
+<p>Wird ein <em>Schicksalswüfel</em> ausgegeben kann eine Aktion von einem Gegner gestohlen werden. Diese steht dem Gegner in seiner aktuellen (oder nächsten, falls er nicht an der Reihe ist) Runde nicht mehr zur verfügung. Der Teilnehmer welcher den Schicksalswürfel ausgegeben hat hat die Aktion sofort zur Verfügung.</p>
+<p>Das Ausgeben von Würfeln für Aktionen nimmt selbst keine Aktion in Anspruch.</p>
+<h3>Würfelpool und Gruppenwürfel</h3>
+<p>tba</p>
+<h3>Ablauf eines Angriffs</h3>
+<p>Angriffe mit Waffen werden im Nahkampf und im Fernkampf genau gleich gehandhabt. Der einzige Unterschied ist dass Angriffe mit Nahkampfwaffen auf die Fertigkeit <em>Nahkampf</em> geworfen werden, Angriffe mit Schusswaffen auf die Fertigkeit <em>Schießen</em> und Angriffe mit Wurfwaffen auf die Fertigkeit <em>Werfen</em>.</p>
+<h4>1. Der Trefferwurf</h4>
+<p>Der Charakter greift pro Runde so oft an wie bei der Waffe als Angriffe/Aktion vermerkt ist. Um für jeden dieser Angriffe zu ermitteln ob er das Ziel trifft wird ein Trefferwurf mit einem Würfel pro Angriff gemacht. Der Mindestwurf dafür ist:</p>
+<p><em>7 - Waffenfertigkeit - Treffgenauigkeit der Waffe [ + Rückstoßmalus ]</em></p>
+<p>Ein Charakter mit einer Desert Eagle und einem Wert von 2 bei Schießen wirft also einen Wüfel auf 5+. Ein Charakter mit einer Messer und einem Wert von 5 auf Nahkampf wirft 2 Würfel auf 2+. </p>
+<p>Jeder Erfolg ist ein Treffer. Es können Wiederholungswürfel und Bonuswürfel verwendet werden.</p>
+<h5>Rückstoß (optional)</h5>
+<p>Dies ist eine optionale Regel. Vor dem Abenteuer sollten sich Spielleiter und Spieler darauf einigen ob sie verwendet wird. </p>
+<p>Jedes Mal wenn ein Charakter mit einer Fernkampfwaffe angreift merkt man sich die Anzahl der Schüsse, verringert um die Rückstoßkontrolle der verwendeten Waffe (auf einem Würfel als Rückstoßzähler). Wird in der darauffolgenden Aktion direkt wieder geschossen so kommt dieser Wert als Malus auf den Trefferwurf. Wird nicht geschossen so verfällt der Malus komplett.</p>
+<h5>Trefferwürfe bei falscher Distanz (optional)</h5>
+<p>Dies ist eine optionale Regel. Vor dem Abenteuer sollten sich Spielleiter und Spieler darauf einigen ob sie verwendet wird. </p>
+<p>Jede Waffe hat eine angegebene Distanz auf der sie effektiv ist. Weicht die Distanz des Ziels von der bei der Waffe angegebenen ab ergibt sich ein Malus auf den Trefferwurf.</p>
+<p>Die Distanzen sind:</p>
+<ul>
+<li>Kurz: 0-20 Meter</li>
+<li>Mittel: 21-100 Meter</li>
+<li>Lang: 101-500 Meter</li>
+<li>Extrem: &gt;500 Meter</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Ziel/Waffe</th>
+<th>Kurz</th>
+<th>Mittel</th>
+<th>Lang</th>
+<th>Extrem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kurz</td>
+<td>0</td>
+<td>-1</td>
+<td>-2</td>
+<td>-3</td>
+</tr>
+<tr>
+<td>Mittel</td>
+<td>-2</td>
+<td>0</td>
+<td>-1</td>
+<td>-2</td>
+</tr>
+<tr>
+<td>Lang</td>
+<td>-4</td>
+<td>-2</td>
+<td>0</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>Extrem</td>
+<td>-7</td>
+<td>-3</td>
+<td>-3</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h5>Feuermodi</h5>
+<p>Moderne Waffen haben in der Regel verschiedene Feuermodi. Sind bei der Waffe Feuermodi angegeben kann die folgende Regel für die Waffe verwendet werden. </p>
+<p>Es wird davon ausgegangen dass sich die Waffe bei einem normalen Trefferwurf im Halbautomatischen- bzw. Burstmodus befindet. In diesem Modus gibt die Waffe die angegebene Anzahl von Schüssen pro Aktion ab. Bei Waffen mit nur vollautomatischem Feuermodus wird dieser als Standard angenommen. </p>
+<p>Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die Schusszahl und die Genauigkeit der Waffe:</p>
+<ul>
+<li>Einzelschussmodus: <em>Schuss pro Aktion: 1</em>, <em>Genauigkeit +2</em></li>
+<li>Vollautomatik: <em>Schuss pro Aktion verdoppelt</em>, <em>Genauigkeit -3</em></li>
+</ul>
+<h4>2. Der Deckungswurf</h4>
+<p>Wenn der Angegriffene Deckung hat ist es möglich, Treffer zu verhindern bevor sie Schaden anrichten können. Deckung gibt es in unterschiedlichen Stufen, die auch den Mindestwurf vorgeben:</p>
+<ul>
+<li>6+ geringe Deckung, der Großteil des Körpers sichtbar. Nur einige Bereiche der Sicht des Angreifers auf den Beschossenen sind verdeckt. </li>
+<li>5+ halb verdeckt</li>
+<li>4+ nur geringe Teile des Beschossenen sind für den Angreifer sichtbar</li>
+</ul>
+<p>Der Angegriffene wirft für jeden Treffer einen Würfel. Ein Erfolg reduziert hierbei die Anzahl der Treffer um eins.</p>
+<p>Ein Deckungswurf ist sowohl bei Nahkampf als auch bei Fernkampfwaffen möglich, wenn Deckung vorhanden ist. Es können Bonus- und Wiederholungswürfel verwendet werden.</p>
+<h4>3. Der Rüstungswurf</h4>
+<p>Um zu prüfen ob die getroffenen Angriffe Schaden anrichten werden verschiedene Kriterien in einem Wurf, dem Rüstungswurf, vereint.
+Hier werden in erster Linie der Durchschlag der Waffe mit der angelegten Rüstung verglichen. </p>
+<p>Der Angegriffene wirft für jeden (eventuell durch Deckungswurf reduzierten) Treffer einen Würfel. Der Mindestwurf ergibt sich
+hierbei aus:</p>
+<p><em>7 - Schutz der Rüstung + Durchschlag der Waffe/Munition</em></p>
+<p>Alle Treffer die nicht durch Erfolge dieses Wurfes verhindert wurden schlagen jeweils so viele Wunden wie bei der Waffe angegeben ist.</p>
+            </div>
+        </div>
+    
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/wounds.jpg)">
+                &nbsp;
+            </div>
+            <h2>Wunden und Heilung</h2>
+            <div class="chapter-text">
+                <p>Die körperliche Unversehrtheit des Charakters wird in Form von Wunden dargestellt. Ein Charakter kann eine bestimmte Anzahl von Wunden aushalten ohne ohnmächtig zu werden. </p>
+<h3>Wunden und Boosts</h3>
+<p>Betrachtet man den Charakterbogen eines unversehrten Charakters, so
+sieht man eine Leiste von gefüllten Herzen:</p>
+<p><i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i></p>
+<p>Diese Herzen stellen die Wunden dar, die ein Charakter hinnehmen kann 
+ohne ohnmächtig zu werden. Jede Schadensquelle verursacht eine bestimmte
+Zahl von Wunden. Dies kann eine feste Zahl an Wunden sein, wie bei den
+meisten Waffen. Es kann jedoch auch eine Würfelformel verwendet werden. </p>
+<p>Die Herzen werden abgestrichen oder geleert sobald der Charakter Wunden
+hinnimmt. So kann sich die Lebensanzeige nach einem Treffer einer Waffe
+folgendermaßen entwickeln:</p>
+<p><i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="far fa-heart fa-2x text-danger"></i>
+<i class="far fa-heart fa-2x text-danger"></i></p>
+<p>Diese leeren Herzen können durch Heilung wieder gefüllt werden. </p>
+<p>Anders verhält es sich mit Boosts. Einige Gegenstände verleihen bei
+Anwendung Boosts, die reine Erste Hilfe ohne Hilfsmittel gibt z.B.
+einen Boost. Boosts werden als andersfarbige Herzen dargestellt und
+können ebenso Wunden absorbieren, wenn sie abgestrichen werden. </p>
+<p>Bei Boosts werden diese Herzen jedoch komplett wieder entfernt und
+können nicht durch Heilung wieder hergestellt werden. Ein Boost ist
+also eine zeitweise Verbesserung des Zustands.</p>
+<p>Nimmt der Charakter Schaden wird immer von rechts abgestrichen.
+Zunächst werden die Boosts verbraucht, danach die noch vollständigen
+Herzen. Bei folgender Anzeige ist der Boost also <em>nach</em> der Verwundung
+(die leeren Herzen) eingetreten.</p>
+<p><i class="fas fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-danger"></i>
+<i class="far fa-heart fa-2x text-danger"></i>
+<i class="fas fa-heart fa-2x text-info"></i>
+<i class="fas fa-heart fa-2x text-info"></i>
+<i class="fas fa-heart fa-2x text-info"></i></p>
+<h3>Ohnmacht und Tod</h3>
+<p>Ein Charakter der weder volle Herzen noch Boosts hat wird ohnmächtig
+und gilt als sterbend.</p>
+<h3>Heilung</h3>
+<p>Wirkliche Heilung von Wunden ist nur über Zeit und mit Medizin möglich.
+Erste Hilfe und die Anwendung von Bandagen und weiteren Hilfsmitteln
+erzeugen nur Boost. </p>
+<p>Die Anwendung der Erste Hilfe Fertigkeit ohne Hilfsmittel erzeugt einen
+Boost. Mit Hilfsmittel variiert die Anzahl, dies ist bei den Gegenständen
+beschrieben. </p>
+<h3>Die Rast</h3>
+<p>Kommen die Charaktere zu einer Ruhepause von mindestens 3 Stunden, so 
+gilt dies als <em>Rast</em>. Hierbei kann jeder Charakter einzeln für sich 
+entscheiden wieviele Stunden er ruhen möchte. Manchmal wird dies natürlich auch
+von Störungen unterbrochen.</p>
+<p>Je nach Dauer der Rast kann der Charakter verschiedene Wunden oder Boosts
+wieder herstellen. Alle Angaben werden addiert, so dass eine zehnstündige
+Rast 2 Wunden heilt und 2 Boosts gibt.</p>
+<ul>
+<li>3 Stunden: 1 Boost, falls der Charakter weniger als 3 Boosts hat</li>
+<li>5 Stunden: Es wird eine Wunde geheilt</li>
+<li>8 Stunden: 1 Boost, falls der Charakter weniger als 3 Boosts hat</li>
+<li>10 Stunden: Es wird eine Wunde geheilt</li>
+</ul>
+<h3>Zustände des Charakters</h3>
+<p>Ein Charakter kann verschiedene Zustände haben. Diese haben verschiedene
+Auswirkungen auf das Handeln des Charakters, aber auch Effekte über Zeit. </p>
+<h4>Sterbend</h4>
+<p>Dieser Zustand wird nur verursacht wenn die Wunden des Charakters die
+maximalen Wunden übersteigen, die Herzen also auf 0 sinken. </p>
+<h4>Ohnmacht</h4>
+<h4>Blutend</h4>
+<h4>Vergiftet</h4>
+<h4>Brennend</h4>
+            </div>
+        </div>
+    
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/advancement.jpg)">
+                &nbsp;
+            </div>
+            <h2>Steigern</h2>
+            <div class="chapter-text">
+                <p>Im Laufe der Zeit kann der Charakter Erfahrung sammeln und sich
+weiterentwickeln. Dies geschieht auch auf der Basis von Schablonen.</p>
+<h3>Reputation</h3>
+<p>Reputation stellt den Bekanntheitsgrad des Charakters dar. Es ist 
+eine Angabe wie wahrscheinlich es ist dass der Charakter den Personen
+denen er begegnet bekannt ist, als auch ein Wert der besagt wieviel 
+der Charakter in seinem Leben schon erlebt hat.</p>
+<p>Reputation wird in der Form <em>verbraucht/gesammelt</em> Festgehalten. 
+Alle jemals bekommene Reputation steht hinter dem Schrägstrich, alle
+Reputation die man für das Steigern verwendet hat davor. Solange
+die verbrauchte Reputation geringer ist als die gesammelte können für die 
+Differenz Schablonen erworben werden.</p>
+<h4>Reputation erlangen</h4>
+<p>Für erfolgreiche Abenteuer erhält der Charakter Reputation. Diese wird
+vom Spielleiter vergeben und sollte sich für ein Abenteuer im Bereich
+von 5-10 bewegen. </p>
+<p>Es kann auch für einzelne Aktionen direkt Reputation geben. So kann
+eine gelungene Aktion oder Szene im Spiel dazu führen dass der Spielleiter
+direkt eine gewisse Anzahl an Reputation vergibt.</p>
+<h3>Den Charakter weiterentwickeln</h3>
+<p>Für die erlangte Reputation kann der Spieler nach jeder
+Spielsitzung Schablonen aus den Bereichen <em>Charakter</em>, <em>Interessen</em>,
+<em>Lebensumstände</em> und <em>Talent</em> kaufen. Es ist nicht möglich neue
+Schablonen aus den Bereichen <em>Beruf</em> und <em>Bildung</em> hinzuzufügen.</p>
+<p>Dieses Weiterentwickeln findet jeweils nach einer Spielsitzung statt, 
+so kann auch innerhalb eines Abenteuers der Charakter um weitere 
+Schablonen erweitert werden.</p>
+<p>Diese Schablonen werden genau wie bei der Charaktererschaffung festgehalten
+und die Veränderungen der Werte direkt auf dem Charakterbogen verrechnet.</p>
+            </div>
+        </div>
+    
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/horror.jpg)">
+                &nbsp;
+            </div>
+            <h2>Horror</h2>
+            <div class="chapter-text">
+                <p>Die Horror-Erweiterung von PhaseSix fügt die klassischen Horror Elemente
+zum Spiel hinzu. Nicht nur können Charaktere Silbermunition in ihre 
+Waffen laden, es gibt auch Wesen aus der dunkelsten Phantasie und
+obskure Gegenstände. </p>
+<p>Zudem hat ein Charakter nun einen möglichen Stresslevel. Wenn die 
+nichtweltlichen Begegnungen zuviel sind besteht die Gefahr dass der 
+Charakter die Kontrolle verliert, oder gar eine permanente 
+Geistesstörung erlangt.</p>
+<h3>Stress</h3>
+<p>ist die Horror-Erweiterung aktiviert, so hat der Charakter einen Wert 
+für Stress, welcher bei 0 beginnt. Zudem hat der Charakter einen 
+Wert für den maximalen Stress, den er verkraften kann. Dieser Wert ist
+von Anfang an 6, kann aber durch Schablonen oder Anderes verändert werden.</p>
+<p>Der Charakter kann Stress erlangen, indem er auf ausserweltliche 
+Wesenheiten trifft oder andere Begegnungen hat, welche so abnormal sind
+dass sie ihn beeinflussen.</p>
+<p>Erreicht der Charakter durch eine Aktion sein maixmales Stresslevel,
+so bekommt er einen <em>Tick</em>, und der Stress wird auf 0 gesetzt.</p>
+<h3>Ticks</h3>
+<p>Erreicht der Charakter den maximalen Stresslevel, so bekommt er einen
+<em>Tick</em>, und der Stresslevel wird wieder auf 0 gesetzt.</p>
+<p>Ticks sind psychologische Krankheiten, welche auch einen Einfluss auf 
+die Charakterwerte des Charakters haben. Währen der Charakter Stress
+wieder durch eine Rast oder ähnliches abbauen können ist es ohne
+Terapie nicht möglich Ticks wieder zu entfernen. </p>
+<p>Sollte ein Charakter einen Tick erhalten wird auf die folgenden 
+Tabellen gewürfelt, und der ermittelte Tick dem Charakter hinzugefügt.</p>
+            </div>
+        </div>
+    
+    </body>
+</html>

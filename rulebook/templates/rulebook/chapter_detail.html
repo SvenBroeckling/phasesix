@@ -12,7 +12,7 @@
             margin-right: -15px;
         }
     </style>
-    <div class="belowhead-img mb-5" style="background-image: url({{ object.image.url }})">
+    <div class="belowhead-img mb-5" style="background-image: url({% static object.image_url %})">
         &nbsp;
     </div>
     {% endif %}
@@ -21,19 +21,19 @@
 {% block content %}
     <div class="row">
         <div class="col-md-9 rules">
-            <h1><i class="{{ object.fa_icon_class|default:"book" }}"></i> {{ object.name }}</h1>
+            <h1><i class="{{ object.fa_icon_class|default:"fas fa-book" }}"></i> {{ object.title }}</h1>
             <br>
             <div class="columns">
-                {{ object.text|urpg_markup }}
+                {{ object.content|safe }}
             </div>
         </div>
         <div class="col-md-3">
             <div class="card border-0">
                 <ul class="list-group list-group-flush">
-                    {% for chapter in all_chapters %}
+                    {% for chapter in structure %}
                         <li class="list-group-item">
-                            <i class="{{ chapter.fa_icon_class|default:"book" }} fa-fw"></i>
-                            <a class="mb-5 no-decoration" href="{% url 'rulebook:detail' pk=chapter.pk %}">{{ chapter.name }}</a><br>
+                            <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw"></i>
+                            <a class="mb-5 no-decoration" href="{% url 'rulebook:detail' pk=forloop.counter %}">{{ chapter.title }}</a><br>
                         </li>
                     {% endfor %}
                 </ul>

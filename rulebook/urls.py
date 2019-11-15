@@ -5,6 +5,5 @@ from rulebook import views
 app_name = 'rulebook'
 
 urlpatterns = [
-    url('^$', views.IndexView.as_view(), name='index'),
     url('^chapter/(?P<pk>\d+)$', views.ChapterDetailView.as_view(), name='detail'),
 ]

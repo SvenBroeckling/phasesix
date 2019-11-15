@@ -1,0 +1,91 @@
+<html lang="de">
+    <head>
+        <title>PhaseSix Regeln</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Viga&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="font/css/all.css">
+
+        <style>
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+
+            :lang(de) {
+                prince-hyphenate-patterns: url("hyph/hyph-de-1996.pat");
+            }
+
+            body {
+                font-family: 'Crimson Text';
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Viga';
+            }
+
+            h2 {
+                margin-bottom: 1cm;
+            }
+
+            .chapter-text h3, .chapter-text h4, .chapter-text h5, .chapter-text h6 {
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            .chapter-text p {
+                margin-top: 3mm;
+            }
+
+            .chapter {
+                page-break-before: always;
+            }
+
+            .page {
+                page-break-before: always;
+            }
+
+            .chapter-text {
+                column-count: 2;
+                column-gap: 1cm;
+                text-align: justify;
+            }
+
+            .chapter-image {
+                position: relative;
+                height: 10cm;
+                width: 21cm;
+                margin: -1cm -1cm 1cm -1cm;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .chapter-text img {
+                width: 9cm;
+            }
+
+            .text-danger {
+                color: red;
+            }
+
+            .text-info {
+                color: skyblue;
+            }
+        </style>
+    </head>
+    <body>
+
+    {% include 'templates/title.html' %}
+
+    {% for chapter in structure %}
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url(img/{{ chapter.image }})">
+                &nbsp;
+            </div>
+            <h2>{{ chapter.title }}</h2>
+            <div class="chapter-text">
+                {{ chapter.content }}
+            </div>
+        </div>
+    {% endfor %}
+    </body>
+</html>

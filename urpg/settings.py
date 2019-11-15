@@ -122,6 +122,8 @@ COMPRESS_ENABLED = False
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_files')
 
+RULEBOOK_ROOT = os.path.join(STATIC_ROOT, 'rulebook')
+
 LOGIN_REDIRECT_URL = "/"
 try:
     from .localsettings import *
