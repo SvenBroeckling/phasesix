@@ -130,13 +130,14 @@
                                             data-toggle="modal"
                                             data-target=".character-modal"
                                             data-modal-title="{% trans 'Add Modification' %}"
-                                            href=""><i class="fas fa-plus"></i></a>
+                                            href=""><i class="fas fa-plus text-info"></i></a>
                                 {% endif %}
                                 <a class="float-right action-link text-danger ml-1" title="{% trans 'Remove' %}" href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-trash"></i></a>
                                 <a class="float-right action-link text-warning ml-3" title="{% trans 'Damage' %}" href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i class="fas fa-times"></i></a>
                             {% endif %}
 
                             <span class="float-right">{% color_value_span weapon.condition 100 %}%</span>
+                            {% for wm in weapon.modifications.all %}<span class="badge badge-info mr-1 float-right small">{{ wm }}</span>{% endfor %}
                         </li>
                     {% empty %}
                         <li class="list-group-item">
