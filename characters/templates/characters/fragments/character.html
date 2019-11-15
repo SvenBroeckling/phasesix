@@ -5,83 +5,97 @@
     <div class="row">
 
         <div class="col-md-4">
-            <h2 class="mb-2">{% trans 'Persona' %}</h2>
             <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans 'Persona' %}</th>
+                    <th class="text-right">{% trans 'Value' %}</th>
+                    <th class="text-right">{% trans 'Roll' %}</th>
+                </tr>
+                </thead>
                 <tr>
                     <td>{% trans 'Openness' %}</td>
-                    <td class="text-right">
-                        <span class="text-muted d-none">({{ object.openness }})</span>
-                        {% color_value_span object.openness_roll 14 invert=True %}+
-                    </td>
+                    <td class="text-right">{% color_value_span object.openness 14 %}</td>
+                    <td class="text-right">{% color_value_span object.openness_roll 14 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Conscientiousness' %}</td>
-                    <td class="text-right">
-                        <span class="text-muted d-none">({{ object.conscientiousness }})</span>
-                        {% color_value_span object.conscientiousness_roll 14 invert=True %}+
-                    </td>
+                    <td class="text-right">{% color_value_span object.conscientiousness 14 %}</td>
+                    <td class="text-right">{% color_value_span object.conscientiousness_roll 14 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Extraversion' %}</td>
-                    <td class="text-right">
-                        <span class="text-muted d-none">({{ object.extraversion }})</span>
-                        {% color_value_span object.extraversion_roll 14 invert=True %}+
-                    </td>
+                    <td class="text-right">{% color_value_span object.extraversion 14 %}</td>
+                    <td class="text-right">{% color_value_span object.extraversion_roll 14 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Agreeableness' %}</td>
-                    <td class="text-right">
-                        <span class="text-muted d-none">({{ object.agreeableness }})</span>
-                        {% color_value_span object.agreeableness_roll 14 invert=True %}+
-                    </td>
+                    <td class="text-right">{% color_value_span object.agreeableness 14 %}</td>
+                    <td class="text-right">{% color_value_span object.agreeableness_roll 14 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Neuroticism' %}</td>
-                    <td class="text-right">
-                        <span class="text-muted d-none">({{ object.neuroticism }})</span>
-                        {% color_value_span object.neuroticism_roll 14 invert=True %}+
-                    </td>
+                    <td class="text-right">{% color_value_span object.neuroticism 14 %}</td>
+                    <td class="text-right">{% color_value_span object.neuroticism_roll 14 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'IQ' %}</td>
-                    <td class="text-right">{% color_value_span object.intelligence 100 %}</td>
+                    <td class="text-right">{% color_value_span object.intelligence 100 14 %}</td>
+                    <td class="text-right">{% color_value_span object.intelligence_roll 100 invert=True %}+</td>
                 </tr>
             </table>
         </div>
 
         <div class="col-md-4">
-            <h2 class="mb-2">{% trans 'Physis' %}</h2>
             <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Physis' %}</th>
+                        <th class="text-right">{% trans 'Value' %}</th>
+                        <th class="text-right">{% trans 'Roll' %}</th>
+                    </tr>
+                </thead>
                 <tr>
                     <td>{% trans 'Deftness' %}</td>
                     <td class="text-right">{% color_value_span object.deftness 6 %}</td>
+                    <td class="text-right">{% color_value_span object.deftness_roll 6 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Strength' %}</td>
                     <td class="text-right">{% color_value_span object.strength 6 %}</td>
+                    <td class="text-right">{% color_value_span object.strength_roll 6 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Attractiveness' %}</td>
                     <td class="text-right">{% color_value_span object.attractiveness 6 %}</td>
+                    <td class="text-right">{% color_value_span object.attractiveness_roll 6 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Endurance' %}</td>
                     <td class="text-right">{% color_value_span object.endurance 6 %}</td>
+                    <td class="text-right">{% color_value_span object.endurance_roll 6 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Resistance' %}</td>
                     <td class="text-right">{% color_value_span object.resistance 6 %}</td>
+                    <td class="text-right">{% color_value_span object.resistance_roll 6 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Quickness' %}</td>
                     <td class="text-right">{% color_value_span object.quickness 100 %}</td>
+                    <td class="text-right">{% color_value_span object.quickness_roll 6 invert=True %}+</td>
                 </tr>
             </table>
         </div>
 
         <div class="col-md-4">
-            <h2 class="mb-2">{% trans 'Dice' %}</h2>
             <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans 'Dice' %}</th>
+                    <th class="text-right">{% trans 'Amount' %}</th>
+                </tr>
+                </thead>
                 <tr>
                     <td>{% trans 'Bonus Dice' %}</td>
                     <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
@@ -100,8 +114,13 @@
 
 <div class="row mt-2">
     <div class="col-md-4">
-        <h2 class="mb-2">{% trans 'Skills' %}</h2>
         <table class="table">
+            <thead>
+            <tr>
+                <th>{% trans 'Skills' %}</th>
+                <th class="text-right">{% trans 'Dice' %}</th>
+            </tr>
+            </thead>
             {% for skill in object.characterskill_set.mind_skills %}
                 <tr>
                     <td>{{ skill.skill }}</td>
@@ -112,8 +131,13 @@
     </div>
 
     <div class="col-md-4">
-        <h2 class="mb-md-2 d-sm-none d-md-block d-xl-block">&nbsp;</h2>
         <table class="table">
+            <thead>
+            <tr>
+                <th>{% trans 'Skills' %}</th>
+                <th class="text-right">{% trans 'Dice' %}</th>
+            </tr>
+            </thead>
             {% for skill in object.characterskill_set.practical_skills %}
                 <tr>
                     <td>{{ skill.skill }}</td>
@@ -125,8 +149,12 @@
 
     <div class="col-md-4">
         {% if object.shadows.exists %}
-            <h2 class="mb-2">{% trans 'Shadows' %}</h2>
             <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans 'Shadows' %}</th>
+                </tr>
+                </thead>
                 {% for shadow in object.shadows.all %}
                     <tr>
                         {% if shadow.description %}
@@ -140,8 +168,13 @@
         {% endif %}
 
         {% if object.characterknowledge_set.exists %}
-            <h2 class="mb-2">{% trans 'Knowledge' %}</h2>
             <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans 'Knowledge' %}</th>
+                    <th class="text-right">{% trans 'Dice' %}</th>
+                </tr>
+                </thead>
                 {% for knowledge in object.characterknowledge_set.all %}
                     <tr>
                         <td>{{ knowledge.knowledge }}</td>

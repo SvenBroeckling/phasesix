@@ -55,6 +55,16 @@ class Character(models.Model):
     shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
     quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
 
+    def __getattr__(self, item):
+        if item.endswith('_roll'):
+            name = item.replace("_roll", '')
+            if name == 'intelligence':
+                return (120 - self.intelligence) / 5
+            else:
+                value = getattr(self, name)
+                return 5 - value if value <= 5 else 0
+        return super().__getattr__(item)
+
     def __str__(self):
         return self.name
 
@@ -223,10 +233,6 @@ class Character(models.Model):
         return self.lineage.base_quickness + self.get_attribute_modifier('base_quickness')
 
     @property
-    def openness_roll(self):
-        return 5 - self.openness if self.openness <= 5 else 0
-
-    @property
     def openness(self):
         return self.lineage.base_openness + self.get_attribute_modifier('base_openness')
 
@@ -237,16 +243,8 @@ class Character(models.Model):
         )
 
     @property
-    def conscientiousness_roll(self):
-        return 5 - self.conscientiousness if self.conscientiousness <= 5 else 0
-
-    @property
     def extraversion(self):
         return self.lineage.base_extraversion + self.get_attribute_modifier('base_extraversion')
-
-    @property
-    def extraversion_roll(self):
-        return 5 - self.extraversion if self.extraversion <= 5 else 0
 
     @property
     def agreeableness(self):
@@ -255,16 +253,8 @@ class Character(models.Model):
         )
 
     @property
-    def agreeableness_roll(self):
-        return 5 - self.agreeableness if self.agreeableness <= 5 else 0
-
-    @property
     def neuroticism(self):
         return self.lineage.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
-
-    @property
-    def neuroticism_roll(self):
-        return 5 + self.neuroticism if self.neuroticism > -5 else 0
 
     def get_full_heart_range(self):
         return range(self.health)
