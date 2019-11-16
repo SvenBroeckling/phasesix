@@ -9,8 +9,19 @@ Ein Phase Six Charakter hat immer eine Abstammung. Für alle Menschen
 es kann aber in anderen Settings auch Elfen, Zwerge, Androiden
 oder Roboter geben. 
 
-Die Abstammung gibt vor wieviele *Werdegangspunkte* der Charakter hat.
-Mit diesen Werdegangspunkten können bei der Charaktererschaffung
+Die Abstammung bestimmt die Startwerte folgender Eigenschaften des Charakters:
+
+* Werdegangspunkte (50)
+* Persona- und Physiseigenschaften (0)
+* Intelligenz (100)
+* Bonus-, Schicksals- und Wiederholungswürfel (0)
+* Maximale Lebenspunkte (6)
+* Maximaler Stress (Horror-Erweiterung) (6)
+* Arkana (Magie-Erweiterung) (6)
+
+Die Werte in Klammern geben die Startwerte eines Menschen an.
+
+Mit den Werdegangspunkten können bei der Charaktererschaffung
 Schablonen zusammengestellt werden, die den Werdegang und somit alle
 Werte des Charakters ausmachen. 
 
@@ -24,6 +35,7 @@ verschiedene irdische Epochen zur Auswahl:
 * Mittelalter, Wikinger und Kreuzzüge
 * Viktorianisches Zeitalter und der Wilde Westen
 * Imperialismus und Weltkriege
+* Der kalte Krieg und die 80er
 * Moderne Zeit
 * Science Fiction
 
@@ -32,7 +44,7 @@ Charaktere erlangen können. Mittelalter, Wikinger und Kreuzzüge lässt
 sich so auch für ein Fantasy Setting verwenden, welches nicht auf der 
 Erde spielt.
 
-Zudem gibt es frei wählbare Erweiterungen, welche für ein Scenario oder
+Zudem gibt es frei wählbare Erweiterungen, welche für ein Szenario oder
 ein Abenteuer vom Spielleiter gewählt werden können. Diese fügen dem 
 Spiel spezielle Regeln, Gegenstände und Schablonen hinzu. Die besonderen
 Erweiterungen sind:
@@ -69,17 +81,15 @@ Schablone in den eigenen Werdegang zu übernehmen.
 ### Schablonen zusammenstellen
 
 Um einen Charakter zu erschaffen wählst du so lange Schablonen aus der
-gewählten Epoche und eventuellen Erweiterungen bis
+gewählten Epoche und eventuellen Erweiterungen, bis
 keine Werdegangspunkte mehr übrig sind, oder du mit dem Charakter
 zufrieden bist. Diese Schablonen können beliebig aus allen
 Kategorien zusammengestellt werden. So kann man auch mehrere Berufe 
 wählen, dies sind im Werdegang des Charakters alle Berufe die er einmal
-ausgeführt hat, oder sogar noch parallel ausübt. 
+ausgeübt hat, oder sogar noch parallel ausübt. 
 
 Die Attribute, Fertigkeiten, Schatten und das Wissen der Schablonen
-werden zusammengerechnet und auf den Startwert 1 im Charakterbogen 
-addiert. Hierbei können alle Werte auch negativ werden (siehe Würfe
-unr Proben)
+werden zusammengerechnet und auf den Startwert der Abstammung (0 beim Menschen) im Charakterbogen addiert. Hierbei können alle Werte auch negativ werden (siehe Würfe und Proben)
 
 ### Den Charakter fertigstellen
 
@@ -88,3 +98,5 @@ du den Charakter einfach als *fertig* erklären. Sollten noch
 Werdegangspunkte übrig und nicht ausgegeben sein so werden diese zur
 *Reputation* des Charakters (siehe Steigern). Es gehen also keine Punkte
 verloren. 
+
+Zum Schluß werden noch die Mindestwürfe der Persona- und Physiseigenschaften eingetragen. Diese berechnen sich, indem der Wert von 5 abgezogen wird. Liegt das Ergebnis unter 0 so wird 0 als Mindestwurf eingetragen. Dies ist im Kapitel "Würfe und Proben" näher beschrieben.

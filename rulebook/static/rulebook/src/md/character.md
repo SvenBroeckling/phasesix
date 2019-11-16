@@ -4,7 +4,7 @@ Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Char
 
 ### Persona
 
-Die Werte unter Persona beziehen sich auf die psychologischen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Bei jedem Wurf auf Physiswerte oder Fertigkeiten wird einer der Personawerte hinzugenommen, je nach Situation.
+Die Werte unter Persona beziehen sich auf die psychologischen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen Wert und einen Mindestwurf und stellen mit den Physiseigenschaften zusammen die Grundlage für Würfe dar.
 
 #### Offenheit
 
@@ -26,11 +26,11 @@ Auch Verträglichkeit bezieht sich auf das zwischenmenschliche Verhalten des Cha
 
 Neurotizismus steht für die emotionale Labilität des Charakters. Ein hoher Neurotizismuswert steht für ein starkes Empfinden von negativen Gefühlen wie *Angst*, *Anspannung*, *Trauer*, aber auch *Unsicherheit* und *Verlegenheit*. Charaktere mit niedrigem Neurotizismus-Wert sind eher *entspannt*, sie erleben negative Erlebnisse *stabiler* und sind eher *zufrieden*.
 
-***Achtung***: Ein höherer Neurotizismus ist schlecht für die Würfe des Charakters. Im Gegensatz zu allen anderen Personawerten wird Neurotizismus von den Proben abgezogen und nicht als Bonus gewertet.
+***Achtung***: Ein höherer Neurotizismus ist schlecht für die Würfe des Charakters. Im Gegensatz zu allen anderen Personawerten wird Neurotizismus negativ auf den Mindestwurf verrechnet (siehe "Einen Charakter erstellen").
 
 ### Physis
 
-Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters. Auf diese Werte wird bei Proben direkt geworfen, wobei jeweils ein situationsabhängiger Persona Wert hinzugenommen wird (s. Würfe und Proben). 
+Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters. Physiseigenschaften haben jeweils einen Mindeswurf und einen Wert, und sind zusammen mit den Personaeigenschaften die Grundlage aller Würfe. 
 
 #### Geschick
 
@@ -56,22 +56,22 @@ Sowohl die Fähigkeit Verletzungen oder auch Schmerzen auszuhalten oder abzuwend
 
 Schnelligkeit ist sowohl die Geschwindigkeit mit der der Charakter sich bewegen kann, als auch die Fähigkeit schnell auf etwas zu reagieren.
 
-### Würfel
+### Zusatzwürfel
 
 Jeder Charakter kann eine Anzahl an *Bonuswürfeln*, *Schicksalswürfeln* oder *Wiederholungswürfeln* haben. Alle drei haben unterschiedliche Verwendungen (s. Würfe und Proben), stellen jedoch immer einen Vorteil für den Charakter dar, welcher während des Spiels eingesetzt werden kann. 
 
-Alle drei Würfelarten werden zu Beginn einer Spielsitzung aufgefrischt, also auf das Maximum des Charakters gesetzt. 
+Alle drei Würfelarten werden zu während einer Rast aufgefrischt, also auf das Maximum des Charakters gesetzt. 
 
 
 ### Fertigkeiten
 
 Komplexere Handlungen oder Kenntnisse werden durch *Fertigkeiten* beschrieben. Alle Charaktere haben die selben Fertigkeiten mit unterschiedlichen Werten, so kann der Spielleiter sicher sein dass ein Spieler einen Wurf auf eine Fertigkeit auch sicher machen kann. 
 
-Auf Fertigkeiten wird wie auch bei den Physiswerten immer in Verbindung mit einem Personawert geworfen. Dieser Personawert ergibt sich aus der jeweiligen Situation und wird vom Spielleiter festgelegt.
+Wird auf eine Fertigkeit geworfen, so wird vom Spielleiter eine zur Situation passende Persona- oder Physiseigenschaft genannt. Der Fertigkeitswert gibt die Anzahl der geworfenen Würfel an, während die Persona- oder Physiseigenschaft den notwendigen Mindestwurf vorgibt.
 
 ### Wissen
 
-Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Auch auf Wissen wird immer in Verbindung mit einem Personawert geworfen.
+Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen wird genau wie Fertigkeiten auf eine Persona- oder Physiseigenschaft geworfen.
 
 ### Schatten
 

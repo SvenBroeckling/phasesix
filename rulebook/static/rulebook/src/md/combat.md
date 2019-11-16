@@ -74,6 +74,8 @@ Der Charakter greift pro Runde so oft an wie bei der Waffe als Angriffe/Aktion v
 
 *7 - Waffenfertigkeit - Treffgenauigkeit der Waffe [ + Rückstoßmalus ]*
 
+Dieser Mindestwurf kann nie unter 2+ sinken, egal wie hoch die Schießen oder Nahkampffertigkeit oder die Genauigkeit der Waffe ist. Ein Wurf von 1 ist zwar kein schlimmer Patzer, verfehlt jedoch immer sein Ziel.
+
 Ein Charakter mit einer Desert Eagle und einem Wert von 2 bei Schießen wirft also einen Wüfel auf 5+. Ein Charakter mit einer Messer und einem Wert von 5 auf Nahkampf wirft 2 Würfel auf 2+. 
 
 Jeder Erfolg ist ein Treffer. Es können Wiederholungswürfel und Bonuswürfel verwendet werden.

@@ -70,17 +70,27 @@ beschrieben.
 
 Kommen die Charaktere zu einer Ruhepause von mindestens 3 Stunden, so 
 gilt dies als *Rast*. Hierbei kann jeder Charakter einzeln für sich 
-entscheiden wieviele Stunden er ruhen möchte. Manchmal wird dies natürlich auch
-von Störungen unterbrochen.
+entscheiden wieviele Stunden er ruhen möchte. Manchmal wird dies natürlich auch von Störungen unterbrochen.
 
 Je nach Dauer der Rast kann der Charakter verschiedene Wunden oder Boosts
 wieder herstellen. Alle Angaben werden addiert, so dass eine zehnstündige
 Rast 2 Wunden heilt und 2 Boosts gibt.
 
 - 3 Stunden: 1 Boost, falls der Charakter weniger als 3 Boosts hat
+- 3 Stunden: Alle Bonus- und Wiederholungswürfel werden wiederhergestellt
 - 5 Stunden: Es wird eine Wunde geheilt
 - 8 Stunden: 1 Boost, falls der Charakter weniger als 3 Boosts hat
+- 8 Stunden: Alle Schicksalswürfel werden wiederhergestellt
 - 10 Stunden: Es wird eine Wunde geheilt
+
+Zudem gibt es folgende Effekte mit Erweiterungen:
+
+- 4 Stunden: Der Stress des Charakters sinkt um 1 (Horror-Erweiterung)
+- 4 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
+- 6 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
+- 8 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
+- 8 Stunden: Der Stress des Charakters sinkt um 1 (Horror-Erweiterung)
+- 10 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
 
 ### Zustände des Charakters
 
@@ -92,6 +102,7 @@ Auswirkungen auf das Handeln des Charakters, aber auch Effekte über Zeit.
 Dieser Zustand wird nur verursacht wenn die Wunden des Charakters die
 maximalen Wunden übersteigen, die Herzen also auf 0 sinken. 
 
+#### Schmerz
 #### Ohnmacht
 #### Blutend
 #### Vergiftet
