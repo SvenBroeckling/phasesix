@@ -86,9 +86,16 @@
                     {% endif %}">
 
         <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <div>
+                <h3 class="mb-0">{{ object.name }}</h3>
+                <small>{% template_category_string object 3 %}</small><br>
+                <small>{% template_category_string object 2 %}</small><br>
+                <small>{% template_category_string object 6 %}</small><br>
+            </div>
+
             <div class="{% if may_edit %}dropdown{% endif %}">
                 {% if character.image %}
-                    {% thumbnail character.image "120x120" crop="center" as im %}
+                    {% thumbnail character.image "140x140" crop="center" as im %}
                         <img
                                 {% if may_edit %}data-toggle="dropdown"{% endif %}
                                 class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
@@ -99,7 +106,7 @@
                     <img
                             class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
                             {% if may_edit %}data-toggle="dropdown"{% endif %}
-                            width="120" height="120"
+                            width="140" height="140"
                             src="{% static 'img/silhuette.png' %}"
                             alt="{{ object.name }}">
                 {% endif %}
@@ -137,12 +144,6 @@
                 {% endif %}
             </div>
 
-            <div class="pl-4 text-right">
-                <h3 class="mb-0">{{ object.name }}</h3>
-                <small>{% template_category_string object 3 %}</small><br>
-                <small>{% template_category_string object 2 %}</small><br>
-                <small>{% template_category_string object 6 %}</small><br>
-            </div>
         </div>
     </div>
 {% endblock %}

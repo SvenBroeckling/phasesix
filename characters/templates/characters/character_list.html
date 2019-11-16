@@ -11,25 +11,35 @@
         {% for object in object_list %}
             <div class="col-md-3 mb-3">
                 <a href="{{ object.get_absolute_url }}">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="card character-list-item" style="
+                            background-size: 100%;
+                            {% if object.backdrop_image %}
+                            background-image: url({{ object.backdrop_image.url }})
+                            {% else %}
+                            {% if object.get_epoch.image %}
+                                background-image: url({{ object.get_epoch.image.url }})
+                            {% else %}
+                                background-color: silver
+                            {% endif %}
+                            {% endif %}
+                            ">
+                        <div class="card-body text-right">
                             {% if object.image %}
                                 {% thumbnail object.image "120x120" crop="center" as im %}
                                     <img
-                                            class="img-fluid rounded float-left mr-3"
+                                            class="img-fluid rounded float-left"
                                             src="{{ MEDIA_URL }}{{ im.url }}"
                                             alt="{{ object.name }}">
                                 {% endthumbnail %}
                             {% else %}
                                 <img
-                                        class="img-fluid rounded float-left mr-3"
+                                        class="img-fluid rounded float-left"
                                         height="120" width="120"
                                         src="{% static 'img/silhuette.png' %}"
                                         alt="{{ object.name }}">
                             {% endif %}
-                            <h3>{{ object.name }}</h3>
-                            <small>{% template_category_string object 3 "text-dark" %}</small><br>
-                            <small>{{ object.created_by|default:"" }}</small><br>
+                            <h4>{{ object.name }}</h4>
+                            <small>{% template_category_string object 3 "" %}</small><br>
                         </div>
                     </div>
                 </a>
