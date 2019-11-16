@@ -8,7 +8,7 @@
                 <i class="fas fa-dice-six fa-2x text-success" data-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Bonus Dice' %}" data-content="{% trans 'Add bonus dice to any roll in the game, or use them to create an additional action in combat at any time.<br><br>Bonus dice are expended on use and refresh at any rest.' %}"></i>
             {% endfor %}
             {% for i in object.destiny_dice|to_range %}
-                <i class="fas fa-dice-four fa-2x text-danger" data-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Destiny Dice' %}" data-content="{% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at a rest of at least 8 hours.' %}"></i>
+                <i class="fas fa-dice-four fa-2x text-danger" data-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Destiny Dice' %}" data-content="{% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at a rest of at least 10 hours.' %}"></i>
             {% endfor %}
             {% for i in object.rerolls|to_range %}
                 <i class="fas fa-dice-six fa-2x text-info" data-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Rerolls' %}" data-content="{% trans 'Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and refresh at any rest.' %}"></i>

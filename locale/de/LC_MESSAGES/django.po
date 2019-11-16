@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-16 02:36+0000\n"
-"PO-Revision-Date: 2019-11-16 03:40+0100\n"
+"POT-Creation-Date: 2019-11-16 05:35+0000\n"
+"PO-Revision-Date: 2019-11-16 06:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -149,7 +149,7 @@ msgid "wounds"
 msgstr "Wunden"
 
 #: armory/models.py:134
-#: characters/templates/characters/fragments/combat.html:162
+#: characters/templates/characters/fragments/combat.html:153
 msgid "penetration"
 msgstr "Durchschlag"
 
@@ -348,11 +348,11 @@ msgstr "Eigenarten"
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:420
+#: characters/models.py:422
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:432
+#: characters/models.py:434
 msgid "Quantity"
 msgstr "Menge"
 
@@ -562,6 +562,55 @@ msgstr ""
 #: characters/templates/characters/_rest.html:21
 msgid "Take a rest"
 msgstr "Rast"
+
+#: characters/templates/characters/_rest.html:25
+#: characters/templates/characters/fragments/health.html:8
+msgid "Bonus Dice"
+msgstr "Bonuswürfel"
+
+#: characters/templates/characters/_rest.html:25
+#: characters/templates/characters/fragments/health.html:8
+msgid ""
+"Add bonus dice to any roll in the game, or use them to create an additional "
+"action in combat at any time.<br><br>Bonus dice are expended on use and "
+"refresh at any rest."
+msgstr ""
+"Füge Bonuswürfel zu jedem Wurf im Spiel hinzu, oder benutze sie um jederzeit "
+"im Kamp eine zusätzliche Aktion zu erzeugen.<br><br>Bonuswüfel werden bei "
+"der Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
+
+#: characters/templates/characters/_rest.html:28
+#: characters/templates/characters/fragments/health.html:14
+msgid "Rerolls"
+msgstr "Wiederholungswürfel"
+
+#: characters/templates/characters/_rest.html:28
+#: characters/templates/characters/fragments/health.html:14
+msgid ""
+"Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and "
+"refresh at any rest."
+msgstr ""
+"Benutze einen Wiederholungswürfel um einen beliebigen bereits geworfenen "
+"Würfel im Spiel erneut zu würfeln.<br><br>Wiederholungswürfel werden bei der "
+"Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
+
+#: characters/templates/characters/_rest.html:49
+#: characters/templates/characters/fragments/health.html:11
+msgid "Destiny Dice"
+msgstr "Schicksalswürfel"
+
+#: characters/templates/characters/_rest.html:49
+msgid ""
+"Destiny dice may be added to rolls just like bonus dice, but they always "
+"succeed on a 4+ roll. Additionally they may be used to steal an action in "
+"combat at any time.<br><br>Destiny dice are expended on use and refresh at a "
+"rest of at least 8 hours."
+msgstr ""
+"Schicksalswüfel können, wie Bonuswürfel, zu jedem Wurf hinzugefügt werden, "
+"sie erreichen allerdings immer auf 4+ einen Erfolg. Zusätzlich können sie "
+"jederzeit im Kampf verwendet werden um eine Aktion zu stehlen."
+"<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
+"sich bei einer Rast von mindestens 8 Stunden wieder auf."
 
 #: characters/templates/characters/character_detail.html:121
 #: characters/templates/characters/character_detail.html:122
@@ -834,7 +883,7 @@ msgid "Resistance"
 msgstr "Resistenz"
 
 #: characters/templates/characters/fragments/character.html:84
-#: characters/templates/characters/fragments/combat.html:138
+#: characters/templates/characters/fragments/combat.html:129
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
@@ -893,68 +942,68 @@ msgid "Walk"
 msgstr "Gehen"
 
 #: characters/templates/characters/fragments/combat.html:78
-#: characters/templates/characters/fragments/combat.html:89
-#: characters/templates/characters/fragments/combat.html:100
-#: characters/templates/characters/fragments/combat.html:111
+#: characters/templates/characters/fragments/combat.html:87
+#: characters/templates/characters/fragments/combat.html:96
+#: characters/templates/characters/fragments/combat.html:105
 msgid "Movement"
 msgstr "Bewegung"
 
-#: characters/templates/characters/fragments/combat.html:83
-#: characters/templates/characters/fragments/combat.html:94
-#: characters/templates/characters/fragments/combat.html:105
+#: characters/templates/characters/fragments/combat.html:81
+#: characters/templates/characters/fragments/combat.html:90
+#: characters/templates/characters/fragments/combat.html:99
 msgid "Meter"
 msgstr "Meter"
 
-#: characters/templates/characters/fragments/combat.html:88
+#: characters/templates/characters/fragments/combat.html:86
 msgid "Run"
 msgstr "Laufen"
 
-#: characters/templates/characters/fragments/combat.html:99
+#: characters/templates/characters/fragments/combat.html:95
 msgid "Crawl"
 msgstr "Robben"
 
-#: characters/templates/characters/fragments/combat.html:110
+#: characters/templates/characters/fragments/combat.html:104
 msgid "Change Stance"
 msgstr "Stellung ändern"
 
-#: characters/templates/characters/fragments/combat.html:128
+#: characters/templates/characters/fragments/combat.html:119
 msgid "Actions"
 msgstr "Aktionen"
 
-#: characters/templates/characters/fragments/combat.html:148
+#: characters/templates/characters/fragments/combat.html:139
 msgid "Attack Roll"
 msgstr "Angriffswurf"
 
-#: characters/templates/characters/fragments/combat.html:149
+#: characters/templates/characters/fragments/combat.html:140
 #: rules/templates/rules/_template_widget.html:24
 msgid "Skill"
 msgstr "Fertigkeit"
 
-#: characters/templates/characters/fragments/combat.html:149
+#: characters/templates/characters/fragments/combat.html:140
 msgid "Weapon Accuracy"
 msgstr "Waffengenauigkeit"
 
-#: characters/templates/characters/fragments/combat.html:152
+#: characters/templates/characters/fragments/combat.html:143
 msgid "Cover Roll"
 msgstr "Deckungswurf"
 
-#: characters/templates/characters/fragments/combat.html:154
+#: characters/templates/characters/fragments/combat.html:145
 msgid "Mostly covered"
 msgstr "Größtenteils verdeckt"
 
-#: characters/templates/characters/fragments/combat.html:155
+#: characters/templates/characters/fragments/combat.html:146
 msgid "Half cover or prone"
 msgstr "Halbe Deckung oder liegend"
 
-#: characters/templates/characters/fragments/combat.html:156
+#: characters/templates/characters/fragments/combat.html:147
 msgid "Minimal cover"
 msgstr "Minimale Deckung"
 
-#: characters/templates/characters/fragments/combat.html:160
+#: characters/templates/characters/fragments/combat.html:151
 msgid "Armor roll"
 msgstr "Rüstungswurf"
 
-#: characters/templates/characters/fragments/combat.html:162
+#: characters/templates/characters/fragments/combat.html:153
 msgid "Armor value"
 msgstr "Rüstungswert"
 
@@ -1016,49 +1065,18 @@ msgstr "Entfernen / Benutzen"
 msgid "No items yet."
 msgstr "Noch keine Gegenstände."
 
-#: characters/templates/characters/fragments/health.html:8
-msgid "Bonus Dice"
-msgstr "Bonuswürfel"
-
-#: characters/templates/characters/fragments/health.html:8
-msgid ""
-"Add bonus dice to any roll in the game, or use them to create an additional "
-"action in combat at any time.<br><br>Bonus dice are expended on use and "
-"refresh at any rest."
-msgstr ""
-"Füge Bonuswürfel zu jedem Wurf im Spiel hinzu, oder benutze sie um jederzeit "
-"im Kamp eine zusätzliche Aktion zu erzeugen.<br><br>Bonuswüfel werden bei "
-"der Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
-
-#: characters/templates/characters/fragments/health.html:11
-msgid "Destiny Dice"
-msgstr "Schicksalswürfel"
-
 #: characters/templates/characters/fragments/health.html:11
 msgid ""
 "Destiny dice may be added to rolls just like bonus dice, but they always "
 "succeed on a 4+ roll. Additionally they may be used to steal an action in "
 "combat at any time.<br><br>Destiny dice are expended on use and refresh at a "
-"rest of at least 8 hours."
+"rest of at least 10 hours."
 msgstr ""
 "Schicksalswüfel können, wie Bonuswürfel, zu jedem Wurf hinzugefügt werden, "
 "sie erreichen allerdings immer auf 4+ einen Erfolg. Zusätzlich können sie "
 "jederzeit im Kampf verwendet werden um eine Aktion zu stehlen."
 "<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
-"sich bei einer Rast von mindestens 8 Stunden wieder auf."
-
-#: characters/templates/characters/fragments/health.html:14
-msgid "Rerolls"
-msgstr "Wiederholungswürfel"
-
-#: characters/templates/characters/fragments/health.html:14
-msgid ""
-"Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and "
-"refresh at any rest."
-msgstr ""
-"Benutze einen Wiederholungswürfel um einen beliebigen bereits geworfenen "
-"Würfel im Spiel erneut zu würfeln.<br><br>Wiederholungswürfel werden bei der "
-"Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
+"sich bei einer Rast von mindestens 10 Stunden wieder auf."
 
 #: characters/templates/characters/fragments/health.html:20 gmtools/forms.py:19
 msgid "Health"

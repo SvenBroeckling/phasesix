@@ -83,3 +83,6 @@ Schicksalswürfel können sowohl als Bonus- als aus als Wiederholungswürfel ein
 Schicksalswürfel müssen immer getrennt von allen normalen Würfeln geworfen werden, um auszumachen ob genau sie die 4+ erreicht haben.
 
 > Wenn wir uns das vorherige Beispiel mit Hagens Wurf auf seine Tapferkeit mit Neurotizismus ansehen (5 Würfel auf 15+), so würde ihm hier ein Schicksalswürfel sehr helfen, denn dieser müsste tatsächlich nur eine 4+ erreichen.
+>
+
+Schicksalswürfel frischen sich bei jeder Rast von mindestens 10 Stunden auf ihr Maximum auf. 
