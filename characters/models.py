@@ -116,6 +116,14 @@ class Character(models.Model):
         return res
 
     @property
+    def wounds_taken(self):
+        return self.max_health - self.health
+
+    @property
+    def available_stress(self):
+        return self.max_stress - self.stress
+
+    @property
     def spell_points_spent(self):
         return 0
 
@@ -256,39 +264,17 @@ class Character(models.Model):
     def neuroticism(self):
         return self.lineage.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
 
-    def get_full_heart_range(self):
-        return range(self.health)
+    @property
+    def ballistic_protection(self):
+        return self.characterriotgear_set.aggregate(
+           Sum('riot_gear__protection_ballistic')
+        )['riot_gear__protection_ballistic__sum'] or 0
 
-    def get_empty_heart_range(self):
-        return range(self.max_health - self.health)
-
-    def get_boost_range(self):
-        return range(self.boost)
-
-    def get_available_stress_range(self):
-        return range(self.max_stress - self.stress)
-
-    def get_stress_range(self):
-        return range(self.stress)
-
-    def get_arcana_range(self):
-        return range(self.arcana)
-
-    def get_ballistic_protection_range(self):
-        return range(
-            self.characterriotgear_set.aggregate(
-                Sum('riot_gear__protection_ballistic')
-            )['riot_gear__protection_ballistic__sum']
-            or 0
-        )
-
-    def get_explosive_protection_range(self):
-        return range(
-            self.characterriotgear_set.aggregate(
-                Sum('riot_gear__protection_explosive')
-            )['riot_gear__protection_explosive__sum']
-            or 0
-        )
+    @property
+    def explosive_protection(self):
+        return self.characterriotgear_set.aggregate(
+            Sum('riot_gear__protection_explosive')
+        )['riot_gear__protection_explosive__sum'] or 0
 
     def fill_basics(self):
         for skill in Skill.objects.all():

@@ -95,3 +95,9 @@ def template_category_string(character, template_category, css="text-light"):
     return mark_safe(
         '<span class="{}">{}</span>'.format(css, ", ".join([str(t.template) for t in tc]))
     )
+
+@register.filter
+def to_range(value):
+    if value:
+        return range(int(value))
+    return []

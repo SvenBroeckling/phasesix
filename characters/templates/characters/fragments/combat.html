@@ -125,21 +125,9 @@
             <div class="col-md-6 col-xl-12">
                 <table class="table">
                     <tr>
-                        <th>{% trans 'Actions' %}</th>
+                        <td>{% trans 'Actions' %}</td>
                         <td class="text-right">{% color_value_span object.actions 6 %}</td>
                     </tr>
-                    <tr>
-                        <th>{% trans 'Bonus Dice' %}</th>
-                        <td class="text-right">{% color_value_span object.bonus_dice 6 %}</td>
-                    </tr>
-                    <tr>
-                        <th>{% trans 'Destiny Dice' %}</th>
-                        <td class="text-right">{% color_value_span object.destiny_dice 6 %}</td>
-                    </tr>
-
-                </table>
-
-                <table class="table">
                     {% for skill in object.characterskill_set.combat_skills %}
                         <tr>
                             <td>{{ skill.skill }}</td>
