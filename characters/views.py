@@ -150,6 +150,11 @@ class XhrCreateCharacterPreviewView(DetailView):
     model = Character
     template_name = 'characters/fragments/character.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'fragment_name': 'character'})
+        return context
+
 
 class CreateCharacterDraftView(DetailView):
     template_name = 'characters/create_character_draft.html'
