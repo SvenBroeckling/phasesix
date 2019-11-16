@@ -215,7 +215,7 @@ class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTES = [
         'attacks_per_action', 'capacity', 'wounds', 'penetration',
         'accuracy', 'weight', 'recoil_control', 'concealment', 'reload_actions']
-    ATTRIBUTE_CHOICES = zip(ATTRIBUTES, ATTRIBUTES)
+    ATTRIBUTE_CHOICES = zip([_(a.replace('_', '')) for a in ATTRIBUTES], ATTRIBUTES)
     weapon_modification = models.ForeignKey(WeaponModification, on_delete=models.CASCADE)
     attribute = models.CharField(_('attribute'), max_length=40, choices=ATTRIBUTE_CHOICES)
     modifier = models.IntegerField(_('modifier'), default=0)
