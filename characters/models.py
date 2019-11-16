@@ -395,7 +395,9 @@ class CharacterWeapon(models.Model):
         skill = self.character.characterskill_set.ranged_combat_skill()
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
-        return 7 - skill.value - mods - self.weapon.accuracy
+
+        roll = 7 - skill.value - mods - self.weapon.accuracy
+        return roll if roll >= 2 else 2
 
     def penetration(self):
         pen = self.weapon.penetration

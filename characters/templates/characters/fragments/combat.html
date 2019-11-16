@@ -12,15 +12,15 @@
                         {% trans 'Action' %}<br>
                         <small>{% trans 'Type' %}</small>
                     </th>
-                    <th>
+                    <th class="text-right">
                         {% trans 'Roll' %}<br>
                         <small>{% trans 'Time' %}</small>
                     </th>
-                    <th>
+                    <th class="text-right">
                         {% trans 'Damage' %}<br>
                         <small>{% trans 'Penetration' %}</small>
                     </th>
-                    <th>
+                    <th class="text-right">
                         {% trans 'Range' %}<br>
                         <small>{% trans 'Area of effect' %}</small>
                     </th>
@@ -33,19 +33,19 @@
                             <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}<br>
                             <small>{{ w.weapon.type }}</small>
                         </td>
-                        <td>
+                        <td class="text-right">
                             {% color_value_span w.attack_roll 7 %}+
                             <br>
                             <small>{% color_value_span w.weapon.attacks_per_action 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
                         </td>
-                        <td>
+                        <td class="text-right">
                             {% for i in w.wounds_range %}
                                 <i class="fas fa-heart text-danger"></i>
                             {% endfor %}
                             <br>
                             {% color_value_span w.penetration 3 %}
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ w.weapon.get_range_lower_display }}
                             {% if w.weapon.range_upper and w.weapon.range_upper != w.weapon.range_lower %}-
                                 {{ w.weapon.get_range_upper_display }}{% endif %}
@@ -58,61 +58,52 @@
                             <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
                             <small>{{ s.spell.type.name }} - {{ s.spell.flavour.name }}</small>
                         </td>
-                        <td>
+                        <td class="text-right">
                             {% color_value_span 4 4 %}+<br>
                             <small>{% color_value_span s.spell.casting_time 1 %}</small>
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ s.spell.power }}<br>
                             <small>{{ s.spell.components }}</small>
                         </td>
-                        <td>
+                        <td class="text-right">
                             {{ s.spell.range }}<br>
                             <small>{{ s.spell.area_of_effect }} - {{ s.spell.area_of_effect_range }}</small>
                         </td>
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td>
+                    <td colspan="3">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td>
+                    <td class="text-right">
                         {% color_value_span object.combat_walking_range 4 %} {% trans 'Meter' %}
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="3">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Run" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td>
+                    <td class="text-right">
                         {% color_value_span object.combat_running_range 4 %} {% trans 'Meter' %}
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="3">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Crawl" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td>
+                    <td class="text-right">
                         {% color_value_span object.combat_crawling_range 4 %} {% trans 'Meter' %}
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="4">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Change Stance" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                 </tr>
 
                 </tbody>
