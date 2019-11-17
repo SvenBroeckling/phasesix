@@ -37,8 +37,7 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     if algebraic_sign and value > 0:
         display_value = "+{}".format(display_value)
 
-    return mark_safe('<span title="max. %s" class="color-%s">%s</span>' % (
-        max_value,
+    return mark_safe('<span class="color-%s">%s</span>' % (
         color_class,
         display_value))
 
