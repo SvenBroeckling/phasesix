@@ -56,7 +56,9 @@
                                 <a class="dropdown-item" href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'characters:list' %}">{% trans 'My Characters' %}</a>
+                                {% comment %}
                                 <a class="dropdown-item" href="{% url 'campaigns:list' %}">{% trans 'My Campaigns' %}</a>
+                                {% endcomment %}
                                 <a class="dropdown-item" href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rulebook' %}</a>
                                 <div class="dropdown-divider"></div> 
                                 <a class="dropdown-item" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
