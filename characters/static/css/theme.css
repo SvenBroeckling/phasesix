@@ -59,8 +59,8 @@ a[data-toggle="popover"] {
 
 .touch-menu:hover {
     cursor: pointer;
-    border-color: #9ecaed;
-    box-shadow: 0 0 20px 10px #9ecaed;
+    border-color: silver;
+    filter: drop-shadow(0 0 20px black);
 
 }
 
@@ -196,12 +196,17 @@ a[data-toggle="popover"] {
 .character-list-item {
     color: white;
     text-shadow: 2px 2px #000;
-    background-size: 100%;
     background-position: center;
+    background-size: cover;
+}
+
+.character-list-item:hover {
+    filter: drop-shadow(0 0 10px black);
 }
 
 .character-list-item img {
     border: 2px solid black;
+    filter: drop-shadow(0 0 10px black);
 }
 
 .campaign-info-row .info {
@@ -217,6 +222,7 @@ a[data-toggle="popover"] {
 
 .character-info-row img {
     border: 2px solid black;
+    filter: drop-shadow(0 0 10px black);
 }
 
 .character-info-row h3 {

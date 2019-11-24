@@ -9,15 +9,19 @@
     </div>
     <div class="row character-list">
         {% for object in object_list %}
-            <div class="col-md-3 mb-3">
+            <div class="col-sm-6 col-md-6 mb-3">
                 <a href="{{ object.get_absolute_url }}">
                     <div class="card character-list-item" style="
                             background-size: 100%;
                             {% if object.backdrop_image %}
-                            background-image: url({{ object.backdrop_image.url }})
+                                {% thumbnail object.backdrop_image "x800" as im %}
+                                    background-image: url({{ im.url }})
+                                {% endthumbnail %}
                             {% else %}
                             {% if object.get_epoch.image %}
-                                background-image: url({{ object.get_epoch.image.url }})
+                                {% thumbnail object.get_epoch.image "x800" as im %}
+                                    background-image: url({{ im.url }})
+                                {% endthumbnail %}
                             {% else %}
                                 background-color: silver
                             {% endif %}
