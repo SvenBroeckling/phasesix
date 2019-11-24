@@ -1,8 +1,10 @@
+from django.db.models import Q
 from django.template import Library
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from armory.models import WeaponModificationType
+from rules.models import Extension
 
 register = Library()
 
@@ -100,3 +102,12 @@ def to_range(value):
     if value:
         return range(int(value))
     return []
+
+
+@register.filter
+def for_extensions(queryset, extension_queryset):
+    return queryset.filter(
+        Q(extensions__id__in=extension_queryset.all()) |
+        Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
+    )
+
