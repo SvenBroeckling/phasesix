@@ -25,6 +25,10 @@
                         if (template_count > 9){
                             $('form.finish-form').submit();
                         }
+                        $('.template').tilt({
+                            glare: false,
+                            perspective: 1800
+                        })
                     });
                 e.preventDefault();
                 return false;
@@ -39,6 +43,11 @@
                     $('.draft-template-list').removeClass('d-none');
                 }
             });
+
+            $('.template').tilt({
+                glare: false,
+                perspective: 1800
+            })
         })
     </script>
 {% endblock %}
