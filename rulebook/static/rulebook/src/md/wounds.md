@@ -102,7 +102,12 @@ Auswirkungen auf das Handeln des Charakters, aber auch Effekte über Zeit.
 Dieser Zustand wird nur verursacht wenn die Wunden des Charakters die
 maximalen Wunden übersteigen, die Herzen also auf 0 sinken. 
 
+#### Geschockt
+#### Versteckt
+#### Desorientiert
+#### Bewustlos
 #### Schmerz
+#### Gegriffen
 #### Ohnmacht
 #### Blutend
 #### Vergiftet
