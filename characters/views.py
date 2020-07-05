@@ -12,7 +12,7 @@ from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationTy
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
 from horror.models import QuirkCategory
-from rules.models import Extension, Template, Lineage
+from rules.models import Extension, Template, Lineage, StatusEffect
 
 
 class IndexView(TemplateView):
@@ -58,6 +58,17 @@ class XhrCharacterRestView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         context = super().get_context_data(**kwargs)
         context['object'] = character
+        return context
+
+
+class XhrCharacterStatusEffectsView(TemplateView):
+    template_name = 'characters/_status_effects.html'
+
+    def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['object'] = character
+        context['status_effects'] = StatusEffect.objects.all()
         return context
 
 

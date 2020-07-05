@@ -1,0 +1,56 @@
+{% load i18n characters_extras %}
+
+<div class="row">
+    <div class="col-md-10 offset-md-2">
+        <p>
+            {% blocktrans %}
+                WIP
+
+            {% endblocktrans %}
+        </p>
+        <div class="row">
+            {% for se in status_effects %}
+                <div class="col-md-3 text-center pt-2">
+                    <h2 class="mb-2">{{ se }}</h2>
+                    <i class="{{ se.fa_icon_class }} fa-5x"></i>
+                    <h5 class="mt-4">{% trans 'Strength' %}</h5>
+                    <input
+                            class="status-effect-value"
+                            type="number"
+                            max="10"
+                            min="0"
+                            value="0"
+                            data-slider-value="1"
+                            data-slider-ticks="[0, 5, 10]"
+                            data-slider-ticks-labels='["0", "5", "10"]'>
+                    <h5 class="mt-2">{% trans 'Duration' %}</h5>
+                    <input
+                            class="status-effect-value"
+                            type="number"
+                            max="10"
+                            min="0"
+                            value="0"
+                            data-slider-value="1"
+                            data-slider-ticks="[0, 5, 10]"
+                            data-slider-ticks-labels='["0", "5", "10"]'>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .slider.slider-horizontal {
+        margin-left: 15px;
+        width: 80%;
+    }
+</style>
+
+<script>
+    $(function(){
+        setTimeout(function(){
+            $('.status-effect-value').slider({value: 0});
+            $('.status-effect-duration').slider({value: 0});
+        }, 300);
+    })
+</script>

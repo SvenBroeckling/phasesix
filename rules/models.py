@@ -20,7 +20,7 @@ class Extension(models.Model, metaclass=TransMeta):
     A URPG source book extension
     """
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
-    fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fa fa-book')
+    fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
     name = models.CharField(_('name'), max_length=120)
     identifier = models.CharField(_('identifier'), max_length=20)
     image = models.ImageField(
@@ -318,3 +318,23 @@ class TemplateRequirement(models.Model, metaclass=TransMeta):
         related_name='required_template_requirement_set',
         blank=True,
         null=True)
+
+
+class StatusEffect(models.Model, metaclass=TransMeta):
+    objects = ExtensionSelectQuerySet.as_manager()
+
+    extensions = models.ManyToManyField('rules.Extension')
+    fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
+    name = models.CharField(_('name'), max_length=120)
+    rules = models.TextField(_('rules'), blank=True, null=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
+    class Meta:
+        translate = ('name', 'rules')
+        verbose_name = _('status effect')
+        verbose_name_plural = _('status effects')
+
+    def __str__(self):
+        return self.name
+

@@ -55,9 +55,9 @@
             </div>
 
             <div>
-            {% for q in object.quirks.all %}
-                <i class="fas fa-frown text-dark" data-toggle="popover" title="{{ q }}" data-content="{{ q.get_modifier_summary_html }}" data-trigger="hover" data-html="true"></i>
-            {% endfor %}
+                {% for q in object.quirks.all %}
+                    <i class="fas fa-frown text-dark" data-toggle="popover" title="{{ q }}" data-content="{{ q.get_modifier_summary_html }}" data-trigger="hover" data-html="true"></i>
+                {% endfor %}
             </div>
         {% endif %}
     </div>

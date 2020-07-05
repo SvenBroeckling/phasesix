@@ -365,6 +365,22 @@ class CharacterKnowledge(models.Model):
         return self.base_value + (q['knowledge_modifier__sum'] or 0)
 
 
+class CharacterStatusEffect(models.Model):
+    character = models.ForeignKey(Character, models.CASCADE)
+    status_effect = models.ForeignKey('rules.StatusEffect', models.CASCADE)
+    base_value = models.IntegerField(_('base value'), default=0)
+
+    class Meta:
+        ordering = ('knowledge__name_en',)
+
+    def __str__(self):
+        return "{} {}".format(self.status_effect.name, self.value)
+
+    @property
+    def value(self):
+        return self.base_value
+
+
 class CharacterTemplate(models.Model):
     character = models.ForeignKey(Character, models.CASCADE)
     template = models.ForeignKey('rules.Template', models.CASCADE)

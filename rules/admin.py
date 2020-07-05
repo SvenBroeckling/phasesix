@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 from rules.models import Skill, Extension, Shadow, Knowledge, Template, TemplateModifier, TemplateRequirement, \
-    TemplateCategory, LineageTemplatePoints, Lineage
+    TemplateCategory, LineageTemplatePoints, Lineage, StatusEffect
 
 
 class ExtensionAdmin(admin.ModelAdmin):
@@ -48,6 +48,10 @@ class LineageAdmin(admin.ModelAdmin):
     inlines = [LineageTemplatePointsInline]
 
 
+class StatusEffectAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'fa_icon_class')
+
+
 admin.site.register(Extension, ExtensionAdmin)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Knowledge)
@@ -55,3 +59,4 @@ admin.site.register(Shadow)
 admin.site.register(TemplateCategory, TemplateCategoryAdmin)
 admin.site.register(Template, TemplateAdmin)
 admin.site.register(Lineage, LineageAdmin)
+admin.site.register(StatusEffect, StatusEffectAdmin)
