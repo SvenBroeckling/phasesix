@@ -36,6 +36,17 @@
             {% endfor %}
         </div>
 
+        <div class="mt-2">
+            {% for cse in object.characterstatuseffect_set.all %}
+                <i
+                        class="{{ cse.status_effect.fa_icon_class }} fa-2x"
+                        data-toggle="popover" title="{{ cse }}"
+                        data-content="{{ cse.rules }}"
+                        data-trigger="hover" data-html="true"></i>
+                <span class="text-danger mr-2">{{ cse.value }}</span>
+            {% endfor %}
+        </div>
+
         {% if object.extension_enabled.magic %}
             <div>
                 {% for i in object.arcana|to_range %}
@@ -61,22 +72,5 @@
             </div>
         {% endif %}
 
-        <div>
-            {% for cse in object.characterstatuseffect_set.all %}
-                <a
-                        class="modal-trigger text-decoration-none"
-                        data-url="{% url 'characters:xhr_status_effects' pk=object.id %}"
-                        data-toggle="modal"
-                        data-target=".character-modal"
-                        data-modal-title="{% trans 'Status Effects' %}"
-                        href="">
-                    <i
-                            class="{{ cse.status_effect.fa_icon_class }}"
-                            data-toggle="popover" title="{{ cse }}"
-                            data-content="{{ cse.rules }}"
-                            data-trigger="hover" data-html="true"></i> <span class="text-danger mr-2">{{ cse.value }}</span>
-                </a>
-            {% endfor %}
-        </div>
     </div>
 {% endblock %}
