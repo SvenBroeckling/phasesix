@@ -111,3 +111,13 @@ def for_extensions(queryset, extension_queryset):
         Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
     )
 
+@register.filter
+def status_effect_value(status_effect, character):
+    from characters.models import CharacterStatusEffect
+    try:
+        obj = CharacterStatusEffect.objects.get(character=character, status_effect=status_effect)
+        return obj.value
+    except CharacterStatusEffect.DoesNotExist:
+        return 0
+
+

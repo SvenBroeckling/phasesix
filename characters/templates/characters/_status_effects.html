@@ -2,24 +2,35 @@
 
 <div class="row">
     {% for se in status_effects %}
+        {% with se|status_effect_value:object as se_value %}
         <div class="col-md-3 text-center pt-2">
             <div class="card mb-2">
                 <div class="card-body">
                     <h2 class="mb-2">{{ se }}</h2>
-                    <i class="{{ se.fa_icon_class }} fa-5x"></i>
-                    <h5 class="mt-4">{% trans 'Value' %}</h5>
+
+                    <span class="fa-layers fa-fw fa-5x">
+                        <i class="{{ se.fa_icon_class }} mb-4"></i>
+                        <span
+                                data-status-effect-id="{{ se.id }}"
+                                class="fa-layers-counter {{ se_value|yesno:"text-danger,text-muted" }}">{{ se_value }}</span>
+                    </span>
+
                     <input
                             class="status-effect-value"
                             type="number"
                             max="10"
                             min="0"
-                            value="0"
-                            data-slider-value="1"
+                            value="{{ se_value }}"
+                            data-status-effect-id="{{ se.id }}"
+                            data-url="{% url 'characters:xhr_status_effects_change' pk=object.id %}"
+                            data-slider-value="{{ se_value }}"
+                            data-slider-tooltip="show"
                             data-slider-ticks="[0, 5, 10]"
                             data-slider-ticks-labels='["0", "5", "10"]'>
                 </div>
             </div>
         </div>
+        {% endwith %}
     {% endfor %}
 </div>
 
@@ -33,8 +44,31 @@
 <script>
     $(function(){
         setTimeout(function(){
-            $('.status-effect-value').slider({value: 0});
-            $('.status-effect-duration').slider({value: 0});
+            $('.status-effect-value').slider();
+            $('.status-effect-value').on('change', function(e){
+                let elem = $(this);
+                let value = elem.val();
+                let status_effect_id = elem.data('status-effect-id');
+
+                $.post(
+                    elem.data('url'),
+                    {
+                        status_effect_id: status_effect_id,
+                        value: value
+                    },
+                    function(data) {
+                        let target = $(`span[data-status-effect-id="${status_effect_id}"]`);
+                        target.removeClass('text-danger text-muted');
+                        if(value > 0) {
+                            target.addClass('text-danger');
+                        } else {
+                            target.addClass('text-muted');
+                        }
+                        console.log(target);
+                        target.text(value);
+                    }
+                )
+            })
         }, 300);
     })
 </script>

@@ -60,5 +60,15 @@
                 {% endfor %}
             </div>
         {% endif %}
+
+        <div>
+            {% for cse in object.characterstatuseffect_set.all %}
+                <i
+                        class="{{ cse.status_effect.fa_icon_class }}"
+                        data-toggle="popover" title="{{ cse }}"
+                        data-content="{{ cse.rules }}"
+                        data-trigger="hover" data-html="true"></i> <span class="text-danger mr-2">{{ cse.value }}</span>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

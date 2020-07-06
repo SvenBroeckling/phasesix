@@ -371,7 +371,7 @@ class CharacterStatusEffect(models.Model):
     base_value = models.IntegerField(_('base value'), default=0)
 
     class Meta:
-        ordering = ('knowledge__name_en',)
+        ordering = ('status_effect__ordering',)
 
     def __str__(self):
         return "{} {}".format(self.status_effect.name, self.value)

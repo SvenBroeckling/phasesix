@@ -85,6 +85,10 @@ urlpatterns = [
         r'^xhr_status_effects/(?P<pk>\d+)$',
         views.XhrCharacterStatusEffectsView.as_view(),
         name='xhr_status_effects'),
+    url(
+        r'^xhr_status_effects/change/(?P<pk>\d+)$',
+        views.XhrCharacterStatusEffectsChangeView.as_view(),
+        name='xhr_status_effects_change'),
 
     # gear
     url(

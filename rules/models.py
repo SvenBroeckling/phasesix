@@ -329,8 +329,10 @@ class StatusEffect(models.Model, metaclass=TransMeta):
     rules = models.TextField(_('rules'), blank=True, null=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+    ordering = models.IntegerField(_('ordering'), default=100)
 
     class Meta:
+        ordering = ('ordering',)
         translate = ('name', 'rules')
         verbose_name = _('status effect')
         verbose_name_plural = _('status effects')

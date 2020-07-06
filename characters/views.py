@@ -10,7 +10,7 @@ from django.views.generic import TemplateView, DetailView, ListView, CreateView,
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType
 from characters.forms import CharacterImageForm, CreateCharacterForm
-from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem
+from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect
 from horror.models import QuirkCategory
 from rules.models import Extension, Template, Lineage, StatusEffect
 
@@ -70,6 +70,35 @@ class XhrCharacterStatusEffectsView(TemplateView):
         context['object'] = character
         context['status_effects'] = StatusEffect.objects.all()
         return context
+
+
+class XhrCharacterStatusEffectsChangeView(View):
+    template_name = 'characters/_status_effects.html'
+
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        status_effect = StatusEffect.objects.get(id=request.POST.get('status_effect_id'))
+        value = int(request.POST.get('value'))
+
+        if character.may_edit(request.user):
+            if value > 0:
+                obj, created = CharacterStatusEffect.objects.get_or_create(
+                    character=character,
+                    status_effect=status_effect,
+                    defaults={'base_value': value}
+                )
+                if not created:
+                    obj.base_value = value
+                    obj.save()
+            else:
+                CharacterStatusEffect.objects.filter(
+                    character=character, status_effect=status_effect).delete()
+
+            return JsonResponse({
+                'status': 'ok',
+                'value': value
+            })
+        return JsonResponse({'status': 'forbidden', 'value': 0})
 
 
 class CharacterModifyStressView(View):
