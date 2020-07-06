@@ -11,7 +11,7 @@
                 <i class="fas fa-dice-four fa-2x text-danger" data-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Destiny Dice' %}" data-content="{% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at a rest of at least 10 hours.' %}"></i>
             {% endfor %}
             {% for i in object.rerolls|to_range %}
-                <i class="fas fa-dice-six fa-2x text-info" data-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Rerolls' %}" data-content="{% trans 'Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and refresh at any rest.' %}"></i>
+                <i class="fas fa-dice-one fa-2x text-info" data-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Rerolls' %}" data-content="{% trans 'Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and refresh at any rest.' %}"></i>
             {% endfor %}
         </div>
 
@@ -63,11 +63,19 @@
 
         <div>
             {% for cse in object.characterstatuseffect_set.all %}
-                <i
-                        class="{{ cse.status_effect.fa_icon_class }}"
-                        data-toggle="popover" title="{{ cse }}"
-                        data-content="{{ cse.rules }}"
-                        data-trigger="hover" data-html="true"></i> <span class="text-danger mr-2">{{ cse.value }}</span>
+                <a
+                        class="modal-trigger text-decoration-none"
+                        data-url="{% url 'characters:xhr_status_effects' pk=object.id %}"
+                        data-toggle="modal"
+                        data-target=".character-modal"
+                        data-modal-title="{% trans 'Status Effects' %}"
+                        href="">
+                    <i
+                            class="{{ cse.status_effect.fa_icon_class }}"
+                            data-toggle="popover" title="{{ cse }}"
+                            data-content="{{ cse.rules }}"
+                            data-trigger="hover" data-html="true"></i> <span class="text-danger mr-2">{{ cse.value }}</span>
+                </a>
             {% endfor %}
         </div>
     </div>
