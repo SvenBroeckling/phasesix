@@ -83,6 +83,22 @@ Schicksalswürfel können sowohl als Bonus- als aus als Wiederholungswürfel ein
 Schicksalswürfel müssen immer getrennt von allen normalen Würfeln geworfen werden, um auszumachen ob genau sie die 4+ erreicht haben.
 
 > Wenn wir uns das vorherige Beispiel mit Hagens Wurf auf seine Tapferkeit mit Neurotizismus ansehen (5 Würfel auf 15+), so würde ihm hier ein Schicksalswürfel sehr helfen, denn dieser müsste tatsächlich nur eine 4+ erreichen.
->
 
 Schicksalswürfel frischen sich bei jeder Rast von mindestens 10 Stunden auf ihr Maximum auf. 
+
+### Gruppenwürfe
+
+Immer wenn es darum geht dass die Gruppe als Ganzes eine Probe besteht werden Gruppenwürfe verwendet.
+Statt z.B. eine Achtsamkeitsprobe von jedem Spieler zu verlangen kann der Spielleiter eine 
+Achtsamkeitsprobe der ganzen Gruppe verlangen. Ist diese Probe gelungen, gilt der Effekt für alle
+Charaktere in der Gruppe.
+
+Ein gelungener Gruppenwurf erfordert immer eine Anzahl von Erfolgen, die erreicht werden müssen.
+Der Spielleiter sagt an wie viele Erfolge für eine Gruppenprobe erreicht werden müssen, damit diese
+erfolgreich ist. Danach wirft jeder Spieler auf das verlangte Attribut oder die verlangte Fertigkeit. 
+
+Alle Erfolge jedes Charakters werden zusammengezählt. Ist die geforderte Anzahl an Erfolgen erreicht, 
+so ist die Probe gelungen.
+
+Bei einem Gruppenwurf kann jeder Beteiligte wie gewohnt Bonus-, Schicksals- und Wiederholungswürfel 
+einsetzen. Auch schwere und sehr schwere Proben sind möglich.
