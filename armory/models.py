@@ -44,6 +44,7 @@ class Item(models.Model, metaclass=TransMeta):
     extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+    usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
 
     image = models.ImageField(
         _('image'), max_length=256, upload_to='item_images/', null=True, blank=True)

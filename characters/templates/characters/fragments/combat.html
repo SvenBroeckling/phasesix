@@ -52,6 +52,21 @@
                         </td>
                     </tr>
                 {% endfor %}
+                {% for i in object.characteritem_set.usable_in_combat %}
+                    <tr>
+                        <td>
+                            <i class="fas fa-bomb text-success"></i> <span class="text-muted">{{ i.quantity }} x </span>{{ i.item }}<br>
+                            <small>{{ i.item.type }}</small>
+                        </td>
+                        <td class="text-right">
+                            {% color_value_span i.use_roll 7 %}+
+                        </td>
+                        <td class="text-right">
+                        </td>
+                        <td class="text-right">
+                        </td>
+                    </tr>
+                {% endfor %}
                 {% for s in object.characterspell_set.all %}
                     <tr>
                         <td>

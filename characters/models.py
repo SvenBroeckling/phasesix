@@ -439,6 +439,9 @@ class CharacterRiotGear(models.Model):
 
 
 class CharacterItemQuerySet(models.QuerySet):
+    def usable_in_combat(self):
+        return self.filter(item__usable_in_combat=True)
+
     def by_type(self):
         return self.order_by('item__type')
 
@@ -449,6 +452,13 @@ class CharacterItem(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'), default=1)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
+
+    def use_roll(self):
+        if self.item.type.name_en == 'Grenades':
+            return 7 - self.character.characterskill_set.get(skill__name_en="Throwing").value
+        if self.item.type.name_en == 'First Aid':
+            return 7 - self.character.characterskill_set.get(skill__name_en="First Aid").value
+        return 0
 
 
 class CharacterSpell(models.Model):
