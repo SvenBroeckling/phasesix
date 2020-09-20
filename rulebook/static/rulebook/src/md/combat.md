@@ -11,16 +11,16 @@ Haben zwei Teilnehmer das selbe Ergebnis, so entscheidet zunächst der Wert *Sch
 
 ### Ablauf der Runden
 
-Der Kampf ist in *Kampfrunden* aufgeteilt. In jeder Kampfrunde bekommt jeder Teilnehmer einmal die *Initiative*, d.h. er ist am Zug und kann bestimmen welche *Aktionen* er ausführt. 
+Der Kampf ist in *Kampfrunden* aufgeteilt. In jeder Kampfrunde bekommt jeder Teilnehmer einmal die *Priorität*, d.h. er ist am Zug und kann bestimmen welche *Aktionen* er ausführt. 
 
 Hat der letzte Teilnehmer agiert beginnt die nächste *Kampfrunde* mit dem ersten Teilnehmer. 
 
 
 ### Akteur und Aktionen
 
-Ist ein Teilnehmer am Zug so hat er die *Initiative*, er ist in diesem Moment der *Akteur*.
+Ist ein Teilnehmer am Zug so hat er die *Priorität*, er ist in diesem Moment der *Akteur*.
 
-Zu Beginn des Zuges frischen sich die *Aktionen* des Teilnehmers auf. Die Anzahl der Aktionen des Spielers ist der Durchschnitt aus *Schnelligkeit* und *Geschick* plus 1. Wenn dieses Ergebnis negativ sein sollte hat der Teilnehmer trotzdem eine Aktion pro Runde, ist also nur sehr langsam. 
+Zu Beginn des Zuges frischen sich die *Aktionen* des Teilnehmers auf. Die Anzahl der Aktionen des Spielers ist der Durchschnitt aus *Schnelligkeit* und *Geschick* plus 1. Wenn dieses Ergebnis null oder negativ sein sollte hat der Teilnehmer trotzdem eine Aktion pro Runde, ist also nur sehr langsam. 
 
 "Auffrischen" bedeutet also dass alle Aktionen wieder verfügbar sind. Wenn der Teilnehmer zuvor Aktionen verbraucht hat, etwa durch Handlungen in früheren Kampfrunden, setzt er seine verfügbaren Handlungen wieder auf das Maximum.
 
@@ -30,6 +30,7 @@ Sind die Aktionen aufgefrischt kann der Teilnehmer im Kampf handeln. Dazu führt
 * Mit einer Waffe oder einem Gegenstand *parieren*
 * Eine Waffe nachladen
 * Einen Gegenstand benutzen
+* Hinknien oder auf den Boden legen
 * "Schnelligkeit" Meter gehen (und dabei eine weitere Handlung ausführen ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)
 * "Schnelligkeit"*2 Meter rennen
 * "Schnelligkeit"/2 Meter robben
@@ -115,6 +116,7 @@ Es wird davon ausgegangen dass sich die Waffe bei einem normalen Trefferwurf im 
 Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die Schusszahl und die Genauigkeit der Waffe:
 
 * Einzelschussmodus: *Schuss pro Aktion: 1*, *Genauigkeit +2*
+* Halbautomatik: *Es werden die bei der Waffe angegebenen Werte verwendet*
 * Vollautomatik: *Schuss pro Aktion verdoppelt*, *Genauigkeit -3*
 
 #### 2. Der Deckungswurf
@@ -122,8 +124,8 @@ Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die
 Wenn der Angegriffene Deckung hat ist es möglich, Treffer zu verhindern bevor sie Schaden anrichten können. Deckung gibt es in unterschiedlichen Stufen, die auch den Mindestwurf vorgeben:
 
 * 6+ geringe Deckung, der Großteil des Körpers sichtbar. Nur einige Bereiche der Sicht des Angreifers auf den Beschossenen sind verdeckt. 
-* 5+ halb verdeckt
-* 4+ nur geringe Teile des Beschossenen sind für den Angreifer sichtbar
+* 5+ der Angegriffene ist halb verdeckt oder kniet.
+* 4+ nur geringe Teile des Angegriffenen sind für den Angreifer sichtbar, order der Angegriffene liegt.
 
 Der Angegriffene wirft für jeden Treffer einen Würfel. Ein Erfolg reduziert hierbei die Anzahl der Treffer um eins.
 

@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'bootstrap4',
     'compressor',
     'simplemde',
-    'inline_admin_panel',
     'gmtools',
     'armory',
     'world',
