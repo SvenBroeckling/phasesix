@@ -103,6 +103,14 @@ Dieser Zustand wird nur verursacht wenn die Wunden des Charakters die
 maximalen Wunden übersteigen, die Herzen also auf 0 sinken. 
 
 #### Geschockt
+
+Der Wert dieses Statuseffektes wird direkt von den Würfeln von Deckungswürfen
+abgezogen. Ein Charakter mit Geschockt: 3 hat somit 3 Würfel weniger beim 
+Deckungswurf. Sinkt die Anzahl der möglichen Würfel damit auf 0, so ist der 
+Deckungswurf nicht mehr möglich.
+
+Der Geschockt-Wert verringert sich am Ende jeder Kampfrunde um 1.
+
 #### Versteckt
 #### Desorientiert
 #### Bewustlos
