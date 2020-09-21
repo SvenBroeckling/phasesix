@@ -72,5 +72,15 @@
             </div>
         {% endif %}
 
+        <ul class="list-group mb-2 mt-2">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {% trans 'Actions' %}
+                <span class="badge badge-primary badge-pill">{{ object.actions }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {% trans 'Evasion' %}
+                <span class="badge badge-primary badge-pill">{{ object.evasion }}</span>
+            </li>
+        </ul>
     </div>
 {% endblock %}

@@ -60,6 +60,10 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_destiny_dice = models.IntegerField(_('base destiny dice'), default=0)
     base_rerolls = models.IntegerField(_('base rerolls'), default=0)
 
+    # Base Values
+    base_evasion = models.IntegerField(_('base evasion'), default=0)
+    base_protection = models.IntegerField(_('base armor'), default=0)
+
     # physis
     base_deftness = models.IntegerField(_('base deftness'), default=1)
     base_strength = models.IntegerField(_('base strength'), default=1)

@@ -266,15 +266,19 @@ class Character(models.Model):
 
     @property
     def ballistic_protection(self):
-        return self.characterriotgear_set.aggregate(
+        return self.lineage.base_protection + self.characterriotgear_set.aggregate(
            Sum('riot_gear__protection_ballistic')
         )['riot_gear__protection_ballistic__sum'] or 0
 
     @property
     def explosive_protection(self):
-        return self.characterriotgear_set.aggregate(
+        return self.lineage.base_protection + self.characterriotgear_set.aggregate(
             Sum('riot_gear__protection_explosive')
         )['riot_gear__protection_explosive__sum'] or 0
+
+    @property
+    def evasion(self):
+        return self.lineage.base_evasion
 
     def fill_basics(self):
         for skill in Skill.objects.all():
