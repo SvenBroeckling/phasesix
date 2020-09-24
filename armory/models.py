@@ -143,8 +143,7 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     attack_modes = models.ManyToManyField(WeaponAttackMode, verbose_name=_('attack modes'))
 
-    range_lower = models.CharField(_('lower range'), default='s', max_length=1, choices=RANGE_CHOICES)
-    range_upper = models.CharField(_('upper range'), null=True, blank=True, max_length=1, choices=RANGE_CHOICES)
+    range_meter = models.IntegerField(_('range (meter)'), default=0)
 
     image = models.ImageField(_('image'), max_length=256, upload_to='weapon_images/', null=True, blank=True)
 

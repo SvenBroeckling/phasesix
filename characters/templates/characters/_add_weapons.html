@@ -63,9 +63,7 @@
                                                     <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.reload_actions 6 invert=True %}<br>
                                                     <i class="fas fa-arrow-circle-left fa-fw"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.recoil_control 4 %}<br>
                                                 {% endif %}
-                                                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.get_range_lower_display }}
-                                                {% if weapon.range_upper and weapon.range_upper != weapon.range_lower %}-
-                                                    {{ weapon.get_range_upper_display }}{% endif %}<br>
+                                                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
                                             </div>
                                             <div class="col-md-6">
                                                 <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>

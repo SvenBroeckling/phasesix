@@ -46,9 +46,7 @@
                             {% color_value_span w.penetration 3 %}
                         </td>
                         <td class="text-right">
-                            {{ w.weapon.get_range_lower_display }}
-                            {% if w.weapon.range_upper and w.weapon.range_upper != w.weapon.range_lower %}-
-                                {{ w.weapon.get_range_upper_display }}{% endif %}
+                            {{ w.weapon.range_meter }}m
                         </td>
                     </tr>
                 {% endfor %}
