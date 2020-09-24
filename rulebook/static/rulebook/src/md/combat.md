@@ -87,25 +87,18 @@ Dies ist eine optionale Regel. Vor dem Abenteuer sollten sich Spielleiter und Sp
 
 Jedes Mal wenn ein Charakter mit einer Fernkampfwaffe angreift merkt man sich die Anzahl der Schüsse, verringert um die Rückstoßkontrolle der verwendeten Waffe (auf einem Würfel als Rückstoßzähler). Wird in der darauffolgenden Aktion direkt wieder geschossen so kommt dieser Wert als Malus auf den Trefferwurf. Wird nicht geschossen so verfällt der Malus komplett.
 
-##### Trefferwürfe bei falscher Distanz (optional)
-
-Dies ist eine optionale Regel. Vor dem Abenteuer sollten sich Spielleiter und Spieler darauf einigen ob sie verwendet wird. 
+##### Trefferwürfe bei falscher Distanz
 
 Jede Waffe hat eine angegebene Distanz auf der sie effektiv ist. Weicht die Distanz des Ziels von der bei der Waffe angegebenen ab ergibt sich ein Malus auf den Trefferwurf.
 
-Die Distanzen sind:
+Wenn die wirkliche Schussdistanz geringer ist als die angegebene Distanz der Waffe wird der Angriff
+normal durchgeführt. 
 
-* Kurz: 0-20 Meter
-* Mittel: 21-100 Meter
-* Lang: 101-500 Meter
-* Extrem: >500 Meter
+Ist die Distanz bis zum Doppelten der Waffe erhöht gilt für die Trefferwürfe ein Malus von 2. Der 
+Mindestwurf um zu treffen ist somit um 2 erhöht. 
 
-| Ziel/Waffe | Kurz | Mittel | Lang | Extrem |
-| ---------- | ---- | ------ | ---- | ------ |
-| Kurz       | 0    | -1     | -2   | -3     |
-| Mittel     | -2   | 0      | -1   | -2     |
-| Lang       | -4   | -2     | 0    | -1     |
-| Extrem     | -7   | -3     | -3   | 0      |
+Wenn die Entfernung des Ziels mehr als das Doppelte der Waffenreichweite entfernt ist ist es nicht
+möglich auf das Ziel zu schiessen oder anzugreifen.
 
 ##### Feuermodi
 
