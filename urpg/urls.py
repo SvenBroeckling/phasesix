@@ -22,8 +22,8 @@ urlpatterns = [
     url(r'rulebook/', include('rulebook.urls', namespace='rulebook')),
     url(r'rules/', include('rules.urls', namespace='rules')),
     url(r'gmtools/', include('gmtools.urls', namespace='gmtools')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('acct/', include('django.contrib.auth.urls')),
+    path('acct/', include('django_registration.backends.activation.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
