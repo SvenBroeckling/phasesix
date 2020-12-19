@@ -118,7 +118,7 @@ Wenn der Angegriffene Deckung hat ist es möglich, Treffer zu verhindern bevor s
 
 * 6+ geringe Deckung, der Großteil des Körpers sichtbar. Nur einige Bereiche der Sicht des Angreifers auf den Beschossenen sind verdeckt. 
 * 5+ der Angegriffene ist halb verdeckt oder kniet.
-* 4+ nur geringe Teile des Angegriffenen sind für den Angreifer sichtbar, order der Angegriffene liegt.
+* 4+ nur geringe Teile des Angegriffenen sind für den Angreifer sichtbar, oder der Angegriffene liegt.
 
 Der Angegriffene wirft für jeden Treffer einen Würfel. Ein Erfolg reduziert hierbei die Anzahl der Treffer um eins.
 
