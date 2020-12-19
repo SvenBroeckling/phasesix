@@ -16,7 +16,7 @@ Die Abstammung bestimmt die Startwerte folgender Eigenschaften des Charakters:
 * Intelligenz (100)
 * Bonus-, Schicksals- und Wiederholungswürfel (0)
 * Basisschutz (0)
-* Ausweichen (0)
+* Ausweichen (1)
 * Maximale Lebenspunkte (6)
 * Maximaler Stress (Horror-Erweiterung) (6)
 * Arkana (Magie-Erweiterung) (6)
