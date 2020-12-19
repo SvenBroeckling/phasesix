@@ -266,9 +266,10 @@ class Character(models.Model):
 
     @property
     def ballistic_protection(self):
-        return self.lineage.base_protection + self.characterriotgear_set.aggregate(
+        bp = self.characterriotgear_set.aggregate(
            Sum('riot_gear__protection_ballistic')
         )['riot_gear__protection_ballistic__sum'] or 0
+        return self.lineage.base_protection + bp
 
     @property
     def explosive_protection(self):
