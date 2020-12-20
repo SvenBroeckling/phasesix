@@ -18,7 +18,7 @@
             {% trans 'Average Round' %}: {{ statistics.average_round_length|floatformat:2 }}<br>
             <a href="{% url 'gmtools:combat_sim' %}" class="btn btn-primary mt-4">{% trans 'Back to selection' %}</a>
         </div>
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-end">
             {{ dummy_2.health }} health<br>
             {{ dummy_2.attack_value }} attack<br>
             {{ dummy_2.cover }}+ cover<br>
@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-header" id="heading{{ forloop.counter }}">
                                 <h5 class="mb-0 text-center">
-                                    <span class="float-left">
+                                    <span class="float-start">
                                         {% for i in r.d1_health %}
                                             <i class="fas fa-heart fa-2x text-danger"></i>
                                         {% endfor %}
@@ -43,12 +43,12 @@
                                             <i class="far fa-heart fa-2x text-danger"></i>
                                         {% endfor %}
                                     </span>
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                            data-target="#collapse{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                                    <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
                                             aria-expanded="true" aria-controls="collapse{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
                                         {% trans 'Round' %} {{ forloop.counter }}
                                     </button>
-                                    <span class="float-right">
+                                    <span class="float-end">
                                         {% for i in r.d2_health %}
                                             <i class="fas fa-heart fa-2x text-danger"></i>
                                         {% endfor %}
@@ -70,7 +70,7 @@
                                             </div>
                                         {% else %}
                                             <div class="row">
-                                                <div class="col-md-12 {% if a.active_character is dummy_2 %}text-right{% endif %}">
+                                                <div class="col-md-12 {% if a.active_character is dummy_2 %}text-end{% endif %}">
                                                     {{ a.damage|default:"" }}
                                                     {{ a.mode }}
                                                     {% for die,success in a.dice %}

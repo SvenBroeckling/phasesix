@@ -24,7 +24,7 @@
     {% if user.is_authenticated %}
         <div class="row">
             <div class="col-md-12">
-                <span class="switch switch-sm float-right">
+                <span class="switch switch-sm float-end">
                     <input
                             type="checkbox"
                             {% if is_subscribed %}checked{% endif %}
@@ -46,14 +46,14 @@
         {% if user.is_authenticated %}
             <div class="col-md-12">
                 <div class="btn-group" role="group">
-                    <a href="" class="mb-3 mt-0" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Create new Thread' %}</a>
+                    <a href="" class="mb-3 mt-0" data-bs-toggle="collapse" data-bs-target="#new-thread-collapse">{% trans 'Create new Thread' %}</a>
                 </div>
 
                 <div class="collapse card" id="new-thread-collapse">
                     <div class="card-body">
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <small class="float-right"><a href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
+                            <small class="float-end"><a href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
                             {% bootstrap_form form %}
                             <div class="btn-group" role="group">
                                 <button type="submit" class="btn btn-outline-success mb-4">{% trans 'Create Thread' %}</button>

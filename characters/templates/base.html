@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {% compress css %}
+        <link href="{% static 'fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/switch.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/simplemde.min.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/animate.css' %}" type="text/css" rel="stylesheet"/>
@@ -128,9 +129,10 @@
 
 {% compress js %}
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'fontawesome/js/fontawesome.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
     <script src="{% static 'js/jquery.matchHeight.js' %}"></script>
     <script src="{% static 'js/dropzone.min.js' %}"></script>
     <script src="{% static 'js/simplemde.min.js' %}"></script>

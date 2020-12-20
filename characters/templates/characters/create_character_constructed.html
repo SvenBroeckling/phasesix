@@ -20,7 +20,7 @@
                             elem.removeClass('d-none');
                             $(elem.data('rel')).removeClass('disabled');
                         }
-                        $('a[data-toggle="tab"]:not(.disabled):first').tab('show');
+                        $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
                     })
                 }
 
@@ -103,8 +103,8 @@
 
     <div class="row initial-data">
         <div class="col-md-12">
-            <div class="form-group float-right">
-                <span class="switch switch-sm float-right">
+            <div class="mb-3 float-end">
+                <span class="switch switch-sm float-end">
                     <input type="checkbox" class="switch" id="switch-preview">
                     <label for="switch-preview">{% trans "Preview" %}</label>
                 </span>
@@ -125,7 +125,7 @@
             <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
                 {% for tp in template_points %}
                     <li class="nav-item">
-                        <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
+                        <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
                             {{ tp.template_category }}
                         </a>
                     </li>
@@ -136,11 +136,11 @@
         <div class="col-md-12 tab-content">
             {% for tp in template_points %}
                 <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
-                    <div class="card-columns">
+                    <div class="row" data-masonry='{"percentPosition": true }>
                         {% for i in tp.template_category.template_set.all %}
                             {% has_extensions i object.extensions.all as has_extension %}
                             {% if has_extension %}
-                                <div class="constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                                <div class="col col-md-4 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
                                     data-template-id="{{ i.id }}"
                                     data-tp-id="{{ tp.id }}"
                                     data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"

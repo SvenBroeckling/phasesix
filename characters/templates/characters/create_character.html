@@ -14,7 +14,7 @@
                         {% trans 'Create a character by choosing your background step by step and buy templates for creation points.' %}
                     </p>
                     <div class="dropdown">
-                        <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Constructed Character' %}</button>
+                        <button class="btn btn-primary" data-bs-toggle="dropdown">{% trans 'New Constructed Character' %}</button>
                         <div class="dropdown-menu">
                             {% for extension in extensions %}
                                 <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='constructed' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
@@ -35,7 +35,7 @@
                         {% trans 'Draft one character template from three, and that multiple times. Useful for short fun sessions.' %}
                     </p>
                     <div class="dropdown">
-                        <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Draft Character' %}</button>
+                        <button class="btn btn-primary" data-bs-toggle="dropdown">{% trans 'New Draft Character' %}</button>
                         <div class="dropdown-menu">
                             {% for extension in extensions %}
                                 <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='draft' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
@@ -56,7 +56,7 @@
                         {% trans 'Create a complete random character. Choose this for quick non player characters and such.' %}
                     </p>
                     <div class="dropdown">
-                        <button class="btn btn-primary" data-toggle="dropdown">{% trans 'New Random Character' %}</button>
+                        <button class="btn btn-primary" data-bs-toggle="dropdown">{% trans 'New Random Character' %}</button>
                         <div class="dropdown-menu">
                             {% for extension in extensions %}
                                 <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='random' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>

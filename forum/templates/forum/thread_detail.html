@@ -24,7 +24,7 @@
     {% if user.is_authenticated %}
         <div class="row">
             <div class="col-md-12">
-                <span class="switch switch-sm float-right">
+                <span class="switch switch-sm float-end">
                     <input
                             type="checkbox"
                             class="switch"
@@ -60,7 +60,7 @@
         {% if user.is_authenticated %}
             <div class="col-md-12">
                 <div class="btn-group" role="group">
-                    <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse">{% trans 'Answer Thread' %}</a>
+                    <a href="" class="mb-3" data-bs-toggle="collapse" data-bs-target="#new-thread-collapse">{% trans 'Answer Thread' %}</a>
                 </div>
 
                 <div class="collapse card" id="new-thread-collapse">
@@ -102,7 +102,7 @@
         {% if user.is_authenticated %}
             <div class="col-md-12">
                 <div class="btn-group" role="group">
-                    <a href="" class="mb-3" data-toggle="collapse" data-target="#new-thread-collapse-bottom">{% trans 'Answer Thread' %}</a>
+                    <a href="" class="mb-3" data-bs-toggle="collapse" data-bs-target="#new-thread-collapse-bottom">{% trans 'Answer Thread' %}</a>
                 </div>
 
                 <div class="collapse card" id="new-thread-collapse-bottom">

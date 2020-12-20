@@ -8,10 +8,10 @@
             <div>
                 {% if may_edit %}
                     <a
-                            class="btn btn-primary btn-sm float-right modal-trigger"
+                            class="btn btn-primary btn-sm float-end modal-trigger"
                             data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                            data-toggle="modal"
-                            data-target=".character-modal"
+                            data-bs-toggle="modal"
+                            data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Armor' %}"
                             href=""><i class="fas fa-plus"></i></a>
                 {% endif %}
@@ -23,13 +23,13 @@
                     <div class="card-header">
                         {{ r.riot_gear }}
                         {% if may_edit %}
-                            <a class="float-right action-link text-danger ml-1" title="{% trans 'Remove' %}"
+                            <a class="float-end action-link text-danger ms-1" title="{% trans 'Remove' %}"
                                href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i
                                     class="fas fa-trash"></i></a>
-                            <a class="float-right action-link text-warning ml-3" title="{% trans 'Damage' %}"
+                            <a class="float-end action-link text-warning ms-3" title="{% trans 'Damage' %}"
                                href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i
                                     class="fas fa-times"></i></a>
-                            <span class="float-right">{% color_value_span r.condition 100 %}%</span>
+                            <span class="float-end">{% color_value_span r.condition 100 %}%</span>
                         {% endif %}
                     </div>
                     <div class="card-body">
@@ -47,9 +47,9 @@
                                     class="modal-trigger"
                                     data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
                                     {% if may_edit %}
-                                    data-toggle="modal"
+                                    data-bs-toggle="modal"
                                     {% endif %}
-                                    data-target=".character-modal"
+                                    data-bs-target=".character-modal"
                                     data-modal-title="{% trans 'Add Armor' %}"
                                     href="">{% trans 'No armor yet.' %}</a>
                         </div>
@@ -60,10 +60,10 @@
             <div>
                 {% if may_edit %}
                     <a
-                            class="btn btn-primary btn-sm float-right modal-trigger"
+                            class="btn btn-primary btn-sm float-end modal-trigger"
                             data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                            data-toggle="modal"
-                            data-target=".character-modal"
+                            data-bs-toggle="modal"
+                            data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Weapon' %}"
                             href=""><i class="fas fa-plus"></i></a>
                 {% endif %}
@@ -78,18 +78,18 @@
                             {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
                             {% if has_valid_wm %}
                                 <a
-                                        class="modal-trigger float-right ml-1 {% if not has_valid_wm %}disabled{% endif %}"
+                                        class="modal-trigger float-end ms-1 {% if not has_valid_wm %}disabled{% endif %}"
                                         data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
                                         title="{% trans 'Add Modification' %}"
-                                        data-toggle="modal"
-                                        data-target=".character-modal"
+                                        data-bs-toggle="modal"
+                                        data-bs-target=".character-modal"
                                         data-modal-title="{% trans 'Add Modification' %}"
                                         href=""><i class="fas fa-plus text-info"></i></a>
                             {% endif %}
-                            <a class="float-right action-link text-danger ml-1" title="{% trans 'Remove' %}"
+                            <a class="float-end action-link text-danger ms-1" title="{% trans 'Remove' %}"
                                href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i
                                     class="fas fa-trash"></i></a>
-                            <a class="float-right action-link text-warning ml-3" title="{% trans 'Damage' %}"
+                            <a class="float-end action-link text-warning ms-3" title="{% trans 'Damage' %}"
                                href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i
                                     class="fas fa-times"></i></a>
                         {% endif %}
@@ -137,9 +137,9 @@
                                     class="modal-trigger"
                                     data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
                                     {% if may_edit %}
-                                    data-toggle="modal"
+                                    data-bs-toggle="modal"
                                     {% endif %}
-                                    data-target=".character-modal"
+                                    data-bs-target=".character-modal"
                                     data-modal-title="{% trans 'Add Weapon' %}"
                                     href="">{% trans 'No weapon yet.' %}</a>
 
@@ -153,12 +153,12 @@
             <div>
                 {% if may_edit %}
                     <a
-                            class="btn btn-primary btn-sm float-right modal-trigger"
+                            class="btn btn-primary btn-sm float-end modal-trigger"
                             data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
                             title="{% trans 'Add Item' %}"
-                            data-toggle="modal"
+                            data-bs-toggle="modal"
                             data-modal-title="{% trans 'Add item' %}"
-                            data-target=".character-modal"
+                            data-bs-target=".character-modal"
                             href=""><i class="fa fa-plus"></i></a>
                 {% endif %}
                 <h2 class="mb-2">{% trans 'Items' %}</h2>
@@ -170,7 +170,7 @@
                    {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
                     <span class="small text-muted">{{ ci.item.type }}</span>
                     {% if may_edit %}
-                        <a class="float-right action-link text-danger" title="{% trans 'Remove / Use' %}"
+                        <a class="float-end action-link text-danger" title="{% trans 'Remove / Use' %}"
                            href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i
                                 class="fas fa-trash"></i></a>
                     {% endif %}
@@ -190,10 +190,10 @@
                             data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
                             title="{% trans 'Add Item' %}"
                             {% if may_edit %}
-                            data-toggle="modal"
+                            data-bs-toggle="modal"
                             {% endif %}
                             data-modal-title="{% trans 'Add item' %}"
-                            data-target=".character-modal"
+                            data-bs-target=".character-modal"
                             href="">{% trans 'No items yet.' %}</a>
                 </div>
             </div>

@@ -29,7 +29,7 @@
     <ul class="nav nav-tabs" role="tablist">
         {% for t in item_types %}
             <li class="nav-item {% if forloop.first %}active{% endif %}">
-                <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab" data-toggle="tab">{{ t }}</a>
+                <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab" data-bs-toggle="tab">{{ t }}</a>
             </li>
         {% endfor %}
     </ul>
@@ -44,23 +44,23 @@
                             <div class="col-md-6">
                                 <div class="card mt-3">
                                     <div class="card-header text-center">
-                                        <span class="float-left">
+                                        <span class="float-start">
                                             {% for e in item.extensions.all %}
                                                 <i class="{{ e.fa_icon_class }}" title="{{ e }}"></i>
                                             {% endfor %}
                                         </span>
                                         <span>{{ item }}</span>
-                                        <span class="float-right small">{{ item.type }}</span>
+                                        <span class="float-end small">{{ item.type }}</span>
                                     </div>
                                     <div class="card-body">
                                         {% if item.description %}<p>{{ item.description }}</p>{% endif %}
                                         <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span item.concealment 6 invert=True %}<br>
                                         <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
                                         <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span item.price 500 invert=True %} €
-                                        <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}" class="float-right add-form" method="post">
+                                        <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}" class="float-end add-form" method="post">
                                             {% csrf_token %}
                                             <input type="hidden" name="item_id" value="{{ item.id }}">
-                                            <button class="btn btn-sm btn-primary float-right" data-msg="{% trans 'Added' %}">{% trans 'Add item' %}</button>
+                                            <button class="btn btn-sm btn-primary float-end" data-msg="{% trans 'Added' %}">{% trans 'Add item' %}</button>
                                         </form>
                                     </div>
                                 </div>

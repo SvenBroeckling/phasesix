@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <a href="{% url 'characters:create_character' %}" class="btn btn-primary btn-lg float-right mb-2">{% trans 'Create a character' %}</a>
+            <a href="{% url 'characters:create_character' %}" class="btn btn-primary btn-lg float-end mb-2">{% trans 'Create a character' %}</a>
         </div>
     </div>
     <div class="row character-list">
@@ -27,17 +27,17 @@
                             {% endif %}
                             {% endif %}
                             ">
-                        <div class="card-body text-right">
+                        <div class="card-body text-end">
                             {% if object.image %}
                                 {% thumbnail object.image "120x120" crop="center" as im %}
                                     <img
-                                            class="img-fluid rounded float-left"
+                                            class="img-fluid rounded float-start"
                                             src="{{ MEDIA_URL }}{{ im.url }}"
                                             alt="{{ object.name }}">
                                 {% endthumbnail %}
                             {% else %}
                                 <img
-                                        class="img-fluid rounded float-left"
+                                        class="img-fluid rounded float-start"
                                         height="120" width="120"
                                         src="{% static 'img/silhuette.png' %}"
                                         alt="{{ object.name }}">

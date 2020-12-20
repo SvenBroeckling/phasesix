@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <a href="{% url 'campaigns:create' %}" class="btn btn-primary btn-lg float-right mb-2">{% trans 'Create a campaign' %}</a>
+            <a href="{% url 'campaigns:create' %}" class="btn btn-primary btn-lg float-end mb-2">{% trans 'Create a campaign' %}</a>
         </div>
     </div>
     <div class="row character-list">
@@ -16,7 +16,7 @@
                             {% if object.image %}
                                 {% thumbnail object.image "120x120" crop="center" as im %}
                                     <img
-                                            class="img-fluid rounded float-left mr-3"
+                                            class="img-fluid rounded float-start me-3"
                                             src="{{ MEDIA_URL }}{{ im.url }}"
                                             alt="{{ object.name }}">
                                 {% endthumbnail %}

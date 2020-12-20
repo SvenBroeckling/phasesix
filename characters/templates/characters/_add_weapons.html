@@ -29,7 +29,7 @@
     <ul class="nav nav-tabs">
         {% for t in weapon_types %}
             <li class="{% if forloop.first %}active{% endif %} nav-item">
-                <a class="nav-link" href="#w{{ t.id }}" aria-controls="home" role="tab" data-toggle="tab">{{ t }}</a>
+                <a class="nav-link" href="#w{{ t.id }}" aria-controls="home" role="tab" data-bs-toggle="tab">{{ t }}</a>
             </li>
         {% endfor %}
     </ul>
@@ -44,13 +44,13 @@
                             <div class="col-md-12">
                                 <div class="card mt-3">
                                     <div class="card-header text-center">
-                                        <span class="float-left">
+                                        <span class="float-start">
                                             {% for e in weapon.extensions.all %}
                                                 <i class="{{ e.fa_icon_class }}" title="{{ e }}"></i>
                                             {% endfor %}
                                         </span>
                                         <span>{{ weapon }}</span>
-                                        <span class="float-right small">{{ weapon.type }}</span>
+                                        <span class="float-end small">{{ weapon.type }}</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -75,10 +75,10 @@
                                                     <br>
                                                     {% for fm in weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
                                                 {% endif %}
-                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-right add-form" method="post">
+                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-end add-form" method="post">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
-                                                    <button class="btn btn-sm btn-primary float-right" data-msg="{% trans 'Added' %}">{% trans 'Add weapon' %}</button>
+                                                    <button class="btn btn-sm btn-primary float-end" data-msg="{% trans 'Added' %}">{% trans 'Add weapon' %}</button>
                                                 </form>
                                             </div>
                                         </div>

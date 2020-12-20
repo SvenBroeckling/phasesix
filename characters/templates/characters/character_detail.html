@@ -30,7 +30,7 @@
             $('.fragment').each(function (index) {
                 $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
                     $(this).children(':first').unwrap(); // keep the original fragment container
-                    $('[data-toggle="popover"]').popover();
+                    $('[data-bs-toggle="popover"]').popover();
                 })
             });
         }
@@ -40,7 +40,7 @@
         })
 
         // save bootstrap tabs
-        $('a[data-toggle="pill"]').on('click', function (e) {
+        $('a[data-bs-toggle="pill"]').on('click', function (e) {
             window.localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
 
@@ -49,7 +49,7 @@
             $('a[href="' + activeTab + '"]').tab('show');
         }
 
-        $('[data-toggle="popover"]').popover();
+        $('[data-bs-toggle="popover"]').popover();
 
         // reputation
         $('.add-reputation-form').on('submit', function(e){
@@ -101,7 +101,7 @@
                 {% if character.image %}
                     {% thumbnail character.image "140x140" crop="center" as im %}
                         <img
-                                {% if may_edit %}data-toggle="dropdown"{% endif %}
+                                {% if may_edit %}data-bs-toggle="dropdown"{% endif %}
                                 class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
                                 src="{{ MEDIA_URL }}{{ im.url }}"
                                 alt="{{ object.name }}">
@@ -109,7 +109,7 @@
                 {% else %}
                     <img
                             class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
-                            {% if may_edit %}data-toggle="dropdown"{% endif %}
+                            {% if may_edit %}data-bs-toggle="dropdown"{% endif %}
                             width="140" height="140"
                             src="{% static 'img/silhuette.png' %}"
                             alt="{{ object.name }}">
@@ -120,8 +120,8 @@
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_rest' pk=object.id %}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
+                                data-bs-toggle="modal"
+                                data-bs-target=".character-modal"
                                 data-modal-title="{% trans 'Rest' %}"
                                 href=""><i class="fas fa-plus fa-fw text-info"></i> {% trans 'Rest' %}</a>
                         <div class="dropdown-divider"></div>
@@ -133,8 +133,8 @@
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_status_effects' pk=object.id %}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
+                                data-bs-toggle="modal"
+                                data-bs-target=".character-modal"
                                 data-modal-title="{% trans 'Status Effects' %}"
                                 href=""><i class="fas fa-thermometer-quarter fa-fw text-info"></i> {% trans 'Status Effects' %}</a>
 
@@ -148,8 +148,8 @@
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
-                                data-toggle="modal"
-                                data-target=".character-modal"
+                                data-bs-toggle="modal"
+                                data-bs-target=".character-modal"
                                 data-modal-title="{% trans 'Name / Images' %}"
                                 href=""><i class="fas fa-image fa-fw text-info"></i> {% trans 'Name / Images' %}</a>
                     </div>
@@ -188,23 +188,23 @@
             {% detail_fragment 'health' %}
 
             <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" data-toggle="pill" href="#v-character"
+                <a class="nav-link active" data-bs-toggle="pill" href="#v-character"
                    role="tab" aria-controls="v-character" aria-selected="true"><i class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Character' %}</a>
-                <a class="nav-link" data-toggle="pill" href="#v-gear" role="tab" aria-controls="v-gear"
+                <a class="nav-link" data-bs-toggle="pill" href="#v-gear" role="tab" aria-controls="v-gear"
                    aria-selected="true"><i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Gear' %}</a>
-                <a class="nav-link" data-toggle="pill" href="#v-combat" role="tab" aria-controls="v-combat"
+                <a class="nav-link" data-bs-toggle="pill" href="#v-combat" role="tab" aria-controls="v-combat"
                    aria-selected="true"><i class="fas fa-fw fa-chess-pawn"></i>&nbsp;{% trans 'Combat' %}</a>
                 {% if object.extension_enabled.magic %}
-                    <a class="nav-link" data-toggle="pill" href="#v-magic" role="tab" aria-controls="v-combat"
+                    <a class="nav-link" data-bs-toggle="pill" href="#v-magic" role="tab" aria-controls="v-combat"
                        aria-selected="true"><i class="fas fa-fw fa-magic"></i>&nbsp;{% trans 'Magic' %}
                         {% if object.spell_points_available %}
-                            <span class="badge badge-info float-right">{{ object.spell_points_available }}</span>
+                            <span class="badge badge-info float-end">{{ object.spell_points_available }}</span>
                         {% endif %}
                     </a>
                 {% endif %}
-                <a class="nav-link" data-toggle="pill" href="#v-background" role="tab" aria-controls="v-background"
+                <a class="nav-link" data-bs-toggle="pill" href="#v-background" role="tab" aria-controls="v-background"
                    aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
-                    <span class="badge badge-primary float-right">{{ object.reputation_available }}</span>
+                    <span class="badge badge-primary float-end">{{ object.reputation_available }}</span>
                 </a>
             </div>
         </div>

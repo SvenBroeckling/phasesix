@@ -44,7 +44,7 @@
     <li class="nav-item">
         {% for tp in template_points %}
             <li class="nav-item">
-                <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
+                <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
                     {{ tp.template_category }}
                 </a>
             </li>

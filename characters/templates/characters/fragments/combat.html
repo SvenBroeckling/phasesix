@@ -12,15 +12,15 @@
                         {% trans 'Action' %}<br>
                         <small>{% trans 'Type' %}</small>
                     </th>
-                    <th class="text-right">
+                    <th class="text-end">
                         {% trans 'Roll' %}<br>
                         <small>{% trans 'Time' %}</small>
                     </th>
-                    <th class="text-right">
+                    <th class="text-end">
                         {% trans 'Damage' %}<br>
                         <small>{% trans 'Penetration' %}</small>
                     </th>
-                    <th class="text-right">
+                    <th class="text-end">
                         {% trans 'Range' %}<br>
                         <small>{% trans 'Area of effect' %}</small>
                     </th>
@@ -33,19 +33,19 @@
                             <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}<br>
                             <small>{{ w.weapon.type }}</small>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             {% color_value_span w.attack_roll 7 %}+
                             <br>
                             <small>{% color_value_span w.weapon.attacks_per_action 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             {% for i in w.wounds_range %}
                                 <i class="fas fa-heart text-danger"></i>
                             {% endfor %}
                             <br>
                             {% color_value_span w.penetration 3 %}
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             {{ w.weapon.range_meter }}m
                         </td>
                     </tr>
@@ -56,12 +56,12 @@
                             <i class="fas fa-bomb text-success"></i> <span class="text-muted">{{ i.quantity }} x </span>{{ i.item }}<br>
                             <small>{{ i.item.type }}</small>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             {% color_value_span i.use_roll 7 %}+
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                         </td>
                     </tr>
                 {% endfor %}
@@ -71,15 +71,15 @@
                             <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
                             <small>{{ s.spell.type.name }} - {{ s.spell.flavour.name }}</small>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             {% color_value_span 4 4 %}+<br>
                             <small>{% color_value_span s.spell.casting_time 1 %}</small>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             {{ s.spell.power }}<br>
                             <small>{{ s.spell.components }}</small>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             {{ s.spell.range }}<br>
                             <small>{{ s.spell.area_of_effect }} - {{ s.spell.area_of_effect_range }}</small>
                         </td>
@@ -90,7 +90,7 @@
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         {% color_value_span object.combat_walking_range 4 %} {% trans 'Meter' %}
                     </td>
                 </tr>
@@ -99,7 +99,7 @@
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Run" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         {% color_value_span object.combat_running_range 4 %} {% trans 'Meter' %}
                     </td>
                 </tr>
@@ -108,7 +108,7 @@
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Crawl" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         {% color_value_span object.combat_crawling_range 4 %} {% trans 'Meter' %}
                     </td>
                 </tr>
@@ -130,17 +130,17 @@
                 <table class="table">
                     <tr>
                         <td>{% trans 'Actions' %}</td>
-                        <td class="text-right">{% color_value_span object.actions 6 %}</td>
+                        <td class="text-end">{% color_value_span object.actions 6 %}</td>
                     </tr>
                     {% for skill in object.characterskill_set.combat_skills %}
                         <tr>
                             <td>{{ skill.skill }}</td>
-                            <td class="text-right">{% color_value_span skill.value 6 %}</td>
+                            <td class="text-end">{% color_value_span skill.value 6 %}</td>
                         </tr>
                     {% endfor %}
                     <tr>
                         <td>{% trans 'Quickness' %}</td>
-                        <td class="text-right">{% color_value_span object.quickness 6 %}</td>
+                        <td class="text-end">{% color_value_span object.quickness 6 %}</td>
                     </tr>
                 </table>
             </div>
@@ -150,11 +150,11 @@
                     <div class="list-group list-group-flush">
                         <li class="list-group-item">
                             <div class="h4">{% trans "Attack Roll" %}</div>
-                            <div class="text-muted ml-4">7 - {% trans 'Skill' %} - {% trans 'Weapon Accuracy' %}</div>
+                            <div class="text-muted ms-4">7 - {% trans 'Skill' %} - {% trans 'Weapon Accuracy' %}</div>
                         </li>
                         <li class="list-group-item">
                             <div class="h4">{% trans 'Cover Roll' %}</div>
-                            <div class="text-muted ml-4">
+                            <div class="text-muted ms-4">
                                 4+ - {% trans 'Mostly covered' %}<br>
                                 5+ - {% trans 'Half cover or prone' %}<br>
                                 6+ - {% trans 'Minimal cover' %}
@@ -162,7 +162,7 @@
                         </li>
                         <li class="list-group-item">
                             <div class="h4">{% trans 'Armor roll' %}</div>
-                            <div class="text-muted ml-4">
+                            <div class="text-muted ms-4">
                                 7 - {% trans 'Armor value' %} + {% trans 'penetration' %}
                             </div>
                         </li>
