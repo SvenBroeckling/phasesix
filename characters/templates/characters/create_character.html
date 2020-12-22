@@ -3,68 +3,25 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-4">
-            <div class="card text-center mb-2">
-                <div class="card-header">
-                    {% trans 'Constructed Character' %}
-                </div>
-                <div class="card-body">
-                    <i class="fas fa-user-secret fa-9x mb-4"></i>
-                    <p>
-                        {% trans 'Create a character by choosing your background step by step and buy templates for creation points.' %}
-                    </p>
-                    <div class="dropdown">
-                        <button class="btn btn-primary" data-bs-toggle="dropdown">{% trans 'New Constructed Character' %}</button>
-                        <div class="dropdown-menu">
-                            {% for extension in extensions %}
-                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='constructed' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
-                            {% endfor %}
-                        </div>
+        <div class="col-12">
+            <h1 class="text-center">- {% trans 'New Character' %} -</h1>
+            <p class="text-muted text-center">{% trans 'Choose an epoch for your character to live in' %}</p>
+        </div>
+
+        {% for extension in extensions %}
+            <div class="col-md-4">
+                <div class="card text-center mb-2">
+                    <div class="card-header">
+                        {{ extension }}
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted text-center">{{ extension.year_range }}</p>
+                        <i class="{{ extension.fa_icon_class }} fa-9x mb-4"></i>
+                        <p class="text-center">{{ extension.description }}</p>
+                        <a href="" class="btn btn-primary w-100">{{ extension }}</a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-center mb-2">
-                <div class="card-header">
-                    {% trans 'Draft Character' %}
-                </div>
-                <div class="card-body">
-                    <i class="fas fa-sync-alt fa-9x mb-4"></i>
-                    <p>
-                        {% trans 'Draft one character template from three, and that multiple times. Useful for short fun sessions.' %}
-                    </p>
-                    <div class="dropdown">
-                        <button class="btn btn-primary" data-bs-toggle="dropdown">{% trans 'New Draft Character' %}</button>
-                        <div class="dropdown-menu">
-                            {% for extension in extensions %}
-                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='draft' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-center mb-2">
-                <div class="card-header">
-                    {% trans 'Random Character' %}
-                </div>
-                <div class="card-body">
-                    <i class="fas fa-question fa-9x mb-4"></i>
-                    <p>
-                        {% trans 'Create a complete random character. Choose this for quick non player characters and such.' %}
-                    </p>
-                    <div class="dropdown">
-                        <button class="btn btn-primary" data-bs-toggle="dropdown">{% trans 'New Random Character' %}</button>
-                        <div class="dropdown-menu">
-                            {% for extension in extensions %}
-                                <a href="{% url 'characters:create_character_data' extension_pk=extension.id mode='random' %}" class="dropdown-item"><i class="{{ extension.fa_icon_class }}"></i> {{ extension }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
