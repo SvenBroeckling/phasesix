@@ -5,52 +5,56 @@
     <div class="text-center mb-3">
         <div class="mb-2">
             {% for i in object.bonus_dice|to_range %}
-                <i class="fas fa-dice-six fa-2x text-success" data-bs-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Bonus Dice' %}" data-content="{% trans 'Add bonus dice to any roll in the game, or use them to create an additional action in combat at any time.<br><br>Bonus dice are expended on use and refresh at any rest.' %}"></i>
+                <i class="fas fa-dice-six fa-2x text-success" data-bs-toggle="popover" data-bs-trigger="hover" data-html="true" title="{% trans 'Bonus Dice' %}" data-bs-content="{% trans 'Add bonus dice to any roll in the game, or use them to create an additional action in combat at any time.<br><br>Bonus dice are expended on use and refresh at any rest.' %}"></i>
             {% endfor %}
             {% for i in object.destiny_dice|to_range %}
-                <i class="fas fa-dice-four fa-2x text-danger" data-bs-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Destiny Dice' %}" data-content="{% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at a rest of at least 10 hours.' %}"></i>
+                <i class="fas fa-dice-four fa-2x text-danger" data-bs-toggle="popover" data-bs-trigger="hover" data-html="true" title="{% trans 'Destiny Dice' %}" data-bs-content="{% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at a rest of at least 10 hours.' %}"></i>
             {% endfor %}
             {% for i in object.rerolls|to_range %}
-                <i class="fas fa-dice-one fa-2x text-info" data-bs-toggle="popover" data-trigger="hover" data-html="true" title="{% trans 'Rerolls' %}" data-content="{% trans 'Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and refresh at any rest.' %}"></i>
+                <i class="fas fa-dice-one fa-2x text-info" data-bs-toggle="popover" data-bs-trigger="hover" data-html="true" title="{% trans 'Rerolls' %}" data-bs-content="{% trans 'Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and refresh at any rest.' %}"></i>
             {% endfor %}
         </div>
 
         <div>
             {% for i in object.health|to_range %}
-                <i class="fas fa-heart text-danger" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Health' %}" data-content="{% trans 'A full heart. This can compensate a wound. Use the character menu to take a wound.' %}"></i>
+                <i class="fas fa-heart text-danger" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Health' %}" data-bs-content="{% trans 'A full heart. This can compensate a wound. Use the character menu to take a wound.' %}"></i>
             {% endfor %}
             {% for i in object.wounds_taken|to_range %}
-                <i class="far fa-heart text-danger" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Wound' %}" data-content="{% trans 'A wound taken. This empty heart can be restored at a hospital.' %}"></i>
+                <i class="far fa-heart text-danger" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Wound' %}" data-bs-content="{% trans 'A wound taken. This empty heart can be restored at a hospital.' %}"></i>
             {% endfor %}
             {% for i in object.boost|to_range %}
-                <i class="fas fa-heart text-info" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Boost' %}" data-content="{% trans 'A temporary boost, given by first aid or medicine. If you take damage this will expanded first.' %}"></i>
+                <i class="fas fa-heart text-info" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Boost' %}" data-bs-content="{% trans 'A temporary boost, given by first aid or medicine. If you take damage this will expanded first.' %}"></i>
             {% endfor %}
         </div>
 
         <div>
             {% for i in object.ballistic_protection|to_range %}
-                <i class="fas fa-shield-alt text-success" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Ballistic Protection' %}" data-content="{% trans 'Protects you from ballistic shots at the defense roll.' %}"></i>
+                <i class="fas fa-shield-alt text-success" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Ballistic Protection' %}" data-bs-content="{% trans 'Protects you from ballistic shots at the defense roll.' %}"></i>
             {% endfor %}
             {% for i in object.explosion_protection|to_range %}
-                <i class="fas fa-shield-alt text-info" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Explosive Protection' %}" data-content="{% trans 'Protects you from explsive force at the defense roll.' %}"></i>
+                <i class="fas fa-shield-alt text-info" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Explosive Protection' %}" data-bs-content="{% trans 'Protects you from explsive force at the defense roll.' %}"></i>
             {% endfor %}
         </div>
 
         <div class="mt-2">
             {% for cse in object.characterstatuseffect_set.all %}
-                <i
-                        class="{{ cse.status_effect.fa_icon_class }} fa-2x"
-                        data-bs-toggle="popover" title="{{ cse }}"
-                        data-content="{{ cse.rules }}"
-                        data-trigger="hover" data-html="true"></i>
-                <span class="text-danger me-2">{{ cse.value }}</span>
+                <span class="fa-layers fa-fw fa-3x">
+                    <i
+                            data-bs-toggle="popover"
+                            title="{{ cse }}: {{ cse.value }}"
+                            data-bs-content="{{ cse.rules }}asd"
+                            data-bs-trigger="hover"
+                            data-bs-html="true"
+                            class="{{ cse.status_effect.fa_icon_class }}"></i>
+                    <span class="fa-layers-counter bg-danger">{{ cse.value }}</span>
+                </span>
             {% endfor %}
         </div>
 
         {% if object.extension_enabled.magic %}
             <div>
                 {% for i in object.arcana|to_range %}
-                    <i class="fas fa-magic text-warning" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Arcana' %}" data-content="{% trans 'Use this to cast spells at the magic or combat tab.' %}"></i>
+                    <i class="fas fa-magic text-warning" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Arcana' %}" data-bs-content="{% trans 'Use this to cast spells at the magic or combat tab.' %}"></i>
                 {% endfor %}
             </div>
         {% endif %}
@@ -58,16 +62,16 @@
         {% if object.extension_enabled.horror %}
             <div>
                 {% for i in object.stress|to_range %}
-                    <i class="fas fa-meh text-warning" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Stress' %}" data-content="{% trans 'This is your stress level. You will geht a quirk if it reaches your stress maximum.' %}"></i>
+                    <i class="fas fa-meh text-warning" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Stress' %}" data-bs-content="{% trans 'This is your stress level. You will geht a quirk if it reaches your stress maximum.' %}"></i>
                 {% endfor %}
                 {% for i in object.available_stress|to_range %}
-                    <i class="far fa-meh text-warning" data-bs-toggle="popover" data-trigger="hover" title="{% trans 'Possible Stress' %}" data-content="{% trans 'This is possible stress your can cope with. You will get a quirk if all slots are filled.' %}"></i>
+                    <i class="far fa-meh text-warning" data-bs-toggle="popover" data-bs-trigger="hover" title="{% trans 'Possible Stress' %}" data-bs-content="{% trans 'This is possible stress your can cope with. You will get a quirk if all slots are filled.' %}"></i>
                 {% endfor %}
             </div>
 
             <div>
                 {% for q in object.quirks.all %}
-                    <i class="fas fa-frown text-dark" data-bs-toggle="popover" title="{{ q }}" data-content="{{ q.get_modifier_summary_html }}" data-trigger="hover" data-html="true"></i>
+                    <i class="fas fa-frown text-dark" data-bs-toggle="popover" title="{{ q }}" data-bs-content="{{ q.get_modifier_summary_html }}" data-bs-trigger="hover" data-html="true"></i>
                 {% endfor %}
             </div>
         {% endif %}

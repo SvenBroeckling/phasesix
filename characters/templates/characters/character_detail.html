@@ -40,7 +40,7 @@
         })
 
         // save bootstrap tabs
-        $('a[data-bs-toggle="pill"]').on('click', function (e) {
+        $('a[data-bs-toggle="tab"]').on('click', function (e) {
             window.localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
 
@@ -166,8 +166,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body character-modal-container">
                     <div class="text-center">
@@ -176,7 +175,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">{% trans 'Close' %}</button>
                 </div>
             </div>
         </div>
@@ -186,30 +185,30 @@
 
         <div class="col-lg-2 col-md-3">
             {% detail_fragment 'health' %}
-
-            <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" data-bs-toggle="pill" href="#v-character"
-                   role="tab" aria-controls="v-character" aria-selected="true"><i class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Character' %}</a>
-                <a class="nav-link" data-bs-toggle="pill" href="#v-gear" role="tab" aria-controls="v-gear"
-                   aria-selected="true"><i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Gear' %}</a>
-                <a class="nav-link" data-bs-toggle="pill" href="#v-combat" role="tab" aria-controls="v-combat"
-                   aria-selected="true"><i class="fas fa-fw fa-chess-pawn"></i>&nbsp;{% trans 'Combat' %}</a>
-                {% if object.extension_enabled.magic %}
-                    <a class="nav-link" data-bs-toggle="pill" href="#v-magic" role="tab" aria-controls="v-combat"
-                       aria-selected="true"><i class="fas fa-fw fa-magic"></i>&nbsp;{% trans 'Magic' %}
-                        {% if object.spell_points_available %}
-                            <span class="badge bg-info float-end">{{ object.spell_points_available }}</span>
-                        {% endif %}
-                    </a>
-                {% endif %}
-                <a class="nav-link" data-bs-toggle="pill" href="#v-background" role="tab" aria-controls="v-background"
-                   aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
-                    <span class="badge bg-primary float-end">{{ object.reputation_available }}</span>
-                </a>
-            </div>
         </div>
 
         <div class="col-lg-10 col-md-9">
+            <div class="nav nav-tabs mb-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" data-bs-toggle="tab" href="#v-character"
+                   role="tab" aria-controls="v-character" aria-selected="true"><i class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Character' %}</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#v-gear" role="tab" aria-controls="v-gear"
+                   aria-selected="true"><i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Gear' %}</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#v-combat" role="tab" aria-controls="v-combat"
+                   aria-selected="true"><i class="fas fa-fw fa-chess-pawn"></i>&nbsp;{% trans 'Combat' %}</a>
+                {% if object.extension_enabled.magic %}
+                    <a class="nav-link" data-bs-toggle="tab" href="#v-magic" role="tab" aria-controls="v-combat"
+                       aria-selected="true"><i class="fas fa-fw fa-magic"></i>&nbsp;{% trans 'Magic' %}
+                        {% if object.spell_points_available %}
+                            <span class="badge bg-info ms-2">{{ object.spell_points_available }}</span>
+                        {% endif %}
+                    </a>
+                {% endif %}
+                <a class="nav-link" data-bs-toggle="tab" href="#v-background" role="tab" aria-controls="v-background"
+                   aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
+                    <span class="badge bg-primary ms-2">{{ object.reputation_available }}</span>
+                </a>
+            </div>
+
             {% if not object.created_by %}
                 <div class="alert alert-danger" role="alert">
                     {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
