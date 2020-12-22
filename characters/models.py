@@ -25,9 +25,6 @@ class Character(models.Model):
         _('backdrop image'), upload_to='character_backdrop_images', blank=True, null=True
     )
 
-    creation_mode = models.CharField(
-        _('creation mode'), max_length=12, default='random'
-    )
     created_by = models.ForeignKey(
         'auth.User',
         verbose_name=_('created by'),
@@ -142,9 +139,6 @@ class Character(models.Model):
         return self.reputation - self.reputation_spent
 
     def set_initial_reputation(self, initial_reputation=None):
-        """Sets the reputation to the initial reputation, or to the spent reputation
-        if no initial reputation is given (for draft and random characters) to start
-        a new character with 0 reputation available"""
         self.reputation = (
             self.reputation_spent if initial_reputation is None else initial_reputation
         )
@@ -280,33 +274,6 @@ class Character(models.Model):
     @property
     def evasion(self):
         return self.lineage.base_evasion
-
-    def fill_basics(self):
-        for skill in Skill.objects.all():
-            self.characterskill_set.create(skill=skill, base_value=1)
-            self.save()
-
-    def fill_random(self):
-        self.fill_basics()
-        for tc in TemplateCategory.objects.all():
-            if tc.template_set.all().for_extensions(self.extensions).exists():
-                for i in range(random.randint(1, 3)):
-                    self.add_template(
-                        tc.template_set.all()
-                        .for_extensions(self.extensions)
-                        .order_by('?')[0]
-                    )
-        for i in range(random.randint(2, 4)):
-            self.characterweapon_set.create(
-                weapon=Weapon.objects.for_extensions(self.extensions).order_by('?')[0]
-            )
-        self.characterriotgear_set.create(
-            riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?')[0]
-        )
-        for i in range(random.randint(2, 4)):
-            self.characteritem_set.create(
-                item=Item.objects.for_extensions(self.extensions).order_by('?')[0]
-            )
 
 
 class CharacterSkillQuerySet(models.QuerySet):

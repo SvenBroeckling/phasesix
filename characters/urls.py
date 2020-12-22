@@ -33,24 +33,9 @@ urlpatterns = [
     # new character
     url(r'^new/$', views.CreateCharacterView.as_view(), name='create_character'),
     url(
-        r'^new/data/(?P<extension_pk>\d+)/(?P<mode>\w+)/$',
+        r'^new/data/(?P<extension_pk>\d+)/$',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
-
-    # draft
-    url(r'^new/draft/(?P<pk>\d+)$', views.CreateCharacterDraftView.as_view(), name='create_character_draft'),
-    url(
-        r'^new/draft/preview/(?P<pk>\d+)$',
-        views.XhrCreateCharacterPreviewView.as_view(),
-        name='xhr_create_character_preview'),
-    url(
-        r'^new/draft/templates/(?P<pk>\d+)$',
-        views.XhrDraftPreviewSelectedTemplatesView.as_view(),
-        name='xhr_draft_preview_selected_templates'),
-    url(
-        r'^new/draft/add_template/(?P<pk>\d+)$',
-        views.XhrDraftAddTemplateView.as_view(),
-        name='xhr_draft_add_template'),
 
     # constructed
     url(
@@ -61,6 +46,10 @@ urlpatterns = [
         r'^new/constructed/add_template/(?P<pk>\d+)$',
         views.XhrConstructedAddTemplateView.as_view(),
         name='xhr_constructed_add_template'),
+    url(
+        r'^new/constructed/preview/(?P<pk>\d+)$',
+        views.XhrCreateCharacterPreviewView.as_view(),
+        name='xhr_create_character_preview'),
     url(
         r'^new/constructed/remove_template/(?P<pk>\d+)$',
         views.XhrConstructedRemoveTemplateView.as_view(),

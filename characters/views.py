@@ -12,7 +12,7 @@ from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationTy
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect
 from horror.models import QuirkCategory
-from rules.models import Extension, Template, Lineage, StatusEffect
+from rules.models import Extension, Template, Lineage, StatusEffect, Skill
 
 
 class IndexView(TemplateView):
@@ -150,21 +150,17 @@ class CreateCharacterDataView(FormView):
     template_name = 'characters/character_form.html'
 
     def form_valid(self, form):
-        self.object = Character.objects.create(name=form.cleaned_data['name'], lineage=form.cleaned_data['lineage'])
+        self.object = Character.objects.create(
+            name=form.cleaned_data['name'],
+            lineage=form.cleaned_data['lineage'])
         self.object.extensions.add(form.cleaned_data['epoch'])
+
         for e in form.cleaned_data['extensions']:
             self.object.extensions.add(e)
-        self.object.created_by = self.request.user if self.request.user.is_authenticated else None
-        self.object.creation_mode = self.kwargs['mode']
-        self.object.save()
+        for skill in Skill.objects.all():
+            self.object.characterskill_set.create(skill=skill, base_value=1)
 
-        if self.kwargs['mode'] == 'random':
-            self.object.fill_random()
-            self.object.set_initial_reputation()
-            self.object.health = self.object.max_health
-            self.object.arcana = self.object.max_arcana
-        else:
-            self.object.fill_basics()
+        self.object.created_by = self.request.user if self.request.user.is_authenticated else None
         self.object.save()
 
         return super().form_valid(form)
@@ -179,10 +175,6 @@ class CreateCharacterDataView(FormView):
         }
 
     def get_success_url(self):
-        if self.kwargs['mode'] == 'random':
-            return reverse('characters:detail', kwargs={'pk': self.object.id})
-        elif self.kwargs['mode'] == 'draft':
-            return reverse('characters:create_character_draft', kwargs={'pk': self.object.id})
         return reverse('characters:create_character_constructed', kwargs={'pk': self.object.id})
 
 
@@ -193,53 +185,6 @@ class XhrCreateCharacterPreviewView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'fragment_name': 'character'})
-        return context
-
-
-class CreateCharacterDraftView(DetailView):
-    template_name = 'characters/create_character_draft.html'
-    model = Character
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['initial_templates'] = Template.objects.for_extensions(self.object.extensions).order_by('?')[:3]
-        return context
-
-    def post(self, request, *args, **kwargs):
-        obj = Character.objects.get(id=kwargs['pk'])
-        obj.set_initial_reputation()
-        obj.health = obj.max_health
-        obj.arcana = obj.max_arcana
-        obj.save()
-        return HttpResponseRedirect(obj.get_absolute_url())
-
-
-class XhrDraftAddTemplateView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs['pk'])
-        if character.may_edit(request.user):
-            template = Template.objects.get(id=request.POST.get('template_id'))
-            character.add_template(template)
-
-        templates = Template.objects.for_extensions(character.extensions).exclude(
-            id__in=[i.template.id for i in character.charactertemplate_set.all()])
-        return render(
-            request,
-            'characters/_draft_template_list.html',
-            {
-                'initial_templates': templates.order_by('?')[:3],
-                'object': character,
-            }
-        )
-
-
-class XhrDraftPreviewSelectedTemplatesView(TemplateView):
-    model = Character
-    template_name = 'characters/_draft_selected_templates.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['templates'] = Character.objects.get(id=kwargs['pk']).charactertemplate_set.order_by('-id')
         return context
 
 

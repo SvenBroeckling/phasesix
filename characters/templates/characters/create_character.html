@@ -16,9 +16,15 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted text-center">{{ extension.year_range }}</p>
-                        <i class="{{ extension.fa_icon_class }} fa-9x mb-4"></i>
-                        <p class="text-center">{{ extension.description }}</p>
-                        <a href="" class="btn btn-primary w-100">{{ extension }}</a>
+                        <i class="{{ extension.fa_icon_class }} fa-7x mb-4"></i>
+                        <p class="text-center">
+                            {% if extension.description %}
+                                {{ extension.description }}
+                            {% else %}
+                                {% lorem 20 w %}
+                            {% endif %}
+                        </p>
+                        <a href="{% url 'characters:create_character_data' extension_pk=extension.id %}" class="btn btn-primary w-100">{{ extension }}</a>
                     </div>
                 </div>
             </div>
