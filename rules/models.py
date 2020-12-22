@@ -23,6 +23,8 @@ class Extension(models.Model, metaclass=TransMeta):
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
     name = models.CharField(_('name'), max_length=120)
     identifier = models.CharField(_('identifier'), max_length=20)
+    description = models.TextField(_('description'), blank=True, null=True)
+    year_range = models.CharField(_('year range'), blank=True, null=True, max_length=50)
     image = models.ImageField(
         _('image'), upload_to='extension_images', blank=True, null=True
     )
@@ -33,7 +35,7 @@ class Extension(models.Model, metaclass=TransMeta):
 
     class Meta:
         ordering = ('ordering',)
-        translate = ('name',)
+        translate = ('name', 'description', 'year_range')
         verbose_name = _('extension')
         verbose_name_plural = _('extensions')
 
