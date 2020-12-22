@@ -3,17 +3,17 @@
 
 {% block javascript %}
     <script>
-        $(function(){
+        $(function () {
             var timer = null;
 
-            $('#id_q').on('keyup', function(e){
+            $('#id_q').on('keyup', function (e) {
                 var q = $(this).val();
 
-                function updateTabs(){
-                    $('.tab-pane').each(function(index){
+                function updateTabs() {
+                    $('.tab-pane').each(function (index) {
                         var elem = $(this);
                         var ct = elem.find('.constructed-template:not(.d-none)');
-                        if(ct.length === 0) {
+                        if (ct.length === 0) {
                             elem.addClass('d-none');
                             $(elem.data('rel')).addClass('disabled');
                         } else {
@@ -27,9 +27,9 @@
                 if (timer) {
                     clearTimeout(timer);
                 }
-                timer = setTimeout(function(){
-                    $('.constructed-template').each(function(index){
-                        if($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                timer = setTimeout(function () {
+                    $('.constructed-template').each(function (index) {
+                        if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
                             $(this).removeClass('d-none');
                         } else {
                             $(this).addClass('d-none');
@@ -41,7 +41,7 @@
             });
 
 
-            $('.row').on('click', '.constructed-template', function(e){
+            $('.row').on('click', '.constructed-template', function (e) {
                 var template_div = $(this);
                 var template_id = template_div.data('template-id');
                 var preview_url = template_div.data('preview-url');
@@ -49,8 +49,8 @@
                     $.post(
                         template_div.data('remove-url'),
                         {template_id: template_id},
-                        function(data){
-                            if(data.status === 'ok'){
+                        function (data) {
+                            if (data.status === 'ok') {
                                 $('.template-points').text(data.remaining_points);
                                 template_div.removeClass('selected');
                                 $('.character-preview').load(preview_url);
@@ -62,15 +62,15 @@
                     $.post(
                         template_div.data('add-url'),
                         {template_id: template_id},
-                        function(data){
-                            if(data.status === 'ok') {
+                        function (data) {
+                            if (data.status === 'ok') {
                                 $('.template-points').text(data.remaining_points);
                                 template_div.addClass('selected');
                                 $('.character-preview').load(preview_url);
                             } else {
                                 template_div.addClass('notenoughpoints');
                                 $('.template-points').addClass('animated wobble');
-                                setTimeout(function(){
+                                setTimeout(function () {
                                     template_div.removeClass('notenoughpoints');
                                     $('.template-points').removeClass('animated wobble');
                                 }, 500);
@@ -81,84 +81,104 @@
                 return false;
             });
 
-            $('#switch-preview').on('change', function(){
-                if($(this).prop('checked')) {
-                    $('.draft-template-list').addClass('d-none');
-                    $('.draft-preview').removeClass('d-none');
+            $('#switch-preview').on('change', function () {
+                if ($(this).prop('checked')) {
+                    $('.template-list').addClass('d-none');
+                    $('.character-preview').removeClass('d-none');
                 } else {
-                    $('.draft-preview').addClass('d-none');
-                    $('.draft-template-list').removeClass('d-none');
+                    $('.character-preview').addClass('d-none');
+                    $('.template-list').removeClass('d-none');
                 }
             });
 
             $('.template').tilt({
                 glare: false,
                 perspective: 1800
+            });
+
+            // masonry + bootstrap tabs
+            $('a[data-bs-toggle="tab"]').each(function () {
+                let self = $(this);
+                console.log(self);
+                $(this).on('shown.bs.tab', function () {
+                    let elem = $(`${self.attr('href')}`);
+                    let container = elem.find('.masonry-container');
+                    container.masonry({
+                        percentPosition: true,
+                    })
+                })
             })
+
         })
     </script>
 {% endblock %}
 
 {% block content %}
-
-    <div class="row initial-data">
-        <div class="col-md-12">
-            <div class="mb-3 float-end">
-                <span class="switch switch-sm float-end">
-                    <input type="checkbox" class="switch" id="switch-preview">
-                    <label for="switch-preview">{% trans "Preview" %}</label>
-                </span>
-                <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
-            </div>
-            <h2><span class="badge badge-info template-points h2">{{ character.remaining_template_points }}</span> {% trans "Character Points "%}</h2>
-            <p class="text-muted">{% trans 'Excess points will become the new characters initial reputation.' %}</p>
-            <form action="{% url 'characters:create_character_constructed' pk=character.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success">{% trans 'Finish Character' %}</button>
-            </form>
-        <hr>
-        </div>
-    </div>
-
-    <div class="row draft-template-list mt-4">
-        <div class="col-md-12">
-            <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
-                {% for tp in template_points %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
-                            {{ tp.template_category }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="col-md-12 tab-content">
-            {% for tp in template_points %}
-                <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
-                    <div class="row" data-masonry='{"percentPosition": true }>
-                        {% for i in tp.template_category.template_set.all %}
-                            {% has_extensions i object.extensions.all as has_extension %}
-                            {% if has_extension %}
-                                <div class="col col-md-4 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
-                                    data-template-id="{{ i.id }}"
-                                    data-tp-id="{{ tp.id }}"
-                                    data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
-                                    data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
-                                    data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
-                                    {% template_widget i %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+    <div class="row mt-4">
+        <div class="col-12 col-md-3">
+            <div class="row initial-data">
+                <div class="col-md-12">
+                    <input type="text" class="form-control mb-3 w-100" placeholder="{% trans "Search" %}" id="id_q">
+                    <h3>
+                        <span
+                            class="badge bg-info template-points h2">{{ character.remaining_template_points }}</span> {% trans "Character Points " %}
+                    </h3>
+                    <p class="text-muted">{% trans 'Excess points will become the new characters initial reputation.' %}</p>
+                    <form action="{% url 'characters:create_character_constructed' pk=character.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn w-100 btn-success">{% trans 'Finish Character' %}</button><br>
+                        <span class="switch switch-sm">
+                            <input type="checkbox" class="mt-3 switch" id="switch-preview">
+                            <label for="switch-preview">{% trans "Preview" %}</label>
+                        </span>
+                    </form>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </div>
 
-    <div class="row draft-preview d-none mt-4">
-        <div class="col-md-12 character-preview">
+        <div class="col-12 col-md-8 template-list">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
+                        {% for tp in template_points %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab"
+                                   href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
+                                    {{ tp.template_category }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="col-md-12 tab-content">
+                    {% for tp in template_points %}
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}"
+                             data-rel="#tab{{ tp.id }}">
+                            <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
+                                {% for i in tp.template_category.template_set.all %}
+                                    {% has_extensions i object.extensions.all as has_extension %}
+                                    {% if has_extension %}
+                                        <div class="col col-md-6 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                                             data-template-id="{{ i.id }}"
+                                             data-tp-id="{{ tp.id }}"
+                                             data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
+                                             data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
+                                             data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
+                                            {% template_widget i %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8 character-preview d-none">
             {% detail_fragment 'character' %}
         </div>
     </div>
+
 {% endblock %}

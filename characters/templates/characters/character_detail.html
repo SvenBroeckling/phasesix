@@ -198,13 +198,13 @@
                     <a class="nav-link" data-bs-toggle="pill" href="#v-magic" role="tab" aria-controls="v-combat"
                        aria-selected="true"><i class="fas fa-fw fa-magic"></i>&nbsp;{% trans 'Magic' %}
                         {% if object.spell_points_available %}
-                            <span class="badge badge-info float-end">{{ object.spell_points_available }}</span>
+                            <span class="badge bg-info float-end">{{ object.spell_points_available }}</span>
                         {% endif %}
                     </a>
                 {% endif %}
                 <a class="nav-link" data-bs-toggle="pill" href="#v-background" role="tab" aria-controls="v-background"
                    aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
-                    <span class="badge badge-primary float-end">{{ object.reputation_available }}</span>
+                    <span class="badge bg-primary float-end">{{ object.reputation_available }}</span>
                 </a>
             </div>
         </div>
