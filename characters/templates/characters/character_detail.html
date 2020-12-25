@@ -71,6 +71,16 @@
             return false;
         });
 
+        $('.delete-character').on('click', function(e){
+            let elem = $(this);
+            if(confirm(elem.data('message'))) {
+                $.post(elem.attr('href'), function(data){
+                    window.location = data.url;
+                })
+            }
+            e.preventDefault();
+            return false;
+        });
     })
     </script>
 {% endblock %}
@@ -124,12 +134,12 @@
                                 data-bs-target=".character-modal"
                                 data-modal-title="{% trans 'Rest' %}"
                                 href=""><i class="fas fa-plus fa-fw text-info"></i> {% trans 'Rest' %}</a>
+
                         <div class="dropdown-divider"></div>
+
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal Wound' %}</a>
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i class="far fa-heart fa-fw text-danger"></i> {% trans 'Take Damage' %}</a>
                         <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i class="fas fa-heart fa-fw text-info"></i> {% trans 'Get Boost' %}</a>
-
-                        <div class="dropdown-divider"></div>
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_status_effects' pk=object.id %}"
@@ -152,6 +162,13 @@
                                 data-bs-target=".character-modal"
                                 data-modal-title="{% trans 'Name / Images' %}"
                                 href=""><i class="fas fa-image fa-fw text-info"></i> {% trans 'Name / Images' %}</a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a
+                                data-message="{% trans 'Delete character' %} {{ object }}"
+                                class="dropdown-item delete-character"
+                                href="{% url 'characters:xhr_delete' pk=object.id %}"><i class="far fa-delete fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
                     </div>
                 {% endif %}
             </div>

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db.models import Q, Sum
+from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 from django.views import View
-from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
+from django.views.generic import TemplateView, DetailView, FormView
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType
 from characters.forms import CharacterImageForm, CreateCharacterForm
@@ -19,14 +20,20 @@ class IndexView(TemplateView):
     template_name = 'characters/index.html'
 
 
-class CharacterListView(ListView):
-    def get_queryset(self):
+class CharacterListView(TemplateView):
+    template_name = 'characters/character_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
         user = self.request.user
+
         if user.is_authenticated:
-            if user.is_staff:
-                return Character.objects.all()
-            return Character.objects.filter(created_by=user)
-        return Character.objects.filter(created_by__isnull=True)
+            context['own_characters'] = Character.objects.filter(created_by=user)
+        else:
+            context['own_characters'] = Character.objects.filter(created_by__isnull=True)
+        if user.is_authenticated and user.is_staff:
+            context['other_peoples_characters'] = Character.objects.exclude(created_by=user)
+        return context
 
 
 class CharacterDetailView(DetailView):
@@ -36,6 +43,18 @@ class CharacterDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context
+
+
+class XhrDeleteCharacterView(View):
+    def post(self, request, *args, **kwargs):
+        obj = Character.objects.get(id=kwargs['pk'])
+        if obj.created_by == self.request.user:
+            messages.info(request, _('Character deleted.'))
+            obj.delete()
+        return JsonResponse({
+            'status': 'ok',
+            'url': reverse('characters:list'),
+        })
 
 
 class XhrDetailFragmentView(DetailView):
