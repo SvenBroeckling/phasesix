@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
     url(r'^list/$', views.CharacterListView.as_view(), name='list'),
+    url(r'^xhr_delete/(?P<pk>\d+)$', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
 
     url(
         r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<fragment_name>[a-z_]+)$',

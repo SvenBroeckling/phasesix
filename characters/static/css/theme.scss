@@ -129,38 +129,10 @@ a[data-toggle="popover"] {
     text-decoration: none;
 }
 
-/* Card columns */
-
-@media only screen and (max-width: 768px) {
-    .card-columns {
-        column-count: 1;
-    }
-}
-
-@media only screen and (max-width: 1024px) and (min-width: 769px){
-    .card-columns {
-        column-count: 2;
-    }
-}
-
 /* Tables */
 
 .table th {
     border-top: none;
-}
-
-/* Character Detail Page List Groups */
-
-.list-group {
-    border: none;
-    border-radius: 0;
-}
-.list-group-item a {
-    text-decoration: none;
-}
-.card>.list-group:last-child .list-group-item:last-child {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
 }
 
 /* Rules */
@@ -182,7 +154,6 @@ a[data-toggle="popover"] {
 .rules p {
     text-align: justify;
 }
-
 
 .rules blockquote {
     margin-left: 2em;

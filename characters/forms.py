@@ -16,7 +16,8 @@ class CreateCharacterForm(forms.Form):
     lineage = forms.ModelChoiceField(queryset=Lineage.objects.all())
     epoch = forms.ModelChoiceField(
         queryset=Extension.objects.filter(is_epoch=True, is_mandatory=False),
-        label=_('Epoch'))
+        label=_('Epoch'),
+        widget=forms.HiddenInput())
     extensions = forms.ModelMultipleChoiceField(
         queryset=Extension.objects.filter(is_epoch=False, is_mandatory=False),
         label=_('Extensions'),
