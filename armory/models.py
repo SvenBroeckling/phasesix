@@ -239,6 +239,7 @@ class RiotGear(models.Model, metaclass=TransMeta):
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
     protection_ballistic = models.IntegerField(_('protection ballistic'), default=0)
     protection_explosive = models.IntegerField(_('protection explosive'), default=0)
+    evasion = models.IntegerField(_('evasion'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
 
     class Meta:

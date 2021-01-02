@@ -29,14 +29,16 @@
                             <a class="float-end action-link text-warning ms-3" title="{% trans 'Damage' %}"
                                href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i
                                     class="fas fa-times"></i></a>
-                            <span class="float-end">{% color_value_span r.condition 100 %}%</span>
                         {% endif %}
+                        <span class="float-end">{% color_value_span r.condition 100 %}%</span>
                     </div>
                     <div class="card-body">
                         <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}<br>
-                        <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.riot_gear.concealment 6 invert=True %}<br>
-                        <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.riot_gear.weight }}<br>
-                        <i class="fas fa-asterisk fa-fw"></i> {% trans 'Condition' %}: {% color_value_span r.condition 100 %}
+                        <i class="fas fa-running fa-fw"></i> {% trans 'Evasion' %}: {% color_value_span r.riot_gear.evasion 7 %}
+                    </div>
+                    <div class="card-footer">
+                        <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
+                        <i class="fas fa-balance-scale fa-fw ms-1" title="{% trans 'Weight' %}"></i> {{ r.riot_gear.weight }}
                     </div>
                 </div>
             {% empty %}
@@ -93,6 +95,7 @@
                                href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i
                                     class="fas fa-times"></i></a>
                         {% endif %}
+                        <span class="float-end">{% color_value_span weapon.condition 100 %}%</span>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -106,17 +109,12 @@
                                     <i class="fas fa-arrow-circle-left fa-fw"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
                                 {% endif %}
                                 <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m<br>
+                                {% if not weapon.weapon.is_hand_to_hand_weapon %}
+                                    <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
-                                <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}<br>
-                                <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
-                                {% if not weapon.weapon.is_hand_to_hand_weapon %}
-                                    <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}<br>
-                                {% endif %}
-                                <br>
-                                <i class="fas fa-wrench fa-fw"></i> {% trans 'Condition' %}: {% color_value_span weapon.condition 100 %}<br>
                                 {% if weapon.weapon.attack_modes.exists %}
-                                    <br>
                                     {% for fm in weapon.weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
                                 {% endif %}
                                 {% if weapon.modifications.exists %}
@@ -127,6 +125,10 @@
                                 {% endif %}
                             </div>
                         </div>
+                    </div>
+                    <div class="card-footer">
+                        <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}
+                        <i class="fas fa-balance-scale fa-fw" title="{% trans 'Weight' %}"></i> {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
                     </div>
                 </div>
             {% empty %}
@@ -165,7 +167,7 @@
             </div>
 
         {% for ci in character.characteritem_set.by_type %}
-            <div class="card mb-2">
+            <div class="card mb-3">
                 <div class="card-header">
                    {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
                     <span class="small text-muted">{{ ci.item.type }}</span>
@@ -175,11 +177,14 @@
                                 class="fas fa-trash"></i></a>
                     {% endif %}
                 </div>
+                {% if ci.item.description %}
                 <div class="card-body">
-                   {% if ci.item.description %}<p>{{ ci.item.description }}</p>{% endif %}
-                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span ci.item.concealment 6 invert=True %}<br>
-                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ ci.item.weight }}<br>
-                    <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span ci.item.price 500 invert=True %} €
+                   <p class="mb-0">{{ ci.item.description }}</p>
+                </div>
+                {% endif %}
+                <div class="card-footer">
+                    <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
+                    <i class="fas fa-balance-scale fa-fw ms-1" title="{% trans 'Weight' %}"></i> {{ ci.item.weight }}
                 </div>
             </div>
         {% empty %}
