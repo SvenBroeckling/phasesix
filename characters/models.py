@@ -6,7 +6,7 @@ import math
 from decimal import Decimal
 
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Max
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -275,6 +275,20 @@ class Character(models.Model):
     def evasion(self):
         return self.lineage.base_evasion
 
+    @property
+    def max_concealment(self):
+        ic = self.characteritem_set.aggregate(
+            Max('item__concealment')
+        )['item__concealment__max'] or 0
+        rc = self.characterriotgear_set.aggregate(
+            Max('riot_gear__concealment')
+        )['riot_gear__concealment__max'] or 0
+        wc = 0
+        for w in self.characterweapon_set.all():
+            if w.modified_concealment > wc:
+                wc = w.modified_concealment
+        return max(ic, rc, wc)
+
 
 class CharacterSkillQuerySet(models.QuerySet):
     def mind_skills(self):
@@ -387,7 +401,8 @@ class CharacterWeapon(models.Model):
         roll = 7 - skill.value - mods - self.weapon.accuracy
         return roll if roll >= 2 else 2
 
-    def penetration(self):
+    @property
+    def modified_penetration(self):
         pen = self.weapon.penetration
         mods = 0
         for wm in self.modifications.all():
@@ -395,13 +410,23 @@ class CharacterWeapon(models.Model):
                 mods += wmm.modifier
         return pen + mods
 
-    def wounds_range(self):
+    @property
+    def modified_concealment(self):
+        con = self.weapon.concealment
+        mods = 0
+        for wm in self.modifications.all():
+            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='concealment'):
+                mods += wmm.modifier
+        return con + mods
+
+    @property
+    def modified_wounds(self):
         wounds = self.weapon.wounds
         mods = 0
         for wm in self.modifications.all():
             for wmm in wm.weaponmodificationattributechange_set.filter(attribute='wounds'):
                 mods += wmm.modifier
-        return range(wounds + mods)
+        return wounds + mods
 
 
 class CharacterRiotGear(models.Model):
