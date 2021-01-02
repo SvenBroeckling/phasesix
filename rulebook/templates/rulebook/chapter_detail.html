@@ -28,16 +28,14 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card border-0">
-                <ul class="list-group list-group-flush">
-                    {% for chapter in structure %}
-                        <li class="list-group-item">
-                            <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw"></i>
-                            <a class="mb-5 no-decoration" href="{% url 'rulebook:detail' pk=forloop.counter %}">{{ chapter.title }}</a><br>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <ul class="list-group list-group-flush">
+                {% for chapter in structure %}
+                    <li class="list-group-item">
+                        <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw"></i>
+                        <a class="mb-5 no-decoration" href="{% url 'rulebook:detail' pk=forloop.counter %}">{{ chapter.title }}</a><br>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

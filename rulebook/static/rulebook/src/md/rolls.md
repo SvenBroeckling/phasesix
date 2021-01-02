@@ -1,4 +1,3 @@
-
 Immer wenn ein Charakter eine Handlung mit ungewissem Ausgang durchführt wird mit Würfeln auf einen passenden Wert geworfen, welcher in der Regel vom Spielleiter festgelegt wird. Der Ausgang des Wurfes zeigt auf ob und wie gut die Handlung gelungen ist. Dies wird als *Probe* bezeichnet.
 
 Für alle Würfe werden sechsseitige Würfel verwendet. Die Anzahl der Würfel richtet sich nach dem Wert des Charakters in der betreffenden Eigenschaft, dazu kommen eventuell Bonuswürfel oder Schicksalswürfel. 
@@ -102,3 +101,14 @@ so ist die Probe gelungen.
 
 Bei einem Gruppenwurf kann jeder Beteiligte wie gewohnt Bonus-, Schicksals- und Wiederholungswürfel 
 einsetzen. Auch schwere und sehr schwere Proben sind möglich.
+
+### Verborgenheit
+
+Ein besonderer Wurf ist der Wurf auf die Verborgenheit. Dieser kommt zum Tragen wenn 
+eine Person einen Charakter beobachtet und bestimmte auffällige Ausrüstung sucht. 
+
+Jedes Ausrüstungsstück hat einen Verborgenheitswert. Je höher dieser Wert ist, desto offensichtlicher ist dieser Gegenstand zu sehen oder zu erkennen. 
+
+Beobachtet nun eine Person einen Charakter oder die ganze Gruppe, so gilt für den Verborgenheitswurf der Gegenstand mit dem *höchsten* Verborgenheitswert. 
+
+Die beobachtende Person wirft nun eine Anzahl von Würfeln entsprechend ihres Wahrnehmungswertes auf einen Mindestwurf von 7 - *dem ermittelten Verborgenheitswert*. Bei einem Erfolg kann der Beobachter einen auffälligen Gegenstand ausmachen.
