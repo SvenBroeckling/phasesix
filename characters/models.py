@@ -118,7 +118,7 @@ class Character(models.Model):
 
     @property
     def weaponless_minimum_roll(self):
-        roll = 7 - self.characterskill_set.ranged_combat_skill().value
+        roll = 7 - self.characterskill_set.melee_combat_skill().value
         return roll if roll >= 2 else 2
 
     @property
@@ -314,6 +314,9 @@ class CharacterSkillQuerySet(models.QuerySet):
 
     def combat_skills(self):
         return self.filter(skill__show_on_combat_tab=True)
+
+    def melee_combat_skill(self):
+        return self.get(skill__name_en='Hand to Hand Combat')
 
     def ranged_combat_skill(self):
         return self.get(skill__name_en='Shooting')
