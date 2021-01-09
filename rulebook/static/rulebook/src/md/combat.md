@@ -114,10 +114,9 @@ Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die
 
 #### Waffenloser Nahkampf
 
-Greift der Chrakter ohne Waffe an, so wirft der Spieler eine Anzahl Würfel dem Schnelligkeitswert entsprechend. Der Mindestwurf entspricht dem Basis Nahkampfmindestwurf, also 7 - *Fertigkeit Nahkampf*, mindestens aber 2+.
+Greift der Chrakter ohne Waffe an, so wirft der Spieler Trefferwürfel entsprechend seinem Schnelligkeitswert. Der Mindestwurf entspricht dem Nahkampfmindestwurf, also 7 - *Fertigkeit Nahkampf*, mindestens aber 2+.
 
-Ein waffenloser Nahkampfangriff verursacht eine Wunde, wenn die Kraft des Charakters 3 oder weniger ist. Ist die
-Kraft höher als 3, so verursacht ein waffenloser Nahkampfangriff 2 Wunden.
+Ein waffenloser Nahkampfangriff verursacht eine Wunde pro Treffer, wenn die Kraft des Charakters 3 oder weniger ist. Ist die Kraft höher als 3, so verursacht ein waffenloser Nahkampfangriff 2 Wunden pro Treffer.
 
 Der Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die Reichweite beträgt 1 Meter.
 
