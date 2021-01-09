@@ -70,7 +70,7 @@
             <h2 class="mb-2 mt-3">{% trans 'Background' %}</h2>
             <div class="row">
                 {% for template in character.charactertemplate_set.all %}
-                    <div class="col col-md-6">
+                    <div class="col-12 col-md-6">
                         {% template_widget template.template %}
                     </div>
                 {% endfor %}

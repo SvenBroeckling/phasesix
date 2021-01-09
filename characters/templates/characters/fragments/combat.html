@@ -39,7 +39,7 @@
                             <small>{% color_value_span w.weapon.attacks_per_action 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
                         </td>
                         <td class="text-end">
-                            {% for i in w.wounds_with_modifiers|to_range %}
+                            {% for i in w.modified_wounds|to_range %}
                                 <i class="fas fa-heart text-danger"></i>
                             {% endfor %}
                             <br>
