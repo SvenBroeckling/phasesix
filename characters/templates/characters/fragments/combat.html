@@ -27,6 +27,27 @@
                 </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>
+                            <i class="fas fa-hand-rock text-success"></i> {% trans 'Weaponless' %}<br>
+                            <small>{% trans 'Melee' %}</small>
+                        </td>
+                        <td class="text-end">
+                            {% color_value_span object.weaponless_minimum_roll 7 invert=True %}+
+                            <br>
+                            <small>{% color_value_span object.weaponless_attacks 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
+                        </td>
+                        <td class="text-end">
+                            {% for i in object.weaponless_wounds|to_range %}
+                                <i class="fas fa-heart text-danger"></i>
+                            {% endfor %}
+                            <br>
+                            {% color_value_span 0 3 %}
+                        </td>
+                        <td class="text-end">
+                            1m
+                        </td>
+                    </tr>
                 {% for w in object.characterweapon_set.all %}
                     <tr>
                         <td>
@@ -34,7 +55,7 @@
                             <small>{{ w.weapon.type }}</small>
                         </td>
                         <td class="text-end">
-                            {% color_value_span w.attack_roll 7 %}+
+                            {% color_value_span w.attack_roll 7 invert=True %}+
                             <br>
                             <small>{% color_value_span w.weapon.attacks_per_action 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
                         </td>

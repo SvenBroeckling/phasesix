@@ -60,8 +60,7 @@ Schnelligkeit ist sowohl die Geschwindigkeit mit der der Charakter sich bewegen 
 
 Jeder Charakter kann eine Anzahl an *Bonuswürfeln*, *Schicksalswürfeln* oder *Wiederholungswürfeln* haben. Alle drei haben unterschiedliche Verwendungen (s. Würfe und Proben), stellen jedoch immer einen Vorteil für den Charakter dar, welcher während des Spiels eingesetzt werden kann. 
 
-Alle drei Würfelarten werden zu während einer Rast aufgefrischt, also auf das Maximum des Charakters gesetzt. 
-
+Der Charakter kann während der Rast verbrauchte Würfel zurück erhalten (s. Wunden und Heilung).
 
 ### Fertigkeiten
 

@@ -112,6 +112,15 @@ Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die
 * Halbautomatik: *Es werden die bei der Waffe angegebenen Werte verwendet*
 * Vollautomatik: *Schuss pro Aktion verdoppelt*, *Genauigkeit -3*
 
+#### Waffenloser Nahkampf
+
+Greift der Chrakter ohne Waffe an, so wirft der Spieler eine Anzahl Würfel dem Schnelligkeitswert entsprechend. Der Mindestwurf entspricht dem Basis Nahkampfmindestwurf, also 7 - *Fertigkeit Nahkampf*, mindestens aber 2+.
+
+Ein waffenloser Nahkampfangriff verursacht eine Wunde, wenn die Kraft des Charakters 3 oder weniger ist. Ist die
+Kraft höher als 3, so verursacht ein waffenloser Nahkampfangriff 2 Wunden.
+
+Der Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die Reichweite beträgt 1 Meter.
+
 #### 2. Der Deckungswurf
 
 Wenn der Angegriffene Deckung hat ist es möglich, Treffer zu verhindern bevor sie Schaden anrichten können. Deckung gibt es in unterschiedlichen Stufen, die auch den Mindestwurf vorgeben:

@@ -113,6 +113,21 @@ class Character(models.Model):
         return res
 
     @property
+    def weaponless_attacks(self):
+        return self.quickness
+
+    @property
+    def weaponless_minimum_roll(self):
+        roll = 7 - self.characterskill_set.ranged_combat_skill().value
+        return roll if roll >= 2 else 2
+
+    @property
+    def weaponless_wounds(self):
+        if self.strength > 3:
+            return 2
+        return 1
+
+    @property
     def wounds_taken(self):
         return self.max_health - self.health
 
