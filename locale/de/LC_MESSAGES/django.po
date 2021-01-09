@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-25 21:23+0000\n"
-"PO-Revision-Date: 2020-12-25 22:25+0100\n"
+"POT-Creation-Date: 2021-01-09 19:15+0000\n"
+"PO-Revision-Date: 2021-01-09 20:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,8 +19,8 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 
 #: armory/models.py:21 armory/models.py:38 armory/models.py:72
-#: armory/models.py:103 armory/models.py:127 armory/models.py:178
-#: armory/models.py:200 armory/models.py:236 campaigns/models.py:10
+#: armory/models.py:103 armory/models.py:127 armory/models.py:170
+#: armory/models.py:192 armory/models.py:228 campaigns/models.py:10
 #: campaigns/models.py:53 campaigns/models.py:61 characters/models.py:19
 #: forum/models.py:33 forum/models.py:51 horror/models.py:11
 #: horror/models.py:24 magic/models.py:9 magic/models.py:25 magic/models.py:41
@@ -33,15 +33,15 @@ msgid "name"
 msgstr "Name"
 
 #: armory/models.py:22 armory/models.py:39 armory/models.py:73
-#: armory/models.py:128 armory/models.py:179 armory/models.py:201
-#: armory/models.py:237 characters/models.py:20 magic/models.py:187
+#: armory/models.py:128 armory/models.py:171 armory/models.py:193
+#: armory/models.py:229 characters/models.py:20 magic/models.py:187
 #: rules/models.py:26 rules/models.py:50 rules/models.py:159
 #: rules/models.py:228
 msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:23 armory/models.py:45 armory/models.py:74
-#: armory/models.py:123 armory/models.py:234 characters/models.py:359
+#: armory/models.py:123 armory/models.py:226 characters/models.py:388
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:79 rules/models.py:31 rules/models.py:52 rules/models.py:139
 #: rules/models.py:160 rules/models.py:259 rules/models.py:336
@@ -49,7 +49,7 @@ msgid "created at"
 msgstr "Erzeugt am"
 
 #: armory/models.py:24 armory/models.py:46 armory/models.py:75
-#: armory/models.py:124 armory/models.py:235 rules/models.py:32
+#: armory/models.py:124 armory/models.py:227 rules/models.py:32
 #: rules/models.py:53 rules/models.py:140 rules/models.py:161
 #: rules/models.py:260 rules/models.py:337
 msgid "modified at"
@@ -67,16 +67,16 @@ msgstr "Gegenstandstypen"
 msgid "type"
 msgstr "Typ"
 
-#: armory/models.py:41 armory/models.py:141 armory/models.py:238
+#: armory/models.py:41 armory/models.py:141 armory/models.py:230
 msgid "weight"
 msgstr "Gewicht"
 
-#: armory/models.py:42 armory/models.py:142 armory/models.py:203
-#: armory/models.py:239
+#: armory/models.py:42 armory/models.py:142 armory/models.py:195
+#: armory/models.py:231
 msgid "price"
 msgstr "Preis"
 
-#: armory/models.py:43 armory/models.py:137 armory/models.py:242
+#: armory/models.py:43 armory/models.py:137 armory/models.py:235
 msgid "concealment"
 msgstr "Verborgenheit"
 
@@ -154,7 +154,7 @@ msgid "wounds"
 msgstr "Wunden"
 
 #: armory/models.py:135
-#: characters/templates/characters/fragments/combat.html:166
+#: characters/templates/characters/fragments/combat.html:187
 msgid "penetration"
 msgstr "Durchschlag"
 
@@ -182,40 +182,44 @@ msgstr "Waffe"
 msgid "weapons"
 msgstr "Waffen"
 
-#: armory/models.py:181
+#: armory/models.py:173
 msgid "unique equip"
 msgstr "Einmalig ausrüsten"
 
-#: armory/models.py:183
+#: armory/models.py:175
 msgid "A weapon may only have one modification of this type (i.E. sights)"
 msgstr ""
 "Eine Waffe darf nur eine Modifikation von diesem Typ haben (z.B. Visiere)"
 
-#: armory/models.py:188 armory/models.py:189
+#: armory/models.py:180 armory/models.py:181
 msgid "weapon modification type"
 msgstr "Waffenmodifikationstyp"
 
-#: armory/models.py:207 armory/models.py:208
+#: armory/models.py:199 armory/models.py:200
 msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
-#: armory/models.py:220 horror/models.py:53 rules/models.py:282
+#: armory/models.py:212 horror/models.py:53 rules/models.py:282
 msgid "attribute"
 msgstr "Attribut"
 
-#: armory/models.py:221
+#: armory/models.py:213
 msgid "modifier"
 msgstr "Modifikator"
 
-#: armory/models.py:240
+#: armory/models.py:232
 msgid "protection ballistic"
 msgstr "Ballistischer Schutz"
 
-#: armory/models.py:241
+#: armory/models.py:233
 msgid "protection explosive"
 msgstr "Explosivschutz"
 
-#: armory/models.py:246 armory/models.py:247
+#: armory/models.py:234
+msgid "evasion"
+msgstr "Ausweichen"
+
+#: armory/models.py:239 armory/models.py:240
 msgid "riot gear"
 msgstr "Rüstung"
 
@@ -341,15 +345,15 @@ msgstr "Schatten"
 msgid "quirks"
 msgstr "Eigenarten"
 
-#: characters/models.py:301 characters/models.py:323 characters/models.py:343
+#: characters/models.py:330 characters/models.py:352 characters/models.py:372
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:410
+#: characters/models.py:450
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:425
+#: characters/models.py:465
 msgid "Quantity"
 msgstr "Menge"
 
@@ -431,25 +435,25 @@ msgstr "Anmelden"
 #: characters/templates/characters/_add_items.html:57
 #: characters/templates/characters/_add_riot_gear.html:39
 #: characters/templates/characters/_add_weapons.html:69
-#: characters/templates/characters/fragments/gear.html:37
-#: characters/templates/characters/fragments/gear.html:111
-#: characters/templates/characters/fragments/gear.html:180
+#: characters/templates/characters/fragments/gear.html:40
+#: characters/templates/characters/fragments/gear.html:130
+#: characters/templates/characters/fragments/gear.html:186
+#: characters/templates/characters/fragments/health.html:41
 msgid "Concealment"
 msgstr "Verborgenheit"
 
 #: characters/templates/characters/_add_items.html:58
 #: characters/templates/characters/_add_riot_gear.html:40
 #: characters/templates/characters/_add_weapons.html:70
-#: characters/templates/characters/fragments/gear.html:38
-#: characters/templates/characters/fragments/gear.html:112
-#: characters/templates/characters/fragments/gear.html:181
+#: characters/templates/characters/fragments/gear.html:41
+#: characters/templates/characters/fragments/gear.html:131
+#: characters/templates/characters/fragments/gear.html:187
 msgid "Weight"
 msgstr "Gewicht"
 
 #: characters/templates/characters/_add_items.html:59
 #: characters/templates/characters/fragments/character.html:12
 #: characters/templates/characters/fragments/character.html:54
-#: characters/templates/characters/fragments/gear.html:182
 msgid "Value"
 msgstr "Wert"
 
@@ -462,8 +466,8 @@ msgid "Added"
 msgstr "Hinzugefügt"
 
 #: characters/templates/characters/_add_items.html:63
-#: characters/templates/characters/fragments/gear.html:160
-#: characters/templates/characters/fragments/gear.html:195
+#: characters/templates/characters/fragments/gear.html:162
+#: characters/templates/characters/fragments/gear.html:200
 msgid "Add item"
 msgstr "Gegenstand hinzufügen"
 
@@ -483,46 +487,46 @@ msgid "Add modification"
 msgstr "Modifikation hinzufügen"
 
 #: characters/templates/characters/_add_weapons.html:58
-#: characters/templates/characters/fragments/gear.html:100
+#: characters/templates/characters/fragments/gear.html:103
 msgid "Attacks / Action"
 msgstr "Angriffe pro Aktion"
 
 #: characters/templates/characters/_add_weapons.html:59
-#: characters/templates/characters/fragments/gear.html:101
+#: characters/templates/characters/fragments/gear.html:104
 msgid "Accuracy"
 msgstr "Genauigkeit"
 
 #: characters/templates/characters/_add_weapons.html:60
 #: characters/templates/characters/fragments/combat.html:21
-#: characters/templates/characters/fragments/gear.html:102
+#: characters/templates/characters/fragments/gear.html:105
 msgid "Penetration"
 msgstr "Durchschlag"
 
 #: characters/templates/characters/_add_weapons.html:61
-#: characters/templates/characters/fragments/gear.html:103
+#: characters/templates/characters/fragments/gear.html:106
 #: gmtools/templates/gmtools/combat_sim_results.html:10
 #: gmtools/templates/gmtools/combat_sim_results.html:25
 msgid "Wounds"
 msgstr "Wunden"
 
 #: characters/templates/characters/_add_weapons.html:63
-#: characters/templates/characters/fragments/gear.html:105
+#: characters/templates/characters/fragments/gear.html:108
 msgid "Reload actions"
 msgstr "Nachladeaktionen"
 
 #: characters/templates/characters/_add_weapons.html:64
-#: characters/templates/characters/fragments/gear.html:106
+#: characters/templates/characters/fragments/gear.html:109
 msgid "Recoil control"
 msgstr "Rückstoßkontrolle"
 
 #: characters/templates/characters/_add_weapons.html:66
 #: characters/templates/characters/fragments/combat.html:24
-#: characters/templates/characters/fragments/gear.html:108
+#: characters/templates/characters/fragments/gear.html:111
 msgid "Range"
 msgstr "Reichweite"
 
 #: characters/templates/characters/_add_weapons.html:72
-#: characters/templates/characters/fragments/gear.html:114
+#: characters/templates/characters/fragments/gear.html:113
 msgid "Capacity"
 msgstr "Kapazität"
 
@@ -860,7 +864,7 @@ msgid "Resistance"
 msgstr "Resistenz"
 
 #: characters/templates/characters/fragments/character.html:84
-#: characters/templates/characters/fragments/combat.html:142
+#: characters/templates/characters/fragments/combat.html:163
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
@@ -898,7 +902,7 @@ msgstr "Zeit"
 
 #: characters/templates/characters/fragments/combat.html:20
 #: characters/templates/characters/fragments/gear.html:29
-#: characters/templates/characters/fragments/gear.html:92
+#: characters/templates/characters/fragments/gear.html:94
 msgid "Damage"
 msgstr "Schaden"
 
@@ -906,87 +910,96 @@ msgstr "Schaden"
 msgid "Area of effect"
 msgstr "Effektbereich"
 
-#: characters/templates/characters/fragments/combat.html:39
+#: characters/templates/characters/fragments/combat.html:32
+msgid "Weaponless"
+msgstr "Waffenlos"
+
+#: characters/templates/characters/fragments/combat.html:33
+msgid "Melee"
+msgstr "Nahkampf"
+
+#: characters/templates/characters/fragments/combat.html:38
+#: characters/templates/characters/fragments/combat.html:60
 msgid "Attacks per Action"
 msgstr "Angriffe pro Aktion"
 
-#: characters/templates/characters/fragments/combat.html:39
+#: characters/templates/characters/fragments/combat.html:38
+#: characters/templates/characters/fragments/combat.html:60
 msgid "ApA"
 msgstr "ApA"
 
-#: characters/templates/characters/fragments/combat.html:90
+#: characters/templates/characters/fragments/combat.html:111
 msgid "Walk"
 msgstr "Gehen"
 
-#: characters/templates/characters/fragments/combat.html:91
-#: characters/templates/characters/fragments/combat.html:100
-#: characters/templates/characters/fragments/combat.html:109
-#: characters/templates/characters/fragments/combat.html:118
+#: characters/templates/characters/fragments/combat.html:112
+#: characters/templates/characters/fragments/combat.html:121
+#: characters/templates/characters/fragments/combat.html:130
+#: characters/templates/characters/fragments/combat.html:139
 msgid "Movement"
 msgstr "Bewegung"
 
-#: characters/templates/characters/fragments/combat.html:94
-#: characters/templates/characters/fragments/combat.html:103
-#: characters/templates/characters/fragments/combat.html:112
+#: characters/templates/characters/fragments/combat.html:115
+#: characters/templates/characters/fragments/combat.html:124
+#: characters/templates/characters/fragments/combat.html:133
 msgid "Meter"
 msgstr "Meter"
 
-#: characters/templates/characters/fragments/combat.html:99
+#: characters/templates/characters/fragments/combat.html:120
 msgid "Run"
 msgstr "Laufen"
 
-#: characters/templates/characters/fragments/combat.html:108
+#: characters/templates/characters/fragments/combat.html:129
 msgid "Crawl"
 msgstr "Robben"
 
-#: characters/templates/characters/fragments/combat.html:117
+#: characters/templates/characters/fragments/combat.html:138
 msgid "Change Stance"
 msgstr "Stellung ändern"
 
-#: characters/templates/characters/fragments/combat.html:132
-#: characters/templates/characters/fragments/health.html:81
+#: characters/templates/characters/fragments/combat.html:153
 msgid "Actions"
 msgstr "Aktionen"
 
-#: characters/templates/characters/fragments/combat.html:152
+#: characters/templates/characters/fragments/combat.html:173
 msgid "Attack Roll"
 msgstr "Angriffswurf"
 
-#: characters/templates/characters/fragments/combat.html:153
+#: characters/templates/characters/fragments/combat.html:174
 #: rules/templates/rules/_template_widget.html:24
 msgid "Skill"
 msgstr "Fertigkeit"
 
-#: characters/templates/characters/fragments/combat.html:153
+#: characters/templates/characters/fragments/combat.html:174
 msgid "Weapon Accuracy"
 msgstr "Waffengenauigkeit"
 
-#: characters/templates/characters/fragments/combat.html:156
+#: characters/templates/characters/fragments/combat.html:177
 msgid "Cover Roll"
 msgstr "Deckungswurf"
 
-#: characters/templates/characters/fragments/combat.html:158
+#: characters/templates/characters/fragments/combat.html:179
 msgid "Mostly covered"
 msgstr "Größtenteils verdeckt"
 
-#: characters/templates/characters/fragments/combat.html:159
+#: characters/templates/characters/fragments/combat.html:180
 msgid "Half cover or prone"
 msgstr "Halbe Deckung oder liegend"
 
-#: characters/templates/characters/fragments/combat.html:160
+#: characters/templates/characters/fragments/combat.html:181
 msgid "Minimal cover"
 msgstr "Minimale Deckung"
 
-#: characters/templates/characters/fragments/combat.html:164
+#: characters/templates/characters/fragments/combat.html:185
 msgid "Armor roll"
 msgstr "Rüstungswurf"
 
-#: characters/templates/characters/fragments/combat.html:166
+#: characters/templates/characters/fragments/combat.html:187
 msgid "Armor value"
 msgstr "Rüstungswert"
 
 #: characters/templates/characters/fragments/gear.html:15
-#: characters/templates/characters/fragments/gear.html:53
+#: characters/templates/characters/fragments/gear.html:55
 msgid "Add Armor"
 msgstr "Rüstung hinzufügen"
 
@@ -995,51 +1008,50 @@ msgid "Armor"
 msgstr "Rüstung"
 
 #: characters/templates/characters/fragments/gear.html:26
-#: characters/templates/characters/fragments/gear.html:89
+#: characters/templates/characters/fragments/gear.html:91
 msgid "Remove"
 msgstr "Entfernen"
 
-#: characters/templates/characters/fragments/gear.html:39
-#: characters/templates/characters/fragments/gear.html:117
-msgid "Condition"
-msgstr "Zustand"
+#: characters/templates/characters/fragments/gear.html:37
+msgid "Evasion"
+msgstr "Ausweichen"
 
-#: characters/templates/characters/fragments/gear.html:54
+#: characters/templates/characters/fragments/gear.html:56
 msgid "No armor yet."
 msgstr "Noch keine Rüstung."
 
-#: characters/templates/characters/fragments/gear.html:67
-#: characters/templates/characters/fragments/gear.html:143
+#: characters/templates/characters/fragments/gear.html:69
+#: characters/templates/characters/fragments/gear.html:145
 msgid "Add Weapon"
 msgstr "Waffe hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:70
+#: characters/templates/characters/fragments/gear.html:72
 msgid "Weapons"
 msgstr "Waffen"
 
-#: characters/templates/characters/fragments/gear.html:83
-#: characters/templates/characters/fragments/gear.html:86
+#: characters/templates/characters/fragments/gear.html:85
+#: characters/templates/characters/fragments/gear.html:88
 msgid "Add Modification"
 msgstr "Modifikatoren hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:144
+#: characters/templates/characters/fragments/gear.html:146
 msgid "No weapon yet."
 msgstr "Noch keine Waffen."
 
-#: characters/templates/characters/fragments/gear.html:158
-#: characters/templates/characters/fragments/gear.html:191
+#: characters/templates/characters/fragments/gear.html:160
+#: characters/templates/characters/fragments/gear.html:196
 msgid "Add Item"
 msgstr "Gegenstand hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:164
+#: characters/templates/characters/fragments/gear.html:166
 msgid "Items"
 msgstr "Gegenstände"
 
-#: characters/templates/characters/fragments/gear.html:173
+#: characters/templates/characters/fragments/gear.html:175
 msgid "Remove / Use"
 msgstr "Entfernen / Benutzen"
 
-#: characters/templates/characters/fragments/gear.html:197
+#: characters/templates/characters/fragments/gear.html:202
 msgid "No items yet."
 msgstr "Noch keine Gegenstände."
 
@@ -1106,19 +1118,27 @@ msgstr "Explosivschutz"
 msgid "Protects you from explsive force at the defense roll."
 msgstr "Schützt dich vor Explosionseinwirkung beim Verteidigungswurf."
 
-#: characters/templates/characters/fragments/health.html:57
+#: characters/templates/characters/fragments/health.html:41
+msgid ""
+"This is the highest concealment among your equipment. It is relevant if "
+"somebody searches you for your equipment."
+msgstr ""
+"Dies ist die höchste Verborgenheit innerhalb deiner Ausrüstung. Es ist "
+"relevant wenn jemand dich nach dem Equipment durchsucht."
+
+#: characters/templates/characters/fragments/health.html:48
 msgid "Arcana"
 msgstr "Arkana"
 
-#: characters/templates/characters/fragments/health.html:57
+#: characters/templates/characters/fragments/health.html:48
 msgid "Use this to cast spells at the magic or combat tab."
 msgstr "Benutze dies um Zauber im Magie oder Kampftab zu sprechen."
 
-#: characters/templates/characters/fragments/health.html:65
+#: characters/templates/characters/fragments/health.html:56
 msgid "Stress"
 msgstr "Stress"
 
-#: characters/templates/characters/fragments/health.html:65
+#: characters/templates/characters/fragments/health.html:56
 msgid ""
 "This is your stress level. You will geht a quirk if it reaches your stress "
 "maximum."
@@ -1126,21 +1146,17 @@ msgstr ""
 "Dies ist dein Stresslevel. wenn du das Maximum an Stress erreichst wirst du "
 "einen Tick bekommen."
 
-#: characters/templates/characters/fragments/health.html:68
+#: characters/templates/characters/fragments/health.html:59
 msgid "Possible Stress"
 msgstr "Möglicher Stress"
 
-#: characters/templates/characters/fragments/health.html:68
+#: characters/templates/characters/fragments/health.html:59
 msgid ""
 "This is possible stress your can cope with. You will get a quirk if all "
 "slots are filled."
 msgstr ""
 "Dies ist der mögliche Stress mit dem du umgehen kannst. Du wirst einen Tick "
 "erhalten wenn alle Plätze gefüllt sind."
-
-#: characters/templates/characters/fragments/health.html:85
-msgid "Evasion"
-msgstr "Ausweichen"
 
 #: characters/templates/characters/fragments/magic.html:11
 msgid "Create a spell"
@@ -1990,6 +2006,9 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "Condition"
+#~ msgstr "Zustand"
 
 #~ msgid "upper range"
 #~ msgstr "Obere Reichweite"
