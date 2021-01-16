@@ -97,6 +97,7 @@ def template_category_string(character, template_category, css="text-light"):
         '<span class="{}">{}</span>'.format(css, ", ".join([str(t.template) for t in tc]))
     )
 
+
 @register.filter
 def to_range(value):
     if value:
@@ -111,6 +112,7 @@ def for_extensions(queryset, extension_queryset):
         Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
     )
 
+
 @register.filter
 def status_effect_value(status_effect, character):
     from characters.models import CharacterStatusEffect
@@ -121,3 +123,8 @@ def status_effect_value(status_effect, character):
         return 0
 
 
+@register.simple_tag
+def character_attribute_roll(character, attribute_name):
+    if attribute_name:
+        return getattr(character, f'{attribute_name}_roll')
+    return None

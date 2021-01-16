@@ -15,33 +15,33 @@
                 </thead>
                 <tr>
                     <td>{% trans 'Openness' %}</td>
-                    <td class="text-end">{% color_value_span object.openness 14 %}</td>
-                    <td class="text-end">{% color_value_span object.openness_roll 14 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.openness 7 %}</td>
+                    <td class="text-end">{% color_value_span object.openness_roll 7 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Conscientiousness' %}</td>
-                    <td class="text-end">{% color_value_span object.conscientiousness 14 %}</td>
-                    <td class="text-end">{% color_value_span object.conscientiousness_roll 14 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.conscientiousness 7 %}</td>
+                    <td class="text-end">{% color_value_span object.conscientiousness_roll 7 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Extraversion' %}</td>
-                    <td class="text-end">{% color_value_span object.extraversion 14 %}</td>
-                    <td class="text-end">{% color_value_span object.extraversion_roll 14 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.extraversion 7 %}</td>
+                    <td class="text-end">{% color_value_span object.extraversion_roll 7 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Agreeableness' %}</td>
-                    <td class="text-end">{% color_value_span object.agreeableness 14 %}</td>
-                    <td class="text-end">{% color_value_span object.agreeableness_roll 14 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.agreeableness 7 %}</td>
+                    <td class="text-end">{% color_value_span object.agreeableness_roll 7 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Neuroticism' %}</td>
-                    <td class="text-end">{% color_value_span object.neuroticism 14 %}</td>
-                    <td class="text-end">{% color_value_span object.neuroticism_roll 14 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.neuroticism 7 %}</td>
+                    <td class="text-end">{% color_value_span object.neuroticism_roll 7 invert=True %}+</td>
                 </tr>
                 <tr>
                     <td>{% trans 'IQ' %}</td>
-                    <td class="text-end">{% color_value_span object.intelligence 100 14 %}</td>
-                    <td class="text-end">{% color_value_span object.intelligence_roll 100 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.intelligence 140 %}</td>
+                    <td class="text-end">{% color_value_span object.intelligence_roll 7 invert=True %}+</td>
                 </tr>
             </table>
         </div>
@@ -51,39 +51,32 @@
                 <thead>
                     <tr>
                         <th>{% trans 'Physis' %}</th>
-                        <th class="text-end">{% trans 'Value' %}</th>
-                        <th class="text-end">{% trans 'Roll' %}</th>
+                        <th class="text-end">{% trans 'Dice' %}</th>
                     </tr>
                 </thead>
                 <tr>
                     <td>{% trans 'Deftness' %}</td>
-                    <td class="text-end">{% color_value_span object.deftness 6 %}</td>
-                    <td class="text-end">{% color_value_span object.deftness_roll 6 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.deftness 7 %}</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Strength' %}</td>
-                    <td class="text-end">{% color_value_span object.strength 6 %}</td>
-                    <td class="text-end">{% color_value_span object.strength_roll 6 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.strength 7 %}</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Attractiveness' %}</td>
-                    <td class="text-end">{% color_value_span object.attractiveness 6 %}</td>
-                    <td class="text-end">{% color_value_span object.attractiveness_roll 6 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.attractiveness 7 %}</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Endurance' %}</td>
-                    <td class="text-end">{% color_value_span object.endurance 6 %}</td>
-                    <td class="text-end">{% color_value_span object.endurance_roll 6 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.endurance 7 %}</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Resistance' %}</td>
-                    <td class="text-end">{% color_value_span object.resistance 6 %}</td>
-                    <td class="text-end">{% color_value_span object.resistance_roll 6 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.resistance 7 %}</td>
                 </tr>
                 <tr>
                     <td>{% trans 'Quickness' %}</td>
-                    <td class="text-end">{% color_value_span object.quickness 100 %}</td>
-                    <td class="text-end">{% color_value_span object.quickness_roll 6 invert=True %}+</td>
+                    <td class="text-end">{% color_value_span object.quickness 7 %}</td>
                 </tr>
             </table>
         </div>
@@ -134,12 +127,19 @@
             <tr>
                 <th>{% trans 'Skills' %}</th>
                 <th class="text-end">{% trans 'Dice' %}</th>
+                <th class="text-end">{% trans 'Roll' %}</th>
             </tr>
             </thead>
             {% for skill in object.characterskill_set.mind_skills %}
                 <tr>
-                    <td>{{ skill.skill }}</td>
-                    <td class="text-end">{% color_value_span skill.value 6 %}</td>
+                    <td>{{ skill.skill }}{% if skill.skill.default_persona_attribute %} <small class="text-muted">({{ skill.skill.get_default_persona_attribute_display }}){% endif %}</small></td>
+                    <td class="text-end">{% color_value_span skill.value 7 %}</td>
+                    {% if skill.skill.default_persona_attribute %}
+                        {% character_attribute_roll object skill.skill.default_persona_attribute as cr %}
+                        <td class="text-end">{% color_value_span cr 7 invert=True %}+</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>
@@ -151,12 +151,19 @@
             <tr>
                 <th>{% trans 'Skills' %}</th>
                 <th class="text-end">{% trans 'Dice' %}</th>
+                <th class="text-end">{% trans 'Roll' %}</th>
             </tr>
             </thead>
             {% for skill in object.characterskill_set.practical_skills %}
                 <tr>
-                    <td>{{ skill.skill }}</td>
-                    <td class="text-end">{% color_value_span skill.value 6 %}</td>
+                    <td>{{ skill.skill }}{% if skill.skill.default_persona_attribute %} <small class="text-muted">({{ skill.skill.get_default_persona_attribute_display }}){% endif %}</small></td>
+                    <td class="text-end">{% color_value_span skill.value 7 %}</td>
+                    {% if skill.skill.default_persona_attribute %}
+                    {% character_attribute_roll object skill.skill.default_persona_attribute as cr %}
+                    <td class="text-end">{% color_value_span cr 7 invert=True %}+</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>
