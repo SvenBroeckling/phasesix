@@ -56,10 +56,11 @@ class Character(models.Model):
         if item.endswith('_roll'):
             name = item.replace("_roll", '')
             if name == 'intelligence':
-                return (120 - self.intelligence) / 5
+                value = (120 - self.intelligence) / 5
+                return value if value >= 2 else 2
             else:
                 value = getattr(self, name)
-                return 5 - value if value <= 5 else 0
+                return 5 - value if value <= 3 else 2
         return super().__getattr__(item)
 
     def __str__(self):
