@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'gmtools',
     'armory',
     'world',
+    'homebrew',
     'rules',
     'characters',
     'rulebook',

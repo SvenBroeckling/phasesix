@@ -61,6 +61,15 @@
                                 </ul>
                             </li>
 
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">{% trans 'Create' %}</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'homebrew:index' %}">{% trans 'Overview' %}</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{% url 'homebrew:create_character' %}">{% trans 'Create Item' %}</a></li>
+                                </ul>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'forum:index' %}">{% trans 'Forum' %}</a>
                             </li>
@@ -91,7 +100,7 @@
                                     </ul>
                                 </li>
                             {% else %}
-                                <li class="nav-item active">
+                                <li class="nav-item  me-1 active">
                                     <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
                                 </li>
                             {% endif %}

@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'magic/', include('magic.urls', namespace='magic')),
     url(r'forum/', include('forum.urls', namespace='forum')),
     url(r'rulebook/', include('rulebook.urls', namespace='rulebook')),
+    url(r'homebrew/', include('homebrew.urls', namespace='homebrew')),
     url(r'rules/', include('rules.urls', namespace='rules')),
     url(r'gmtools/', include('gmtools.urls', namespace='gmtools')),
     path('acct/', include('django.contrib.auth.urls')),
