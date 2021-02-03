@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -43,6 +44,13 @@ class Item(models.Model, metaclass=TransMeta):
     concealment = models.IntegerField(_('concealment'), default=0)
     extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('created by'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
 

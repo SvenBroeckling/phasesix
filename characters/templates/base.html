@@ -61,14 +61,16 @@
                                 </ul>
                             </li>
 
+                            {% comment %}
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">{% trans 'Create' %}</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{% url 'homebrew:index' %}">{% trans 'Overview' %}</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{% url 'homebrew:create_character' %}">{% trans 'Create Item' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'homebrew:create_item' %}">{% trans 'Create Item' %}</a></li>
                                 </ul>
                             </li>
+                            {% endcomment %}
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'forum:index' %}">{% trans 'Forum' %}</a>
@@ -181,15 +183,6 @@
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 }
             }
-        });
-
-        // simplemde
-        $('textarea').each(function (idx, elem) {
-            new SimpleMDE({
-                element: elem,
-                spellChecker: false,
-                forceSync: true
-            });
         });
     });
 </script>

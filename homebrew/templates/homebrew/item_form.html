@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n bootstrap4 %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center">- {% trans 'Create Item' %} -</h1>
+            <p class="text-muted text-center">{% trans 'Create a homebrew item for your party.' %}</p>
+        </div>
+    </div>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                {% bootstrap_field form.name_de %}
+                {% bootstrap_field form.description_de %}
+            </div>
+            <div class="col-12 col-sm-6">
+                {% bootstrap_field form.name_en %}
+                {% bootstrap_field form.description_en %}
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-12 col-sm-4">
+            {% bootstrap_field form.extensions %}
+        </div>
+        <div class="col-12 col-sm-4">
+            {% bootstrap_field form.weight %}
+            {% bootstrap_field form.price %}
+            {% bootstrap_field form.concealment %}
+        </div>
+        <div class="col-12 col-sm-4">
+            {% bootstrap_field form.usable_in_combat %}
+        </div>
+    </div>
+    </form>
+{% endblock %}
