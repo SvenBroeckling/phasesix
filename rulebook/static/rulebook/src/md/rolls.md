@@ -8,27 +8,27 @@ Diese Art der Proben werden überall außerhalb des Kampfes verwendet. Im Kampf 
 
 ### Die Anzahl der Würfel
 
-Die geforderte oder gewünschte Fertigkeit oder das Wissen geben mit ihrem Wert die Anzahl der Würfel direkt vor. Ein Charakter mit einem "Einschüchtern" Wert von 4 hat auch 4 sechsseite Würfel für diese Probe zur Verfügung.
+Die geforderte oder gewünschte Fertigkeit oder das Wissen geben mit ihrem Wert die Anzahl der Würfel direkt vor. Ein Charakter mit einem „Einschüchtern“ Wert von 4 hat auch 4 sechsseite Würfel für diese Probe zur Verfügung.
 
-Ist der Wert 0 oder negativ so ist es dem Charakter nicht möglich diesen Wurf ohne weitere Hilfe zu machen, er ist einfach zu schlecht in der Fertigkeit. *Bonuswürfel* oder *Schicksalswürfel* können jedoch, so vorhanden, verwendet werden, egal wie sehr der Wert im Negativen ist.
+Ist der Wert 0 oder negativ so ist es dem Charakter nicht möglich diesen Wurf ohne weitere Hilfe zu machen, er ist einfach zu schlecht in der Fertigkeit. *Bonuswürfel* oder *Schicksalswürfel* können jedoch verwendet werden, egal wie sehr der Wert im Negativen ist.
 
 ### Der Mindestwurf
 
-Wird eine Probe gefordert oder gewünscht, so nennt der Spielleiter immer eine auf die Situation passende Persona- oder Physiseigenschaft. Diese geben den Mindestwurf vor, welcher mit den Würfeln erreicht werden muss um Erfolge zu erzielen.
+Wird eine Probe gefordert oder gewünscht, so nennt der Spielleiter immer eine auf die Situation passende Personaeigenschaft. Diese gibt den Mindestwurf vor, welcher mit den Würfeln erreicht werden muss, um Erfolge zu erzielen.
 
-> Hagens Spieler möchte mit roher Gewalt effektvoll eine Tür auftreten, die zwischen ihm und der vermuteten Diebesbande steht. Der Spielleiter fordert ihn auf einen Wurf auf Nahkampf mit Kraft als Mindestwurf zu machen.
+> Hagens Spieler möchte mit roher Gewalt effektvoll eine Tür auftreten, die zwischen ihm und der vermuteten Diebesbande steht. Der Spielleiter fordert ihn auf, einen Wurf auf Nahkampf mit Kraft als Mindestwurf zu machen.
 >
 >Hagen hat einen Mindestwurf von 2+ in Kraft, sein Wert in der Fertigkeit Nahkampf ist 4. Somit wirft er 4 Würfel. Jeder Würfel der eine 2 oder eine höhere Zahl zeigt ist hierbei ein Erfolg. Ein einzelner Erfolg reicht für das Gelingen aus, jedoch wirft Hagens Spieler 4 Erfolge, und tritt die Tür sogleich dem ersten Dieb ins Gesicht.
 
 Der jeweilige Mindestwurf ergibt sich wie folgt aus den Werten der Persona- und Physiseigenschaften:
 
-* Bei allen Physiseigenschaften bis auf Intelligenz und Neurotizismus ergibt sich der Mindestwurf indem der Wert der Eigenschaft von 5 abgezogen wird. Ist das Ergbnis kleiner als 0 so wird 0 angenommen. 
-* Bei der Eigenschaft *Neurotizismus* wird der Wert statt dessen auf 5 **addiert**, da ein hoher Neurotizismus negativ ist. Auch hier kann das Ergebnis nicht kleiner als 0 sein.
-* Der Mindestwurf der Intelligenz berechnet sich indem der IQ von 120 abgezogen wird, und das Ergebnis durch 5 geteilt wird. Auch dieses kann nicht kleiner als 0 sein.
+* Bei allen Physiseigenschaften bis auf Intelligenz und Neurotizismus ergibt sich der Mindestwurf, indem der Wert der Eigenschaft von 5 abgezogen wird. Ist das Ergbnis kleiner als 0 so wird 0 angenommen. 
+* Bei der Eigenschaft *Neurotizismus* wird der Wert stattdessen auf 5 **addiert**, da ein hoher Neurotizismus negativ ist. Auch hier kann das Ergebnis nicht kleiner als 0 sein.
+* Der Mindestwurf der Intelligenz berechnet sich, indem der IQ von 120 abgezogen wird, und das Ergebnis durch 5 geteilt wird. Auch dieses kann nicht kleiner als 0 sein.
 
 Diese Mindestwürfe werden nach der Erstellung des Charakters und beim Steigern ermittelt und auf dem Charakterbogen eingetragen. Es muss also niemand im Spiel etwas nachrechnen. 
 
-Der Mindestwurf wird in der Form "X+" angegeben, um anzudeuten dass dies das Würfelergebnis ist was mindestens erreicht werden muss. Ein Charakter mit einer Kraft von 1 hat also einen Mindestwurf von 4+ (5 - 1). Ein Charakter mit einer Gewissenhaftigkeit von -6 hat einen Mindestwurf von 14+.
+Der Mindestwurf wird in der Form „X+“ angegeben, um anzudeuten, dass dies das Würfelergebnis ist was mindestens erreicht werden muss. Ein Charakter mit einer Kraft von 1 hat also einen Mindestwurf von 4+ (5 - 1). Ein Charakter mit einer Gewissenhaftigkeit von -6 hat einen Mindestwurf von 14+.
 
 > Hagen ist Söldner mit Passion. Seine Intelligenz beträgt 80, seine Kraft hingegen 3. Er ist mit einem Wert von 6 Punkten in Offenheit sehr Offen neuem gegenüber.
 >
@@ -48,7 +48,7 @@ Da bei einem Wurf mit mehreren Würfeln zwischen den einzelnen Würfeln kein Unt
 >
 > Im ersten Wurf wirft er 4,2,6,6,1. Somit hat er zwei Sechsen zur Verfügung die er weiter werfen kann, um die 15 evtl. noch zu erreichen. Der zweite Wurf (mit den beiden Würfeln) zeigt eine 6 und eine 1. 
 >
-> Nun darf er nur noch den verbleibenden Würfel der eine 6 gezeigt hat erneut werfen. Da dieser nun eine 1 zeigt hilft ihm auch die Ausgeprägte Tapferkeit nicht - seine Geistige Stabilität macht ihm einen Strich durch die Rechnung.
+> Nun darf er nur noch den verbleibenden Würfel der eine 6 gezeigt hat erneut werfen. Da dieser nun eine 1 zeigt, hilft ihm auch die ausgeprägte Tapferkeit nicht – seine geistige Stabilität macht ihm einen Strich durch die Rechnung.
 
 ### Schwierigkeitsgrade
 
@@ -79,7 +79,7 @@ In der Regel bekommt der Charakter Schicksalswürfel mit seinem Werdegang, aller
 
 Schicksalswürfel können sowohl als Bonus- als aus als Wiederholungswürfel eingesetzt werden. Auf einem Schicksalswürfel ist ein Ergebnis von 4 **immer** ein Erfolg, unabhängig vom Schwierigkeitsgrad der Probe.
 
-Schicksalswürfel müssen immer getrennt von allen normalen Würfeln geworfen werden, um auszumachen ob genau sie die 4+ erreicht haben.
+Schicksalswürfel müssen immer getrennt von allen normalen Würfeln geworfen werden, um auszumachen, ob genau sie die 4+ erreicht haben.
 
 > Wenn wir uns das vorherige Beispiel mit Hagens Wurf auf seine Tapferkeit mit Neurotizismus ansehen (5 Würfel auf 15+), so würde ihm hier ein Schicksalswürfel sehr helfen, denn dieser müsste tatsächlich nur eine 4+ erreichen.
 
@@ -87,7 +87,7 @@ Schicksalswürfel frischen sich bei jeder Rast von mindestens 10 Stunden auf ihr
 
 ### Gruppenwürfe
 
-Immer wenn es darum geht dass die Gruppe als Ganzes eine Probe besteht werden Gruppenwürfe verwendet.
+Immer, wenn es darum geht, dass die Gruppe als Ganzes eine Probe besteht werden Gruppenwürfe verwendet.
 Statt z.B. eine Achtsamkeitsprobe von jedem Spieler zu verlangen kann der Spielleiter eine 
 Achtsamkeitsprobe der ganzen Gruppe verlangen. Ist diese Probe gelungen, gilt der Effekt für alle
 Charaktere in der Gruppe.

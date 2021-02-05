@@ -4,11 +4,11 @@ Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Char
 
 ### Persona
 
-Die Werte unter Persona beziehen sich auf die psychologischen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen Wert und einen Mindestwurf und stellen mit den Physiseigenschaften zusammen die Grundlage für Würfe dar.
+Die Werte unter Persona beziehen sich auf die psychologischen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen Wert und einen Mindestwurf und stellen die Grundlage für Würfe dar.
 
 #### Offenheit
 
-Offenheit beschreibt die Offenheit gegenüber neuen Erfahrungen und Eindrücken. Ein Charakter mit schwach ausgeprägter Offenheit ist eher *konservativ* gegenüber neuem. Stark ausgeprägte Offenheit sorgt dafür dass der Charakter eher *neugierig* oder auch *erfinderisch* ist.
+Offenheit beschreibt die Offenheit gegenüber neuen Erfahrungen und Eindrücken. Ein Charakter mit schwach ausgeprägter Offenheit ist eher *konservativ* gegenüber Neuem. Stark ausgeprägte Offenheit sorgt dafür, dass der Charakter eher *neugierig* oder auch *erfinderisch* ist.
 
 #### Gewissenhaftigkeit
 
@@ -20,29 +20,29 @@ Dieser Wert stellt das zwischenmenschliche Verhalten des Charakters dar. Ein Cha
 
 #### Verträglichkeit
 
-Auch Verträglichkeit bezieht sich auf das zwischenmenschliche Verhalten des Charakters. Wenig ausgeprägte Verträglichkeit steht für *antagonistisches*, *wettbewerbsorientiertes* Verhalten, eine stark ausgeprägte Verträglichkeit bedeutet dass der Charakter *kooperativ* und *mitfühlend* ist.
+Auch Verträglichkeit bezieht sich auf das zwischenmenschliche Verhalten des Charakters. Wenig ausgeprägte Verträglichkeit steht für *antagonistisches*, *wettbewerbsorientiertes* Verhalten, eine stark ausgeprägte Verträglichkeit bedeutet, dass der Charakter *kooperativ* und *mitfühlend* ist.
 
 #### Neurotizismus
 
-Neurotizismus steht für die emotionale Labilität des Charakters. Ein hoher Neurotizismuswert steht für ein starkes Empfinden von negativen Gefühlen wie *Angst*, *Anspannung*, *Trauer*, aber auch *Unsicherheit* und *Verlegenheit*. Charaktere mit niedrigem Neurotizismus-Wert sind eher *entspannt*, sie erleben negative Erlebnisse *stabiler* und sind eher *zufrieden*.
+Neurotizismus steht für die emotionale Labilität des Charakters. Ein hoher Neurotizismuswert steht für ein starkes Empfinden von negativen Gefühlen wie *Angst*, *Anspannung*, *Trauer*, aber auch *Unsicherheit* und *Verlegenheit*. Charaktere mit niedrigem Neurotizismuswert sind eher *entspannt*, sie erleben negative Erlebnisse *stabiler* und sind eher *zufrieden*.
 
-***Achtung***: Ein höherer Neurotizismus ist schlecht für die Würfe des Charakters. Im Gegensatz zu allen anderen Personawerten wird Neurotizismus negativ auf den Mindestwurf verrechnet (siehe "Einen Charakter erstellen").
+***Achtung***: Ein höherer Neurotizismus ist schlecht für die Würfe des Charakters. Im Gegensatz zu allen anderen Personawerten wird Neurotizismus negativ auf den Mindestwurf verrechnet (siehe „Einen Charakter erstellen“).
 
 ### Physis
 
-Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters. Physiseigenschaften haben jeweils einen Mindeswurf und einen Wert, und sind zusammen mit den Personaeigenschaften die Grundlage aller Würfe. 
+Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters. Physiseigenschaften haben jeweils einen Wert, welcher die Anzahl an Würfeln vorgibt, mit denen auf diese Physiseigenschaft geworfen wird.
 
 #### Geschick
 
-Dieser Wert beschreibt sowohl das köperliche Gechick des Charakters als auch die Fingerfertigkeit.
+Dieser Wert beschreibt sowohl das körperliche Geschick des Charakters als auch die Fingerfertigkeit.
 
 #### Kraft
 
-Kraft ist die reine Stärke des Charakters und kommt immer dann zur Anwendung wenn es darum geht mit reiner Muskelkraft etwas zu bewegen.
+Kraft ist die reine Stärke des Charakters und kommt immer dann zur Anwendung, wenn es darum geht mit reiner Muskelkraft etwas zu bewegen.
 
 #### Attraktivität
 
-Mit der Attraktivität wird dargestellt wie charismatisch der Charakter ist. Dabei muss ein hoher Wert nicht unbedingt für Schönheit stehen, es kann auch ein Charakter mit markantem Aussehen Attraktiv sein.
+Mit der Attraktivität wird dargestellt wie charismatisch der Charakter ist. Dabei muss ein hoher Wert nicht unbedingt für Schönheit stehen, es kann auch ein Charakter mit markantem Aussehen attraktiv sein.
 
 #### Ausdauer
 
@@ -54,23 +54,23 @@ Sowohl die Fähigkeit Verletzungen oder auch Schmerzen auszuhalten oder abzuwend
 
 #### Schnelligkeit
 
-Schnelligkeit ist sowohl die Geschwindigkeit mit der der Charakter sich bewegen kann, als auch die Fähigkeit schnell auf etwas zu reagieren.
+Schnelligkeit ist sowohl die Geschwindigkeit, mit der der Charakter sich bewegen kann, als auch die Fähigkeit schnell auf etwas zu reagieren.
 
 ### Zusatzwürfel
 
 Jeder Charakter kann eine Anzahl an *Bonuswürfeln*, *Schicksalswürfeln* oder *Wiederholungswürfeln* haben. Alle drei haben unterschiedliche Verwendungen (s. Würfe und Proben), stellen jedoch immer einen Vorteil für den Charakter dar, welcher während des Spiels eingesetzt werden kann. 
 
-Der Charakter kann während der Rast verbrauchte Würfel zurück erhalten (s. Wunden und Heilung).
+Der Charakter kann während der Rast verbrauchte Würfel zurückerhalten (s. Wunden und Heilung).
 
 ### Fertigkeiten
 
-Komplexere Handlungen oder Kenntnisse werden durch *Fertigkeiten* beschrieben. Alle Charaktere haben die selben Fertigkeiten mit unterschiedlichen Werten, so kann der Spielleiter sicher sein dass ein Spieler einen Wurf auf eine Fertigkeit auch sicher machen kann. 
+Komplexere Handlungen oder Kenntnisse werden durch *Fertigkeiten* beschrieben. Alle Charaktere haben dieselben Fertigkeiten mit unterschiedlichen Werten, so kann der Spielleiter sicher sein, dass ein Spieler einen Wurf auf eine Fertigkeit auch sicher machen kann. 
 
-Wird auf eine Fertigkeit geworfen, so wird vom Spielleiter eine zur Situation passende Persona- oder Physiseigenschaft genannt. Der Fertigkeitswert gibt die Anzahl der geworfenen Würfel an, während die Persona- oder Physiseigenschaft den notwendigen Mindestwurf vorgibt.
+Jede Fertigkeit hat eine vorgegebene Personaeigenschaft, welche den Mindestwurf dieser Fertigkeit vorgibt. Der Spielleiter kann bei einem Wurf auf die Fertigkeit jedoch jederzeit eine andere, passende Personaeigenschaft wählen. Der Fertigkeitswert gibt die Anzahl der geworfenen Würfel an, während die Personaeigenschaft den notwendigen Mindestwurf angibt.
 
 ### Wissen
 
-Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen wird genau wie Fertigkeiten auf eine Persona- oder Physiseigenschaft geworfen.
+Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen wird genau wie Fertigkeiten auf eine Personaenschaft geworfen.
 
 ### Schatten
 
