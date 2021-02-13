@@ -14,43 +14,7 @@
             </div>
             {% for object in own_characters %}
                 <div class="col-12 col-sm-6 col-md-6 mb-3">
-                    <a href="{{ object.get_absolute_url }}">
-                        <div class="card character-list-item" style="
-                                                                         background-size: 100%;
-                                                                         {% if object.backdrop_image %}
-                                                                         {% thumbnail object.backdrop_image "x800" as im %}
-                                                                         background-image: url({{ im.url }})
-                                                                         {% endthumbnail %}
-                                                                         {% else %}
-                                                                         {% if object.get_epoch.image %}
-                                                                         {% thumbnail object.get_epoch.image "x800" as im %}
-                                                                         background-image: url({{ im.url }})
-                                                                         {% endthumbnail %}
-                                                                         {% else %}
-                                                                         background-color: silver
-                                                                         {% endif %}
-                                                                         {% endif %}
-                                                                            ">
-                            <div class="card-body text-end">
-                                {% if object.image %}
-                                    {% thumbnail object.image "120x120" crop="center" as im %}
-                                        <img
-                                                class="img-fluid rounded float-start"
-                                                src="{{ MEDIA_URL }}{{ im.url }}"
-                                                alt="{{ object.name }}">
-                                    {% endthumbnail %}
-                                {% else %}
-                                    <img
-                                            class="img-fluid rounded float-start"
-                                            height="120" width="120"
-                                            src="{% static 'img/silhuette.png' %}"
-                                            alt="{{ object.name }}">
-                                {% endif %}
-                                <h4>{{ object.name }}</h4>
-                                <small>{% template_category_string object 3 "" %}</small><br>
-                            </div>
-                        </div>
-                    </a>
+                    {% include 'characters/_character_list_widget.html' %}
                 </div>
             {% endfor %}
         </div>
@@ -64,44 +28,7 @@
             </div>
             {% for object in other_peoples_characters %}
                 <div class="col-12 col-sm-6 col-md-6 mb-3">
-                    <a href="{{ object.get_absolute_url }}">
-                        <div class="card character-list-item" style="
-                                background-size: 100%;
-                                {% if object.backdrop_image %}
-                                    {% thumbnail object.backdrop_image "x800" as im %}
-                                        background-image: url({{ im.url }})
-                                    {% endthumbnail %}
-                                {% else %}
-                                    {% if object.get_epoch.image %}
-                                        {% thumbnail object.get_epoch.image "x800" as im %}
-                                            background-image: url({{ im.url }})
-                                        {% endthumbnail %}
-                                    {% else %}
-                                        background-color: silver
-                                    {% endif %}
-                                {% endif %}
-                                ">
-                            <div class="card-body text-end">
-                                {% if object.image %}
-                                    {% thumbnail object.image "120x120" crop="center" as im %}
-                                        <img
-                                                class="img-fluid rounded float-start"
-                                                src="{{ MEDIA_URL }}{{ im.url }}"
-                                                alt="{{ object.name }}">
-                                    {% endthumbnail %}
-                                {% else %}
-                                    <img
-                                            class="img-fluid rounded float-start"
-                                            height="120" width="120"
-                                            src="{% static 'img/silhuette.png' %}"
-                                            alt="{{ object.name }}">
-                                {% endif %}
-                                <h4>{{ object.name }}</h4>
-                                <small>{% template_category_string object 3 "" %}</small><br>
-                                <small>{{ object.created_by }}</small><br>
-                            </div>
-                        </div>
-                    </a>
+                    {% include "characters/_character_list_widget.html" %}
                 </div>
             {% endfor %}
         </div>

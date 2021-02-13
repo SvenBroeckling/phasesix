@@ -1,5 +1,7 @@
 import os
 
+from django.urls import reverse_lazy
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = 'http://phasesix.org'
 SECRET_KEY = 'p&90ws3x7(hi+$+v4=(5ni@@3$uqgdpg$s*=w@8yl-w12)0%&$'
@@ -11,6 +13,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 ACCOUNT_ACTIVATION_DAYS = 7
+LOGIN_URL = reverse_lazy('login')
 
 INSTALLED_APPS = [
     'django.contrib.admin',

@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-import random
 import math
 from decimal import Decimal
 
@@ -40,6 +37,10 @@ class Character(models.Model):
 
     lineage = models.ForeignKey(
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE
+    )
+
+    campaign = models.ForeignKey(
+        'campaigns.Campaign', verbose_name=_('Campaign'), blank=True, null=True, on_delete=models.SET_NULL
     )
 
     reputation = models.IntegerField(_('reputation'), default=0)

@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, TemplateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
 from campaigns.forms import SceneForm
 from campaigns.models import Campaign
@@ -56,7 +55,7 @@ class CampaignUpdateView(CampaignMixin, UpdateView):
 class CampaignInvitationView(CampaignMixin, DetailView):
     model = Campaign
     template_name = 'campaigns/campaign_invitation.html'
-    active_tab = 'detail'
+    active_tab = 'invitation'
 
 
 class CampaignScenesView(CampaignMixin, DetailView):

@@ -1,0 +1,38 @@
+{% load i18n static thumbnail characters_extras %}
+<a href="{{ object.get_absolute_url }}">
+    <div class="card character-list-item" style="
+            background-size: 100%;
+            {% if object.backdrop_image %}
+                {% thumbnail object.backdrop_image "x800" as im %}
+                    background-image: url({{ im.url }})
+                {% endthumbnail %}
+            {% else %}
+                {% if object.get_epoch.image %}
+                    {% thumbnail object.get_epoch.image "x800" as im %}
+                        background-image: url({{ im.url }})
+                    {% endthumbnail %}
+                {% else %}
+                    background-color: silver
+                {% endif %}
+            {% endif %}
+            ">
+        <div class="card-body text-end">
+            {% if object.image %}
+                {% thumbnail object.image "120x120" crop="center" as im %}
+                    <img
+                            class="img-fluid rounded float-start"
+                            src="{{ MEDIA_URL }}{{ im.url }}"
+                            alt="{{ object.name }}">
+                {% endthumbnail %}
+            {% else %}
+                <img
+                        class="img-fluid rounded float-start"
+                        height="120" width="120"
+                        src="{% static 'img/silhuette.png' %}"
+                        alt="{{ object.name }}">
+            {% endif %}
+            <h4>{{ object.name }}</h4>
+            <small>{% template_category_string object 3 "" %}</small><br>
+        </div>
+    </div>
+</a>
