@@ -13,6 +13,7 @@ Die Abstammung bestimmt die Startwerte folgender Eigenschaften des Charakters:
 
 * Werdegangspunkte (50)
 * Persona- und Physiseigenschaften (0)
+* Mindestwurf (5+)
 * Intelligenz (100)
 * Bonus-, Schicksals- und Wiederholungswürfel (0)
 * Basisschutz (0)
@@ -101,8 +102,3 @@ du den Charakter einfach als *fertig* erklären. Sollten noch
 Werdegangspunkte übrig und nicht ausgegeben sein so werden diese zur
 *Reputation* des Charakters addiert (siehe Steigern). Es gehen also keine Punkte
 verloren. 
-
-Zum Schluss werden noch die Mindestwürfe der Persona- und Physiseigenschaften
-eingetragen. Diese berechnen sich, indem der Wert von 5 abgezogen wird.
-Liegt das Ergebnis unter 2, so wird 2 als Mindestwurf eingetragen.
-Dies ist im Kapitel „Würfe und Proben“ näher beschrieben.

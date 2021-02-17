@@ -1,4 +1,4 @@
-Um ein Phase Six Abenteuer zu bestehen erstellt jeder Spieler einen Charakter, den er in dem Abenteuer spielt. Das Leben des Charakters wird komplett auf seinem Charakterbogen dargestellt, der alle relevanten Werte enthält.
+Um ein Phase Six Abenteuer zu bestehen, erstellt jeder Spieler einen Charakter, den er in dem Abenteuer spielt. Das Leben des Charakters wird komplett auf seinem Charakterbogen dargestellt, welcher alle relevanten Werte enthält.
 
 Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Charakter erschaffen wird. In diesem Teil soll es um die grundlegenden Eigenschaften gehen, welche einen Charakter in PhaseSix ausmachen. 
 
@@ -56,6 +56,14 @@ Sowohl die Fähigkeit Verletzungen oder auch Schmerzen auszuhalten oder abzuwend
 
 Schnelligkeit ist sowohl die Geschwindigkeit, mit der der Charakter sich bewegen kann, als auch die Fähigkeit schnell auf etwas zu reagieren.
 
+### Der Mindestwurf
+
+Der Mindestwurf ist eine zentrale Eigenschaft deines Charakters. Er gibt an welches Ergebnis ein Würfel erreichen muss, um einen Erfolg darzustellen. Der Mindestwurf wird von der Abstammung übernommen und ist bei den meisten Charakteren 5+. Er kann nur durch besondere Geschehnisse oder seltene Objekte verändert werden, und dies auch häufig nur kurzzeitig.
+
+### Schutz und Ausweichen
+
+Beide Werte werden im Kampf verwendet, um möglichen Schaden zu verhindern. Die Anfangswerte dieser Eigenschaften werden von der Abstammung übernommen, sie können durch Schablonen verändert werden.
+
 ### Zusatzwürfel
 
 Jeder Charakter kann eine Anzahl an *Bonuswürfeln*, *Schicksalswürfeln* oder *Wiederholungswürfeln* haben. Alle drei haben unterschiedliche Verwendungen (s. Würfe und Proben), stellen jedoch immer einen Vorteil für den Charakter dar, welcher während des Spiels eingesetzt werden kann. 
@@ -70,8 +78,8 @@ Jede Fertigkeit hat eine vorgegebene Personaeigenschaft, welche den Mindestwurf 
 
 ### Wissen
 
-Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen wird genau wie Fertigkeiten auf eine Personaenschaft geworfen.
+Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen wird genau wie Fertigkeiten auf eine Personaeigenschaft geworfen.
 
 ### Schatten
 
-Ein Charakter kann besondere Eigenschaften haben, die ihn außerhalb seiner körperlichen oder psychischen Eigenschaften beeinflussen. Jeder *Schatten* bringt eine eigene Beschreibung oder Regel mit. So kann ein Charakter z.B. einen Rivalen haben oder obrigkeitshörig sein. Auf Schatten wird nicht geworfen, Schatten haben auch keine Werte.
+Ein Charakter kann besondere Eigenschaften haben, die ihn außerhalb seiner körperlichen oder psychischen Eigenschaften beeinflussen. Jeder *Schatten* bringt eine eigene Beschreibung oder Regel mit. So kann ein Charakter z. B. einen Rivalen haben oder obrigkeitshörig sein. Auf Schatten wird nicht geworfen, Schatten haben auch keine Werte.
