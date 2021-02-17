@@ -9,9 +9,27 @@
     </div>
     <div class="row character-list">
         {% for object in object_list %}
-            <div class="col-md-3 mb-3">
+            <div class="col-12">
+                <h1 class="text-center mb-3">- {% trans 'Your campaigns' %} -</h1>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 mb-3">
                 <a href="{{ object.get_absolute_url }}">
-                    <div class="card">
+                    <div class="card campaign-list-item" style="
+                            background-size: 100%;
+                            {% if object.backdrop_image %}
+                                {% thumbnail object.backdrop_image "x800" as im %}
+                                    background-image: url({{ im.url }})
+                                {% endthumbnail %}
+                            {% else %}
+                                {% if object.epoch.image %}
+                                    {% thumbnail object.epoch.image "x800" as im %}
+                                        background-image: url({{ im.url }})
+                                    {% endthumbnail %}
+                                {% else %}
+                                    background-color: silver
+                                {% endif %}
+                            {% endif %}
+                            ">
                         <div class="card-body text-center">
                             {% if object.image %}
                                 {% thumbnail object.image "120x120" crop="center" as im %}
