@@ -121,10 +121,3 @@ def status_effect_value(status_effect, character):
         return obj.value
     except CharacterStatusEffect.DoesNotExist:
         return 0
-
-
-@register.simple_tag
-def character_attribute_roll(character, attribute_name):
-    if attribute_name:
-        return getattr(character, f'{attribute_name}_roll')
-    return None

@@ -53,17 +53,6 @@ class Character(models.Model):
     shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
     quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
 
-    def __getattr__(self, item):
-        if item.endswith('_roll'):
-            name = item.replace("_roll", '')
-            if name == 'intelligence':
-                value = (120 - self.intelligence) / 5
-                return value if value >= 2 else 2
-            else:
-                value = getattr(self, name)
-                return 5 - value if value <= 3 else 2
-        return super().__getattr__(item)
-
     def __str__(self):
         return self.name
 

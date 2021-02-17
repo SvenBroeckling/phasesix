@@ -37,8 +37,8 @@ class TemplateAdmin(admin.ModelAdmin):
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'kind', 'show_on_combat_tab', 'default_persona_attribute')
-    list_editable = ('kind', 'show_on_combat_tab', 'default_persona_attribute')
+    list_display = ('name_de', 'name_en', 'kind', 'show_on_combat_tab')
+    list_editable = ('kind', 'show_on_combat_tab')
 
 
 class LineageTemplatePointsInline(admin.TabularInline):

@@ -122,13 +122,6 @@ class Skill(models.Model, metaclass=TransMeta):
     )
     name = models.CharField(_('name'), max_length=120)
     kind = models.CharField(_('kind'), max_length=1, choices=KIND_CHOICES)
-    default_persona_attribute = models.CharField(
-        _('default persona attribute'),
-        max_length=20,
-        choices=SKILL_PERSONA_CHOICES,
-        null=True,
-        blank=True,
-        default='openness')
     extensions = models.ManyToManyField('rules.Extension')
     show_on_combat_tab = models.BooleanField(_('show on combat tab'), default=False)
 
