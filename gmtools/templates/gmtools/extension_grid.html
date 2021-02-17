@@ -24,12 +24,20 @@
 {% endblock %}
 
 {% block content %}
+    <a class="btn btn-primary mb-3" href="{% url 'gmtools:extension_grid' type='template' %}">{% trans 'Template Grid' %}</a>
+    <a class="btn btn-primary mb-3" href="{% url 'gmtools:extension_grid' type='lineage' %}">{% trans 'Lineage Grid' %}</a>
+    <a class="btn btn-primary mb-3" href="{% url 'gmtools:extension_grid' type='skill' %}">{% trans 'Skill Grid' %}</a>
+    <a class="btn btn-primary mb-3" href="{% url 'gmtools:extension_grid' type='item' %}">{% trans 'Item Grid' %}</a>
+    <a class="btn btn-primary mb-3" href="{% url 'gmtools:extension_grid' type='weapon' %}">{% trans 'Weapon Grid' %}</a>
+    <a class="btn btn-primary mb-3" href="{% url 'gmtools:extension_grid' type='weaponmodification' %}">{% trans 'Weapon Mod Grid' %}</a>
+    <a class="btn btn-primary mb-3" href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Riot Gear Grid' %}</a>
+
     <table class="table table-bordered table-hover-tr tableFixHead">
         <thead>
             <tr>
-                <th>{% trans 'Template' %}</th>
+                <th class="bg-light">{% trans 'Template' %}</th>
                 {% for e in extensions %}
-                    <th {% if not e.is_epoch %}class="bg-dark"{% endif %}>{{ e.name }}</th>
+                    <th class="{{ e.is_epoch|yesno:"bg-secondary,bg-light" }}">{{ e.name }}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -42,7 +50,7 @@
                         </a>
                     </td>
                     {% for e in extensions %}
-                        <td {% if not e.is_epoch %}class="bg-dark"{% endif %}>
+                        <td class="{{ e.is_epoch|yesno:"bg-secondary,bg-light" }}">
                             <a
                                     href="{% url 'gmtools:extension_grid' type=type %}"
                                     class="set-epoch"

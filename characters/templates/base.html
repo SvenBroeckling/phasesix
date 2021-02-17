@@ -90,13 +90,8 @@
                                             <li><a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item" href="{% url 'gmtools:combat_sim' %}">{% trans 'Combat Sim' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='template' %}">{% trans 'Template Grid' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='lineage' %}">{% trans 'Lineage Grid' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='skill' %}">{% trans 'Skill Grid' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='item' %}">{% trans 'Item Grid' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='weapon' %}">{% trans 'Weapon Grid' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='weaponmodification' %}">{% trans 'Weapon Mod Grid' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Riot Gear Grid' %}</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a></li>
                                             <li><hr class="dropdown-divider"></li>
                                         {% endif %}
                                         <li><a class="dropdown-item" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>

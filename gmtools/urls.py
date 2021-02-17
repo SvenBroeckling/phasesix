@@ -7,6 +7,10 @@ app_name = 'gmtools'
 
 urlpatterns = [
     url(
+        '^template_statistics/$',
+        staff_member_required(views.TemplateStatisticsView.as_view()),
+        name='template_statistics'),
+    url(
         '^extension_grid/(?P<type>.*)/$',
         staff_member_required(views.ExtensionGrid.as_view()),
         name='extension_grid'),

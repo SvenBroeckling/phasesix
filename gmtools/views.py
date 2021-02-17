@@ -13,6 +13,21 @@ from gmtools.forms import CombatSimDummyForm
 from rules.models import Extension, Template, Lineage, Skill
 
 
+class TemplateStatisticsView(TemplateView):
+    template_name = 'gmtools/template_statistics.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        attributes = {}
+        skills = {}
+        shadows = {}
+
+        for t in Template.objects.all():
+            pass
+
+        return context
+
+
 class ExtensionGrid(TemplateView):
     template_name = 'gmtools/extension_grid.html'
 
