@@ -15,22 +15,39 @@
 
     <title>{% block title %}Phase Six{% endblock %}</title>
 
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+
     <!-- Matomo -->
     <script type="text/javascript">
-      var _paq = window._paq || [];
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(["setCookieDomain", "*.phasesix.org"]);
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="//piwik.nimbostratus.de/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        _paq.push(['setSiteId', '8']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-      })();
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setCookieDomain", "*.phasesix.org"]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//piwik.nimbostratus.de/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '8']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
     </script>
-    <noscript><p><img src="//piwik.nimbostratus.de/matomo.php?idsite=8&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+    <noscript><p><img src="//piwik.nimbostratus.de/matomo.php?idsite=8&amp;rec=1" style="border:0;" alt=""/></p>
+    </noscript>
     <!-- End Matomo Code -->
 </head>
 
@@ -51,14 +68,23 @@
                     <div class="collapse navbar-collapse" id="mainNavBar">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">{% trans 'Play' %}</a>
+                                <a href="#" class="nav-link dropdown-toggle" role="button"
+                                   data-bs-toggle="dropdown">{% trans 'Play' %}</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'characters:list' %}">{% trans 'My Characters' %}</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'campaigns:list' %}">{% trans 'My Campaigns' %}</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rulebook' %}</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'characters:list' %}">{% trans 'My Characters' %}</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'campaigns:list' %}">{% trans 'My Campaigns' %}</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rulebook' %}</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
                                 </ul>
                             </li>
 
@@ -84,17 +110,30 @@
                         <ul class="navbar-nav justify-content-end">
                             {% if user.is_authenticated %}
                                 <li class="nav-item dropdown" id="theme-dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="icon-cogs icon-large"></i> {{ request.user|capfirst }}</a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                            class="icon-cogs icon-large"></i> {{ request.user|capfirst }}</a>
                                     <ul class="dropdown-menu">
                                         {% if user.is_staff %}
-                                            <li><a class="dropdown-item" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:combat_sim' %}">{% trans 'Combat Sim' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a></li>
-                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'gmtools:combat_sim' %}">{% trans 'Combat Sim' %}</a>
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a>
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
                                         {% endif %}
-                                        <li><a class="dropdown-item" href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
                                     </ul>
                                 </li>
                             {% else %}
