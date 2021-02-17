@@ -6,13 +6,13 @@
         <div class="col-md-3 text-center pt-2">
             <div class="card mb-2">
                 <div class="card-body">
-                    <h2 class="mb-2">{{ se }}</h2>
+                    <h2 class="mb-5">{{ se }}</h2>
 
-                    <span class="fa-layers fa-fw fa-5x">
+                    <span class="fa-layers fa-fw fa-3x">
                         <i class="{{ se.fa_icon_class }} mb-4"></i>
                         <span
                                 data-status-effect-id="{{ se.id }}"
-                                class="fa-layers-counter {{ se_value|yesno:"text-danger,text-muted" }}">{{ se_value }}</span>
+                                class="fa-layers-counter">{{ se_value }}</span>
                     </span>
 
                     <input
@@ -57,15 +57,10 @@
                         value: value
                     },
                     function(data) {
-                        let target = $(`span[data-status-effect-id="${status_effect_id}"]`);
-                        target.removeClass('text-danger text-muted');
-                        if(value > 0) {
-                            target.addClass('text-danger');
-                        } else {
-                            target.addClass('text-muted');
-                        }
-                        console.log(target);
-                        target.text(value);
+                        let target = $(`span[data-status-effect-id="${status_effect_id}"]`)
+                        target
+                            .removeClass('text-danger text-muted')
+                            .text(value)
                     }
                 )
             })
