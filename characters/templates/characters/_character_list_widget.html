@@ -1,5 +1,5 @@
 {% load i18n static thumbnail characters_extras %}
-<a href="{{ object.get_absolute_url }}">
+<a href="{{ object.get_absolute_url }}" data-character-id="{{ object.id }}">
     <div class="card character-list-item" style="
             background-size: 100%;
             {% if object.backdrop_image %}
@@ -33,6 +33,9 @@
             {% endif %}
             <h4>{{ object.name }}</h4>
             <small>{% template_category_string object 3 "" %}</small><br>
+            {% if object.created_by != request.user %}
+                <small>{{ object.created_by }}</small>
+            {% endif %}
         </div>
     </div>
 </a>
