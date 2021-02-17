@@ -5,11 +5,12 @@ from markdown import markdown
 register = Library()
 
 
-@register.inclusion_tag('rules/_template_widget.html')
-def template_widget(template):
-    return {
+@register.inclusion_tag('rules/_template_widget.html', takes_context=True)
+def template_widget(context, template):
+    context.update({
         'template': template
-    }
+    })
+    return context
 
 
 @register.filter

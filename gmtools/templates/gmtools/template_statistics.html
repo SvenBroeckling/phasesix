@@ -1,4 +1,67 @@
 {% extends 'base.html' %}
+{% load i18n rules_extras %}
+
+{% block javascript %}
+    <script>
+    $(function(){
+        $('#info-modal').on('show.bs.modal', function(e){
+            $(this).find('.modal-body').html($(e.relatedTarget).parent().find('.d-none').html())
+        })
+    })
+    </script>
+{% endblock %}
 
 {% block content %}
+    <div class="modal" tabindex="-1" id="info-modal">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Templates</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Loading.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1>{% trans 'Template Attributes' %}</h1>
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=attributes_max header="Attributes Max"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=attributes_min header="Attributes Min"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=attributes_count header="Attributes Count"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=attributes_sum header="Attributes Sum"%}
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1>{% trans 'Template Skills' %}</h1>
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=skills_max header="Skills Max"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=skills_min header="Skills Min"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=skills_count header="Skills Count"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=skills_sum header="Skills Sum"%}
+        </div>
+    </div>
 {% endblock %}
