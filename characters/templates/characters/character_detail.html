@@ -5,83 +5,86 @@
 
 {% block javascript %}
     <script>
-    $(function(){
-        var body = $('body');
+        $(function () {
+            var body = $('body');
 
-        body.on('click', '.modal-trigger', function (e) {
-            $('.character-modal-container').load($(this).data('url'));
-            $('.modal-header h5').text($(this).data('modal-title'));
-        });
+            body.on('click', '.modal-trigger', function (e) {
+                $('.character-modal-container').load($(this).data('url'));
+                $('.modal-header h5').text($(this).data('modal-title'));
+            });
 
-        body.on('click', '.action-link', function(e){
-            $.post($(this).attr('href'), function(data){
+            body.on('click', '.action-link', function (e) {
+                $.post($(this).attr('href'), function (data) {
+                    refresh_fragments();
+                });
+                e.preventDefault();
+                return false;
+            });
+
+            $('#character-modal').on('hidden.bs.modal', function (e) {
                 refresh_fragments();
+                $('.character-modal-container').html('');
             });
-            e.preventDefault();
-            return false;
-        });
 
-        $('#character-modal').on('hidden.bs.modal', function(e){
-            refresh_fragments();
-            $('.character-modal-container').html('');
-        });
-
-        function refresh_fragments() {
-            $('.fragment').each(function (index) {
-                $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
-                    $(this).children(':first').unwrap(); // keep the original fragment container
-                    $('[data-bs-toggle="popover"]').popover();
-                })
-            });
-        }
-        $('.template').tilt({
-            glare: false,
-            perspective: 1800
-        })
-
-        // save bootstrap tabs
-        $('a[data-bs-toggle="tab"]').on('click', function (e) {
-            window.localStorage.setItem('activeTab', $(e.target).attr('href'));
-        });
-
-        var activeTab = window.localStorage.getItem('activeTab');
-        if (activeTab) {
-            $('a[href="' + activeTab + '"]').tab('show');
-        }
-
-        $('[data-bs-toggle="popover"]').popover();
-
-        // reputation
-        $('.add-reputation-form').on('submit', function(e){
-            var form = $(this);
-            var btn = form.find('button');
-            var original_btn_html = btn.html();
-
-            btn.text(btn.data('flash-message'));
-            setTimeout(function(){btn.html(original_btn_html)}, 1000);
-
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize()
-            }).done(function(data){
-                refresh_fragments();
-            });
-            e.preventDefault();
-            return false;
-        });
-
-        $('.delete-character').on('click', function(e){
-            let elem = $(this);
-            if(confirm(elem.data('message'))) {
-                $.post(elem.attr('href'), function(data){
-                    window.location = data.url;
-                })
+            function refresh_fragments() {
+                $('.fragment').each(function (index) {
+                    $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
+                        $(this).children(':first').unwrap(); // keep the original fragment container
+                        $('[data-bs-toggle="popover"]').popover();
+                    })
+                });
             }
-            e.preventDefault();
-            return false;
-        });
-    })
+
+            $('.template').tilt({
+                glare: false,
+                perspective: 1800
+            })
+
+            // save bootstrap tabs
+            $('a[data-bs-toggle="tab"]').on('click', function (e) {
+                window.localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+
+            var activeTab = window.localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('a[href="' + activeTab + '"]').tab('show');
+            }
+
+            $('[data-bs-toggle="popover"]').popover();
+
+            // reputation
+            $('.add-reputation-form').on('submit', function (e) {
+                var form = $(this);
+                var btn = form.find('button');
+                var original_btn_html = btn.html();
+
+                btn.text(btn.data('flash-message'));
+                setTimeout(function () {
+                    btn.html(original_btn_html)
+                }, 1000);
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize()
+                }).done(function (data) {
+                    refresh_fragments();
+                });
+                e.preventDefault();
+                return false;
+            });
+
+            $('.delete-character').on('click', function (e) {
+                let elem = $(this);
+                if (confirm(elem.data('message'))) {
+                    $.post(elem.attr('href'), function (data) {
+                        window.location = data.url;
+                    })
+                }
+                e.preventDefault();
+                return false;
+            });
+        })
     </script>
 {% endblock %}
 
@@ -137,21 +140,32 @@
 
                         <div class="dropdown-divider"></div>
 
-                        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal Wound' %}</a>
-                        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i class="far fa-heart fa-fw text-danger"></i> {% trans 'Take Damage' %}</a>
-                        <a class="dropdown-item action-link" href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i class="fas fa-heart fa-fw text-info"></i> {% trans 'Get Boost' %}</a>
+                        <a class="dropdown-item action-link"
+                           href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
+                                class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal Wound' %}</a>
+                        <a class="dropdown-item action-link"
+                           href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
+                                class="far fa-heart fa-fw text-danger"></i> {% trans 'Take Damage' %}</a>
+                        <a class="dropdown-item action-link"
+                           href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
+                                class="fas fa-heart fa-fw text-info"></i> {% trans 'Get Boost' %}</a>
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_status_effects' pk=object.id %}"
                                 data-bs-toggle="modal"
                                 data-bs-target=".character-modal"
                                 data-modal-title="{% trans 'Status Effects' %}"
-                                href=""><i class="fas fa-thermometer-quarter fa-fw text-info"></i> {% trans 'Status Effects' %}</a>
+                                href=""><i
+                                class="fas fa-thermometer-quarter fa-fw text-info"></i> {% trans 'Status Effects' %}</a>
 
                         {% if object.extension_enabled.horror %}
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i class="fas fa-meh fa-fw text-warning"></i> {% trans 'Gain Stress' %}</a>
-                            <a class="dropdown-item action-link" href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i class="far fa-meh fa-fw text-info"></i> {% trans 'Remove Stress' %}</a>
+                            <a class="dropdown-item action-link"
+                               href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
+                                    class="fas fa-meh fa-fw text-warning"></i> {% trans 'Gain Stress' %}</a>
+                            <a class="dropdown-item action-link"
+                               href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
+                                    class="far fa-meh fa-fw text-info"></i> {% trans 'Remove Stress' %}</a>
                         {% endif %}
 
                         <div class="dropdown-divider"></div>
@@ -168,7 +182,8 @@
                         <a
                                 data-message="{% trans 'Delete character' %} {{ object }}"
                                 class="dropdown-item delete-character"
-                                href="{% url 'characters:xhr_delete' pk=object.id %}"><i class="far fa-delete fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
+                                href="{% url 'characters:xhr_delete' pk=object.id %}"><i
+                                class="far fa-delete fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
                     </div>
                 {% endif %}
             </div>
@@ -178,7 +193,8 @@
 {% endblock %}
 
 {% block content %}
-    <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog" aria-labelledby="character-modal">
+    <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog"
+         aria-labelledby="character-modal">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -200,14 +216,14 @@
 
     <div class="row mt-4">
 
-        <div class="col-lg-2 col-md-3">
+        <div class="col-12">
             {% detail_fragment 'health' %}
-        </div>
 
-        <div class="col-lg-10 col-md-9">
-            <div class="nav nav-tabs mb-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <div class="nav nav-tabs justify-content-center mb-3" id="v-pills-tab" role="tablist"
+                 aria-orientation="vertical">
                 <a class="nav-link active" data-bs-toggle="tab" href="#v-character"
-                   role="tab" aria-controls="v-character" aria-selected="true"><i class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Character' %}</a>
+                   role="tab" aria-controls="v-character" aria-selected="true"><i
+                        class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Character' %}</a>
                 <a class="nav-link" data-bs-toggle="tab" href="#v-gear" role="tab" aria-controls="v-gear"
                    aria-selected="true"><i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Gear' %}</a>
                 <a class="nav-link" data-bs-toggle="tab" href="#v-combat" role="tab" aria-controls="v-combat"
