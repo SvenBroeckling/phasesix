@@ -94,22 +94,6 @@
                 </table>
             {% endif %}
 
-            {% if object.characterknowledge_set.exists %}
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>{% trans 'Knowledge' %}</th>
-                        <th class="text-end">{% trans 'Dice' %}</th>
-                    </tr>
-                    </thead>
-                    {% for knowledge in object.characterknowledge_set.all %}
-                        <tr>
-                            <td>{{ knowledge.knowledge }}</td>
-                            <td class="text-end">{% color_value_span knowledge.value 6 %}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
         </div>
     </div>
 
@@ -146,6 +130,24 @@
                 </tr>
             {% endfor %}
         </table>
+    </div>
+    <div class="col-md-4">
+        {% if object.characterknowledge_set.exists %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans 'Knowledge' %}</th>
+                    <th class="text-end">{% trans 'Dice' %}</th>
+                </tr>
+                </thead>
+                {% for knowledge in object.characterknowledge_set.all %}
+                    <tr>
+                        <td>{{ knowledge.knowledge }}</td>
+                        <td class="text-end">{% color_value_span knowledge.value 6 %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
