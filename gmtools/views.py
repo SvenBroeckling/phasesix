@@ -52,9 +52,13 @@ class TemplateStatisticsView(TemplateView):
                     if m.attribute_modifier > attributes_max[m.attribute][0]:
                         attributes_max[m.attribute][0] = m.attribute_modifier
                         attributes_max[m.attribute][1] = [t]
+                    elif m.attribute_modifier == attributes_max[m.attribute][0]:
+                        attributes_max[m.attribute][1].append(t)
                     if m.attribute_modifier < attributes_max[m.attribute][0]:
                         attributes_min[m.attribute][0] = m.attribute_modifier
                         attributes_min[m.attribute][1] = [t]
+                    elif m.attribute_modifier == attributes_min[m.attribute][0]:
+                        attributes_min[m.attribute][1].append(t)
                 if m.skill:
                     skills_sum[m.skill][0] += m.skill_modifier
                     skills_sum[m.skill][1].append(t)
@@ -65,9 +69,13 @@ class TemplateStatisticsView(TemplateView):
                     if m.skill_modifier > skills_max[m.skill][0]:
                         skills_max[m.skill][0] = m.skill_modifier
                         skills_max[m.skill][1] = [t]
+                    elif m.skill_modifier == skills_max[m.skill][0]:
+                        skills_max[m.skill][1].append(t)
                     if m.skill_modifier < skills_min[m.skill][0]:
                         skills_min[m.skill][0] = m.skill_modifier
                         skills_min[m.skill][1] = [t]
+                    elif m.skill_modifier == skills_min[m.skill][0]:
+                        skills_min[m.skill][1].append(t)
 
         context.update({
             'attributes_max': dict(reversed(sorted(attributes_max.items(), key=lambda item: item[1][0]))),
