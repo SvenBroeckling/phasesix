@@ -11,7 +11,7 @@ Haben zwei Teilnehmer dasselbe Ergebnis, so entscheidet zunächst der Wert *Schn
 
 ### Ablauf der Runden
 
-Der Kampf ist in *Kampfrunden* aufgeteilt. In jeder Kampfrunde bekommt jeder Teilnehmer einmal die *Priorität*, d.h. er ist am Zug und kann bestimmen welche *Aktionen* er ausführt. 
+Der Kampf ist in *Kampfrunden* aufgeteilt. In jeder Kampfrunde bekommt jeder Teilnehmer einmal die *Priorität*, d. h. er ist am Zug und kann bestimmen welche *Aktionen* er ausführt. 
 
 Hat der letzte Teilnehmer agiert, beginnt die nächste *Kampfrunde* mit dem ersten Teilnehmer. 
 
@@ -135,3 +135,8 @@ hierbei aus:
 *7 - Schutz der Rüstung + Durchschlag der Waffe/Munition*
 
 Alle Treffer die nicht durch Erfolge dieses Wurfes verhindert wurden schlagen jeweils so viele Wunden wie bei der Waffe angegeben ist.
+
+### Abweichung beim Werfen
+
+D12 -> Richtung
+D6 -> Meter
