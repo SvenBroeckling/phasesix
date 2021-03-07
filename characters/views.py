@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
@@ -57,6 +55,20 @@ class XhrDeleteCharacterView(View):
         })
 
 
+class XhrSidebarView(DetailView):
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sidebar_name'] = self.kwargs['sidebar_name']
+        context['status_effects'] = StatusEffect.objects.all()
+        context['may_edit'] = self.object.may_edit(self.request.user)
+        return context
+
+    def get_template_names(self):
+        return ['characters/sidebar/' + self.kwargs['sidebar_name'] + '.html']
+
+
 class XhrDetailFragmentView(DetailView):
     model = Character
 
@@ -77,17 +89,6 @@ class XhrCharacterRestView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         context = super().get_context_data(**kwargs)
         context['object'] = character
-        return context
-
-
-class XhrCharacterStatusEffectsView(TemplateView):
-    template_name = 'characters/_status_effects.html'
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs['pk'])
-        context = super().get_context_data(**kwargs)
-        context['object'] = character
-        context['status_effects'] = StatusEffect.objects.all()
         return context
 
 

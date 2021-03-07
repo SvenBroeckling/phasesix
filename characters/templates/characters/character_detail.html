@@ -6,33 +6,60 @@
 {% block javascript %}
     <script>
         $(function () {
-            var body = $('body');
+            let body = $('body')
 
             body.on('click', '.modal-trigger', function (e) {
-                $('.character-modal-container').load($(this).data('url'));
-                $('.modal-header h5').text($(this).data('modal-title'));
-            });
+                $('.character-modal-container').load($(this).data('url'))
+                $('.modal-header h5').text($(this).data('modal-title'))
+            })
+
+            body.on('click', '.sidebar-trigger', function(e){
+                let sidebar = showSidebar();
+                sidebar.find('h4').text($(this).data('sidebar-title'))
+                sidebar.find('.bs-canvas-content').load($(this).data('sidebar-url'))
+            })
 
             body.on('click', '.action-link', function (e) {
                 $.post($(this).attr('href'), function (data) {
-                    refresh_fragments();
-                });
-                e.preventDefault();
-                return false;
-            });
+                    refresh_fragments()
+                })
+                e.preventDefault()
+                return false
+            })
+
+            body.on('change', '.status-effect-value', function(e){
+                let elem = $(this);
+                let value = elem.val();
+                let status_effect_id = elem.data('status-effect-id');
+
+                $.post(
+                    elem.data('url'),
+                    {
+                        status_effect_id: status_effect_id,
+                        value: value
+                    },
+                    function(data) {
+                        let target = $(`span[data-status-effect-id="${status_effect_id}"]`)
+                        target
+                            .removeClass('text-danger text-muted')
+                            .text(value)
+                        refresh_fragments()
+                    }
+                )
+            })
 
             $('#character-modal').on('hidden.bs.modal', function (e) {
-                refresh_fragments();
-                $('.character-modal-container').html('');
-            });
+                refresh_fragments()
+                $('.character-modal-container').html('')
+            })
 
             function refresh_fragments() {
                 $('.fragment').each(function (index) {
                     $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
-                        $(this).children(':first').unwrap(); // keep the original fragment container
-                        $('[data-bs-toggle="popover"]').popover();
+                        $(this).children(':first').unwrap() // keep the original fragment container
+                        $('[data-bs-toggle="popover"]').popover()
                     })
-                });
+                })
             }
 
             $('.template').tilt({
@@ -42,48 +69,48 @@
 
             // save bootstrap tabs
             $('a[data-bs-toggle="tab"]').on('click', function (e) {
-                window.localStorage.setItem('activeTab', $(e.target).attr('href'));
-            });
+                window.localStorage.setItem('activeTab', $(e.target).attr('href'))
+            })
 
-            var activeTab = window.localStorage.getItem('activeTab');
+            var activeTab = window.localStorage.getItem('activeTab')
             if (activeTab) {
-                $('a[href="' + activeTab + '"]').tab('show');
+                $('a[href="' + activeTab + '"]').tab('show')
             }
 
-            $('[data-bs-toggle="popover"]').popover();
+            $('[data-bs-toggle="popover"]').popover()
 
             // reputation
             $('.add-reputation-form').on('submit', function (e) {
-                var form = $(this);
-                var btn = form.find('button');
-                var original_btn_html = btn.html();
+                var form = $(this)
+                var btn = form.find('button')
+                var original_btn_html = btn.html()
 
-                btn.text(btn.data('flash-message'));
+                btn.text(btn.data('flash-message'))
                 setTimeout(function () {
                     btn.html(original_btn_html)
-                }, 1000);
+                }, 1000)
 
                 $.ajax({
                     url: form.attr('action'),
                     type: 'POST',
                     data: form.serialize()
                 }).done(function (data) {
-                    refresh_fragments();
-                });
-                e.preventDefault();
-                return false;
-            });
+                    refresh_fragments()
+                })
+                e.preventDefault()
+                return false
+            })
 
             $('.delete-character').on('click', function (e) {
-                let elem = $(this);
+                let elem = $(this)
                 if (confirm(elem.data('message'))) {
                     $.post(elem.attr('href'), function (data) {
-                        window.location = data.url;
+                        window.location = data.url
                     })
                 }
-                e.preventDefault();
-                return false;
-            });
+                e.preventDefault()
+                return false
+            })
         })
     </script>
 {% endblock %}
@@ -138,37 +165,6 @@
                                 data-modal-title="{% trans 'Rest' %}"
                                 href=""><i class="fas fa-plus fa-fw text-info"></i> {% trans 'Rest' %}</a>
 
-                        <div class="dropdown-divider"></div>
-
-                        <a class="dropdown-item action-link"
-                           href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
-                                class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal Wound' %}</a>
-                        <a class="dropdown-item action-link"
-                           href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
-                                class="far fa-heart fa-fw text-danger"></i> {% trans 'Take Damage' %}</a>
-                        <a class="dropdown-item action-link"
-                           href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
-                                class="fas fa-heart fa-fw text-info"></i> {% trans 'Get Boost' %}</a>
-                        <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_status_effects' pk=object.id %}"
-                                data-bs-toggle="modal"
-                                data-bs-target=".character-modal"
-                                data-modal-title="{% trans 'Status Effects' %}"
-                                href=""><i
-                                class="fas fa-thermometer-quarter fa-fw text-info"></i> {% trans 'Status Effects' %}</a>
-
-                        {% if object.extension_enabled.horror %}
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item action-link"
-                               href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
-                                    class="fas fa-meh fa-fw text-warning"></i> {% trans 'Gain Stress' %}</a>
-                            <a class="dropdown-item action-link"
-                               href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
-                                    class="far fa-meh fa-fw text-info"></i> {% trans 'Remove Stress' %}</a>
-                        {% endif %}
-
-                        <div class="dropdown-divider"></div>
                         <a
                                 class="dropdown-item modal-trigger"
                                 data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
@@ -176,8 +172,6 @@
                                 data-bs-target=".character-modal"
                                 data-modal-title="{% trans 'Name / Images' %}"
                                 href=""><i class="fas fa-image fa-fw text-info"></i> {% trans 'Name / Images' %}</a>
-
-                        <div class="dropdown-divider"></div>
 
                         <a
                                 data-message="{% trans 'Delete character' %} {{ object }}"

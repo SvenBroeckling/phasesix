@@ -10,11 +10,11 @@
         <link href="{% static 'css/simplemde.min.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/animate.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
         <link type="text/x-scss" href="{% static 'css/theme.scss' %}" rel="stylesheet"/>
     {% endcompress %}
 
     <title>{% block title %}Phase Six{% endblock %}</title>
-
 
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
@@ -25,33 +25,21 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
     <meta name="theme-color" content="#ffffff">
-
-
-    <!-- Matomo -->
-    <script type="text/javascript">
-        var _paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(["setCookieDomain", "*.phasesix.org"]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function () {
-            var u = "//piwik.nimbostratus.de/";
-            _paq.push(['setTrackerUrl', u + 'matomo.php']);
-            _paq.push(['setSiteId', '8']);
-            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-            g.type = 'text/javascript';
-            g.async = true;
-            g.defer = true;
-            g.src = u + 'matomo.js';
-            s.parentNode.insertBefore(g, s);
-        })();
-    </script>
-    <noscript><p><img src="//piwik.nimbostratus.de/matomo.php?idsite=8&amp;rec=1" style="border:0;" alt=""/></p>
-    </noscript>
-    <!-- End Matomo Code -->
+    {% block extraheader %}{% endblock %}
 </head>
 
 <body>
+
+<div id="bs-canvas-right" class="bs-canvas bs-canvas-right position-fixed bg-dark h-100">
+    <header class="bs-canvas-header p-3 bg-primary overflow-auto">
+        <button type="button" class="bs-canvas-close float-left btn btn-danger btn-sm close" aria-label="Close"><span aria-hidden="true" class="text-light">&times;</span>
+        </button>
+        <h4 class="d-inline-block text-light mb-0 float-right">{% trans 'Properties' %}</h4>
+    </header>
+    <div class="bs-canvas-content px-3 py-5">
+    </div>
+</div>
+
 <div class="container-fluid">
 
     <div class="row pt-lg-3 pb-3">
@@ -185,6 +173,7 @@
     <script src="{% static 'js/featherlight.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-slider.min.js' %}"></script>
     <script src="{% static 'js/tilt.jquery.min.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
 {% endcompress %}
 
 <script>

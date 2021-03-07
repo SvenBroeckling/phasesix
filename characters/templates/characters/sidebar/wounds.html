@@ -1,0 +1,81 @@
+{% load i18n characters_extras %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="btn-group mb-4 w-100">
+            <a class="btn btn-primary btn-sm action-link"
+               href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
+                    class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal' %}</a>
+            <a class="btn btn-primary btn-sm action-link"
+               href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
+                    class="far fa-heart fa-fw text-danger"></i> {% trans 'Damage' %}</a>
+            <a class="btn btn-primary btn-sm action-link"
+               href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
+                    class="fas fa-heart fa-fw text-info"></i> {% trans 'Boost' %}</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'A full heart. This can compensate a wound. Use the character menu to take a wound.' %}
+    </div>
+    <div class="col-2 mb-2">
+        <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'A wound taken. This empty heart can be restored at a hospital.' %}
+    </div>
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'A temporary boost, given by first aid or medicine. If you take damage this will expended first.' %}
+    </div>
+</div>
+
+<div class="row mt-3">
+    <h3>{% trans 'Status effects' %}</h3>
+    {% for se in status_effects %}
+        {% with se|status_effect_value:object as se_value %}
+            <div class="col-12 text-center pt-2">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h2 class="mb-5">{{ se }}</h2>
+
+                        <span class="fa-layers fa-fw fa-3x">
+                            <i class="{{ se.fa_icon_class }}"></i>
+                            <span
+                                    data-status-effect-id="{{ se.id }}"
+                                    class="fa-layers-counter">{{ se_value }}</span>
+                        </span>
+
+                        <input
+                                class="status-effect-value mt-3"
+                                type="number"
+                                max="10"
+                                min="0"
+                                value="{{ se_value }}"
+                                data-status-effect-id="{{ se.id }}"
+                                data-url="{% url 'characters:xhr_status_effects_change' pk=object.id %}"
+                                data-slider-value="{{ se_value }}"
+                                data-slider-tooltip="show"
+                                data-slider-ticks="[0, 5, 10]"
+                                data-slider-ticks-labels='["0", "5", "10"]'>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+    {% endfor %}
+</div>
+
+<script>
+    $(function(){
+        setTimeout(function(){
+            $('.status-effect-value').slider();
+        }, 300);
+    })
+</script>

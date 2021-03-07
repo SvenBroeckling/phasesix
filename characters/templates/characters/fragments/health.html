@@ -44,21 +44,16 @@
                     {% trans 'Status' %}
                 </div>
                 <div class="card-body">
-                    <div>
+                    <div class="sidebar-trigger" data-sidebar-title="{% trans 'Wounds' %}"
+                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="wounds" %}">
                         {% for i in object.health|to_range %}
-                            <i class="fas fa-heart text-danger" data-bs-toggle="popover" data-bs-trigger="hover"
-                               title="{% trans 'Health' %}"
-                               data-bs-content="{% trans 'A full heart. This can compensate a wound. Use the character menu to take a wound.' %}"></i>
+                            <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
                         {% endfor %}
                         {% for i in object.wounds_taken|to_range %}
-                            <i class="far fa-heart text-danger" data-bs-toggle="popover" data-bs-trigger="hover"
-                               title="{% trans 'Wound' %}"
-                               data-bs-content="{% trans 'A wound taken. This empty heart can be restored at a hospital.' %}"></i>
+                            <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
                         {% endfor %}
                         {% for i in object.boost|to_range %}
-                            <i class="fas fa-heart text-info" data-bs-toggle="popover" data-bs-trigger="hover"
-                               title="{% trans 'Boost' %}"
-                               data-bs-content="{% trans 'A temporary boost, given by first aid or medicine. If you take damage this will expanded first.' %}"></i>
+                            <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
                         {% endfor %}
                     </div>
 
@@ -73,40 +68,31 @@
                     {% endif %}
 
                     {% if object.extension_enabled.horror %}
-                        <div>
+                        <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
+                             data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="horror" %}">
                             {% for i in object.stress|to_range %}
-                                <i class="fas fa-meh text-warning" data-bs-toggle="popover"
-                                   data-bs-trigger="hover" title="{% trans 'Stress' %}"
-                                   data-bs-content="{% trans 'This is your stress level. You will geht a quirk if it reaches your stress maximum.' %}"></i>
+                                <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
                             {% endfor %}
                             {% for i in object.available_stress|to_range %}
-                                <i class="far fa-meh text-warning" data-bs-toggle="popover"
-                                   data-bs-trigger="hover" title="{% trans 'Possible Stress' %}"
-                                   data-bs-content="{% trans 'This is possible stress your can cope with. You will get a quirk if all slots are filled.' %}"></i>
+                                <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
                             {% endfor %}
                         </div>
 
-                        <div>
+                        <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
+                             data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="horror" %}">
                             {% for q in object.quirks.all %}
-                                <i class="fas fa-frown text-dark" data-bs-toggle="popover" title="{{ q }}"
-                                   data-bs-content="{{ q.get_modifier_summary_html }}" data-bs-trigger="hover"
-                                   data-html="true"></i>
+                                <i class="fas fa-frown text-dark" title="{{ q }}"></i>
                             {% endfor %}
                         </div>
                     {% endif %}
 
-                    <div class="mt-2">
+                    <div class="sidebar-trigger mt-2" data-sidebar-title="{% trans 'Wounds' %}"
+                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="wounds" %}">
                         {% for cse in object.characterstatuseffect_set.all %}
                             <span class="fa-layers fa-fw fa-3x">
-                                             <i
-                                                     data-bs-toggle="popover"
-                                                     title="{{ cse }}: {{ cse.value }}"
-                                                     data-bs-content="{{ cse.rules|default:"no rules yet" }}"
-                                                     data-bs-trigger="hover"
-                                                     data-bs-html="true"
-                                                     class="{{ cse.status_effect.fa_icon_class }}"></i>
-                                             <span class="fa-layers-counter bg-danger">{{ cse.value }}</span>
-                                             </span>
+                                <i title="{{ cse }}: {{ cse.value }}" class="{{ cse.status_effect.fa_icon_class }}"></i>
+                                <span class="fa-layers-counter bg-danger">{{ cse.value }}</span>
+                            </span>
                         {% endfor %}
                     </div>
                 </div>

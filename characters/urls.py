@@ -11,6 +11,10 @@ urlpatterns = [
     url(r'^xhr_delete/(?P<pk>\d+)$', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
 
     url(
+        r'^xhr_detail_sidebar/(?P<pk>\d+)/(?P<sidebar_name>[a-z_]+)$',
+        views.XhrSidebarView.as_view(),
+        name='xhr_detail_sidebar'),
+    url(
         r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<fragment_name>[a-z_]+)$',
         views.XhrDetailFragmentView.as_view(),
         name='xhr_detail_fragment'),
@@ -71,10 +75,6 @@ urlpatterns = [
         r'^xhr_reputation/(?P<pk>\d+)$',
         views.XhrReputationView.as_view(),
         name='xhr_reputation'),
-    url(
-        r'^xhr_status_effects/(?P<pk>\d+)$',
-        views.XhrCharacterStatusEffectsView.as_view(),
-        name='xhr_status_effects'),
     url(
         r'^xhr_status_effects/change/(?P<pk>\d+)$',
         views.XhrCharacterStatusEffectsChangeView.as_view(),
