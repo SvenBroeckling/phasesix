@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 16:34+0000\n"
-"PO-Revision-Date: 2021-02-17 17:50+0100\n"
+"POT-Creation-Date: 2021-03-07 23:31+0000\n"
+"PO-Revision-Date: 2021-03-08 00:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -290,7 +290,11 @@ msgstr "Kampagne erstellen"
 msgid "Create a campaign"
 msgstr "Erstelle eine Kampagne"
 
-#: campaigns/templates/campaigns/campaign_list.html:26
+#: campaigns/templates/campaigns/campaign_list.html:13
+msgid "Your campaigns"
+msgstr "Deine Kampagnen"
+
+#: campaigns/templates/campaigns/campaign_list.html:44
 msgid "GM"
 msgstr "SL"
 
@@ -375,82 +379,66 @@ msgstr "Zustand"
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/templates/base.html:54
+#: characters/templates/base.html:37
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: characters/templates/base.html:60
 msgid "Play"
 msgstr "Spielen"
 
-#: characters/templates/base.html:56
+#: characters/templates/base.html:63
 #: characters/templates/characters/character_form.html:11
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/base.html:57
+#: characters/templates/base.html:66
 msgid "My Characters"
 msgstr "Meine Charaktere"
 
-#: characters/templates/base.html:58
+#: characters/templates/base.html:68
 msgid "My Campaigns"
 msgstr "Meine Kampagnen"
 
-#: characters/templates/base.html:60
+#: characters/templates/base.html:73
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:61
+#: characters/templates/base.html:75
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:78 forum/templates/forum/board_detail.html:43
+#: characters/templates/base.html:92 forum/templates/forum/board_detail.html:43
 #: forum/templates/forum/index.html:7
 #: forum/templates/forum/thread_detail.html:53
 msgid "Forum"
 msgstr "Forum"
 
-#: characters/templates/base.html:81
+#: characters/templates/base.html:95
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
-#: characters/templates/base.html:91
+#: characters/templates/base.html:107
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:93
+#: characters/templates/base.html:112
 msgid "Combat Sim"
 msgstr "CombatSim"
 
-#: characters/templates/base.html:94
-msgid "Template Grid"
-msgstr "Schablonengrid"
+#: characters/templates/base.html:115
+msgid "Extension Grids"
+msgstr "Erweiterungstabellen"
 
-#: characters/templates/base.html:95
-msgid "Lineage Grid"
-msgstr "Abstammungsgrid"
+#: characters/templates/base.html:118
+msgid "Template Statistics"
+msgstr "Schablonenstatistiken"
 
-#: characters/templates/base.html:96
-msgid "Skill Grid"
-msgstr "Fertigkeitsgrid"
-
-#: characters/templates/base.html:97
-msgid "Item Grid"
-msgstr "Gegenstandsgrid"
-
-#: characters/templates/base.html:98
-msgid "Weapon Grid"
-msgstr "Waffengrid"
-
-#: characters/templates/base.html:99
-msgid "Weapon Mod Grid"
-msgstr "Waffenmodifikationsgrid"
-
-#: characters/templates/base.html:100
-msgid "Riot Gear Grid"
-msgstr "Rüstungsgrid"
-
-#: characters/templates/base.html:103
+#: characters/templates/base.html:125
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:108 templates/registration/login.html:11
+#: characters/templates/base.html:130 templates/registration/login.html:11
 msgid "Login"
 msgstr "Anmelden"
 
@@ -526,6 +514,8 @@ msgstr "Durchschlag"
 
 #: characters/templates/characters/_add_weapons.html:61
 #: characters/templates/characters/fragments/gear.html:106
+#: characters/templates/characters/fragments/health.html:47
+#: characters/templates/characters/fragments/health.html:89
 #: gmtools/templates/gmtools/combat_sim_results.html:10
 #: gmtools/templates/gmtools/combat_sim_results.html:25
 msgid "Wounds"
@@ -583,13 +573,13 @@ msgid "Take a rest"
 msgstr "Rast"
 
 #: characters/templates/characters/_rest.html:25
-#: characters/templates/characters/fragments/health.html:131
-#: characters/templates/characters/fragments/health.html:133
+#: characters/templates/characters/fragments/health.html:117
+#: characters/templates/characters/fragments/health.html:119
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
 #: characters/templates/characters/_rest.html:25
-#: characters/templates/characters/fragments/health.html:132
+#: characters/templates/characters/fragments/health.html:118
 msgid ""
 "Add bonus dice to any roll in the game, or use them to create an additional "
 "action in combat at any time.<br><br>Bonus dice are expended on use and "
@@ -600,13 +590,13 @@ msgstr ""
 "der Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
 
 #: characters/templates/characters/_rest.html:28
-#: characters/templates/characters/fragments/health.html:145
-#: characters/templates/characters/fragments/health.html:147
+#: characters/templates/characters/fragments/health.html:131
+#: characters/templates/characters/fragments/health.html:133
 msgid "Rerolls"
 msgstr "Wiederholungswürfel"
 
 #: characters/templates/characters/_rest.html:28
-#: characters/templates/characters/fragments/health.html:146
+#: characters/templates/characters/fragments/health.html:132
 msgid ""
 "Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and "
 "refresh at any rest."
@@ -616,8 +606,8 @@ msgstr ""
 "Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
 
 #: characters/templates/characters/_rest.html:49
-#: characters/templates/characters/fragments/health.html:138
-#: characters/templates/characters/fragments/health.html:140
+#: characters/templates/characters/fragments/health.html:124
+#: characters/templates/characters/fragments/health.html:126
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
@@ -634,80 +624,55 @@ msgstr ""
 "<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
 "sich bei einer Rast von mindestens 8 Stunden wieder auf."
 
-#: characters/templates/characters/character_detail.html:138
-#: characters/templates/characters/character_detail.html:139
+#: characters/templates/characters/character_detail.html:165
+#: characters/templates/characters/character_detail.html:166
 msgid "Rest"
 msgstr "Rast"
 
-#: characters/templates/characters/character_detail.html:145
-msgid "Heal Wound"
-msgstr "Wunde heilen"
-
-#: characters/templates/characters/character_detail.html:148
-msgid "Take Damage"
-msgstr "Schaden nehmen"
-
-#: characters/templates/characters/character_detail.html:151
-msgid "Get Boost"
-msgstr "Boost hinzufügen"
-
-#: characters/templates/characters/character_detail.html:157
-#: characters/templates/characters/character_detail.html:159
-msgid "Status Effects"
-msgstr "Status Effekte"
-
-#: characters/templates/characters/character_detail.html:165
-msgid "Gain Stress"
-msgstr "Stress hinzufügen"
-
-#: characters/templates/characters/character_detail.html:168
-msgid "Remove Stress"
-msgstr "Stress entfernen"
-
-#: characters/templates/characters/character_detail.html:177
-#: characters/templates/characters/character_detail.html:178
+#: characters/templates/characters/character_detail.html:173
+#: characters/templates/characters/character_detail.html:174
 msgid "Name / Images"
 msgstr "Name / Bilder"
 
-#: characters/templates/characters/character_detail.html:183
+#: characters/templates/characters/character_detail.html:177
 msgid "Delete character"
 msgstr "Charackter löschen"
 
-#: characters/templates/characters/character_detail.html:186
+#: characters/templates/characters/character_detail.html:180
 msgid "Delete Character"
 msgstr "Charakter löschen"
 
-#: characters/templates/characters/character_detail.html:207
+#: characters/templates/characters/character_detail.html:201
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/characters/character_detail.html:211
+#: characters/templates/characters/character_detail.html:205
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/characters/character_detail.html:226
+#: characters/templates/characters/character_detail.html:220
 msgid "Character"
 msgstr "Charakter"
 
-#: characters/templates/characters/character_detail.html:228
+#: characters/templates/characters/character_detail.html:222
 msgid "Gear"
 msgstr "Ausrüstung"
 
-#: characters/templates/characters/character_detail.html:230
+#: characters/templates/characters/character_detail.html:224
 #: characters/templates/characters/fragments/health.html:10
 msgid "Combat"
 msgstr "Kampf"
 
-#: characters/templates/characters/character_detail.html:233
+#: characters/templates/characters/character_detail.html:227
 msgid "Magic"
 msgstr "Magie"
 
-#: characters/templates/characters/character_detail.html:240
+#: characters/templates/characters/character_detail.html:234
 #: characters/templates/characters/fragments/advancement.html:70
 msgid "Background"
 msgstr "Werdegang"
 
-#: characters/templates/characters/character_detail.html:247
+#: characters/templates/characters/character_detail.html:241
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -846,7 +811,7 @@ msgstr "Persona"
 #: characters/templates/characters/fragments/character.html:106
 #: characters/templates/characters/fragments/character.html:123
 #: characters/templates/characters/fragments/character.html:140
-#: characters/templates/characters/fragments/health.html:119
+#: characters/templates/characters/fragments/health.html:105
 msgid "Dice"
 msgstr "Würfel"
 
@@ -936,6 +901,7 @@ msgstr "Zeit"
 #: characters/templates/characters/fragments/combat.html:20
 #: characters/templates/characters/fragments/gear.html:29
 #: characters/templates/characters/fragments/gear.html:94
+#: characters/templates/characters/sidebar/wounds.html:11
 msgid "Damage"
 msgstr "Schaden"
 
@@ -1120,83 +1086,53 @@ msgstr ""
 msgid "Status"
 msgstr "Status"
 
-#: characters/templates/characters/fragments/health.html:50 gmtools/forms.py:19
+#: characters/templates/characters/fragments/health.html:50
+#: characters/templates/characters/sidebar/wounds.html:21 gmtools/forms.py:19
 msgid "Health"
 msgstr "Lebenspunkte"
 
-#: characters/templates/characters/fragments/health.html:51
-msgid ""
-"A full heart. This can compensate a wound. Use the character menu to take a "
-"wound."
-msgstr ""
-"Ein volles Herz. Dieses kann eine Wunde kompensieren. Benutze das "
-"Charaktermenü um Wunden zu erhalten."
-
-#: characters/templates/characters/fragments/health.html:55
+#: characters/templates/characters/fragments/health.html:53
+#: characters/templates/characters/sidebar/wounds.html:27
 msgid "Wound"
 msgstr "Wunde"
 
 #: characters/templates/characters/fragments/health.html:56
-msgid "A wound taken. This empty heart can be restored at a hospital."
-msgstr ""
-"Eine hingenommene Wunde. Dieses leere Herzkann in einem Krankenhaus "
-"wiederhergestellt werden."
-
-#: characters/templates/characters/fragments/health.html:60
+#: characters/templates/characters/sidebar/wounds.html:14
+#: characters/templates/characters/sidebar/wounds.html:33
 msgid "Boost"
 msgstr "Boost"
 
-#: characters/templates/characters/fragments/health.html:61
-msgid ""
-"A temporary boost, given by first aid or medicine. If you take damage this "
-"will expanded first."
-msgstr ""
-"Ein zeitweiser Boost, durch Medizin oder Erste Hilfe verursacht. Wenn du "
-"Schaden nimmst wird dieses zuerst entfernt."
-
-#: characters/templates/characters/fragments/health.html:69
+#: characters/templates/characters/fragments/health.html:64
 msgid "Arcana"
 msgstr "Arkana"
 
-#: characters/templates/characters/fragments/health.html:70
+#: characters/templates/characters/fragments/health.html:65
 msgid "Use this to cast spells at the magic or combat tab."
 msgstr "Benutze dies um Zauber im Magie oder Kampftab zu sprechen."
 
-#: characters/templates/characters/fragments/health.html:79
+#: characters/templates/characters/fragments/health.html:71
+#: characters/templates/characters/fragments/health.html:74
+#: characters/templates/characters/fragments/health.html:81
+#: characters/templates/characters/sidebar/horror.html:18
 msgid "Stress"
 msgstr "Stress"
 
-#: characters/templates/characters/fragments/health.html:80
-msgid ""
-"This is your stress level. You will geht a quirk if it reaches your stress "
-"maximum."
-msgstr ""
-"Dies ist dein Stresslevel. wenn du das Maximum an Stress erreichst wirst du "
-"einen Tick bekommen."
-
-#: characters/templates/characters/fragments/health.html:84
+#: characters/templates/characters/fragments/health.html:77
+#: characters/templates/characters/sidebar/horror.html:24
 msgid "Possible Stress"
 msgstr "Möglicher Stress"
 
-#: characters/templates/characters/fragments/health.html:85
-msgid ""
-"This is possible stress your can cope with. You will get a quirk if all "
-"slots are filled."
-msgstr ""
-"Dies ist der mögliche Stress mit dem du umgehen kannst. Du wirst einen Tick "
-"erhalten wenn alle Plätze gefüllt sind."
-
-#: characters/templates/characters/fragments/health.html:124
-#: characters/templates/characters/fragments/health.html:126
+#: characters/templates/characters/fragments/health.html:110
+#: characters/templates/characters/fragments/health.html:112
 msgid "Minimum Roll"
 msgstr "Mindestwurf"
 
-#: characters/templates/characters/fragments/health.html:125
+#: characters/templates/characters/fragments/health.html:111
 msgid "Reach this roll with a die to get a success."
 msgstr ""
 "Erreiche diesen Mindestwurf mit einem Würfel um einen Erfolg zu erzielen."
 
-#: characters/templates/characters/fragments/health.html:139
+#: characters/templates/characters/fragments/health.html:125
 msgid ""
 "Destiny dice may be added to rolls just like bonus dice, but they always "
 "succeed on a 4+ roll. Additionally they may be used to steal an action in "
@@ -1280,7 +1216,69 @@ msgstr "Schau in die Regeln"
 msgid "Photo by Unsplash.com"
 msgstr "Foto von Unsplash.com"
 
-#: characters/views.py:52
+#: characters/templates/characters/sidebar/horror.html:8
+msgid "Gain Stress"
+msgstr "Stress hinzufügen"
+
+#: characters/templates/characters/sidebar/horror.html:11
+msgid "Remove Stress"
+msgstr "Stress entfernen"
+
+#: characters/templates/characters/sidebar/horror.html:21
+msgid ""
+"This is your stress level. You will geht a quirk if it reaches your stress "
+"maximum."
+msgstr ""
+"Dies ist dein Stresslevel. wenn du das Maximum an Stress erreichst wirst du "
+"einen Tick bekommen."
+
+#: characters/templates/characters/sidebar/horror.html:27
+msgid ""
+"This is possible stress your can cope with. You will get a quirk if all "
+"slots are filled."
+msgstr ""
+"Dies ist der mögliche Stress mit dem du umgehen kannst. Du wirst einen Tick "
+"erhalten wenn alle Plätze gefüllt sind."
+
+#: characters/templates/characters/sidebar/horror.html:32
+msgid "Your quirks"
+msgstr "Deine Eigenarten"
+
+#: characters/templates/characters/sidebar/horror.html:41
+msgid "You don't have any"
+msgstr "Du hast keine"
+
+#: characters/templates/characters/sidebar/wounds.html:8
+msgid "Heal"
+msgstr "Heilen"
+
+#: characters/templates/characters/sidebar/wounds.html:24
+msgid ""
+"A full heart. This can compensate a wound. Use the character menu to take a "
+"wound."
+msgstr ""
+"Ein volles Herz. Dieses kann eine Wunde kompensieren. Benutze das "
+"Charaktermenü um Wunden zu erhalten."
+
+#: characters/templates/characters/sidebar/wounds.html:30
+msgid "A wound taken. This empty heart can be restored at a hospital."
+msgstr ""
+"Eine hingenommene Wunde. Dieses leere Herz kann in einem Krankenhaus "
+"wiederhergestellt werden."
+
+#: characters/templates/characters/sidebar/wounds.html:36
+msgid ""
+"A temporary boost, given by first aid or medicine. If you take damage this "
+"will expended first."
+msgstr ""
+"Ein zeitweiser Boost, durch Medizin oder Erste Hilfe verursacht. Wenn du "
+"Schaden nimmst wird dieses zuerst entfernt."
+
+#: characters/templates/characters/sidebar/wounds.html:41
+msgid "Status effects"
+msgstr "Statuseffekte"
+
+#: characters/views.py:50
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
@@ -1460,27 +1458,63 @@ msgstr "Kampf"
 msgid "Round"
 msgstr "Runde"
 
+#: gmtools/templates/gmtools/extension_grid.html:27
+msgid "Template Grid"
+msgstr "Schablonengrid"
+
+#: gmtools/templates/gmtools/extension_grid.html:28
+msgid "Lineage Grid"
+msgstr "Abstammungsgrid"
+
+#: gmtools/templates/gmtools/extension_grid.html:29
+msgid "Skill Grid"
+msgstr "Fertigkeitsgrid"
+
 #: gmtools/templates/gmtools/extension_grid.html:30
+msgid "Item Grid"
+msgstr "Gegenstandsgrid"
+
+#: gmtools/templates/gmtools/extension_grid.html:31
+msgid "Weapon Grid"
+msgstr "Waffengrid"
+
+#: gmtools/templates/gmtools/extension_grid.html:32
+msgid "Weapon Mod Grid"
+msgstr "Waffenmodifikationsgrid"
+
+#: gmtools/templates/gmtools/extension_grid.html:33
+msgid "Riot Gear Grid"
+msgstr "Rüstungsgrid"
+
+#: gmtools/templates/gmtools/extension_grid.html:38
 msgid "Template"
 msgstr "Schablone"
 
-#: gmtools/views.py:114
+#: gmtools/templates/gmtools/template_statistics.html:34
+msgid "Template Attributes"
+msgstr "Schablonenattribute"
+
+#: gmtools/templates/gmtools/template_statistics.html:52
+msgid "Template Skills"
+msgstr "Schablonenfertigkeiten"
+
+#: gmtools/views.py:191
 msgid "You have to select weapons."
 msgstr "Du musst Waffen wählen."
 
-#: gmtools/views.py:181
+#: gmtools/views.py:258
 msgid "attack roll"
 msgstr "Angriffswurf"
 
-#: gmtools/views.py:205
+#: gmtools/views.py:282
 msgid "cover roll"
 msgstr "Deckungswurf"
 
-#: gmtools/views.py:227
+#: gmtools/views.py:304
 msgid "armor roll"
 msgstr "Rüstungswurf"
 
-#: gmtools/views.py:234
+#: gmtools/views.py:311
 msgid "damage"
 msgstr "Schaden"
 
@@ -2074,6 +2108,18 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "Heal Wound"
+#~ msgstr "Wunde heilen"
+
+#~ msgid "Take Damage"
+#~ msgstr "Schaden nehmen"
+
+#~ msgid "Get Boost"
+#~ msgstr "Boost hinzufügen"
+
+#~ msgid "Status Effects"
+#~ msgstr "Status Effekte"
 
 #~ msgid "Explosive Protection"
 #~ msgstr "Explosivschutz"
