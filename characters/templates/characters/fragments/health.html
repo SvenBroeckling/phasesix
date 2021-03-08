@@ -99,39 +99,31 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-4 mb-5">
+        <div class="col-12 col-md-4 mb-5 sidebar-trigger"data-sidebar-title="{% trans 'Dice' %}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="dice" %}">
             <div class="card h-100">
                 <div class="card-header text-center">
                     {% trans 'Dice' %}
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <i class="fas fa-fw fa-dice-five text-warning" data-bs-toggle="popover"
-                           data-bs-trigger="hover" data-html="true" title="{% trans 'Minimum Roll' %}"
-                           data-bs-content="{% trans 'Reach this roll with a die to get a success.' %}"></i>
+                        <i class="fas fa-fw fa-dice-five text-warning" data-bs-toggle="popover" title="{% trans 'Minimum Roll' %}"></i>
                         {% trans 'Minimum Roll' %}
                         <span class="float-end">{% color_value_span 5 5 invert=True %}+</span>
                     </li>
                     <li class="list-group-item">
-                        <i class="fas fa-fw fa-dice-six text-success" data-bs-toggle="popover" data-bs-trigger="hover"
-                           data-html="true" title="{% trans 'Bonus Dice' %}"
-                           data-bs-content="{% trans 'Add bonus dice to any roll in the game, or use them to create an additional action in combat at any time.<br><br>Bonus dice are expended on use and refresh at any rest.' %}"></i>
+                        <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
                         {% trans 'Bonus Dice' %}
-                        <span class="float-end">{% color_value_span object.bonus_dice 3 %}</span>
+                        <span class="float-end">{% color_value_span object.bonus_dice_free 3 %} / {% color_value_span object.bonus_dice 3 %}</span>
                     </li>
                     <li class="list-group-item">
-                        <i class="fas fa-fw fa-dice-four text-danger" data-bs-toggle="popover" data-bs-trigger="hover"
-                           data-html="true" title="{% trans 'Destiny Dice' %}"
-                           data-bs-content="{% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at a rest of at least 10 hours.' %}"></i>
+                        <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
                         {% trans 'Destiny Dice' %}
-                        <span class="float-end">{% color_value_span object.destiny_dice 3 %}</span>
+                        <span class="float-end">{% color_value_span object.destiny_dice_free 3 %} / {% color_value_span object.destiny_dice 3 %}</span>
                     </li>
                     <li class="list-group-item">
-                        <i class="fas fa-fw fa-dice-one text-info" data-bs-toggle="popover" data-bs-trigger="hover"
-                           data-html="true" title="{% trans 'Rerolls' %}"
-                           data-bs-content="{% trans 'Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and refresh at any rest.' %}"></i>
+                        <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
                         {% trans 'Rerolls' %}
-                        <span class="float-end">{% color_value_span object.rerolls 3 %}</span>
+                        <span class="float-end">{% color_value_span object.rerolls_free 3 %} / {% color_value_span object.rerolls 3 %}</span>
                     </li>
                 </ul>
             </div>

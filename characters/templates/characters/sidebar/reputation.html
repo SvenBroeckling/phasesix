@@ -1,0 +1,56 @@
+{% load i18n bootstrap4 %}
+
+<div class="row">
+    <div class="col-12">
+        <p>
+            {% blocktrans %}
+                Reputation represents the characters degree of popularity. Reputation may be
+                spent to get new character templates.
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans %}
+                The game master distributes reputation after each game session and for
+                special events.
+            {% endblocktrans %}
+        </p>
+        <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post"
+              class="add-reputation-form">
+            {% csrf_token %}
+            <input type="hidden" name="operation" value="add">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Reputation"
+                       aria-label="Reputation" name="reputation">
+                <button type="submit" name="add_reputation" class="btn btn-dark" type="button"
+                        data-flash-message="{% trans 'Added' %}"><i
+                        class="fa fa-eye text-warning"></i> Hinzufügen
+                </button>
+            </div>
+        </form>
+        {% if character.reputation_available %}
+            <p>
+                {% blocktrans %}
+                    You have unspent reputation points. Use them to add new templates to your
+                    character and advance in your professions.
+                {% endblocktrans %}
+            </p>
+            {% if may_edit %}
+                <button
+                        class="btn btn-primary btn-block mb-3 mt-3 modal-trigger"
+                        data-bs-toggle="modal"
+                        data-bs-target=".character-modal"
+                        data-modal-title="{% trans 'Reputation' %}"
+                        data-url="{% url 'characters:xhr_reputation' object.id %}">
+                    {% trans 'Add character templates' %}
+                </button>
+            {% endif %}
+
+        {% else %}
+            <p>
+                {% blocktrans %}
+                    You don't have unspent reputation points.
+                {% endblocktrans %}
+            </p>
+        {% endif %}
+    </div>
+</div>

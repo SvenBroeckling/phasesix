@@ -1,0 +1,36 @@
+{% load i18n %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="btn-group w-100">
+            <a href="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}" class="btn btn-sm btn-primary action-link"><i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>{% trans '+Bonus' %}</a>
+            <a href="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}" class="btn btn-sm btn-primary action-link"><i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>{% trans '+Destiny' %}</a>
+            <a href="{% url 'characters:modify_dice' pk=object.id mode="add_reroll" %}" class="btn btn-sm btn-primary action-link"><i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>{% trans '+Reroll' %}</a>
+        </div>
+        <div class="btn-group w-100 mb-4">
+            <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_bonus" %}" class="btn btn-sm btn-primary action-link"><i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>{% trans '-Bonus' %}</a>
+            <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_destiny" %}" class="btn btn-sm btn-primary action-link"><i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>{% trans '-Destiny' %}</a>
+            <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_reroll" %}" class="btn btn-sm btn-primary action-link"><i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>{% trans '-Reroll' %}</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'Add bonus dice to any roll in the game, or use them to create an additional action in combat at any time.<br><br>Bonus dice are expended on use and refresh at any rest.' %}
+    </div>
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at a rest of at least 10 hours.' %}
+    </div>
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and refresh at any rest.' %}
+    </div>
+</div>

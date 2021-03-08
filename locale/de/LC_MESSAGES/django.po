@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-07 23:31+0000\n"
-"PO-Revision-Date: 2021-03-08 00:32+0100\n"
+"POT-Creation-Date: 2021-03-08 00:13+0000\n"
+"PO-Revision-Date: 2021-03-08 01:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -41,7 +41,7 @@ msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:24 armory/models.py:46 armory/models.py:82
-#: armory/models.py:131 armory/models.py:234 characters/models.py:382
+#: armory/models.py:131 armory/models.py:234 characters/models.py:398
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:79 rules/models.py:31 rules/models.py:52 rules/models.py:146
 #: rules/models.py:167 rules/models.py:266 rules/models.py:343
@@ -359,23 +359,35 @@ msgstr "Arkana"
 msgid "stress"
 msgstr "Stress"
 
-#: characters/models.py:53 rules/models.py:174
+#: characters/models.py:53
+msgid "Bonus dice used"
+msgstr "Benutzte Bonuswürfel"
+
+#: characters/models.py:54
+msgid "Destiny dice used"
+msgstr "Benutzte Schicksalswürfel"
+
+#: characters/models.py:55
+msgid "Rerolls used"
+msgstr "Benutzte Wiederholungswürfel"
+
+#: characters/models.py:57 rules/models.py:174
 msgid "shadows"
 msgstr "Schatten"
 
-#: characters/models.py:54 horror/models.py:31
+#: characters/models.py:58 horror/models.py:31
 msgid "quirks"
 msgstr "Eigenarten"
 
-#: characters/models.py:324 characters/models.py:346 characters/models.py:366
+#: characters/models.py:340 characters/models.py:362 characters/models.py:382
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:444
+#: characters/models.py:460
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:459
+#: characters/models.py:475
 msgid "Quantity"
 msgstr "Menge"
 
@@ -546,10 +558,6 @@ msgstr "Kapazität"
 msgid "Add weapon"
 msgstr "Waffe hinzufügen"
 
-#: characters/templates/characters/_change_image.html:8
-msgid "Save"
-msgstr "Speichern"
-
 #: characters/templates/characters/_reputation.html:63
 msgid "Select Template for Reputation?"
 msgstr "Schablone für Reputation auswählen?"
@@ -573,13 +581,16 @@ msgid "Take a rest"
 msgstr "Rast"
 
 #: characters/templates/characters/_rest.html:25
-#: characters/templates/characters/fragments/health.html:117
-#: characters/templates/characters/fragments/health.html:119
+#: characters/templates/characters/fragments/health.html:114
+#: characters/templates/characters/fragments/health.html:115
+#: characters/templates/characters/sidebar/dice.html:6
+#: characters/templates/characters/sidebar/dice.html:11
+#: characters/templates/characters/sidebar/dice.html:19
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
 #: characters/templates/characters/_rest.html:25
-#: characters/templates/characters/fragments/health.html:118
+#: characters/templates/characters/sidebar/dice.html:22
 msgid ""
 "Add bonus dice to any roll in the game, or use them to create an additional "
 "action in combat at any time.<br><br>Bonus dice are expended on use and "
@@ -590,13 +601,16 @@ msgstr ""
 "der Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
 
 #: characters/templates/characters/_rest.html:28
-#: characters/templates/characters/fragments/health.html:131
-#: characters/templates/characters/fragments/health.html:133
+#: characters/templates/characters/fragments/health.html:124
+#: characters/templates/characters/fragments/health.html:125
+#: characters/templates/characters/sidebar/dice.html:8
+#: characters/templates/characters/sidebar/dice.html:13
+#: characters/templates/characters/sidebar/dice.html:31
 msgid "Rerolls"
 msgstr "Wiederholungswürfel"
 
 #: characters/templates/characters/_rest.html:28
-#: characters/templates/characters/fragments/health.html:132
+#: characters/templates/characters/sidebar/dice.html:34
 msgid ""
 "Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and "
 "refresh at any rest."
@@ -606,8 +620,11 @@ msgstr ""
 "Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
 
 #: characters/templates/characters/_rest.html:49
-#: characters/templates/characters/fragments/health.html:124
-#: characters/templates/characters/fragments/health.html:126
+#: characters/templates/characters/fragments/health.html:119
+#: characters/templates/characters/fragments/health.html:120
+#: characters/templates/characters/sidebar/dice.html:7
+#: characters/templates/characters/sidebar/dice.html:12
+#: characters/templates/characters/sidebar/dice.html:25
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
@@ -624,55 +641,38 @@ msgstr ""
 "<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
 "sich bei einer Rast von mindestens 8 Stunden wieder auf."
 
-#: characters/templates/characters/character_detail.html:165
-#: characters/templates/characters/character_detail.html:166
-msgid "Rest"
-msgstr "Rast"
-
-#: characters/templates/characters/character_detail.html:173
-#: characters/templates/characters/character_detail.html:174
-msgid "Name / Images"
-msgstr "Name / Bilder"
-
-#: characters/templates/characters/character_detail.html:177
-msgid "Delete character"
-msgstr "Charackter löschen"
-
-#: characters/templates/characters/character_detail.html:180
-msgid "Delete Character"
-msgstr "Charakter löschen"
-
-#: characters/templates/characters/character_detail.html:201
-msgid "Loading"
-msgstr "Lade"
-
-#: characters/templates/characters/character_detail.html:205
-msgid "Close"
-msgstr "Schließen"
-
-#: characters/templates/characters/character_detail.html:220
+#: characters/templates/characters/character_detail.html:140
+#: characters/templates/characters/character_detail.html:187
 msgid "Character"
 msgstr "Charakter"
 
-#: characters/templates/characters/character_detail.html:222
+#: characters/templates/characters/character_detail.html:168
+msgid "Loading"
+msgstr "Lade"
+
+#: characters/templates/characters/character_detail.html:172
+msgid "Close"
+msgstr "Schließen"
+
+#: characters/templates/characters/character_detail.html:189
 msgid "Gear"
 msgstr "Ausrüstung"
 
-#: characters/templates/characters/character_detail.html:224
+#: characters/templates/characters/character_detail.html:191
 #: characters/templates/characters/fragments/health.html:10
 msgid "Combat"
 msgstr "Kampf"
 
-#: characters/templates/characters/character_detail.html:227
+#: characters/templates/characters/character_detail.html:194
 msgid "Magic"
 msgstr "Magie"
 
-#: characters/templates/characters/character_detail.html:234
+#: characters/templates/characters/character_detail.html:201
 #: characters/templates/characters/fragments/advancement.html:70
 msgid "Background"
 msgstr "Werdegang"
 
-#: characters/templates/characters/character_detail.html:241
+#: characters/templates/characters/character_detail.html:208
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -811,6 +811,7 @@ msgstr "Persona"
 #: characters/templates/characters/fragments/character.html:106
 #: characters/templates/characters/fragments/character.html:123
 #: characters/templates/characters/fragments/character.html:140
+#: characters/templates/characters/fragments/health.html:102
 #: characters/templates/characters/fragments/health.html:105
 msgid "Dice"
 msgstr "Würfel"
@@ -1087,18 +1088,18 @@ msgid "Status"
 msgstr "Status"
 
 #: characters/templates/characters/fragments/health.html:50
-#: characters/templates/characters/sidebar/wounds.html:21 gmtools/forms.py:19
+#: characters/templates/characters/sidebar/wounds.html:31 gmtools/forms.py:19
 msgid "Health"
 msgstr "Lebenspunkte"
 
 #: characters/templates/characters/fragments/health.html:53
-#: characters/templates/characters/sidebar/wounds.html:27
+#: characters/templates/characters/sidebar/wounds.html:37
 msgid "Wound"
 msgstr "Wunde"
 
 #: characters/templates/characters/fragments/health.html:56
 #: characters/templates/characters/sidebar/wounds.html:14
-#: characters/templates/characters/sidebar/wounds.html:33
+#: characters/templates/characters/sidebar/wounds.html:43
 msgid "Boost"
 msgstr "Boost"
 
@@ -1122,28 +1123,10 @@ msgstr "Stress"
 msgid "Possible Stress"
 msgstr "Möglicher Stress"
 
+#: characters/templates/characters/fragments/health.html:109
 #: characters/templates/characters/fragments/health.html:110
-#: characters/templates/characters/fragments/health.html:112
 msgid "Minimum Roll"
 msgstr "Mindestwurf"
-
-#: characters/templates/characters/fragments/health.html:111
-msgid "Reach this roll with a die to get a success."
-msgstr ""
-"Erreiche diesen Mindestwurf mit einem Würfel um einen Erfolg zu erzielen."
-
-#: characters/templates/characters/fragments/health.html:125
-msgid ""
-"Destiny dice may be added to rolls just like bonus dice, but they always "
-"succeed on a 4+ roll. Additionally they may be used to steal an action in "
-"combat at any time.<br><br>Destiny dice are expended on use and refresh at a "
-"rest of at least 10 hours."
-msgstr ""
-"Schicksalswüfel können, wie Bonuswürfel, zu jedem Wurf hinzugefügt werden, "
-"sie erreichen allerdings immer auf 4+ einen Erfolg. Zusätzlich können sie "
-"jederzeit im Kampf verwendet werden um eine Aktion zu stehlen."
-"<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
-"sich bei einer Rast von mindestens 10 Stunden wieder auf."
 
 #: characters/templates/characters/fragments/magic.html:11
 msgid "Create a spell"
@@ -1216,6 +1199,55 @@ msgstr "Schau in die Regeln"
 msgid "Photo by Unsplash.com"
 msgstr "Foto von Unsplash.com"
 
+#: characters/templates/characters/sidebar/character.html:8
+msgid "Save"
+msgstr "Speichern"
+
+#: characters/templates/characters/sidebar/character.html:17
+msgid "Delete character"
+msgstr "Charackter löschen"
+
+#: characters/templates/characters/sidebar/character.html:20
+msgid "Delete Character"
+msgstr "Charakter löschen"
+
+#: characters/templates/characters/sidebar/dice.html:6
+msgid "+Bonus"
+msgstr "+Bonus"
+
+#: characters/templates/characters/sidebar/dice.html:7
+msgid "+Destiny"
+msgstr "+Schicksal"
+
+#: characters/templates/characters/sidebar/dice.html:8
+msgid "+Reroll"
+msgstr "+Wiederholung"
+
+#: characters/templates/characters/sidebar/dice.html:11
+msgid "-Bonus"
+msgstr "-Bonus"
+
+#: characters/templates/characters/sidebar/dice.html:12
+msgid "-Destiny"
+msgstr "-Schicksal"
+
+#: characters/templates/characters/sidebar/dice.html:13
+msgid "-Reroll"
+msgstr "-Widerholung"
+
+#: characters/templates/characters/sidebar/dice.html:28
+msgid ""
+"Destiny dice may be added to rolls just like bonus dice, but they always "
+"succeed on a 4+ roll. Additionally they may be used to steal an action in "
+"combat at any time.<br><br>Destiny dice are expended on use and refresh at a "
+"rest of at least 10 hours."
+msgstr ""
+"Schicksalswüfel können, wie Bonuswürfel, zu jedem Wurf hinzugefügt werden, "
+"sie erreichen allerdings immer auf 4+ einen Erfolg. Zusätzlich können sie "
+"jederzeit im Kampf verwendet werden um eine Aktion zu stehlen."
+"<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
+"sich bei einer Rast von mindestens 10 Stunden wieder auf."
+
 #: characters/templates/characters/sidebar/horror.html:8
 msgid "Gain Stress"
 msgstr "Stress hinzufügen"
@@ -1253,6 +1285,11 @@ msgid "Heal"
 msgstr "Heilen"
 
 #: characters/templates/characters/sidebar/wounds.html:24
+#: characters/templates/characters/sidebar/wounds.html:25
+msgid "Rest"
+msgstr "Rast"
+
+#: characters/templates/characters/sidebar/wounds.html:34
 msgid ""
 "A full heart. This can compensate a wound. Use the character menu to take a "
 "wound."
@@ -1260,13 +1297,13 @@ msgstr ""
 "Ein volles Herz. Dieses kann eine Wunde kompensieren. Benutze das "
 "Charaktermenü um Wunden zu erhalten."
 
-#: characters/templates/characters/sidebar/wounds.html:30
+#: characters/templates/characters/sidebar/wounds.html:40
 msgid "A wound taken. This empty heart can be restored at a hospital."
 msgstr ""
 "Eine hingenommene Wunde. Dieses leere Herz kann in einem Krankenhaus "
 "wiederhergestellt werden."
 
-#: characters/templates/characters/sidebar/wounds.html:36
+#: characters/templates/characters/sidebar/wounds.html:46
 msgid ""
 "A temporary boost, given by first aid or medicine. If you take damage this "
 "will expended first."
@@ -1274,7 +1311,7 @@ msgstr ""
 "Ein zeitweiser Boost, durch Medizin oder Erste Hilfe verursacht. Wenn du "
 "Schaden nimmst wird dieses zuerst entfernt."
 
-#: characters/templates/characters/sidebar/wounds.html:41
+#: characters/templates/characters/sidebar/wounds.html:51
 msgid "Status effects"
 msgstr "Statuseffekte"
 
@@ -1422,6 +1459,7 @@ msgstr "Kämpft!"
 
 #: gmtools/templates/gmtools/combat_sim_results.html:10
 #: gmtools/templates/gmtools/combat_sim_results.html:25
+#, fuzzy
 msgid "Pen."
 msgstr "DS"
 
@@ -2109,6 +2147,13 @@ msgstr "Registrieren"
 msgid "Create Account"
 msgstr "Konto erstellen"
 
+#~ msgid "Name / Images"
+#~ msgstr "Name / Bilder"
+
+#~ msgid "Reach this roll with a die to get a success."
+#~ msgstr ""
+#~ "Erreiche diesen Mindestwurf mit einem Würfel um einen Erfolg zu erzielen."
+
 #~ msgid "Heal Wound"
 #~ msgstr "Wunde heilen"
 
@@ -2237,9 +2282,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "Practical Skills"
 #~ msgstr "Praxisfertigkeiten"
-
-#~ msgid "Bonus"
-#~ msgstr "Bonus"
 
 #~ msgid "Use"
 #~ msgstr "Benutzen"

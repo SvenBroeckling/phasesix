@@ -50,6 +50,10 @@ class Character(models.Model):
     arcana = models.IntegerField(_('arcana'), default=3)
     stress = models.IntegerField(_('stress'), default=0)
 
+    bonus_dice_used = models.IntegerField(_('Bonus dice used'), default=0)
+    destiny_dice_used = models.IntegerField(_('Destiny dice used'), default=0)
+    rerolls_used = models.IntegerField(_('Rerolls used'), default=0)
+
     shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
     quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
 
@@ -213,6 +217,18 @@ class Character(models.Model):
     @property
     def rerolls(self):
         return self.lineage.base_rerolls + self.get_attribute_modifier('base_rerolls')
+
+    @property
+    def bonus_dice_free(self):
+        return self.bonus_dice - self.bonus_dice_used
+
+    @property
+    def destiny_dice_free(self):
+        return self.destiny_dice - self.destiny_dice_used
+
+    @property
+    def rerolls_free(self):
+        return self.rerolls - self.rerolls_used
 
     @property
     def deftness(self):

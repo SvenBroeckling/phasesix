@@ -1,0 +1,23 @@
+{% load i18n bootstrap4 %}
+
+<div class="row">
+    <div class="col-12">
+        <form action="{% url 'characters:change_image' pk=character.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form character_form %}
+            <button class="btn btn-primary btn-sm w-100 mb-1 mt-3 float-end" type="submit">{% trans 'Save' %}</button>
+        </form>
+    </div>
+</div>
+
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <a
+                    data-message="{% trans 'Delete character' %}: {{ object }}?"
+                    class="btn btn-danger btn-sm w-100 delete-character"
+                    href="{% url 'characters:xhr_delete' pk=object.id %}"><i
+                    class="far fa-times fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
+        </div>
+    </div>
+{% endif %}

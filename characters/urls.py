@@ -29,6 +29,12 @@ urlpatterns = [
         views.XhrCharacterRestView.as_view(),
         name='xhr_rest'),
 
+    # dice
+    url(
+        r'^dice/(?P<pk>\d+)/(?P<mode>\w+)/$',
+        views.CharacterModifyDiceView.as_view(),
+        name='modify_dice'),
+
     # horror
     url(
         r'^stress/(?P<pk>\d+)/(?P<mode>\w+)/$',
@@ -61,10 +67,6 @@ urlpatterns = [
         name='xhr_constructed_remove_template'),
 
     # Images etc
-    url(
-        r'^xhr_change_image/(?P<pk>\d+)$',
-        views.XhrChangeImageView.as_view(),
-        name='xhr_change_image'),
     url(
         r'^change_image/(?P<pk>\d+)$',
         views.ChangeImageView.as_view(),

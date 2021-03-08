@@ -62,6 +62,7 @@ class XhrSidebarView(DetailView):
         context = super().get_context_data(**kwargs)
         context['sidebar_name'] = self.kwargs['sidebar_name']
         context['status_effects'] = StatusEffect.objects.all()
+        context['character_form'] = CharacterImageForm(instance=self.object)
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 
@@ -134,6 +135,26 @@ class CharacterModifyStressView(View):
             elif self.kwargs['mode'] == 'remove':
                 if character.stress > 0:
                     character.stress -= 1
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
+class CharacterModifyDiceView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.may_edit(request.user):
+            if self.kwargs['mode'] == 'add_bonus':
+                character.bonus_dice_used -= 1
+            elif self.kwargs['mode'] == 'remove_bonus':
+                character.bonus_dice_used += 1
+            if self.kwargs['mode'] == 'add_destiny':
+                character.destiny_dice_used -= 1
+            elif self.kwargs['mode'] == 'remove_destiny':
+                character.destiny_dice_used += 1
+            if self.kwargs['mode'] == 'add_reroll':
+                character.rerolls_used -= 1
+            elif self.kwargs['mode'] == 'remove_reroll':
+                character.rerolls_used += 1
             character.save()
         return JsonResponse({'status': 'ok'})
 
@@ -253,17 +274,6 @@ class XhrConstructedRemoveTemplateView(View):
             return JsonResponse({'status': 'ok', 'remaining_points': character.remaining_template_points})
 
         return JsonResponse({'status': 'noop'})
-
-
-class XhrChangeImageView(TemplateView):
-    template_name = 'characters/_change_image.html'
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs['pk'])
-        context = super(XhrChangeImageView, self).get_context_data(**kwargs)
-        context['character'] = character
-        context['form'] = CharacterImageForm(instance=character)
-        return context
 
 
 class ChangeImageView(View):

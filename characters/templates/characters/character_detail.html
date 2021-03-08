@@ -80,10 +80,10 @@
             $('[data-bs-toggle="popover"]').popover()
 
             // reputation
-            $('.add-reputation-form').on('submit', function (e) {
-                var form = $(this)
-                var btn = form.find('button')
-                var original_btn_html = btn.html()
+            body.on('submit', '.add-reputation-form', function (e) {
+                let form = $(this)
+                let btn = form.find('button')
+                let original_btn_html = btn.html()
 
                 btn.text(btn.data('flash-message'))
                 setTimeout(function () {
@@ -101,7 +101,7 @@
                 return false
             })
 
-            $('.delete-character').on('click', function (e) {
+            body.on('click', '.delete-character', function (e) {
                 let elem = $(this)
                 if (confirm(elem.data('message'))) {
                     $.post(elem.attr('href'), function (data) {
@@ -137,49 +137,16 @@
                 <small>{% template_category_string object 6 %}</small><br>
             </div>
 
-            <div class="{% if may_edit %}dropdown{% endif %}">
+            <div class="sidebar-trigger mt-2" data-sidebar-title="{% trans 'Character' %}"
+                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="character" %}">
                 {% if character.image %}
                     {% thumbnail character.image "140x140" crop="center" as im %}
-                        <img
-                                {% if may_edit %}data-bs-toggle="dropdown"{% endif %}
-                                class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
-                                src="{{ MEDIA_URL }}{{ im.url }}"
-                                alt="{{ object.name }}">
+                        <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
                     {% endthumbnail %}
                 {% else %}
-                    <img
-                            class="rounded img-fluid {% if may_edit %}touch-menu{% endif %}"
-                            {% if may_edit %}data-bs-toggle="dropdown"{% endif %}
-                            width="140" height="140"
-                            src="{% static 'img/silhuette.png' %}"
-                            alt="{{ object.name }}">
+                    <img class="rounded img-fluid" width="140" height="140" src="{% static 'img/silhuette.png' %}" alt="{{ object.name }}">
                 {% endif %}
 
-                {% if may_edit %}
-                    <div class="dropdown-menu">
-                        <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_rest' pk=object.id %}"
-                                data-bs-toggle="modal"
-                                data-bs-target=".character-modal"
-                                data-modal-title="{% trans 'Rest' %}"
-                                href=""><i class="fas fa-plus fa-fw text-info"></i> {% trans 'Rest' %}</a>
-
-                        <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'characters:xhr_change_image' pk=object.id %}"
-                                data-bs-toggle="modal"
-                                data-bs-target=".character-modal"
-                                data-modal-title="{% trans 'Name / Images' %}"
-                                href=""><i class="fas fa-image fa-fw text-info"></i> {% trans 'Name / Images' %}</a>
-
-                        <a
-                                data-message="{% trans 'Delete character' %} {{ object }}"
-                                class="dropdown-item delete-character"
-                                href="{% url 'characters:xhr_delete' pk=object.id %}"><i
-                                class="far fa-delete fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
-                    </div>
-                {% endif %}
             </div>
 
         </div>
