@@ -8,7 +8,9 @@ Diese Art der Proben werden überall außerhalb des Kampfes verwendet. Im Kampf 
 
 ### Die Anzahl der Würfel
 
-Die geforderte oder gewünschte Fertigkeit oder das Wissen geben mit ihrem Wert die Anzahl der Würfel direkt vor. Ein Charakter mit einem „Einschüchtern“ Wert von 4 hat auch 4 sechsseite Würfel für diese Probe zur Verfügung.
+Die geforderte oder gewünschte Fertigkeit gibt mit ihrem Wert die Anzahl der Würfel direkt vor. Ein Charakter mit einem „Einschüchtern“ Wert von 4 hat auch 4 sechsseite Würfel für diese Probe zur Verfügung.
+
+Die Wissenseigenschaften haben einen Wert, mit dem sie die Anzahl der Würfel vorgeben. Zudem ist hier aber eine Fertigkeit angegeben. Die Würfel der Fertigkeit addiert. So hat ein Charakter mit der Fertigkeit „Kommunikation“ 2 und dem Wissen „Etikette (Kommunikation)“ 3 insgesamt 5 Würfel auf Etikette.
 
 Ist der Wert 0 oder negativ so ist es dem Charakter nicht möglich diesen Wurf ohne weitere Hilfe zu machen, er ist einfach zu schlecht in der Fertigkeit. *Bonuswürfel* oder *Schicksalswürfel* können jedoch verwendet werden, egal wie sehr der Wert im Negativen ist.
 

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -145,7 +143,12 @@ class Knowledge(models.Model, metaclass=TransMeta):
     extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
-    add_to_all_characters = models.BooleanField(_('add to all characters'), default=True)
+    skill = models.ForeignKey(
+        Skill,
+        verbose_name=_('Skill'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         translate = ('name',)

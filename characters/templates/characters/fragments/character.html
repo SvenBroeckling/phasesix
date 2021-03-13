@@ -75,25 +75,33 @@
         </div>
 
         <div class="col-md-4">
-            {% if object.shadows.exists %}
+            {% if object.characterknowledge_set.exists %}
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>{% trans 'Shadows' %}</th>
+                        <th>{% trans 'Knowledge' %}</th>
+                        <th class="text-end">{% trans 'Dice' %}</th>
                     </tr>
                     </thead>
-                    {% for shadow in object.shadows.all %}
+                    {% for knowledge in object.characterknowledge_set.all %}
                         <tr>
-                            {% if shadow.description %}
-                                <td><a role="button" tabindex="0" data-bs-toggle="popover" data-trigger="focus" title="{{ shadow }}" data-content="{{ shadow.description }}">{{ shadow }}</a></td>
-                            {% else %}
-                                <td>{{ shadow }}</td>
-                            {% endif %}
+                            <td>
+                                {{ knowledge.knowledge }}
+                                {% if knowledge.knowledge.skill %}
+                                    <small class="text-muted">({{ knowledge.knowledge.skill }})</small>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                {% color_value_span knowledge.value 6 %}
+                                {% if knowledge.knowledge.skill %}
+                                    {% character_knowledge_skil_value object knowledge as cs %}
+                                    + {% color_value_span cs 6 %}
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </table>
             {% endif %}
-
         </div>
     </div>
 
@@ -131,19 +139,22 @@
             {% endfor %}
         </table>
     </div>
+
     <div class="col-md-4">
-        {% if object.characterknowledge_set.exists %}
+        {% if object.shadows.exists %}
             <table class="table">
                 <thead>
                 <tr>
-                    <th>{% trans 'Knowledge' %}</th>
-                    <th class="text-end">{% trans 'Dice' %}</th>
+                    <th>{% trans 'Shadows' %}</th>
                 </tr>
                 </thead>
-                {% for knowledge in object.characterknowledge_set.all %}
+                {% for shadow in object.shadows.all %}
                     <tr>
-                        <td>{{ knowledge.knowledge }}</td>
-                        <td class="text-end">{% color_value_span knowledge.value 6 %}</td>
+                        {% if shadow.description %}
+                            <td><a role="button" tabindex="0" data-bs-toggle="popover" data-trigger="focus" title="{{ shadow }}" data-content="{{ shadow.description }}">{{ shadow }}</a></td>
+                        {% else %}
+                            <td>{{ shadow }}</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>

@@ -41,6 +41,11 @@ class SkillAdmin(admin.ModelAdmin):
     list_editable = ('kind', 'show_on_combat_tab')
 
 
+class KnowledgeAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'skill')
+    list_editable = 'skill',
+
+
 class LineageTemplatePointsInline(admin.TabularInline):
     model = LineageTemplatePoints
 
@@ -55,7 +60,7 @@ class StatusEffectAdmin(admin.ModelAdmin):
 
 admin.site.register(Extension, ExtensionAdmin)
 admin.site.register(Skill, SkillAdmin)
-admin.site.register(Knowledge)
+admin.site.register(Knowledge, KnowledgeAdmin)
 admin.site.register(Shadow)
 admin.site.register(TemplateCategory, TemplateCategoryAdmin)
 admin.site.register(Template, TemplateAdmin)

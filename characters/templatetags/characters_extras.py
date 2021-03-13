@@ -121,3 +121,7 @@ def status_effect_value(status_effect, character):
         return obj.value
     except CharacterStatusEffect.DoesNotExist:
         return 0
+
+@register.simple_tag
+def character_knowledge_skil_value(character, character_knowledge):
+    return character.characterskill_set.get(skill=character_knowledge.knowledge.skill).value
