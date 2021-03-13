@@ -54,7 +54,6 @@ class Character(models.Model):
     destiny_dice_used = models.IntegerField(_('Destiny dice used'), default=0)
     rerolls_used = models.IntegerField(_('Rerolls used'), default=0)
 
-    shadows = models.ManyToManyField('rules.Shadow', verbose_name=_('shadows'), blank=True)
     quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
 
     def __str__(self):
@@ -80,22 +79,31 @@ class Character(models.Model):
             attribute=attribute_name).aggregate(Sum('attribute_modifier'))
         return (m['attribute_modifier__sum'] or 0) + (q['attribute_modifier__sum'] or 0)
 
+    def knowledge_dict(self):
+        kd = {}
+        for t in self.charactertemplate_set.all():
+            for m in t.template.templatemodifier_set.all():
+                if m.knowledge is not None:
+                    if m.knowledge in kd.keys():
+                        kd[m.knowledge] += m.knowledge_modifier
+                    else:
+                        kd[m.knowledge] = m.knowledge_modifier
+        return kd
+
+    def shadow_list(self):
+        sl = []
+        for t in self.charactertemplate_set.all():
+            for m in t.template.templatemodifier_set.all():
+                if m.shadow:
+                    sl.append(m.shadow)
+        return sl
+
     def add_template(self, template):
         if not self.charactertemplate_set.filter(template=template).exists():
             self.charactertemplate_set.create(template=template)
-            for tm in template.templatemodifier_set.all():
-                if tm.knowledge is not None:
-                    self.characterknowledge_set.get_or_create(knowledge=tm.knowledge)
-                if tm.shadow is not None:
-                    self.shadows.add(tm.shadow)
 
     def remove_template(self, template):
         self.charactertemplate_set.filter(template=template).delete()
-        for tm in template.templatemodifier_set.all():
-            if tm.knowledge is not None:
-                self.characterknowledge_set.filter(knowledge=tm.knowledge).delete()
-            if tm.shadow is not None:
-                self.shadows.remove(tm.shadow)
 
     def get_epoch(self):
         return self.extensions.filter(is_mandatory=False, is_epoch=True).earliest('id')
@@ -354,26 +362,6 @@ class CharacterSkill(models.Model):
             quirk__in=self.character.quirks.all(),
             skill=self.skill).aggregate(Sum('skill_modifier'))
         return self.base_value + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
-
-
-class CharacterKnowledge(models.Model):
-    character = models.ForeignKey(Character, models.CASCADE)
-    knowledge = models.ForeignKey('rules.Knowledge', models.CASCADE)
-    base_value = models.IntegerField(_('base value'), default=0)
-
-    class Meta:
-        ordering = ('knowledge__name_en',)
-
-    def __str__(self):
-        return "{} {}".format(self.knowledge.name, self.value)
-
-    @property
-    def value(self):
-        q = TemplateModifier.objects.filter(
-            template__charactertemplate__in=self.character.charactertemplate_set.all()
-        )
-        q = q.filter(knowledge=self.knowledge).aggregate(Sum('knowledge_modifier'))
-        return self.base_value + (q['knowledge_modifier__sum'] or 0)
 
 
 class CharacterStatusEffect(models.Model):
