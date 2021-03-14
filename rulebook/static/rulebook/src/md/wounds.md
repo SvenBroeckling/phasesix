@@ -90,21 +90,44 @@ Ein Charakter kann verschiedene Zustände haben. Diese haben verschiedene Auswir
 
 #### Sterbend
 
-Dieser Zustand wird nur verursacht, wenn die Wunden des Charakters die
-maximalen Wunden übersteigen, die Herzen also auf 0 sinken. 
+Dieser Zustand wird nur verursacht, wenn die Wunden des Charakters die maximalen Wunden übersteigen, die Herzen also auf 0 sinken. 
+
+Falls ein Charakter in den Zustand sterbend verfällt, würfelt er so viele Würfel wie der addierte Wert aus Ausdauer und Resistenz beträgt. Das Resultat gibt die Minuten vor, die ein Gefährte Zeit hat, um den Charakter zu stabilisieren. Ist die Zeit abgelaufen so stirbt der Charakter.
+
+Für das Stabilisieren sind Erfolge entsprechend dem "Sterbend" Wert des Charakters erforderlich. Hierbei kann es sich um Erste Hilfe, Medizin oder etwas ähnlich hilfreichem handeln.
 
 #### Geschockt
 
-Der Wert dieses Statuseffektes wird direkt von den Würfeln von Deckungswürfen abgezogen. Ein Charakter mit *Geschockt: 3* hat somit 3 Würfel weniger beim Deckungswurf. Sinkt die Anzahl der möglichen Würfel damit auf 0, so ist der Deckungswurf nicht mehr möglich.
+Der Charakter hat für jeden Wurf so viele Würfel weniger wie der Wert dieses Statuseffektes ist.
 
-Der Geschockt-Wert verringert sich am Ende jeder Kampfrunde um 1.
+#### Erschöpft
+
+Der Charakter hat im Kampf pro Runde eine Aktion weniger.
+
+Sinken die Aktionen dabei auf 0, erhält der Character den Zustand Bewusstlos.
+
+#### Bewustlos
+
+Der Character ist zu keiner Aktion fähig (seine Aktionen pro Runde sind null), kann aber zu Beginn seiner Kampfrunde eine Willenskraftprobe würfeln. Jeder Erfolg stellt eine Aktion wieder her, bis alle Aktionen wieder hergestelllt sind.
+
+#### Brennend
+
+Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands. 
+
+Der Mindestwurf des Charakters ist für alle Würfe auf Aufmerksamkeit um den Wert dieses Zustands erhöht.
 
 #### Versteckt
 #### Desorientiert
-#### Bewustlos
+
 #### Schmerz
 #### Gegriffen
-#### Ohnmacht
+
 #### Blutend
+
+Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands. 
+
 #### Vergiftet
-#### Brennend
+
+Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands.
+
+Der Mindestwurf des Charakters ist für alle Würfe um den Wert dieses Zustands erhöht.
