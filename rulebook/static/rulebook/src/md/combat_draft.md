@@ -61,38 +61,27 @@ Wird ein *Schicksalswüfel* ausgegeben kann eine Aktion von einem Gegner gestohl
 Das Ausgeben von Würfeln für Aktionen nimmt selbst keine Aktion in Anspruch.
 
 
-### Würfelpool und Gruppenwürfel
-
-tba
-
 ### Ablauf eines Angriffs
 
 Angriffe mit Waffen werden im Nahkampf und im Fernkampf genau gleich gehandhabt. Der einzige Unterschied ist, dass Angriffe mit Nahkampfwaffen auf die Fertigkeit *Nahkampf* geworfen werden, Angriffe mit Schusswaffen auf die Fertigkeit *Schießen* und Angriffe mit Wurfwaffen auf die Fertigkeit *Werfen*.
 
-#### 1. Der Trefferwurf
+#### Der Trefferwurf und Deckung
 
-Der Charakter greift pro Aktion ein Mal mit einer Waffe an. Um zu ermitteln, ob der Angriff gelungen ist wirft der Spieler auf die entsprechende Fähigkeit (Schießen, Nahkampf oder Werfen).
+Um einen Angriff durchzuführen wird ein Wurf mit einer bestimmten Anzahl Würfeln geworfen. Der *Mindestwurf* dieses Wurfs entspricht dem *Mindestwurf* des Charakters.
 
-Die Anzahl der Würfel dieses Wurfes wird durch diverse Elemente modifiziert. 
+Die Anzahl der Würfel entspricht zunächst dem jeweiligen Fertigkeitswert des Charakters (Schießen, Nahkampf, Werfen)
 
-* Der Schutzwert des Ziels wird von den Trefferwürfeln abgezogen.
-* Die Deckung des Ziels wird von den Trefferwürfeln abgezogen.
-* Bonuswürfel von Feuermodus, Waffe und persönlichen Schablonen werden zu den den Trefferwürfeln hinzugefügt.
+Je nach Deckung werden von diesem Wurf eine bestimmte Anzahl an Würfeln entfernt:
 
-##### Trefferwürfe bei falscher Distanz
+* Leichte Deckung: -1 Würfel
+* Halbe Deckung: -2 Würfel
+* Fast vollständige Deckung: -3 Würfel
 
-Jede Waffe hat eine angegebene Distanz, auf der sie effektiv ist. Weicht die Distanz des Ziels von der bei der Waffe angegebenen ab, ergibt sich ein Malus auf den Trefferwurf.
+Jeder Erfolg verursacht einen *Treffer* beim Ziel des Angriffs. Wie das Ziel Schaden verhindern kann ist unter *Treffer* beschrieben.
 
-Wenn die wirkliche Schussdistanz geringer ist als die angegebene Distanz der Waffe wird der Angriff
-normal durchgeführt. 
+Der Trefferwurf kann auch durch weitere Umstände verändert werden. Unterschiedliche Feuermodi und Schüsse bei falscher Distanz sorgen u.U. für eine Änderung der verfügbaren Würfel.
 
-Ist die Distanz bis zum Doppelten der Waffe erhöht gilt für die Trefferwürfe ein Malus von 2. Der 
-Mindestwurf um zu treffen ist somit um 2 erhöht. 
-
-Wenn die Entfernung des Ziels mehr als das Doppelte der Waffenreichweite entfernt ist ist es nicht
-möglich auf das Ziel zu schiessen oder anzugreifen.
-
-##### Feuermodi
+##### Bonuswürfel: Feuermodi
 
 Moderne Waffen haben in der Regel verschiedene Feuermodi. Sind bei der Waffe Feuermodi angegeben kann die folgende Regel für die Waffe verwendet werden. 
 
@@ -100,11 +89,36 @@ Es wird davon ausgegangen, dass sich die Waffe bei einem normalen Trefferwurf im
 
 Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die Schusszahl und die Genauigkeit der Waffe:
 
-* Einzelschussmodus: *Schuss pro Aktion: 1*, *Genauigkeit +2*
-* Halbautomatik: *Es werden die bei der Waffe angegebenen Werte verwendet*
-* Vollautomatik: *Schuss pro Aktion verdoppelt*, *Genauigkeit -3*
+* Einzelschussmodus: Keine Änderung der Würfel
+* Halbautomatik: +2 Würfel
+* Vollautomatik: +4 Würfel, alle nicht verbrauchten Aktionen des Charakters müssen für Schüsse mit dieser Waffe verbraucht werden, danach endet die Kampfrunde für ihn. Es können keine Aktionen für Reaktionen aufgehoben werden.
+
+##### Minuswürfel: Trefferwürfe bei falscher Distanz
+
+Jede Waffe hat eine angegebene Distanz, auf der sie effektiv ist. Weicht die Distanz des Ziels von der bei der Waffe angegebenen ab, ergibt sich ein Malus auf die Trefferwürfel.
+
+Wenn die wirkliche Schussdistanz geringer ist als die angegebene Distanz der Waffe wird der Angriff normal durchgeführt. 
+
+Ist die Distanz bis zum Doppelten der Waffe erhöht, werden die Würfel des Trefferwurfes um 2 verringert.
+
+Wenn die Entfernung des Ziels mehr als das Doppelte der Waffenreichweite entfernt ist ist es nicht möglich auf das Ziel zu schiessen oder anzugreifen.
+
+#### Treffer und Durchschlag
+
+Jeder Erfolg des *Trefferwurfs* ist ein *Treffer* beim Ziel des Angriffs. Auch andere Umstände können *Treffer* verursachen, so kann eine Granate z.B. "3 Treffer mit je 2 Wunden" verursachen.
+
+Nimmt ein Charakter *Treffer* hin, werden diese um den *Schutzwert* des Ziels verringert. Der *Schutzwert* ist dabei verringert um den *Durchschlag* der Waffe des Angreifers.
+
+Jeder nicht durch den *Schutzwert* verhinderte Treffer wird zu so vielen Wunden, wie es bei der Waffe oder dem Effekt angegeben ist.
+
+#### Wunden
+
+Eine *Wunde* wird direkt zu den hingenommenen Wunden hinzugefügt. Sie kann nur verhindert werden wenn eine *Schablone*, Ausrüstung oder anderes explizit eine Regel enthält, welche Wunden verändert.
+
 
 #### Waffenloser Nahkampf
+
+TODO RENEW
 
 Greift der Chrakter ohne Waffe an, so wirft der Spieler Trefferwürfel entsprechend seinem Schnelligkeitswert. Der Mindestwurf entspricht dem Nahkampfmindestwurf, also 7 - *Fertigkeit Nahkampf*, mindestens aber 2+.
 
@@ -112,31 +126,18 @@ Ein waffenloser Nahkampfangriff verursacht eine Wunde pro Treffer, wenn die Kraf
 
 Der Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die Reichweite beträgt 1 Meter.
 
-#### 2. Der Deckungswurf
 
-Wenn der Angegriffene Deckung hat ist es möglich, Treffer zu verhindern bevor sie Schaden anrichten können. Deckung gibt es in unterschiedlichen Stufen, die auch den Mindestwurf vorgeben:
+### Werfen von Gegenständen
 
-* 6+ geringe Deckung, der Großteil des Körpers sichtbar. Nur einige Bereiche der Sicht des Angreifers auf den Beschossenen sind verdeckt. 
-* 5+ der Angegriffene ist halb verdeckt oder kniet.
-* 4+ nur geringe Teile des Angegriffenen sind für den Angreifer sichtbar, oder der Angegriffene liegt.
+TODO
 
-Der Angegriffene wirft für jeden Treffer einen Würfel. Ein Erfolg reduziert hierbei die Anzahl der Treffer um eins.
-
-Ein Deckungswurf ist sowohl bei Nahkampf als auch bei Fernkampfwaffen möglich, wenn Deckung vorhanden ist. Es können Bonus- und Wiederholungswürfel verwendet werden.
-
-#### 3. Der Rüstungswurf
-
-Um zu prüfen ob die getroffenen Angriffe Schaden anrichten werden verschiedene Kriterien in einem Wurf, dem Rüstungswurf, vereint.
-Hier werden in erster Linie der Durchschlag der Waffe mit der angelegten Rüstung verglichen. 
-
-Der Angegriffene wirft für jeden (eventuell durch Deckungswurf reduzierten) Treffer einen Würfel. Der Mindestwurf ergibt sich
-hierbei aus:
-
-*7 - Schutz der Rüstung + Durchschlag der Waffe/Munition*
-
-Alle Treffer die nicht durch Erfolge dieses Wurfes verhindert wurden schlagen jeweils so viele Wunden wie bei der Waffe angegeben ist.
-
-### Abweichung beim Werfen
+Abweichung
 
 D12 -> Richtung
 D6 -> Meter
+
+### Würfelpool und Gruppenwürfel
+
+TODO
+
+tba
