@@ -23,8 +23,8 @@ urlpatterns = [
     url(r'homebrew/', include('homebrew.urls', namespace='homebrew')),
     url(r'rules/', include('rules.urls', namespace='rules')),
     url(r'gmtools/', include('gmtools.urls', namespace='gmtools')),
-    path('acct/', include('django.contrib.auth.urls')),
-    path('acct/', include('django_registration.backends.activation.urls')),
+    path('you/', include('django.contrib.auth.urls')),
+    path('you/', include('django_registration.backends.activation.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
