@@ -89,7 +89,7 @@ Es wird davon ausgegangen, dass sich die Waffe bei einem normalen Trefferwurf im
 
 Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die Schusszahl und die Genauigkeit der Waffe:
 
-* Einzelschussmodus: Keine Änderung der Würfel
+* Einzelschussmodus: +1 Würfel
 * Halbautomatik: +2 Würfel
 * Vollautomatik: +4 Würfel, alle nicht verbrauchten Aktionen des Charakters müssen für Schüsse mit dieser Waffe verbraucht werden, danach endet die Kampfrunde für ihn. Es können keine Aktionen für Reaktionen aufgehoben werden.
 
