@@ -411,7 +411,7 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
 
-        roll = 7 - skill.value - mods - self.weapon.accuracy
+        roll = 7 - skill.value - mods
         return roll if roll >= 2 else 2
 
     @property

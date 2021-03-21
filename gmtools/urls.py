@@ -14,5 +14,4 @@ urlpatterns = [
         '^extension_grid/(?P<type>.*)/$',
         staff_member_required(views.ExtensionGrid.as_view()),
         name='extension_grid'),
-    url('^combat_sim/$', staff_member_required(views.CombatSimView.as_view()), name='combat_sim'),
 ]

@@ -100,25 +100,18 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <i class="fas fa-times fa-fw"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.weapon.attacks_per_action 8 %} {% display_modifications weapon 'attacks_per_action' %}<br>
-                                <i class="fas fa-bullseye fa-fw"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.weapon.accuracy 4 %} {% display_modifications weapon 'accuracy' %}<br>
                                 <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
                                 <i class="fas fa-heart fa-fw"></i> {% trans 'Wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
                                 {% if not weapon.weapon.is_hand_to_hand_weapon %}
                                     <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
-                                    <i class="fas fa-arrow-circle-left fa-fw"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.weapon.recoil_control 4 %} {% display_modifications weapon 'recoil_control' %}<br>
-                                {% endif %}
-                                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m<br>
-                                {% if not weapon.weapon.is_hand_to_hand_weapon %}
                                     <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %}
                                 {% endif %}
-                            </div>
-                            <div class="col-md-6">
+                                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m<br>
+                                <br>
                                 {% if weapon.weapon.attack_modes.exists %}
-                                    {% for fm in weapon.weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
+                                    {% for fm in weapon.weapon.attack_modes.all %}{{ fm }} {% for f in fm.dice_bonus|to_range  %}<i class="fas fa-dice-five"></i>{% endfor %}<br>{% endfor %}
                                 {% endif %}
                                 {% if weapon.modifications.exists %}
-                                    <br><br>
                                     {% for wm in weapon.modifications.all %}
                                         {{ wm }}<br>
                                     {% endfor %}

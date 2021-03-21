@@ -55,25 +55,18 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <i class="fas fa-times fa-fw"></i> {% trans 'Attacks / Action' %}: {% color_value_span weapon.attacks_per_action 8 %}<br>
-                                                <i class="fas fa-bullseye fa-fw"></i> {% trans 'Accuracy' %}: {% color_value_span weapon.accuracy 4 %}<br>
                                                 <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.penetration 4 %}<br>
                                                 <i class="fas fa-heart fa-fw"></i> {% trans 'Wounds' %}: {% color_value_span weapon.wounds 4 %}<br>
                                                 {% if not weapon.is_hand_to_hand_weapon %}
                                                     <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.reload_actions 6 invert=True %}<br>
-                                                    <i class="fas fa-arrow-circle-left fa-fw"></i> {% trans 'Recoil control' %}: {% color_value_span weapon.recoil_control 4 %}<br>
-                                                {% endif %}
-                                                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>
-                                                <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
-                                                {% if not weapon.is_hand_to_hand_weapon %}
                                                     <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.capacity 30 %}<br>
                                                 {% endif %}
+                                                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
+                                                <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>
+                                                <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
                                                 {% if weapon.attack_modes.exists %}
                                                     <br>
-                                                    {% for fm in weapon.attack_modes.all %}{{ fm }}<br>{% endfor %}
+                                                    {% for fm in weapon.attack_modes.all %}{{ fm }} {% for f in fm.dice_bonus|to_range  %}<i class="fas fa-dice-five"></i>{% endfor %}<br>{% endfor %}
                                                 {% endif %}
                                                 <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-end add-form" method="post">
                                                     {% csrf_token %}

@@ -6,18 +6,18 @@ from armory.models import WeaponModificationAttributeChange, WeaponType, Weapon,
 
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
-        'name_en', 'capacity', 'attacks_per_action', 'wounds',
-        'recoil_control', 'penetration', 'weight', 'price', 'range_meter')
+        'name_en', 'capacity', 'wounds',
+        'penetration', 'weight', 'price', 'range_meter')
     list_editable = (
-        'attacks_per_action', 'capacity', 'wounds', 'recoil_control',
+        'capacity', 'wounds',
         'penetration', 'weight', 'price', 'range_meter')
     list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon')
     fieldsets = [
         (None, {
             'fields': (
                 ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
-                ('type', 'attacks_per_action', 'capacity', 'wounds', 'penetration', 'weight'),
-                ('range_meter', 'recoil_control', 'concealment', 'accuracy', 'price'),
+                ('type', 'capacity', 'wounds', 'penetration', 'weight'),
+                ('range_meter', 'concealment', 'price'),
                 ('description_en', 'description_de', 'attack_modes'),
                 ('image',)
             )

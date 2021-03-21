@@ -109,6 +109,7 @@ RANGE_CHOICES = (
 
 class WeaponAttackMode(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=100)
+    dice_bonus = models.IntegerField(_('dice bonus'), default=1)
 
     class Meta:
         translate = ('name',)
@@ -137,13 +138,10 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     type = models.ForeignKey(WeaponType, verbose_name=_('type'), on_delete=models.CASCADE)
 
-    attacks_per_action = models.IntegerField(_('attacks per action'))
     capacity = models.IntegerField(_('capacity'), null=True, blank=True)
     wounds = models.IntegerField(_('wounds'), default=0)
     penetration = models.IntegerField(_('penetration'), default=0)
-    recoil_control = models.IntegerField(_('recoil control'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
-    accuracy = models.IntegerField(_('accuracy'), default=0)
     reload_actions = models.IntegerField(_('reload actions'), default=1)
 
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
@@ -213,8 +211,8 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 
 class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTES = [
-        'attacks_per_action', 'capacity', 'wounds', 'penetration',
-        'accuracy', 'weight', 'recoil_control', 'concealment', 'reload_actions']
+        'capacity', 'wounds', 'penetration',
+        'weight', 'recoil_control', 'concealment', 'reload_actions']
     ATTRIBUTE_CHOICES = zip(ATTRIBUTES, [_(a.replace('_', '')) for a in ATTRIBUTES])
     weapon_modification = models.ForeignKey(WeaponModification, on_delete=models.CASCADE)
     attribute = models.CharField(_('attribute'), max_length=40, choices=ATTRIBUTE_CHOICES)
