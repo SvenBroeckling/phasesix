@@ -111,6 +111,10 @@ Nimmt ein Charakter *Treffer* hin, werden diese um den *Schutzwert* des Ziels ve
 
 Jeder nicht durch den *Schutzwert* verhinderte Treffer wird zu so vielen Wunden, wie es bei der Waffe oder dem Effekt angegeben ist.
 
+#### Bonuswunden
+
+Sind bei der Waffe Bonuswunden angegeben, so werden diese direkt verursacht sobald einer der regulären Treffer der Waffe in eine Wunde umgewandelt wird. Sie werden also der Summe der Wunden hinzugefügt, und stellen *nicht* die Wunden pro Treffer dar.
+
 #### Wunden
 
 Eine *Wunde* wird direkt zu den hingenommenen Wunden hinzugefügt. Sie kann nur verhindert werden wenn eine *Schablone*, Ausrüstung oder anderes explizit eine Regel enthält, welche Wunden verändert.
@@ -118,26 +122,26 @@ Eine *Wunde* wird direkt zu den hingenommenen Wunden hinzugefügt. Sie kann nur 
 
 #### Waffenloser Nahkampf
 
-TODO RENEW
+Greift der Chrakter ohne Waffe an, so wirft der Spieler Trefferwürfel entsprechend seinem Wert *Nahkampf*. Der Mindestwurf entspricht dem Mindestwurf des Charakters, also in der Regel 5+.
 
-Greift der Chrakter ohne Waffe an, so wirft der Spieler Trefferwürfel entsprechend seinem Schnelligkeitswert. Der Mindestwurf entspricht dem Nahkampfmindestwurf, also 7 - *Fertigkeit Nahkampf*, mindestens aber 2+.
+Ist der Wert *Kraft* des Charakters höher als 2, so verursacht der erfolgreiche Angriff 1 *Bonuswunde*.
 
-Ein waffenloser Nahkampfangriff verursacht eine Wunde pro Treffer, wenn die Kraft des Charakters 3 oder weniger ist. Ist die Kraft höher als 3, so verursacht ein waffenloser Nahkampfangriff 2 Wunden pro Treffer.
+Ist der Wert *Schnelligkeit* des Charakters höher als 2, so fügt der Charakter dem Wurf einen Würfel hinzu. 
 
 Der Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die Reichweite beträgt 1 Meter.
 
-
 ### Werfen von Gegenständen
 
-TODO
+Wird ein Gegenstand, etwa eine Granate, auf ein Ziel geworfen, so wirft der Charakter auf seinen Wert *Werfen*. Der Mindestwurf entspricht dem Mindestwurf des Charakters, in der Regel also 5+.
 
-Abweichung
+Ergibt der Wurf mindestens einen Erfolg, so hat der Charakter sein Ziel getroffen.
 
-D12 -> Richtung
-D6 -> Meter
+#### Abweichung
 
-### Würfelpool und Gruppenwürfel
+Zeigt der Wurf auf *Werfen* keinen Erfolg, so ist der Wurf fehlgeschlagen. In diesem Fall wird auf die Abweichung geworfen. 
 
-TODO
+Zunächst wird ein W12 geworfen, um die Richtung der Abweichung zu ermitteln. Das Resultat des Wurfes ergibt die Richtung in Form der "Uhrzeit", gesehen von dem Werfenden Charakter mit Blick auf das Ziel. Eine 3 weicht somit, gesehen vom Werfenden, nach rechts vom Ziel ab.
 
-tba
+Danach wird ein W6 geworfen, welcher die Entfernung der Abweichung in Metern ermittelt.
+
+Das geworfene Objekt landet somit an dem ermittelten Ort.

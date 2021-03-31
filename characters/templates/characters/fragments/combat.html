@@ -10,19 +10,18 @@
                 <tr>
                     <th>
                         {% trans 'Action' %}<br>
-                        <small>{% trans 'Type' %}</small>
                     </th>
                     <th class="text-end">
-                        {% trans 'Roll' %}<br>
-                        <small>{% trans 'Time' %}</small>
+                        <small>{% trans 'Attack Dice' %}</small>
                     </th>
                     <th class="text-end">
-                        {% trans 'Damage' %}<br>
                         <small>{% trans 'Penetration' %}</small>
                     </th>
                     <th class="text-end">
+                        {% trans 'Bonus Wounds' %}<br>
+                    </th>
+                    <th class="text-end">
                         {% trans 'Range' %}<br>
-                        <small>{% trans 'Area of effect' %}</small>
                     </th>
                 </tr>
                 </thead>
@@ -33,16 +32,15 @@
                             <small>{% trans 'Melee' %}</small>
                         </td>
                         <td class="text-end">
-                            {% color_value_span object.weaponless_minimum_roll 7 invert=True %}+
-                            <br>
-                            <small>{% color_value_span object.weaponless_attacks 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
+                            {% trans 'Weaponless Attack' %} {% color_value_span object.weaponless_attack_dice 6 %} <i class="fas text-muted fa-dice-five"></i>
                         </td>
                         <td class="text-end">
-                            {% for i in object.weaponless_wounds|to_range %}
+                            {% color_value_span 0 3 %}
+                        </td>
+                        <td class="text-end">
+                            {% for i in object.weaponless_bonus_wounds|to_range %}
                                 <i class="fas fa-heart text-danger"></i>
                             {% endfor %}
-                            <br>
-                            {% color_value_span 0 3 %}
                         </td>
                         <td class="text-end">
                             1m
@@ -55,16 +53,18 @@
                             <small>{{ w.weapon.type }}</small>
                         </td>
                         <td class="text-end">
-                            {% color_value_span w.attack_roll 7 invert=True %}+
-                            <br>
-                            <small>{% color_value_span w.weapon.attacks_per_action 5 %} <abbr title="{% trans 'Attacks per Action' %}">{% trans 'ApA' %}</abbr></small>
+                            {% for am in w.attack_modes %}
+                                {{ am.0 }} {% color_value_span am.1 7 %} <i class="fas text-muted fa-dice-five"></i><br>
+                            {% endfor %}
+                        </td>
+                        <td class="text-end">
+                            {% color_value_span w.modified_penetration 3 %}
                         </td>
                         <td class="text-end">
                             {% for i in w.modified_wounds|to_range %}
                                 <i class="fas fa-heart text-danger"></i>
                             {% endfor %}
                             <br>
-                            {% color_value_span w.modified_penetration 3 %}
                         </td>
                         <td class="text-end">
                             {{ w.weapon.range_meter }}m
@@ -79,6 +79,8 @@
                         </td>
                         <td class="text-end">
                             {% color_value_span i.use_roll 7 %}+
+                        </td>
+                        <td class="text-end">
                         </td>
                         <td class="text-end">
                         </td>
@@ -107,7 +109,7 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -116,7 +118,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Run" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -125,7 +127,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Crawl" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -134,7 +136,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Change Stance" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>

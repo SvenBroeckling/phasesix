@@ -116,19 +116,15 @@ class Character(models.Model):
         return res
 
     @property
-    def weaponless_attacks(self):
-        return self.quickness
+    def weaponless_attack_dice(self):
+        bonus = 1 if self.quickness > 2 else 0
+        return self.characterskill_set.melee_combat_skill().value + bonus
 
     @property
-    def weaponless_minimum_roll(self):
-        roll = 7 - self.characterskill_set.melee_combat_skill().value
-        return roll if roll >= 2 else 2
-
-    @property
-    def weaponless_wounds(self):
-        if self.strength > 3:
-            return 2
-        return 1
+    def weaponless_bonus_wounds(self):
+        if self.strength > 2:
+            return 1
+        return 0
 
     @property
     def wounds_taken(self):
@@ -401,18 +397,16 @@ class CharacterWeapon(models.Model):
     class Meta:
         ordering = ('weapon__id',)
 
-    def attack_roll(self):
-        mods = Decimal(0)
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='accuracy'):
-                mods += wmm.modifier
-
+    def attack_modes(self):
         skill = self.character.characterskill_set.ranged_combat_skill()
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
 
-        roll = 7 - skill.value - mods
-        return roll if roll >= 2 else 2
+        modes = []
+        for wm in self.weapon.weaponattackmode_set.all():
+            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus))
+
+        return modes
 
     @property
     def modified_penetration(self):

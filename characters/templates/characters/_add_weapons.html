@@ -64,9 +64,9 @@
                                                 <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
                                                 <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>
                                                 <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
-                                                {% if weapon.attack_modes.exists %}
+                                                {% if weapon.weaponattackmode_set.exists %}
                                                     <br>
-                                                    {% for fm in weapon.attack_modes.all %}{{ fm }} {% for f in fm.dice_bonus|to_range  %}<i class="fas fa-dice-five"></i>{% endfor %}<br>{% endfor %}
+                                                    {% for fm in weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }} + {% color_value_span fm.dice_bonus 6 %} <i class="fas fa-dice-five"></i><br>{% endfor %}
                                                 {% endif %}
                                                 <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-end add-form" method="post">
                                                     {% csrf_token %}

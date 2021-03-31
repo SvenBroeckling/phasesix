@@ -107,7 +107,7 @@ RANGE_CHOICES = (
 )
 
 
-class WeaponAttackMode(models.Model, metaclass=TransMeta):
+class AttackMode(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=100)
     dice_bonus = models.IntegerField(_('dice bonus'), default=1)
 
@@ -139,15 +139,13 @@ class Weapon(models.Model, metaclass=TransMeta):
     type = models.ForeignKey(WeaponType, verbose_name=_('type'), on_delete=models.CASCADE)
 
     capacity = models.IntegerField(_('capacity'), null=True, blank=True)
-    wounds = models.IntegerField(_('wounds'), default=0)
+    wounds = models.IntegerField(_('bonus wounds'), default=0)
     penetration = models.IntegerField(_('penetration'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
     reload_actions = models.IntegerField(_('reload actions'), default=1)
 
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=8)
-
-    attack_modes = models.ManyToManyField(WeaponAttackMode, verbose_name=_('attack modes'))
 
     range_meter = models.IntegerField(_('range (meter)'), default=0)
 
@@ -160,6 +158,35 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+
+class WeaponAttackMode(models.Model):
+    weapon = models.ForeignKey(
+        Weapon,
+        on_delete=models.CASCADE,
+        verbose_name=_('Weapon'))
+    attack_mode = models.ForeignKey(
+        AttackMode,
+        on_delete=models.CASCADE,
+        verbose_name=_('Attack Mode'))
+    dice_bonus_override = models.IntegerField(
+        _('dice bonus override'),
+        blank=True,
+        null=True)
+
+    class Meta:
+        verbose_name = _('weapon attack mode')
+        verbose_name_plural = _('weapon attack modes')
+
+    def __str__(self):
+        return f'{self.weapon} - {self.attack_mode}: {self.dice_bonus_override}'
+
+    @property
+    def dice_bonus(self):
+        if self.dice_bonus_override:
+            return self.dice_bonus_override
+        return self.attack_mode.dice_bonus
+
 
 
 class WeaponModificationTypeQuerySet(models.QuerySet):

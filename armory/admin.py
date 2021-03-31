@@ -1,7 +1,11 @@
 from django.contrib import admin
 
 from armory.models import WeaponModificationAttributeChange, WeaponType, Weapon, WeaponModificationType, \
-    WeaponModification, RiotGear, ItemType, Item, WeaponAttackMode
+    WeaponModification, RiotGear, ItemType, Item, AttackMode, WeaponAttackMode
+
+
+class WeaponAttackModeInline(admin.TabularInline):
+    model = WeaponAttackMode
 
 
 class WeaponAdmin(admin.ModelAdmin):
@@ -12,13 +16,14 @@ class WeaponAdmin(admin.ModelAdmin):
         'capacity', 'wounds',
         'penetration', 'weight', 'price', 'range_meter')
     list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon')
+    inlines = [WeaponAttackModeInline]
     fieldsets = [
         (None, {
             'fields': (
                 ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
                 ('type', 'capacity', 'wounds', 'penetration', 'weight'),
                 ('range_meter', 'concealment', 'price'),
-                ('description_en', 'description_de', 'attack_modes'),
+                ('description_en', 'description_de',),
                 ('image',)
             )
         }),
@@ -63,7 +68,12 @@ class WeaponModificationAdmin(admin.ModelAdmin):
     inlines = [WeaponModificationAttributeChangeInline]
 
 
-admin.site.register(WeaponAttackMode)
+
+class AttackModeAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'dice_bonus')
+    list_editable = ('dice_bonus',)
+
+admin.site.register(AttackMode, AttackModeAdmin)
 admin.site.register(WeaponType, WeaponTypeAdmin)
 admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(WeaponModificationType)
