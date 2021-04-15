@@ -1,11 +1,13 @@
-// Darkly 5.0.0-beta2
+// Darkly 5.0.0-beta3
 // Bootswatch
 
 
 // Variables
 
 $web-font-path: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" !default;
-@import url($web-font-path);
+@if $web-font-path {
+  @import url($web-font-path);
+}
 
 // Typography
 
@@ -19,6 +21,10 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0
 
 .input-group-addon {
   color: $white;
+}
+
+.form-floating > label {
+  color: $gray-700;
 }
 
 // Navs
