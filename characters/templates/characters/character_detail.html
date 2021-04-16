@@ -132,12 +132,12 @@
         <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
             <div>
                 <h3 class="mb-0">{{ object.name }}</h3>
-                <small>{% template_category_string object 3 %}</small><br>
-                <small>{% template_category_string object 2 %}</small><br>
-                <small>{% template_category_string object 6 %}</small><br>
+                <small>{% template_category_string object 3 "" %}</small><br>
+                <small>{% template_category_string object 2 "" %}</small><br>
+                <small>{% template_category_string object 6 "" %}</small><br>
             </div>
 
-            <div class="sidebar-trigger mt-2" data-sidebar-title="{% trans 'Character' %}"
+            <div class="{% if may_edit %}sidebar-trigger{% endif %} mt-2" data-sidebar-title="{% trans 'Character' %}"
                          data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="character" %}">
                 {% if character.image %}
                     {% thumbnail character.image "140x140" crop="center" as im %}
@@ -146,9 +146,7 @@
                 {% else %}
                     <img class="rounded img-fluid" width="140" height="140" src="{% static 'img/silhuette.png' %}" alt="{{ object.name }}">
                 {% endif %}
-
             </div>
-
         </div>
     </div>
 {% endblock %}

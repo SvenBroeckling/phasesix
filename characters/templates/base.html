@@ -30,11 +30,11 @@
 
 <body>
 
-<div id="bs-canvas-right" class="bs-canvas bs-canvas-right position-fixed bg-dark h-100">
-    <header class="bs-canvas-header p-3 bg-primary overflow-auto">
-        <button type="button" class="bs-canvas-close float-left btn btn-danger btn-sm close" aria-label="Close"><span aria-hidden="true" class="text-light">&times;</span>
+<div id="bs-canvas-right" class="bs-canvas bs-canvas-right position-fixed bg-light h-100">
+    <header class="bs-canvas-header p-3 bg-secondary overflow-auto">
+        <button type="button" class="bs-canvas-close float-end btn btn-dark btn-sm close" aria-label="Close"><span aria-hidden="true" class="text-light">&times;</span>
         </button>
-        <h4 class="d-inline-block text-light mb-0 float-right">{% trans 'Properties' %}</h4>
+        <h4 class="d-inline-block text-light mb-0">{% trans 'Properties' %}</h4>
     </header>
     <div class="bs-canvas-content px-3 py-5">
     </div>
@@ -87,9 +87,11 @@
                             </li>
                             {% endcomment %}
 
+                            {% comment %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'forum:index' %}">{% trans 'Forum' %}</a>
                             </li>
+                            {% endcomment %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'contact' %}">{% trans 'Contact / Privacy' %}</a>
                             </li>

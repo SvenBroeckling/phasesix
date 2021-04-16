@@ -14,6 +14,8 @@
                 special events.
             {% endblocktrans %}
         </p>
+
+        {% if may_edit %}
         <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post"
               class="add-reputation-form">
             {% csrf_token %}
@@ -27,7 +29,8 @@
                 </button>
             </div>
         </form>
-        {% if character.reputation_available %}
+
+        {% if character.reputation_available > 0 %}
             <p>
                 {% blocktrans %}
                     You have unspent reputation points. Use them to add new templates to your
@@ -36,7 +39,7 @@
             </p>
             {% if may_edit %}
                 <button
-                        class="btn btn-primary btn-block mb-3 mt-3 modal-trigger"
+                        class="btn btn-dark btn-block mb-3 mt-3 modal-trigger"
                         data-bs-toggle="modal"
                         data-bs-target=".character-modal"
                         data-modal-title="{% trans 'Reputation' %}"
@@ -44,7 +47,6 @@
                     {% trans 'Add character templates' %}
                 </button>
             {% endif %}
-
         {% else %}
             <p>
                 {% blocktrans %}
@@ -52,5 +54,6 @@
                 {% endblocktrans %}
             </p>
         {% endif %}
+    {% endif  %}
     </div>
 </div>

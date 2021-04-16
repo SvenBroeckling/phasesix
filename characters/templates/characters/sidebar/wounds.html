@@ -1,15 +1,16 @@
 {% load i18n characters_extras %}
 
+{% if may_edit %}
 <div class="row">
     <div class="col-12">
         <div class="btn-group w-100">
-            <a class="btn btn-primary btn-sm action-link"
+            <a class="btn btn-dark btn-sm action-link"
                href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
                     class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal' %}</a>
-            <a class="btn btn-primary btn-sm action-link"
+            <a class="btn btn-dark btn-sm action-link"
                href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
                     class="far fa-heart fa-fw text-danger"></i> {% trans 'Damage' %}</a>
-            <a class="btn btn-primary btn-sm action-link"
+            <a class="btn btn-dark btn-sm action-link"
                href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
                     class="fas fa-heart fa-fw text-info"></i> {% trans 'Boost' %}</a>
         </div>
@@ -17,12 +18,27 @@
 
     <div class="col-12 mb-4">
         <a
-                class="btn btn-primary btn-sm w-100 modal-trigger"
+                class="btn btn-dark btn-sm w-100 modal-trigger"
                 data-url="{% url 'characters:xhr_rest' pk=object.id %}"
                 data-bs-toggle="modal"
                 data-bs-target=".character-modal"
                 data-modal-title="{% trans 'Rest' %}"
                 href=""><i class="fas fa-plus fa-fw text-info"></i> {% trans 'Rest' %}</a>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-12 text-center mt-1 mb-3">
+        {% for i in object.health|to_range %}
+            <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
+        {% endfor %}
+        {% for i in object.wounds_taken|to_range %}
+            <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+        {% endfor %}
+        {% for i in object.boost|to_range %}
+            <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
+        {% endfor %}
     </div>
 </div>
 
@@ -48,7 +64,7 @@
 </div>
 
 <div class="row mt-3">
-    <h3>{% trans 'Status effects' %}</h3>
+    <h4>{% trans 'Status effects' %}</h4>
     {% for se in status_effects %}
         {% with se|status_effect_value:object as se_value %}
             <div class="col-12 text-center pt-2">
@@ -63,6 +79,7 @@
                                     class="fa-layers-counter">{{ se_value }}</span>
                         </span>
 
+                        {% if may_edit %}
                         <input
                                 class="status-effect-value mt-3"
                                 type="number"
@@ -75,6 +92,7 @@
                                 data-slider-tooltip="show"
                                 data-slider-ticks="[0, 5, 10]"
                                 data-slider-ticks-labels='["0", "5", "10"]'>
+                        {% endif %}
                     </div>
                 </div>
             </div>
