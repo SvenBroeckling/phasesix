@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'simplemde',
     'gmtools',
     'armory',
+    'bestiary',
     'world',
     'homebrew',
     'rules',
