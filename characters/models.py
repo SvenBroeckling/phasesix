@@ -28,7 +28,7 @@ class Character(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        help_text=_('Characters without user will be cleaned daily.'),
+        help_text=_('Characters without user will be cleaned daily.')
     )
 
     extensions = models.ManyToManyField(
