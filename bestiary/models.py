@@ -64,4 +64,5 @@ class Foe(models.Model, metaclass=TransMeta):
 class FoeAction(models.Model, metaclass=TransMeta):
     foe = models.ForeignKey(Foe, verbose_name=_('foe'), on_delete=models.CASCADE)
     name = models.CharField(_('name'), max_length=256)
+    skill = models.IntegerField(_('skill'), default=6)
     effect = models.TextField(_('effect'))
