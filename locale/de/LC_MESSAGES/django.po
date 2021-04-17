@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-31 13:30+0000\n"
-"PO-Revision-Date: 2021-03-31 15:32+0200\n"
+"POT-Creation-Date: 2021-04-17 18:34+0000\n"
+"PO-Revision-Date: 2021-04-17 20:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -20,38 +20,40 @@ msgstr ""
 
 #: armory/models.py:22 armory/models.py:39 armory/models.py:80
 #: armory/models.py:111 armory/models.py:136 armory/models.py:203
-#: armory/models.py:225 armory/models.py:261 campaigns/models.py:10
-#: campaigns/models.py:53 campaigns/models.py:61 characters/models.py:16
-#: forum/models.py:33 forum/models.py:51 horror/models.py:11
-#: horror/models.py:24 magic/models.py:9 magic/models.py:25 magic/models.py:41
-#: magic/models.py:57 magic/models.py:73 magic/models.py:89 magic/models.py:105
-#: magic/models.py:121 magic/models.py:142 magic/models.py:186
-#: rules/models.py:22 rules/models.py:47 rules/models.py:121
-#: rules/models.py:142 rules/models.py:168 rules/models.py:225
-#: rules/models.py:267 rules/models.py:344
+#: armory/models.py:225 armory/models.py:261 bestiary/models.py:8
+#: bestiary/models.py:20 bestiary/models.py:36 bestiary/models.py:68
+#: campaigns/models.py:10 campaigns/models.py:53 campaigns/models.py:61
+#: characters/models.py:16 forum/models.py:33 forum/models.py:51
+#: horror/models.py:11 horror/models.py:24 magic/models.py:9 magic/models.py:25
+#: magic/models.py:41 magic/models.py:57 magic/models.py:73 magic/models.py:89
+#: magic/models.py:105 magic/models.py:121 magic/models.py:142
+#: magic/models.py:186 rules/models.py:22 rules/models.py:47
+#: rules/models.py:121 rules/models.py:142 rules/models.py:168
+#: rules/models.py:225 rules/models.py:267 rules/models.py:344
 msgid "name"
 msgstr "Name"
 
 #: armory/models.py:23 armory/models.py:40 armory/models.py:81
 #: armory/models.py:137 armory/models.py:204 armory/models.py:226
-#: armory/models.py:262 characters/models.py:17 magic/models.py:187
-#: rules/models.py:24 rules/models.py:48 rules/models.py:169
-#: rules/models.py:238
+#: armory/models.py:262 bestiary/models.py:37 characters/models.py:17
+#: magic/models.py:187 rules/models.py:24 rules/models.py:48
+#: rules/models.py:169 rules/models.py:238
 msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:24 armory/models.py:46 armory/models.py:82
-#: armory/models.py:132 armory/models.py:259 characters/models.py:382
-#: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
-#: forum/models.py:79 rules/models.py:29 rules/models.py:50 rules/models.py:144
-#: rules/models.py:170 rules/models.py:269 rules/models.py:346
+#: armory/models.py:132 armory/models.py:259 bestiary/models.py:33
+#: characters/models.py:382 forum/models.py:22 forum/models.py:28
+#: forum/models.py:32 forum/models.py:48 forum/models.py:79 rules/models.py:29
+#: rules/models.py:50 rules/models.py:144 rules/models.py:170
+#: rules/models.py:269 rules/models.py:346
 msgid "created at"
 msgstr "Erzeugt am"
 
 #: armory/models.py:25 armory/models.py:54 armory/models.py:83
-#: armory/models.py:133 armory/models.py:260 rules/models.py:30
-#: rules/models.py:51 rules/models.py:145 rules/models.py:171
-#: rules/models.py:270 rules/models.py:347
+#: armory/models.py:133 armory/models.py:260 bestiary/models.py:34
+#: rules/models.py:30 rules/models.py:51 rules/models.py:145
+#: rules/models.py:171 rules/models.py:270 rules/models.py:347
 msgid "modified at"
 msgstr "Modifiziert am"
 
@@ -63,7 +65,8 @@ msgstr "Gegenstandstyp"
 msgid "item types"
 msgstr "Gegenstandstypen"
 
-#: armory/models.py:41 armory/models.py:139 magic/models.py:204
+#: armory/models.py:41 armory/models.py:139 bestiary/models.py:39
+#: magic/models.py:204
 msgid "type"
 msgstr "Typ"
 
@@ -163,7 +166,6 @@ msgid "bonus wounds"
 msgstr "Bonuswunden"
 
 #: armory/models.py:143
-#: characters/templates/characters/fragments/combat.html:189
 msgid "penetration"
 msgstr "Durchschlag"
 
@@ -243,6 +245,71 @@ msgstr "Ausweichen"
 #: armory/models.py:272 armory/models.py:273
 msgid "riot gear"
 msgstr "Rüstung"
+
+#: bestiary/models.py:12
+msgid "foe type"
+msgstr "Gegnertyp"
+
+#: bestiary/models.py:13
+msgid "foe types"
+msgstr "Gegnertypen"
+
+#: bestiary/models.py:24
+msgid "foe resistance or weakness"
+msgstr "Gegner Widerstand oder Schwäche"
+
+#: bestiary/models.py:25
+msgid "foe resistances or weaknesses"
+msgstr "Gegner Widerstände oder Schwächen"
+
+#: bestiary/models.py:41 characters/models.py:48
+msgid "health"
+msgstr "Lebenspunkte"
+
+#: bestiary/models.py:42
+msgid "actions"
+msgstr "Aktionen"
+
+#: bestiary/models.py:43
+msgid "movement"
+msgstr "Bewegung"
+
+#: bestiary/models.py:44
+msgid "minimum roll"
+msgstr "Mindestwurf"
+
+#: bestiary/models.py:50
+msgid "resistances"
+msgstr "Widerstände"
+
+#: bestiary/models.py:55
+msgid "weaknesses"
+msgstr "Schwächen"
+
+#: bestiary/models.py:59 bestiary/models.py:67
+msgid "foe"
+msgstr "Gegner"
+
+#: bestiary/models.py:60
+msgid "foes"
+msgstr "Gegner"
+
+#: bestiary/models.py:69 horror/models.py:65 rules/models.py:128
+#: rules/models.py:304
+msgid "skill"
+msgstr "Fertigkeit"
+
+#: bestiary/models.py:70
+msgid "effect"
+msgstr "Effekt"
+
+#: bestiary/models.py:74
+msgid "foe action"
+msgstr "Gegneraktion"
+
+#: bestiary/models.py:75
+msgid "foe actions"
+msgstr "Gegneraktionen"
 
 #: campaigns/models.py:15 characters/models.py:22
 msgid "backdrop image"
@@ -355,10 +422,6 @@ msgstr "Kampagne"
 msgid "reputation"
 msgstr "Reputation"
 
-#: characters/models.py:48
-msgid "health"
-msgstr "Lebenspunkte"
-
 #: characters/models.py:49
 msgid "boost"
 msgstr "Boost"
@@ -428,33 +491,27 @@ msgstr "Regelbuch"
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:92 forum/templates/forum/board_detail.html:43
-#: forum/templates/forum/index.html:7
-#: forum/templates/forum/thread_detail.html:53
-msgid "Forum"
-msgstr "Forum"
-
-#: characters/templates/base.html:95
+#: characters/templates/base.html:98
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
-#: characters/templates/base.html:107
+#: characters/templates/base.html:110
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:112
+#: characters/templates/base.html:115
 msgid "Extension Grids"
 msgstr "Erweiterungstabellen"
 
-#: characters/templates/base.html:115
+#: characters/templates/base.html:118
 msgid "Template Statistics"
 msgstr "Schablonenstatistiken"
 
-#: characters/templates/base.html:122
+#: characters/templates/base.html:125
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:127 templates/registration/login.html:11
+#: characters/templates/base.html:130 templates/registration/login.html:11
 msgid "Login"
 msgstr "Anmelden"
 
@@ -486,7 +543,7 @@ msgstr "Wert"
 #: characters/templates/characters/_add_riot_gear.html:44
 #: characters/templates/characters/_add_weapon_mod.html:60
 #: characters/templates/characters/_add_weapons.html:74
-#: characters/templates/characters/sidebar/reputation.html:25
+#: characters/templates/characters/sidebar/reputation.html:27
 msgid "Added"
 msgstr "Hinzugefügt"
 
@@ -572,14 +629,14 @@ msgstr "Rast"
 #: characters/templates/characters/_rest.html:25
 #: characters/templates/characters/fragments/health.html:114
 #: characters/templates/characters/fragments/health.html:115
-#: characters/templates/characters/sidebar/dice.html:6
-#: characters/templates/characters/sidebar/dice.html:11
-#: characters/templates/characters/sidebar/dice.html:19
+#: characters/templates/characters/sidebar/dice.html:7
+#: characters/templates/characters/sidebar/dice.html:12
+#: characters/templates/characters/sidebar/dice.html:22
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
 #: characters/templates/characters/_rest.html:25
-#: characters/templates/characters/sidebar/dice.html:22
+#: characters/templates/characters/sidebar/dice.html:25
 msgid ""
 "Add bonus dice to any roll in the game, or use them to create an additional "
 "action in combat at any time.<br><br>Bonus dice are expended on use and "
@@ -592,14 +649,14 @@ msgstr ""
 #: characters/templates/characters/_rest.html:28
 #: characters/templates/characters/fragments/health.html:124
 #: characters/templates/characters/fragments/health.html:125
-#: characters/templates/characters/sidebar/dice.html:8
-#: characters/templates/characters/sidebar/dice.html:13
-#: characters/templates/characters/sidebar/dice.html:31
+#: characters/templates/characters/sidebar/dice.html:9
+#: characters/templates/characters/sidebar/dice.html:14
+#: characters/templates/characters/sidebar/dice.html:34
 msgid "Rerolls"
 msgstr "Wiederholungswürfel"
 
 #: characters/templates/characters/_rest.html:28
-#: characters/templates/characters/sidebar/dice.html:34
+#: characters/templates/characters/sidebar/dice.html:37
 msgid ""
 "Use a reroll to roll any rolled die.<br><br>Rerolls are expended on use and "
 "refresh at any rest."
@@ -611,9 +668,9 @@ msgstr ""
 #: characters/templates/characters/_rest.html:49
 #: characters/templates/characters/fragments/health.html:119
 #: characters/templates/characters/fragments/health.html:120
-#: characters/templates/characters/sidebar/dice.html:7
-#: characters/templates/characters/sidebar/dice.html:12
-#: characters/templates/characters/sidebar/dice.html:25
+#: characters/templates/characters/sidebar/dice.html:8
+#: characters/templates/characters/sidebar/dice.html:13
+#: characters/templates/characters/sidebar/dice.html:28
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
@@ -630,7 +687,7 @@ msgstr ""
 "<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
 "sich bei einer Rast von mindestens 8 Stunden wieder auf."
 
-#: characters/templates/characters/character_detail.html:140
+#: characters/templates/characters/character_detail.html:142
 #: characters/templates/characters/character_detail.html:187
 msgid "Character"
 msgstr "Charakter"
@@ -731,7 +788,7 @@ msgid "Preview"
 msgstr "Vorschau"
 
 #: characters/templates/characters/fragments/advancement.html:7
-#: characters/templates/characters/sidebar/reputation.html:42
+#: characters/templates/characters/sidebar/reputation.html:45
 msgid "Reputation"
 msgstr "Reputation"
 
@@ -879,43 +936,6 @@ msgstr "Stellung ändern"
 msgid "Actions"
 msgstr "Aktionen"
 
-#: characters/templates/characters/fragments/combat.html:175
-msgid "Attack Roll"
-msgstr "Angriffswurf"
-
-#: characters/templates/characters/fragments/combat.html:176
-#: rules/models.py:148 rules/templates/rules/_template_widget.html:24
-msgid "Skill"
-msgstr "Fertigkeit"
-
-#: characters/templates/characters/fragments/combat.html:176
-msgid "Weapon Accuracy"
-msgstr "Waffengenauigkeit"
-
-#: characters/templates/characters/fragments/combat.html:179
-msgid "Cover Roll"
-msgstr "Deckungswurf"
-
-#: characters/templates/characters/fragments/combat.html:181
-msgid "Mostly covered"
-msgstr "Größtenteils verdeckt"
-
-#: characters/templates/characters/fragments/combat.html:182
-msgid "Half cover or prone"
-msgstr "Halbe Deckung oder liegend"
-
-#: characters/templates/characters/fragments/combat.html:183
-msgid "Minimal cover"
-msgstr "Minimale Deckung"
-
-#: characters/templates/characters/fragments/combat.html:187
-msgid "Armor roll"
-msgstr "Rüstungswurf"
-
-#: characters/templates/characters/fragments/combat.html:189
-msgid "Armor value"
-msgstr "Rüstungswert"
-
 #: characters/templates/characters/fragments/gear.html:15
 #: characters/templates/characters/fragments/gear.html:55
 msgid "Add Armor"
@@ -932,7 +952,7 @@ msgstr "Entfernen"
 
 #: characters/templates/characters/fragments/gear.html:29
 #: characters/templates/characters/fragments/gear.html:94
-#: characters/templates/characters/sidebar/wounds.html:11
+#: characters/templates/characters/sidebar/wounds.html:12
 msgid "Damage"
 msgstr "Schaden"
 
@@ -1010,18 +1030,21 @@ msgid "Status"
 msgstr "Status"
 
 #: characters/templates/characters/fragments/health.html:50
-#: characters/templates/characters/sidebar/wounds.html:31 gmtools/forms.py:19
+#: characters/templates/characters/sidebar/wounds.html:34
+#: characters/templates/characters/sidebar/wounds.html:47 gmtools/forms.py:19
 msgid "Health"
 msgstr "Lebenspunkte"
 
 #: characters/templates/characters/fragments/health.html:53
 #: characters/templates/characters/sidebar/wounds.html:37
+#: characters/templates/characters/sidebar/wounds.html:53
 msgid "Wound"
 msgstr "Wunde"
 
 #: characters/templates/characters/fragments/health.html:56
-#: characters/templates/characters/sidebar/wounds.html:14
-#: characters/templates/characters/sidebar/wounds.html:43
+#: characters/templates/characters/sidebar/wounds.html:15
+#: characters/templates/characters/sidebar/wounds.html:40
+#: characters/templates/characters/sidebar/wounds.html:59
 msgid "Boost"
 msgstr "Boost"
 
@@ -1036,12 +1059,12 @@ msgstr "Benutze dies um Zauber im Magie oder Kampftab zu sprechen."
 #: characters/templates/characters/fragments/health.html:71
 #: characters/templates/characters/fragments/health.html:74
 #: characters/templates/characters/fragments/health.html:81
-#: characters/templates/characters/sidebar/horror.html:18
+#: characters/templates/characters/sidebar/horror.html:20
 msgid "Stress"
 msgstr "Stress"
 
 #: characters/templates/characters/fragments/health.html:77
-#: characters/templates/characters/sidebar/horror.html:24
+#: characters/templates/characters/sidebar/horror.html:26
 msgid "Possible Stress"
 msgstr "Möglicher Stress"
 
@@ -1133,31 +1156,31 @@ msgstr "Charackter löschen"
 msgid "Delete Character"
 msgstr "Charakter löschen"
 
-#: characters/templates/characters/sidebar/dice.html:6
+#: characters/templates/characters/sidebar/dice.html:7
 msgid "+Bonus"
 msgstr "+Bonus"
 
-#: characters/templates/characters/sidebar/dice.html:7
+#: characters/templates/characters/sidebar/dice.html:8
 msgid "+Destiny"
 msgstr "+Schicksal"
 
-#: characters/templates/characters/sidebar/dice.html:8
+#: characters/templates/characters/sidebar/dice.html:9
 msgid "+Reroll"
 msgstr "+Wiederholung"
 
-#: characters/templates/characters/sidebar/dice.html:11
+#: characters/templates/characters/sidebar/dice.html:12
 msgid "-Bonus"
 msgstr "-Bonus"
 
-#: characters/templates/characters/sidebar/dice.html:12
+#: characters/templates/characters/sidebar/dice.html:13
 msgid "-Destiny"
 msgstr "-Schicksal"
 
-#: characters/templates/characters/sidebar/dice.html:13
+#: characters/templates/characters/sidebar/dice.html:14
 msgid "-Reroll"
 msgstr "-Widerholung"
 
-#: characters/templates/characters/sidebar/dice.html:28
+#: characters/templates/characters/sidebar/dice.html:31
 msgid ""
 "Destiny dice may be added to rolls just like bonus dice, but they always "
 "succeed on a 4+ roll. Additionally they may be used to steal an action in "
@@ -1170,15 +1193,15 @@ msgstr ""
 "<br><br>Schicksalswürfel werden bei der Verwendung erschöpft und frischen "
 "sich bei einer Rast von mindestens 10 Stunden wieder auf."
 
-#: characters/templates/characters/sidebar/horror.html:8
+#: characters/templates/characters/sidebar/horror.html:9
 msgid "Gain Stress"
 msgstr "Stress hinzufügen"
 
-#: characters/templates/characters/sidebar/horror.html:11
+#: characters/templates/characters/sidebar/horror.html:12
 msgid "Remove Stress"
 msgstr "Stress entfernen"
 
-#: characters/templates/characters/sidebar/horror.html:21
+#: characters/templates/characters/sidebar/horror.html:23
 msgid ""
 "This is your stress level. You will geht a quirk if it reaches your stress "
 "maximum."
@@ -1186,7 +1209,7 @@ msgstr ""
 "Dies ist dein Stresslevel. wenn du das Maximum an Stress erreichst wirst du "
 "einen Tick bekommen."
 
-#: characters/templates/characters/sidebar/horror.html:27
+#: characters/templates/characters/sidebar/horror.html:29
 msgid ""
 "This is possible stress your can cope with. You will get a quirk if all "
 "slots are filled."
@@ -1194,11 +1217,11 @@ msgstr ""
 "Dies ist der mögliche Stress mit dem du umgehen kannst. Du wirst einen Tick "
 "erhalten wenn alle Plätze gefüllt sind."
 
-#: characters/templates/characters/sidebar/horror.html:32
+#: characters/templates/characters/sidebar/horror.html:34
 msgid "Your quirks"
 msgstr "Deine Eigenarten"
 
-#: characters/templates/characters/sidebar/horror.html:41
+#: characters/templates/characters/sidebar/horror.html:44
 msgid "You don't have any"
 msgstr "Du hast keine"
 
@@ -1228,7 +1251,7 @@ msgstr ""
 "\tbesondere Anlässe.\n"
 " "
 
-#: characters/templates/characters/sidebar/reputation.html:32
+#: characters/templates/characters/sidebar/reputation.html:35
 msgid ""
 "\n"
 "                    You have unspent reputation points. Use them to add new "
@@ -1242,11 +1265,11 @@ msgstr ""
 "deinem Charakter hinzuzufügen.\n"
 " "
 
-#: characters/templates/characters/sidebar/reputation.html:44
+#: characters/templates/characters/sidebar/reputation.html:47
 msgid "Add character templates"
 msgstr "Charakterschablonen hinzufügen"
 
-#: characters/templates/characters/sidebar/reputation.html:50
+#: characters/templates/characters/sidebar/reputation.html:52
 msgid ""
 "\n"
 "                    You don't have unspent reputation points.\n"
@@ -1256,16 +1279,16 @@ msgstr ""
 "Du hast keine verfügbaren Reputationspunkte.\n"
 " "
 
-#: characters/templates/characters/sidebar/wounds.html:8
+#: characters/templates/characters/sidebar/wounds.html:9
 msgid "Heal"
 msgstr "Heilen"
 
-#: characters/templates/characters/sidebar/wounds.html:24
 #: characters/templates/characters/sidebar/wounds.html:25
+#: characters/templates/characters/sidebar/wounds.html:26
 msgid "Rest"
 msgstr "Rast"
 
-#: characters/templates/characters/sidebar/wounds.html:34
+#: characters/templates/characters/sidebar/wounds.html:50
 msgid ""
 "A full heart. This can compensate a wound. Use the character menu to take a "
 "wound."
@@ -1273,13 +1296,13 @@ msgstr ""
 "Ein volles Herz. Dieses kann eine Wunde kompensieren. Benutze das "
 "Charaktermenü um Wunden zu erhalten."
 
-#: characters/templates/characters/sidebar/wounds.html:40
+#: characters/templates/characters/sidebar/wounds.html:56
 msgid "A wound taken. This empty heart can be restored at a hospital."
 msgstr ""
 "Eine hingenommene Wunde. Dieses leere Herz kann in einem Krankenhaus "
 "wiederhergestellt werden."
 
-#: characters/templates/characters/sidebar/wounds.html:46
+#: characters/templates/characters/sidebar/wounds.html:62
 msgid ""
 "A temporary boost, given by first aid or medicine. If you take damage this "
 "will expended first."
@@ -1287,7 +1310,7 @@ msgstr ""
 "Ein zeitweiser Boost, durch Medizin oder Erste Hilfe verursacht. Wenn du "
 "Schaden nimmst wird dieses zuerst entfernt."
 
-#: characters/templates/characters/sidebar/wounds.html:51
+#: characters/templates/characters/sidebar/wounds.html:67
 msgid "Status effects"
 msgstr "Statuseffekte"
 
@@ -1299,11 +1322,11 @@ msgstr "Charakter gelöscht."
 msgid "Text"
 msgstr "Text"
 
-#: forum/models.py:10 urpg/settings.py:110
+#: forum/models.py:10 urpg/settings.py:111
 msgid "German"
 msgstr "Deutsch"
 
-#: forum/models.py:11 urpg/settings.py:111
+#: forum/models.py:11 urpg/settings.py:112
 msgid "English"
 msgstr "Englisch"
 
@@ -1324,6 +1347,12 @@ msgstr "PhaseSix Forum: %(user)s hat auf das Thema %(thread)s geantwortet"
 #: forum/templates/forum/thread_detail.html:42
 msgid "Subscribe"
 msgstr "Abonnieren"
+
+#: forum/templates/forum/board_detail.html:43
+#: forum/templates/forum/index.html:7
+#: forum/templates/forum/thread_detail.html:53
+msgid "Forum"
+msgstr "Forum"
 
 #: forum/templates/forum/board_detail.html:49
 msgid "Create new Thread"
@@ -1539,10 +1568,6 @@ msgstr "Eigenart"
 #: horror/models.py:59 rules/models.py:298
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
-
-#: horror/models.py:65 rules/models.py:128 rules/models.py:304
-msgid "skill"
-msgstr "Fertigkeit"
 
 #: horror/models.py:69 rules/models.py:308
 msgid "skill modifier"
@@ -1878,6 +1903,10 @@ msgstr "auf Kampftab zeigen"
 msgid "skills"
 msgstr "Fertigkeiten"
 
+#: rules/models.py:148 rules/templates/rules/_template_widget.html:24
+msgid "Skill"
+msgstr "Fertigkeit"
+
 #: rules/models.py:155 rules/models.py:156 rules/models.py:314
 msgid "knowledge"
 msgstr "Wissen"
@@ -2102,6 +2131,30 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "Attack Roll"
+#~ msgstr "Angriffswurf"
+
+#~ msgid "Weapon Accuracy"
+#~ msgstr "Waffengenauigkeit"
+
+#~ msgid "Cover Roll"
+#~ msgstr "Deckungswurf"
+
+#~ msgid "Mostly covered"
+#~ msgstr "Größtenteils verdeckt"
+
+#~ msgid "Half cover or prone"
+#~ msgstr "Halbe Deckung oder liegend"
+
+#~ msgid "Minimal cover"
+#~ msgstr "Minimale Deckung"
+
+#~ msgid "Armor roll"
+#~ msgstr "Rüstungswurf"
+
+#~ msgid "Armor value"
+#~ msgstr "Rüstungswert"
 
 #~ msgid "attacks per action"
 #~ msgstr "Angriffe pro Aktion"

@@ -41,14 +41,16 @@ class Foe(models.Model, metaclass=TransMeta):
     health = models.IntegerField(_('health'), default=6)
     actions = models.IntegerField(_('actions'), default=2)
     movement = models.IntegerField(_('movement'), default=1)
-    minimum_roll = models.IntegerField(_('minimum_roll'), default=5)
+    minimum_roll = models.IntegerField(_('minimum roll'), default=5)
 
     resistances = models.ManyToManyField(
         FoeResistanceOrWeakness,
+        blank=True,
         related_name='foe_resistance_set',
         verbose_name=_('resistances'))
     weaknesses = models.ManyToManyField(
         FoeResistanceOrWeakness,
+        blank=True,
         related_name='foe_weakness_set',
         verbose_name=_('weaknesses'))
 
