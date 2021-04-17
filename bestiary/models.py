@@ -66,3 +66,9 @@ class FoeAction(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=256)
     skill = models.IntegerField(_('skill'), default=6)
     effect = models.TextField(_('effect'))
+
+    class Meta:
+        translate = ('name', 'effect')
+        verbose_name = _('foe action')
+        verbose_name_plural = _('foe actions')
+
