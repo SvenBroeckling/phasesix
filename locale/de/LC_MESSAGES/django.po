@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-17 18:34+0000\n"
-"PO-Revision-Date: 2021-04-17 20:35+0200\n"
+"POT-Creation-Date: 2021-04-17 19:43+0000\n"
+"PO-Revision-Date: 2021-04-17 21:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: armory/models.py:22 armory/models.py:39 armory/models.py:80
 #: armory/models.py:111 armory/models.py:136 armory/models.py:203
 #: armory/models.py:225 armory/models.py:261 bestiary/models.py:8
-#: bestiary/models.py:20 bestiary/models.py:36 bestiary/models.py:68
+#: bestiary/models.py:20 bestiary/models.py:40 bestiary/models.py:78
 #: campaigns/models.py:10 campaigns/models.py:53 campaigns/models.py:61
 #: characters/models.py:16 forum/models.py:33 forum/models.py:51
 #: horror/models.py:11 horror/models.py:24 magic/models.py:9 magic/models.py:25
@@ -35,7 +35,7 @@ msgstr "Name"
 
 #: armory/models.py:23 armory/models.py:40 armory/models.py:81
 #: armory/models.py:137 armory/models.py:204 armory/models.py:226
-#: armory/models.py:262 bestiary/models.py:37 characters/models.py:17
+#: armory/models.py:262 bestiary/models.py:41 characters/models.py:17
 #: magic/models.py:187 rules/models.py:24 rules/models.py:48
 #: rules/models.py:169 rules/models.py:238
 msgid "description"
@@ -65,7 +65,7 @@ msgstr "Gegenstandstyp"
 msgid "item types"
 msgstr "Gegenstandstypen"
 
-#: armory/models.py:41 armory/models.py:139 bestiary/models.py:39
+#: armory/models.py:41 armory/models.py:139 bestiary/models.py:43
 #: magic/models.py:204
 msgid "type"
 msgstr "Typ"
@@ -96,8 +96,9 @@ msgstr "Ist Homebrew"
 msgid "usable in combat"
 msgstr "Benutzbar im Kampf"
 
-#: armory/models.py:58 armory/models.py:152 campaigns/models.py:12
-#: campaigns/models.py:63 characters/models.py:19 rules/models.py:27
+#: armory/models.py:58 armory/models.py:152 bestiary/models.py:37
+#: campaigns/models.py:12 campaigns/models.py:63 characters/models.py:19
+#: rules/models.py:27
 msgid "image"
 msgstr "Bild"
 
@@ -262,54 +263,114 @@ msgstr "Gegner Widerstand oder Schwäche"
 msgid "foe resistances or weaknesses"
 msgstr "Gegner Widerstände oder Schwächen"
 
-#: bestiary/models.py:41 characters/models.py:48
+#: bestiary/models.py:45 characters/models.py:48
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: bestiary/models.py:42
+#: bestiary/models.py:46
 msgid "actions"
 msgstr "Aktionen"
 
-#: bestiary/models.py:43
+#: bestiary/models.py:47
 msgid "movement"
 msgstr "Bewegung"
 
-#: bestiary/models.py:44
+#: bestiary/models.py:48
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: bestiary/models.py:50
+#: bestiary/models.py:54
 msgid "resistances"
 msgstr "Widerstände"
 
-#: bestiary/models.py:55
+#: bestiary/models.py:59
 msgid "weaknesses"
 msgstr "Schwächen"
 
-#: bestiary/models.py:59 bestiary/models.py:67
+#: bestiary/models.py:63 bestiary/models.py:77
 msgid "foe"
 msgstr "Gegner"
 
-#: bestiary/models.py:60
+#: bestiary/models.py:64
 msgid "foes"
 msgstr "Gegner"
 
-#: bestiary/models.py:69 horror/models.py:65 rules/models.py:128
+#: bestiary/models.py:79 horror/models.py:65 rules/models.py:128
 #: rules/models.py:304
 msgid "skill"
 msgstr "Fertigkeit"
 
-#: bestiary/models.py:70
+#: bestiary/models.py:80
 msgid "effect"
 msgstr "Effekt"
 
-#: bestiary/models.py:74
+#: bestiary/models.py:84
 msgid "foe action"
 msgstr "Gegneraktion"
 
-#: bestiary/models.py:75
+#: bestiary/models.py:85
 msgid "foe actions"
 msgstr "Gegneraktionen"
+
+#: bestiary/templates/bestiary/foe_detail.html:26
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: bestiary/templates/bestiary/foe_detail.html:27
+#: bestiary/templates/bestiary/foe_list.html:21
+#: characters/templates/characters/fragments/health.html:50
+#: characters/templates/characters/sidebar/wounds.html:34
+#: characters/templates/characters/sidebar/wounds.html:47 gmtools/forms.py:19
+msgid "Health"
+msgstr "Lebenspunkte"
+
+#: bestiary/templates/bestiary/foe_detail.html:28
+#: bestiary/templates/bestiary/foe_detail.html:34
+#: bestiary/templates/bestiary/foe_list.html:22
+#: characters/templates/characters/fragments/combat.html:155
+#: characters/templates/characters/fragments/health.html:15
+#: characters/templates/characters/fragments/health.html:17
+msgid "Actions"
+msgstr "Aktionen"
+
+#: bestiary/templates/bestiary/foe_detail.html:29
+#: bestiary/templates/bestiary/foe_list.html:23
+#: characters/templates/characters/fragments/combat.html:114
+#: characters/templates/characters/fragments/combat.html:123
+#: characters/templates/characters/fragments/combat.html:132
+#: characters/templates/characters/fragments/combat.html:141
+msgid "Movement"
+msgstr "Bewegung"
+
+#: bestiary/templates/bestiary/foe_detail.html:30
+#: bestiary/templates/bestiary/foe_list.html:24
+#: characters/templates/characters/fragments/health.html:109
+#: characters/templates/characters/fragments/health.html:110
+msgid "Minimum Roll"
+msgstr "Mindestwurf"
+
+#: bestiary/templates/bestiary/foe_detail.html:31
+#: bestiary/templates/bestiary/foe_list.html:25
+msgid "Resistances"
+msgstr "Widerstände"
+
+#: bestiary/templates/bestiary/foe_detail.html:32
+#: bestiary/templates/bestiary/foe_list.html:26
+msgid "Weaknesses"
+msgstr "Schwächen"
+
+#: bestiary/templates/bestiary/foe_list.html:9
+#: characters/templates/base.html:75
+msgid "Foes"
+msgstr "Gegner"
+
+#: bestiary/templates/bestiary/foe_list.html:19
+msgid "Foe"
+msgstr "Gegner"
+
+#: bestiary/templates/bestiary/foe_list.html:20
+msgid "Type"
+msgstr "Typ"
 
 #: campaigns/models.py:15 characters/models.py:22
 msgid "backdrop image"
@@ -487,31 +548,31 @@ msgstr "Meine Kampagnen"
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:75
+#: characters/templates/base.html:77
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:98
+#: characters/templates/base.html:100
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
-#: characters/templates/base.html:110
+#: characters/templates/base.html:112
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:115
+#: characters/templates/base.html:117
 msgid "Extension Grids"
 msgstr "Erweiterungstabellen"
 
-#: characters/templates/base.html:118
+#: characters/templates/base.html:120
 msgid "Template Statistics"
 msgstr "Schablonenstatistiken"
 
-#: characters/templates/base.html:125
+#: characters/templates/base.html:127
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:130 templates/registration/login.html:11
+#: characters/templates/base.html:132 templates/registration/login.html:11
 msgid "Login"
 msgstr "Anmelden"
 
@@ -905,13 +966,6 @@ msgstr "Waffenloser Angriff"
 msgid "Walk"
 msgstr "Gehen"
 
-#: characters/templates/characters/fragments/combat.html:114
-#: characters/templates/characters/fragments/combat.html:123
-#: characters/templates/characters/fragments/combat.html:132
-#: characters/templates/characters/fragments/combat.html:141
-msgid "Movement"
-msgstr "Bewegung"
-
 #: characters/templates/characters/fragments/combat.html:117
 #: characters/templates/characters/fragments/combat.html:126
 #: characters/templates/characters/fragments/combat.html:135
@@ -929,12 +983,6 @@ msgstr "Robben"
 #: characters/templates/characters/fragments/combat.html:140
 msgid "Change Stance"
 msgstr "Stellung ändern"
-
-#: characters/templates/characters/fragments/combat.html:155
-#: characters/templates/characters/fragments/health.html:15
-#: characters/templates/characters/fragments/health.html:17
-msgid "Actions"
-msgstr "Aktionen"
 
 #: characters/templates/characters/fragments/gear.html:15
 #: characters/templates/characters/fragments/gear.html:55
@@ -1029,12 +1077,6 @@ msgstr ""
 msgid "Status"
 msgstr "Status"
 
-#: characters/templates/characters/fragments/health.html:50
-#: characters/templates/characters/sidebar/wounds.html:34
-#: characters/templates/characters/sidebar/wounds.html:47 gmtools/forms.py:19
-msgid "Health"
-msgstr "Lebenspunkte"
-
 #: characters/templates/characters/fragments/health.html:53
 #: characters/templates/characters/sidebar/wounds.html:37
 #: characters/templates/characters/sidebar/wounds.html:53
@@ -1067,11 +1109,6 @@ msgstr "Stress"
 #: characters/templates/characters/sidebar/horror.html:26
 msgid "Possible Stress"
 msgstr "Möglicher Stress"
-
-#: characters/templates/characters/fragments/health.html:109
-#: characters/templates/characters/fragments/health.html:110
-msgid "Minimum Roll"
-msgstr "Mindestwurf"
 
 #: characters/templates/characters/fragments/magic.html:11
 msgid "Create a spell"
@@ -2176,9 +2213,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "Recoil control"
 #~ msgstr "Rückstoßkontrolle"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
 
 #~ msgid "Roll"
 #~ msgstr "Wurf"
