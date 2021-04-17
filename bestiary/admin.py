@@ -13,4 +13,4 @@ class FoeAdmin(admin.ModelAdmin):
 
 admin.site.register(FoeType)
 admin.site.register(FoeResistanceOrWeakness)
-admin.site.register(Foe)
+admin.site.register(Foe, FoeAdmin)
