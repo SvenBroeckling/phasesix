@@ -2,27 +2,18 @@
 {% load i18n static rules_extras %}
 
 {% block belownav %}
-    {% if object.image %}
-    <style>
-        .belowhead-img {
-            height: 36vh;
-            background-position: center;
-            background-size: cover;
-            margin-left: -15px;
-            margin-right: -15px;
-        }
-    </style>
-    <div class="belowhead-img mb-5" style="background-image: url({% static object.image_url %})">
-        &nbsp;
+    <div
+            style="height: 36vh; background-image: url({% static object.image_url %})"
+            class="row character-info-row mb-3">
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <h1><i class="{{ object.fa_icon_class|default:"fas fa-book" }}"></i> {{ object.title }}</h1>
+        </div>
     </div>
-    {% endif %}
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-9 rules">
-            <h1><i class="{{ object.fa_icon_class|default:"fas fa-book" }}"></i> {{ object.title }}</h1>
-            <br>
             <div class="columns">
                 {{ object.content|safe }}
             </div>

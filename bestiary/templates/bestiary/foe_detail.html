@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static i18n characters_extras %}
+
+{% block belownav %}
+    {% if object.image %}
+    <div
+            style="height: 36vh; background-image: url({{ object.image.url }})"
+            class="row character-info-row mb-3">
+    {% else %}
+        <div
+                style="height: 36vh; background-image: url({% static 'img/jonas-friese-pS_S00R9_6I-unsplash.jpg' %})"
+                class="row character-info-row mb-3">
+    {% endif %}
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <div>
+                <h1>{{ object }}</h1>
+                <small>{{ object.type }}</small>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <h4>{% trans 'Statistics' %}</h4>
+            <b>{% trans 'Health' %}</b>: {% color_value_span object.health 10 %}<br>
+            <b>{% trans 'Actions' %}</b>: {% color_value_span object.actions 4 %}<br>
+            <b>{% trans 'Movement' %}</b>: {% color_value_span object.movement 3 %}<br>
+            <b>{% trans 'Minimum Roll' %}</b>: {% color_value_span object.minimum_roll 5 invert=True %}+<br>
+            <b>{% trans 'Resistances' %}</b>: {{ object.resistance_string }}<br>
+            <b>{% trans 'Weaknesses' %}</b>: {{ object.weakness_string }}<br><br>
+
+            <h4>{% trans 'Actions' %}</h4>
+            <ul>
+                {% for action in object.foeaction_set.all %}
+                    <li>{{ action.name }} {% color_value_span action.skill 8 %} <i>({{ action.effect }})</i></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

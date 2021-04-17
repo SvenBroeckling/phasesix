@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
-# Create your views here.
+from bestiary.models import Foe
+
+
+class FoeListView(ListView):
+    model = Foe
+
+
+class FoeDetailView(DetailView):
+    model = Foe

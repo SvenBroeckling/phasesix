@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static i18n characters_extras %}
+
+{% block belownav %}
+    <div
+            style="height: 36vh; background-image: url({% static 'img/jonas-friese-pS_S00R9_6I-unsplash.jpg' %})"
+            class="row character-info-row mb-3">
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <h1>{% trans 'Foes' %}</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans 'Foe' %}</th>
+                    <th>{% trans 'Type' %}</th>
+                    <th>{% trans 'Health' %}</th>
+                    <th>{% trans 'Actions' %}</th>
+                    <th>{% trans 'Movement' %}</th>
+                    <th>{% trans 'Minimum Roll' %}</th>
+                    <th>{% trans 'Resistances' %}</th>
+                    <th>{% trans 'Weaknesses' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td><a href="{% url 'bestiary:detail' pk=object.id %}">{{ object }}</a></td>
+                        <td>{{ object.type }}</td>
+                        <td>{% color_value_span object.health 10 %}</td>
+                        <td>{% color_value_span object.actions 4 %}</td>
+                        <td>{% color_value_span object.movement 3 %}</td>
+                        <td>{% color_value_span object.minimum_roll 5 invert=True %}+</td>
+                        <td>{{ object.resistance_string }}</td>
+                        <td>{{ object.weakness_string }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
