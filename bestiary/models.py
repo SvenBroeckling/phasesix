@@ -67,10 +67,10 @@ class Foe(models.Model, metaclass=TransMeta):
         return self.name
 
     def resistance_string(self):
-        return ",".join([r.name for r in self.resistances.all()])
+        return ",".join([r.name for r in self.resistances.all()]) or '-'
 
     def weakness_string(self):
-        return ",".join([r.name for r in self.weaknesses.all()])
+        return ",".join([r.name for r in self.weaknesses.all()]) or '-'
 
 
 class FoeAction(models.Model, metaclass=TransMeta):
