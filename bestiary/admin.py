@@ -9,6 +9,8 @@ class FoeActionInline(admin.StackedInline):
 
 class FoeAdmin(admin.ModelAdmin):
     inlines = [FoeActionInline]
+    list_display = ('name_de', 'name_en', 'type', 'health', 'actions', 'movement', 'minimum_roll')
+    list_filter = ('type', 'health', 'actions', 'movement', 'minimum_roll')
 
 
 admin.site.register(FoeType)
