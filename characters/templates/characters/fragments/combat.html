@@ -18,7 +18,7 @@
                         <small>{% trans 'Penetration' %}</small>
                     </th>
                     <th class="text-end">
-                        {% trans 'Bonus Wounds' %}<br>
+                        {% trans 'Bonus' %}<br>
                     </th>
                     <th class="text-end">
                         {% trans 'Range' %}<br>
@@ -61,6 +61,13 @@
                             {% color_value_span w.modified_penetration 3 %}
                         </td>
                         <td class="text-end">
+                            {% for wm in w.modifications.all %}
+                                {% for wma in wm.weaponmodificationattributechange_set.all %}
+                                    {% if wma.status_effect %}
+                                        {{ wma.status_effect|capfirst }} <i class="{{ wma.status_effect.fa_icon_class }}"></i> {% color_value_span wma.status_effect_value 4 %}<br>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
                             {% for i in w.modified_wounds|to_range %}
                                 <i class="fas fa-heart text-danger"></i>
                             {% endfor %}
