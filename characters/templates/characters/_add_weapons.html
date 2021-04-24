@@ -54,9 +54,10 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-12">
                                                 <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.penetration 4 %}<br>
-                                                <i class="fas fa-heart fa-fw"></i> {% trans 'Wounds' %}: {% color_value_span weapon.wounds 4 %}<br>
+                                                <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.wounds 4 %}<br>
+                                                <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.bonus_dice 4 %}<br>
                                                 {% if not weapon.is_hand_to_hand_weapon %}
                                                     <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.reload_actions 6 invert=True %}<br>
                                                     <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.capacity 30 %}<br>

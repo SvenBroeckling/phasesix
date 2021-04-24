@@ -49,12 +49,12 @@ def display_modifications(character_weapon, attribute):
     res = ''
     for wm in character_weapon.modifications.all():
         for wmm in wm.weaponmodificationattributechange_set.all():
-            if wmm.attribute == attribute and wmm.modifier != 0:
+            if wmm.attribute == attribute and wmm.attribute_modifier != 0:
                 if attribute == 'concealment':
-                    css_class = 'text-success' if wmm.modifier < 0 else 'text-danger'
+                    css_class = 'text-success' if wmm.attribute_modifier < 0 else 'text-danger'
                 else:
-                    css_class = 'text-danger' if wmm.modifier < 0 else 'text-success'
-                res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.modifier)
+                    css_class = 'text-danger' if wmm.attribute_modifier < 0 else 'text-success'
+                res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.attribute_modifier)
     return mark_safe(res)
 
 

@@ -402,9 +402,15 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
 
+        bonus_dice = 0
+        for wm in self.modifications.all():
+            for wma in wm.weaponmodificationattributechange_set.all():
+                if wma.attribute == 'bonus_dice':
+                    bonus_dice += wma.attribute_modifier
+
         modes = []
         for wm in self.weapon.weaponattackmode_set.all():
-            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus))
+            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + bonus_dice))
 
         return modes
 
@@ -414,7 +420,7 @@ class CharacterWeapon(models.Model):
         mods = 0
         for wm in self.modifications.all():
             for wmm in wm.weaponmodificationattributechange_set.filter(attribute='penetration'):
-                mods += wmm.modifier
+                mods += wmm.attribute_modifier
         return pen + mods
 
     @property
@@ -423,17 +429,24 @@ class CharacterWeapon(models.Model):
         mods = 0
         for wm in self.modifications.all():
             for wmm in wm.weaponmodificationattributechange_set.filter(attribute='concealment'):
-                mods += wmm.modifier
+                mods += wmm.attribute_modifier
         return con + mods
 
     @property
     def modified_wounds(self):
-        wounds = self.weapon.wounds
         mods = 0
         for wm in self.modifications.all():
             for wmm in wm.weaponmodificationattributechange_set.filter(attribute='wounds'):
-                mods += wmm.modifier
-        return wounds + mods
+                mods += wmm.attribute_modifier
+        return self.weapon.wounds + mods
+
+    @property
+    def modified_range_meter(self):
+        mods = 0
+        for wm in self.modifications.all():
+            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='range_meter'):
+                mods += wmm.attribute_modifier
+        return self.weapon.range_meter + mods
 
 
 class CharacterRiotGear(models.Model):

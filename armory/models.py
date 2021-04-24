@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -90,9 +91,6 @@ class WeaponType(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('armory:weapontype_detail', kwargs={'pk': self.id})
-
     def get_first_image(self):
         return self.weapon_set.earliest('id').image
 
@@ -138,6 +136,7 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     type = models.ForeignKey(WeaponType, verbose_name=_('type'), on_delete=models.CASCADE)
 
+    bonus_dice = models.IntegerField(_('bonus dice'), default=0)
     capacity = models.IntegerField(_('capacity'), null=True, blank=True)
     wounds = models.IntegerField(_('bonus wounds'), default=0)
     penetration = models.IntegerField(_('penetration'), default=0)
@@ -237,19 +236,34 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 
 
 class WeaponModificationAttributeChange(models.Model):
-    ATTRIBUTES = [
-        'capacity', 'wounds', 'penetration',
-        'weight', 'recoil_control', 'concealment', 'reload_actions']
-    ATTRIBUTE_CHOICES = zip(ATTRIBUTES, [_(a.replace('_', '')) for a in ATTRIBUTES])
+    ATTRIBUTE_CHOICES = (
+        ('capacity', _('Capacity')),
+        ('wounds', _('Bonus wounds')),
+        ('bonus_dice', _('Bonus dice')),
+        ('penetration', _('Penetration')),
+        ('concealment', _('Concealment')),
+        ('reload_actions', _('Reload actions')),
+        ('range_meter', _('Range (meter)')),
+    )
     weapon_modification = models.ForeignKey(WeaponModification, on_delete=models.CASCADE)
     attribute = models.CharField(_('attribute'), max_length=40, choices=ATTRIBUTE_CHOICES)
-    modifier = models.IntegerField(_('modifier'), default=0)
+    attribute_modifier = models.IntegerField(_('attribute modifier'), default=0)
+    status_effect = models.ForeignKey(
+        'rules.StatusEffect',
+        verbose_name=_('status effect'),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE)
+    status_effect_value = models.IntegerField(_('status effect value'), default=0)
 
     def get_attribute_display(self):
-        return _(Weapon._meta.get_field(self.attribute).verbose_name)
+        try:
+            return _(Weapon._meta.get_field(self.attribute).verbose_name)
+        except FieldDoesNotExist:
+            return 'UNKNOWN'
 
     def get_modifier_display(self):
-        return "%+d" % self.modifier
+        return "%+d" % self.attribute_modifier
 
 
 class RiotGear(models.Model, metaclass=TransMeta):

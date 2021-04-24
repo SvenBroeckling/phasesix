@@ -351,6 +351,17 @@ class XhrRemoveWeaponView(View):
         return JsonResponse({'status': 'ok'})
 
 
+class XhrRemoveWeaponModificationView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
+        weapon_mod = WeaponModification.objects.get(id=kwargs['weapon_modification_pk'])
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        weapon.modifications.remove(weapon_mod)
+        return JsonResponse({'status': 'ok'})
+
+
 class XhrDamageWeaponView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])

@@ -10,11 +10,9 @@ class WeaponAttackModeInline(admin.TabularInline):
 
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
-        'name_en', 'capacity', 'wounds',
-        'penetration', 'weight', 'price', 'range_meter')
+        'name_en', 'capacity', 'wounds', 'penetration', 'reload_actions', 'weight', 'price', 'range_meter')
     list_editable = (
-        'capacity', 'wounds',
-        'penetration', 'weight', 'price', 'range_meter')
+        'capacity', 'wounds', 'penetration', 'weight', 'reload_actions', 'price', 'range_meter')
     list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon')
     inlines = [WeaponAttackModeInline]
     fieldsets = [
@@ -22,7 +20,7 @@ class WeaponAdmin(admin.ModelAdmin):
             'fields': (
                 ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
                 ('type', 'capacity', 'wounds', 'penetration', 'weight'),
-                ('range_meter', 'concealment', 'price'),
+                ('range_meter', 'concealment', 'price', 'reload_actions', 'bonus_dice'),
                 ('description_en', 'description_de',),
                 ('image',)
             )
@@ -59,7 +57,7 @@ class WeaponTypeAdmin(admin.ModelAdmin):
     list_display = ('name_en', 'name_de')
 
 
-class WeaponModificationAttributeChangeInline(admin.StackedInline):
+class WeaponModificationAttributeChangeInline(admin.TabularInline):
     model = WeaponModificationAttributeChange
 
 
