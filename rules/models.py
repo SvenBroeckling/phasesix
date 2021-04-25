@@ -56,6 +56,8 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_max_arcana = models.IntegerField(_('max arcana'), default=0)
     base_spell_points = models.IntegerField(_('spell points'), default=0)
 
+    base_actions = models.IntegerField(_('base actions'), default=2)
+
     base_bonus_dice = models.IntegerField(_('base bonus dice'), default=0)
     base_destiny_dice = models.IntegerField(_('base destiny dice'), default=0)
     base_rerolls = models.IntegerField(_('base rerolls'), default=0)
@@ -186,6 +188,8 @@ CHARACTER_ATTRIBUTE_CHOICES = (
 
     ('base_max_arcana', _('max arcana')),
     ('base_spell_points', _('spell points')),
+
+    ('base_actions', _('actions')),
 
     ('base_bonus_dice', _('bonus dice')),
     ('base_destiny_dice', _('destiny dice')),

@@ -160,7 +160,7 @@ class Character(models.Model):
 
     @property
     def actions(self):
-        return 1 + math.ceil((self.quickness + self.deftness) / 2)
+        return self.lineage.base_actions + self.get_attribute_modifier('base_actions')
 
     @property
     def combat_walking_range(self):
