@@ -20,7 +20,7 @@ Hat der letzte Teilnehmer agiert, beginnt die nächste *Kampfrunde* mit dem erst
 
 Ist ein Teilnehmer am Zug so hat er die *Priorität*, er ist in diesem Moment der *Akteur*.
 
-Zu Beginn des Zuges frischen sich die *Aktionen* des Teilnehmers auf. Die Anzahl der Aktionen des Spielers ist der Durchschnitt aus *Schnelligkeit* und *Geschick* plus 1. Wenn dieses Ergebnis null oder negativ sein sollte hat der Teilnehmer trotzdem eine Aktion pro Runde, ist also nur sehr langsam. 
+Zu Beginn des Zuges frischen sich die *Aktionen* des Teilnehmers auf. Die Anzahl der Aktionen des Spielers wird von der Abstammung des Spielers genommen. Ein Mensch hat also 2 Aktionen im Kampf zur Verfügung. Die Aktionen pro Runde können durch Schablonen erweitert werden.
 
 „Auffrischen“ bedeutet also, dass alle Aktionen wieder verfügbar sind. Wenn der Teilnehmer zuvor Aktionen verbraucht hat, etwa durch Handlungen in früheren Kampfrunden, setzt er seine verfügbaren Handlungen wieder auf das Maximum.
 
