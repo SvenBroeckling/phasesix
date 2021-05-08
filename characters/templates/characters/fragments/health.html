@@ -58,11 +58,10 @@
                     </div>
 
                     {% if object.extension_enabled.magic %}
-                        <div>
+                        <div class="sidebar-trigger" data-sidebar-title="{% trans 'Magic' %}"
+                             data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="magic" %}">
                             {% for i in object.arcana|to_range %}
-                                <i class="fas fa-magic text-warning" data-bs-toggle="popover"
-                                   data-bs-trigger="hover" title="{% trans 'Arcana' %}"
-                                   data-bs-content="{% trans 'Use this to cast spells at the magic or combat tab.' %}"></i>
+                                <i class="fas fa-magic text-warning" ></i>
                             {% endfor %}
                         </div>
                     {% endif %}

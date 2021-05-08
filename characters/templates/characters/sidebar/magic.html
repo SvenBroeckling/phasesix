@@ -1,0 +1,29 @@
+{% load i18n characters_extras %}
+
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group w-100">
+                <a href="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}" class="btn btn-sm btn-dark action-link"><i class="fas fa-fw fa-magic text-warning" title="{% trans 'Bonus Dice' %}"></i>{% trans '+Arcana' %}</a>
+                <a href="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}" class="btn btn-sm btn-dark action-link"><i class="fas fa-fw fa-magic text-dark" title="{% trans 'Destiny Dice' %}"></i>{% trans '+Arcana' %}</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% detail_fragment 'sidebar_magic' %}
+
+<div class="row">
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-fw fa-magic text-warning" title="{% trans 'Arcana' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'An arkcana slot, which can be used to cast spells.' %}
+    </div>
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-fw fa-magic text-dark" title="{% trans 'Used Arcana' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'An used arcane slot. This can be refreshed taking a rest.' %}
+    </div>
+</div>
