@@ -1,0 +1,29 @@
+{% extends 'characters/fragments/fragment_base.html' %}
+{% load i18n characters_extras %}
+
+{% block fragment %}
+    {% if character.reputation_available > 0 %}
+        <p>
+            {% blocktrans %}
+                You have unspent reputation points. Use them to add new templates to your
+                character and advance in your professions.
+            {% endblocktrans %}
+        </p>
+        {% if may_edit %}
+            <button
+                    class="btn btn-dark btn-block mb-3 mt-3 modal-trigger"
+                    data-bs-toggle="modal"
+                    data-bs-target=".character-modal"
+                    data-modal-title="{% trans 'Reputation' %}"
+                    data-url="{% url 'characters:xhr_reputation' object.id %}">
+                {% trans 'Add character templates' %}
+            </button>
+        {% endif %}
+    {% else %}
+        <p>
+            {% blocktrans %}
+                You don't have unspent reputation points.
+            {% endblocktrans %}
+        </p>
+    {% endif %}
+{% endblock %}

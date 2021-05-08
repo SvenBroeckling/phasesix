@@ -1,0 +1,24 @@
+{% extends 'characters/fragments/fragment_base.html' %}
+{% load i18n characters_extras %}
+
+{% block fragment %}
+    <div class="card mb-2">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
+                {% trans 'Bonus Dice' %}
+                <span class="float-end">{% color_value_span object.bonus_dice_free 3 %} / {% color_value_span object.bonus_dice 3 %}</span>
+            </li>
+            <li class="list-group-item">
+                <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
+                {% trans 'Destiny Dice' %}
+                <span class="float-end">{% color_value_span object.destiny_dice_free 3 %} / {% color_value_span object.destiny_dice 3 %}</span>
+            </li>
+            <li class="list-group-item">
+                <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
+                {% trans 'Rerolls' %}
+                <span class="float-end">{% color_value_span object.rerolls_free 3 %} / {% color_value_span object.rerolls 3 %}</span>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

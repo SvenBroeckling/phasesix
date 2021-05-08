@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n characters_extras %}
 
 {% if may_edit %}
 <div class="row">
@@ -16,6 +16,8 @@
     </div>
 </div>
 {% endif %}
+
+{% detail_fragment 'sidebar_dice' %}
 
 <div class="row">
     <div class="col-2 mb-2">
