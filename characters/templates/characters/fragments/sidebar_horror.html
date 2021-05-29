@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="btn-group mb-4 w-100">
-                    <a class="btn btn-dark btn-sm action-link"
+                    <a class="btn btn-outline-dark btn-sm action-link"
                        href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
                             class="fas fa-meh fa-fw text-warning"></i> {% trans 'Gain Stress' %}</a>
-                    <a class="btn btn-dark btn-sm action-link"
+                    <a class="btn btn-outline-dark btn-sm action-link"
                        href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
                             class="far fa-meh fa-fw text-info"></i> {% trans 'Remove Stress' %}</a>
                 </div>

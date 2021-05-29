@@ -6,13 +6,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="btn-group w-100">
-                    <a class="btn btn-dark btn-sm action-link"
+                    <a class="btn btn-outline-dark btn-sm action-link"
                        href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
                             class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal' %}</a>
-                    <a class="btn btn-dark btn-sm action-link"
+                    <a class="btn btn-outline-dark btn-sm action-link"
                        href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
                             class="far fa-heart fa-fw text-danger"></i> {% trans 'Damage' %}</a>
-                    <a class="btn btn-dark btn-sm action-link"
+                    <a class="btn btn-outline-dark btn-sm action-link"
                        href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
                             class="fas fa-heart fa-fw text-info"></i> {% trans 'Boost' %}</a>
                 </div>
@@ -20,7 +20,7 @@
 
             <div class="col-12 mb-4 mt-1">
                 <a
-                        class="btn btn-dark btn-sm w-100 modal-trigger"
+                        class="btn btn-outline-dark btn-sm w-100 modal-trigger"
                         data-url="{% url 'characters:xhr_rest' pk=object.id %}"
                         data-bs-toggle="modal"
                         data-bs-target=".character-modal"
