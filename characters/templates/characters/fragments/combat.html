@@ -47,7 +47,7 @@
                         </td>
                     </tr>
                 {% for w in object.characterweapon_set.all %}
-                    <tr class="sidebar-trigger" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="characterweapon" %}">
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ w.weapon }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=w.id model_name="CharacterWeapon" sidebar_name="characterweapon" %}">
                         <td>
                             <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}<br>
                             <small>{{ w.weapon.type }}</small>

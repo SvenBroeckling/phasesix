@@ -56,11 +56,16 @@ class XhrDeleteCharacterView(View):
 
 
 class XhrSidebarView(DetailView):
-    model = Character
+
+    def get_queryset(self):
+        if self.kwargs['model_name'] == "CharacterWeapon":
+            return CharacterWeapon.objects.all()
+        return Character.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sidebar_name'] = self.kwargs['sidebar_name']
+        context['model_name'] = self.kwargs['model_name']
         context['status_effects'] = StatusEffect.objects.all()
         context['character_form'] = CharacterImageForm(instance=self.object)
         context['may_edit'] = self.object.may_edit(self.request.user)
@@ -71,11 +76,16 @@ class XhrSidebarView(DetailView):
 
 
 class XhrDetailFragmentView(DetailView):
-    model = Character
+
+    def get_queryset(self):
+        if self.kwargs['model_name'] == "CharacterWeapon":
+            return CharacterWeapon.objects.all()
+        return Character.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['fragment_name'] = self.kwargs['fragment_name']
+        context['model_name'] = self.kwargs['model_name']
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 

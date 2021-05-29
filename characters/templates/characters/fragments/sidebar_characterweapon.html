@@ -1,0 +1,106 @@
+{% extends 'characters/fragments/fragment_base.html' %}
+{% load characters_extras rules_extras i18n %}
+
+{% block fragment %}
+    {% if may_edit %}
+        <div class="row">
+            {% if object.weapon.weaponattackmode_set.exists %}
+                {% for fm in object.weapon.weaponattackmode_set.all %}
+                    <div class="col-12">
+                        <div class="btn-group w-100">
+                            <a class="btn btn-outline-dark btn-sm action-link mb-1"
+                               href="{% url 'characters:modify_health' pk=object.id mode='heal' %}">
+                                {% trans 'Attack:' %} {{ fm.attack_mode.name }}
+                                +{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'bonus_dice' %}
+                                <i class="fas fa-dice-five"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="col-12">
+                <div class="btn-group w-100">
+                    <a class="btn btn-outline-dark btn-sm action-link"
+                       href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
+                            class="fas fa-heart fa-fw text-danger"></i> {% trans 'Damage' %}</a>
+                    <a class="btn btn-outline-dark btn-sm action-link"
+                       href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
+                            class="far fa-heart fa-fw text-danger"></i> {% trans 'Repair' %}</a>
+                    <a class="btn btn-outline-dark btn-sm action-link"
+                       href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
+                            class="far fa-heart fa-fw text-danger"></i> {% trans 'Reload' %}</a>
+                </div>
+            </div>
+
+            <div class="col-12 mt-1">
+                <div class="btn-group w-100">
+                    <a class="btn btn-outline-dark btn-sm action-link"
+                       href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
+                            class="fas fa-heart fa-fw text-danger"></i> {% trans 'Add Modification' %}</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row mt-4">
+        <div class="col12">
+            <h4 class="text-center">{% trans 'Stats' %}</h4>
+            <div class="card mb-2 mt-2">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-angle-double-right fa-fw"></i>
+                        {% trans 'Penetration' %}
+                        <span class="float-end">{% color_value_span object.weapon.penetration 4 %} {% display_modifications object 'penetration' %}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-heart fa-fw"></i>
+                        {% trans 'Bonus wounds' %}
+                        <span class="float-end">{% color_value_span object.weapon.wounds 4 %} {% display_modifications object 'wounds' %}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-dice-five fa-fw"></i>
+                        {% trans 'Bonus dice' %}
+                        <span class="float-end">{% color_value_span object.weapon.bonus_dice 4 %} {% display_modifications object 'bonus_dice' %}</span>
+                    </li>
+                    {% if not object.weapon.is_hand_to_hand_weapon %}
+                        <li class="list-group-item">
+                            <i class="fas fa-clock fa-fw"></i>
+                            {% trans 'Reload actions' %}
+                            <span class="float-end">{% color_value_span object.weapon.reload_actions 6 invert=True %} {% display_modifications object 'reload_actions' %}</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-list-ol fa-fw"></i>
+                            {% trans 'Capacity' %}
+                            <span class="float-end">{% color_value_span object.weapon.capacity 30 %} {% display_modifications object 'capacity' %}</span>
+                        </li>
+                    {% endif %}
+                    <li class="list-group-item">
+                        <i class="fas fa-arrows-alt-h fa-fw"></i>
+                        {% trans 'Range' %}
+                        <span class="float-end">{{ object.weapon.range_meter }}m {% display_modifications object 'range_meter' %}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% if object.weapon.weaponattackmode_set.exists %}
+        <div class="row mt-4">
+            <div class="col12">
+                <h4 class="text-center">{% trans 'Attack Modes' %}</h4>
+                <div class="card mb-2 mt-2">
+                    <ul class="list-group list-group-flush">
+                        {% for fm in object.weapon.weaponattackmode_set.all %}
+                            <li class="list-group-item">
+                                <i class="fas fa-angle-double-right fa-fw"></i>
+                                {{ fm.attack_mode.name }}
+                                <span class="float-end">+{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'bonus_dice' %}<i
+                                        class="fas fa-dice-five"></i></span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

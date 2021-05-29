@@ -11,11 +11,11 @@ urlpatterns = [
     url(r'^xhr_delete/(?P<pk>\d+)$', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
 
     url(
-        r'^xhr_detail_sidebar/(?P<pk>\d+)/(?P<sidebar_name>[a-z_]+)$',
+        r'^xhr_detail_sidebar/(?P<pk>\d+)/(?P<model_name>[A-Za-z_]+)/(?P<sidebar_name>[a-z_]+)$',
         views.XhrSidebarView.as_view(),
         name='xhr_detail_sidebar'),
     url(
-        r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<fragment_name>[a-z_]+)$',
+        r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<model_name>[A-Za-z_]+)/(?P<fragment_name>[a-z_]+)$',
         views.XhrDetailFragmentView.as_view(),
         name='xhr_detail_fragment'),
 

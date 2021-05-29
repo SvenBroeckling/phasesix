@@ -73,7 +73,7 @@
             </div>
 
             {% for weapon in object.characterweapon_set.all %}
-                <div class="card mb-4">
+                <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ weapon.weapon }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=weapon.id model_name="CharacterWeapon" sidebar_name="characterweapon" %}">
                     <div class="card-header">
                         {{ weapon.weapon }} <span class="small text-muted">{{ weapon.weapon.type }}</span>
                         {% if may_edit %}

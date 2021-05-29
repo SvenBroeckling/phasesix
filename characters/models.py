@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import math
-from decimal import Decimal
 
 from django.db import models
 from django.db.models import Sum, Max
@@ -396,6 +395,9 @@ class CharacterWeapon(models.Model):
 
     class Meta:
         ordering = ('weapon__id',)
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)
 
     def attack_modes(self):
         skill = self.character.characterskill_set.ranged_combat_skill()

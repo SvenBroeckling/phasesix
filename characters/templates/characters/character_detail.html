@@ -140,7 +140,7 @@
             </div>
 
             <div class="{% if may_edit %}sidebar-trigger{% endif %} mt-2" data-sidebar-title="{% trans 'Character' %}"
-                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id sidebar_name="character" %}">
+                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="character" %}">
                 {% if character.image %}
                     {% thumbnail character.image "140x140" crop="center" as im %}
                         <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
@@ -178,7 +178,7 @@
     <div class="row mt-4">
 
         <div class="col-12">
-            {% detail_fragment 'health' %}
+            {% detail_fragment 'Character' 'health' %}
 
             <div class="nav nav-tabs justify-content-center mb-3" id="v-pills-tab" role="tablist"
                  aria-orientation="vertical">
@@ -211,23 +211,23 @@
 
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="v-character" role="tabpanel">
-                    {% detail_fragment 'character' %}
+                    {% detail_fragment 'Character' 'character' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-gear" role="tabpanel">
-                    {% detail_fragment 'gear' %}
+                    {% detail_fragment 'Character' 'gear' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-combat" role="tabpanel">
-                    {% detail_fragment 'combat' %}
+                    {% detail_fragment 'Character' 'combat' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-magic" role="tabpanel">
-                    {% detail_fragment 'magic' %}
+                    {% detail_fragment 'Character' 'magic' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-background" role="tabpanel">
-                    {% detail_fragment 'advancement' %}
+                    {% detail_fragment 'Character' 'advancement' %}
                 </div>
             </div>
         </div>

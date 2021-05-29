@@ -8,8 +8,8 @@
             <form action="{% url 'login' %}" method="post">
                 {% bootstrap_form form %}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">{% trans 'Login' %}</button>
-                <a class="btn btn-outline-secondary mb-2" href="{% url 'django_registration_register' %}">{% trans 'Create Account' %}</a>
+                <button type="submit" class="btn btn-primary mt-2">{% trans 'Login' %}</button>
+                <a class="btn btn-outline-secondary mt-2" href="{% url 'django_registration_register' %}">{% trans 'Create Account' %}</a>
             </form>
         </div>
     </div>
