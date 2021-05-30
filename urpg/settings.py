@@ -1,6 +1,7 @@
 import os
 
 from django.urls import reverse_lazy
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = 'http://phasesix.org'
