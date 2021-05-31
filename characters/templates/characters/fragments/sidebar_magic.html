@@ -4,9 +4,13 @@
 {% block fragment %}
  <div class="row mt-4 mb-4">
      <div class="col-12 text-center">
-         {% for i in object.arcana|to_range %}
-             <i class="fas fa-magic fa-2x text-warning" ></i>
-         {% endfor %}
+         <div class="card">
+             <div class="card-body">
+                 {% for i in object.arcana|to_range %}
+                     <i class="fas fa-magic fa-2x text-warning" ></i>
+                 {% endfor %}
+             </div>
+         </div>
      </div>
  </div>
 {% endblock %}

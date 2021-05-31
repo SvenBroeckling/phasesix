@@ -24,15 +24,15 @@
 </div>
 
 <div class="row mt-3">
-    <h4>{% trans 'Status effects' %}</h4>
+    <h4 class="text-center">{% trans 'Status effects' %}</h4>
     {% for se in status_effects %}
         {% with se|status_effect_value:object as se_value %}
             <div class="col-12 text-center pt-2">
                 <div class="card mb-2">
                     <div class="card-body">
-                        <h2 class="mb-5">{{ se }}</h2>
+                        <h5 class="mb-2">{{ se }}</h5>
 
-                        <span class="fa-layers fa-fw fa-3x">
+                        <span class="fa-layers fa-fw fa-3x mb-2">
                             <i class="{{ se.fa_icon_class }}"></i>
                             <span
                                     data-status-effect-id="{{ se.id }}"

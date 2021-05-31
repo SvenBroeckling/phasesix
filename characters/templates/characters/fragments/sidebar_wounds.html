@@ -32,15 +32,19 @@
 
     <div class="row">
         <div class="col-12 text-center mt-1 mb-3">
-            {% for i in object.health|to_range %}
-                <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
-            {% endfor %}
-            {% for i in object.wounds_taken|to_range %}
-                <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
-            {% endfor %}
-            {% for i in object.boost|to_range %}
-                <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
-            {% endfor %}
+            <div class="card">
+                <div class="card-body">
+                    {% for i in object.health|to_range %}
+                        <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
+                    {% endfor %}
+                    {% for i in object.wounds_taken|to_range %}
+                        <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+                    {% endfor %}
+                    {% for i in object.boost|to_range %}
+                        <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

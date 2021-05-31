@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col-12">
             <div class="btn-group w-100">
-                <a href="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}" class="btn btn-sm btn-dark action-link"><i class="fas fa-fw fa-magic text-warning" title="{% trans 'Bonus Dice' %}"></i>{% trans '+Arcana' %}</a>
-                <a href="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}" class="btn btn-sm btn-dark action-link"><i class="fas fa-fw fa-magic text-dark" title="{% trans 'Destiny Dice' %}"></i>{% trans '+Arcana' %}</a>
+                <a href="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}" class="btn btn-sm btn-outline-dark action-link"><i class="fas fa-fw fa-magic text-warning" title="{% trans 'Bonus Dice' %}"></i>{% trans '+Arcana' %}</a>
+                <a href="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}" class="btn btn-sm btn-outline-dark action-link"><i class="fas fa-fw fa-magic text-dark" title="{% trans 'Destiny Dice' %}"></i>{% trans '+Arcana' %}</a>
             </div>
         </div>
     </div>

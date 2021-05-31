@@ -15,7 +15,7 @@
 
             body.on('click', '.sidebar-trigger', function(e){
                 let sidebar = showSidebar();
-                sidebar.find('h4').text($(this).data('sidebar-title'))
+                sidebar.find('h4:first').text($(this).data('sidebar-title'))
                 sidebar.find('.bs-canvas-content').load($(this).data('sidebar-url'))
             })
 
