@@ -11,6 +11,9 @@
                     <th>
                         {% trans 'Action' %}<br>
                     </th>
+                    <th title="{% trans 'Capacity' %}">
+                        {% trans 'Cap.' %}<br>
+                    </th>
                     <th class="text-end">
                         <small>{% trans 'Attack Dice' %}</small>
                     </th>
@@ -31,6 +34,7 @@
                             <i class="fas fa-hand-rock text-success"></i> {% trans 'Weaponless' %}<br>
                             <small>{% trans 'Melee' %}</small>
                         </td>
+                        <td>-</td>
                         <td class="text-end">
                             {% trans 'Weaponless Attack' %} {% color_value_span object.weaponless_attack_dice 6 %} <i class="fas text-muted fa-dice-five"></i>
                         </td>
@@ -51,6 +55,13 @@
                         <td>
                             <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}<br>
                             <small>{{ w.weapon.type }}</small>
+                        </td>
+                        <td>
+                            {% if w.has_capacity %}
+                                {% color_value_span w.capacity_available w.modified_capacity %} / {% color_value_span w.modified_capacity w.modified_capacity %}
+                            {% else %}
+                                -
+                            {% endif %}
                         </td>
                         <td class="text-end">
                             {% for am in w.attack_modes %}
@@ -81,8 +92,11 @@
                 {% for i in object.characteritem_set.usable_in_combat %}
                     <tr>
                         <td>
-                            <i class="fas fa-bomb text-success"></i> <span class="text-muted">{{ i.quantity }} x </span>{{ i.item }}<br>
+                            <i class="fas fa-bomb text-success"></i> <span class="text-muted"></span>{{ i.item }}<br>
                             <small>{{ i.item.type }}</small>
+                        </td>
+                        <td>
+                            {{ i.quantity }}
                         </td>
                         <td class="text-end">
                             {% color_value_span i.use_roll 7 %}+
@@ -101,6 +115,7 @@
                             <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
                             <small>{{ s.spell.type.name }} - {{ s.spell.flavour.name }}</small>
                         </td>
+                        <td></td>
                         <td class="text-end">
                             {% color_value_span 4 4 %}+<br>
                             <small>{% color_value_span s.spell.casting_time 1 %}</small>
@@ -116,7 +131,7 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -125,7 +140,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Run" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -134,7 +149,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Crawl" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -143,7 +158,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Change Stance" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>

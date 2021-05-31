@@ -103,7 +103,7 @@
                                 <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
                                 <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
                                 <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.weapon.bonus_dice 4 %} {% display_modifications weapon 'bonus_dice' %}<br>
-                                {% if not weapon.weapon.is_hand_to_hand_weapon %}
+                                {% if not weapon.has_capacity %}
                                     <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
                                     <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %} {% display_modifications weapon 'capacity' %}<br>
                                 {% endif %}

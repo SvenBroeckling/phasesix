@@ -392,6 +392,7 @@ class CharacterWeapon(models.Model):
     weapon = models.ForeignKey('armory.Weapon', on_delete=models.CASCADE)
     modifications = models.ManyToManyField('armory.WeaponModification')
     condition = models.IntegerField(default=100)
+    capacity_used = models.IntegerField(_('capacity used'), default=0)
 
     class Meta:
         ordering = ('weapon__id',)
@@ -449,6 +450,23 @@ class CharacterWeapon(models.Model):
             for wmm in wm.weaponmodificationattributechange_set.filter(attribute='range_meter'):
                 mods += wmm.attribute_modifier
         return self.weapon.range_meter + mods
+
+    @property
+    def modified_capacity(self):
+        base_capacity = self.weapon.capacity if self.weapon.capacity else 0
+        mods = 0
+        for wm in self.modifications.all():
+            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='capacity'):
+                mods += wmm.attribute_modifier
+        return base_capacity + mods
+
+    @property
+    def has_capacity(self):
+        return self.modified_capacity > 0
+
+    @property
+    def capacity_available(self):
+        return self.modified_capacity - self.capacity_used
 
 
 class CharacterRiotGear(models.Model):

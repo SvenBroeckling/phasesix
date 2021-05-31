@@ -4,7 +4,7 @@
 {% block fragment %}
     {% if may_edit %}
         <div class="row">
-            {% if object.weapon.weaponattackmode_set.exists %}
+            {% if object.weapon.weaponattackmode_set.exists and object.has_capacity %}
                 {% for fm in object.weapon.weaponattackmode_set.all %}
                     <div class="col-12">
                         <div class="btn-group w-100">
@@ -16,6 +16,13 @@
                         </div>
                     </div>
                 {% endfor %}
+                    <div class="col-12">
+                        <div class="btn-group w-100">
+                            <a class="btn btn-outline-dark btn-sm action-link mb-1"
+                               href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
+                                    class="far fa-heart fa-fw text-danger"></i> {% trans 'Reload' %}</a>
+                        </div>
+                    </div>
             {% endif %}
 
             <div class="col-12">
@@ -26,9 +33,6 @@
                     <a class="btn btn-outline-dark btn-sm action-link"
                        href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
                             class="far fa-heart fa-fw text-danger"></i> {% trans 'Repair' %}</a>
-                    <a class="btn btn-outline-dark btn-sm action-link"
-                       href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
-                            class="far fa-heart fa-fw text-danger"></i> {% trans 'Reload' %}</a>
                 </div>
             </div>
 
@@ -47,6 +51,13 @@
             <h4 class="text-center">{% trans 'Stats' %}</h4>
             <div class="card mb-2 mt-2">
                 <ul class="list-group list-group-flush">
+                    {% if object.has_capacity %}
+                        <li class="list-group-item">
+                            <i class="fas fa-angle-double-right fa-fw"></i>
+                            {% trans 'Capacity' %}
+                            <span class="float-end">{% color_value_span object.capacity_available object.weapon.capacity %} / {% color_value_span object.modified_capacity object.weapon.capacity %} {% display_modifications object 'capacity' %}</span>
+                        </li>
+                    {% endif %}
                     <li class="list-group-item">
                         <i class="fas fa-angle-double-right fa-fw"></i>
                         {% trans 'Penetration' %}
