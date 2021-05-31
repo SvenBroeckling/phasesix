@@ -1,15 +1,49 @@
 {% extends 'base.html' %}
-{% load i18n bootstrap4 %}
+{% load i18n bootstrap4 thumbnail %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="text-center">- {% trans 'New Character' %} -</h1>
-            <form action="" method="post">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <button type="submit" class="btn btn-primary btn-block">{% trans 'Create Character' %}</button>
-            </form>
+    <form action="" method="post">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">- {% trans 'New Character' %} -</h1>
+                <p class="text-muted text-center">{% trans 'Choose a name and additional extensions for your character' %}</p>
+            </div>
         </div>
-    </div>
+
+        <div class="row">
+            {% csrf_token %}
+            <div class="col-12 col-md-6">
+                {% bootstrap_field form.name %}
+            </div>
+            <div class="col-12 col-md-6">
+                {% bootstrap_field form.lineage %}
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            {% for extension in extensions %}
+                {% thumbnail extension.image "1024" as im %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <a href="{% url 'characters:create_character_data' extension_pk=extension.id %}">
+                            <div class="card text-center create-epoch-card mb-4">
+                                <div class="card-body"
+                                     style="background-image: url({{ im.url }}); background-size: cover">
+                                    <div class="card-text w-100 p-5">
+                                        <h5 class="text-center p-0 m-0">{{ extension }}</h5>
+                                        <p class="text-center text-dark p-0 m-0">{{ extension.year_range }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endthumbnail %}
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block mt-2">{% trans 'Create Character' %}</button>
+            </div>
+        </div>
+    </form>
 {% endblock %}
