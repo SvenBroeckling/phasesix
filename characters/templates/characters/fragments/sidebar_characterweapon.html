@@ -5,14 +5,13 @@
     {% if may_edit %}
         <div class="row">
             {% if object.weapon.weaponattackmode_set.exists and object.has_capacity %}
-                {% for fm in object.weapon.weaponattackmode_set.all %}
+                {% for fm in object.attack_modes %}
                     <div class="col-12">
                         <div class="btn-group w-100">
                             <a class="btn btn-outline-dark btn-sm action-link mb-1"
                                href="{% url 'characters:modify_health' pk=object.id mode='heal' %}">
-                                {% trans 'Attack:' %} {{ fm.attack_mode.name }}
-                                +{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'bonus_dice' %}
-                                <i class="fas fa-dice-five"></i></a>
+                                {% trans 'Attack:' %} {{ fm.0 }}
+                                {% color_value_span fm.1 8 %} <i class="fas fa-dice-five"></i></a>
                         </div>
                     </div>
                 {% endfor %}
@@ -105,7 +104,7 @@
                             <li class="list-group-item">
                                 <i class="fas fa-angle-double-right fa-fw"></i>
                                 {{ fm.attack_mode.name }}
-                                <span class="float-end">+{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'bonus_dice' %}<i
+                                <span class="float-end">+{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'bonus_dice' %} <i
                                         class="fas fa-dice-five"></i></span>
                             </li>
                         {% endfor %}
