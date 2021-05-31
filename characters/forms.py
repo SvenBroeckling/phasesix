@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import HiddenInput
 from django.utils.translation import ugettext_lazy as _
 
 from characters.models import Character
@@ -23,4 +22,4 @@ class CreateCharacterForm(forms.Form):
         queryset=Extension.objects.filter(is_epoch=False, is_mandatory=False, is_active=True),
         label=_('Extensions'),
         required=False,
-        widget=HiddenInput())
+        widget=forms.SelectMultiple(attrs={'style': 'display: none'}))

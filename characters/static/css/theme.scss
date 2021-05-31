@@ -2,6 +2,10 @@
 @import '../bootstrap/scss/bootstrap.scss';
 @import 'bootswatch/cyborg/bootswatch';
 
+.pointer {
+  cursor: pointer;
+}
+
 .index-lead {
   font-size: 1.2rem;
 }
@@ -75,6 +79,14 @@ a[data-toggle="popover"] {
   position: relative;
 }
 
+.create-epoch-card:hover {
+  border: 1px solid $primary;
+}
+
+.create-epoch-card.selected {
+  border: 2px solid $success;
+}
+
 .create-epoch-card .card-text {
   position: absolute;
   top: 50%;
@@ -94,13 +106,12 @@ a[data-toggle="popover"] {
 }
 
 .constructed-template.selected div.card {
-  background-color: lightgreen;
+  border: 2px solid $success;
 }
 
 .constructed-template.notenoughpoints div.card {
   background-color: #600;
 }
-
 
 .no-decoration {
   text-decoration: none;
