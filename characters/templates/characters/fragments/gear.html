@@ -103,7 +103,7 @@
                                 <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Penetration' %}: {% color_value_span weapon.weapon.penetration 4 %} {% display_modifications weapon 'penetration' %}<br>
                                 <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
                                 <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.weapon.bonus_dice 4 %} {% display_modifications weapon 'bonus_dice' %}<br>
-                                {% if not weapon.has_capacity %}
+                                {% if weapon.has_capacity %}
                                     <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
                                     <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %} {% display_modifications weapon 'capacity' %}<br>
                                 {% endif %}
@@ -116,28 +116,30 @@
                                 {% if weapon.modifications.exists %}
                                     <div class="row mt-3">
                                         {% for wm in weapon.modifications.all %}
-                                            <div class="col-6 card">
-                                                <div class="card-header">
-                                                    <i class="fas fa-puzzle-piece"></i>
-                                                    {{ wm }}
-                                                </div>
-                                                <div class="card-body">
-                                                    {% for wma in wm.weaponmodificationattributechange_set.all %}
-                                                        {{ wma.get_attribute_display|capfirst }} +{% color_value_span wma.attribute_modifier 4 %}<br>
-                                                    {% endfor %}
-                                                    {% for wma in wm.weaponmodificationattributechange_set.all %}
-                                                        {% if wma.status_effect %}
-                                                        {{ wma.status_effect|capfirst }} <i class="{{ wma.status_effect.fa_icon_class }}"></i> {% color_value_span wma.status_effect_value 4 %}<br>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                                <div class="card-footer">
-                                                    <a
-                                                            class="action-link btn btn-outline-secondary btn-sm float-end"
-                                                            data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
-                                                            title="{% trans 'Remove Modification' %}"
-                                                            href="{% url 'characters:xhr_remove_weapon_modification' pk=object.id weapon_pk=weapon.id weapon_modification_pk=wm.id %}">
-                                                        <i class="fas fa-minus text-danger"></i> {% trans 'Remove' %}</a>
+                                            <div class="col-6">
+                                                <div class="card mb-2">
+                                                    <div class="card-header">
+                                                        <i class="fas fa-puzzle-piece"></i>
+                                                        {{ wm }}
+                                                    </div>
+                                                    <div class="card-body">
+                                                        {% for wma in wm.weaponmodificationattributechange_set.all %}
+                                                            {{ wma.get_attribute_display|capfirst }} +{% color_value_span wma.attribute_modifier 4 %}<br>
+                                                        {% endfor %}
+                                                        {% for wma in wm.weaponmodificationattributechange_set.all %}
+                                                            {% if wma.status_effect %}
+                                                                {{ wma.status_effect|capfirst }} <i class="{{ wma.status_effect.fa_icon_class }}"></i> {% color_value_span wma.status_effect_value 4 %}<br>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <a
+                                                                class="action-link btn btn-outline-secondary btn-sm float-end"
+                                                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                                                title="{% trans 'Remove Modification' %}"
+                                                                href="{% url 'characters:xhr_remove_weapon_modification' pk=object.id weapon_pk=weapon.id weapon_modification_pk=wm.id %}">
+                                                            <i class="fas fa-minus text-danger"></i> {% trans 'Remove' %}</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         {% endfor %}
