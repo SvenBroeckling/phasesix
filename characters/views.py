@@ -14,6 +14,18 @@ from horror.models import QuirkCategory
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill
 
 
+class DiceJsonView(View):
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({
+            'dice': [
+                {
+                    'name': 'Jasmin "Fiend" Keller',
+                    'dice': 5,
+                    'bonus': 3,
+                }
+            ]
+        })
+
 class IndexView(TemplateView):
     template_name = 'characters/index.html'
 

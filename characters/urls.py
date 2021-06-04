@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^list/$', views.CharacterListView.as_view(), name='list'),
     url(r'^xhr_delete/(?P<pk>\d+)$', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
 
+    url(r'^dice_json/$', views.DiceJsonView.as_view(), name='dice_json'),
+
     url(
         r'^xhr_detail_sidebar/(?P<pk>\d+)/(?P<model_name>[A-Za-z_]+)/(?P<sidebar_name>[a-z_]+)$',
         views.XhrSidebarView.as_view(),
