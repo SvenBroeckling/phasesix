@@ -37,6 +37,16 @@ urlpatterns = [
         views.CharacterModifyDiceView.as_view(),
         name='modify_dice'),
 
+    # Weapons
+    url(
+        r'^attack/(?P<characterweapon_pk>\d+)/(?P<weapon_attackmode_pk>\d+)/$',
+        views.CharacterAttackView.as_view(),
+        name='attack'),
+    url(
+        r'^reload/(?P<characterweapon_pk>\d+)/$',
+        views.CharacterReloadView.as_view(),
+        name='reload'),
+
     # horror
     url(
         r'^stress/(?P<pk>\d+)/(?P<mode>\w+)/$',
@@ -103,9 +113,9 @@ urlpatterns = [
         views.XhrRemoveWeaponModificationView.as_view(),
         name='xhr_remove_weapon_modification'),
     url(
-        r'^xhr_damage_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
-        views.XhrDamageWeaponView.as_view(),
-        name='xhr_damage_weapon'),
+        r'^xhr_weapon_condition/(?P<pk>\d+)/(?P<weapon_pk>\d+)(?P<mode>\w+)/$',
+        views.XhrWeaponConditionView.as_view(),
+        name='xhr_weapon_condition'),
 
     url(
         r'^xhr_add_riot_gear/(?P<pk>\d+)$',

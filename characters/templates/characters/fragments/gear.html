@@ -92,7 +92,7 @@
                                href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i
                                     class="fas fa-trash"></i></a>
                             <a class="float-end action-link text-warning ms-3" title="{% trans 'Damage' %}"
-                               href="{% url 'characters:xhr_damage_weapon' pk=object.id weapon_pk=weapon.id %}"><i
+                               href="{% url 'characters:xhr_weapon_condition' pk=object.id weapon_pk=weapon.id mode="damage" %}"><i
                                     class="fas fa-times"></i></a>
                         {% endif %}
                         <span class="float-end">{% color_value_span weapon.condition 100 %}%</span>

@@ -7,7 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView, DetailView, FormView
 
-from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType
+from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType, \
+    WeaponAttackMode
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect
 from horror.models import QuirkCategory
@@ -158,6 +159,33 @@ class CharacterModifyStressView(View):
                 if character.stress > 0:
                     character.stress -= 1
             character.save()
+        return JsonResponse({'status': 'ok'})
+
+
+class CharacterAttackView(View):
+    def post(self, request, *args, **kwargs):
+        character_weapon = CharacterWeapon.objects.get(id=kwargs['characterweapon_pk'])
+        weapon_attack_mode = WeaponAttackMode.objects.get(id=kwargs['weapon_attackmode_pk'])
+
+        if not character_weapon.character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        character_weapon.capacity_used += weapon_attack_mode.capacity_consumed
+        character_weapon.save()
+
+        return JsonResponse({'status': 'ok'})
+
+
+class CharacterReloadView(View):
+    def post(self, request, *args, **kwargs):
+        character_weapon = CharacterWeapon.objects.get(id=kwargs['characterweapon_pk'])
+
+        if not character_weapon.character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        character_weapon.capacity_used = 0
+        character_weapon.save()
+
         return JsonResponse({'status': 'ok'})
 
 
@@ -393,13 +421,18 @@ class XhrRemoveWeaponModificationView(View):
         return JsonResponse({'status': 'ok'})
 
 
-class XhrDamageWeaponView(View):
+class XhrWeaponConditionView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
-        weapon.condition -= 10
+
+        if kwargs['mode'] == 'damage':
+            weapon.condition -= 10
+        else:
+            weapon.condition += 10
+
         weapon.save()
         return JsonResponse({'status': 'ok'})
 

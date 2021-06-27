@@ -413,7 +413,7 @@ class CharacterWeapon(models.Model):
 
         modes = []
         for wm in self.weapon.weaponattackmode_set.all():
-            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + bonus_dice))
+            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + bonus_dice, wm.id))
 
         return modes
 

@@ -108,6 +108,7 @@ RANGE_CHOICES = (
 class AttackMode(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=100)
     dice_bonus = models.IntegerField(_('dice bonus'), default=1)
+    capacity_consumed = models.IntegerField(_('capacity consumed'), default=1)
 
     class Meta:
         translate = ('name',)
@@ -172,6 +173,10 @@ class WeaponAttackMode(models.Model):
         _('dice bonus override'),
         blank=True,
         null=True)
+    capacity_consumed_override = models.IntegerField(
+        _('capacity consumed override'),
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name = _('weapon attack mode')
@@ -186,6 +191,11 @@ class WeaponAttackMode(models.Model):
             return self.dice_bonus_override
         return self.attack_mode.dice_bonus
 
+    @property
+    def capacity_consumed(self):
+        if self.capacity_consumed_override:
+            return self.capacity_consumed_override
+        return self.attack_mode.capacity_consumed
 
 
 class WeaponModificationTypeQuerySet(models.QuerySet):
