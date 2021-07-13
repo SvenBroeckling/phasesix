@@ -70,3 +70,19 @@ class LatestModifiedAdmin(LatestNewAdmin):
         )
         objects = reversed(sorted(objects, key=lambda x: x.modified_at))
         return objects
+
+    def item_link(self, item):
+        url = reverse(
+            "admin:%s_%s_change" % (
+                item._meta.app_label,
+                item._meta.model_name), args=(item.id,))
+        return 'http://phasesix.org' + url
+
+    def item_title(self, item):
+        return "%s: %s" % (item.__class__.__name__, item)
+
+    def item_pubdate(self, item):
+        return item.created_at
+
+    def item_updatedate(self, item):
+        return item.modified_at
