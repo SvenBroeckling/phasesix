@@ -195,7 +195,7 @@
             </div>
 
         {% for ci in character.characteritem_set.by_type %}
-            <div class="card mb-3">
+            <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ ci.item }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=ci.id model_name="CharacterItem" sidebar_name="characteritem" %}">
                 <div class="card-header">
                    {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
                     <span class="small text-muted">{{ ci.item.type }}</span>
