@@ -52,11 +52,11 @@ Auf diese Weise ist es auch möglich einen Wurf zu machen, wenn die Zahl der Wü
 
 Die Bonuswürfel frischen sich bei jeder Rast auf ihr Maximum auf. 
 
-### Wiederholungswürfel
+### Wiederholungswürfe
 
-Wiederholungswürfel funktionieren ähnlich wie Bonuswürfel, werden jedoch nicht zu einem Wurf hinzugenommen, sondern im Nachhinein angewandt. Für je einen Wiederholungswürfel kann einer der Würfel eines Wurfes erneut geworfen werden. So ist es also nicht möglich einen Wurf auf 0 oder weniger erfolgreich zu bestehen.
+Für je einen Wiederholungswurf kann ein kompletter Wurf erneut geworfen werden. So ist es also nicht möglich einen Wurf auf 0 oder weniger erfolgreich zu bestehen.
 
-Wiederholungswürfel frischen sich auch bei jeder Rast auf ihr Maximum auf.
+Wiederholungswürfe frischen sich auch bei jeder Rast auf ihr Maximum auf.
 
 ### Schicksalswürfel
 
