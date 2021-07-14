@@ -89,6 +89,14 @@ class Character(models.Model):
                         kd[m.knowledge] = m.knowledge_modifier
         return kd
 
+    @property
+    def templates_with_shadow_rules(self):
+        return self.charactertemplate_set.filter(template__show_rules_in_shadows=True)
+
+    @property
+    def templates_with_combat_rules(self):
+        return self.charactertemplate_set.filter(template__show_rules_in_shadows=True)
+
     def shadow_list(self):
         sl = []
         for t in self.charactertemplate_set.all():
@@ -490,12 +498,13 @@ class CharacterItem(models.Model):
     quantity = models.IntegerField(_('Quantity'), default=1)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
 
-    def use_roll(self):
+    @property
+    def use_skill(self):
         if self.item.type.name_en == 'Grenades':
-            return 7 - self.character.characterskill_set.get(skill__name_en="Throwing").value
+            return self.character.characterskill_set.get(skill__name_en="Throwing")
         if self.item.type.name_en == 'First Aid':
-            return 7 - self.character.characterskill_set.get(skill__name_en="First Aid").value
-        return 0
+            return self.character.characterskill_set.get(skill__name_en="First Aid")
+        return None
 
 
 class CharacterSpell(models.Model):

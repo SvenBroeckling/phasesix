@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib import admin
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
@@ -276,6 +277,14 @@ class Template(models.Model, metaclass=TransMeta):
     category = models.ForeignKey(TemplateCategory, models.CASCADE, verbose_name=_('category'))
 
     rules = models.TextField(_('rules'), blank=True, null=True)
+    show_rules_in_shadows = models.BooleanField(
+        _('Show rules in shadows'),
+        default=False,
+        help_text=_('Show the rule as shadow on the main character sheet.'))
+    show_rules_in_combat = models.BooleanField(
+        _('Show rules in combat'),
+        default=False,
+        help_text=_('Show the rule as combat action on the combat tab.'))
     quote = models.TextField(_('quote'), blank=True, null=True)
     quote_author = models.CharField(_('quote author'), max_length=50, null=True, blank=True)
 
@@ -289,6 +298,18 @@ class Template(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    @admin.display(boolean=True)
+    def has_quote(self):
+        if self.quote:
+            return True
+        return False
+
+    @admin.display(boolean=True)
+    def has_rules(self):
+        if self.rules:
+            return True
+        return False
 
 
 class TemplateModifier(models.Model, metaclass=TransMeta):

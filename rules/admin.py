@@ -30,9 +30,10 @@ class TemplateCategoryAdmin(admin.ModelAdmin):
 class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
     search_fields = ('name_de', 'name_en')
-    list_display = ('name', 'cost', 'category')
+    list_display = (
+        'name', 'cost', 'category', 'has_rules', 'show_rules_in_shadows', 'show_rules_in_combat', 'has_quote')
+    list_editable = ('category', 'cost', 'show_rules_in_shadows', 'show_rules_in_combat')
     list_filter = ('extensions', 'category')
-    list_editable = ('category', 'cost')
     save_as = True
 
 
