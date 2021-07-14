@@ -39,6 +39,9 @@
                     <div class="card-footer">
                         <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
                         <i class="fas fa-balance-scale fa-fw ms-1" title="{% trans 'Weight' %}"></i> {{ r.riot_gear.weight }}
+                        {% if user.is_superuser %}
+                            <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                        {% endif %}
                     </div>
                 </div>
             {% empty %}
@@ -151,6 +154,9 @@
                     <div class="card-footer">
                         <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span weapon.weapon.concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}
                         <i class="fas fa-balance-scale fa-fw" title="{% trans 'Weight' %}"></i> {{ weapon.weapon.weight }} {% display_modifications weapon 'weight' %}<br>
+                        {% if user.is_superuser %}
+                            <a href="{% url 'admin:armory_weapon_change' weapon.weapon.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                        {% endif %}
                     </div>
                 </div>
             {% empty %}
@@ -207,6 +213,9 @@
                 <div class="card-footer">
                     <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
                     <i class="fas fa-balance-scale fa-fw ms-1" title="{% trans 'Weight' %}"></i> {{ ci.item.weight }}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin:armory_item_change' ci.item.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                    {% endif %}
                 </div>
             </div>
         {% empty %}

@@ -45,6 +45,9 @@
                             {% trans 'Add riot gear' %}
                         </button>
                     </form>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin:armory_riotgear_change' r.id %}" style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
