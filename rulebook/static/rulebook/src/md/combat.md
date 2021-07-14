@@ -26,15 +26,15 @@ Zu Beginn des Zuges frischen sich die *Aktionen* des Teilnehmers auf. Die Anzahl
 
 Sind die Aktionen aufgefrischt, kann der Teilnehmer im Kampf handeln. Dazu führt er nacheinander Handlungen aus, wobei jede Handlung eine gewisse Zahl an *Aktionen* in Anspruch nimmt. Handlungen können u. A. folgende sein:
 
-* Mit einer Waffe angreifen
-* Mit einer Waffe oder einem Gegenstand *parieren*
-* Eine Waffe nachladen
-* Einen Gegenstand benutzen
-* Einem Nahkampfangriff ausweichen
-* Hinknien oder auf den Boden legen
-* *Schnelligkeit* Meter gehen (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)
-* *Schnelligkeit* * 2 Meter rennen
-* *Schnelligkeit* / 2 Meter robben
+* Mit einer Waffe **angreifen**
+* Mit einer Waffe oder einem Gegenstand **parieren**
+* Eine Waffe **nachladen**
+* Einen Gegenstand **benutzen**
+* Einem Nahkampfangriff **ausweichen**
+* **Hinknien** oder auf den Boden legen
+* *Schnelligkeit* Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)
+* *Schnelligkeit* * 2 Meter **rennen**
+* *Schnelligkeit* / 2 Meter **robben**
 
 Aktionen sollten nicht zusammen, sondern immer nacheinander ausgeführt werden, da es mögliche Reaktionen gibt.
 
@@ -129,6 +129,13 @@ Ist der Wert *Kraft* des Charakters höher als 2, so verursacht der erfolgreiche
 Ist der Wert *Schnelligkeit* des Charakters höher als 2, so fügt der Charakter dem Wurf einen Würfel hinzu. 
 
 Der Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die Reichweite beträgt 1 Meter.
+
+
+#### Ausweichen
+
+Der Angegriffene kann einem Nahkampfangriff als Reaktion ausweichen. Voraussetzung hierfür ist, dass der angegriffene Charakter eine Aktion verfügbar hat und den Angreifer wahrnehmen kann. Einem Angriff von hinten kann also nicht ausgewichen werden.
+
+Um einem Angriff auszuweichen, wirft der Charakter einen Wurf auf seinen Wert in *Ausweichen* auf seinen normalen Mindestwurf. Der Charakter ist dem Angriff komplett ausgewichen, wenn der Wurf erfolgreich ist.
 
 ### Werfen von Gegenständen
 
