@@ -506,6 +506,9 @@ class CharacterItem(models.Model):
             return self.character.characterskill_set.get(skill__name_en="First Aid")
         return None
 
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+
 
 class CharacterSpell(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)

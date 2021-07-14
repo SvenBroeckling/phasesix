@@ -73,6 +73,8 @@ class XhrSidebarView(DetailView):
     def get_queryset(self):
         if self.kwargs['model_name'] == "CharacterWeapon":
             return CharacterWeapon.objects.all()
+        elif self.kwargs['model_name'] == "CharacterItem":
+            return CharacterItem.objects.all()
         return Character.objects.all()
 
     def get_context_data(self, **kwargs):
