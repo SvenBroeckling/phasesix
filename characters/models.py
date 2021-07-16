@@ -202,10 +202,6 @@ class Character(models.Model):
         return self.lineage.base_spell_points + self.get_attribute_modifier('base_spell_points')
 
     @property
-    def intelligence(self):
-        return self.lineage.base_intelligence + self.get_attribute_modifier('base_intelligence')
-
-    @property
     def max_health(self):
         return self.lineage.base_max_health + self.get_attribute_modifier('base_max_health')
 
@@ -268,8 +264,8 @@ class Character(models.Model):
         return self.lineage.base_quickness + self.get_attribute_modifier('base_quickness')
 
     @property
-    def openness(self):
-        return self.lineage.base_openness + self.get_attribute_modifier('base_openness')
+    def education(self):
+        return self.lineage.base_education + self.get_attribute_modifier('base_education')
 
     @property
     def conscientiousness(self):
@@ -278,18 +274,22 @@ class Character(models.Model):
         )
 
     @property
-    def extraversion(self):
-        return self.lineage.base_extraversion + self.get_attribute_modifier('base_extraversion')
+    def willpower(self):
+        return self.lineage.base_willpower + self.get_attribute_modifier('base_willpower')
 
     @property
-    def agreeableness(self):
-        return self.lineage.base_agreeableness + self.get_attribute_modifier(
-            'base_agreeableness'
+    def apprehension(self):
+        return self.lineage.base_apprehension + self.get_attribute_modifier(
+            'base_apprehension'
         )
 
     @property
-    def neuroticism(self):
-        return self.lineage.base_neuroticism + self.get_attribute_modifier('base_neuroticism')
+    def charm(self):
+        return self.lineage.base_charm + self.get_attribute_modifier('base_charm')
+
+    @property
+    def logic(self):
+        return self.lineage.base_logic + self.get_attribute_modifier('base_logic')
 
     @property
     def ballistic_protection(self):

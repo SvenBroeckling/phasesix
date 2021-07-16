@@ -77,11 +77,12 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_quickness = models.IntegerField(_('base quickness'), default=1)
 
     # persona
-    base_openness = models.IntegerField(_('base openness'), default=1)
+    base_education = models.IntegerField(_('base education'), default=1)
+    base_logic = models.IntegerField(_('base logic'), default=1)
     base_conscientiousness = models.IntegerField(_('base conscientiousness'), default=1)
-    base_extraversion = models.IntegerField(_('base extraversion'), default=1)
-    base_agreeableness = models.IntegerField(_('base agreeableness'), default=1)
-    base_neuroticism = models.IntegerField(_('base neuroticism'), default=1)
+    base_willpower = models.IntegerField(_('base willpower'), default=1)
+    base_apprehension = models.IntegerField(_('base apprehension'), default=1)
+    base_charm = models.IntegerField(_('base charme'), default=1)
 
     # horror
     base_max_stress = models.IntegerField(_('max stress'), default=6)
@@ -110,13 +111,19 @@ class Skill(models.Model, metaclass=TransMeta):
     A URPG skill
     """
     objects = ExtensionSelectQuerySet.as_manager()
-    SKILL_PERSONA_CHOICES = (
-        ('intelligence', _('intelligence')),
-        ('openness', _('openness')),
+    SKILL_ATTRIBUTE_CHOICES = (
+        ('deftness', _('deftness')),
+        ('strength', _('strength')),
+        ('attractiveness', _('attractiveness')),
+        ('endurance', _('endurance')),
+        ('resistance', _('resistance')),
+        ('quickness', _('quickness')),
+        ('logic', _('logic')),
+        ('education', _('education')),
         ('conscientiousness', _('conscientiousness')),
-        ('extraversion', _('extraversion')),
-        ('agreeableness', _('agreeableness')),
-        ('neuroticism', _('neuroticism')),
+        ('willpower', _('willpower')),
+        ('apprehension', _('apprehension')),
+        ('charm', _('charm')),
     )
     KIND_CHOICES = (
         ('p', _('practical')),
@@ -126,6 +133,19 @@ class Skill(models.Model, metaclass=TransMeta):
     kind = models.CharField(_('kind'), max_length=1, choices=KIND_CHOICES)
     extensions = models.ManyToManyField('rules.Extension')
     show_on_combat_tab = models.BooleanField(_('show on combat tab'), default=False)
+
+    dominant_attribute = models.CharField(
+        _('dominant attribute'),
+        choices=SKILL_ATTRIBUTE_CHOICES,
+        max_length=20,
+        blank=True,
+        null=True)
+    supplemental_attribute = models.CharField(
+        _('supplemental attribute'),
+        choices=SKILL_ATTRIBUTE_CHOICES,
+        max_length=20,
+        blank=True,
+        null=True)
 
     class Meta:
         translate = ('name',)
@@ -204,11 +224,12 @@ CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_resistance', _('resistance')),
     ('base_quickness', _('quickness')),
 
-    ('base_openness', _('openness')),
+    ('base_education', _('education')),
+    ('base_logic', _('logic')),
     ('base_conscientiousness', _('conscientiousness')),
-    ('base_extraversion', _('extraversion')),
-    ('base_agreeableness', _('agreeableness')),
-    ('base_neuroticism', _('neuroticism')),
+    ('base_willpower', _('willpower')),
+    ('base_apprehension', _('apprehension')),
+    ('base_charm', _('charm')),
 
     ('base_max_stress', _('max stress')),
 )
