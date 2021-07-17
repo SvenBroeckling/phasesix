@@ -52,7 +52,6 @@ class Lineage(models.Model, metaclass=TransMeta):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
-    base_intelligence = models.IntegerField(_('intelligence'), default=100)
     base_max_health = models.IntegerField(_('max health'), default=6)
 
     base_max_arcana = models.IntegerField(_('max arcana'), default=0)
@@ -219,7 +218,6 @@ class Shadow(models.Model, metaclass=TransMeta):
 
 
 CHARACTER_ATTRIBUTE_CHOICES = (
-    ('base_intelligence', _('intelligence')),
     ('base_max_health', _('max health')),
 
     ('base_max_arcana', _('max arcana')),
