@@ -116,7 +116,10 @@
             </thead>
             {% for skill in object.characterskill_set.mind_skills %}
                 <tr>
-                    <td>{{ skill.skill }}</td>
+                    <td>
+                        {{ skill.skill }}
+                        <small class="text-muted">({{ skill.skill.dominant_attribute_name }}, {{ skill.skill.supplemental_attribute_name }})</small>
+                    </td>
                     <td class="text-end">{% color_value_span skill.value 7 %}</td>
                 </tr>
             {% endfor %}
@@ -133,7 +136,10 @@
             </thead>
             {% for skill in object.characterskill_set.practical_skills %}
                 <tr>
-                    <td>{{ skill.skill }}</td>
+                    <td>
+                        {{ skill.skill }}
+                        <small class="text-muted">({{ skill.skill.dominant_attribute_name }}, {{ skill.skill.supplemental_attribute_name }})</small>
+                    </td>
                     <td class="text-end">{% color_value_span skill.value 7 %}</td>
                 </tr>
             {% endfor %}

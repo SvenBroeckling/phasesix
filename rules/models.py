@@ -147,6 +147,20 @@ class Skill(models.Model, metaclass=TransMeta):
         blank=True,
         null=True)
 
+    @property
+    def dominant_attribute_name(self):
+        try:
+            return next(filter(lambda x: x[0] == self.dominant_attribute, self.SKILL_ATTRIBUTE_CHOICES))[1]
+        except StopIteration:
+            return ''
+
+    @property
+    def supplemental_attribute_name(self):
+        try:
+            return next(filter(lambda x: x[0] == self.supplemental_attribute, self.SKILL_ATTRIBUTE_CHOICES))[1]
+        except StopIteration:
+            return ''
+
     class Meta:
         translate = ('name',)
         verbose_name = _('skill')

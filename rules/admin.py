@@ -38,7 +38,7 @@ class TemplateAdmin(admin.ModelAdmin):
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'kind', 'show_on_combat_tab')
+    list_display = ('name_de', 'name_en', 'kind', 'show_on_combat_tab', 'dominant_attribute', 'supplemental_attribute')
     list_editable = ('kind', 'show_on_combat_tab')
 
 

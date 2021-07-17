@@ -348,13 +348,16 @@ class CharacterSkill(models.Model):
 
     character = models.ForeignKey(Character, models.CASCADE)
     skill = models.ForeignKey('rules.Skill', models.CASCADE)
-    base_value = models.IntegerField(_('base value'), default=0)
+    base_value = models.IntegerField(_('base value'), default=1)
 
     class Meta:
         ordering = ('skill__name_de',)
 
     def __str__(self):
         return "{} {}".format(self.skill.name, self.value)
+
+    def attribute_value(self, attribute_name):
+        return getattr(self.character, attribute_name)
 
     @property
     def value(self):
@@ -364,7 +367,10 @@ class CharacterSkill(models.Model):
         q = QuirkModifier.objects.filter(
             quirk__in=self.character.quirks.all(),
             skill=self.skill).aggregate(Sum('skill_modifier'))
-        return self.base_value + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
+        dom = self.attribute_value(self.skill.dominant_attribute)
+        sup = self.attribute_value(self.skill.supplemental_attribute)
+        attr_mod = math.ceil((dom + sup) / 2)
+        return self.base_value + attr_mod + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
 
 
 class CharacterStatusEffect(models.Model):
