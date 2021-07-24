@@ -514,8 +514,3 @@ class CharacterItem(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
-
-
-class CharacterSpell(models.Model):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    spell = models.ForeignKey('magic.Spell', on_delete=models.CASCADE)

@@ -9,7 +9,7 @@
                     data-bs-toggle="modal"
                     data-bs-target=".character-modal"
                     data-modal-title="{% trans 'Create a spell' %}"
-                    data-url="{% url 'magic:xhr_spell' object.id %}">
+                    data-url="">
                 <i class="fa fa-magic text-warning"></i> {% trans 'Spell Points' %} {{ object.spell_points_available }}
             </button>
         {% endif %}
