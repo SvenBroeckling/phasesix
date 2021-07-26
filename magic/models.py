@@ -4,6 +4,13 @@ from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 
 
+SPELL_ATTRIBUTE_CHOICES = (
+    ('power', _('power')),
+    ('range', _('range')),
+    ('actions', _('actions')),
+)
+
+
 class SpellVariant(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=30)
 
@@ -12,6 +19,19 @@ class SpellVariant(models.Model, metaclass=TransMeta):
         translate = ('name',)
         verbose_name = _('spell variant')
         verbose_name_plural = _('spell variants')
+
+    def __str__(self):
+        return self.name
+
+
+class SpellShape(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=30)
+
+    class Meta:
+        ordering = ('id',)
+        translate = ('name',)
+        verbose_name = _('spell shape')
+        verbose_name_plural = _('spell shapes')
 
     def __str__(self):
         return self.name
@@ -38,6 +58,14 @@ class BaseSpell(models.Model, metaclass=TransMeta):
         blank=True,
         verbose_name=_('created by'))
 
+    cost = models.IntegerField(_('cost'))
+
+    power = models.IntegerField(_('power'), default=1)
+    range = models.IntegerField(_('range'), default=0)
+    actions = models.IntegerField(_('actions'), default=1)
+
+    is_ritual = models.BooleanField(_('is ritual'), default=False)
+
     variant = models.ForeignKey(
         SpellVariant,
         on_delete=models.CASCADE,
@@ -46,6 +74,12 @@ class BaseSpell(models.Model, metaclass=TransMeta):
         SpellType,
         on_delete=models.CASCADE,
         verbose_name=_('type'))
+    shape = models.ForeignKey(
+        SpellShape,
+        on_delete=models.CASCADE,
+        verbose_name=_('shape'),
+        blank=True,
+        null=True)
 
     name = models.CharField(_('name'), max_length=80)
     rules = models.TextField(_('rules'))
@@ -59,4 +93,59 @@ class BaseSpell(models.Model, metaclass=TransMeta):
         ordering = ('id',)
         translate = ('name', 'rules')
         verbose_name = _('base spell')
-        verbose_name_plural = _('base spell')
+        verbose_name_plural = _('base spells')
+
+
+class SpellTemplate(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=120)
+    cost = models.IntegerField(verbose_name=_('cost'), default=1)
+
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
+    rules = models.TextField(_('rules'), blank=True, null=True)
+
+    quote = models.TextField(_('quote'), blank=True, null=True)
+    quote_author = models.CharField(_('quote author'), max_length=50, null=True, blank=True)
+
+    class Meta:
+        translate = ('name', 'rules')
+        verbose_name = _('spell template')
+        verbose_name_plural = _('spell templates')
+
+    def __str__(self):
+        return self.name
+
+
+class SpellTemplateModifier(models.Model, metaclass=TransMeta):
+    spell_template = models.ForeignKey(SpellTemplate, on_delete=models.CASCADE)
+    attribute = models.CharField(
+        verbose_name=_('attribute'),
+        max_length=40,
+        choices=SPELL_ATTRIBUTE_CHOICES,
+        null=True,
+        blank=True)
+    attribute_modifier = models.IntegerField(
+        verbose_name=_('attribute modifier'),
+        blank=True,
+        null=True)
+    variant_change = models.ForeignKey(
+        SpellVariant,
+        on_delete=models.SET_NULL,
+        verbose_name=_('variant change'),
+        null=True,
+        blank=True)
+    type_change = models.ForeignKey(
+        SpellType,
+        on_delete=models.SET_NULL,
+        verbose_name=_('type change'),
+        null=True,
+        blank=True)
+    shape_change = models.ForeignKey(
+        SpellShape,
+        on_delete=models.SET_NULL,
+        verbose_name=_('shape change'),
+        null=True,
+        blank=True)
+
+

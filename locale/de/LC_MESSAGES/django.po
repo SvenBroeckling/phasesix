@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-17 13:33+0000\n"
-"PO-Revision-Date: 2021-07-17 15:36+0200\n"
+"POT-Creation-Date: 2021-07-26 12:06+0000\n"
+"PO-Revision-Date: 2021-07-26 14:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -24,36 +24,36 @@ msgstr ""
 #: bestiary/models.py:20 bestiary/models.py:40 bestiary/models.py:78
 #: campaigns/models.py:10 campaigns/models.py:53 campaigns/models.py:61
 #: characters/models.py:15 forum/models.py:33 forum/models.py:51
-#: horror/models.py:11 horror/models.py:24 magic/models.py:9 magic/models.py:25
-#: magic/models.py:41 magic/models.py:57 magic/models.py:73 magic/models.py:89
-#: magic/models.py:105 magic/models.py:121 magic/models.py:142
-#: magic/models.py:186 rules/models.py:23 rules/models.py:49
-#: rules/models.py:132 rules/models.py:180 rules/models.py:206
-#: rules/models.py:266 rules/models.py:308 rules/models.py:405
+#: horror/models.py:11 horror/models.py:24 magic/models.py:15
+#: magic/models.py:28 magic/models.py:41 magic/models.py:84 magic/models.py:100
+#: rules/models.py:23 rules/models.py:49 rules/models.py:131
+#: rules/models.py:179 rules/models.py:205 rules/models.py:264
+#: rules/models.py:306 rules/models.py:403
 msgid "name"
 msgstr "Name"
 
 #: armory/models.py:24 armory/models.py:41 armory/models.py:82
 #: armory/models.py:136 armory/models.py:213 armory/models.py:235
 #: armory/models.py:286 bestiary/models.py:41 characters/models.py:16
-#: magic/models.py:187 rules/models.py:25 rules/models.py:50
-#: rules/models.py:207 rules/models.py:279
+#: rules/models.py:25 rules/models.py:50 rules/models.py:206
+#: rules/models.py:277
 msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:47 armory/models.py:83
 #: armory/models.py:131 armory/models.py:283 bestiary/models.py:33
 #: characters/models.py:395 forum/models.py:22 forum/models.py:28
-#: forum/models.py:32 forum/models.py:48 forum/models.py:79 rules/models.py:30
-#: rules/models.py:52 rules/models.py:182 rules/models.py:208
-#: rules/models.py:310 rules/models.py:407
+#: forum/models.py:32 forum/models.py:48 forum/models.py:79 magic/models.py:103
+#: rules/models.py:30 rules/models.py:52 rules/models.py:181
+#: rules/models.py:207 rules/models.py:308 rules/models.py:405
 msgid "created at"
 msgstr "Erzeugt am"
 
 #: armory/models.py:26 armory/models.py:55 armory/models.py:84
 #: armory/models.py:132 armory/models.py:284 bestiary/models.py:34
-#: rules/models.py:31 rules/models.py:53 rules/models.py:183
-#: rules/models.py:209 rules/models.py:311 rules/models.py:408
+#: magic/models.py:104 rules/models.py:31 rules/models.py:53
+#: rules/models.py:182 rules/models.py:208 rules/models.py:309
+#: rules/models.py:406
 msgid "modified at"
 msgstr "Modifiziert am"
 
@@ -66,7 +66,7 @@ msgid "item types"
 msgstr "Gegenstandstypen"
 
 #: armory/models.py:42 armory/models.py:138 bestiary/models.py:43
-#: magic/models.py:204
+#: magic/models.py:76
 msgid "type"
 msgstr "Typ"
 
@@ -84,7 +84,7 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:50 campaigns/models.py:21 characters/models.py:26
-#: magic/models.py:184
+#: magic/models.py:59
 msgid "created by"
 msgstr "Erzeugt von"
 
@@ -162,7 +162,7 @@ msgstr "Angriffsmodi"
 msgid "is hand to hand weapon"
 msgstr "Ist Nahkampfwaffe"
 
-#: armory/models.py:140 rules/models.py:230
+#: armory/models.py:140 rules/models.py:228
 msgid "bonus dice"
 msgstr "Bonuswürfel"
 
@@ -284,15 +284,17 @@ msgstr "Nachladeaktionen"
 msgid "Range (meter)"
 msgstr "Reichweite (Meter)"
 
-#: armory/models.py:259 horror/models.py:53 rules/models.py:353
+#: armory/models.py:259 horror/models.py:53 magic/models.py:123
+#: rules/models.py:351
 msgid "attribute"
 msgstr "Attribut"
 
-#: armory/models.py:260 horror/models.py:59 rules/models.py:359
+#: armory/models.py:260 horror/models.py:59 magic/models.py:129
+#: rules/models.py:357
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: armory/models.py:263 rules/models.py:414
+#: armory/models.py:263 rules/models.py:412
 msgid "status effect"
 msgstr "Statuseffekt"
 
@@ -336,7 +338,8 @@ msgstr "Gegner Widerstände oder Schwächen"
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: bestiary/models.py:46 rules/models.py:228
+#: bestiary/models.py:46 magic/models.py:10 magic/models.py:65
+#: rules/models.py:226
 msgid "actions"
 msgstr "Aktionen"
 
@@ -364,8 +367,8 @@ msgstr "Gegner"
 msgid "foes"
 msgstr "Gegner"
 
-#: bestiary/models.py:79 horror/models.py:65 rules/models.py:166
-#: rules/models.py:365
+#: bestiary/models.py:79 horror/models.py:65 rules/models.py:165
+#: rules/models.py:363
 msgid "skill"
 msgstr "Fertigkeit"
 
@@ -541,7 +544,7 @@ msgstr "Erweiterungen"
 msgid "Characters without user will be cleaned daily."
 msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 
-#: characters/models.py:38 rules/models.py:92 rules/models.py:100
+#: characters/models.py:38 rules/models.py:91 rules/models.py:99
 msgid "lineage"
 msgstr "Abstammung"
 
@@ -1180,7 +1183,6 @@ msgid "Create a spell"
 msgstr "Erstelle einen Zauber"
 
 #: characters/templates/characters/fragments/magic.html:13
-#: magic/templates/magic/_spell_summary.html:13
 msgid "Spell Points"
 msgstr "Zauberpunkte"
 
@@ -1721,7 +1723,7 @@ msgstr "Tick Kategorie"
 msgid "quirk categories"
 msgstr "Tick Kategorien"
 
-#: horror/models.py:25 rules/models.py:312
+#: horror/models.py:25 rules/models.py:310
 msgid "category"
 msgstr "Kategorie"
 
@@ -1729,177 +1731,104 @@ msgstr "Kategorie"
 msgid "quirk"
 msgstr "Eigenart"
 
-#: horror/models.py:69 rules/models.py:369
+#: horror/models.py:69 rules/models.py:367
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: magic/forms.py:23
-msgid "Description / Additional Rules"
-msgstr "Beschreibung / Weitere Regeln"
-
-#: magic/models.py:10 magic/models.py:26 magic/models.py:42 magic/models.py:58
-#: magic/models.py:74 magic/models.py:90 magic/models.py:106
-#: magic/models.py:122 magic/models.py:143 magic/models.py:192
-#: rules/models.py:326
-msgid "cost"
-msgstr "Kosten"
-
-#: magic/models.py:15
-msgid "spell cost"
-msgstr "Zauber Kosten"
-
-#: magic/models.py:16
-msgid "spell costs"
-msgstr "Zauber Kosten"
-
-#: magic/models.py:20 magic/models.py:36 magic/models.py:52 magic/models.py:68
-#: magic/models.py:84 magic/models.py:100 magic/models.py:116
-#: magic/models.py:133 magic/models.py:155
-msgid "{} ({} Points)"
-msgstr "{} ({} Punkte)"
-
-#: magic/models.py:31
-msgid "spell range"
-msgstr "Zauber Reichweite"
-
-#: magic/models.py:32
-msgid "spell ranges"
-msgstr "Zauber Reichweiten"
-
-#: magic/models.py:47
-msgid "spell area of effect"
-msgstr "Zauber Effektbereich"
-
-#: magic/models.py:48
-msgid "spell areas of effect"
-msgstr "Zauber Effektbereiche"
-
-#: magic/models.py:63
-msgid "spell area of effect range"
-msgstr "Effektbereich Reichweite"
-
-#: magic/models.py:64
-msgid "spell areas of effect range"
-msgstr "Effektbereich Reichweite"
-
-#: magic/models.py:79
-msgid "spell component"
-msgstr "Zauber Komponente"
-
-#: magic/models.py:80
-msgid "spell components"
-msgstr "Zauber Komponenten"
-
-#: magic/models.py:95
-msgid "spell casting time"
-msgstr "Zauber Spruchzeit"
-
-#: magic/models.py:96
-msgid "spell casting times"
-msgstr "Zauber Spruchzeiten"
-
-#: magic/models.py:111
-msgid "spell type"
-msgstr "Zaubertyp"
-
-#: magic/models.py:112
-msgid "spell types"
-msgstr "Zaubertypen"
-
-#: magic/models.py:123
-msgid "wounds"
-msgstr "Wunden"
-
-#: magic/models.py:128
-msgid "spell power"
-msgstr "Zauberstärke"
-
-#: magic/models.py:129
-msgid "spell powers"
-msgstr "Zauberstärken"
-
-#: magic/models.py:141
-msgid "Spell Type"
-msgstr "Zaubertyp"
-
-#: magic/models.py:148
-msgid "spell flavour"
-msgstr "Zauber Variante"
-
-#: magic/models.py:149
-msgid "spell flavours"
-msgstr "Zaubervarianten"
-
-#: magic/models.py:163 magic/models.py:196
-msgid "flavour"
-msgstr "Variante"
-
-#: magic/models.py:167 magic/models.py:200
+#: magic/models.py:8 magic/models.py:63
 msgid "power"
 msgstr "Stärke"
 
-#: magic/models.py:168
-msgid "rule text"
-msgstr "Regeltext"
-
-#: magic/models.py:174
-msgid "spell rule"
-msgstr "Zauberregel"
-
-#: magic/models.py:175
-msgid "spell rules"
-msgstr "Zauberregeln"
-
-#: magic/models.py:208
-msgid "casting time"
-msgstr "Spruchzeit"
-
-#: magic/models.py:212
-msgid "components"
-msgstr "Komponenten"
-
-#: magic/models.py:216
-msgid "area of effect"
-msgstr "Effektbereich"
-
-#: magic/models.py:220
-msgid "area of effect range"
-msgstr "Effektbereich Reichweite"
-
-#: magic/models.py:224
+#: magic/models.py:9 magic/models.py:64
 msgid "range"
 msgstr "Reichweite"
 
-#: magic/templates/magic/_spell.html:79
-msgid "Create Spell"
-msgstr "Zauber erstellen"
+#: magic/models.py:20
+msgid "spell variant"
+msgstr "Zaubervariante"
 
-#: magic/templates/magic/_spell.html:80
-msgid "Not enough spell points"
-msgstr "Nicht genug Zauberpunkte"
+#: magic/models.py:21
+msgid "spell variants"
+msgstr "Zaubervarianten"
 
-#: magic/templates/magic/_spell.html:81
-msgid "It's not possible to create a spell with zero or negative cost."
-msgstr ""
-"Es ist nicht möglich einen Zauber mit 0 oder weniger Kosten zu erstellen."
+#: magic/models.py:33
+msgid "spell shape"
+msgstr "Zauberform"
 
-#: magic/templates/magic/_spell.html:82
-msgid "Your Spell needs a description an a name."
-msgstr "Dein Zauber benötigt eine Beschreibung und einen Namen."
+#: magic/models.py:34
+msgid "spell shapes"
+msgstr "Zauberformen"
 
-#: magic/templates/magic/_spell_summary.html:3
-msgid "Unnamed Spell"
-msgstr "Unbenannter Zauber"
+#: magic/models.py:46
+msgid "spell type"
+msgstr "Zaubertyp"
 
-#: magic/views.py:57
-msgid "Spell created."
-msgstr "Zauber erschaffen."
+#: magic/models.py:47
+msgid "spell types"
+msgstr "Zaubertypen"
+
+#: magic/models.py:61 magic/models.py:101 rules/models.py:324
+msgid "cost"
+msgstr "Kosten"
+
+#: magic/models.py:67
+msgid "is ritual"
+msgstr "Ist Ritual"
+
+#: magic/models.py:72
+msgid "variant"
+msgstr "Variante"
+
+#: magic/models.py:80
+msgid "shape"
+msgstr "Form"
+
+#: magic/models.py:85 magic/models.py:106 rules/models.py:312
+#: rules/models.py:404
+msgid "rules"
+msgstr "Regeln"
+
+#: magic/models.py:86 magic/models.py:108 rules/models.py:321
+msgid "quote"
+msgstr "Zitat"
+
+#: magic/models.py:87 magic/models.py:109 rules/models.py:322
+msgid "quote author"
+msgstr "Zitatautor"
+
+#: magic/models.py:95
+msgid "base spell"
+msgstr "Basiszauber"
+
+#: magic/models.py:96
+msgid "base spells"
+msgstr "Basiszauber"
+
+#: magic/models.py:113
+msgid "spell template"
+msgstr "Zauberschablone"
+
+#: magic/models.py:114
+msgid "spell templates"
+msgstr "Zauberschablonen"
+
+#: magic/models.py:135
+msgid "variant change"
+msgstr "Variantenänderung"
+
+#: magic/models.py:141
+msgid "type change"
+msgstr "Typänderung"
+
+#: magic/models.py:147
+msgid "shape change"
+msgstr "Formänderung"
 
 #: rules/models.py:21
 msgid "is mandatory"
 msgstr "Ist Pflicht"
 
-#: rules/models.py:22 rules/models.py:404
+#: rules/models.py:22 rules/models.py:402
 msgid "FA Icon Class"
 msgstr "FA Icon Klasse"
 
@@ -1919,7 +1848,7 @@ msgstr "Ist aktiv"
 msgid "is epoch"
 msgstr "Ist Epoche"
 
-#: rules/models.py:34 rules/models.py:409
+#: rules/models.py:34 rules/models.py:407
 msgid "ordering"
 msgstr "Sortierung"
 
@@ -1931,275 +1860,259 @@ msgstr "Erweiterung"
 msgid "extensions"
 msgstr "Erweiterungen"
 
-#: rules/models.py:55 rules/models.py:222
-msgid "intelligence"
-msgstr "Intelligenz"
-
-#: rules/models.py:56 rules/models.py:223
+#: rules/models.py:55 rules/models.py:221
 msgid "max health"
 msgstr "Maximale Lebenspunkte"
 
-#: rules/models.py:58 rules/models.py:225
+#: rules/models.py:57 rules/models.py:223
 msgid "max arcana"
 msgstr "Max Arkana"
 
-#: rules/models.py:59 rules/models.py:226
+#: rules/models.py:58 rules/models.py:224
 msgid "spell points"
 msgstr "Zauberpunkte"
 
-#: rules/models.py:61
+#: rules/models.py:60
 msgid "base actions"
 msgstr "Basisaktionen"
 
-#: rules/models.py:63
+#: rules/models.py:62
 msgid "base bonus dice"
 msgstr "Bonuswürfel Basis"
 
-#: rules/models.py:64
+#: rules/models.py:63
 msgid "base destiny dice"
 msgstr "Schicksalswürfel Basis"
 
-#: rules/models.py:65
+#: rules/models.py:64
 msgid "base rerolls"
 msgstr "Wiederholungswürfe Basis"
 
-#: rules/models.py:68
+#: rules/models.py:67
 msgid "base evasion"
 msgstr "Basisausweichen"
 
-#: rules/models.py:69
+#: rules/models.py:68
 msgid "base armor"
 msgstr "Basisschutz"
 
-#: rules/models.py:72
+#: rules/models.py:71
 msgid "base deftness"
 msgstr "Geschick Basis"
 
-#: rules/models.py:73
+#: rules/models.py:72
 msgid "base strength"
 msgstr "Kraft Basis"
 
-#: rules/models.py:74
+#: rules/models.py:73
 msgid "base attractiveness"
 msgstr "Attraktivität Basis"
 
-#: rules/models.py:75
+#: rules/models.py:74
 msgid "base endurance"
 msgstr "Ausdauer Basis"
 
-#: rules/models.py:76
+#: rules/models.py:75
 msgid "base resistance"
 msgstr "Resistenz Basis"
 
-#: rules/models.py:77
+#: rules/models.py:76
 msgid "base quickness"
 msgstr "Schnelligkeit Basis"
 
-#: rules/models.py:80
+#: rules/models.py:79
 msgid "base education"
 msgstr "Bildung Basis"
 
-#: rules/models.py:81
+#: rules/models.py:80
 msgid "base logic"
 msgstr "Logik Basis"
 
-#: rules/models.py:82
+#: rules/models.py:81
 msgid "base conscientiousness"
 msgstr "Gewissenhaftigkeit Basis"
 
-#: rules/models.py:83
+#: rules/models.py:82
 msgid "base willpower"
 msgstr "Willenskraft Basis"
 
-#: rules/models.py:84
+#: rules/models.py:83
 msgid "base apprehension"
 msgstr "Auffassungsgabe Basis"
 
-#: rules/models.py:85
+#: rules/models.py:84
 msgid "base charme"
 msgstr "Charme Basis"
 
-#: rules/models.py:88 rules/models.py:248
+#: rules/models.py:87 rules/models.py:246
 msgid "max stress"
 msgstr "Maximaler Stress"
 
-#: rules/models.py:93
+#: rules/models.py:92
 msgid "lineages"
 msgstr "Abstammungen"
 
-#: rules/models.py:102 rules/models.py:285
+#: rules/models.py:101 rules/models.py:283
 msgid "template category"
 msgstr "Schablonenkategorie"
 
-#: rules/models.py:103
+#: rules/models.py:102
 msgid "points"
 msgstr "Punkte"
 
-#: rules/models.py:115 rules/models.py:234
+#: rules/models.py:114 rules/models.py:232
 msgid "deftness"
 msgstr "Geschick"
 
-#: rules/models.py:116 rules/models.py:235
+#: rules/models.py:115 rules/models.py:233
 msgid "strength"
 msgstr "Kraft"
 
-#: rules/models.py:117 rules/models.py:236
+#: rules/models.py:116 rules/models.py:234
 msgid "attractiveness"
 msgstr "Attraktivität"
 
-#: rules/models.py:118 rules/models.py:237
+#: rules/models.py:117 rules/models.py:235
 msgid "endurance"
 msgstr "Ausdauer"
 
-#: rules/models.py:119 rules/models.py:238
+#: rules/models.py:118 rules/models.py:236
 msgid "resistance"
 msgstr "Resistenz"
 
-#: rules/models.py:120 rules/models.py:239
+#: rules/models.py:119 rules/models.py:237
 msgid "quickness"
 msgstr "Schnelligkeit"
 
-#: rules/models.py:121 rules/models.py:242
+#: rules/models.py:120 rules/models.py:240
 msgid "logic"
 msgstr "Logik"
 
-#: rules/models.py:122 rules/models.py:241
+#: rules/models.py:121 rules/models.py:239
 msgid "education"
 msgstr "Bildung"
 
-#: rules/models.py:123 rules/models.py:243
+#: rules/models.py:122 rules/models.py:241
 msgid "conscientiousness"
 msgstr "Gewissenhaftigkeit"
 
-#: rules/models.py:124 rules/models.py:244
+#: rules/models.py:123 rules/models.py:242
 msgid "willpower"
 msgstr "Willenskraft"
 
-#: rules/models.py:125 rules/models.py:245
+#: rules/models.py:124 rules/models.py:243
 msgid "apprehension"
 msgstr "Auffassungsgabe"
 
-#: rules/models.py:126 rules/models.py:246
+#: rules/models.py:125 rules/models.py:244
 msgid "charm"
 msgstr "Charme"
 
-#: rules/models.py:129
+#: rules/models.py:128
 msgid "practical"
 msgstr "praktisch"
 
-#: rules/models.py:130
+#: rules/models.py:129
 msgid "mind"
 msgstr "geistig"
 
-#: rules/models.py:133
+#: rules/models.py:132
 msgid "kind"
 msgstr "Art"
 
-#: rules/models.py:135
+#: rules/models.py:134
 msgid "show on combat tab"
 msgstr "auf Kampftab zeigen"
 
-#: rules/models.py:138
+#: rules/models.py:137
 msgid "dominant attribute"
 msgstr "Dominantes Attribut"
 
-#: rules/models.py:144
+#: rules/models.py:143
 msgid "supplemental attribute"
 msgstr "Unterstützendes Attribut"
 
-#: rules/models.py:167
+#: rules/models.py:166
 msgid "skills"
 msgstr "Fertigkeiten"
 
-#: rules/models.py:186 rules/templates/rules/_template_widget.html:24
+#: rules/models.py:185 rules/templates/rules/_template_widget.html:24
 msgid "Skill"
 msgstr "Fertigkeit"
 
-#: rules/models.py:193 rules/models.py:194 rules/models.py:375
+#: rules/models.py:192 rules/models.py:193 rules/models.py:373
 msgid "knowledge"
 msgstr "Wissen"
 
-#: rules/models.py:214 rules/models.py:385
+#: rules/models.py:213 rules/models.py:383
 msgid "shadow"
 msgstr "Schatten"
 
-#: rules/models.py:215
+#: rules/models.py:214
 msgid "shadows"
 msgstr "Schatten"
 
-#: rules/models.py:231
+#: rules/models.py:229
 msgid "destiny dice"
 msgstr "Schicksalswürfel"
 
-#: rules/models.py:232
+#: rules/models.py:230
 msgid "rerolls"
 msgstr "Wiederholungswürfe"
 
-#: rules/models.py:254
+#: rules/models.py:252
 msgid "None"
 msgstr "Keine"
 
-#: rules/models.py:268 rules/models.py:274
+#: rules/models.py:266 rules/models.py:272
 msgid "bootstrap color class"
 msgstr "Bootstrap Farbklasse"
 
-#: rules/models.py:280
+#: rules/models.py:278
 msgid "sort order"
 msgstr "Sortierreihenfolge"
 
-#: rules/models.py:281
+#: rules/models.py:279
 msgid "Allow for reputation"
 msgstr "Für Reputation erlaubt"
 
-#: rules/models.py:286
+#: rules/models.py:284
 msgid "template categories"
 msgstr "Schablonenkategorien"
 
-#: rules/models.py:314 rules/models.py:406
-msgid "rules"
-msgstr "Regeln"
-
-#: rules/models.py:316
+#: rules/models.py:314
 msgid "Show rules in shadows"
 msgstr "Regeln unter Schatten anzeigen"
 
-#: rules/models.py:318
+#: rules/models.py:316
 msgid "Show the rule as shadow on the main character sheet."
 msgstr "Zeige die Regeln als Schatten im Charakterbogen."
 
-#: rules/models.py:320
+#: rules/models.py:318
 msgid "Show rules in combat"
 msgstr "Zeige Regeln im Kampf"
 
-#: rules/models.py:322
+#: rules/models.py:320
 msgid "Show the rule as combat action on the combat tab."
 msgstr "Zeige die Regeln als Kampfaktionen im Kampftab."
 
-#: rules/models.py:323
-msgid "quote"
-msgstr "Zitat"
-
-#: rules/models.py:324
-msgid "quote author"
-msgstr "Zitatautor"
-
-#: rules/models.py:330
+#: rules/models.py:328
 msgid "character template"
 msgstr "Charakterschablone"
 
-#: rules/models.py:331
+#: rules/models.py:329
 msgid "character templates"
 msgstr "Charakterschablonen"
 
-#: rules/models.py:351 rules/models.py:391
+#: rules/models.py:349 rules/models.py:389
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:379
+#: rules/models.py:377
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
-#: rules/models.py:415
+#: rules/models.py:413
 msgid "status effects"
 msgstr "Statuseffekte"
 
@@ -2323,6 +2236,106 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "Description / Additional Rules"
+#~ msgstr "Beschreibung / Weitere Regeln"
+
+#~ msgid "spell cost"
+#~ msgstr "Zauber Kosten"
+
+#~ msgid "spell costs"
+#~ msgstr "Zauber Kosten"
+
+#~ msgid "{} ({} Points)"
+#~ msgstr "{} ({} Punkte)"
+
+#~ msgid "spell area of effect"
+#~ msgstr "Zauber Effektbereich"
+
+#~ msgid "spell areas of effect"
+#~ msgstr "Zauber Effektbereiche"
+
+#~ msgid "spell area of effect range"
+#~ msgstr "Effektbereich Reichweite"
+
+#~ msgid "spell areas of effect range"
+#~ msgstr "Effektbereich Reichweite"
+
+#~ msgid "spell component"
+#~ msgstr "Zauber Komponente"
+
+#~ msgid "spell components"
+#~ msgstr "Zauber Komponenten"
+
+#~ msgid "spell casting time"
+#~ msgstr "Zauber Spruchzeit"
+
+#~ msgid "spell casting times"
+#~ msgstr "Zauber Spruchzeiten"
+
+#~ msgid "wounds"
+#~ msgstr "Wunden"
+
+#~ msgid "spell power"
+#~ msgstr "Zauberstärke"
+
+#~ msgid "spell powers"
+#~ msgstr "Zauberstärken"
+
+#~ msgid "Spell Type"
+#~ msgstr "Zaubertyp"
+
+#~ msgid "spell flavour"
+#~ msgstr "Zauber Variante"
+
+#~ msgid "spell flavours"
+#~ msgstr "Zaubervarianten"
+
+#~ msgid "flavour"
+#~ msgstr "Variante"
+
+#~ msgid "rule text"
+#~ msgstr "Regeltext"
+
+#~ msgid "spell rule"
+#~ msgstr "Zauberregel"
+
+#~ msgid "spell rules"
+#~ msgstr "Zauberregeln"
+
+#~ msgid "casting time"
+#~ msgstr "Spruchzeit"
+
+#~ msgid "components"
+#~ msgstr "Komponenten"
+
+#~ msgid "area of effect"
+#~ msgstr "Effektbereich"
+
+#~ msgid "area of effect range"
+#~ msgstr "Effektbereich Reichweite"
+
+#~ msgid "Create Spell"
+#~ msgstr "Zauber erstellen"
+
+#~ msgid "Not enough spell points"
+#~ msgstr "Nicht genug Zauberpunkte"
+
+#~ msgid "It's not possible to create a spell with zero or negative cost."
+#~ msgstr ""
+#~ "Es ist nicht möglich einen Zauber mit 0 oder weniger Kosten zu erstellen."
+
+#~ msgid "Your Spell needs a description an a name."
+#~ msgstr "Dein Zauber benötigt eine Beschreibung und einen Namen."
+
+#~ msgid "Unnamed Spell"
+#~ msgstr "Unbenannter Zauber"
+
+#~ msgid "Spell created."
+#~ msgstr "Zauber erschaffen."
+
+#~ msgid "intelligence"
+#~ msgstr "Intelligenz"
 
 #~ msgid "Openness"
 #~ msgstr "Offenheit"
