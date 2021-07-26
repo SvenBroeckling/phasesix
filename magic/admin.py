@@ -32,9 +32,12 @@ class SpellTemplateAdmin(admin.ModelAdmin):
     )
 
 
+class SpellTypeAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'image')
+
 admin.site.register(BaseSpell, BaseSpellAdmin)
 admin.site.register(SpellTemplate, SpellTemplateAdmin)
 admin.site.register(SpellTemplateModifier)
 admin.site.register(SpellShape)
-admin.site.register(SpellType)
+admin.site.register(SpellType, SpellTypeAdmin)
 admin.site.register(SpellVariant)
