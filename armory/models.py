@@ -55,8 +55,9 @@ class Item(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
 
-    image = models.ImageField(
-        _('image'), max_length=256, upload_to='item_images/', null=True, blank=True)
+    image = models.ImageField(_('image'), max_length=256, upload_to='item_images/', null=True, blank=True)
+    image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
     class Meta:
         translate = ('name', 'description')
@@ -150,6 +151,8 @@ class Weapon(models.Model, metaclass=TransMeta):
     range_meter = models.IntegerField(_('range (meter)'), default=0)
 
     image = models.ImageField(_('image'), max_length=256, upload_to='weapon_images/', null=True, blank=True)
+    image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
     class Meta:
         translate = ('name', 'description')

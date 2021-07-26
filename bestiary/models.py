@@ -33,9 +33,9 @@ class Foe(models.Model, metaclass=TransMeta):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
-    image = models.ImageField(
-        _('image'), upload_to='foe_images', blank=True, null=True
-    )
+    image = models.ImageField(_('image'), upload_to='foe_images', blank=True, null=True)
+    image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)

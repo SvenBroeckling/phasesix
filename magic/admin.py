@@ -21,6 +21,8 @@ class SpellTemplateModifierInline(admin.TabularInline):
 
 
 class SpellTemplateAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'cost')
+    list_filter = 'cost',
     inlines = [SpellTemplateModifierInline]
     fields = (
         ('name_de', 'name_en'),

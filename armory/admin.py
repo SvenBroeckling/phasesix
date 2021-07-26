@@ -22,7 +22,7 @@ class WeaponAdmin(admin.ModelAdmin):
                 ('type', 'capacity', 'wounds', 'penetration', 'weight'),
                 ('range_meter', 'concealment', 'price', 'reload_actions', 'bonus_dice'),
                 ('description_en', 'description_de',),
-                ('image',)
+                ('image', 'image_copyright', 'image_copyright_url')
             )
         }),
     ]

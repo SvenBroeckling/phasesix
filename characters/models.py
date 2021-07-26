@@ -14,12 +14,14 @@ from rules.models import Skill, Template, TemplateCategory, TemplateModifier
 class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
-    image = models.ImageField(
-        _('image'), upload_to='character_images', blank=True, null=True
-    )
-    backdrop_image = models.ImageField(
-        _('backdrop image'), upload_to='character_backdrop_images', blank=True, null=True
-    )
+
+    image = models.ImageField(_('image'), upload_to='character_images', blank=True, null=True)
+    image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
+
+    backdrop_image = models.ImageField(_('backdrop image'), upload_to='character_backdrop_images', blank=True, null=True)
+    backdrop_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
+    backdrop_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
     created_by = models.ForeignKey(
         'auth.User',
