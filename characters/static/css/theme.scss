@@ -260,3 +260,27 @@ a[data-toggle="popover"] {
 .character-list a {
   text-decoration: none;
 }
+
+/* Magic */
+
+.add-spell-spell-type-card {
+  height: 45vh;
+  position: relative;
+}
+
+.add-spell-spell-type-card:hover {
+  border: 1px solid $primary;
+}
+
+.add-spell-spell-type-card.selected {
+  border: 2px solid $success;
+}
+
+.add-spell-spell-type-card .card-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  text-decoration: none;
+  background-color: rgba(10, 10, 10, 0.5);
+}

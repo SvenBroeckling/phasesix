@@ -156,4 +156,8 @@ urlpatterns = [
         views.AddWeaponModificationView.as_view(),
         name='add_weapon_modification'),
 
+    url(
+        r'^xhr_add_spell/(?P<pk>\d+)$',
+        views.XhrAddSpellView.as_view(),
+        name='xhr_add_spell'),
 ]

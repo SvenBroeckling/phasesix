@@ -1,0 +1,49 @@
+{% load characters_extras rules_extras i18n thumbnail %}
+
+<script>
+    $(function(){
+        $('.add-form').on('submit', function(e){
+            var form = $(this);
+            var btn = form.find('button');
+            var original_btn_html = btn.html();
+
+            btn.text(btn.data('msg'));
+            btn.addClass('btn-success');
+
+            setTimeout(function () {
+                btn.html(original_btn_html);
+                btn.removeClass('btn-success');
+            }, 1000);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize()
+            });
+            e.preventDefault();
+            return false;
+        });
+    })
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3>{% trans 'Choose a school' %}</h3>
+        </div>
+    </div>
+    <div class="row">
+        {% for t in spell_types %}
+            {% thumbnail t.image "1024" as img %}
+            <div class="col-12 col-md-4">
+                <div class="card text-center add-spell-spell-type-card pointer mb-4">
+                    <div class="card-body" style="background-image: url({{ img.url }}); background-size: cover">
+                        <div class="card-text w-100 p-5">
+                            <h5 class="text-center p-0 m-i0">{{ t }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endthumbnail %}
+        {% endfor %}
+    </div>
+</div>

@@ -12,6 +12,7 @@ from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationTy
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect
 from horror.models import QuirkCategory
+from magic.models import SpellType
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill
 
 
@@ -552,4 +553,16 @@ class AddWeaponModificationView(View):
             weapon.modifications.filter(type=weapon_modification.type).delete()
             weapon.modifications.add(weapon_modification)
         return JsonResponse({'status': 'ok'})
+
+
+class XhrAddSpellView(TemplateView):
+    template_name = 'characters/_add_spell.html'
+
+    def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['character'] = character
+        context['spell_types'] = SpellType.objects.all()
+        return context
+
 
