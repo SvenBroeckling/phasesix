@@ -7,7 +7,7 @@
             $('.spell-selection-card').each(function(idx){
                 let elem = $(this)
                 if(parseInt(elem.data('spell-point-cost'), 10) > remaining_spell_points){
-                    elem.addClass('
+                    elem.addClass('disabled');
                 } else {
                     elem.removeClass('disabled');
                 }
