@@ -521,12 +521,40 @@ class CharacterItem(models.Model):
 class CharacterSpell(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     spell = models.ForeignKey('magic.BaseSpell', on_delete=models.CASCADE)
+    custom_name = models.CharField(_('custom name'), max_length=30, null=True, blank=True)
 
     class Meta:
         ordering = ('spell__id',)
 
+    def __str__(self):
+        return self.spell.name
+
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+    @property
+    def name(self):
+        return self.custom_name if self.custom_name else self.spell.name
+
+    @property
+    def variant(self):
+        return self.spell.variant
+
+    @property
+    def power(self):
+        return self.spell.power
+
+    @property
+    def range(self):
+        return self.spell.range
+
+    @property
+    def actions(self):
+        return self.spell.actions
+
+    @property
+    def is_ritual(self):
+        return self.spell.is_ritual
 
 
 class CharacterSpellTemplate(models.Model):
