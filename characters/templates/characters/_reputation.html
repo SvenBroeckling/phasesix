@@ -5,7 +5,7 @@
 
         function checkReputationCosts(remaining_reputation) {
             $('.constructed-template').each(function(idx){
-                elem = $(this);
+                let elem = $(this);
                 if(parseInt(elem.data('reputation-cost'), 10) > remaining_reputation){
                     elem.addClass('disabled');
                 } else {
@@ -16,7 +16,7 @@
         checkReputationCosts($('#reputation').data('initial-reputation'));
 
         $('.constructed-template').on('click', function(e){
-            var elem = $(this);
+            let elem = $(this);
             if(!elem.hasClass('disabled')) {
                 if(confirm(elem.data('select-message'))) {
                     $.post(
@@ -55,11 +55,11 @@
 <div class="tab-content">
     {% for tp in template_points %}
         <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
-            <div class="card-columns">
+            <div class="row">
                 {% for i in tp.template_category.template_set.all %}
                     {% has_extensions i object.extensions.all as has_ext %}
                     {% if has_ext and not i.id in character_template_ids %}
-                        <div class="constructed-template"
+                        <div class="col col-md-6 constructed-template"
                              data-select-message="{% trans 'Select Template for Reputation?' %}"
                              data-reputation-cost="{{ i.cost }}"
                              data-template-id="{{ i.id }}"

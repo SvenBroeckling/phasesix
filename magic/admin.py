@@ -33,7 +33,9 @@ class SpellTemplateAdmin(admin.ModelAdmin):
 
 
 class SpellTypeAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'image')
+    list_display = ('name_de', 'name_en', 'image', 'dominant_attribute')
+    list_editable = 'dominant_attribute',
+
 
 admin.site.register(BaseSpell, BaseSpellAdmin)
 admin.site.register(SpellTemplate, SpellTemplateAdmin)

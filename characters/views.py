@@ -565,4 +565,15 @@ class XhrAddSpellView(TemplateView):
         context['spell_types'] = SpellType.objects.all()
         return context
 
-
+    def post(self, request, *args, **kwargs):
+        from magic.models import BaseSpell
+        character = Character.objects.get(id=kwargs['pk'])
+        operation = request.POST.get('operation', 'noop')
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        if operation == 'add-spell':
+            spell = BaseSpell.objects.get(id=request.POST.get('spell_id'))
+            if not spell.cost <= character.spell_points_available:
+                return JsonResponse({'status': 'notenoughpoints'})
+            character.characterspell_set.create(spell=spell)
+        return JsonResponse({'status': 'ok', 'remaining_spell_points': character.spell_points_available})

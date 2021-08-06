@@ -15,7 +15,7 @@
                             data-modal-title="{% trans 'Add Armor' %}"
                             href=""><i class="fas fa-plus"></i></a>
                 {% endif %}
-                <h2 class="mb-2">{% trans 'Armor' %}</h2>
+                <h2 class="mb-2 h4">{% trans 'Armor' %}</h2>
             </div>
 
             {% for r in character.characterriotgear_set.all %}
@@ -72,7 +72,7 @@
                             data-modal-title="{% trans 'Add Weapon' %}"
                             href=""><i class="fas fa-plus"></i></a>
                 {% endif %}
-                <h2 class="mb-2">{% trans 'Weapons' %}</h2>
+                <h2 class="mb-2 h4">{% trans 'Weapons' %}</h2>
             </div>
 
             {% for weapon in object.characterweapon_set.all %}
@@ -191,7 +191,7 @@
                             data-bs-target=".character-modal"
                             href=""><i class="fa fa-plus"></i></a>
                 {% endif %}
-                <h2 class="mb-2">{% trans 'Items' %}</h2>
+                <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
             </div>
 
         {% for ci in character.characteritem_set.by_type %}

@@ -516,3 +516,19 @@ class CharacterItem(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+
+class CharacterSpell(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    spell = models.ForeignKey('magic.BaseSpell', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('spell__id',)
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+
+
+class CharacterSpellTemplate(models.Model):
+    character_spell = models.ForeignKey(CharacterSpell, on_delete=models.CASCADE)
+    spell_template = models.ForeignKey('magic.SpellTemplate', on_delete=models.CASCADE)

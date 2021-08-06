@@ -5,6 +5,51 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 
+CHARACTER_ATTRIBUTE_CHOICES = (
+    ('base_max_health', _('max health')),
+
+    ('base_max_arcana', _('max arcana')),
+    ('base_spell_points', _('spell points')),
+
+    ('base_actions', _('actions')),
+
+    ('base_bonus_dice', _('bonus dice')),
+    ('base_destiny_dice', _('destiny dice')),
+    ('base_rerolls', _('rerolls')),
+
+    ('base_deftness', _('deftness')),
+    ('base_strength', _('strength')),
+    ('base_attractiveness', _('attractiveness')),
+    ('base_endurance', _('endurance')),
+    ('base_resistance', _('resistance')),
+    ('base_quickness', _('quickness')),
+
+    ('base_education', _('education')),
+    ('base_logic', _('logic')),
+    ('base_conscientiousness', _('conscientiousness')),
+    ('base_willpower', _('willpower')),
+    ('base_apprehension', _('apprehension')),
+    ('base_charm', _('charm')),
+
+    ('base_max_stress', _('max stress')),
+)
+
+
+BASE_ATTRIBUTE_CHOICES = (
+    ('deftness', _('deftness')),
+    ('strength', _('strength')),
+    ('attractiveness', _('attractiveness')),
+    ('endurance', _('endurance')),
+    ('resistance', _('resistance')),
+    ('quickness', _('quickness')),
+    ('logic', _('logic')),
+    ('education', _('education')),
+    ('conscientiousness', _('conscientiousness')),
+    ('willpower', _('willpower')),
+    ('apprehension', _('apprehension')),
+    ('charm', _('charm')),
+)
+
 
 class ExtensionSelectQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
@@ -112,20 +157,6 @@ class Skill(models.Model, metaclass=TransMeta):
     A URPG skill
     """
     objects = ExtensionSelectQuerySet.as_manager()
-    SKILL_ATTRIBUTE_CHOICES = (
-        ('deftness', _('deftness')),
-        ('strength', _('strength')),
-        ('attractiveness', _('attractiveness')),
-        ('endurance', _('endurance')),
-        ('resistance', _('resistance')),
-        ('quickness', _('quickness')),
-        ('logic', _('logic')),
-        ('education', _('education')),
-        ('conscientiousness', _('conscientiousness')),
-        ('willpower', _('willpower')),
-        ('apprehension', _('apprehension')),
-        ('charm', _('charm')),
-    )
     KIND_CHOICES = (
         ('p', _('practical')),
         ('m', _('mind')),
@@ -137,13 +168,13 @@ class Skill(models.Model, metaclass=TransMeta):
 
     dominant_attribute = models.CharField(
         _('dominant attribute'),
-        choices=SKILL_ATTRIBUTE_CHOICES,
+        choices=BASE_ATTRIBUTE_CHOICES,
         max_length=20,
         blank=True,
         null=True)
     supplemental_attribute = models.CharField(
         _('supplemental attribute'),
-        choices=SKILL_ATTRIBUTE_CHOICES,
+        choices=BASE_ATTRIBUTE_CHOICES,
         max_length=20,
         blank=True,
         null=True)
@@ -151,14 +182,14 @@ class Skill(models.Model, metaclass=TransMeta):
     @property
     def dominant_attribute_name(self):
         try:
-            return next(filter(lambda x: x[0] == self.dominant_attribute, self.SKILL_ATTRIBUTE_CHOICES))[1]
+            return next(filter(lambda x: x[0] == self.dominant_attribute, BASE_ATTRIBUTE_CHOICES))[1]
         except StopIteration:
             return ''
 
     @property
     def supplemental_attribute_name(self):
         try:
-            return next(filter(lambda x: x[0] == self.supplemental_attribute, self.SKILL_ATTRIBUTE_CHOICES))[1]
+            return next(filter(lambda x: x[0] == self.supplemental_attribute, BASE_ATTRIBUTE_CHOICES))[1]
         except StopIteration:
             return ''
 
@@ -217,36 +248,6 @@ class Shadow(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
-
-
-CHARACTER_ATTRIBUTE_CHOICES = (
-    ('base_max_health', _('max health')),
-
-    ('base_max_arcana', _('max arcana')),
-    ('base_spell_points', _('spell points')),
-
-    ('base_actions', _('actions')),
-
-    ('base_bonus_dice', _('bonus dice')),
-    ('base_destiny_dice', _('destiny dice')),
-    ('base_rerolls', _('rerolls')),
-
-    ('base_deftness', _('deftness')),
-    ('base_strength', _('strength')),
-    ('base_attractiveness', _('attractiveness')),
-    ('base_endurance', _('endurance')),
-    ('base_resistance', _('resistance')),
-    ('base_quickness', _('quickness')),
-
-    ('base_education', _('education')),
-    ('base_logic', _('logic')),
-    ('base_conscientiousness', _('conscientiousness')),
-    ('base_willpower', _('willpower')),
-    ('base_apprehension', _('apprehension')),
-    ('base_charm', _('charm')),
-
-    ('base_max_stress', _('max stress')),
-)
 
 
 class TemplateCategory(models.Model, metaclass=TransMeta):

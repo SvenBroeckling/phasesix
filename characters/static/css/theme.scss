@@ -284,3 +284,13 @@ a[data-toggle="popover"] {
   text-decoration: none;
   background-color: rgba(10, 10, 10, 0.5);
 }
+
+.spell-selection-card:not(.disabled):hover {
+  border: 1px solid $primary;
+}
+
+.spell-selection-card.disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
