@@ -66,7 +66,7 @@
                     <div class="card-body" style="background-image: url({{ img.url }}); background-size: cover">
                         <div class="card-text w-100 p-5">
                             <h5 class="text-center p-0 m-i0">{{ t }}</h5>
-                            <small class="text-center">{{ t.dominant_attribute_name }}</small>
+                            <small class="text-center">{{ t.dominant_attribute_name|capfirst }}</small>
                         </div>
                     </div>
                 </div>
@@ -89,12 +89,12 @@
                 <div class="col-12 col-md-6">
                     <div
                             class="card spell-selection-card pointer mt-3"
-                            data-select-message="{% blocktrans with t_spell=s.name t_cost=s.cost %}Add spell {{ t_spell }} for {{ t_cost }} spell points?{% endblocktrans %}"
+                            data-select-message="{% blocktrans with t_spell=s.name t_cost=s.spell_point_cost %}Add spell {{ t_spell }} for {{ t_cost }} spell points?{% endblocktrans %}"
                             data-spell-id="{{ s.id }}"
                             data-add-url="{% url 'characters:xhr_add_spell' pk=character.id %}"
-                            data-spell-point-cost="{{ s.cost }}">
+                            data-spell-point-cost="{{ s.spell_point_cost }}">
                         <div class="card-header">
-                            <span class="badge bg-dark float-end">{{ s.cost }}</span>
+                            <span class="badge bg-dark float-end">{{ s.spell_point_cost }}</span>
                             {{ s }} <small class="text-muted">{{ s.variant }}</small>
                         </div>
                         <div class="card-body">
@@ -104,9 +104,12 @@
                             <p>
                                 {{ s.rules }}
                             </p>
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
+                            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Attribute' %}: {{ s.type.dominant_attribute_name|capfirst }}<br>
+                            <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
+                            {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
+                            <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
+                            <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
+                            <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
                         </div>
                     </div>
                 </div>

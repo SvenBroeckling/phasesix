@@ -4,11 +4,11 @@ from magic.models import BaseSpell, SpellType, SpellVariant, SpellShape, SpellTe
 
 
 class BaseSpellAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'cost', 'type', 'variant', 'power', 'range', 'actions')
-    list_filter = ('cost', 'type', 'variant', 'power', 'range', 'actions')
+    list_display = ('name_de', 'name_en', 'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions')
+    list_filter = ('spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions')
     fields = (
         ('name_de', 'name_en'),
-        ('cost', 'power', 'range', 'actions'),
+        ('spell_point_cost', 'arcana_cost', 'power', 'range', 'actions'),
         ('variant', 'type', 'shape'),
         'is_ritual',
         ('rules_de', 'rules_en'),
@@ -21,12 +21,12 @@ class SpellTemplateModifierInline(admin.TabularInline):
 
 
 class SpellTemplateAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'cost')
-    list_filter = 'cost',
+    list_display = ('name_de', 'name_en', 'spell_point_cost')
+    list_filter = 'spell_point_cost',
     inlines = [SpellTemplateModifierInline]
     fields = (
         ('name_de', 'name_en'),
-        'cost',
+        'spell_point_cost',
         ('rules_de', 'rules_en'),
         ('quote', 'quote_author'),
     )

@@ -20,7 +20,10 @@
         <div class="row">
             {% for s in object.characterspell_set.all %}
                 <div class="col col-md-6">
-                    <div class="card">
+                    <div
+                            data-sidebar-title="{{ s.name }}"
+                            data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=s.id model_name="CharacterSpell" sidebar_name="characterspell" %}"
+                            class="card mb-2 sidebar-trigger">
                         <div class="card-header">
                             <span class="text-muted float-end">{{ s.variant }}</span>
                             {{ s }}
@@ -32,9 +35,12 @@
                             <p>
                                 {{ s.spell.rules }}
                             </p>
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
-                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
+                            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Attribute' %}: {{ s.spell_type.dominant_attribute_name|capfirst }}<br>
+                            <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
+                            {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
+                            <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
+                            <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
+                            <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
                         </div>
                     </div>
                 </div>

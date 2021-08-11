@@ -10,7 +10,8 @@ from django.views.generic import TemplateView, DetailView, FormView
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType, \
     WeaponAttackMode
 from characters.forms import CharacterImageForm, CreateCharacterForm
-from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect
+from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
+    CharacterSpell
 from horror.models import QuirkCategory
 from magic.models import SpellType
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill
@@ -76,6 +77,8 @@ class XhrSidebarView(DetailView):
             return CharacterWeapon.objects.all()
         elif self.kwargs['model_name'] == "CharacterItem":
             return CharacterItem.objects.all()
+        elif self.kwargs['model_name'] == "CharacterSpell":
+            return CharacterSpell.objects.all()
         return Character.objects.all()
 
     def get_context_data(self, **kwargs):
@@ -573,7 +576,7 @@ class XhrAddSpellView(TemplateView):
             return JsonResponse({'status': 'forbidden'})
         if operation == 'add-spell':
             spell = BaseSpell.objects.get(id=request.POST.get('spell_id'))
-            if not spell.cost <= character.spell_points_available:
+            if not spell.spell_point_cost <= character.spell_points_available:
                 return JsonResponse({'status': 'notenoughpoints'})
             character.characterspell_set.create(spell=spell)
         return JsonResponse({'status': 'ok', 'remaining_spell_points': character.spell_points_available})

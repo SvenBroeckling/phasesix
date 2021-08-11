@@ -9,6 +9,7 @@ SPELL_ATTRIBUTE_CHOICES = (
     ('power', _('power')),
     ('range', _('range')),
     ('actions', _('actions')),
+    ('arcana_cost', _('arcana')),
 )
 
 
@@ -77,7 +78,8 @@ class BaseSpell(models.Model, metaclass=TransMeta):
         blank=True,
         verbose_name=_('created by'))
 
-    cost = models.IntegerField(_('cost'))
+    spell_point_cost = models.IntegerField(_('spell point cost'))
+    arcana_cost = models.IntegerField(_('arcana cost'), default=1)
 
     power = models.IntegerField(_('power'), default=1)
     range = models.IntegerField(_('range'), default=0)
@@ -117,7 +119,7 @@ class BaseSpell(models.Model, metaclass=TransMeta):
 
 class SpellTemplate(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=120)
-    cost = models.IntegerField(verbose_name=_('cost'), default=1)
+    spell_point_cost = models.IntegerField(verbose_name=_('spell point cost'), default=1)
 
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)

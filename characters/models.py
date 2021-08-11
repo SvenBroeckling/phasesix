@@ -537,6 +537,10 @@ class CharacterSpell(models.Model):
         return self.custom_name if self.custom_name else self.spell.name
 
     @property
+    def spell_type(self):
+        return self.spell.type
+
+    @property
     def variant(self):
         return self.spell.variant
 
@@ -555,6 +559,10 @@ class CharacterSpell(models.Model):
     @property
     def is_ritual(self):
         return self.spell.is_ritual
+
+    @property
+    def arcana_cost(self):
+        return self.spell.arcana_cost
 
 
 class CharacterSpellTemplate(models.Model):
