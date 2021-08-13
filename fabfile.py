@@ -49,6 +49,7 @@ def update():
 def deploy():
     with virtualenv():
         run('git pull')
+        run('pip install -U pip')
         run('pip install -r requirements.txt')
         run('./manage.py migrate')
         run('./manage.py collectstatic --no-input')
