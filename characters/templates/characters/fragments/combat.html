@@ -121,24 +121,16 @@
                     </tr>
                 {% endfor %}
                 {% for s in object.characterspell_set.all %}
-                    <tr>
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ s }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=s.id model_name="CharacterSpell" sidebar_name="characterspell" %}">
                         <td>
                             <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
-                            <small>{{ s.spell.type.name }} - {{ s.spell.flavour.name }}</small>
+                            <small>{{ s.spell_type }} - {{ s.variant }}</small>
                         </td>
                         <td></td>
-                        <td class="text-end">
-                            {% color_value_span 4 4 %}+<br>
-                            <small>{% color_value_span s.spell.casting_time 1 %}</small>
-                        </td>
-                        <td class="text-end">
-                            {{ s.spell.power }}<br>
-                            <small>{{ s.spell.components }}</small>
-                        </td>
-                        <td class="text-end">
-                            {{ s.spell.range }}<br>
-                            <small>{{ s.spell.area_of_effect }} - {{ s.spell.area_of_effect_range }}</small>
-                        </td>
+                        <td></td>
+                        <td class="text-end"></td>
+                        <td class="text-end"></td>
+                        <td class="text-end"></td>
                     </tr>
                 {% endfor %}
                 <tr>

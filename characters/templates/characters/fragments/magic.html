@@ -37,7 +37,7 @@
                             </p>
                             <i class="fas fa-dice-five fa-fw"></i> {% trans 'Attribute' %}: {{ s.spell_type.dominant_attribute_name|capfirst }}<br>
                             <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
-                            {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
+                            {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
                             <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
                             <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
                             <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
