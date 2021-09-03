@@ -86,7 +86,7 @@ class Character(models.Model):
             for m in t.template.templatemodifier_set.all():
                 if m.knowledge is not None:
                     if m.knowledge in kd.keys():
-                        kd[m.knowledge] += m.knowledge_modifier
+                        kd[m.knowledge] += m.knowledge_modifier if m.knowledge_modifier is not None else 0
                     else:
                         kd[m.knowledge] = m.knowledge_modifier
         return kd
