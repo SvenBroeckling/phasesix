@@ -78,6 +78,8 @@ class BaseSpell(models.Model, metaclass=TransMeta):
         blank=True,
         verbose_name=_('created by'))
 
+    is_tirakan_spell = models.BooleanField(_('is tirakan spell'), default=False)
+
     spell_point_cost = models.IntegerField(_('spell point cost'))
     arcana_cost = models.IntegerField(_('arcana cost'), default=1)
 
