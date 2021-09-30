@@ -4,10 +4,14 @@ from magic.models import BaseSpell, SpellType, SpellVariant, SpellShape, SpellTe
 
 
 class BaseSpellAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions')
-    list_filter = ('spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions')
+    list_display = (
+        'name_de', 'name_en', 'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions',
+        'is_tirakan_spell')
+    list_editable = ('is_tirakan_spell',)
+    list_filter = (
+        'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions', 'is_tirakan_spell')
     fields = (
-        ('name_de', 'name_en'),
+        ('name_de', 'name_en', 'is_tirakan_spell'),
         ('spell_point_cost', 'arcana_cost', 'power', 'range', 'actions'),
         ('variant', 'type', 'shape'),
         'is_ritual',
