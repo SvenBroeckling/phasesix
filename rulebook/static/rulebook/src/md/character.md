@@ -4,7 +4,7 @@ Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Char
 
 ### Persona
 
-Die Werte unter Persona beziehen sich auf die psychologischen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen Wert und einen Mindestwurf und stellen die Grundlage für Würfe dar.
+Die Werte unter Persona beziehen sich auf die geistigen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen Wert und stellen die Grundlage für Fertigkeiten dar.
 
 #### Offenheit
 
