@@ -4,29 +4,32 @@ Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Char
 
 ### Persona
 
-Die Werte unter Persona beziehen sich auf die geistigen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen Wert und stellen die Grundlage für Fertigkeiten dar.
+Die Werte unter Persona beziehen sich auf die geistigen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen eigenen Wert und stellen zudem die Grundlage für Fertigkeiten dar.
 
-#### Offenheit
+#### Bildung
 
-Offenheit beschreibt die Offenheit gegenüber neuen Erfahrungen und Eindrücken. Ein Charakter mit schwach ausgeprägter Offenheit ist eher *konservativ* gegenüber Neuem. Stark ausgeprägte Offenheit sorgt dafür, dass der Charakter eher *neugierig* oder auch *erfinderisch* ist.
+Bildung beschreibt das angeeignete Allgemeinwissen des Charakters.  Ein Charakter mit hoher Bildung ist gut in allen theoretischen Fertigkeiten wie etwa *Naturkunde* oder *Historie*.
+
+#### Logik
+
+Im Gegensatz zur Bildung stellt der Wert Logik die Fähigkeit zum *vernünftigen Schlussfolgern* dar. Logik kommt immer dann zum Tragen, wenn es um das Lösen von Problemen durch logisches Nachdenken geht. Zudem ist ein Charakter mit hoher Logik in Fertigkeiten wie *Untersuchen* oder *Mechanik* besser.
 
 #### Gewissenhaftigkeit
 
 Wie gewissenhaft geht der Charakter an Aufgaben oder Tätigkeiten heran? Schwach ausgeprägte Gewissenhaftigkeit macht den Charakter *nachlässig*, während stark ausgeprägte Gewissenhaftigkeit für eine *organisierte*, *effektive* Herangehensweise sorgt.
 
-#### Extraversion
+#### Willenskraft
 
-Dieser Wert stellt das zwischenmenschliche Verhalten des Charakters dar. Ein Charakter mit schwach ausgeprägter Extraversion ist eher *zurückhaltend* und *reserviert*, während eine stark ausgeprägte Extraversion für *Geselligkeit* steht.
+Willenskraft bezieht sich auf die Fähigkeit des Charakters, seine eigenen Vorstellungen und Prinzipien durchzusetzen. Ein willensstarker Charakter ist unter Anderem gut in den Fertigkeiten *Tapferkeit* und *Einschüchtern*.
 
-#### Verträglichkeit
+#### Auffassungsgabe
 
-Auch Verträglichkeit bezieht sich auf das zwischenmenschliche Verhalten des Charakters. Wenig ausgeprägte Verträglichkeit steht für *antagonistisches*, *wettbewerbsorientiertes* Verhalten, eine stark ausgeprägte Verträglichkeit bedeutet, dass der Charakter *kooperativ* und *mitfühlend* ist.
+Die Auffassungsgabe beschreibt, wie gut der Charakter seine Umgebung wahrnehmen und Informationen auffassen kann. Ein Charakter mit guter Auffassungsgabe ist gut in den Fertigkeiten *Wahrnehmung* und *Orientierung*.
 
-#### Neurotizismus
+#### Charme
 
-Neurotizismus steht für die emotionale Labilität des Charakters. Ein hoher Neurotizismuswert steht für ein starkes Empfinden von negativen Gefühlen wie *Angst*, *Anspannung*, *Trauer*, aber auch *Unsicherheit* und *Verlegenheit*. Charaktere mit niedrigem Neurotizismuswert sind eher *entspannt*, sie erleben negative Erlebnisse *stabiler* und sind eher *zufrieden*.
+Ein Charakter mit hohem Charme versteht es, anderen Menschen gegenüberzutreten und positiv bei ihnen in Erscheinung zu treten. Dieser Wert ist nicht mit der Physis Eigenschaft *Attraktivität* zu verwechseln. Ein Charmanter Charakter ist unter Anderem gut in *Politik* und *Empathie*.
 
-***Achtung***: Ein höherer Neurotizismus ist schlecht für die Würfe des Charakters. Im Gegensatz zu allen anderen Personawerten wird Neurotizismus negativ auf den Mindestwurf verrechnet (siehe „Einen Charakter erstellen“).
 
 ### Physis
 
@@ -34,11 +37,11 @@ Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters
 
 #### Geschick
 
-Dieser Wert beschreibt sowohl das körperliche Geschick des Charakters als auch die Fingerfertigkeit.
+Dieser Wert beschreibt sowohl das körperliche Geschick des Charakters als auch die Fingerfertigkeit. Ein geschickter Charakter ist unter Anderem gut in *Darbietung* und *Heimlichkeit*.
 
 #### Kraft
 
-Kraft ist die reine Stärke des Charakters und kommt immer dann zur Anwendung, wenn es darum geht mit reiner Muskelkraft etwas zu bewegen.
+Kraft ist die reine Stärke des Charakters und kommt immer dann zur Anwendung, wenn es darum geht mit reiner Muskelkraft etwas zu bewegen. Ein Charakter mit hoher Kraft kann gut *Werfen* und ist gut in *Athletik*.
 
 #### Attraktivität
 
@@ -74,11 +77,13 @@ Der Charakter kann während der Rast verbrauchte Würfel zurückerhalten (s. Wun
 
 Komplexere Handlungen oder Kenntnisse werden durch *Fertigkeiten* beschrieben. Alle Charaktere haben dieselben Fertigkeiten mit unterschiedlichen Werten, so kann der Spielleiter sicher sein, dass ein Spieler einen Wurf auf eine Fertigkeit auch sicher machen kann. 
 
-Jede Fertigkeit hat eine vorgegebene Personaeigenschaft, welche den Mindestwurf dieser Fertigkeit vorgibt. Der Spielleiter kann bei einem Wurf auf die Fertigkeit jedoch jederzeit eine andere, passende Personaeigenschaft wählen. Der Fertigkeitswert gibt die Anzahl der geworfenen Würfel an, während die Personaeigenschaft den notwendigen Mindestwurf angibt.
+Jede Fertigkeit setzt sich aus einem Basiswert und einem eigenen Fertigkeitswert zusammen. Der Basiswert ist der Durchschnittswert aus zwei, jeweils unterschiedlichen, Attributen. So ist die Basis der Fertigkeit *Einschüchtern* z.B. *Auffassungsgabe* und *Gewissenhaftigkeit*. 
+
+Auf die Basisfertigkeit werden die Boni der gewählten Charakterschablonen addiert.
 
 ### Wissen
 
-Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen wird genau wie Fertigkeiten auf eine Personaeigenschaft geworfen.
+Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen hat wie Fertigkeiten den Durchschnitt zweier Attributwerte als Basis.
 
 ### Schatten
 
