@@ -233,6 +233,20 @@ class CharacterModifyHealthView(View):
         return JsonResponse({'status': 'ok'})
 
 
+class CharacterModifyArcanaView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.may_edit(request.user):
+            if self.kwargs['mode'] == 'restore':
+                if character.arcana < character.max_arcana:
+                    character.arcana += 1
+            elif self.kwargs['mode'] == 'use':
+                if character.arcana > 0:
+                    character.arcana -= 1
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
 class CreateCharacterView(TemplateView):
     template_name = 'characters/create_character.html'
 

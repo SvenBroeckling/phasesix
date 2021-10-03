@@ -63,6 +63,9 @@
                             {% for i in object.arcana|to_range %}
                                 <i class="fas fa-magic text-warning" ></i>
                             {% endfor %}
+                            {% for i in object.arcana_used|to_range %}
+                                <i class="fas fa-magic text-dark" ></i>
+                            {% endfor %}
                         </div>
                     {% endif %}
 

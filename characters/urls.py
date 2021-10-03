@@ -31,6 +31,12 @@ urlpatterns = [
         views.XhrCharacterRestView.as_view(),
         name='xhr_rest'),
 
+    # magic
+    url(
+        r'^arcana/(?P<pk>\d+)/(?P<mode>\w+)/$',
+        views.CharacterModifyArcanaView.as_view(),
+        name='modify_arcana'),
+
     # dice
     url(
         r'^dice/(?P<pk>\d+)/(?P<mode>\w+)/$',

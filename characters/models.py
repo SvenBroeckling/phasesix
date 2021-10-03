@@ -140,6 +140,10 @@ class Character(models.Model):
         return self.max_health - self.health
 
     @property
+    def arcana_used(self):
+        return self.max_arcana - self.arcana
+
+    @property
     def available_stress(self):
         return self.max_stress - self.stress
 
