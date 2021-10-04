@@ -3,7 +3,8 @@ phasesixscreenshot1.png
 ## Magieschablonen
 
 Berufe:
-  Druide
+                        MaxArcana   Spellpoints     AttrPoints      SkillPoints
+  Druide                3           5               2               1
   Warlock
   Dämonologe
   Geisterbeschwörer
