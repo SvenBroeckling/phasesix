@@ -19,21 +19,13 @@
             </div>
 
             {% for r in character.characterriotgear_set.all %}
-                <div class="card mb-4">
+                <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=r.id model_name="CharacterRiotGear" sidebar_name="characterriotgear" %}">
                     <div class="card-header">
                         {{ r.riot_gear }}
-                        {% if may_edit %}
-                            <a class="float-end action-link text-danger ms-1" title="{% trans 'Remove' %}"
-                               href="{% url 'characters:xhr_remove_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i
-                                    class="fas fa-trash"></i></a>
-                            <a class="float-end action-link text-warning ms-3" title="{% trans 'Damage' %}"
-                               href="{% url 'characters:xhr_damage_riot_gear' pk=object.id riot_gear_pk=r.id %}"><i
-                                    class="fas fa-times"></i></a>
-                        {% endif %}
                         <span class="float-end">{% color_value_span r.condition 100 %}%</span>
                     </div>
                     <div class="card-body">
-                        <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 7 %}/{% color_value_span r.riot_gear.protection_explosive 7 %}<br>
+                        <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
                         <i class="fas fa-running fa-fw"></i> {% trans 'Evasion' %}: {% color_value_span r.riot_gear.evasion 7 %}
                     </div>
                     <div class="card-footer">

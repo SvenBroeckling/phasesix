@@ -12,6 +12,8 @@ CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_spell_points', _('spell points')),
 
     ('base_actions', _('actions')),
+    ('base_protection', _('protection')),
+    ('base_evasion', _('evasion')),
 
     ('base_bonus_dice', _('bonus dice')),
     ('base_destiny_dice', _('destiny dice')),

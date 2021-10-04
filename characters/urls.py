@@ -104,12 +104,11 @@ urlpatterns = [
         views.XhrCharacterStatusEffectsChangeView.as_view(),
         name='xhr_status_effects_change'),
 
-    # gear
+    # weapons
     url(
         r'^xhr_add_weapons/(?P<pk>\d+)$',
         views.XhrAddWeaponsView.as_view(),
         name='xhr_add_weapons'),
-
     url(
         r'^add_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
         views.AddWeaponView.as_view(),
@@ -127,6 +126,7 @@ urlpatterns = [
         views.XhrWeaponConditionView.as_view(),
         name='xhr_weapon_condition'),
 
+    # riot gear
     url(
         r'^xhr_add_riot_gear/(?P<pk>\d+)$',
         views.XhrAddRiotGearView.as_view(),
@@ -140,10 +140,11 @@ urlpatterns = [
         views.XhrRemoveRiotGearView.as_view(),
         name='xhr_remove_riot_gear'),
     url(
-        r'^xhr_damage_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
-        views.XhrDamageRiotGearView.as_view(),
-        name='xhr_damage_riot_gear'),
+        r'^xhr_riot_gear_condition/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)(?P<mode>\w+)/$',
+        views.XhrRiotGearConditionView.as_view(),
+        name='xhr_riot_gear_condition'),
 
+    # items
     url(
         r'^xhr_add_items/(?P<pk>\d+)$',
         views.XhrAddItemsView.as_view(),
@@ -157,6 +158,7 @@ urlpatterns = [
         views.XhrRemoveItemView.as_view(),
         name='xhr_remove_item'),
 
+    # weapon modifications
     url(
         r'^xhr_add_weapon_modifications/(?P<pk>\d+)$',
         views.XhrAddWeaponModView.as_view(),
@@ -166,6 +168,7 @@ urlpatterns = [
         views.AddWeaponModificationView.as_view(),
         name='add_weapon_modification'),
 
+    # magic
     url(
         r'^xhr_add_spell/(?P<pk>\d+)$',
         views.XhrAddSpellView.as_view(),

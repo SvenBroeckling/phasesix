@@ -35,7 +35,8 @@
                     {{ r }}
                 </div>
                 <div class="card-body">
-                    <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.protection_ballistic 7 %}/{% color_value_span r.protection_explosive 7 %}<br>
+                    <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.protection_ballistic 3 %}<br>
+                    <i class="fas fa-running fa-fw"></i> {% trans 'Evasion' %}: {% color_value_span r.evasion 3 %}<br>
                     <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.concealment 6 invert=True %}<br>
                     <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.weight }}<br>
                     <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=r.id %}" method="post" class="float-end add-form">

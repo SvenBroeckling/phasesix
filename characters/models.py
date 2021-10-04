@@ -19,7 +19,8 @@ class Character(models.Model):
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
-    backdrop_image = models.ImageField(_('backdrop image'), upload_to='character_backdrop_images', blank=True, null=True)
+    backdrop_image = models.ImageField(_('backdrop image'), upload_to='character_backdrop_images', blank=True,
+                                       null=True)
     backdrop_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     backdrop_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
@@ -190,16 +191,16 @@ class Character(models.Model):
     @property
     def remaining_template_points(self):
         template_points = (
-            self.lineage.lineagetemplatepoints_set.aggregate(Sum('points'))[
-                'points__sum'
-            ]
-            or 0
+                self.lineage.lineagetemplatepoints_set.aggregate(Sum('points'))[
+                    'points__sum'
+                ]
+                or 0
         )
         spent_points = (
-            self.charactertemplate_set.aggregate(Sum('template__cost'))[
-                'template__cost__sum'
-            ]
-            or 0
+                self.charactertemplate_set.aggregate(Sum('template__cost'))[
+                    'template__cost__sum'
+                ]
+                or 0
         )
         return template_points - spent_points
 
@@ -300,19 +301,16 @@ class Character(models.Model):
     @property
     def ballistic_protection(self):
         bp = self.characterriotgear_set.aggregate(
-           Sum('riot_gear__protection_ballistic')
+            Sum('riot_gear__protection_ballistic')
         )['riot_gear__protection_ballistic__sum'] or 0
-        return self.lineage.base_protection + bp
-
-    @property
-    def explosive_protection(self):
-        return self.lineage.base_protection + self.characterriotgear_set.aggregate(
-            Sum('riot_gear__protection_explosive')
-        )['riot_gear__protection_explosive__sum'] or 0
+        return self.lineage.base_protection + self.get_attribute_modifier('base_protection') + bp
 
     @property
     def evasion(self):
-        return self.lineage.base_evasion
+        be = self.characterriotgear_set.aggregate(
+            Sum('riot_gear__evasion')
+        )['riot_gear__evasion__sum'] or 0
+        return self.lineage.base_evasion + self.get_attribute_modifier('base_evasion') + be
 
     @property
     def max_concealment(self):
@@ -494,6 +492,12 @@ class CharacterRiotGear(models.Model):
     riot_gear = models.ForeignKey('armory.RiotGear', on_delete=models.CASCADE)
     condition = models.IntegerField(_('condition'), default=100)
 
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+
+    class Meta:
+        ordering = ('riot_gear__id',)
+
 
 class CharacterItemQuerySet(models.QuerySet):
     def usable_in_combat(self):
@@ -509,6 +513,9 @@ class CharacterItem(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'), default=1)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('item__id',)
 
     @property
     def use_skill(self):

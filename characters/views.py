@@ -76,6 +76,8 @@ class XhrSidebarView(DetailView):
     def get_queryset(self):
         if self.kwargs['model_name'] == "CharacterWeapon":
             return CharacterWeapon.objects.all()
+        if self.kwargs['model_name'] == "CharacterRiotGear":
+            return CharacterRiotGear.objects.all()
         elif self.kwargs['model_name'] == "CharacterItem":
             return CharacterItem.objects.all()
         elif self.kwargs['model_name'] == "CharacterSpell":
@@ -500,13 +502,18 @@ class XhrRemoveRiotGearView(View):
         return JsonResponse({'status': 'ok'})
 
 
-class XhrDamageRiotGearView(View):
+class XhrRiotGearConditionView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
+        riot_gear = CharacterRiotGear.objects.get(id=kwargs['riot_gear_pk'])
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
-        riot_gear = CharacterRiotGear.objects.get(id=kwargs['riot_gear_pk'])
-        riot_gear.condition -= 10
+
+        if kwargs['mode'] == 'damage':
+            riot_gear.condition -= 10
+        else:
+            riot_gear.condition += 10
+
         riot_gear.save()
         return JsonResponse({'status': 'ok'})
 

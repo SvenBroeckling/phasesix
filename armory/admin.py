@@ -30,16 +30,15 @@ class WeaponAdmin(admin.ModelAdmin):
 
 class RiotGearAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'weight', 'price', 'protection_ballistic',
-                    'protection_explosive', 'evasion', 'concealment')
-    list_editable = ('weight', 'price', 'protection_ballistic', 'protection_explosive',
-                     'evasion', 'concealment')
+                    'evasion', 'concealment')
+    list_editable = ('weight', 'price', 'protection_ballistic', 'evasion', 'concealment')
     list_filter = ('extensions',)
     fieldsets = [
         (None, {
             'fields': (
                 ('name_en', 'name_de', 'extensions'),
                 ('price', 'weight'),
-                ('protection_ballistic', 'protection_explosive'),
+                ('protection_ballistic',),
                 ('concealment', 'evasion'),
                 ('description_en', 'description_de'),
             )
