@@ -1,3 +1,47 @@
-{% load i18n characters_extras %}
+{% load i18n characters_extras characters_extras rules_extras %}
 
-{% detail_fragment 'CharacterItem' 'sidebar_characteritem' %}
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group w-100">
+                <a class="btn btn-outline-dark btn-sm action-link close-sidebar mb-1"
+                   href="{% url 'characters:xhr_remove_item' pk=object.character.id item_pk=object.id %}"><i class="fas fa-times fa-fw text-info"></i> {% trans 'Expend' %}</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-12">
+        {{ object.item.description|urpg_markup }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-2 mt-2">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    {% trans 'Type' %}
+                    <span class="float-end">{{ object.item.type }}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    {% trans 'Weight' %}
+                    <span class="float-end">{% color_value_span object.item.weight 100 invert=True %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    {% trans 'Price' %}
+                    <span class="float-end">{% color_value_span object.item.price|floatformat:2 100 invert=True %} €</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    {% trans 'Concealment' %}
+                    <span class="float-end">{% color_value_span object.item.concealment 5 invert=True %}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

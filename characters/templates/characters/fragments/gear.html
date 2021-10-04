@@ -79,25 +79,6 @@
                 <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ weapon.weapon }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=weapon.id model_name="CharacterWeapon" sidebar_name="characterweapon" %}">
                     <div class="card-header">
                         {{ weapon.weapon }} <span class="small text-muted">{{ weapon.weapon.type }}</span>
-                        {% if may_edit %}
-                            {% has_valid_weaponmodifications weapon.weapon object as has_valid_wm %}
-                            {% if has_valid_wm %}
-                                <a
-                                        class="modal-trigger float-end ms-1 {% if not has_valid_wm %}disabled{% endif %}"
-                                        data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
-                                        title="{% trans 'Add Modification' %}"
-                                        data-bs-toggle="modal"
-                                        data-bs-target=".character-modal"
-                                        data-modal-title="{% trans 'Add Modification' %}"
-                                        href=""><i class="fas fa-plus text-info"></i></a>
-                            {% endif %}
-                            <a class="float-end action-link text-danger ms-1" title="{% trans 'Remove' %}"
-                               href="{% url 'characters:xhr_remove_weapon' pk=object.id weapon_pk=weapon.id %}"><i
-                                    class="fas fa-trash"></i></a>
-                            <a class="float-end action-link text-warning ms-3" title="{% trans 'Damage' %}"
-                               href="{% url 'characters:xhr_weapon_condition' pk=object.id weapon_pk=weapon.id mode="damage" %}"><i
-                                    class="fas fa-times"></i></a>
-                        {% endif %}
                         <span class="float-end">{% color_value_span weapon.condition 100 %}%</span>
                     </div>
                     <div class="card-body">
@@ -199,18 +180,18 @@
                 <div class="card-header">
                    {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
                     <span class="small text-muted">{{ ci.item.type }}</span>
-                    {% if may_edit %}
-                        <a class="float-end action-link text-danger" title="{% trans 'Remove / Use' %}"
-                           href="{% url 'characters:xhr_remove_item' pk=object.id item_pk=ci.id %}"><i
-                                class="fas fa-trash"></i></a>
+                    {% if ci.item.concealment > 0 %}
+                        <span class="float-end">
+                        <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
+                        </span>
                     {% endif %}
                 </div>
                 {% if ci.item.description %}
-                <div class="card-body">
+                <div class="card-body d-none">
                    <p class="mb-0">{{ ci.item.description }}</p>
                 </div>
                 {% endif %}
-                <div class="card-footer">
+                <div class="card-footer d-none">
                     <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
                     <i class="fas fa-balance-scale fa-fw ms-1" title="{% trans 'Weight' %}"></i> {{ ci.item.weight }}
                     {% if user.is_superuser %}

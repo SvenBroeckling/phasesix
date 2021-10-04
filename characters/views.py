@@ -29,8 +29,9 @@ class DiceJsonView(View):
             ]
         })
 
+
 class IndexView(TemplateView):
-    template_name = 'characters/index.html'
+    template_name = 'index.html'
 
 
 class CharacterListView(TemplateView):
@@ -113,7 +114,7 @@ class XhrDetailFragmentView(DetailView):
 
 
 class XhrCharacterRestView(TemplateView):
-    template_name = 'characters/_rest.html'
+    template_name = 'characters/modals/rest.html'
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
@@ -380,7 +381,7 @@ class ChangeImageView(View):
 
 
 class XhrReputationView(TemplateView):
-    template_name = 'characters/_reputation.html'
+    template_name = 'characters/modals/reputation.html'
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
@@ -411,7 +412,7 @@ class XhrReputationView(TemplateView):
 # gear
 
 class XhrAddWeaponsView(TemplateView):
-    template_name = 'characters/_add_weapons.html'
+    template_name = 'characters/modals/add_weapons.html'
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
@@ -469,7 +470,7 @@ class XhrWeaponConditionView(View):
 
 
 class XhrAddRiotGearView(TemplateView):
-    template_name = 'characters/_add_riot_gear.html'
+    template_name = 'characters/modals/add_riot_gear.html'
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
@@ -511,7 +512,7 @@ class XhrDamageRiotGearView(View):
 
 
 class XhrAddItemsView(TemplateView):
-    template_name = 'characters/_add_items.html'
+    template_name = 'characters/modals/add_items.html'
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
@@ -553,7 +554,7 @@ class XhrRemoveItemView(View):
 
 
 class XhrAddWeaponModView(TemplateView):
-    template_name = 'characters/_add_weapon_mod.html'
+    template_name = 'characters/modals/add_weapon_mod.html'
 
     def get_context_data(self, **kwargs):
         character =  Character.objects.get(id=kwargs['pk'])
@@ -584,7 +585,7 @@ class AddWeaponModificationView(View):
 
 
 class XhrAddSpellView(TemplateView):
-    template_name = 'characters/_add_spell.html'
+    template_name = 'characters/modals/add_spell.html'
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])

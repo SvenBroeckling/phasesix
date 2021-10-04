@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'feeds/modified_admin/$', LatestModifiedAdmin()),
 
     url(r'^admin/', admin.site.urls),
-    url(r'^contact/', TemplateView.as_view(template_name="characters/contact.html"), name="contact"),
+    url(r'^contact/', TemplateView.as_view(template_name="contact.html"), name="contact"),
     url(r'^', include('characters.urls', namespace='characters')),
     url(r'campaigns/', include('campaigns.urls', namespace='campaigns')),
     url(r'magic/', include('magic.urls', namespace='magic')),

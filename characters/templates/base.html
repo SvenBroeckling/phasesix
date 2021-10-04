@@ -10,7 +10,6 @@
         <link href="{% static 'css/simplemde.min.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/animate.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
         <link type="text/x-scss" href="{% static 'css/theme.scss' %}" rel="stylesheet"/>
     {% endcompress %}
 
@@ -30,13 +29,13 @@
 
 <body>
 
-<div id="bs-canvas-right" class="bs-canvas bs-canvas-right position-fixed bg-light h-100">
-    <header class="bs-canvas-header p-3 bg-light border-bottom overflow-auto">
-        <button type="button" class="bs-canvas-close float-end btn btn-outline-danger btn-sm close" aria-label="Close"><span aria-hidden="true" class="text-dark">&times;</span>
+<div id="sidebar-right" class="sidebar sidebar-right position-fixed bg-light h-100">
+    <header class="sidebar-header p-3 bg-light border-bottom overflow-auto">
+        <button type="button" class="sidebar-close float-end btn btn-outline-danger btn-sm close" aria-label="Close"><span aria-hidden="true" class="text-dark">&times;</span>
         </button>
         <h4 class="d-inline-block text-dark mb-0">{% trans 'Properties' %}</h4>
     </header>
-    <div class="bs-canvas-content px-3 py-5">
+    <div class="sidebar-content px-3 py-5">
     </div>
 </div>
 
@@ -174,7 +173,6 @@
     <script src="{% static 'js/featherlight.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-slider.min.js' %}"></script>
     <script src="{% static 'js/tilt.jquery.min.js' %}"></script>
-    <script src="{% static 'js/sidebar.js' %}"></script>
 {% endcompress %}
 
 <script>

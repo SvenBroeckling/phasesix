@@ -11,7 +11,20 @@
     </div>
 {% endif %}
 
-{% detail_fragment 'Character' 'sidebar_magic' %}
+<div class="row mt-4 mb-4">
+    <div class="col-12 text-center">
+        <div class="card">
+            <div class="card-body">
+                {% for i in object.arcana|to_range %}
+                    <i class="fas fa-magic fa-2x text-warning" ></i>
+                {% endfor %}
+                {% for i in object.arcana_used|to_range %}
+                    <i class="fas fa-magic fa-2x text-dark" ></i>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-2 mb-2">

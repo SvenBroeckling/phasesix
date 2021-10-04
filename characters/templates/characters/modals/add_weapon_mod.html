@@ -46,7 +46,7 @@
                     <div class="row">
                         {% for wm in t.weaponmodification_set.all|for_extensions:character.extensions %}
                             {% if weapon.weapon.type in wm.available_for_weapon_types.all %}
-                                <div class="col-md-6 mt-3">
+                                <div class="col-lg-6 mt-3">
                                     <div class="card match-height">
                                         <div class="card-header">
                                             {{ wm }}

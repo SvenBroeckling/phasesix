@@ -10,5 +10,41 @@
     </div>
 {% endif %}
 
-{% detail_fragment 'CharacterSpell' 'sidebar_characterspell' %}
-
+<div class="row mt-4 mb-4">
+    <div class="col-12">
+        <h4 class="text-center">{% trans 'Spell' %}</h4>
+        <p>
+            {{ object.spell.rules }}
+        </p>
+        <div class="card mb-2 mt-2">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fas fa-dice-five fa-fw"></i>
+                    {% trans 'Attribute' %}
+                    <span class="float-end">{{ object.spell_type.dominant_attribute_name|capfirst }}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-magic fa-fw"></i>
+                    {% trans 'Arcana' %}
+                    <span class="float-end">{% for a in object.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}
+                    </span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-bolt fa-fw"></i>
+                    {% trans 'Power' %}
+                    <span class="float-end">{% color_value_span object.power 4 %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-arrows-alt-h fa-fw"></i>
+                    {% trans 'Range' %}
+                    <span class="float-end">{% color_value_span object.range 4 %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-hourglass fa-fw"></i>
+                    {% trans 'Actions' %}
+                    <span class="float-end">{% color_value_span object.actions 3 invert=True %}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

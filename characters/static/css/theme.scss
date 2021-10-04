@@ -156,6 +156,18 @@ a[data-toggle="popover"] {
   cursor: pointer;
 }
 
+.sidebar {
+  top: 0;
+  width: 0;
+  z-index: 1110;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar-right {
+  right: 0;
+}
+
 /* Scroll only modal body */
 
 .modal-dialog {

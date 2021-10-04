@@ -1,3 +1,62 @@
 {% load characters_extras i18n %}
 
-{% detail_fragment 'Character' 'sidebar_horror' %}
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group mb-4 w-100">
+                <a class="btn btn-outline-dark btn-sm action-link"
+                   href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
+                        class="fas fa-meh fa-fw text-warning"></i> {% trans 'Gain Stress' %}</a>
+                <a class="btn btn-outline-dark btn-sm action-link"
+                   href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
+                        class="far fa-meh fa-fw text-info"></i> {% trans 'Remove Stress' %}</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col-12 text-center mt-1 mb-3">
+        <div class="card">
+            <div class="card-body">
+                {% for i in object.stress|to_range %}
+                    <i class="fas fa-meh fa-2x text-warning" title="{% trans 'Stress' %}"></i>
+                {% endfor %}
+                {% for i in object.available_stress|to_range %}
+                    <i class="far fa-meh fa-2x text-warning" title="{% trans 'Possible Stress' %}"></i>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-meh text-warning" title="{% trans 'Stress' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'This is your stress level. You will geht a quirk if it reaches your stress maximum.' %}
+    </div>
+    <div class="col-2 mb-2">
+        <i class="far fa-2x fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'This is possible stress your can cope with. You will get a quirk if all slots are filled.' %}
+    </div>
+</div>
+
+<div class="row mt-3">
+    <h4 class="text-center">{% trans 'Your quirks' %}</h4>
+    {% for q in object.quirks.all %}
+        <div class="col-12 mb-2">
+            <div class="card">
+                <div class="card-header">{{ q }}</div>
+                <div class="card-body">{{ q.get_modifier_summary_html|safe }}</div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 mb-2">
+            {% trans "You don't have any" %}
+        </div>
+    {% endfor  %}
+</div>
