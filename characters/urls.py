@@ -36,6 +36,10 @@ urlpatterns = [
         r'^arcana/(?P<pk>\d+)/(?P<mode>\w+)/$',
         views.CharacterModifyArcanaView.as_view(),
         name='modify_arcana'),
+    url(
+        r'^spell/cast/(?P<pk>\d+)/$',
+        views.CharacterCastSpellView.as_view(),
+        name='cast_spell'),
 
     # dice
     url(

@@ -247,6 +247,17 @@ class CharacterModifyArcanaView(View):
         return JsonResponse({'status': 'ok'})
 
 
+class CharacterCastSpellView(View):
+    def post(self, request, *args, **kwargs):
+        character_spell = CharacterSpell.objects.get(id=kwargs['pk'])
+        character = character_spell.character
+        if character.may_edit(request.user):
+            if character_spell.arcana_cost <= character.arcana:
+                character.arcana -= character_spell.arcana_cost
+                character.save()
+        return JsonResponse({'status': 'ok'})
+
+
 class CreateCharacterView(TemplateView):
     template_name = 'characters/create_character.html'
 
