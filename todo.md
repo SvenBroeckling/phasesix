@@ -1,0 +1,98 @@
+phasesixscreenshot1.png
+
+## Magieschablonen
+
+Berufe:
+  Druide
+  Warlock
+  Dämonologe
+  Geisterbeschwörer
+  Hexer
+  Hermetiker
+  Mumienbefrieder
+  Mystiker
+  Nekrologe
+  Runenleger
+  Schamane
+  Schwarzmagier
+  Waldläufer
+  Weissmagier
+  Zauberer
+  Seher
+  Vampirjäger
+  Mönch
+  Paladin
+  Priester
+  Vampir
+  
+
+## Base
+
+- penetration -> piercing
+
+## Regeln
+
+- Poison: MW + 1
+- Statuseffekte nicht ticken / Rewrite
+- Kampf Schicksalswürfel Stehlen: Explizit erwähnen dass man die selbst bekommt
+- Ini Regel: Explding Dice explizit erwähnen
+- Beim Reagieren auf Schüsse ist die Deckung des schiessenden halbiert / verringert
+- Vollautomatisch Konsumiert alle bleibenden Aktionen einer Runde und schiesst für jede Aktion
+- Zielen als Waffenwert? Genauigkeit -> Zielen bei anbauteilen
+
+## Currency
+
+- Währung pro Kampagne einstellbar
+- Defaults von der Epoche, beim Charakter einstellbar
+- Einfach Decimal, d.h. nur 2 Namen
+
+
+## Kampagnenansicht
+
+- Szenen -> Gamelog (Gemeinsam mit Charaktertagebuch)
+- Alle Items in Ansicht (Aufgeschluesselt nach Charakter)
+- Alle Schablonen in Ansicht (Aufgeschluesselt nach Charakter)?
+- Alle Werte in Ansicht (Aufgeschluesselt nach Charakter)?
+
+## Tirakan Zauber
+
+- Zauberei Check
+- Weisse Magie check
+- Schamanissmus Check
+- Sanguine Magie check
+- Nekrologie check
+- Mystizismus check
+- Runenmagie
+- Schwarze Magie
+  - Gezücht
+  - Macht des Blutes
+  - Niederes Wesen binden
+  - Schattenleib
+  - Sonnenschild
+
+## Charakter Detail
+
+- Add Items, Weapons, Armor als Sidebar?
+
+## Data
+
+- Viel Equipment fehlt in den 80ern
+- Alienspinne als Foe
+- Highendschablone 1en rerollen
+- Highendschablone 4+ MW
+- Highendschablone 6en sind zusätzliche Erfolge
+- Highendschablone Joker
+- Recherche Knowledge (Achtsamkeit)
+  - Schablone Journalist
+  - Eigene Schablone
+
+
+## Weitere Funktionen
+
+- Rast fertigstellen
+
+
+## Waffenaddons überarbeiten
+
+- Weniger Bonuswürfel
+- Kapazität
