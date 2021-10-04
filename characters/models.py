@@ -352,7 +352,6 @@ class CharacterSkill(models.Model):
 
     character = models.ForeignKey(Character, models.CASCADE)
     skill = models.ForeignKey('rules.Skill', models.CASCADE)
-    base_value = models.IntegerField(_('base value'), default=1)
 
     class Meta:
         ordering = ('skill__name_de',)
@@ -374,7 +373,7 @@ class CharacterSkill(models.Model):
         dom = self.attribute_value(self.skill.dominant_attribute)
         sup = self.attribute_value(self.skill.supplemental_attribute)
         attr_mod = math.ceil((dom + sup) / 2)
-        return self.base_value + attr_mod + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
+        return attr_mod + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
 
 
 class CharacterStatusEffect(models.Model):

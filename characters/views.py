@@ -284,7 +284,7 @@ class CreateCharacterDataView(FormView):
         for e in form.cleaned_data['extensions']:
             self.object.extensions.add(e)
         for skill in Skill.objects.all():
-            self.object.characterskill_set.create(skill=skill, base_value=1)
+            self.object.characterskill_set.create(skill=skill)
 
         self.object.created_by = self.request.user if self.request.user.is_authenticated else None
         self.object.save()
