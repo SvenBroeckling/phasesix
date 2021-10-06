@@ -4,7 +4,9 @@
 {% block javascript %}
     <script>
     $(function(){
-        var timer = null;
+        let timer = null;
+        let masonry = $('.masonry-container').masonry()
+
         $('#id_q').on('keyup', function(e){
             var q = $(this).val();
 
@@ -20,6 +22,7 @@
                     };
                 });
                 history.replaceState({q: q}, '', '?q=' + q);
+                masonry.masonry({percentPosition: true})
             }, 10);
         });
 
@@ -33,6 +36,7 @@
                     $(this).addClass('d-none');
                 };
             });
+            masonry.masonry({percentPosition: true})
         }
 
         $('.template').tilt({
@@ -49,7 +53,7 @@
             <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
         </div>
     </div>
-    <div class="row">
+    <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
         {% for object in object_list %}
             <div class="col col-md-4">
                 {% template_widget object %}
