@@ -70,10 +70,14 @@
                     $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
                         $(this).children(':first').unwrap() // keep the original fragment container
                         $('[data-bs-toggle="popover"]').popover()
+                        $('.masonry-container').masonry({percentPosition: true})
                     })
                 })
+
                 let sc = $('.sidebar-content')
-                sc.load(sc.data('sidebar-url'))
+                if(sc.data('sidebar-url') !== undefined) {
+                    sc.load(sc.data('sidebar-url'))
+                }
             }
 
             $('.template').tilt({
@@ -90,8 +94,6 @@
             if (activeTab) {
                 $('a[href="' + activeTab + '"]').tab('show')
             }
-
-            $('[data-bs-toggle="popover"]').popover()
 
             // reputation
             body.on('submit', '.add-reputation-form', function (e) {
@@ -125,6 +127,10 @@
                 e.preventDefault()
                 return false
             })
+
+            $('[data-bs-toggle="popover"]').popover()
+            setTimeout(() => $('.masonry-container').masonry({percentPosition: true}), 500)
+
         })
     </script>
 {% endblock %}

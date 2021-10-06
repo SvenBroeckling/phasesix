@@ -17,15 +17,15 @@
                 </div>
             </div>
         {% endif %}
-        <div class="row">
+        <div class="row masonry-container">
             {% for s in object.characterspell_set.all %}
-                <div class="col col-md-6">
+                <div class="col col-md-6 col-xl-4 mb-2">
                     <div
                             data-sidebar-title="{{ s.name }}"
                             data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=s.id model_name="CharacterSpell" sidebar_name="characterspell" %}"
                             class="card mb-2 sidebar-trigger">
                         <div class="card-header">
-                            <span class="text-muted float-end">{{ s.variant }}</span>
+                            <span class="text-muted float-end">{{ s.spell_type }} / {{ s.variant }}</span>
                             {{ s }}
                         </div>
                         <div class="card-body">

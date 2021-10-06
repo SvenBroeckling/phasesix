@@ -52,11 +52,24 @@ class SpellType(models.Model, metaclass=TransMeta):
         max_length=20,
         blank=True,
         null=True)
+    supplemental_attribute = models.CharField(
+        _('supplemental attribute'),
+        choices=BASE_ATTRIBUTE_CHOICES,
+        max_length=20,
+        blank=True,
+        null=True)
 
     @property
     def dominant_attribute_name(self):
         try:
             return next(filter(lambda x: x[0] == self.dominant_attribute, BASE_ATTRIBUTE_CHOICES))[1]
+        except StopIteration:
+            return ''
+
+    @property
+    def supplemental_attribute_name(self):
+        try:
+            return next(filter(lambda x: x[0] == self.supplemental_attribute, BASE_ATTRIBUTE_CHOICES))[1]
         except StopIteration:
             return ''
 

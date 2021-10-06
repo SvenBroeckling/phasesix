@@ -99,7 +99,6 @@
             // masonry + bootstrap tabs
             $('a[data-bs-toggle="tab"]').each(function () {
                 let self = $(this);
-                console.log(self);
                 $(this).on('shown.bs.tab', function () {
                     let elem = $(`${self.attr('href')}`);
                     let container = elem.find('.masonry-container');
