@@ -13,12 +13,31 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-9 rules">
+        <div class="d-block d-lg-none col-12">
+            <button
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#rules-mobile-nav"
+                    class="btn btn-outline-dark w-100 mb-3">{% trans 'Chapters' %}</button>
+            <div class="collapse mb-3" id="rules-mobile-nav">
+                <ul class="nav nav-pills flex-column">
+                    {% for chapter in structure %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if chapter == object %}active{% endif %}" href="{% url 'rulebook:detail' pk=forloop.counter %}">
+                                <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
+                                {{ chapter.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-12 col-lg-9 rules">
             <div class="columns">
                 {{ object.content|safe }}
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 d-none d-lg-block">
             <ul class="nav nav-pills flex-column">
                 {% for chapter in structure %}
                     <li class="nav-item">
