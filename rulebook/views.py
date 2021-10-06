@@ -2,6 +2,7 @@ import os
 
 import yaml
 from django.conf import settings
+from django.utils.translation import get_language
 from django.views.generic import TemplateView
 from markdown import markdown
 
@@ -11,8 +12,9 @@ class ChapterDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        language = get_language()
 
-        with open(os.path.join(settings.RULEBOOK_ROOT, 'structure.yml'), 'r') as yml_file:
+        with open(os.path.join(settings.RULEBOOK_ROOT, f'structure_{language}.yml'), 'r') as yml_file:
             structure = yaml.load(yml_file, Loader=yaml.Loader)
 
         chapter = structure[int(kwargs['pk']) - 1]

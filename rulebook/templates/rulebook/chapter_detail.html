@@ -19,11 +19,13 @@
             </div>
         </div>
         <div class="col-md-3">
-            <ul class="list-group list-group-flush">
+            <ul class="nav nav-pills flex-column">
                 {% for chapter in structure %}
-                    <li class="list-group-item">
-                        <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw"></i>
-                        <a class="mb-5 no-decoration" href="{% url 'rulebook:detail' pk=forloop.counter %}">{{ chapter.title }}</a><br>
+                    <li class="nav-item">
+                        <a class="nav-link {% if chapter == object %}active{% endif %}" href="{% url 'rulebook:detail' pk=forloop.counter %}">
+                            <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
+                            {{ chapter.title }}
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
