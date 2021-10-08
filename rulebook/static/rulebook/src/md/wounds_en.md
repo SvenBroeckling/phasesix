@@ -4,10 +4,6 @@ The physical integrity of the character is represented in the form of wounds. A 
 
 If you look at the character sheet of an intact character, you will see a bar of filled hearts:
 
-### Wunden und Boosts
-
-Betrachtet man den Charakterbogen eines unversehrten Charakters, so sieht man eine Leiste von gefüllten Herzen:
-
 <i class="fas fa-heart fa-2x text-danger"></i>
 <i class="fas fa-heart fa-2x text-danger"></i>
 <i class="fas fa-heart fa-2x text-danger"></i>
