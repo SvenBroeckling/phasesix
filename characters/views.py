@@ -42,11 +42,11 @@ class CharacterListView(TemplateView):
         user = self.request.user
 
         if user.is_authenticated:
-            context['own_characters'] = Character.objects.filter(created_by=user)
+            context['own_characters'] = Character.objects.with_templates().filter(created_by=user)
         if user.is_authenticated and user.is_staff:
-            context['other_peoples_characters'] = Character.objects.exclude(
+            context['other_peoples_characters'] = Character.objects.with_templates().exclude(
                 Q(created_by=user) | Q(created_by__isnull=True))
-        context['anonymous_characters'] = Character.objects.filter(created_by__isnull=True)
+        context['anonymous_characters'] = Character.objects.with_templates().filter(created_by__isnull=True)
         return context
 
 
@@ -381,6 +381,7 @@ class ChangeImageView(View):
             form.save()
         return HttpResponseRedirect(character.get_absolute_url())
 
+
 # reputation
 
 
@@ -566,7 +567,7 @@ class XhrAddWeaponModView(TemplateView):
     template_name = 'characters/modals/add_weapon_mod.html'
 
     def get_context_data(self, **kwargs):
-        character =  Character.objects.get(id=kwargs['pk'])
+        character = Character.objects.get(id=kwargs['pk'])
         weapon = CharacterWeapon.objects.get(id=self.request.GET.get('weapon_id'))
         context = super(XhrAddWeaponModView, self).get_context_data(**kwargs)
         context['character'] = character

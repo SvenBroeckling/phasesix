@@ -34,7 +34,7 @@
             <h4>{{ object.name }}</h4>
             <small>{% template_category_string object 3 "" %}</small><br>
             {% if object.created_by != request.user %}
-                <small>{{ object.created_by }}</small>
+                <small>{{ object.created_by|default:"" }}</small>
             {% endif %}
         </div>
     </div>

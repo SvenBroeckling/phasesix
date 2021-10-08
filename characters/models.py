@@ -11,7 +11,14 @@ from horror.models import QuirkModifier
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier
 
 
+class CharacterQuerySet(models.QuerySet):
+    def with_templates(self):
+        return self.filter(charactertemplate__id__isnull=False).distinct()
+
+
 class Character(models.Model):
+    objects = CharacterQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
 
