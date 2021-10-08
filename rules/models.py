@@ -404,6 +404,7 @@ class StatusEffect(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
+    is_active = models.BooleanField(_('is active'), default=True)
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
     name = models.CharField(_('name'), max_length=120)
     rules = models.TextField(_('rules'), blank=True, null=True)

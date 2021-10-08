@@ -264,6 +264,7 @@ class WeaponModificationAttributeChange(models.Model):
     status_effect = models.ForeignKey(
         'rules.StatusEffect',
         verbose_name=_('status effect'),
+        limit_choices_to={'is_active': True},
         blank=True,
         null=True,
         on_delete=models.CASCADE)

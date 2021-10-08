@@ -56,7 +56,8 @@ class LineageAdmin(admin.ModelAdmin):
 
 
 class StatusEffectAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'fa_icon_class')
+    list_display = ('name_de', 'name_en', 'fa_icon_class', 'is_active')
+    list_editable = 'is_active',
 
 
 admin.site.register(Extension, ExtensionAdmin)
