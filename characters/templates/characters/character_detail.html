@@ -140,7 +140,9 @@
             class="row character-info-row"
             style="
                     {% if character.backdrop_image %}
-                        background-image: url({{ character.backdrop_image.url }})
+                        {% thumbnail character.backdrop_image "1800" as im %}
+                        background-image: url({{ im.url }})
+                        {% endthumbnail %}
                     {% else %}
                         {% if character.get_epoch.image %}
                             {% thumbnail character.get_epoch.image "1800" as im %}

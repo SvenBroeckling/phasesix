@@ -374,6 +374,8 @@ class ChangeImageView(View):
         character = Character.objects.get(id=kwargs['pk'])
         if not character.may_edit(request.user):
             return HttpResponseRedirect(character.get_absolute_url())
+        if not request.user.is_authenticated:  # anonymous users may not upload images
+            return HttpResponseRedirect(character.get_absolute_url())
         form = CharacterImageForm(request.POST, instance=character, files=request.FILES)
         if form.is_valid():
             form.save()

@@ -5,12 +5,14 @@
         <form action="{% url 'characters:change_image' pk=character.id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% bootstrap_form character_form %}
-            <button class="btn btn-primary btn-sm w-100 mb-1 mt-3 float-end" type="submit">{% trans 'Save' %}</button>
+            {% if may_edit and request.user.is_authenticated %}
+                <button class="btn btn-primary btn-sm w-100 mb-1 mt-3 float-end" type="submit">{% trans 'Save' %}</button>
+            {% endif %}
         </form>
     </div>
 </div>
 
-{% if may_edit %}
+{% if may_edit and request.user.is_authenticated %}
     <div class="row">
         <div class="col-12">
             <a
