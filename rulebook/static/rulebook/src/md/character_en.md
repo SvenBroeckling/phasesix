@@ -33,7 +33,7 @@ A character with high charm knows how to face other people and appear positive t
 
 ### Physis
 
-Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters. Physiseigenschaften haben jeweils einen Wert, welcher die Anzahl an Würfeln vorgibt, mit denen auf diese Physiseigenschaft geworfen wird.
+All physis attributes describe the physical condition of the character. Physis attributes each have a value that specifies the number of dice to roll on that physique attribute.
 
 #### Deftness
 
