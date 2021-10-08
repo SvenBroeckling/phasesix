@@ -16,17 +16,17 @@
                 {% endif %}
             {% endif %}
             ">
-        <div class="card-body text-end">
+        <div class="card-body">
             {% if object.image %}
                 {% thumbnail object.image "120x120" crop="center" as im %}
                     <img
-                            class="img-fluid rounded float-start"
+                            class="img-fluid rounded float-start me-3"
                             src="{{ MEDIA_URL }}{{ im.url }}"
                             alt="{{ object.name }}">
                 {% endthumbnail %}
             {% else %}
                 <img
-                        class="img-fluid rounded float-start"
+                        class="img-fluid rounded float-start me-3"
                         height="120" width="120"
                         src="{% static 'img/silhuette.png' %}"
                         alt="{{ object.name }}">
