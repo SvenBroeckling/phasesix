@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% load i18n static %}
 
+{% block belownav %}
+    <span class="social" style="position: absolute; bottom: 5px; right: 5px">
+        <a href="mailto:info@phasesix.org"><i class="fas fa-2x fa-envelope me-1 text-dark"></i></a>
+        <a href="https://www.reddit.com/r/phasesix/"><i class="fab fa-2x fa-reddit text-dark"></i></a>
+    </span>
+{% endblock %}
+
 {% block content %}
     <div class="row mb-5 mt-5">
         <div class="col-md-8 offset-md-2 index-lead">

@@ -1,4 +1,18 @@
-phasesixscreenshot1.png
+## Tirakan Zauber
+
+- Zauberei Check
+- Weisse Magie check
+- Schamanissmus Check
+- Sanguine Magie check
+- Nekrologie check
+- Mystizismus check
+- Runenmagie
+- Schwarze Magie
+  - Gezücht
+  - Macht des Blutes
+  - Niederes Wesen binden
+  - Schattenleib
+  - Sonnenschild
 
 ## Magieschablonen
 
@@ -39,8 +53,6 @@ Berufe:
 
 ## Regeln
 
-- Poison: MW + 1
-- Statuseffekte nicht ticken / Rewrite
 - Kampf Schicksalswürfel Stehlen: Explizit erwähnen dass man die selbst bekommt
 - Ini Regel: Explding Dice explizit erwähnen
 - Beim Reagieren auf Schüsse ist die Deckung des schiessenden halbiert / verringert
@@ -60,26 +72,6 @@ Berufe:
 - Alle Items in Ansicht (Aufgeschluesselt nach Charakter)
 - Alle Schablonen in Ansicht (Aufgeschluesselt nach Charakter)?
 - Alle Werte in Ansicht (Aufgeschluesselt nach Charakter)?
-
-## Tirakan Zauber
-
-- Zauberei Check
-- Weisse Magie check
-- Schamanissmus Check
-- Sanguine Magie check
-- Nekrologie check
-- Mystizismus check
-- Runenmagie
-- Schwarze Magie
-  - Gezücht
-  - Macht des Blutes
-  - Niederes Wesen binden
-  - Schattenleib
-  - Sonnenschild
-
-## Charakter Detail
-
-- Add Items, Weapons, Armor als Sidebar?
 
 ## Data
 
