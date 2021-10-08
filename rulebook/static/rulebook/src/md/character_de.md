@@ -1,6 +1,6 @@
 Um ein Phase Six Abenteuer zu bestehen, erstellt jeder Spieler einen Charakter, den er in dem Abenteuer spielt. Das Leben des Charakters wird komplett auf seinem Charakterbogen dargestellt, welcher alle relevanten Werte enthält.
 
-Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Charakter erschaffen wird. In diesem Teil soll es um die grundlegenden Eigenschaften gehen, welche einen Charakter in PhaseSix ausmachen. 
+Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Charakter erschaffen wird. In diesem Teil soll es um die grundlegenden Eigenschaften gehen, welche einen Charakter in Phase Six ausmachen. 
 
 ### Persona
 
@@ -65,7 +65,7 @@ Der Mindestwurf ist eine zentrale Eigenschaft deines Charakters. Er gibt an welc
 
 ### Schutz und Ausweichen
 
-Beide Werte werden im Kampf verwendet, um möglichen Schaden zu verhindern. Die Anfangswerte dieser Eigenschaften werden von der Abstammung übernommen, sie können durch Schablonen verändert werden.
+Beide Werte werden im Kampf verwendet, um möglichen Schaden zu verhindern. Die Anfangswerte dieser Eigenschaften werden von der Abstammung übernommen, sie können durch Schablonen verändert werden. Der *Schutz* vermindert im Kampf hingenommenen Schaden, *Ausweichen* erlaubt es, einem Nahkampfangriff auszuweichen. Beide Werte werden in der Regel auch durch Rüstungen verändert.
 
 ### Zusatzwürfel
 
@@ -83,8 +83,8 @@ Auf die Basisfertigkeit werden die Boni der gewählten Charakterschablonen addie
 
 ### Wissen
 
-Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen hat wie Fertigkeiten den Durchschnitt zweier Attributwerte als Basis.
+Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen ist jeweils einer Fertigkeit zugeordnet. Der effektive Wert, auf den geworfen wird, setzt sich aus dem Wissenswert und dem Fertigkeitswert zusammen.
 
 ### Schatten
 
-Ein Charakter kann besondere Eigenschaften haben, die ihn außerhalb seiner körperlichen oder psychischen Eigenschaften beeinflussen. Jeder *Schatten* bringt eine eigene Beschreibung oder Regel mit. So kann ein Charakter z. B. einen Rivalen haben oder obrigkeitshörig sein. Auf Schatten wird nicht geworfen, Schatten haben auch keine Werte.
+Ein Charakter kann besondere Eigenschaften haben, die ihn außerhalb seiner körperlichen oder psychischen Eigenschaften beeinflussen. Jeder *Schatten* bringt eine eigene Beschreibung oder Regel mit. So kann ein Charakter z. B. einen Rivalen haben oder obrigkeitshörig sein. Auf Schatten wird nicht geworfen, Schatten haben auch keine Werte, können jedoch eigene Regeln mit sich bringen.

@@ -1,39 +1,21 @@
-Im Laufe der Zeit kann der Charakter Erfahrung sammeln und sich
-weiterentwickeln. Dies geschieht auch auf der Basis von Schablonen.
+Over time, the character can gain experience and develop. This also happens on the basis of templates.
 
 ### Reputation
 
-Reputation stellt den Bekanntheitsgrad des Charakters dar. Es ist 
-eine Angabe wie wahrscheinlich es ist dass der Charakter den Personen
-denen er begegnet bekannt ist, als auch ein Wert der besagt wieviel 
-der Charakter in seinem Leben schon erlebt hat.
+Reputation represents how well known the character is. It is an indication of how likely it is that the character is known to the people he meets, as well as a value that says how much the character has experienced in his life.
 
-Reputation wird in der Form *verbraucht/gesammelt* Festgehalten. 
-Alle jemals bekommene Reputation steht hinter dem Schrägstrich, alle
-Reputation die man für das Steigern verwendet hat davor. Solange
-die verbrauchte Reputation geringer ist als die gesammelte können für die 
-Differenz Schablonen erworben werden.
+Reputation is recorded in the form *used/collected*. All reputation you ever got is behind the slash, all reputation you used to increase is in front of it. As long as the used reputation is lower than the collected one, templates can be bought for the difference.
 
-#### Reputation erlangen
+#### Gaining reputation
 
-Für erfolgreiche Abenteuer erhält der Charakter Reputation. Diese wird
-vom Spielleiter vergeben und sollte sich für ein Abenteuer im Bereich
-von 5-10 bewegen. 
+For successful adventures the character gets reputation. This is assigned by the game master and should be in the range of 5-10 for an adventure. 
 
-Es kann auch für einzelne Aktionen direkt Reputation geben. So kann
-eine gelungene Aktion oder Szene im Spiel dazu führen dass der Spielleiter
-direkt eine gewisse Anzahl an Reputation vergibt.
+Reputation can also be given directly for individual actions. For example, a successful action or scene in the game can lead to the game master directly awarding a certain amount of reputation.
 
-### Den Charakter weiterentwickeln
+### Developing the character
 
-Für die erlangte Reputation kann der Spieler nach jeder
-Spielsitzung Schablonen aus den Bereichen *Charakter*, *Interessen*,
-*Lebensumstände* und *Talent* kaufen. Es ist nicht möglich neue
-Schablonen aus den Bereichen *Beruf* und *Bildung* hinzuzufügen.
+For the reputation gained, the player can buy templates from the areas of *character*, *interests*, *environment* and *talent* after each game session. It is not possible to add new templates from the areas of *occupation* and *education*.
 
-Dieses Weiterentwickeln findet jeweils nach einer Spielsitzung statt, 
-so kann auch innerhalb eines Abenteuers der Charakter um weitere 
-Schablonen erweitert werden.
+This further development takes place after each game session, so it is also possible to add further templates to the character within an adventure.
 
-Diese Schablonen werden genau wie bei der Charaktererschaffung festgehalten
-und die Veränderungen der Werte direkt auf dem Charakterbogen verrechnet.
+These templates are recorded exactly as in the character creation and the changes in the values are calculated directly on the character sheet.

@@ -1,39 +1,19 @@
-Die Horror-Erweiterung von PhaseSix fügt die klassischen Horror Elemente
-zum Spiel hinzu. Nicht nur können Charaktere Silbermunition in ihre 
-Waffen laden, es gibt auch Wesen aus der dunkelsten Phantasie und
-obskure Gegenstände. 
+The horror expansion of Phase Six adds the classic horror elements to the game. Not only can characters load silver ammunition into their weapons, there are also creatures from the darkest imagination and obscure objects. 
 
-Zudem hat ein Charakter nun einen möglichen Stresslevel. Wenn die 
-nichtweltlichen Begegnungen zuviel sind besteht die Gefahr dass der 
-Charakter die Kontrolle verliert, oder gar eine permanente 
-Geistesstörung erlangt.
+In addition, a character now has a possible stress level. If the non-worldly encounters are too much there is a risk that the character will lose control, or even acquire a permanent mental disorder.
 
 ### Stress
 
-ist die Horror-Erweiterung aktiviert, so hat der Charakter einen Wert 
-für Stress, welcher bei 0 beginnt. Zudem hat der Charakter einen 
-Wert für den maximalen Stress, den er verkraften kann. Dieser Wert ist
-von Anfang an 6, kann aber durch Schablonen oder Anderes verändert werden.
+If the horror enhancement is activated, the character has a value for stress that starts at 0. In addition, the character has a value for the maximum stress he can handle. This value is 6 from the start, but can be changed by templates or other means.
 
-Der Charakter kann Stress erlangen, indem er auf ausserweltliche 
-Wesenheiten trifft oder andere Begegnungen hat, welche so abnormal sind
-dass sie ihn beeinflussen.
+The character can gain stress by encountering otherworldly entities or having other encounters that are so abnormal that they affect him.
 
-Erreicht der Charakter durch eine Aktion sein maixmales Stresslevel,
-so bekommt er einen *Tick*, und der Stress wird auf 0 gesetzt.
+If the character reaches his maixmal stress level by an action, he gets a *tick*, and the stress is set to 0.
 
 ### Ticks
 
-Erreicht der Charakter den maximalen Stresslevel, so bekommt er einen
-*Tick*, und der Stresslevel wird wieder auf 0 gesetzt.
+If the character reaches the maximum stress level, he gets a *tick*, and the stress level is set to 0 again.
 
-Ticks sind psychologische Krankheiten, welche auch einen Einfluss auf 
-die Charakterwerte des Charakters haben. Währen der Charakter Stress
-wieder durch eine Rast oder ähnliches abbauen können ist es ohne
-Terapie nicht möglich Ticks wieder zu entfernen. 
+Ticks are psychological illnesses that also have an effect on the character's stats. While the character can reduce stress by resting or something similar, it is not possible to remove ticks without therapy. 
 
-Sollte ein Charakter einen Tick erhalten wird auf die folgenden 
-Tabellen gewürfelt, und der ermittelte Tick dem Charakter hinzugefügt.
-
-
-
+If a character gets a tick, the following tables are rolled and the determined tick is added to the character.

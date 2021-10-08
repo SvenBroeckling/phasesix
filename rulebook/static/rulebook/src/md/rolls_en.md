@@ -1,91 +1,91 @@
-Immer wenn ein Charakter eine Handlung mit ungewissem Ausgang durchführt wird mit Würfeln auf einen passenden Wert geworfen, welcher in der Regel vom Spielleiter festgelegt wird. Der Ausgang des Wurfes zeigt auf ob und wie gut die Handlung gelungen ist. Dies wird als *Probe* oder *Wurf* bezeichnet.
+Whenever a character performs an action with an uncertain outcome, dice are rolled for a suitable value, which is usually determined by the game master. The outcome of the roll indicates whether and how well the action succeeded. This is called a *roll* or *check*.
 
-Für alle Würfe werden sechsseitige Würfel verwendet. Die Anzahl der Würfel richtet sich nach dem Wert des Charakters in der betreffenden Eigenschaft, dazu kommen eventuell Bonuswürfel oder Schicksalswürfel. 
+Six-sided dice are used for all rolls. The number of dice is determined by the character's value in the trait in question, plus any bonus dice or fate dice. 
 
-Eine Probe ist also ein Wurf mit einer *Anzahl* Würfel, wobei ein *Mindestwurf* erreicht werden muss, welcher durch einen *Schwierigkeitsgrad* modifiziert sein kann. Wir gehen im Folgenden genauer auf die Elemente ein.
+So a check is a roll of a *number* of dice, with a *minimum roll* that must be achieved, which may be modified by a *level of difficulty*. We go into more detail about the elements below.
 
-Diese Art der Proben werden überall außerhalb des Kampfes verwendet. Im Kampf gelten gesonderte Regeln für das Ermitteln von Treffern und Wunden.
+These types of checks are used everywhere outside of combat. In combat, separate rules apply for determining hits and wounds.
 
-### Die Anzahl der Würfel
+### The number of dice
 
-Die geforderte oder gewünschte Fertigkeit gibt mit ihrem Wert die Anzahl der Würfel direkt vor. Ein Charakter mit einem „Einschüchtern“ Wert von 4 hat auch 4 sechsseite Würfel für diese Probe zur Verfügung.
+The required or desired skill directly determines the number of dice with its value. A character with an "Intimidate" value of 4 also has 4 six-sided dice available for this check.
 
-Die Wissenseigenschaften haben einen Wert, mit dem sie die Anzahl der Würfel vorgeben. Zudem ist hier aber eine Fertigkeit angegeben. Die Würfel der Fertigkeit addiert. So hat ein Charakter mit der Fertigkeit „Kommunikation“ 2 und dem Wissen „Etikette (Kommunikation)“ 3 insgesamt 5 Würfel auf Etikette.
+The knowledge traits have a value with which they specify the number of dice. In addition, however, an associated skill is given here, and its value is added to the knowledge value. Thus, a character with the skill "Communication" 2 and the knowledge "Etiquette (Communication)" 3 has a total of 5 dice on Etiquette.
 
-Ist der Wert 0 oder negativ so ist es dem Charakter nicht möglich diesen Wurf ohne weitere Hilfe zu machen, er ist einfach zu schlecht in der Fertigkeit. *Bonuswürfel* oder *Schicksalswürfel* können jedoch verwendet werden, egal wie sehr der Wert im Negativen ist.
+If the value is 0 or negative, the character is not able to make this roll without further help, he is simply too bad at the skill. However, *bonus dice* or *destiny dice* can be used, no matter how much the value is in the negative.
 
-### Der Mindestwurf
+### The minimum roll
 
-Der Mindestwurf wird direkt vom Charakter vorgegeben. Ein Mensch hat einen Mindestwurf von 5+, dieser kann durch besondere Umstände auch verändert werden.
+The minimum roll is specified directly by the character. A human has a minimum roll of 5+, this can also be changed by special circumstances.
 
-> Hagens Spieler möchte mit roher Gewalt effektvoll eine Tür auftreten, die zwischen ihm und der vermuteten Diebesbande steht. Der Spielleiter fordert ihn auf, einen Wurf auf Kraft zu machen.
+> Hagen's player wants to use brute force to effectively kick open a door that stands between him and the suspected gang of thieves. The game master asks him to make a roll for Strength.
 >
->Hagen hat einen Wert von 4 in Kraft, somit wirft er 4 Würfel. Jeder Würfel der eine 5 oder eine höhere Zahl zeigt ist hierbei ein Erfolg. Ein einzelner Erfolg reicht für das Gelingen aus, jedoch wirft Hagens Spieler 4 Erfolge, und tritt die Tür sogleich dem ersten Dieb ins Gesicht.
+>Hagen has a value of 4 in strength, so he rolls 4 dice. Any die that shows a 5 or higher is a success. A single success is sufficient for success, but Hagen's player rolls 4 successes, and immediately kicks the door in the face of the first thief.
 
-Der Mindestwurf wird in der Form „X+“ angegeben, um anzudeuten, dass dies das Würfelergebnis ist, was mindestens erreicht werden muss. 
+The minimum roll is given in the form "X+" to indicate that this is the die result, which is the minimum that must be achieved. 
 
-### Schwierigkeitsgrade
+### Levels of difficulty
 
-Der Spielleiter kann den Mindestwurf bei besonders leichten oder schweren Proben modifizieren. Bei schweren Proben kann ein Modifikator als Wurf+ angesagt werden, bei leichten Proben ein Wurf-.
+The game master can modify the minimum roll for particularly easy or difficult checks. For difficult checks, a modifier can be announced as a roll+, and for easy checks, a roll-.
 
-Eine +3 Probe bedeutet in diesem Fall, dass der Mindestwurf um 3 angehoben wird, bei einem Menschen also 8+ beträgt. Hier kommt ins Spiel, dass alle Würfe außerhalb des Kampfes *weiter geworfen* werden, also sogenannte *Exploding Dice* sind.
+A +3 check in this case means that the minimum roll is raised by 3, so for a human it is 8+. This is where it comes into play that all rolls outside of combat are *exploding dice*.
 
 ### Exploding Dice
 
-Es ist bei Phase Six möglich, dass Mindestwürfe über die 6+ hinaus gehen, teilweise sogar weit höher sind. Hier gilt außerhalb des Kampfes bei jedem Wurf die Regel der „Exploding Dice“.
+It is possible in Phase Six for minimum rolls to exceed 6+, and in some cases to be much higher. Here, the rule of "Exploding Dice" applies to every roll outside of combat.
 
-Würfel, die nach dem Wurf eine 6 zeigen dürfen noch einmal geworfen werden. Das Ergebnis wird dann jeweils zusammengezählt. So kann auf einem einzelnen Würfel ein Mindestwurf von 9+ erreicht werden, indem zuerst eine 6, und dann mindestens eine 3 geworfen wird. Eine 14+ kann nur erreicht werden, wenn auf einem Würfel zunächst eine 6, dann noch eine 6 und dann mindestens eine 2 geworfen wird. 
+Dice that show a 6 after the roll may be rolled again. The result is then added together. Thus, a minimum roll of 9+ can be achieved on a single die by first rolling a 6, and then rolling at least a 3. A 14+ can only be achieved if on one die first a 6, then another 6, and then at least a 2 is rolled. 
 
-Da bei einem Wurf mit mehreren Würfeln zwischen den einzelnen Würfeln kein Unterschied gemacht wird, können alle Sechsen gleichzeitig erneut geworfen werden, wenn dies notwendig ist um einen hohen Mindestwurf zu erreichen.
+Since no distinction is made between the individual dice on a roll of multiple dice, all sixes can be rolled again at the same time if this is necessary to achieve a high minimum roll.
 
-> Hagens Spielleiter verlangt vom ihm eine Tapferkeitsprobe +9, da er allein der Diebesbande gegenüber steht. So muss er auf mindestens einem Würfel seines Tapferkeitswertes eine 14 erreichen. Glücklicherweise hat er einen Tapferkeitswert von 5, also immerhin 5 Würfel zur Verfügung. 
+> Hagen's gamemaster requires him to make a Courage check +9, since he is facing the gang of thieves alone. So he must achieve a 14 on at least one die of his valor value. Fortunately, he has a Courage value of 5, so he has 5 dice at his disposal. 
 >
-> Im ersten Wurf wirft er 4,2,6,6,1. Somit hat er zwei Sechsen zur Verfügung die er weiter werfen kann, um die 14 evtl. noch zu erreichen. Der zweite Wurf (mit den beiden Würfeln) zeigt eine 6 und eine 1. 
+> In the first roll he rolls 4,2,6,6,1, so he has two sixes to roll to reach the 14. The second roll (with the two dice) shows a 6 and a 1. 
 >
-> Nun darf er nur noch den verbleibenden Würfel der eine 6 gezeigt hat erneut werfen. Da dieser nun eine 1 zeigt, hilft ihm auch die ausgeprägte Tapferkeit nicht, Hagen hat nur eine 13 erreicht.
+> Now he may only roll the remaining die that showed a 6 again. Since this now shows a 1, even the pronounced courage does not help him, Hagen has only reached a 13.
 
-### Bonuswürfel
+### Bonus dice
 
-Ein Charakter kann eine Anzahl an Bonuswürfeln haben. Diese werden durch die Schablonen (siehe *Einen Charakter erstellen*) festgelegt. Von den Bonuswürfeln kann eine beliebige Anzahl zu den zu werfenden Würfeln hinzugenommen werden. Dies kann auch geschehen, wenn der eigentliche Wurf schon fehlgeschlagen ist. So kann ein Bonuswürfel nach dem anderen geopfert werden um eventuell doch noch zu einem Erfolg zu führen.
+A character can have a number of bonus dice. These are determined by the templates (see *Creating a Character*). Any number of the bonus dice can be added to the dice to be rolled. This can be done even if the actual roll has already failed. This way, one bonus die after the other can be sacrificed to possibly still lead to a success.
 
-Auf diese Weise ist es auch möglich einen Wurf zu machen, wenn die Zahl der Würfel eigentlich 0 oder weniger ergibt.
+In this way, it is also possible to make a roll when the number of dice is actually 0 or less.
 
-Die Bonuswürfel frischen sich bei jeder Rast auf ihr Maximum auf. 
+The bonus dice refresh to their maximum at each rest. 
 
-### Wiederholungswürfe
+### Rerolls
 
-Für je einen Wiederholungswurf kann ein kompletter Wurf erneut geworfen werden. So ist es also nicht möglich einen Wurf auf 0 oder weniger erfolgreich zu bestehen.
+For each re-roll, a complete roll can be re-rolled. Thus, it is not possible to successfully pass a roll to 0 or less.
 
-Wiederholungswürfe frischen sich auch bei jeder Rast auf ihr Maximum auf.
+Rerolls also refresh to their maximum at each rest.
 
-### Schicksalswürfel
+### Destiny dice
 
-In der Regel bekommt der Charakter Schicksalswürfel mit seinem Werdegang, allerdings kann der Spielleiter auch einzelne Schicksalswürfel für besondere Aktionen oder bei besonderen Gelegenheiten vergeben.
+As a rule, the character gets destiny dice with his career, but the game master can also assign individual destiny dice for special actions or on special occasions.
 
-Schicksalswürfel können sowohl als Bonus- als aus als Wiederholungswürfel eingesetzt werden. Auf einem Schicksalswürfel ist ein Ergebnis von 4 **immer** ein Erfolg, unabhängig vom Schwierigkeitsgrad der Probe.
+Destiny dice can be used both as bonus dice and as rerolls. On a destiny die, a result of 4 is **always** a success, regardless of the difficulty of the check.
 
-Schicksalswürfel müssen immer getrennt von allen normalen Würfeln geworfen werden, um auszumachen, ob genau sie die 4+ erreicht haben.
+Destiny dice must always be rolled separately from all normal dice to determine if they have reached 4+.
 
-> Wenn wir uns das vorherige Beispiel mit Hagens Wurf auf seine Tapferkeit ansehen (5 Würfel auf 14+), so würde ihm hier ein Schicksalswürfel sehr helfen, denn dieser müsste tatsächlich nur eine 4+ erreichen.
+> If we look at the previous example with Hagen's roll on his valor (5 dice on 14+), a destiny die would help him a lot here, because it would actually only have to reach a 4+.
 
-Schicksalswürfel frischen sich bei jeder Rast von mindestens 10 Stunden auf ihr Maximum auf. 
+Destiny dice refresh to their maximum at every rest. 
 
-### Gruppenwürfe
+### Group rolls
 
-Immer, wenn es darum geht, dass die Gruppe als Ganzes eine Probe besteht werden Gruppenwürfe verwendet. Statt z. B. eine Achtsamkeitsprobe von jedem Spieler zu verlangen kann der Spielleiter eine Achtsamkeitsprobe der ganzen Gruppe verlangen. Ist diese Probe gelungen, gilt der Effekt für alle Charaktere in der Gruppe.
+Whenever the group as a whole is required to pass a check, group rolls are used. For example, instead of asking each player to make an Apprehension check, the game master can ask the whole group to make an Apprehension check. If this check is successful, the effect applies to all characters in the group.
 
-Ein gelungener Gruppenwurf erfordert immer eine Anzahl von Erfolgen, die erreicht werden müssen. Der Spielleiter sagt an wie viele Erfolge für eine Gruppenprobe erreicht werden müssen, damit diese erfolgreich ist. Danach wirft jeder Spieler auf das verlangte Attribut oder die verlangte Fertigkeit. 
+A successful group roll always requires a number of successes to be achieved. The game master tells how many successes must be achieved for a group roll to be successful. Then each player rolls on the required attribute or skill. 
 
-Alle Erfolge jedes Charakters werden zusammengezählt. Ist die geforderte Anzahl an Erfolgen erreicht, so ist die Probe gelungen.
+All the successes of each character are added up. If the required number of successes is reached, the check is successful.
 
-Bei einem Gruppenwurf kann jeder Beteiligte wie gewohnt Bonus-, Schicksals- und Wiederholungswürfel einsetzen. Auch die Modifikation des Mindestwurfs aufgrund der Schwere der Probe ist möglich.
+In the case of a party roll, each party can use bonus, destiny, and reroll dice as usual. It is also possible to modify the minimum roll based on the severity of the check.
 
-### Verborgenheit
+### Concealment
 
-Ein besonderer Wurf ist der Wurf auf die Verborgenheit. Dieser kommt zum Tragen, wenn eine Person einen Charakter beobachtet und bestimmte auffällige Ausrüstung sucht. 
+A special roll is the roll on concealment. This comes into play when a person is watching a character and looking for certain conspicuous equipment. 
 
-Jedes Ausrüstungsstück hat einen Verborgenheitswert. Je höher dieser Wert ist, desto offensichtlicher ist dieser Gegenstand zu sehen oder zu erkennen. 
+Each piece of equipment has a concealment value. The higher this value, the more obvious that item is to see or recognize. 
 
-Beobachtet nun eine Person einen Charakter oder die ganze Gruppe, so gilt für den Verborgenheitswurf der Gegenstand mit dem *höchsten* Verborgenheitswert. 
+If a person now observes a character or the whole group, the item with the *highest* concealment value counts for the concealment roll. 
 
-Die beobachtende Person wirft nun eine Anzahl von Würfeln entsprechend ihres Wahrnehmungswertes *plus* dem ermittelten Verborgenheitswert. Bei einem Erfolg kann der Beobachter einen auffälligen Gegenstand ausmachen.
+The person observing now rolls a number of dice equal to their Perception value *plus* the determined Concealment value. If successful, the observer can spot a conspicuous object.

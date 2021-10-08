@@ -1,3 +1,5 @@
+> Work in progress
+
 It's Magic!
 
 Deine Kampagne soll Magie enthalten? Also versteht mich nicht falsch, verwechselt Magie nicht mit göttlichem Wirken oder gar mit Körpermodifikationen. Magie ist eine sonderbare Macht, welche je nach Universum ganz anders dargestellt sein kann.

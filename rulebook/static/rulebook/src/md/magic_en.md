@@ -1,42 +1,52 @@
+> Work in progress
+
 It's Magic!
 
-Deine Kampagne soll Magie enthalten? Also versteht mich nicht falsch, verwechselt Magie nicht mit göttlichem Wirken oder gar mit Körpermodifikationen. Magie ist eine sonderbare Macht, welche je nach Universum ganz anders dargestellt sein kann.
+Your campaign should contain magic? So don't get me wrong, don't confuse magic with divine work or even body modifications. Magic is a strange power, which can be represented quite differently depending on the universe.
 
-In der Antike oder im Mittelalter kann das Hinzufügen von Magie dazu führen dass die Kampagne sich eher wie eine Fantasywelt anfühlt. In der Moderne mag Magie zu einer Cthulhuiden Geschichte beitragen, in der Zukunft kann es zu einer Szenerie wie im in verschiedenen Geschichten beschriebenen Seattle des Jahres 2050 führen.
+In ancient or medieval times, adding magic may make the campaign feel more like a fantasy world. In the modern era, magic may add to a Cthulhuiden story; in the future, it may lead to a setting like the Seattle of 2052 described in various stories.
 
-Die Magie Erweiterung ist unabhängig von Epochen oder anderen Erweiterungen. Sie kann zu jeder beliebigen Zeit dazu gewählt werden, um in der Kampagne Magie zu ermöglichen.
-Grundlegende Attribute
+The magic expansion is independent of eras or other expansions. It can be chosen at any time to enable magic in the campaign.
 
-Die Magie Erweiterung basiert auf zwei grundlegenden Attributen, welche Charaktere mit aktivierter Erweiterung automatisch haben und welche durch Schablonen erlangt werden können.
-Arkana
+### Basic Attributes
 
-Arkana spiegelt die Menge an Magie wieder die der Charakter in sich vereinen und speichern kann. Mit Arkana wirkt der Charakter Zauber und führt Rituale aus. Schablonen, wie z.B. "Arkaner Lehrmeister" steigern das maximal mögliche Arkana, welches ein Charakter haben kann.
+The Magic expansion is based on two basic attributes, which characters with the expansion activated automatically have and which can be obtained through templates.
 
-Arkana regenriert sich durch eine Rast, der Charakter regeneriert jeweils 1 Arkana wenn die Rast 4 Stunden, 6 Stunden, 8 Stunden oder 10 Stunden währt.
-Zauberpunkte
+#### Arcana
 
-Zauberpunkte werden verwendet um Zauber zu erschaffen. Zauberpunkte kann der Charakter auch durch Schablonen erlangen. So gibt die Schablone "Arkane Schule" zum Beispiel 10 Zauberpunkte.
+Arcana reflects the amount of magic the character can combine and store. With arcana, the character casts spells and performs rituals. Templates, such as "Arcane Teacher" increase the maximum possible arcana a character can have.
 
-Sind Zauberpunkte einmal für einen Zauber ausgegeben so sind sie verbraucht und können nicht erneut verwendet werden. Im Gegensatz zu Arkana ist dies kein Wert der sich durch Rast auffrischt.
-Einen Zauber erstellen
+Arcana regenerates by resting.
 
-Jeder erstellte Zauber ist ein Unikat. Jeder Spieler erstellt für seine Charaktere Zauber auf der Basis von Zauberschablonen, und gibt ihnen eigene Namen.
-Die Schule der Magie
+#### Spell Points
 
-Zunächst wird die Schule als Zauberschablone gewählt. Dies gibt vor was der Zauber bezweckt, welcher magischen Aurichtung
+Spell points are used to create spells. Spell points can also be obtained by the character through templates. For example, the "Arcane School" template gives 10 spell points.
 
-Schulen:
+Once spell points are spent on a spell, they are used up and cannot be used again. Unlike arcana, this is not a value that refreshes by resting.
 
-    Schaden (Damage)
-    Kontrolle (Control)
+### Learn spells
+
+* Learn multiple times
+
+
+#### Schools
+
+Spells in Phase Six are assigned to schools. These give a 
+
+    Damage (Damage)
+    Control (Control)
     Transmutation (Transmutation)
-    Heilung (Healing)
-    Illusion (Illusion)
-    Weissagung (Divination)
-    Widerrufung (Abjuration)
-    Beschwörung (Conjuration)
-    Verzauberung (Enchantment)
+    Healing
+    Illusion
+    Divination
+    Revocation (Abjuration)
+    Conjuration
+    Enchantment (Enchantment)
 
-Zauberschablonen
+### Spell templates
 
-Zauberschablonen verändern die Werte eines Zaubers, können zudem Effekte hinzufügen oder das Verhalten des Zaubers komplett ändern.
+Spell templates change the values of a spell and can also add effects or completely change the behavior of the spell.
+
+### Forget spells
+
+### Cast spells

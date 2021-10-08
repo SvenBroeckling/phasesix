@@ -1,154 +1,153 @@
-Wenn es zum Kampf kommt, verläuft das Spiel in Runden.
+When it comes to combat, the game proceeds in rounds.
 
-### Beginn des Kampfes
+### Start of the combat
 
-Sobald sich ein Konflikt ergibt wird die Zeit eingefroren, und die Gruppe bestimmt die Reihenfolge in der die Teilnehmer des Kampfes agieren. 
+As soon as a conflict arises, time is frozen, and the group decides the order in which the participants of the combat will act. 
 
-Hierzu wirft jeder Teilnehmer auf einen W6, und addiert den *Schnelligkeitswert* hinzu. Der Teilnehmer mit dem höchsten Ergebnis beginnt den Kampf, alle Weiteren folgen in der Reihenfolge ihrer Ergebnisse. 
+To do this, each participant rolls on a D6, and adds the *speed value*. The participant with the highest score starts the combat, all others follow in the order of their scores. 
 
-Haben zwei Teilnehmer dasselbe Ergebnis, so entscheidet zunächst der Wert *Schnelligkeit*, und falls dieser auch identisch ist der *Geschickwert*.
+If two participants have the same result, the *Quickness* value decides first, and if this is also identical, the *Deftness* value.
 
+All participants of the combat have no actions available at the beginning of the combat. Only when they receive the *priority* for the first time do their actions refresh. 
 
-### Ablauf der Runden
+### Sequence of rounds
 
-Der Kampf ist in *Kampfrunden* aufgeteilt. In jeder Kampfrunde bekommt jeder Teilnehmer einmal die *Priorität*, d. h. er ist am Zug und kann bestimmen welche *Aktionen* er ausführt. 
+The combat is divided into *combat rounds*. In each combat round, each participant gets *priority* once, i.e. it is his turn and he can determine which *actions* he will perform. 
 
-Hat der letzte Teilnehmer agiert, beginnt die nächste *Kampfrunde* mit dem ersten Teilnehmer. 
+If the last participant has acted, the next *combat round* begins with the first participant. 
 
+#### Actor and actions
 
-### Akteur und Aktionen
+If it is a participant's turn, he has the *priority*, he is the *actor* at this moment.
 
-Ist ein Teilnehmer am Zug so hat er die *Priorität*, er ist in diesem Moment der *Akteur*.
+At the beginning of the turn, the *actions* of the participant refresh. The number of the player's actions is taken from the player's lineage. Thus, a human has 2 actions available in combat. The actions per round can be expanded by templates.
 
-Zu Beginn des Zuges frischen sich die *Aktionen* des Teilnehmers auf. Die Anzahl der Aktionen des Spielers wird von der Abstammung des Spielers genommen. Ein Mensch hat also 2 Aktionen im Kampf zur Verfügung. Die Aktionen pro Runde können durch Schablonen erweitert werden.
+"Refresh" therefore means that all actions are available again. If the participant has previously used up actions, for example by actions in previous combat rounds, he resets his available actions to the maximum.
 
-„Auffrischen“ bedeutet also, dass alle Aktionen wieder verfügbar sind. Wenn der Teilnehmer zuvor Aktionen verbraucht hat, etwa durch Handlungen in früheren Kampfrunden, setzt er seine verfügbaren Handlungen wieder auf das Maximum.
+Once the actions are refreshed, the participant can act in combat. To do this, he performs actions one after another, each action taking a certain number of *actions*. Actions can be, among others, the following:
 
-Sind die Aktionen aufgefrischt, kann der Teilnehmer im Kampf handeln. Dazu führt er nacheinander Handlungen aus, wobei jede Handlung eine gewisse Zahl an *Aktionen* in Anspruch nimmt. Handlungen können u. A. folgende sein:
+* To **attack** with a weapon
+* Parry **with a weapon or object**.
+* Reload a weapon
+* **Use** an object
+* **evade** a melee attack.
+* **Kneel** or lay on the ground.
+* **Walk** *Quickness* Meters (performing another action without consuming an action, but each roll is reduced by 2).
+* **Run** *Quickness* * 2 meters.
+* **Crawl** *Quickness* / 2 meters.
 
-* Mit einer Waffe **angreifen**
-* Mit einer Waffe oder einem Gegenstand **parieren**
-* Eine Waffe **nachladen**
-* Einen Gegenstand **benutzen**
-* Einem Nahkampfangriff **ausweichen**
-* **Hinknien** oder auf den Boden legen
-* *Schnelligkeit* Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)
-* *Schnelligkeit* * 2 Meter **rennen**
-* *Schnelligkeit* / 2 Meter **robben**
+Actions should not be performed together, but always one after the other, as there are possible reactions.
 
-Aktionen sollten nicht zusammen, sondern immer nacheinander ausgeführt werden, da es mögliche Reaktionen gibt.
+#### Reactions
 
-### Reaktionen
+If an *actor* acts in combat, all participants who directly perceive the *actor* can react to this action.
 
-Agiert ein *Akteur* im Kampf, so können alle Teilnehmer, die den *Akteur* wahrnehmen, auf diese Aktion reagieren.
+To be able to react to an action, the following conditions must be met:
 
-Um auf eine Aktion reagieren zu können müssen folgende Bedingungen erfüllt sein:
+* The reacting participant must directly perceive the *actor*, i.e. hear, see, or otherwise become aware of his action.
+* The reacting participant still has unused *actions*. 
 
-* Der reagierende Teilnehmer muss den *Akteur* direkt wahrnehmen, also hören, sehen oder auf andere Art von seiner Aktion Kenntnis erlangen.
-* Der reagierende Teilnehmer hat noch unverbrauchte *Aktionen* 
+The reaction is executed immediately after the *actor's* action, but takes place practically simultaneously. There can only ever be one *reaction* by a participant to an *action*. However, any number of participants can react to the *actor* when they perceive its *action*. 
 
-Die Reaktion wird direkt nach der Aktion des *Akteurs* ausgeführt, findet aber praktisch gleichzeitig statt. Es kann immer nur eine *Reaktion* eines Teilnehmers auf eine *Aktion* folgen. Es können jedoch beliebig viele Teilnehmer auf den *Akteur* reagieren, wenn sie dessen *Aktion* wahrnehmen. 
+Each *reaction* reduces the available *actions* of the reacting participant by one.
 
-Jede *Reaktion* verringert die verfügbaren *Aktionen* des reagierenden Teilnehmers um eins.
+### Actions through bonus dice
 
-### Aktionen durch Bonuswürfel
+Bonus and destiny dice can be used in combat to gain or steal actions.
 
-Bonus- und Schicksalswürfel können im Kampf verwendet werden, um Aktionen zu erlangen oder zu stehlen.
+To gain an additional action, a *bonus die* can be subtracted. The additional action is available immediately, including for a reaction. 
 
-Um eine zusätzliche Aktion zu erlangen, kann ein *Bonuswürfel* für die Spielsitzung abgezogen werden. Die zusätzliche Aktion steht sofort zur Verfügung. 
+If a *destiny die* is spent, an action can be stolen from an opponent. This action is no longer available to the opponent in his current (or next, if it is not his turn) turn. The participant who spent the destiny dice has the action immediately available, even as a reaction.
 
-Wird ein *Schicksalswürfel* ausgegeben kann eine Aktion von einem Gegner gestohlen werden. Diese steht dem Gegner in seiner aktuellen (oder nächsten, falls er nicht an der Reihe ist) Runde nicht mehr zur verfügung. Der Teilnehmer, welcher den Schicksalswürfel ausgegeben hat, hat die Aktion sofort zur Verfügung.
+Spending dice for actions does not itself take an action.
 
-Das Ausgeben von Würfeln für Aktionen nimmt selbst keine Aktion in Anspruch.
+### Sequence of an attack
 
-### Ablauf eines Angriffs
+Attacks with weapons are handled exactly the same in melee and ranged combat. The only difference is that attacks with melee weapons are rolled on the *Hand to Hand combat* skill, attacks with firearms are rolled on the *Shooting* skill, and attacks with throwing weapons are rolled on the *Throwing* skill.
 
-Angriffe mit Waffen werden im Nahkampf und im Fernkampf genau gleich gehandhabt. Der einzige Unterschied ist, dass Angriffe mit Nahkampfwaffen auf die Fertigkeit *Nahkampf* geworfen werden, Angriffe mit Schusswaffen auf die Fertigkeit *Schießen* und Angriffe mit Wurfwaffen auf die Fertigkeit *Werfen*.
+#### The hit roll and cover
 
-#### Der Trefferwurf und Deckung
+To make an attack, a roll of a certain number of dice is made. The *minimum* roll of this die is equal to the *minimum* roll of the character.
 
-Um einen Angriff durchzuführen wird ein Wurf mit einer bestimmten Anzahl Würfeln geworfen. Der *Mindestwurf* dieses Wurfs entspricht dem *Mindestwurf* des Charakters.
+The number of dice initially corresponds to the character's respective skill value (shooting, hand to hand combat, throwing).
 
-Die Anzahl der Würfel entspricht zunächst dem jeweiligen Fertigkeitswert des Charakters (Schießen, Nahkampf, Werfen)
+Depending on the cover, a certain number of dice are removed from this roll:
 
-Je nach Deckung werden von diesem Wurf eine bestimmte Anzahl an Würfeln entfernt:
+* Light cover: -1 die
+* Half cover: -2 dice
+* Almost complete cover: -3 dice
 
-* Leichte Deckung: -1 Würfel
-* Halbe Deckung: -2 Würfel
-* Fast vollständige Deckung: -3 Würfel
+Each success causes a *hit* to the target of the attack. How the target can prevent damage is described under *hit*.
 
-Jeder Erfolg verursacht einen *Treffer* beim Ziel des Angriffs. Wie das Ziel Schaden verhindern kann, ist unter *Treffer* beschrieben.
+The hit roll can also be changed by other circumstances. Different fire modes and firing at the wrong distance may cause the available dice to change.
 
-Der Trefferwurf kann auch durch weitere Umstände verändert werden. Unterschiedliche Feuermodi und Schüsse bei falscher Distanz sorgen u.U. für eine Änderung der verfügbaren Würfel.
+##### Bonus dice: Fire modes
 
-##### Bonuswürfel: Feuermodi
+Modern weapons usually have different firing modes. If fire modes are specified for the weapon, the following rule can be used for the weapon. 
 
-Moderne Waffen haben in der Regel verschiedene Feuermodi. Sind bei der Waffe Feuermodi angegeben kann die folgende Regel für die Waffe verwendet werden. 
+It is assumed that the weapon is in semi-automatic or burst mode for a normal hit roll. In this mode, the weapon fires the specified number of rounds per action. For weapons with only fully automatic fire mode, this is assumed to be the default. 
 
-Es wird davon ausgegangen, dass sich die Waffe bei einem normalen Trefferwurf im Halbautomatischen- bzw. Burstmodus befindet. In diesem Modus gibt die Waffe die angegebene Anzahl von Schüssen pro Aktion ab. Bei Waffen mit nur vollautomatischem Feuermodus wird dieser als Standard angenommen. 
+When firing in a mode other than the default mode, the number of shots and the accuracy of the weapon changes:
 
-Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die Schusszahl und die Genauigkeit der Waffe:
+* Single shot mode: +1 die
+* Semi-automatic mode: +2 dice
+* Full-auto: +4 dice, all the character's unspent actions must be used up for shots with this weapon, after which the combat round ends for him. No actions can be saved for reactions.
 
-* Einzelschussmodus: +1 Würfel
-* Halbautomatik: +2 Würfel
-* Vollautomatik: +4 Würfel, alle nicht verbrauchten Aktionen des Charakters müssen für Schüsse mit dieser Waffe verbraucht werden, danach endet die Kampfrunde für ihn. Es können keine Aktionen für Reaktionen aufgehoben werden.
+##### Minus die: Hit rolls at wrong distance.
 
-##### Minuswürfel: Trefferwürfe bei falscher Distanz
+Each weapon has a specified distance at which it is effective. If the target's distance differs from that specified on the weapon, there is a penalty to the hit dice.
 
-Jede Waffe hat eine angegebene Distanz, auf der sie effektiv ist. Weicht die Distanz des Ziels von der bei der Waffe angegebenen ab, ergibt sich ein Malus auf die Trefferwürfel.
+If the real shooting distance is less than the specified distance of the weapon, the attack is performed normally. 
 
-Wenn die wirkliche Schussdistanz geringer ist als die angegebene Distanz der Waffe, wird der Angriff normal durchgeführt. 
+If the distance is increased up to the double of the weapon, the hit dice of the hit roll are reduced by 2.
 
-Ist die Distanz bis zum Doppelten der Waffe erhöht, werden die Würfel des Trefferwurfes um 2 verringert.
+If the target's distance is more than twice the weapon's range away, it is not possible to shoot or attack at the target.
 
-Wenn die Entfernung des Ziels mehr als das Doppelte der Waffenreichweite entfernt ist, ist es nicht möglich auf das Ziel zu schießen oder anzugreifen.
+#### Hit and penetration
 
-#### Treffer und Durchschlag
+Any success of the *hit roll* is a *hit* on the target of the attack. Other circumstances can also cause *hits*, for example a grenade can cause "3 hits with 2 wounds each".
 
-Jeder Erfolg des *Trefferwurfs* ist ein *Treffer* beim Ziel des Angriffs. Auch andere Umstände können *Treffer* verursachen, so kann eine Granate z. B. "3 Treffer mit je 2 Wunden" verursachen.
+If a character takes *hits*, they are reduced by the target's *protection value*. The *protection* is reduced by the *penetration* of the attacker's weapon.
 
-Nimmt ein Charakter *Treffer* hin, werden diese um den *Schutzwert* des Ziels verringert. Der *Schutzwert* ist dabei verringert um den *Durchschlag* der Waffe des Angreifers.
+Any hit not prevented by the *protection value* becomes as many wounds as the weapon or effect specifies.
 
-Jeder nicht durch den *Schutzwert* verhinderte Treffer wird zu so vielen Wunden, wie es bei der Waffe oder dem Effekt angegeben ist.
+#### Bonus wounds
 
-#### Bonuswunden
+If bonus wounds are specified with the weapon, they are caused directly as soon as one of the weapon's regular hits is converted into a wound. Thus, they are added to the sum of the wounds, and do *not* represent the wounds per hit.
 
-Sind bei der Waffe Bonuswunden angegeben, so werden diese direkt verursacht, sobald einer der regulären Treffer der Waffe in eine Wunde umgewandelt wird. Sie werden also der Summe der Wunden hinzugefügt, und stellen *nicht* die Wunden pro Treffer dar.
+#### Wounds
 
-#### Wunden
+A *wound* is added directly to the wounds taken. It can only be prevented if a *template*, equipment or other explicitly contains a rule that modifies wounds.
 
-Eine *Wunde* wird direkt zu den hingenommenen Wunden hinzugefügt. Sie kann nur verhindert werden, wenn eine *Schablone*, Ausrüstung oder anderes explizit eine Regel enthält, welche Wunden verändert.
 
+#### Weaponless melee
 
-#### Waffenloser Nahkampf
+If the character attacks without a weapon, the player rolls hit dice equal to his *Hand to hand combat* value. The minimum roll is equal to the character's minimum roll, which is usually 5+.
 
-Greift der Character ohne Waffe an, so wirft der Spieler Trefferwürfel entsprechend seinem Wert *Nahkampf*. Der Mindestwurf entspricht dem Mindestwurf des Charakters, also in der Regel 5+.
+If the character's *Strength* value is higher than 2, the successful attack causes 1 *bonus wound*.
 
-Ist der Wert *Kraft* des Charakters höher als 2, so verursacht der erfolgreiche Angriff 1 *Bonuswunde*.
+If the character's *Quickness* value is higher than 2, the character adds one die to the roll. 
 
-Ist der Wert *Schnelligkeit* des Charakters höher als 2, so fügt der Charakter dem Wurf einen Würfel hinzu. 
+The penetration of an unarmed melee attack is 0, and the range is 1 meter.
 
-Der Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die Reichweite beträgt 1 Meter.
+#### Evasion
 
+The attacked character can dodge a melee attack as a reaction. This requires that the attacked character has an action available and can perceive the attacker. Thus, an attack from behind cannot be dodged.
 
-#### Ausweichen
+To dodge an attack, the character rolls a die to his value in *Evasion* on his normal minimum roll. The character has completely dodged the attack if the roll is successful.
 
-Der Angegriffene kann einem Nahkampfangriff als Reaktion ausweichen. Voraussetzung hierfür ist, dass der angegriffene Charakter eine Aktion verfügbar hat und den Angreifer wahrnehmen kann. Einem Angriff von hinten kann also nicht ausgewichen werden.
+### Throwing objects
 
-Um einem Angriff auszuweichen, wirft der Charakter einen Wurf auf seinen Wert in *Ausweichen* auf seinen normalen Mindestwurf. Der Charakter ist dem Angriff komplett ausgewichen, wenn der Wurf erfolgreich ist.
+If an object, such as a grenade, is thrown at a target, the character throws to its value in *Throwing*. The minimum roll is equal to the character's minimum roll, usually 5+.
 
-### Werfen von Gegenständen
+If the roll results in at least one success, the character has hit his target.
 
-Wird ein Gegenstand, etwa eine Granate, auf ein Ziel geworfen, so wirft der Charakter auf seinen Wert *Werfen*. Der Mindestwurf entspricht dem Mindestwurf des Charakters, in der Regel also 5+.
+#### Deviation
 
-Ergibt der Wurf mindestens einen Erfolg, so hat der Charakter sein Ziel getroffen.
+If the roll on *throwing* shows no success, then the roll has failed. In this case, a roll is made on the deviation. 
 
-#### Abweichung
+First, a W12 is thrown to determine the direction of the deviation. The result of the throw gives the direction in the form of the "clock" as seen by the throwing character facing the target. A 3 thus deviates to the right of the target, as seen by the throwing character.
 
-Zeigt der Wurf auf *Werfen* keinen Erfolg, so ist der Wurf fehlgeschlagen. In diesem Fall wird auf die Abweichung geworfen. 
+Then a D6 is thrown, which determines the distance of the deviation in meters.
 
-Zunächst wird ein W12 geworfen, um die Richtung der Abweichung zu ermitteln. Das Resultat des Wurfes ergibt die Richtung in Form der "Uhrzeit", gesehen von dem Werfenden Charakter mit Blick auf das Ziel. Eine 3 weicht somit, gesehen vom Werfenden, nach rechts vom Ziel ab.
-
-Danach wird ein W6 geworfen, welcher die Entfernung der Abweichung in Metern ermittelt.
-
-Das geworfene Objekt landet somit an dem ermittelten Ort.
+The thrown object thus lands at the determined location.

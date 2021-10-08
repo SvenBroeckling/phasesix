@@ -8,6 +8,7 @@ Hierzu wirft jeder Teilnehmer auf einen W6, und addiert den *Schnelligkeitswert*
 
 Haben zwei Teilnehmer dasselbe Ergebnis, so entscheidet zunächst der Wert *Schnelligkeit*, und falls dieser auch identisch ist der *Geschickwert*.
 
+Alle Teilnehmer des Kampfes beginnen haben zu Beginn des Kampfes keine Aktionen verfügbar. Erst wenn sie das erste mal die *Priorität* erhalten frischen sich ihre Aktionen auf. 
 
 ### Ablauf der Runden
 
@@ -16,7 +17,7 @@ Der Kampf ist in *Kampfrunden* aufgeteilt. In jeder Kampfrunde bekommt jeder Tei
 Hat der letzte Teilnehmer agiert, beginnt die nächste *Kampfrunde* mit dem ersten Teilnehmer. 
 
 
-### Akteur und Aktionen
+#### Akteur und Aktionen
 
 Ist ein Teilnehmer am Zug so hat er die *Priorität*, er ist in diesem Moment der *Akteur*.
 
@@ -38,9 +39,9 @@ Sind die Aktionen aufgefrischt, kann der Teilnehmer im Kampf handeln. Dazu führ
 
 Aktionen sollten nicht zusammen, sondern immer nacheinander ausgeführt werden, da es mögliche Reaktionen gibt.
 
-### Reaktionen
+#### Reaktionen
 
-Agiert ein *Akteur* im Kampf, so können alle Teilnehmer, die den *Akteur* wahrnehmen, auf diese Aktion reagieren.
+Agiert ein *Akteur* im Kampf, so können alle Teilnehmer, die den *Akteur* direkt wahrnehmen, auf diese Aktion reagieren.
 
 Um auf eine Aktion reagieren zu können müssen folgende Bedingungen erfüllt sein:
 
@@ -55,9 +56,9 @@ Jede *Reaktion* verringert die verfügbaren *Aktionen* des reagierenden Teilnehm
 
 Bonus- und Schicksalswürfel können im Kampf verwendet werden, um Aktionen zu erlangen oder zu stehlen.
 
-Um eine zusätzliche Aktion zu erlangen, kann ein *Bonuswürfel* für die Spielsitzung abgezogen werden. Die zusätzliche Aktion steht sofort zur Verfügung. 
+Um eine zusätzliche Aktion zu erlangen, kann ein *Bonuswürfel* abgezogen werden. Die zusätzliche Aktion steht sofort zur Verfügung, auch für eine Reaktion. 
 
-Wird ein *Schicksalswürfel* ausgegeben kann eine Aktion von einem Gegner gestohlen werden. Diese steht dem Gegner in seiner aktuellen (oder nächsten, falls er nicht an der Reihe ist) Runde nicht mehr zur verfügung. Der Teilnehmer, welcher den Schicksalswürfel ausgegeben hat, hat die Aktion sofort zur Verfügung.
+Wird ein *Schicksalswürfel* ausgegeben kann eine Aktion von einem Gegner gestohlen werden. Diese steht dem Gegner in seiner aktuellen (oder nächsten, falls er nicht an der Reihe ist) Runde nicht mehr zur verfügung. Der Teilnehmer, welcher den Schicksalswürfel ausgegeben hat, hat die Aktion sofort zur Verfügung, auch als Reaktion.
 
 Das Ausgeben von Würfeln für Aktionen nimmt selbst keine Aktion in Anspruch.
 
@@ -69,7 +70,7 @@ Angriffe mit Waffen werden im Nahkampf und im Fernkampf genau gleich gehandhabt.
 
 Um einen Angriff durchzuführen wird ein Wurf mit einer bestimmten Anzahl Würfeln geworfen. Der *Mindestwurf* dieses Wurfs entspricht dem *Mindestwurf* des Charakters.
 
-Die Anzahl der Würfel entspricht zunächst dem jeweiligen Fertigkeitswert des Charakters (Schießen, Nahkampf, Werfen)
+Die Anzahl der Würfel entspricht zunächst dem jeweiligen Fertigkeitswert des Charakters (Schießen, Nahkampf, Werfen).
 
 Je nach Deckung werden von diesem Wurf eine bestimmte Anzahl an Würfeln entfernt:
 

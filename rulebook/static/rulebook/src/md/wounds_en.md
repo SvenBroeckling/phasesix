@@ -1,9 +1,12 @@
-Die körperliche Unversehrtheit des Charakters wird in Form von Wunden dargestellt. Ein Charakter kann eine bestimmte Anzahl von Wunden aushalten, ohne ohnmächtig zu werden. 
+The physical integrity of the character is represented in the form of wounds. A character can withstand a certain number of wounds without passing out. 
+
+### Wounds and Boosts
+
+If you look at the character sheet of an intact character, you will see a bar of filled hearts:
 
 ### Wunden und Boosts
 
-Betrachtet man den Charakterbogen eines unversehrten Charakters, so
-sieht man eine Leiste von gefüllten Herzen:
+Betrachtet man den Charakterbogen eines unversehrten Charakters, so sieht man eine Leiste von gefüllten Herzen:
 
 <i class="fas fa-heart fa-2x text-danger"></i>
 <i class="fas fa-heart fa-2x text-danger"></i>
@@ -12,9 +15,9 @@ sieht man eine Leiste von gefüllten Herzen:
 <i class="fas fa-heart fa-2x text-danger"></i>
 <i class="fas fa-heart fa-2x text-danger"></i>
 
-Diese Herzen stellen die Wunden dar, die ein Charakter hinnehmen kann, ohne ohnmächtig zu werden. Jede Schadensquelle verursacht eine bestimmte Zahl von Wunden. Dies kann eine feste Zahl an Wunden sein, wie bei den meisten Waffen. Es kann jedoch auch eine Würfelformel verwendet werden. 
+These hearts represent the wounds a character can take without passing out. Each source of damage causes a certain number of wounds. This can be a fixed number of wounds, as with most weapons. However, a dice formula can also be used. 
 
-Die Herzen werden abgestrichen oder geleert, sobald der Charakter Wunden hinnimmt. So kann sich die Lebensanzeige nach einem Treffer einer Waffe folgendermaßen entwickeln:
+Hearts are crossed out or emptied as soon as the character takes wounds. Thus, after a hit with a weapon, the life meter may evolve as follows:
 
 <i class="fas fa-heart fa-2x text-danger"></i>
 <i class="fas fa-heart fa-2x text-danger"></i>
@@ -23,21 +26,13 @@ Die Herzen werden abgestrichen oder geleert, sobald der Charakter Wunden hinnimm
 <i class="far fa-heart fa-2x text-danger"></i>
 <i class="far fa-heart fa-2x text-danger"></i>
 
-Diese leeren Herzen können durch Heilung wieder gefüllt werden. 
+These empty hearts can be filled again through healing. 
 
-Anders verhält es sich mit Boosts. Einige Gegenstände verleihen bei
-Anwendung Boosts, die reine Erste Hilfe ohne Hilfsmittel gibt z. B.
-einen Boost. Boosts werden als andersfarbige Herzen dargestellt und
-können ebenso Wunden absorbieren, wenn sie abgestrichen werden. 
+The situation is different with boosts. Some items give boosts when used, pure first aid without tools gives a boost, for example. Boosts are represented as different colored hearts and can also absorb wounds when crossed out. 
 
-Bei Boosts werden diese Herzen jedoch komplett wieder entfernt und
-können nicht durch Heilung wieder hergestellt werden. Ein Boost ist
-also eine zeitweise Verbesserung des Zustands.
+However, with boosts, these hearts are completely removed and cannot be restored by healing. Thus, a boost is a temporary improvement in condition.
 
-Nimmt der Charakter Schaden, wird immer von rechts abgestrichen.
-Zunächst werden die Boosts verbraucht, danach die noch vollständigen
-Herzen. Bei folgender Anzeige ist der Boost also *nach* der Verwundung
-(die leeren Herzen) eingetreten.
+If the character takes damage, it is always crossed out from the right. First the boosts are used up, then the still complete hearts. So in the following display, the boost occurred *after* the wounding (the empty hearts).
 
 <i class="fas fa-heart fa-2x text-danger"></i>
 <i class="fas fa-heart fa-2x text-danger"></i>
@@ -46,88 +41,66 @@ Herzen. Bei folgender Anzeige ist der Boost also *nach* der Verwundung
 <i class="fas fa-heart fa-2x text-info"></i>
 <i class="fas fa-heart fa-2x text-info"></i>
 
-### Ohnmacht und Tod
+### Fainting and Death
 
-Ein Charakter der weder volle Herzen noch Boosts hat, wird ohnmächtig
-und gilt als *sterbend*.
+A character who has neither full hearts nor boosts faints and is considered *dying*.
 
-### Heilung
+### Healing
 
-Wirkliche Heilung von Wunden ist nur über Zeit und mit Medizin möglich.
-Erste Hilfe und die Anwendung von Bandagen und weiteren Hilfsmitteln
-erzeugen nur Boost. 
+Real healing of wounds is only possible over time and with medicine. First aid and the use of bandages and other aids only generate boosts. 
 
-Die Anwendung der Erste Hilfe Fertigkeit ohne Hilfsmittel erzeugt einen
-Boost. Mit Hilfsmittel variiert die Anzahl, dies ist bei den Gegenständen beschrieben. 
+Using the first aid skill without aids generates a boost. With aids the number varies, this is described in the items. 
 
-### Die Rast
+### The rest
 
-Kommen die Charaktere zu einer Ruhepause von mindestens 3 Stunden, so 
-gilt dies als *Rast*. Hierbei kann jeder Charakter einzeln für sich 
-entscheiden wie viele Stunden er ruhen möchte. Manchmal wird dies natürlich auch von Störungen unterbrochen.
+If the characters come to rest for at least 6 hours, this is considered a *rest*.
 
-Je nach Dauer der Rast kann der Charakter verschiedene Wunden oder Boosts wieder herstellen. Alle Angaben werden addiert, sodass eine zehnstündige Rast 2 Wunden heilt und 2 Boosts gibt, sowie alle Würfel wiederherstellt.
+During a rest, the character has the opportunity to heal wounds. For this purpose, the values *Resistance*, *Endurance* and *Willpower* are added together. Dice are rolled according to the sum, for each success the character heals one wound.
 
-- 3 Stunden: 1 Boost, falls der Charakter weniger als 3 Boosts hat
-- 3 Stunden: Alle Bonus- und Wiederholungswürfel werden wiederhergestellt
-- 5 Stunden: Es wird eine Wunde geheilt
-- 8 Stunden: 1 Boost, falls der Charakter weniger als 3 Boosts hat
-- 10 Stunden: Alle Schicksalswürfel werden wiederhergestellt
-- 10 Stunden: Es wird eine Wunde geheilt
+All *bonus dice*, *destiny dice* and *rerolls* refresh, so are set to the character's maximum.
 
-Zudem gibt es folgende Effekte mit Erweiterungen:
+If the magic extension is used, the character rolls on the sum of the *Charm*, *Conscientiousness*, and *Willpower* stats. For each success, one *arcana* is restored.
 
-- 4 Stunden: Der Stress des Charakters sinkt um 1 (Horror-Erweiterung)
-- 4 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
-- 6 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
-- 7 Stunden: Der Stress des Charakters sinkt um 1 (Horror-Erweiterung)
-- 8 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
-- 10 Stunden: Der Charakter regeneriert 1 Arkana (Magie-Erweiterung)
+When horror extension is active, the character rolls on the sum of *willpower* and *logic*. For each success, the stress can be reduced by one.
 
-### Zustände des Charakters
+### Conditions of the character
 
-Ein Charakter kann verschiedene Zustände haben. Diese haben verschiedene Auswirkungen auf das Handeln des Charakters, aber auch Effekte über Zeit. 
+A character can have different conditions. These have different effects on the character's actions, but also effects over time. The conditions are noted on the character sheet with a counter.
 
-#### Sterbend
+#### Dying
 
-Dieser Zustand wird nur verursacht, wenn die Wunden des Charakters die maximalen Wunden übersteigen, die Herzen also auf 0 sinken. 
+This condition is only caused when the character's wounds exceed the maximum wounds, so the hearts drop to 0. 
 
-Falls ein Charakter in den Zustand sterbend verfällt, würfelt er so viele Würfel wie der addierte Wert aus Ausdauer und Resistenz beträgt. Das Resultat gibt die Minuten vor, die ein Gefährte Zeit hat, um den Charakter zu stabilisieren. Ist die Zeit abgelaufen so stirbt der Charakter.
+If a character falls into the dying condition, he rolls as many dice as the added value of *endurance* and *resistance*. The result gives the minutes a companion has to stabilize the character. If the time is up, the character dies.
 
-Für das Stabilisieren sind Erfolge entsprechend dem "Sterbend" Wert des Charakters erforderlich. Hierbei kann es sich um Erste Hilfe, Medizin oder etwas ähnlich hilfreichem handeln.
+Stabilizing requires successes according to the character's "Dying" value. This can be first aid, medicine, or something similarly helpful.
 
-#### Geschockt
+#### Shocked
 
-Der Charakter hat für jeden Wurf so viele Würfel weniger wie der Wert dieses Statuseffektes ist.
+The character has as many dice less for each roll as the value of this status effect.
 
-#### Erschöpft
+#### Exhausted
 
-Der Charakter hat im Kampf pro Runde eine Aktion weniger.
+The character has one *action* less per round in combat.
 
-Sinken die Aktionen dabei auf 0, erhält der Character den Zustand Bewusstlos.
+If the actions drop to 0, the character gets the condition *Unconscious*.
 
-#### Bewustlos
+#### Unconscious
 
-Der Character ist zu keiner Aktion fähig (seine Aktionen pro Runde sind null), kann aber zu Beginn seiner Kampfrunde eine Willenskraftprobe würfeln. Jeder Erfolg stellt eine Aktion wieder her, bis alle Aktionen wieder hergestelllt sind.
+The character is incapable of any action (his *actions* per round are zero), but can roll a *willpower* test at the beginning of his combat round. Each success restores one action until all actions are restored.
 
-#### Brennend
+#### Burning
 
-Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands. 
+The character receives one wound for each level of this condition at the end of the combat round (or after 5 minutes if not in combat). 
 
-Der Mindestwurf des Charakters ist für alle Würfe auf Aufmerksamkeit um den Wert dieses Zustands erhöht.
+The character's minimum roll is increased by the value of this condition for all rolls for *Perception*.
 
-#### Versteckt
-#### Desorientiert
+#### Bleeding
 
-#### Schmerz
-#### Gegriffen
+The character receives one wound for each level of this condition at the end of the combat round (or after 5 minutes if not in combat). 
 
-#### Blutend
+#### Poisoned
 
-Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands. 
+The character receives one wound for each level of this condition at the end of the combat round (or after 5 minutes if not in combat).
 
-#### Vergiftet
-
-Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands.
-
-Der Mindestwurf des Charakters ist für alle Würfe um den Wert dieses Zustands erhöht.
+The character's minimum roll is increased by the value of this condition for all rolls.

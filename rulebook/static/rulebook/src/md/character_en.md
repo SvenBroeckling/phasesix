@@ -1,90 +1,88 @@
-Um ein Phase Six Abenteuer zu bestehen, erstellt jeder Spieler einen Charakter, den er in dem Abenteuer spielt. Das Leben des Charakters wird komplett auf seinem Charakterbogen dargestellt, welcher alle relevanten Werte enthält.
+To accomplish a Phase Six adventure, each player creates a character to play in the adventure. The character's life is represented entirely on his character sheet, which contains all the relevant stats.
 
-Das Kapitel *Einen Charakter erstellen* geht genau darauf ein wie ein neuer Charakter erschaffen wird. In diesem Teil soll es um die grundlegenden Eigenschaften gehen, welche einen Charakter in PhaseSix ausmachen. 
+The chapter *Creating a Character* explains exactly how to create a new character. This part will deal with the basic characteristics that make up a character in Phase Six. 
 
 ### Persona
 
-Die Werte unter Persona beziehen sich auf die geistigen Eigenschaften des Charakters. Jeder Wert entspricht einer Charaktereigenschaft. Personaeigenschaften haben jeweils einen eigenen Wert und stellen zudem die Grundlage für Fertigkeiten dar.
+The values listed under Persona refer to the character's mental traits. Each value corresponds to a character trait. Persona traits each have their own value and are also the basis for skills.
 
-#### Bildung
+#### Education
 
-Bildung beschreibt das angeeignete Allgemeinwissen des Charakters.  Ein Charakter mit hoher Bildung ist gut in allen theoretischen Fertigkeiten wie etwa *Naturkunde* oder *Historie*.
+Education describes the character's acquired general knowledge.  A character with high education is good in all theoretical skills like *nature* or *history*.
 
-#### Logik
+#### Logic
 
-Im Gegensatz zur Bildung stellt der Wert Logik die Fähigkeit zum *vernünftigen Schlussfolgern* dar. Logik kommt immer dann zum Tragen, wenn es um das Lösen von Problemen durch logisches Nachdenken geht. Zudem ist ein Charakter mit hoher Logik in Fertigkeiten wie *Untersuchen* oder *Mechanik* besser.
+In contrast to education, the value Logic represents the ability to *reasonably conclude*. Logic always comes into play when solving problems through logical reasoning. In addition, a character with high Logic is better at skills such as *Investigation* or *Mechanics*.
 
-#### Gewissenhaftigkeit
+#### Conscientiousness
 
-Wie gewissenhaft geht der Charakter an Aufgaben oder Tätigkeiten heran? Schwach ausgeprägte Gewissenhaftigkeit macht den Charakter *nachlässig*, während stark ausgeprägte Gewissenhaftigkeit für eine *organisierte*, *effektive* Herangehensweise sorgt.
+How conscientious is the character about tasks or activities? Weak conscientiousness makes the character *negligent*, while strong conscientiousness makes for an *organized*, *effective* approach.
 
-#### Willenskraft
+#### Willpower
 
-Willenskraft bezieht sich auf die Fähigkeit des Charakters, seine eigenen Vorstellungen und Prinzipien durchzusetzen. Ein willensstarker Charakter ist unter Anderem gut in den Fertigkeiten *Tapferkeit* und *Einschüchtern*.
+Willpower refers to the character's ability to assert their own ideas and principles. A strong-willed character is good at the skills *Courage* and *Intimidation*, among others.
 
-#### Auffassungsgabe
+#### Apprehension
 
-Die Auffassungsgabe beschreibt, wie gut der Charakter seine Umgebung wahrnehmen und Informationen auffassen kann. Ein Charakter mit guter Auffassungsgabe ist gut in den Fertigkeiten *Wahrnehmung* und *Orientierung*.
+Apprehension describes how well the character is able to perceive his environment and absorb information. A character with good Perception is good at the skills *Perception* and *Orientation*.
 
-#### Charme
+#### Charm
 
-Ein Charakter mit hohem Charme versteht es, anderen Menschen gegenüberzutreten und positiv bei ihnen in Erscheinung zu treten. Dieser Wert ist nicht mit der Physis Eigenschaft *Attraktivität* zu verwechseln. Ein Charmanter Charakter ist unter Anderem gut in *Politik* und *Empathie*.
+A character with high charm knows how to face other people and appear positive to them. This value is not to be confused with the physical trait *Attractiveness*. A Charming character is good at *Politics* and *Empathy* among other things.
 
 
 ### Physis
 
 Alle Attribute der Physis beschreiben die körperliche Verfassung des Charakters. Physiseigenschaften haben jeweils einen Wert, welcher die Anzahl an Würfeln vorgibt, mit denen auf diese Physiseigenschaft geworfen wird.
 
-#### Geschick
+#### Deftness
 
-Dieser Wert beschreibt sowohl das körperliche Geschick des Charakters als auch die Fingerfertigkeit. Ein geschickter Charakter ist unter Anderem gut in *Darbietung* und *Heimlichkeit*.
+This value describes both the physical skill of the character and dexterity. A dexterous character is good at *Performance* and *Stealth*, among other things.
 
-#### Kraft
+#### Strength
 
-Kraft ist die reine Stärke des Charakters und kommt immer dann zur Anwendung, wenn es darum geht mit reiner Muskelkraft etwas zu bewegen. Ein Charakter mit hoher Kraft kann gut *Werfen* und ist gut in *Athletik*.
+Strength is the pure strength of the character and is always used when it comes to moving something with pure muscle power. A character with high strength can *throw* well and is good at *athletics*.
 
-#### Attraktivität
+#### Attractiveness
 
-Mit der Attraktivität wird dargestellt wie charismatisch der Charakter ist. Dabei muss ein hoher Wert nicht unbedingt für Schönheit stehen, es kann auch ein Charakter mit markantem Aussehen attraktiv sein.
+Attractiveness shows how charismatic the character is. A high value does not necessarily stand for beauty, a character with a striking appearance can also be attractive.
 
-#### Ausdauer
+#### Endurance
 
-Ausdauer ist die körperliche Ausdauer des Charakters, also nicht im Sinne von Geduld (dies ist eher *Gewissenhaftigkeit* unter Persona). Dieser Wert kommt also bei einem Dauerlauf oder einer lange dauernden, anstrengenden Tätigkeit zum Tragen. 
+Endurance is the physical stamina of the character, so not in the sense of patience (this is rather *conscientiousness*) under Persona. So this value comes into play during an endurance run or a long, strenuous activity. 
 
-#### Resistenz
+#### Resistance
 
-Sowohl die Fähigkeit Verletzungen oder auch Schmerzen auszuhalten oder abzuwenden, als auch die Resistenz gegen Krankheiten, Gifte oder Umwelteinflüsse wie Hitze oder Kälte fließen in diesem Wert zusammen. 
+Both the ability to withstand or avert injury or pain, and resistance to disease, toxins, or environmental influences such as heat or cold, flow together in this value. 
 
-#### Schnelligkeit
+#### Quickness
 
-Schnelligkeit ist sowohl die Geschwindigkeit, mit der der Charakter sich bewegen kann, als auch die Fähigkeit schnell auf etwas zu reagieren.
+Speed is both the speed at which the character can move and the ability to react quickly to something.
 
-### Der Mindestwurf
+### The minimum roll
 
-Der Mindestwurf ist eine zentrale Eigenschaft deines Charakters. Er gibt an welches Ergebnis ein Würfel erreichen muss, um einen Erfolg darzustellen. Der Mindestwurf wird von der Abstammung übernommen und ist bei den meisten Charakteren 5+. Er kann nur durch besondere Geschehnisse oder seltene Objekte verändert werden, und dies auch häufig nur kurzzeitig.
+The minimum roll is a central property of your character. It specifies what result a die must reach to represent a success. The minimum roll is inherited from the lineage and is 5+ for most characters. It can only be changed by special events or rare objects, and often only for a short time.
 
-### Schutz und Ausweichen
+### Protection and evasion
 
-Beide Werte werden im Kampf verwendet, um möglichen Schaden zu verhindern. Die Anfangswerte dieser Eigenschaften werden von der Abstammung übernommen, sie können durch Schablonen verändert werden.
+Both values are used in combat to prevent possible damage. The initial values of these traits are taken from the lineage, they can be changed by templates. The *Protection* reduces damage taken in combat, *Evasion* allows to dodge a melee attack. Both values are usually changed by armor as well.
 
-### Zusatzwürfel
+### Additional dice
 
-Jeder Charakter kann eine Anzahl an *Bonuswürfeln*, *Schicksalswürfeln* oder *Wiederholungswürfeln* haben. Alle drei haben unterschiedliche Verwendungen (s. Würfe und Proben), stellen jedoch immer einen Vorteil für den Charakter dar, welcher während des Spiels eingesetzt werden kann. 
+Each character can have a number of *bonus dice*, *destiny dice* or *rerolls*. All three have different uses (see Rolls and Checks), but always represent an advantage to the character that can be used during the game. 
 
-Der Charakter kann während der Rast verbrauchte Würfel zurückerhalten (s. Wunden und Heilung).
+The character can regain used dice during the rest (see Wounds and healing).
 
-### Fertigkeiten
+### Skills
 
-Komplexere Handlungen oder Kenntnisse werden durch *Fertigkeiten* beschrieben. Alle Charaktere haben dieselben Fertigkeiten mit unterschiedlichen Werten, so kann der Spielleiter sicher sein, dass ein Spieler einen Wurf auf eine Fertigkeit auch sicher machen kann. 
+More complex actions or knowledge are described by *skills*. All characters have the same skills with different values. Each skill is composed of a base value and its own skill value. The base value is the average value of two, respectively different, attributes. For example, the base of the skill *Intimidate* is *Apprehension* and *Conscientiousness*. 
 
-Jede Fertigkeit setzt sich aus einem Basiswert und einem eigenen Fertigkeitswert zusammen. Der Basiswert ist der Durchschnittswert aus zwei, jeweils unterschiedlichen, Attributen. So ist die Basis der Fertigkeit *Einschüchtern* z.B. *Auffassungsgabe* und *Gewissenhaftigkeit*. 
+The bonuses of the selected character templates are added to the base skill.
 
-Auf die Basisfertigkeit werden die Boni der gewählten Charakterschablonen addiert.
+### Knowledge
 
-### Wissen
+Knowledge works similarly to skills, but here the list is not predetermined. Characters can have different knowledge skills based on their background, which they can use freely. Knowledge is related to one skill at a time. The effective value to roll on is composed of the knowledge value and the skill value.
 
-Wissen funktioniert ähnlich wie Fertigkeiten, hier ist jedoch die Liste nicht vorgegeben. Charaktere können aufgrund ihres Werdegangs unterschiedliche Wissensfertigkeiten haben, welche sie frei anwenden können. Wissen hat wie Fertigkeiten den Durchschnitt zweier Attributwerte als Basis.
+### Shadows
 
-### Schatten
-
-Ein Charakter kann besondere Eigenschaften haben, die ihn außerhalb seiner körperlichen oder psychischen Eigenschaften beeinflussen. Jeder *Schatten* bringt eine eigene Beschreibung oder Regel mit. So kann ein Charakter z. B. einen Rivalen haben oder obrigkeitshörig sein. Auf Schatten wird nicht geworfen, Schatten haben auch keine Werte.
+A character can have special properties that affect him outside of his physical or psychological characteristics. Each *shadow* brings its own description or rule. For example, a character may have a rival or be obedient to authority. Shadows are not rolled on, nor do shadows have values, but they can bring their own rules.

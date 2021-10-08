@@ -1,4 +1,4 @@
-Immer wenn ein Charakter eine Handlung mit ungewissem Ausgang durchführt wird mit Würfeln auf einen passenden Wert geworfen, welcher in der Regel vom Spielleiter festgelegt wird. Der Ausgang des Wurfes zeigt auf ob und wie gut die Handlung gelungen ist. Dies wird als *Probe* oder *Wurf* bezeichnet.
+Immer wenn ein Charakter eine Handlung mit ungewissem Ausgang durchführt wird mit Würfeln auf einen passenden Wert geworfen, welcher in der Regel vom Spielleiter festgelegt wird. Der Ausgang des Wurfes zeigt auf ob und wie gut die Handlung gelungen ist. Dies wird als *Wurf* oder *Probe* bezeichnet.
 
 Für alle Würfe werden sechsseitige Würfel verwendet. Die Anzahl der Würfel richtet sich nach dem Wert des Charakters in der betreffenden Eigenschaft, dazu kommen eventuell Bonuswürfel oder Schicksalswürfel. 
 
@@ -10,7 +10,7 @@ Diese Art der Proben werden überall außerhalb des Kampfes verwendet. Im Kampf 
 
 Die geforderte oder gewünschte Fertigkeit gibt mit ihrem Wert die Anzahl der Würfel direkt vor. Ein Charakter mit einem „Einschüchtern“ Wert von 4 hat auch 4 sechsseite Würfel für diese Probe zur Verfügung.
 
-Die Wissenseigenschaften haben einen Wert, mit dem sie die Anzahl der Würfel vorgeben. Zudem ist hier aber eine Fertigkeit angegeben. Die Würfel der Fertigkeit addiert. So hat ein Charakter mit der Fertigkeit „Kommunikation“ 2 und dem Wissen „Etikette (Kommunikation)“ 3 insgesamt 5 Würfel auf Etikette.
+Die Wissenseigenschaften haben einen Wert, mit dem sie die Anzahl der Würfel vorgeben. Zudem ist hier aber eine zugehörige Fertigkeit angegeben, deren Wert zum Wert des Wissens addiert wird. So hat ein Charakter mit der Fertigkeit „Kommunikation“ 2 und dem Wissen „Etikette (Kommunikation)“ 3 insgesamt 5 Würfel auf Etikette.
 
 Ist der Wert 0 oder negativ so ist es dem Charakter nicht möglich diesen Wurf ohne weitere Hilfe zu machen, er ist einfach zu schlecht in der Fertigkeit. *Bonuswürfel* oder *Schicksalswürfel* können jedoch verwendet werden, egal wie sehr der Wert im Negativen ist.
 
@@ -62,13 +62,13 @@ Wiederholungswürfe frischen sich auch bei jeder Rast auf ihr Maximum auf.
 
 In der Regel bekommt der Charakter Schicksalswürfel mit seinem Werdegang, allerdings kann der Spielleiter auch einzelne Schicksalswürfel für besondere Aktionen oder bei besonderen Gelegenheiten vergeben.
 
-Schicksalswürfel können sowohl als Bonus- als aus als Wiederholungswürfel eingesetzt werden. Auf einem Schicksalswürfel ist ein Ergebnis von 4 **immer** ein Erfolg, unabhängig vom Schwierigkeitsgrad der Probe.
+Schicksalswürfel können sowohl als Bonus- als aus als Wiederholungswürfe eingesetzt werden. Auf einem Schicksalswürfel ist ein Ergebnis von 4 **immer** ein Erfolg, unabhängig vom Schwierigkeitsgrad der Probe.
 
 Schicksalswürfel müssen immer getrennt von allen normalen Würfeln geworfen werden, um auszumachen, ob genau sie die 4+ erreicht haben.
 
 > Wenn wir uns das vorherige Beispiel mit Hagens Wurf auf seine Tapferkeit ansehen (5 Würfel auf 14+), so würde ihm hier ein Schicksalswürfel sehr helfen, denn dieser müsste tatsächlich nur eine 4+ erreichen.
 
-Schicksalswürfel frischen sich bei jeder Rast von mindestens 10 Stunden auf ihr Maximum auf. 
+Schicksalswürfel frischen sich bei jeder Rast auf ihr Maximum auf. 
 
 ### Gruppenwürfe
 
