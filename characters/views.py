@@ -43,10 +43,10 @@ class CharacterListView(TemplateView):
 
         if user.is_authenticated:
             context['own_characters'] = Character.objects.filter(created_by=user)
-        else:
-            context['own_characters'] = Character.objects.filter(created_by__isnull=True)
         if user.is_authenticated and user.is_staff:
-            context['other_peoples_characters'] = Character.objects.exclude(created_by=user)
+            context['other_peoples_characters'] = Character.objects.exclude(
+                Q(created_by=user) | Q(created_by__isnull=True))
+        context['anonymous_characters'] = Character.objects.filter(created_by__isnull=True)
         return context
 
 

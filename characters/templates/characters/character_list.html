@@ -1,36 +1,93 @@
 {% extends 'base.html' %}
 {% load i18n static thumbnail characters_extras %}
 
+{% block javascript %}
+    <script>
+    $(function(){
+        $('[data-bs-toggle="tab"].nav-link:first').addClass('active')
+        $('.tab-pane:first').addClass('active')
+    })
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <a href="{% url 'characters:create_character' %}" class="btn btn-primary btn-lg float-end mb-2">{% trans 'Create a character' %}</a>
+            <a href="{% url 'characters:create_character' %}"
+               class="btn btn-primary btn-lg float-end mb-2">{% trans 'Create a character' %}</a>
         </div>
     </div>
-    {% if own_characters %}
-        <div class="row character-list">
-            <div class="col-12">
-                <h1 class="text-center mb-3">- {% trans 'Your characters' %} -</h1>
-            </div>
-            {% for object in own_characters %}
-                <div class="col-12 col-sm-6 col-md-6 mb-3">
-                    {% include 'characters/_character_list_widget.html' %}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
 
-    {% if other_peoples_characters %}
-        <div class="row character-list">
-            <div class="col-12">
-                <h1 class="text-center mb-3 mt-3">- {% trans 'Other peoples characters' %} -</h1>
-                <p class="text-center muted">{% trans 'You can see these because you are an admin' %}</p>
-            </div>
-            {% for object in other_peoples_characters %}
-                <div class="col-12 col-sm-6 col-md-6 mb-3">
-                    {% include "characters/_character_list_widget.html" %}
+    <div class="nav nav-tabs justify-content-center mb-3" id="v-pills-tab" role="tablist"
+         aria-orientation="vertical">
+        {% if own_characters %}
+            <a class="nav-link" data-bs-toggle="tab" href="#v-own"
+               role="tab" aria-controls="v-own" aria-selected="true">
+                <i class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Your characters' %}
+                <span class="badge bg-info ms-2">{{ own_characters.count }}</span>
+            </a>
+        {% endif %}
+
+        {% if other_peoples_characters %}
+            <a class="nav-link" data-bs-toggle="tab" href="#v-other" role="tab" aria-controls="v-other"
+               aria-selected="true">
+                <i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Other peoples characters' %}
+                <span class="badge bg-info ms-2">{{ other_peoples_characters.count }}</span>
+            </a>
+        {% endif %}
+
+        {% if anonymous_characters %}
+            <a class="nav-link" data-bs-toggle="tab" href="#v-anon" role="tab" aria-controls="v-anon"
+               aria-selected="true">
+                <i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Anonymous characters' %}
+                <span class="badge bg-info ms-2">{{ anonymous_characters.count }}</span>
+            </a>
+        {% endif %}
+    </div>
+
+
+    <div class="tab-content">
+        {% if own_characters %}
+            <div class="tab-pane fade show" id="v-own" role="tabpanel">
+                <div class="row character-list">
+                    {% for object in own_characters %}
+                        <div class="col-12 col-sm-6 col-md-6 mb-3">
+                            {% include 'characters/_character_list_widget.html' %}
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+            </div>
+        {% endif %}
+
+        {% if other_peoples_characters %}
+            <div class="tab-pane fade show" id="v-other" role="tabpanel">
+                <div class="row character-list">
+                    <div class="col-12">
+                        <p class="text-center muted">{% trans 'You can see these because you are an admin' %}</p>
+                    </div>
+                    {% for object in other_peoples_characters %}
+                        <div class="col-12 col-sm-6 col-md-6 mb-3">
+                            {% include "characters/_character_list_widget.html" %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if anonymous_characters %}
+            <div class="tab-pane fade show" id="v-anon" role="tabpanel">
+                <div class="row character-list">
+                    <div class="col-12">
+                        <p class="text-center muted">{% trans 'You can see these because you are an admin' %}</p>
+                    </div>
+                    {% for object in anonymous_characters %}
+                        <div class="col-12 col-sm-6 col-md-6 mb-3">
+                            {% include "characters/_character_list_widget.html" %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
 {% endblock %}
