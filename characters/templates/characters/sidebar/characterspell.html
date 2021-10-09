@@ -20,8 +20,9 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <i class="fas fa-dice-five fa-fw"></i>
-                    {% trans 'Attribute' %}
-                    <span class="float-end">{{ object.spell_type.dominant_attribute_name|capfirst }}</span>
+                    {% trans 'Dice' %}
+                    {% spell_type_attribute_dice_value object.character object.spell_type as dice %}
+                    <span class="float-end">{{ object.spell_type.dominant_attribute_name|capfirst }} + {{ object.spell_type.supplemental_attribute_name|capfirst }} {% color_value_span dice 5 %}</span>
                 </li>
                 <li class="list-group-item">
                     <i class="fas fa-magic fa-fw"></i>

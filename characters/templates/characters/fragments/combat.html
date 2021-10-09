@@ -3,29 +3,16 @@
 
 {% block fragment %}
 <div class="row">
-    <div class="col-12 col-xl-9 mb-4">
+    <div class="col-12">
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>
-                        {% trans 'Action' %}<br>
-                    </th>
-                    <th title="{% trans 'Capacity' %}">
-                        {% trans 'Cap.' %}<br>
-                    </th>
-                    <th class="text-end">
-                        <small>{% trans 'Attack Dice' %}</small>
-                    </th>
-                    <th class="text-end">
-                        <small>{% trans 'Penetration' %}</small>
-                    </th>
-                    <th class="text-end">
-                        {% trans 'Bonus' %}<br>
-                    </th>
-                    <th class="text-end">
-                        {% trans 'Range' %}<br>
-                    </th>
+                    <th>{% trans 'Action' %}</th>
+                    <th title="{% trans 'Capacity' %}">{% trans 'Cap.' %}</th>
+                    <th class="text-end">{% trans 'Dice' %}</th>
+                    <th class="text-end">{% trans 'Notes' %}</th>
+                    <th class="text-end">{% trans 'Range' %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,17 +26,16 @@
                             {% trans 'Weaponless Attack' %} {% color_value_span object.weaponless_attack_dice 6 %} <i class="fas text-muted fa-dice-five"></i>
                         </td>
                         <td class="text-end">
-                            {% color_value_span 0 3 %}
+                            <i class="fas fa-angle-double-right text-muted"></i> {% trans 'Penetration' %} {% color_value_span 0 6 %}
+                            {% if object.weaponless_bonus_wounds %}
+                                <br><i class="fas fa-heart text-muted"></i> {% trans 'Bonus wounds:' %} {% color_value_span object.weaponless_bonus_wounds 3 %}
+                            {% endif %}
                         </td>
                         <td class="text-end">
-                            {% for i in object.weaponless_bonus_wounds|to_range %}
-                                <i class="fas fa-heart text-danger"></i>
-                            {% endfor %}
-                        </td>
-                        <td class="text-end">
-                            1m
+                            {% color_value_span 1 5 %} {% trans "Meter" %}
                         </td>
                     </tr>
+
                 {% for w in object.characterweapon_set.all %}
                     <tr class="sidebar-trigger" data-sidebar-title="{{ w.weapon }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=w.id model_name="CharacterWeapon" sidebar_name="characterweapon" %}">
                         <td>
@@ -69,23 +55,21 @@
                             {% endfor %}
                         </td>
                         <td class="text-end">
-                            {% color_value_span w.modified_penetration 3 %}
-                        </td>
-                        <td class="text-end">
+                            <i class="fas fa-angle-double-right text-muted"></i> {% trans 'Penetration' %} {% color_value_span w.modified_penetration 3 %}
+                            {% if w.modified_wounds %}
+                                <br><i class="fas fa-heart text-muted"></i> {% trans 'Bonus wounds:' %} {% color_value_span w.modified_wounds 3 %}
+                            {% endif %}
                             {% for wm in w.modifications.all %}
                                 {% for wma in wm.weaponmodificationattributechange_set.all %}
                                     {% if wma.status_effect %}
-                                        {{ wma.status_effect|capfirst }} <i class="{{ wma.status_effect.fa_icon_class }}"></i> {% color_value_span wma.status_effect_value 4 %}<br>
+                                        <br>{{ wma.status_effect|capfirst }} <i class="{{ wma.status_effect.fa_icon_class }}"></i> {% color_value_span wma.status_effect_value 4 %}
                                     {% endif %}
                                 {% endfor %}
-                            {% endfor %}
-                            {% for i in w.modified_wounds|to_range %}
-                                <i class="fas fa-heart text-danger"></i>
                             {% endfor %}
                             <br>
                         </td>
                         <td class="text-end">
-                            {{ w.modified_range_meter }}m
+                            {% color_value_span w.modified_range_meter 20 %} {% trans "Meter" %}
                         </td>
                     </tr>
                 {% endfor %}
@@ -105,17 +89,15 @@
                         </td>
                         <td class="text-end">
                         </td>
-                        <td class="text-end">
-                        </td>
                     </tr>
                 {% endfor %}
                 {% for t in object.templates_with_combat_rules.all %}
                     <tr>
                         <td>
-                            <i class="fas fa-graduation-cap text-danger"></i> <span class="text-muted"></span>{{ t.template.name }}<br>
+                            <i class="fas fa-graduation-cap text-primary"></i> <span class="text-muted"></span>{{ t.template.name }}<br>
                             <small>{{ t.template.category }}</small>
                         </td>
-                        <td colspan="5">
+                        <td colspan="4">
                             {{ t.template.rules|urpg_markup }}
                         </td>
                     </tr>
@@ -126,15 +108,25 @@
                             <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
                             <small>{{ s.spell_type }} - {{ s.variant }}</small>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td class="text-end"></td>
-                        <td class="text-end"></td>
-                        <td class="text-end"></td>
+                        <td>
+                            {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
+                        </td>
+                        <td class="text-end">
+                            {% spell_type_attribute_dice_value s.character s.spell_type as dice %}
+                            {{ s.spell_type.dominant_attribute_name|capfirst }} + {{ s.spell_type.supplemental_attribute_name|capfirst }} {% color_value_span dice 5 %} <i class="fas fa-dice-five text-muted"></i>
+                        </td>
+                        <td class="text-end">
+                            <i class="fas fa-bolt text-muted"></i> {% trans 'Power' %} {% color_value_span s.power 4 %}<br>
+                            <i class="fas fa-hourglass text-muted"></i> {% trans 'Actions' %} {% color_value_span s.actions 3 invert=True %}
+                        </td>
+                        <td class="text-end">
+                            {% color_value_span s.range 20 %} {% trans 'Meter' %}
+
+                        </td>
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="5">
+                    <td colspan="4">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -143,7 +135,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="4">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Run" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -152,7 +144,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="4">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Crawl" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
@@ -161,37 +153,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="5">
                         <i class="fas fa-user-shield text-warning"></i> {% trans "Change Stance" %}<br>
                         <small>{% trans 'Movement' %}</small>
                     </td>
                 </tr>
-
                 </tbody>
             </table>
-        </div>
-    </div>
-
-    <div class="col-12 col-xl-3">
-        <div class="row">
-            <div class="col-md-6 col-xl-12">
-                <table class="table">
-                    <tr>
-                        <td>{% trans 'Actions' %}</td>
-                        <td class="text-end">{% color_value_span object.actions 6 %}</td>
-                    </tr>
-                    {% for skill in object.characterskill_set.combat_skills %}
-                        <tr>
-                            <td>{{ skill.skill }}</td>
-                            <td class="text-end">{% color_value_span skill.value 6 %}</td>
-                        </tr>
-                    {% endfor %}
-                    <tr>
-                        <td>{% trans 'Quickness' %}</td>
-                        <td class="text-end">{% color_value_span object.quickness 6 %}</td>
-                    </tr>
-                </table>
-            </div>
         </div>
     </div>
 </div>

@@ -35,12 +35,16 @@
                             <p>
                                 {{ s.spell.rules }}
                             </p>
-                            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Attribute' %}: {{ s.spell_type.dominant_attribute_name|capfirst }}<br>
+                            {% spell_type_attribute_dice_value object s.spell_type as dice %}
+                            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Dice' %}: {{ s.spell_type.dominant_attribute_name|capfirst }} + {{ s.spell_type.supplemental_attribute_name|capfirst }} ({% color_value_span dice 5 %})<br>
                             <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
                             {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
                             <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
                             <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
                             <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
+                            {% if user.is_superuser %}
+                                <a href="{% url 'admin:magic_basespell_change' s.spell.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

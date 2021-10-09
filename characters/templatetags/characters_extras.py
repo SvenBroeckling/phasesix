@@ -127,3 +127,10 @@ def status_effect_value(status_effect, character):
 @register.simple_tag
 def character_knowledge_skil_value(character, knowledge):
     return character.characterskill_set.get(skill=knowledge.skill).value
+
+
+@register.simple_tag
+def spell_type_attribute_dice_value(character, spell_type):
+    da = getattr(character, spell_type.dominant_attribute)
+    sa = getattr(character, spell_type.supplemental_attribute)
+    return da + sa

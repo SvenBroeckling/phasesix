@@ -105,7 +105,7 @@ class Character(models.Model):
 
     @property
     def templates_with_combat_rules(self):
-        return self.charactertemplate_set.filter(template__show_rules_in_shadows=True)
+        return self.charactertemplate_set.filter(template__show_rules_in_combat=True)
 
     def shadow_list(self):
         sl = []
