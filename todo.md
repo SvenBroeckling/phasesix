@@ -1,15 +1,14 @@
 ## Tirakan Zauber
 
+x Astrale Magie
+x Chimärologie
+x Dämonologie
+x Echsenmagie
+
 ? Metamagie
 ? Golemancy
 ? Generelle Magie
-- Zauberei Check
-- Weisse Magie check
-- Schamanissmus Check
-- Sanguine Magie check
-- Nekrologie check
-- Mystizismus check
-- Runenmagie
+
 - Schwarze Magie check
   - Gezücht
   - Macht des Blutes
@@ -18,8 +17,26 @@
   - Sonnenschild
 - Hermetik check
   - Aevum
+- Elementarmagie check
+  - Element**
 - Geisterbeschwörungen check
+- Zauberei Check
+- Weisse Magie check
+- Schamanissmus Check
+- Sanguine Magie check
+- Nekrologie check
+- Mystizismus check
+- Runenmagie
 
+## Zaubererweiterungs-Templates
+
+* Twinspell
+* Starker Spell
+* Longrange
+* Arkana Kosten-
+* Actions-
+* Typechange (Wasser -> Blut, billiger)
+* Variantchange (Beherrschung -> Schaden, sehr teuer)
 
 ## Magieschablonen
 
