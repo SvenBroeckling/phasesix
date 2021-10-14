@@ -1,5 +1,8 @@
 ## Tirakan Zauber
 
+? Metamagie
+? Golemancy
+? Generelle Magie
 - Zauberei Check
 - Weisse Magie check
 - Schamanissmus Check
@@ -7,12 +10,16 @@
 - Nekrologie check
 - Mystizismus check
 - Runenmagie
-- Schwarze Magie
+- Schwarze Magie check
   - Gezücht
   - Macht des Blutes
   - Niederes Wesen binden
   - Schattenleib
   - Sonnenschild
+- Hermetik check
+  - Aevum
+- Geisterbeschwörungen check
+
 
 ## Magieschablonen
 

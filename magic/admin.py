@@ -7,7 +7,8 @@ class BaseSpellAdmin(admin.ModelAdmin):
     list_display = (
         'name_de', 'name_en', 'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions',
         'is_tirakan_spell')
-    list_editable = ('is_tirakan_spell',)
+    list_editable = ('spell_point_cost', 'arcana_cost', 'power', 'range', 'actions', 'is_tirakan_spell',)
+    search_fields = ('name_de', 'name_en')
     list_filter = (
         'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions', 'is_tirakan_spell')
     fields = (
