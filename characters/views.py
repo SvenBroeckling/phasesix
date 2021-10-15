@@ -16,6 +16,8 @@ from horror.models import QuirkCategory
 from magic.models import SpellType
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill
 
+import random
+
 
 class DiceJsonView(View):
     def get(self, request, *args, **kwargs):
@@ -123,6 +125,36 @@ class XhrCharacterRestView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['object'] = character
         return context
+
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        mode = request.POST.get('mode', 'manual')
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        if mode == 'auto':
+            character.bonus_dice_used = 0
+            character.destiny_dice_used = 0
+            character.rerolls_used = 0
+
+            for d in range(character.rest_wound_dice):
+                if random.randint(1, 6) >= 5:
+                    if character.health < character.max_health:
+                        character.health += 1
+
+            for d in range(character.rest_arcana_dice):
+                if random.randint(1, 6) >= 5:
+                    if character.arcana < character.max_arcana:
+                        character.arcana += 1
+
+            for d in range(character.rest_stress_dice):
+                if random.randint(1, 6) >= 5:
+                    if character.stress > 0:
+                        character.stress -= 1
+
+            character.save()
+
+        return JsonResponse({'status': 'ok'})
 
 
 class XhrCharacterStatusEffectsChangeView(View):

@@ -14,8 +14,14 @@
             });
 
             body.on('click', '.modal-trigger', function (e) {
+                let modalDialog = $('#character-modal .modal-dialog')
                 $('.character-modal-container').load($(this).data('url'))
                 $('.modal-header h5').text($(this).data('modal-title'))
+                if($(this).hasClass('small-modal')) {
+                    modalDialog.removeClass('modal-xl')
+                } else {
+                    modalDialog.addClass('modal-xl')
+                }
                 $('#sidebar-right').css('width', '');
             })
 

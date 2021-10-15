@@ -100,6 +100,18 @@ class Character(models.Model):
         return kd
 
     @property
+    def rest_wound_dice(self):
+        return self.resistance + self.endurance + self.willpower
+
+    @property
+    def rest_arcana_dice(self):
+        return self.charm + self.conscientiousness + self.willpower
+
+    @property
+    def rest_stress_dice(self):
+        return self.willpower + self.logic
+
+    @property
     def templates_with_shadow_rules(self):
         return self.charactertemplate_set.filter(template__show_rules_in_shadows=True)
 
