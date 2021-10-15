@@ -110,11 +110,6 @@ Berufe:
   - Eigene Schablone
 
 
-## Weitere Funktionen
-
-- Rast fertigstellen
-
-
 ## Waffenaddons überarbeiten
 
 - Weniger Bonuswürfel
