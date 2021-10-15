@@ -22,13 +22,17 @@
             e.preventDefault();
             return false;
         });
+
+        $('.modal-body a.nav-link').first().addClass('active')
+        $('.modal-body div.tab-pane').first().addClass('active')
+        $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
     })
 </script>
 
 <div>
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs justify-content-center">
         {% for t in weapon_types %}
-            <li class="{% if forloop.first %}active{% endif %} nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="#w{{ t.id }}" aria-controls="home" role="tab" data-bs-toggle="tab">{{ t }}</a>
             </li>
         {% endfor %}
@@ -36,8 +40,8 @@
 
     <div class="tab-content">
         {% for t in weapon_types %}
-            <div role="tabpanel" class="tab-pane {% if forloop.first %}show active{% endif %}" id="w{{ t.id }}">
-                <div class="row">
+            <div role="tabpanel" class="tab-pane" id="w{{ t.id }}">
+                <div class="row masonry-container">
                     {% for weapon in t.weapon_set.with_price %}
                         {% has_extensions weapon character.extensions.all as has_extensions %}
                         {% if has_extensions %}

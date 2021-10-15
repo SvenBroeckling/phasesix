@@ -19,7 +19,12 @@
                 $('#sidebar-right').css('width', '');
             })
 
-            body.on('click', '.sidebar-trigger', function(e){
+            $('#character-modal').on('hidden.bs.modal', function (e) {
+                refresh_fragments()
+                $('.character-modal-container').html('')
+            })
+
+            body.on('click', '.sidebar-trigger', function (e) {
                 let sidebar = $('#sidebar-right');
                 $(sidebar).css('width', '330px');
                 sidebar.find('h4:first').text($(this).data('sidebar-title'))
@@ -32,14 +37,14 @@
                 $.post($(this).attr('href'), function (data) {
                     refresh_fragments()
                 })
-                if($(this).hasClass('close-sidebar')){
+                if ($(this).hasClass('close-sidebar')) {
                     $('#sidebar-right').css('width', '');
                 }
                 e.preventDefault()
                 return false
             })
 
-            body.on('change', '.status-effect-value', function(e){
+            body.on('change', '.status-effect-value', function (e) {
                 let elem = $(this);
                 let value = elem.val();
                 let status_effect_id = elem.data('status-effect-id');
@@ -50,7 +55,7 @@
                         status_effect_id: status_effect_id,
                         value: value
                     },
-                    function(data) {
+                    function (data) {
                         let target = $(`span[data-status-effect-id="${status_effect_id}"]`)
                         target
                             .removeClass('text-danger text-muted')
@@ -58,11 +63,6 @@
                         refresh_fragments()
                     }
                 )
-            })
-
-            $('#character-modal').on('hidden.bs.modal', function (e) {
-                refresh_fragments()
-                $('.character-modal-container').html('')
             })
 
             function refresh_fragments() {
@@ -75,7 +75,7 @@
                 })
 
                 let sc = $('.sidebar-content')
-                if(sc.data('sidebar-url') !== undefined) {
+                if (sc.data('sidebar-url') !== undefined) {
                     sc.load(sc.data('sidebar-url'))
                 }
             }
@@ -131,6 +131,9 @@
             $('[data-bs-toggle="popover"]').popover()
             setTimeout(() => $('.masonry-container').masonry({percentPosition: true}), 500)
 
+            body.on('shown.bs.tab', 'a[data-bs-toggle="tab"]', function(e){
+                $($(e.target).attr('href')).find('.masonry-container').masonry({percentPosition: true})
+            })
         })
     </script>
 {% endblock %}
@@ -141,12 +144,12 @@
             style="
                     {% if character.backdrop_image %}
                         {% thumbnail character.backdrop_image "1800" as im %}
-                        background-image: url({{ im.url }})
+                            background-image: url({{ im.url }})
                         {% endthumbnail %}
                     {% else %}
                         {% if character.get_epoch.image %}
                             {% thumbnail character.get_epoch.image "1800" as im %}
-                            background-image: url({{ im.url }})
+                                background-image: url({{ im.url }})
                             {% endthumbnail %}
                         {% else %}
                             background-color: silver
@@ -162,13 +165,14 @@
             </div>
 
             <div class="{% if may_edit %}sidebar-trigger{% endif %} mt-2" data-sidebar-title="{% trans 'Character' %}"
-                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="character" %}">
+                 data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="character" %}">
                 {% if character.image %}
                     {% thumbnail character.image "140x140" crop="center" as im %}
                         <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
                     {% endthumbnail %}
                 {% else %}
-                    <img class="rounded img-fluid" width="140" height="140" src="{% static 'img/silhuette.png' %}" alt="{{ object.name }}">
+                    <img class="rounded img-fluid" width="140" height="140" src="{% static 'img/silhuette.png' %}"
+                         alt="{{ object.name }}">
                 {% endif %}
             </div>
         </div>

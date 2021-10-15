@@ -22,12 +22,16 @@
             e.preventDefault();
             return false;
         });
+
+        $('.modal-body a.nav-link').first().addClass('active')
+        $('.modal-body div.tab-pane').first().addClass('active')
+        $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
     })
 </script>
 
 
 <div>
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs justify-content-center" role="tablist">
         {% for t in weapon_modification_types %}
             {% weaponmodification_type_valid_for_weapon t weapon.weapon as wmt %}
             {% if wmt %}
@@ -43,7 +47,7 @@
             {% weaponmodification_type_valid_for_weapon t weapon.weapon as wmt %}
             {% if wmt %}
                 <div role="tabpanel" class="tab-pane {% if forloop.first %} active {% endif %}" id="i{{ t.id }}">
-                    <div class="row">
+                    <div class="row masonry-container">
                         {% for wm in t.weaponmodification_set.all|for_extensions:character.extensions %}
                             {% if weapon.weapon.type in wm.available_for_weapon_types.all %}
                                 <div class="col-lg-6 mt-3">

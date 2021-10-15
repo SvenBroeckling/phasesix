@@ -37,14 +37,19 @@
                 }
             }
         });
+
+        $('.modal-body a.nav-link').first().addClass('active')
+        $('.modal-body div.tab-pane').first().addClass('active')
+        $('.modal-body div.tab-pane').first().addClass('show')
+        $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
     })
 </script>
 
-<ul class="nav nav-tabs" role="tablist"  id="reputation" data-initial-reputation="{{ object.reputation_available }}">
+<ul class="nav nav-tabs justify-content-center" role="tablist"  id="reputation" data-initial-reputation="{{ object.reputation_available }}">
     <li class="nav-item">
         {% for tp in template_points %}
             <li class="nav-item">
-                <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
+                <a class="nav-link" data-bs-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
                     {{ tp.template_category }}
                 </a>
             </li>
@@ -54,8 +59,8 @@
 
 <div class="tab-content">
     {% for tp in template_points %}
-        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
-            <div class="row">
+        <div class="tab-pane fade" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
+            <div class="row masonry-container">
                 {% for i in tp.template_category.template_set.all %}
                     {% has_extensions i object.extensions.all as has_ext %}
                     {% if has_ext and not i.id in character_template_ids %}
