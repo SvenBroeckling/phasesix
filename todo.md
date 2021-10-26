@@ -41,14 +41,14 @@ x Echsenmagie
 ## Magieschablonen
 
 Berufe:
-                        MaxArcana   Spellpoints     AttrPoints      SkillPoints Cost
-  Arkaner Lehrmeister   1           15                              1           10
-  Arkane Meditation     2                                           2           10
-  Arkanes Studium       1           5                               2           10
-  Arkane Schule         2           10                              2           10
+                        MaxArcana   SC    MK    Spellpoints     AttrPoints      SkillPoints Cost
+  Arkaner Lehrmeister   1           15                                          1           10
+  Arkane Meditation     2                                                       2           10
+  Arkanes Studium       1           5                                           2           10
+  Arkane Schule         2           10                                          2           10
  
   -- 
-  Druide                3           5               2               1           10
+  Druide                3           5               2                           1           10
   Warlock
   Dämonologe
   Geisterbeschwörer
