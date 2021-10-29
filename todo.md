@@ -1,3 +1,12 @@
+## Theme
+
+Mögliche Bootswatch Basisthemes:
+* Cosmo
+* Darkly
+* Simplex
+* Yeti
+
+
 ## Tirakan Zauber
 
 x Astrale Magie
