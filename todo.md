@@ -1,11 +1,9 @@
-## Theme
+## Notizen
 
-Mögliche Bootswatch Basisthemes:
-* Cosmo
-* Darkly
-* Simplex
-* Yeti
-
+* Privat / Öffentlich
+* Reihenfolge?
+* Quicknote-Modal
+* Tagebuch / Log Theme
 
 ## Tirakan Zauber
 
