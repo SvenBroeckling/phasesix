@@ -1,6 +1,6 @@
-@import 'bootswatch/cyborg/variables';
+@import 'bootswatch/phasesix/variables';
 @import '../bootstrap/scss/bootstrap.scss';
-@import 'bootswatch/cyborg/bootswatch';
+@import 'bootswatch/phasesix/bootswatch';
 
 .pointer {
   cursor: pointer;
@@ -96,6 +96,14 @@ a[data-toggle="popover"] {
   background-color: rgba(10, 10, 10, 0.5);
 }
 
+.create-epoch-card .card-text h5 {
+  color: $gray-400;
+}
+
+.create-epoch-card .card-text p {
+  color: $gray-600;
+}
+
 .constructed-template {
   cursor: pointer;
 }
@@ -110,7 +118,7 @@ a[data-toggle="popover"] {
 }
 
 .constructed-template.notenoughpoints div.card {
-  background-color: #600;
+  background-color: $danger;
 }
 
 .no-decoration {
@@ -146,8 +154,8 @@ a[data-toggle="popover"] {
 .rules blockquote {
   margin-left: 2em;
   padding-left: 1em;
-  color: #888;
-  border-left: 2px solid silver;
+  color: $gray-600;
+  border-left: 2px solid $gray-500;
 }
 
 .rules h3 {
@@ -166,6 +174,9 @@ a[data-toggle="popover"] {
   z-index: 1110;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: $gray-800;
+  box-shadow: -5px 0px 5px 1px $gray-900;
+  transition: width 0.1s;
 }
 
 .sidebar-right {

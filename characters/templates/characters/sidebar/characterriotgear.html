@@ -4,20 +4,20 @@
     <div class="row">
         <div class="col-12">
             <div class="btn-group w-100">
-                <a class="btn btn-outline-dark btn-sm action-link"
+                <a class="btn btn-warning btn-sm action-link"
                    href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="damage" %}"><i
-                        class="fas fa-times fa-fw text-warning"></i> {% trans 'Damage' %}</a>
-                <a class="btn btn-outline-dark btn-sm action-link"
+                        class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
+                <a class="btn btn-success btn-sm action-link"
                    href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="repair" %}"><i
-                        class="fas fa-wrench fa-fw text-success"></i> {% trans 'Repair' %}</a>
+                        class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
             </div>
         </div>
 
         <div class="col-12">
             <div class="btn-group w-100">
-                <a class="btn btn-outline-dark btn-sm action-link close-sidebar mt-1"
+                <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
                    href="{% url 'characters:xhr_remove_riot_gear' pk=object.character.id riot_gear_pk=object.id %}"><i
-                        class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                        class="fas fa-trash"></i> {% trans 'Remove' %}</a>
             </div>
         </div>
     </div>

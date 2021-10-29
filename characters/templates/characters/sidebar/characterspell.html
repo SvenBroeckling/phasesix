@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <div class="btn-group w-100">
-                <a href="{% url 'characters:cast_spell' pk=object.id %}" class="btn btn-sm btn-outline-dark action-link"><i class="fas fa-fw fa-magic text-warning" title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}</a>
+                <a href="{% url 'characters:cast_spell' pk=object.id %}" class="btn btn-sm btn-primary action-link"><i class="fas fa-fw fa-magic" title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}</a>
             </div>
         </div>
     </div>
@@ -12,8 +12,7 @@
 
 <div class="row mt-4 mb-4">
     <div class="col-12">
-        <h4 class="text-center">{% trans 'Spell' %}</h4>
-        <p>
+        <p class="mb-4">
             {{ object.spell.rules }}
         </p>
         <div class="card mb-2 mt-2">

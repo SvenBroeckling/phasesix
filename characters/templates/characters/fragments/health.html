@@ -64,7 +64,7 @@
                                 <i class="fas fa-magic text-warning"></i>
                             {% endfor %}
                             {% for i in object.arcana_used|to_range %}
-                                <i class="fas fa-magic text-dark"></i>
+                                <i class="fas fa-magic text-light"></i>
                             {% endfor %}
                         </div>
                     {% endif %}
@@ -83,7 +83,7 @@
                         <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
                              data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="horror" %}">
                             {% for q in object.quirks.all %}
-                                <i class="fas fa-frown text-dark" title="{{ q }}"></i>
+                                <i class="fas fa-frown text-light" title="{{ q }}"></i>
                             {% endfor %}
                         </div>
                     {% endif %}

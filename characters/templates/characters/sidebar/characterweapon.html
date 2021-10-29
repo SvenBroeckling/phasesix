@@ -6,7 +6,7 @@
             {% for fm in object.attack_modes %}
                 <div class="col-12">
                     <div class="btn-group w-100">
-                        <a class="btn btn-outline-dark btn-sm action-link mb-1"
+                        <a class="btn btn-primary btn-sm action-link mb-1"
                            href="{% url 'characters:attack' characterweapon_pk=object.id weapon_attackmode_pk=fm.2 %}">
                             {% trans 'Attack:' %} {{ fm.0 }}
                             {% color_value_span fm.1 8 %} <i class="fas fa-dice-five"></i></a>
@@ -15,21 +15,21 @@
             {% endfor %}
             <div class="col-12">
                 <div class="btn-group w-100">
-                    <a class="btn btn-outline-dark btn-sm action-link mb-1"
+                    <a class="btn btn-secondary btn-sm action-link mb-1"
                        href="{% url 'characters:reload' characterweapon_pk=object.id %}"><i
-                            class="fas fa-redo fa-fw text-info"></i> {% trans 'Reload' %}</a>
+                            class="fas fa-redo fa-fw"></i> {% trans 'Reload' %}</a>
                 </div>
             </div>
         {% endif %}
 
         <div class="col-12">
             <div class="btn-group w-100">
-                <a class="btn btn-outline-dark btn-sm action-link"
+                <a class="btn btn-warning btn-sm action-link"
                    href="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="damage" %}"><i
-                        class="fas fa-times fa-fw text-warning"></i> {% trans 'Damage' %}</a>
-                <a class="btn btn-outline-dark btn-sm action-link"
+                        class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
+                <a class="btn btn-success btn-sm action-link"
                    href="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="repair" %}"><i
-                        class="fas fa-wrench fa-fw text-success"></i> {% trans 'Repair' %}</a>
+                        class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
             </div>
         </div>
 
@@ -38,21 +38,21 @@
                 {% has_valid_weaponmodifications object.weapon object.character as has_valid_wm %}
                 {% if has_valid_wm %}
                     <a
-                            class="btn btn-outline-dark btn-sm modal-trigger close-sidebar mt-1"
+                            class="btn btn-primary btn-sm modal-trigger close-sidebar mt-1"
                             data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.character.id %}?weapon_id={{ object.id }}"
                             data-bs-toggle="modal"
                             data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Modification' %}"
-                            href=""><i class="fas fa-plus text-info"></i> {% trans 'Add Modification' %}</a>
+                            href=""><i class="fas fa-plus"></i> {% trans 'Add Modification' %}</a>
                 {% endif %}
             </div>
         </div>
 
         <div class="col-12">
             <div class="btn-group w-100">
-                <a class="btn btn-outline-dark btn-sm action-link close-sidebar mt-1"
+                <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
                    href="{% url 'characters:xhr_remove_weapon' pk=object.character.id weapon_pk=object.id %}"><i
-                        class="fas fa-trash text-danger"></i> {% trans 'Remove' %}</a>
+                        class="fas fa-trash"></i> {% trans 'Remove' %}</a>
             </div>
         </div>
     </div>
@@ -148,14 +148,12 @@
                                 {% color_value_span wma.status_effect_value 4 %}<br>
                             {% endif %}
                         {% endfor %}
-                    </div>
-                    <div class="card-footer">
                         <a
-                                class="action-link btn btn-outline-secondary btn-sm float-end"
+                                class="action-link btn btn-danger btn-sm float-end"
                                 data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
                                 title="{% trans 'Remove Modification' %}"
                                 href="{% url 'characters:xhr_remove_weapon_modification' pk=object.character.id weapon_pk=object.id weapon_modification_pk=wm.id %}">
-                            <i class="fas fa-minus text-danger"></i> {% trans 'Remove' %}</a>
+                            <i class="fas fa-trash"></i> {% trans 'Remove' %}</a>
                     </div>
                 </div>
             {% endfor %}

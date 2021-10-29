@@ -107,14 +107,12 @@
                                                                 {{ wma.status_effect|capfirst }} <i class="{{ wma.status_effect.fa_icon_class }}"></i> {% color_value_span wma.status_effect_value 4 %}<br>
                                                             {% endif %}
                                                         {% endfor %}
-                                                    </div>
-                                                    <div class="card-footer">
                                                         <a
-                                                                class="action-link btn btn-outline-secondary btn-sm float-end"
+                                                                class="action-link btn btn-danger btn-sm float-end"
                                                                 data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
                                                                 title="{% trans 'Remove Modification' %}"
                                                                 href="{% url 'characters:xhr_remove_weapon_modification' pk=object.id weapon_pk=weapon.id weapon_modification_pk=wm.id %}">
-                                                            <i class="fas fa-minus text-danger"></i> {% trans 'Remove' %}</a>
+                                                            <i class="fas fa-trash"></i> {% trans 'Remove' %}</a>
                                                     </div>
                                                 </div>
                                             </div>

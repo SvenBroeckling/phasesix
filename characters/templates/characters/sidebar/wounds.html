@@ -4,45 +4,41 @@
     <div class="row">
         <div class="col-12">
             <div class="btn-group w-100">
-                <a class="btn btn-outline-dark btn-sm action-link"
+                <a class="btn btn-primary btn-sm action-link"
                    href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
-                        class="fas fa-heart fa-fw text-danger"></i> {% trans 'Heal' %}</a>
-                <a class="btn btn-outline-dark btn-sm action-link"
+                        class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</a>
+                <a class="btn btn-primary btn-sm action-link"
                    href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
-                        class="far fa-heart fa-fw text-danger"></i> {% trans 'Damage' %}</a>
-                <a class="btn btn-outline-dark btn-sm action-link"
+                        class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</a>
+                <a class="btn btn-primary btn-sm action-link"
                    href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
-                        class="fas fa-heart fa-fw text-info"></i> {% trans 'Boost' %}</a>
+                        class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</a>
             </div>
         </div>
 
-        <div class="col-12 mb-4 mt-1">
+        <div class="col-12 mb-3 mt-1">
             <a
-                    class="btn btn-outline-dark btn-sm w-100 modal-trigger small-modal"
+                    class="btn btn-success btn-sm w-100 modal-trigger small-modal"
                     data-url="{% url 'characters:xhr_rest' pk=object.id %}"
                     data-bs-toggle="modal"
                     data-bs-target=".character-modal"
                     data-modal-title="{% trans 'Rest' %}"
-                    href=""><i class="fas fa-plus fa-fw text-info"></i> {% trans 'Rest' %}</a>
+                    href=""><i class="fas fa-plus fa-fw"></i> {% trans 'Rest' %}</a>
         </div>
     </div>
 {% endif %}
 
 <div class="row">
     <div class="col-12 text-center mt-1 mb-3">
-        <div class="card">
-            <div class="card-body">
-                {% for i in object.health|to_range %}
-                    <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
-                {% endfor %}
-                {% for i in object.wounds_taken|to_range %}
-                    <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
-                {% endfor %}
-                {% for i in object.boost|to_range %}
-                    <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
-                {% endfor %}
-            </div>
-        </div>
+        {% for i in object.health|to_range %}
+            <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
+        {% endfor %}
+        {% for i in object.wounds_taken|to_range %}
+            <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+        {% endfor %}
+        {% for i in object.boost|to_range %}
+            <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
+        {% endfor %}
     </div>
 </div>
 
@@ -84,18 +80,18 @@
                         </span>
 
                         {% if may_edit %}
-                        <input
-                                class="status-effect-value mt-3"
-                                type="number"
-                                max="10"
-                                min="0"
-                                value="{{ se_value }}"
-                                data-status-effect-id="{{ se.id }}"
-                                data-url="{% url 'characters:xhr_status_effects_change' pk=object.id %}"
-                                data-slider-value="{{ se_value }}"
-                                data-slider-tooltip="show"
-                                data-slider-ticks="[0, 5, 10]"
-                                data-slider-ticks-labels='["0", "5", "10"]'>
+                            <input
+                                    class="status-effect-value mt-3"
+                                    type="number"
+                                    max="10"
+                                    min="0"
+                                    value="{{ se_value }}"
+                                    data-status-effect-id="{{ se.id }}"
+                                    data-url="{% url 'characters:xhr_status_effects_change' pk=object.id %}"
+                                    data-slider-value="{{ se_value }}"
+                                    data-slider-tooltip="show"
+                                    data-slider-ticks="[0, 5, 10]"
+                                    data-slider-ticks-labels='["0", "5", "10"]'>
                         {% endif %}
                     </div>
                 </div>
@@ -105,8 +101,8 @@
 </div>
 
 <script>
-    $(function(){
-        setTimeout(function(){
+    $(function () {
+        setTimeout(function () {
             $('.status-effect-value').slider();
         }, 300);
     })

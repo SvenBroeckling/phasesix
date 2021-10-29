@@ -23,7 +23,7 @@
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Reputation"
                        aria-label="Reputation" name="reputation">
-                <button type="submit" name="add_reputation" class="btn btn-outline-dark" type="button"
+                <button type="submit" name="add_reputation" class="btn btn-primary" type="button"
                         data-flash-message="{% trans 'Added' %}"><i
                         class="fa fa-eye text-warning"></i> Hinzufügen
                 </button>
@@ -39,7 +39,7 @@
                 </p>
                 {% if may_edit %}
                     <button
-                            class="btn btn-primary w-100 mb-3 mt-3 modal-trigger"
+                            class="btn btn-success w-100 mb-3 mt-3 modal-trigger"
                             data-bs-toggle="modal"
                             data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Reputation' %}"
