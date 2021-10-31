@@ -1,39 +1,15 @@
+## Currency
+
+- Währung pro Kampagne einstellbar
+- Defaults von der Epoche, beim Charakter einstellbar
+- Einfach Decimal, d.h. nur 2 Namen
+
 ## Notizen
 
 * Privat / Öffentlich
 * Reihenfolge?
 * Quicknote-Modal
 * Tagebuch / Log Theme
-
-## Tirakan Zauber
-
-x Astrale Magie
-x Chimärologie
-x Dämonologie
-x Echsenmagie
-
-? Metamagie
-? Golemancy
-? Generelle Magie
-
-- Schwarze Magie check
-  - Gezücht
-  - Macht des Blutes
-  - Niederes Wesen binden
-  - Schattenleib
-  - Sonnenschild
-- Hermetik check
-  - Aevum
-- Elementarmagie check
-  - Element**
-- Geisterbeschwörungen check
-- Zauberei Check
-- Weisse Magie check
-- Schamanissmus Check
-- Sanguine Magie check
-- Nekrologie check
-- Mystizismus check
-- Runenmagie
 
 ## Magieschablonen
 
@@ -67,10 +43,10 @@ Steigerbar:
   Zauberer
   Seher
   Vampirjäger
-  Mönch
-  Paladin
-  Priester
-  Vampir
+  Mönch -> Pantheon
+  Paladin -> Pantneon
+  Priester -> Pantheon
+  Vampir -> Lineage
   
 
 ## Base
@@ -84,13 +60,6 @@ Steigerbar:
 - Beim Reagieren auf Schüsse ist die Deckung des schiessenden halbiert / verringert
 - Vollautomatisch Konsumiert alle bleibenden Aktionen einer Runde und schiesst für jede Aktion
 - Zielen als Waffenwert? Genauigkeit -> Zielen bei anbauteilen
-
-## Currency
-
-- Währung pro Kampagne einstellbar
-- Defaults von der Epoche, beim Charakter einstellbar
-- Einfach Decimal, d.h. nur 2 Namen
-
 
 ## Kampagnenansicht
 
