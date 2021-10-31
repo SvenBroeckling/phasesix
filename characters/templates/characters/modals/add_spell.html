@@ -69,8 +69,7 @@
                     <div class="card-body" style="background-image: url({{ img.url }}); background-size: cover">
                         <div class="card-text w-100 p-5">
                             <h5 class="text-center p-0 m-i0">{{ t }}</h5>
-                            <small class="text-center">{{ t.dominant_attribute_name|capfirst }}</small> +
-                            <small class="text-center">{{ t.supplemental_attribute_name|capfirst }}</small>
+                            <small class="text-center">{{ t.dominant_attribute_name|capfirst }}</small>
                         </div>
                     </div>
                 </div>
@@ -108,7 +107,7 @@
                             <p>
                                 {{ s.rules }}
                             </p>
-                            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Attributes' %}: {{ s.type.dominant_attribute_name|capfirst }} + {{ s.type.supplemental_attribute_name|capfirst }}<br>
+                            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ s.type.dominant_attribute_name|capfirst }}<br>
                             <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
                             {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
                             <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>

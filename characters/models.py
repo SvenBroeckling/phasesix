@@ -369,6 +369,9 @@ class CharacterSkillQuerySet(models.QuerySet):
     def hand_to_hand_combat_skill(self):
         return self.get(skill__name_en='Hand to Hand Combat')
 
+    def spell_casting_skill(self):
+        return self.get(skill__name_en='Spell Casting')
+
 
 class CharacterSkill(models.Model):
     objects = CharacterSkillQuerySet.as_manager()

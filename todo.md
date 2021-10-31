@@ -35,16 +35,6 @@ x Echsenmagie
 - Mystizismus check
 - Runenmagie
 
-## Zaubererweiterungs-Templates
-
-* Twinspell
-* Starker Spell
-* Longrange
-* Arkana Kosten-
-* Actions-
-* Typechange (Wasser -> Blut, billiger)
-* Variantchange (Beherrschung -> Schaden, sehr teuer)
-
 ## Magieschablonen
 
 Berufe:

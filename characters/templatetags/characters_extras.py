@@ -132,7 +132,7 @@ def character_knowledge_skil_value(character, knowledge):
 @register.simple_tag
 def spell_type_attribute_dice_value(character, spell_type):
     da = getattr(character, spell_type.dominant_attribute)
-    sa = getattr(character, spell_type.supplemental_attribute)
-    return da + sa
+    sc = character.characterskill_set.spell_casting_skill()
+    return da + sc.value
 
 
