@@ -44,7 +44,7 @@
                     <span class="float-end">{% color_value_span object.riot_gear.evasion 3 %}</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    <i class="fas fa-balance-scale fa-fw"></i>
                     {% trans 'Weight' %}
                     <span class="float-end">{% color_value_span object.riot_gear.weight 100 invert=True %}</span>
                 </li>
@@ -54,9 +54,14 @@
                     <span class="float-end">{% color_value_span object.riot_gear.price|floatformat:2 100 invert=True %} €</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    <i class="fas fa-eye-slash fa-fw"></i>
                     {% trans 'Concealment' %}
                     <span class="float-end">{% color_value_span object.riot_gear.concealment 5 invert=True %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    {% trans 'Condition' %}
+                    <span class="float-end">{% color_value_span object.condition 100 %}%</span>
                 </li>
             </ul>
         </div>

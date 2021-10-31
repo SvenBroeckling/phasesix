@@ -60,7 +60,12 @@
 
 <div class="row mt-4">
     <div class="col-12">
-        <h4 class="text-center">{% trans 'Stats' %}</h4>
+        {{ object.weapon.description|urpg_markup }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
         <div class="card mb-2 mt-2">
             <ul class="list-group list-group-flush">
                 {% if object.has_capacity %}
@@ -101,6 +106,16 @@
                     <i class="fas fa-arrows-alt-h fa-fw"></i>
                     {% trans 'Range' %}
                     <span class="float-end">{{ object.weapon.range_meter }}m {% display_modifications object 'range_meter' %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-eye-slash fa-fw"></i>
+                    {% trans 'Concealment' %}
+                    <span class="float-end">{% color_value_span object.modified_concealment 5 invert=True %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-arrows-alt-h fa-fw"></i>
+                    {% trans 'Condition' %}
+                    <span class="float-end">{% color_value_span object.condition 100 %}%</span>
                 </li>
             </ul>
         </div>

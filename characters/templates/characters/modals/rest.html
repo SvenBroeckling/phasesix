@@ -51,7 +51,7 @@
         </table>
 
         <button class="btn btn-primary w-100 mb-2 btn-rest" data-mode="auto" data-url="{% url 'characters:xhr_rest' pk=object.id %}">{% trans 'Rest and roll for me' %}</button>
-        <button class="btn btn-outline-dark w-100 btn-rest" data-mode="manual" data-url="{% url 'characters:xhr_rest' pk=object.id %}">{% trans 'Rest and modify nothing' %}</button>
+        <button class="btn btn-secondary w-100 btn-rest" data-mode="manual" data-url="{% url 'characters:xhr_rest' pk=object.id %}">{% trans 'Rest and modify nothing' %}<br><small>{% trans "I prefer to roll my own dice" %}</small></button>
     </div>
 </div>
 
