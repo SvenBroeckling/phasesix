@@ -411,7 +411,7 @@ class CharacterStatusEffect(models.Model):
         ordering = ('status_effect__ordering',)
 
     def __str__(self):
-        return "{} {}".format(self.status_effect.name, self.value)
+        return self.status_effect.name
 
     @property
     def value(self):

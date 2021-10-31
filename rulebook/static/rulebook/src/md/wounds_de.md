@@ -39,7 +39,7 @@ Nimmt der Charakter Schaden, wird immer von rechts abgestrichen. Zunächst werde
 
 ### Ohnmacht und Tod
 
-Ein Charakter der weder volle Herzen noch Boosts hat, wird ohnmächtig und gilt als *sterbend*.
+Ein Charakter der weder volle Herzen noch Boosts hat, wird ohnmächtig und gilt als *sterbend*. Bei dem Zustand weiter unten wird beschrieben wie hier genau zu verfahren ist.
 
 ### Heilung
 
@@ -55,7 +55,7 @@ Bei einer Rast hat der Charakter die Möglichkeit Wunden zu heilen. Hierzu werde
 
 Alle *Bonuswüfel*, *Schicksalswürfel* und *Wiederholungswürfe* frischen auf, werden also auf das Maximum des Charakters gesetzt.
 
-Wird die Magie Erweiterung verwendet wirft der Charakter auf die Summe der Werte *Charme*, *Gewissenhaftigkeit* und *Willenskraft*. Für jeden Erfolg wird ein *Arkana* wiederhergestellt.
+Wird die Magie Erweiterung verwendet, wirft der Charakter auf die Summe der Werte *Charme*, *Gewissenhaftigkeit* und *Willenskraft*. Für jeden Erfolg wird ein *Arkana* wiederhergestellt.
 
 Bei aktiver Horrorerweiterung wirft der Charakter auf die Summe aus *Willenskraft* und *Logik*. Für jeden Erfolg kann der Stress um eins verringert werden.
 
@@ -65,38 +65,40 @@ Ein Charakter kann verschiedene Zustände haben. Diese haben verschiedene Auswir
 
 #### Sterbend
 
-Dieser Zustand wird nur verursacht, wenn die Wunden des Charakters die maximalen Wunden übersteigen, die Herzen also auf 0 sinken. 
+Dieser Zustand wird verursacht, wenn die Wunden des Charakters die maximalen Wunden übersteigen, die Herzen also auf 0 sinken. In diesem Moment wird der Wert dieses Zustands auf 1 gesetzt.
 
-Falls ein Charakter in den Zustand sterbend verfällt, würfelt er so viele Würfel wie der addierte Wert aus *Ausdauer* und *Resistenz* beträgt. Das Resultat gibt die Minuten vor, die ein Gefährte Zeit hat, um den Charakter zu stabilisieren. Ist die Zeit abgelaufen so stirbt der Charakter.
+Ist der Wert des Zustands eins oder höher, so würfelt der Charakter zu Beginn jeder Runde auf seine *Resistenz*. Gelingt dieser Wurf, so passiert nichts. Misslingt dieser Wurf, so wird der Wert des Zustands um eins angehoben.
 
-Für das Stabilisieren sind Erfolge entsprechend dem "Sterbend" Wert des Charakters erforderlich. Hierbei kann es sich um Erste Hilfe, Medizin oder etwas ähnlich hilfreichem handeln.
+Erreicht der Wert des Zustands 6, so stirbt der Charakter.
+
+Für das Stabilisieren sind Erfolge entsprechend dem "Sterbend" Wert des Charakters erforderlich. Hierbei kann es sich um einen Wurf auf Erste Hilfe, Medizin oder etwas ähnlich hilfreichem handeln. Sind genug Erfolge erreicht, wird der Zustand sterbend entfernt.
+
+#### Bewusstlos
+
+Der Character ist zu keiner Handlung fähig (seine *Aktionen* pro Runde sind null). Der Wert dieses Zustands zeigt die Tiefe der Bewusstlosigkeit an.
+
+Zu Beginn jeder Runde kann der Charakter auf seine *Willenskraft* werfen. Zeigt der Wurf Erfolge entsprechend dem Wert dieses Zustands, so wird der Wert auf 0 gesetzt und der Charakter erwacht.
 
 #### Geschockt
 
-Der Charakter hat für jeden Wurf so viele Würfel weniger wie der Wert dieses Statuseffektes ist.
+Der Charakter hat für jeden Wurf so viele Würfel weniger als der Wert dieses Zustands ist.
 
-#### Erschöpft
-
-Der Charakter hat im Kampf pro Runde eine *Aktion* weniger.
-
-Sinken die Aktionen dabei auf 0, erhält der Character den Zustand *Bewusstlos*.
-
-#### Bewustlos
-
-Der Character ist zu keiner Aktion fähig (seine *Aktionen* pro Runde sind null), kann aber zu Beginn seiner Kampfrunde eine *Willenskraftprobe* würfeln. Jeder Erfolg stellt eine Aktion wieder her, bis alle Aktionen wieder hergestelllt sind.
+Zu Beginn jeder Runde kann der Charakter auf seine *Ausdauer* werfen. Er kann den Wert des Zustands um die Anzahl der Erfolge verringern. Erreicht der Zustand dabei einen Wert von 0, so wird er entfernt.
 
 #### Brennend
 
-Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands. 
+Der Mindestwurf des Charakters ist für alle Würfe auf *Wahrnehmung* und für alle Angriffe um den Wert dieses Zustands erhöht.
 
-Der Mindestwurf des Charakters ist für alle Würfe auf Wahrnehmung um den Wert dieses Zustands erhöht.
+Dieser Zustand endet, wenn der Charakter gelöscht wurde.
 
 #### Blutend
 
-Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands. 
+Zu Beginn jeder Runde wirft der Chrakter auf seine *Ausdauer*. Misslingt der Wurf, so nimmt der Charakter je eine Wunde für jede Stufe dieses Zustands hin.
+
+Dieser Zustand endet, wenn der Charakter verbunden wurde (z.B. durch *Erste Hilfe*)
 
 #### Vergiftet
 
-Der Charakter erhält am Ende der Kampfrunde (oder nach 5 Minuten, falls er sich nicht im Kampf befindet) jeweils eine Wunde für jede Stufe dieses Zustands.
-
 Der Mindestwurf des Charakters ist für alle Würfe um den Wert dieses Zustands erhöht.
+
+Zu Beginn jeder Runde kann der Charakter auf seine *Resistenz* werfen. Er kann den Wert des Zustands um die Anzahl der Erfolge verringern. Erreicht der Zustand dabei einen Wert von 0, so wird er entfernt.

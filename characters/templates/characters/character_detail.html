@@ -50,27 +50,6 @@
                 return false
             })
 
-            body.on('change', '.status-effect-value', function (e) {
-                let elem = $(this);
-                let value = elem.val();
-                let status_effect_id = elem.data('status-effect-id');
-
-                $.post(
-                    elem.data('url'),
-                    {
-                        status_effect_id: status_effect_id,
-                        value: value
-                    },
-                    function (data) {
-                        let target = $(`span[data-status-effect-id="${status_effect_id}"]`)
-                        target
-                            .removeClass('text-danger text-muted')
-                            .text(value)
-                        refresh_fragments()
-                    }
-                )
-            })
-
             function refresh_fragments() {
                 $('.fragment').each(function (index) {
                     $(this).load($(this).data('fragment-url'), function (response, status, xhr) {

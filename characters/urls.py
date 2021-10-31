@@ -100,7 +100,7 @@ urlpatterns = [
         views.XhrReputationView.as_view(),
         name='xhr_reputation'),
     url(
-        r'^xhr_status_effects/change/(?P<pk>\d+)$',
+        r'^xhr_status_effects/change/(?P<pk>\d+)/(?P<status_effect_pk>\d+)/(?P<mode>\w+)/$',
         views.XhrCharacterStatusEffectsChangeView.as_view(),
         name='xhr_status_effects_change'),
 
@@ -122,7 +122,7 @@ urlpatterns = [
         views.XhrRemoveWeaponModificationView.as_view(),
         name='xhr_remove_weapon_modification'),
     url(
-        r'^xhr_weapon_condition/(?P<pk>\d+)/(?P<weapon_pk>\d+)(?P<mode>\w+)/$',
+        r'^xhr_weapon_condition/(?P<pk>\d+)/(?P<weapon_pk>\d+)/(?P<mode>\w+)/$',
         views.XhrWeaponConditionView.as_view(),
         name='xhr_weapon_condition'),
 

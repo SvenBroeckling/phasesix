@@ -65,45 +65,26 @@
 
 <div class="row mt-3">
     <h4 class="text-center">{% trans 'Status effects' %}</h4>
-    {% for se in status_effects %}
-        {% with se|status_effect_value:object as se_value %}
-            <div class="col-12 text-center pt-2">
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <h5 class="mb-2">{{ se }}</h5>
-
-                        <span class="fa-layers fa-fw fa-3x mb-2">
-                            <i class="{{ se.fa_icon_class }}"></i>
-                            <span
-                                    data-status-effect-id="{{ se.id }}"
-                                    class="fa-layers-counter">{{ se_value }}</span>
-                        </span>
-
-                        {% if may_edit %}
-                            <input
-                                    class="status-effect-value mt-3"
-                                    type="number"
-                                    max="10"
-                                    min="0"
-                                    value="{{ se_value }}"
-                                    data-status-effect-id="{{ se.id }}"
-                                    data-url="{% url 'characters:xhr_status_effects_change' pk=object.id %}"
-                                    data-slider-value="{{ se_value }}"
-                                    data-slider-tooltip="show"
-                                    data-slider-ticks="[0, 5, 10]"
-                                    data-slider-ticks-labels='["0", "5", "10"]'>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        {% endwith %}
-    {% endfor %}
+    <div class="col-12 pt-2">
+        <div class="card mb-2">
+            <ul class="list-group list-group-flush">
+                {% for se in status_effects %}
+                    {% with se|status_effect_value:object as se_value %}
+                        <li class="list-group-item">
+                            <i class="{{ se.fa_icon_class }} fa-fw"></i>
+                            {{ se }}
+                            <span class="float-end">
+                                <a class="action-link pointer no-decoration text-muted"
+                                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='decrease' %}">-</a>
+                                {% color_value_span se_value 6 invert=True %}
+                                <a class="action-link pointer no-decoration text-muted"
+                                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='increase' %}">+</a>
+                            </span>
+                        </li>
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 
-<script>
-    $(function () {
-        setTimeout(function () {
-            $('.status-effect-value').slider();
-        }, 300);
-    })
-</script>

@@ -162,27 +162,24 @@ class XhrCharacterStatusEffectsChangeView(View):
 
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        status_effect = StatusEffect.objects.get(id=request.POST.get('status_effect_id'))
-        value = int(request.POST.get('value'))
+        status_effect = StatusEffect.objects.get(id=kwargs['status_effect_pk'])
 
         if character.may_edit(request.user):
-            if value > 0:
-                obj, created = CharacterStatusEffect.objects.get_or_create(
-                    character=character,
-                    status_effect=status_effect,
-                    defaults={'base_value': value}
-                )
-                if not created:
-                    obj.base_value = value
-                    obj.save()
-            else:
-                CharacterStatusEffect.objects.filter(
-                    character=character, status_effect=status_effect).delete()
+            obj, created = CharacterStatusEffect.objects.get_or_create(
+                character=character,
+                status_effect=status_effect)
 
-            return JsonResponse({
-                'status': 'ok',
-                'value': value
-            })
+            if kwargs['mode'] == 'decrease':
+                if obj.base_value > 0:
+                    obj.base_value -= 1
+                    obj.save()
+                if obj.base_value <= 0:
+                    obj.delete()
+            if kwargs['mode'] == 'increase':
+                obj.base_value += 1
+                obj.save()
+
+            return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'forbidden', 'value': 0})
 
 

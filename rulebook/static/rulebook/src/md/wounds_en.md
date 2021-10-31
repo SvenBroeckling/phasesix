@@ -39,7 +39,7 @@ If the character takes damage, it is always crossed out from the right. First th
 
 ### Fainting and Death
 
-A character who has neither full hearts nor boosts faints and is considered *dying*.
+A character that has neither full hearts nor boosts faints and is considered *dying*. The condition below describes exactly how to proceed here.
 
 ### Healing
 
@@ -65,38 +65,40 @@ A character can have different conditions. These have different effects on the c
 
 #### Dying
 
-This condition is only caused when the character's wounds exceed the maximum wounds, so the hearts drop to 0. 
+This condition is caused when the character's wounds exceed the maximum wounds, so the hearts decrease to 0. At that moment, the value of this condition is set to 1.
 
-If a character falls into the dying condition, he rolls as many dice as the added value of *endurance* and *resistance*. The result gives the minutes a companion has to stabilize the character. If the time is up, the character dies.
+If the value of the condition is one or higher, the character rolls for his *Resistance* at the beginning of each round. If this roll succeeds, nothing happens. If this roll fails, the value of the condition is raised by one.
 
-Stabilizing requires successes according to the character's "Dying" value. This can be first aid, medicine, or something similarly helpful.
+If the value of the condition reaches 6, the character dies.
 
-#### Shocked
-
-The character has as many dice less for each roll as the value of this status effect.
-
-#### Exhausted
-
-The character has one *action* less per round in combat.
-
-If the actions drop to 0, the character gets the condition *Unconscious*.
+Stabilizing requires successes equal to the character's "Dying" value. This can be a roll on first aid, medicine, or something similarly helpful. If enough successes are achieved, the dying condition is removed.
 
 #### Unconscious
 
-The character is incapable of any action (his *actions* per round are zero), but can roll a *willpower* test at the beginning of his combat round. Each success restores one action until all actions are restored.
+The character is incapable of any action (his *actions* per turn are zero). The value of this condition indicates the depth of unconsciousness.
+
+At the beginning of each round, the character can roll on his *willpower*. If the roll shows successes according to the value of this condition, the value is set to 0 and the character wakes up.
+
+#### Shocked
+
+For each roll, the character has as many dice less than the value of this condition.
+
+At the beginning of each round, the character can roll on his *Endurance*. He can reduce the value of the condition by the number of successes. If the condition reaches a value of 0 in the process, it is removed.
 
 #### Burning
 
-The character receives one wound for each level of this condition at the end of the combat round (or after 5 minutes if not in combat). 
+The character's minimum roll is increased by the value of this condition for all rolls on *perception* and for all attacks.
 
-The character's minimum roll is increased by the value of this condition for all rolls for *Perception*.
+This condition ends when the character is extinguished.
 
 #### Bleeding
 
-The character receives one wound for each level of this condition at the end of the combat round (or after 5 minutes if not in combat). 
+At the beginning of each round, the character rolls for *Endurance*. If the roll fails, the character takes one wound for each level of this condition.
+
+This condition ends when the character is bandaged (e.g. by *first aid*).
 
 #### Poisoned
 
-The character receives one wound for each level of this condition at the end of the combat round (or after 5 minutes if not in combat).
-
 The character's minimum roll is increased by the value of this condition for all rolls.
+
+At the beginning of each round, the character can roll for his *Resistance*. He can reduce the value of this condition by the number of successes. If the condition reaches a value of 0 in the process, it is removed.
