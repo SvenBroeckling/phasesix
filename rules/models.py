@@ -166,7 +166,6 @@ class Skill(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=120)
     kind = models.CharField(_('kind'), max_length=1, choices=KIND_CHOICES)
     extensions = models.ManyToManyField('rules.Extension')
-    show_on_combat_tab = models.BooleanField(_('show on combat tab'), default=False)
 
     dominant_attribute = models.CharField(
         _('dominant attribute'),

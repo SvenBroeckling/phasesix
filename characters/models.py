@@ -2,13 +2,13 @@
 import math
 
 from django.db import models
-from django.db.models import Sum, Max
+from django.db.models import Sum, Max, Q
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, get_language
 
 from armory.models import Item, RiotGear, Weapon
 from horror.models import QuirkModifier
-from rules.models import Skill, Template, TemplateCategory, TemplateModifier
+from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
 
 
 class CharacterQuerySet(models.QuerySet):
@@ -147,7 +147,7 @@ class Character(models.Model):
     @property
     def weaponless_attack_dice(self):
         bonus = 1 if self.quickness > 2 else 0
-        return self.characterskill_set.melee_combat_skill().value + bonus
+        return self.characterskill_set.hand_to_hand_combat_skill().value + bonus
 
     @property
     def weaponless_bonus_wounds(self):
@@ -345,19 +345,23 @@ class Character(models.Model):
                 wc = w.modified_concealment
         return max(ic, rc, wc)
 
+    @property
+    def skills(self):
+        return self.characterskill_set.for_extensions(self.extensions)
+
 
 class CharacterSkillQuerySet(models.QuerySet):
+    def for_extensions(self, extension_rm):
+        return self.filter(
+            Q(skill__extensions__id__in=extension_rm.all()) |
+            Q(skill__extensions__id__in=Extension.objects.filter(is_mandatory=True))
+        )
+
     def mind_skills(self):
-        return self.filter(skill__kind='m')
+        return self.filter(skill__kind='m').order_by(f'skill__name_{get_language()}')
 
     def practical_skills(self):
-        return self.filter(skill__kind='p')
-
-    def combat_skills(self):
-        return self.filter(skill__show_on_combat_tab=True)
-
-    def melee_combat_skill(self):
-        return self.get(skill__name_en='Hand to Hand Combat')
+        return self.filter(skill__kind='p').order_by(f'skill__name_{get_language()}')
 
     def ranged_combat_skill(self):
         return self.get(skill__name_en='Shooting')

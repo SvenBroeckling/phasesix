@@ -114,7 +114,7 @@
                 <th class="text-end">{% trans 'Dice' %}</th>
             </tr>
             </thead>
-            {% for skill in object.characterskill_set.mind_skills %}
+            {% for skill in object.skills.mind_skills %}
                 <tr>
                     <td>
                         {{ skill.skill }}
@@ -134,7 +134,7 @@
                 <th class="text-end">{% trans 'Dice' %}</th>
             </tr>
             </thead>
-            {% for skill in object.characterskill_set.practical_skills %}
+            {% for skill in object.skills.practical_skills %}
                 <tr>
                     <td>
                         {{ skill.skill }}

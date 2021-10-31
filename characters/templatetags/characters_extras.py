@@ -134,3 +134,5 @@ def spell_type_attribute_dice_value(character, spell_type):
     da = getattr(character, spell_type.dominant_attribute)
     sa = getattr(character, spell_type.supplemental_attribute)
     return da + sa
+
+
