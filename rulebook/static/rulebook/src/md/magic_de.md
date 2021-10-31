@@ -57,6 +57,8 @@ Die *Stärke* des Zaubers beschreibt, wie effektiv der Zauber wirkt. Bei neu erl
 
 Jeder Zaubert hat eine bestimmte *Reichweite*. Hierbei handelt es sich um die maximale Entfernung vom Zaubernden, in der ein Zauber wirken kann. Dies ist nicht zu verwechseln mit einer möglichen Fläche, auf der der Zauber wirkt. Diese ist dann in der Zauberbeschreibung erwähnt. Ist die *Reichweite* eines Zaubers 0, so wirkt der Zauber nur bei/an dem Zaubernden selbst.
 
+Die *Form* des Zaubers bestimmt den Wirkungsbereich. Es kann eine geometrische Form, etwa eine Linie oder eine Sphäre sein, oder auch keine bestimmte Form. Letzteres ist der Fall, wenn der Zauber Berührung erfordert oder direkt beim Zaubernden wirkt.
+
 Die *Aktionen* eines Zaubers geben an, wie viele Aktionen das Ausführen des Zaubers benötigt.
 
 #### Schulen

@@ -14,26 +14,29 @@
                 <p>{{ template.rules|urpg_markup }}</p>
             {% endif %}
 
-            {% for mod in template.templatemodifier_set.all %}
-                {% if mod.attribute %}
-                    <i class="fas fa-asterisk" title="{% trans 'Attribute' %}"></i> {{ mod.get_attribute_display|capfirst }} {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
-                {% endif %}
-            {% endfor %}
-            {% for mod in template.templatemodifier_set.all %}
-                {% if mod.skill %}
-                    <i class="fas fa-hand-scissors" title="{% trans 'Skill' %}"></i> {{ mod.skill }} {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
-                {% endif %}
-            {% endfor %}
-            {% for mod in template.templatemodifier_set.all %}
-                {% if mod.knowledge %}
-                    <i class="fas fa-book" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }} {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
-                {% endif %}
-            {% endfor %}
-            {% for mod in template.templatemodifier_set.all %}
-                {% if mod.shadow %}
-                    <i class="fas fa-bullhorn" title="{% trans 'Shadow' %}"></i> {{ mod.shadow }}<br>
-                {% endif %}
-            {% endfor %}
+            {% with all_modifiers=template.templatemodifier_set.all %}
+                {% for mod in all_modifiers %}
+                    {% if mod.attribute %}
+                        <i class="fas fa-asterisk fa-fw" title="{% trans 'Attribute' %}"></i> {{ mod.get_attribute_display|capfirst }} {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
+                    {% endif %}
+                {% endfor %}
+                {% for mod in all_modifiers %}
+                    {% if mod.skill %}
+                        <i class="fas fa-hand-scissors fa-fw" title="{% trans 'Skill' %}"></i> {{ mod.skill }} {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
+                    {% endif %}
+                {% endfor %}
+                {% for mod in all_modifiers %}
+                    {% if mod.knowledge %}
+                        <i class="fas fa-book fa-fw" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }} {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
+                    {% endif %}
+                {% endfor %}
+                {% for mod in all_modifiers %}
+                    {% if mod.shadow %}
+                        <i class="fas fa-bullhorn fa-fw" title="{% trans 'Shadow' %}"></i> {{ mod.shadow }}<br>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+
             {% if template.templaterequirement_set.exists %}
                 <br>
                 {% for req in template.templaterequirement_set.all %}

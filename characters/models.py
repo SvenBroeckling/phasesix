@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _, get_language
 
 from armory.models import Item, RiotGear, Weapon
 from horror.models import QuirkModifier
+from magic.models import SpellTemplateModifier
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
 
 
@@ -169,7 +170,7 @@ class Character(models.Model):
 
     @property
     def spell_points_spent(self):
-        return 0
+        return sum([s.spell_point_cost for s in self.characterspell_set.all()])
 
     @property
     def spell_points_available(self):
@@ -568,29 +569,49 @@ class CharacterSpell(models.Model):
     def may_edit(self, user):
         return self.character.may_edit(user)
 
+    def modifier_attribute_modification(self, attribute_name):
+        mod = 0
+        for t in self.characterspelltemplate_set.all():
+            for m in t.spell_template.spelltemplatemodifier_set.filter(attribute=attribute_name):
+                mod += m.attribute_modifier
+        return mod
+
     @property
     def name(self):
         return self.custom_name if self.custom_name else self.spell.name
 
     @property
     def spell_type(self):
+        for t in self.characterspelltemplate_set.all():
+            for m in t.spell_template.spelltemplatemodifier_set.filter(type_change__isnull=False):
+                return m.type_change
         return self.spell.type
 
     @property
     def variant(self):
+        for t in self.characterspelltemplate_set.all():
+            for m in t.spell_template.spelltemplatemodifier_set.filter(variant_change__isnull=False):
+                return m.variant_change
         return self.spell.variant
 
     @property
     def power(self):
-        return self.spell.power
+        return self.spell.power + self.modifier_attribute_modification('power')
 
     @property
     def range(self):
-        return self.spell.range
+        return self.spell.range + self.modifier_attribute_modification('range')
+
+    @property
+    def shape(self):
+        for t in self.characterspelltemplate_set.all():
+            for m in t.spell_template.spelltemplatemodifier_set.filter(shape_change__isnull=False):
+                return m.shape_change
+        return self.spell.shape
 
     @property
     def actions(self):
-        return self.spell.actions
+        return self.spell.actions + self.modifier_attribute_modification('actions')
 
     @property
     def is_ritual(self):
@@ -598,9 +619,17 @@ class CharacterSpell(models.Model):
 
     @property
     def arcana_cost(self):
-        return self.spell.arcana_cost
+        return self.spell.arcana_cost + self.modifier_attribute_modification('arcana_cost')
+
+    @property
+    def spell_point_cost(self):
+        template_value = sum([s.spell_template.spell_point_cost for s in self.characterspelltemplate_set.all()])
+        return template_value + self.spell.spell_point_cost
 
 
 class CharacterSpellTemplate(models.Model):
     character_spell = models.ForeignKey(CharacterSpell, on_delete=models.CASCADE)
     spell_template = models.ForeignKey('magic.SpellTemplate', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.spell_template.name

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import random
+
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
@@ -13,10 +15,8 @@ from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell
 from horror.models import QuirkCategory
-from magic.models import SpellType
+from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill
-
-import random
 
 
 class DiceJsonView(View):
@@ -262,31 +262,6 @@ class CharacterModifyHealthView(View):
             elif self.kwargs['mode'] == 'boost':
                 character.boost += 1
             character.save()
-        return JsonResponse({'status': 'ok'})
-
-
-class CharacterModifyArcanaView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs['pk'])
-        if character.may_edit(request.user):
-            if self.kwargs['mode'] == 'restore':
-                if character.arcana < character.max_arcana:
-                    character.arcana += 1
-            elif self.kwargs['mode'] == 'use':
-                if character.arcana > 0:
-                    character.arcana -= 1
-            character.save()
-        return JsonResponse({'status': 'ok'})
-
-
-class CharacterCastSpellView(View):
-    def post(self, request, *args, **kwargs):
-        character_spell = CharacterSpell.objects.get(id=kwargs['pk'])
-        character = character_spell.character
-        if character.may_edit(request.user):
-            if character_spell.arcana_cost <= character.arcana:
-                character.arcana -= character_spell.arcana_cost
-                character.save()
         return JsonResponse({'status': 'ok'})
 
 
@@ -623,6 +598,34 @@ class AddWeaponModificationView(View):
         return JsonResponse({'status': 'ok'})
 
 
+# Magic
+
+
+class CharacterModifyArcanaView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.may_edit(request.user):
+            if self.kwargs['mode'] == 'restore':
+                if character.arcana < character.max_arcana:
+                    character.arcana += 1
+            elif self.kwargs['mode'] == 'use':
+                if character.arcana > 0:
+                    character.arcana -= 1
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
+class CharacterCastSpellView(View):
+    def post(self, request, *args, **kwargs):
+        character_spell = CharacterSpell.objects.get(id=kwargs['pk'])
+        character = character_spell.character
+        if character.may_edit(request.user):
+            if character_spell.arcana_cost <= character.arcana:
+                character.arcana -= character_spell.arcana_cost
+                character.save()
+        return JsonResponse({'status': 'ok'})
+
+
 class XhrAddSpellView(TemplateView):
     template_name = 'characters/modals/add_spell.html'
 
@@ -645,3 +648,41 @@ class XhrAddSpellView(TemplateView):
                 return JsonResponse({'status': 'notenoughpoints'})
             character.characterspell_set.create(spell=spell)
         return JsonResponse({'status': 'ok', 'remaining_spell_points': character.spell_points_available})
+
+
+class XhrRemoveSpellView(View):
+    def post(self, request, *args, **kwargs):
+        character_spell = CharacterSpell.objects.get(id=kwargs['pk'])
+        character = character_spell.character
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        character_spell.delete()
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrAddSpellTemplateView(TemplateView):
+    template_name = 'characters/modals/add_spell_template.html'
+
+    def get_context_data(self, **kwargs):
+        character_spell = CharacterSpell.objects.get(id=kwargs['pk'])
+        character = character_spell.character
+
+        context = super().get_context_data(**kwargs)
+        context['character'] = character
+        context['character_spell'] = character_spell
+        context['spell_template_categories'] = SpellTemplateCategory.objects.all()
+        return context
+
+
+class AddSpellTemplateView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        spell_template = SpellTemplate.objects.get(id=kwargs['spell_template_pk'])
+        character_spell = CharacterSpell.objects.get(id=kwargs['character_spell_pk'])
+
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        character_spell.characterspelltemplate_set.create(spell_template=spell_template)
+        return JsonResponse({'status': 'ok'})
+

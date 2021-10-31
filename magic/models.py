@@ -132,8 +132,22 @@ class BaseSpell(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('base spells')
 
 
+class SpellTemplateCategory(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=120)
+
+    class Meta:
+        translate = 'name',
+        verbose_name = _('spell template category')
+        verbose_name_plural = _('spell template categories')
+
+    def __str__(self):
+        return self.name
+
+
 class SpellTemplate(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=120)
+    category = models.ForeignKey(SpellTemplateCategory, on_delete=models.CASCADE)
+
     spell_point_cost = models.IntegerField(verbose_name=_('spell point cost'), default=1)
 
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)

@@ -37,9 +37,25 @@ urlpatterns = [
         views.CharacterModifyArcanaView.as_view(),
         name='modify_arcana'),
     url(
+        r'^xhr_add_spell/(?P<pk>\d+)$',
+        views.XhrAddSpellView.as_view(),
+        name='xhr_add_spell'),
+    url(
+        r'^xhr_remove_spell/(?P<pk>\d+)$',
+        views.XhrRemoveSpellView.as_view(),
+        name='xhr_remove_spell'),
+    url(
         r'^spell/cast/(?P<pk>\d+)/$',
         views.CharacterCastSpellView.as_view(),
         name='cast_spell'),
+    url(
+        r'^xhr_add_spell_template/(?P<pk>\d+)$',
+        views.XhrAddSpellTemplateView.as_view(),
+        name='xhr_add_spell_template'),
+    url(
+        r'^add_spell_template/(?P<pk>\d+)/(?P<spell_template_pk>\d+)/(?P<character_spell_pk>\d+)$',
+        views.AddSpellTemplateView.as_view(),
+        name='add_spell_template'),
 
     # dice
     url(
@@ -167,10 +183,4 @@ urlpatterns = [
         r'^add_weapon_modification/(?P<pk>\d+)/(?P<weapon_modification_pk>\d+)/(?P<weapon_pk>\d+)$',
         views.AddWeaponModificationView.as_view(),
         name='add_weapon_modification'),
-
-    # magic
-    url(
-        r'^xhr_add_spell/(?P<pk>\d+)$',
-        views.XhrAddSpellView.as_view(),
-        name='xhr_add_spell'),
 ]

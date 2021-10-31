@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from magic.models import BaseSpell, SpellType, SpellVariant, SpellShape, SpellTemplate, SpellTemplateModifier
+from magic.models import BaseSpell, SpellType, SpellVariant, SpellShape, SpellTemplate, SpellTemplateModifier, \
+    SpellTemplateCategory
 
 
 class BaseSpellAdmin(admin.ModelAdmin):
@@ -26,12 +27,12 @@ class SpellTemplateModifierInline(admin.TabularInline):
 
 
 class SpellTemplateAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'spell_point_cost')
+    list_display = ('name_de', 'name_en', 'category', 'spell_point_cost')
     list_filter = 'spell_point_cost',
     inlines = [SpellTemplateModifierInline]
     fields = (
         ('name_de', 'name_en'),
-        'spell_point_cost',
+        ('category', 'spell_point_cost'),
         ('rules_de', 'rules_en'),
         ('quote', 'quote_author'),
     )
@@ -43,6 +44,7 @@ class SpellTypeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(BaseSpell, BaseSpellAdmin)
+admin.site.register(SpellTemplateCategory)
 admin.site.register(SpellTemplate, SpellTemplateAdmin)
 admin.site.register(SpellTemplateModifier)
 admin.site.register(SpellShape)
