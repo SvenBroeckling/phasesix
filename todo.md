@@ -28,11 +28,10 @@ Steigerbar:
   -- 
   Druide                3           5               2                           1           10
   Warlock
+  Hexer
   Dämonologe
   Geisterbeschwörer
-  Hexer
   Hermetiker
-  Mumienbefrieder
   Mystiker
   Nekrologe
   Runenleger
