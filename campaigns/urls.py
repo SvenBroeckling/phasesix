@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^detail/(?P<pk>\d+)$', login_required(views.CampaignDetailView.as_view()), name='detail'),
     url(r'^update/(?P<pk>\d+)$', login_required(views.CampaignUpdateView.as_view()), name='update'),
     url(r'^scenes/(?P<pk>\d+)$', login_required(views.CampaignScenesView.as_view()), name='scenes'),
+    url(r'^status/(?P<pk>\d+)$', login_required(views.CampaignStatusView.as_view()), name='status'),
     url(r'^invitation/(?P<pk>\d+)/(?P<hash>.+)$', login_required(views.CampaignInvitationView.as_view()), name='invitation'),
 ]

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
@@ -32,7 +33,7 @@ class CampaignCreateView(CreateView):
 class CampaignMixin(object):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['may_edit'] = self.object.created_by == self.request.user or self.request.user.is_staff
+        context['may_edit'] = self.object.created_by == self.request.user or settings.DEBUG
         context['active_tab'] = self.active_tab
         return context
 
@@ -56,6 +57,12 @@ class CampaignInvitationView(CampaignMixin, DetailView):
     model = Campaign
     template_name = 'campaigns/campaign_invitation.html'
     active_tab = 'invitation'
+
+
+class CampaignStatusView(CampaignMixin, DetailView):
+    template_name = 'campaigns/campaign_status.html'
+    model = Campaign
+    active_tab = 'status'
 
 
 class CampaignScenesView(CampaignMixin, DetailView):

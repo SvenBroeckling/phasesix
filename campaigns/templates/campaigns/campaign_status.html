@@ -1,0 +1,60 @@
+{% extends 'campaigns/campaign_base.html' %}
+{% load characters_extras rules_extras i18n bootstrap4 %}
+
+{% block campaign_content %}
+    <h2>{% trans 'Scenes' %}</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans 'Character' %}</th>
+                    <th>{% trans 'Player' %}</th>
+                    <th>{% trans 'Wounds' %}</th>
+                    <th>{% trans 'Arcana' %}</th>
+                    <th>{% trans 'Dice' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in object.character_set.all %}
+                    <tr>
+                        <td><a href="{{ c.get_absolute_url }}">{{ c }}</a></td>
+                        <td>{{ c.created_by }}</td>
+
+                        <td>
+                            {% for i in c.health|to_range %}
+                                <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
+                            {% endfor %}
+                            {% for i in c.wounds_taken|to_range %}
+                                <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+                            {% endfor %}
+                            {% for i in c.boost|to_range %}
+                                <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% for i in c.arcana|to_range %}
+                                <i class="fas fa-magic text-warning"></i>
+                            {% endfor %}
+                            {% for i in c.arcana_used|to_range %}
+                                <i class="fas fa-magic text-light"></i>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% for i in c.bonus_dice_free|to_range %}
+                                <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Die' %}"></i>
+                            {% endfor %}
+                            {% for i in c.destiny_dice_free|to_range %}
+                                <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Die' %}"></i>
+                            {% endfor %}
+                            {% for i in c.rerolls_free|to_range %}
+                                <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Reroll' %}"></i>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

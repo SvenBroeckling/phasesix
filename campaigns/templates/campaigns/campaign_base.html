@@ -43,6 +43,9 @@
             {% endif %}
 
             {% if may_edit %}
+                <a class="nav-link {% if active_tab == 'status' %}active{% endif %}" href="{% url 'campaigns:status' pk=object.id %}">
+                    <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Status' %}
+                </a>
                 <a class="nav-link {% if active_tab == 'update' %}active{% endif %}" href="{% url 'campaigns:update' pk=object.id %}">
                     <i class="fas fa-fw fa-edit"></i>&nbsp;{% trans 'Edit' %}
                 </a>
