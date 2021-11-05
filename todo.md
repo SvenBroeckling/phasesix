@@ -1,3 +1,12 @@
+## Generell
+
+- Suche in die Add Modals
+- Add Modals Flexbox statt Masonry
+
+## Items
+
+- Plus / Minus in die Item Sidebar
+
 ## Currency
 
 - Währung pro Kampagne einstellbar
@@ -32,20 +41,16 @@ Steigerbar:
   Dämonologe
   Geisterbeschwörer
   Hermetiker
-  Mystiker
   Nekrologe
   Runenleger
-  Schamane
-  Schwarzmagier
   Waldläufer
-  Weissmagier
-  Zauberer
   Seher
-  Vampirjäger
-  Mönch -> Pantheon
-  Paladin -> Pantneon
-  Priester -> Pantheon
-  Vampir -> Lineage
+
+## Pantheon
+  Mönch
+  Paladin
+  Priester
+  Vampir
   
 
 ## Base
