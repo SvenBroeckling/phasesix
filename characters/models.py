@@ -633,3 +633,10 @@ class CharacterSpellTemplate(models.Model):
 
     def __str__(self):
         return self.spell_template.name
+
+
+
+class CharacterCurrency(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    currency_map_unit = models.ForeignKey('armory.CurrencyMapUnit', on_delete=models.CASCADE)
+    quantity = models.IntegerField(_('quantity'), default=0)

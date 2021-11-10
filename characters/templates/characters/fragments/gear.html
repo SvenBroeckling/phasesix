@@ -159,6 +159,11 @@
                 <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
             </div>
 
+            <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Currency' %}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="currency" %}">
+                <div class="card-body text-center">
+                    <i class="fas fa-coins text-warning"></i> 22 <i class="fas fa-coins ms-2 text-white"></i> 30
+                </div>
+            </div>
         {% for ci in character.characteritem_set.by_type %}
             <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ ci.item }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=ci.id model_name="CharacterItem" sidebar_name="characteritem" %}">
                 <div class="card-header">

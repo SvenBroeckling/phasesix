@@ -1,0 +1,26 @@
+{% load i18n characters_extras bootstrap4 %}
+
+<div class="row">
+    <div class="col-12">
+        WIP
+        {% if may_edit %}
+            <form action="{# url 'characters:xhr_reputation' pk=object.id #}" method="post">
+            {% csrf_token %}
+        {% endif %}
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fas fa-coins text-warning"></i> Euro
+                    <input class="form-control float-end w-25" type="number" value="0">
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-coins text-warning"></i> Euro
+                    <input class="form-control form-control-sm float-end w-25" type="number" value="0">
+                </li>
+            </ul>
+        </div>
+        {% if may_edit %}
+            </form>
+        {% endif  %}
+    </div>
+</div>

@@ -2,6 +2,8 @@
 
 - Suche in die Add Modals
 - Add Modals Flexbox statt Masonry
+- Rules chapter button css
+- Currency topdown html -> py
 
 ## Items
 

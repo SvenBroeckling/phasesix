@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from armory.models import WeaponModificationAttributeChange, WeaponType, Weapon, WeaponModificationType, \
-    WeaponModification, RiotGear, ItemType, Item, AttackMode, WeaponAttackMode
+    WeaponModification, RiotGear, ItemType, Item, AttackMode, WeaponAttackMode, CurrencyMap, CurrencyMapUnit
 
 
 class WeaponAttackModeInline(admin.TabularInline):
@@ -65,10 +65,18 @@ class WeaponModificationAdmin(admin.ModelAdmin):
     inlines = [WeaponModificationAttributeChangeInline]
 
 
-
 class AttackModeAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'dice_bonus')
     list_editable = ('dice_bonus',)
+
+
+class CurrencyMapUnitInline(admin.TabularInline):
+    model = CurrencyMapUnit
+
+
+class CurrencyMapAdmin(admin.ModelAdmin):
+    inlines = [CurrencyMapUnitInline]
+
 
 admin.site.register(AttackMode, AttackModeAdmin)
 admin.site.register(WeaponType, WeaponTypeAdmin)
@@ -78,3 +86,5 @@ admin.site.register(WeaponModification, WeaponModificationAdmin)
 admin.site.register(RiotGear, RiotGearAdmin)
 admin.site.register(ItemType)
 admin.site.register(Item, ItemAdmin)
+admin.site.register(CurrencyMap, CurrencyMapAdmin)
+admin.site.register(CurrencyMapUnit)

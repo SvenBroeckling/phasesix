@@ -33,6 +33,8 @@ class Campaign(models.Model):
     )
     forbidden_templates = models.ManyToManyField('rules.Template')
 
+    currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
+
     def __str__(self):
         return self.name
 

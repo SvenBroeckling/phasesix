@@ -82,6 +82,8 @@ class Extension(models.Model, metaclass=TransMeta):
     is_epoch = models.BooleanField(_('is epoch'), default=True)
     ordering = models.IntegerField(_('ordering'), default=100)
 
+    currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
+
     class Meta:
         ordering = ('ordering',)
         translate = ('name', 'description', 'year_range')

@@ -301,3 +301,35 @@ class RiotGear(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+
+class CurrencyMap(models.Model):
+    name = models.CharField(_('name'), max_length=20)
+
+
+class CurrencyMapUnit(models.Model):
+    FA_ICON_CLASS_CHOICES = (
+        ('fas fa-coins', _('Coins')),
+        ('fas fa-euro-sign', _('Euro')),
+        ('fas fa-dollar-sign', _('Dollar')),
+        ('fas fa-rupee-sign', _('Rupee')),
+        ('fas fa-pound-sign', _('Pound')),
+        ('fas fa-lira-sign', _('Lira')),
+        ('fas fa-shekel-sign', _('Shekel')),
+        ('fas fa-yen-sign', _('Yen')),
+        ('fas fa-won-sign', _('Won')))
+    COLOR_CLASS_CHOICES = (
+        ('text-white', _('White')),
+        ('text-success', _('Success')),
+        ('text-primary', _('Primary')),
+        ('text-secondary', _('Secondary')),
+        ('text-warning', _('Warning')),
+        ('text-danger', _('Danger')))
+    currency_map = models.ForeignKey(CurrencyMap, on_delete=models.CASCADE)
+    name = models.CharField(_('name'), max_length=20)
+    color_class = models.CharField(max_length=30, default='text-warning', choices=COLOR_CLASS_CHOICES)
+    fa_icon_class = models.CharField(
+        _('FA Icon Class'),
+        choices=FA_ICON_CLASS_CHOICES,
+        max_length=30,
+        default='fas fa-coins')
