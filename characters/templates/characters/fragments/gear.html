@@ -19,12 +19,14 @@
             </div>
 
             {% for r in character.characterriotgear_set.all %}
-                <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=r.id model_name="CharacterRiotGear" sidebar_name="characterriotgear" %}">
+                <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
+                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=r.id model_name="CharacterRiotGear" sidebar_name="characterriotgear" %}">
                     <div class="card-header">
                         {{ r.riot_gear }}
                         {% if r.riot_gear.concealment > 0 %}
                             <span class="float-end">
-                                <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
+                                <i class="fas fa-eye-slash fa-fw"
+                                   title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
                             </span>
                         {% endif %}
                     </div>
@@ -32,7 +34,8 @@
                         <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
                         <i class="fas fa-running fa-fw"></i> {% trans 'Evasion' %}: {% color_value_span r.riot_gear.evasion 7 %}<br>
                         {% if user.is_superuser %}
-                            <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                            <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}"
+                               style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
                         {% endif %}
                     </div>
                 </div>
@@ -68,12 +71,14 @@
             </div>
 
             {% for weapon in object.characterweapon_set.all %}
-                <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ weapon.weapon }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=weapon.id model_name="CharacterWeapon" sidebar_name="characterweapon" %}">
+                <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ weapon.weapon }}"
+                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=weapon.id model_name="CharacterWeapon" sidebar_name="characterweapon" %}">
                     <div class="card-header">
                         {{ weapon.weapon }} <span class="small text-muted">{{ weapon.weapon.type }}</span>
                         {% if weapon.modified_concealment > 0 %}
                             <span class="float-end">
-                                <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span weapon.modified_concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}
+                                <i class="fas fa-eye-slash fa-fw"
+                                   title="{% trans 'Concealment' %}"></i> {% color_value_span weapon.modified_concealment 7 invert=True %} {% display_modifications weapon 'concealment' %}
                             </span>
                         {% endif %}
                     </div>
@@ -84,13 +89,20 @@
                                 <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
                                 <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.weapon.bonus_dice 4 %} {% display_modifications weapon 'bonus_dice' %}<br>
                                 {% if weapon.has_capacity %}
-                                    <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.weapon.reload_actions 6 invert=True %} {% display_modifications weapon 'reload_actions' %}<br>
-                                    <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.weapon.capacity 30 %} {% display_modifications weapon 'capacity' %}<br>
+                                    <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}:
+                                    {% color_value_span weapon.weapon.reload_actions 6 invert=True %}
+                                    {% display_modifications weapon 'reload_actions' %}<br>
+                                    <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}:
+                                    {% color_value_span weapon.weapon.capacity 30 %}
+                                    {% display_modifications weapon 'capacity' %}<br>
                                 {% endif %}
                                 <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m {% display_modifications weapon 'range_meter' %}<br>
                                 <br>
                                 {% if weapon.weapon.weaponattackmode_set.exists %}
-                                    {% for fm in weapon.weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }} +{% color_value_span fm.dice_bonus 6 %} {% display_modifications weapon 'bonus_dice' %} <i class="fas fa-dice-five"></i><br>{% endfor %}
+                                    {% for fm in weapon.weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }} +
+                                        {% color_value_span fm.dice_bonus 6 %}
+                                        {% display_modifications weapon 'bonus_dice' %} <i class="fas fa-dice-five"></i>
+                                        <br>{% endfor %}
                                 {% endif %}
 
                                 {% if weapon.modifications.exists %}
@@ -104,11 +116,14 @@
                                                     </div>
                                                     <div class="card-body">
                                                         {% for wma in wm.weaponmodificationattributechange_set.all %}
-                                                            {{ wma.get_attribute_display|capfirst }} +{% color_value_span wma.attribute_modifier 4 %}<br>
+                                                            {{ wma.get_attribute_display|capfirst }} +
+                                                            {% color_value_span wma.attribute_modifier 4 %}<br>
                                                         {% endfor %}
                                                         {% for wma in wm.weaponmodificationattributechange_set.all %}
                                                             {% if wma.status_effect %}
-                                                                {{ wma.status_effect|capfirst }} <i class="{{ wma.status_effect.fa_icon_class }}"></i> {% color_value_span wma.status_effect_value 4 %}<br>
+                                                                {{ wma.status_effect|capfirst }}
+                                                                <i class="{{ wma.status_effect.fa_icon_class }}"></i>
+                                                                {% color_value_span wma.status_effect_value 4 %}<br>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </div>
@@ -120,7 +135,8 @@
                             </div>
                         </div>
                         {% if user.is_superuser %}
-                            <a href="{% url 'admin:armory_weapon_change' weapon.weapon.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                            <a href="{% url 'admin:armory_weapon_change' weapon.weapon.id %}"
+                               style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
                         {% endif %}
                     </div>
                 </div>
@@ -159,51 +175,62 @@
                 <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
             </div>
 
-            <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Currency' %}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="currency" %}">
-                <div class="card-body text-center">
-                    <i class="fas fa-coins text-warning"></i> 22 <i class="fas fa-coins ms-2 text-white"></i> 30
+            {% if object.currency_map %}
+                <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Currency' %}"
+                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="currency" %}">
+                    <div class="card-body text-center">
+                        {% for unit in object.currency_map.currencymapunit_set.all %}
+                        <i class="{{ unit.fa_icon_class }} {{ unit.color_class }}"></i> {{ object|currency_quantity:unit }}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% for ci in character.characteritem_set.by_type %}
-            <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ ci.item }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=ci.id model_name="CharacterItem" sidebar_name="characteritem" %}">
-                <div class="card-header">
-                   {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
-                    <span class="small text-muted">{{ ci.item.type }}</span>
-                    {% if ci.item.concealment > 0 %}
-                        <span class="float-end">
-                        <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
+            {% endif %}
+
+            {% for ci in character.characteritem_set.by_type %}
+                <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ ci.item }}"
+                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=ci.id model_name="CharacterItem" sidebar_name="characteritem" %}">
+                    <div class="card-header">
+                        {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
+                        <span class="small text-muted">{{ ci.item.type }}</span>
+                        {% if ci.item.concealment > 0 %}
+                            <span class="float-end">
+                        <i class="fas fa-eye-slash fa-fw"
+                           title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
                         </span>
+                        {% endif %}
+                    </div>
+                    {% if ci.item.description %}
+                        <div class="card-body d-none">
+                            <p class="mb-0">{{ ci.item.description }}</p>
+                        </div>
                     {% endif %}
+                    <div class="card-footer d-none">
+                        <i class="fas fa-eye-slash fa-fw"
+                           title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
+                        <i class="fas fa-balance-scale fa-fw ms-1"
+                           title="{% trans 'Weight' %}"></i> {{ ci.item.weight }}
+                        {% if user.is_superuser %}
+                            <a href="{% url 'admin:armory_item_change' ci.item.id %}"
+                               style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                        {% endif %}
+                    </div>
                 </div>
-                {% if ci.item.description %}
-                <div class="card-body d-none">
-                   <p class="mb-0">{{ ci.item.description }}</p>
+            {% empty %}
+                <div class="card">
+                    <div class="card-body">
+                        <a
+                                class="modal-trigger"
+                                data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
+                                title="{% trans 'Add Item' %}"
+                                {% if may_edit %}
+                                data-bs-toggle="modal"
+                                {% endif %}
+                                data-modal-title="{% trans 'Add item' %}"
+                                data-bs-target=".character-modal"
+                                href="">{% trans 'No items yet.' %}</a>
+                    </div>
                 </div>
-                {% endif %}
-                <div class="card-footer d-none">
-                    <i class="fas fa-eye-slash fa-fw" title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
-                    <i class="fas fa-balance-scale fa-fw ms-1" title="{% trans 'Weight' %}"></i> {{ ci.item.weight }}
-                    {% if user.is_superuser %}
-                        <a href="{% url 'admin:armory_item_change' ci.item.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                    {% endif %}
-                </div>
-            </div>
-        {% empty %}
-            <div class="card">
-                <div class="card-body">
-                    <a
-                            class="modal-trigger"
-                            data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
-                            title="{% trans 'Add Item' %}"
-                            {% if may_edit %}
-                            data-bs-toggle="modal"
-                            {% endif %}
-                            data-modal-title="{% trans 'Add item' %}"
-                            data-bs-target=".character-modal"
-                            href="">{% trans 'No items yet.' %}</a>
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

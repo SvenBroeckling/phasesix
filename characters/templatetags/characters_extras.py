@@ -136,3 +136,6 @@ def spell_type_attribute_dice_value(character, spell_type):
     return da + sc.value
 
 
+@register.filter
+def currency_quantity(object, currency_map_unit):
+    return object.currency_quantity(currency_map_unit)

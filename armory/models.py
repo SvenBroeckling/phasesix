@@ -306,6 +306,8 @@ class RiotGear(models.Model, metaclass=TransMeta):
 class CurrencyMap(models.Model):
     name = models.CharField(_('name'), max_length=20)
 
+    def __str__(self):
+        return self.name
 
 class CurrencyMapUnit(models.Model):
     FA_ICON_CLASS_CHOICES = (

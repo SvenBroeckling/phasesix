@@ -20,9 +20,6 @@
             <a href="{{ object.get_invite_link }}" class="btn btn-primary float-end">{% trans 'Invite Link' %}</a>
             <h1>{{ object.name }}</h1>
             {% trans 'A campaign by' %} {{ object.created_by }}
-            <p>
-                {{ object.abstract|urpg_markup }}
-            </p>
         </div>
     </div>
 {% endblock %}
@@ -33,7 +30,7 @@
         <div class="col-lg-2 col-md-3">
             <div class="nav flex-column nav-pills mb-2" aria-orientation="vertical">
                 <a class="nav-link {% if active_tab == 'detail' %}active{% endif %}" href="{% url 'campaigns:detail' pk=object.id %}">
-                    <i class="fas fa-fw fa-people-carry"></i>&nbsp;{% trans 'Players' %}
+                    <i class="fas fa-fw fa-people-carry"></i>&nbsp;{% trans 'Campaign' %}
                 </a>
 
             {% if active_tab == 'invitation' %}
@@ -47,7 +44,7 @@
                     <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Status' %}
                 </a>
                 <a class="nav-link {% if active_tab == 'update' %}active{% endif %}" href="{% url 'campaigns:update' pk=object.id %}">
-                    <i class="fas fa-fw fa-edit"></i>&nbsp;{% trans 'Edit' %}
+                    <i class="fas fa-fw fa-edit"></i>&nbsp;{% trans 'Settings' %}
                 </a>
                 <a class="nav-link {% if active_tab == 'scenes' %}active{% endif %}" href="{% url 'campaigns:scenes' pk=object.id %}">
                     <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Scenes' %}

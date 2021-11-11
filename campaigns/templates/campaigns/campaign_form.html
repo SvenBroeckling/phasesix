@@ -3,11 +3,11 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12 col-md-8 offset-md-2">
             <form action="{% url 'campaigns:create' %}" method="post">
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                <button class="btn btn-primary">{% trans 'Create campaign' %}</button>
+                <button class="btn btn-primary mt-2">{% trans 'Create campaign' %}</button>
             </form>
         </div>
     </div>

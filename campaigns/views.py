@@ -18,7 +18,7 @@ class CampaignListView(ListView):
 
 class CampaignCreateView(CreateView):
     model = Campaign
-    fields = ('name', 'epoch', 'abstract',)
+    fields = ('name', 'epoch', 'abstract', 'currency_map')
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -46,7 +46,7 @@ class CampaignDetailView(CampaignMixin, DetailView):
 class CampaignUpdateView(CampaignMixin, UpdateView):
     model = Campaign
     active_tab = 'update'
-    fields = ('name', 'epoch', 'extensions', 'image', 'backdrop_image')
+    fields = ('name', 'epoch', 'extensions', 'abstract', 'currency_map', 'image', 'backdrop_image')
     template_name = 'campaigns/campaign_update.html'
 
     def get_success_url(self):

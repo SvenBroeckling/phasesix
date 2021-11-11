@@ -1,26 +1,32 @@
 {% load i18n characters_extras bootstrap4 %}
 
+<script>
+    $(function(){
+        $('.currency-unit-input').on('change keydown', function(e){
+            let quantity = $(this).val()
+            let element = $(this)
+            $.post()
+
+        })
+    })
+</script>
+
 <div class="row">
     <div class="col-12">
         WIP
-        {% if may_edit %}
-            <form action="{# url 'characters:xhr_reputation' pk=object.id #}" method="post">
-            {% csrf_token %}
-        {% endif %}
         <div class="card">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <i class="fas fa-coins text-warning"></i> Euro
-                    <input class="form-control float-end w-25" type="number" value="0">
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-coins text-warning"></i> Euro
-                    <input class="form-control form-control-sm float-end w-25" type="number" value="0">
-                </li>
+                {% for unit in object.currency_map.currencymapunit_set.all %}
+                    <li class="list-group-item">
+                        <i class="{{ unit.fa_icon_class }} fa-fw {{ unit.color_class }} me-1"></i> {{ unit.name }}
+                        <input class="form-control float-end form-control-sm w-25 currency-unit-input"
+                               data-url=""
+                               data-pk="{{ object.id }}"
+                               type="number"
+                               value="{{ object|currency_quantity:unit }}">
+                    </li>
+                {% endfor %}
             </ul>
         </div>
-        {% if may_edit %}
-            </form>
-        {% endif  %}
     </div>
 </div>

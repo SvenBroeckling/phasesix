@@ -101,6 +101,15 @@ class Character(models.Model):
         return kd
 
     @property
+    def currency_map(self):
+        cc = self.campaign.currency_map
+        return cc if cc is not None else self.get_epoch().currency_map
+
+    def currency_quantity(self, currency_map_unit):
+        qs = self.charactercurrency_set.filter(currency_map_unit=currency_map_unit)
+        return qs.latest('id').quantity if qs.exists() else 0
+
+    @property
     def rest_wound_dice(self):
         return self.resistance + self.endurance + self.willpower
 
@@ -135,7 +144,7 @@ class Character(models.Model):
     def remove_template(self, template):
         self.charactertemplate_set.filter(template=template).delete()
 
-    def get_epoch(self):
+    def get_epoch(self) -> Extension:
         return self.extensions.filter(is_mandatory=False, is_epoch=True).earliest('id')
 
     @property
