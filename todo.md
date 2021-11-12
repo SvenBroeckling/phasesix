@@ -1,19 +1,12 @@
 ## Generell
 
 - Suche in die Add Modals
+- Weapon Addon add bug?
 - Add Modals Flexbox statt Masonry
-- Rules chapter button css
-- Currency topdown html -> py
 
 ## Items
 
 - Plus / Minus in die Item Sidebar
-
-## Currency
-
-- Währung pro Kampagne einstellbar
-- Defaults von der Epoche, beim Charakter einstellbar
-- Einfach Decimal, d.h. nur 2 Namen
 
 ## Notizen
 
@@ -61,11 +54,10 @@ Steigerbar:
 
 ## Regeln
 
-- Kampf Schicksalswürfel Stehlen: Explizit erwähnen dass man die selbst bekommt
-- Ini Regel: Explding Dice explizit erwähnen
-- Beim Reagieren auf Schüsse ist die Deckung des schiessenden halbiert / verringert
-- Vollautomatisch Konsumiert alle bleibenden Aktionen einer Runde und schiesst für jede Aktion
-- Zielen als Waffenwert? Genauigkeit -> Zielen bei anbauteilen
+- Kampf Schicksalswürfel Stehlen: Explizit erwähnen, dass man die selbst bekommt
+- Ini Regel: Exploding Dice explizit erwähnen
+- Vollautomatisch konsumiert alle bleibenden Aktionen einer Runde und schießt für jede Aktion
+- Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
 
 ## Kampagnenansicht
 
