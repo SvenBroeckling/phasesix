@@ -102,7 +102,7 @@ class Character(models.Model):
 
     @property
     def currency_map(self):
-        cc = self.campaign.currency_map
+        cc = self.campaign.currency_map if self.campaign is not None else None
         return cc if cc is not None else self.get_epoch().currency_map
 
     def currency_quantity(self, currency_map_unit):
