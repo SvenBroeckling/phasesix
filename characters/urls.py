@@ -173,6 +173,10 @@ urlpatterns = [
         r'^xhr_remove_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
         views.XhrRemoveItemView.as_view(),
         name='xhr_remove_item'),
+    url(
+        r'^modify_currency/(?P<pk>\d+)$',
+        views.XhrModifyCurrencyView.as_view(),
+        name='xhr_modify_currency'),
 
     # weapon modifications
     url(

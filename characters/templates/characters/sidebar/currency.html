@@ -1,32 +1,22 @@
 {% load i18n characters_extras bootstrap4 %}
 
-<script>
-    $(function(){
-        $('.currency-unit-input').on('change keydown', function(e){
-            let quantity = $(this).val()
-            let element = $(this)
-            $.post()
-
-        })
-    })
-</script>
-
 <div class="row">
     <div class="col-12">
-        WIP
         <div class="card">
-            <ul class="list-group list-group-flush">
-                {% for unit in object.currency_map.currencymapunit_set.all %}
-                    <li class="list-group-item">
-                        <i class="{{ unit.fa_icon_class }} fa-fw {{ unit.color_class }} me-1"></i> {{ unit.name }}
-                        <input class="form-control float-end form-control-sm w-25 currency-unit-input"
-                               data-url=""
-                               data-pk="{{ object.id }}"
-                               type="number"
-                               value="{{ object|currency_quantity:unit }}">
-                    </li>
-                {% endfor %}
-            </ul>
+            <form class="modify-currency-form" action="{% url 'characters:xhr_modify_currency' pk=object.id %}" method="post">
+                <ul class="list-group list-group-flush">
+                    {% for unit in object.currency_map.currencymapunit_set.all %}
+                        <li class="list-group-item">
+                            <i class="{{ unit.fa_icon_class }} fa-fw {{ unit.color_class }} me-1"></i> {{ unit.name }}
+                            <input class="form-control float-end form-control-sm w-25 currency-unit-input"
+                                   name="currency-unit-{{ unit.id }}"
+                                   type="number"
+                                   value="{{ object|currency_quantity:unit }}">
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button class="btn btn-primary w-100">{% trans 'Set Currency' %}</button>
+            </form>
         </div>
     </div>
 </div>

@@ -10,7 +10,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView, FormView
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType, \
-    WeaponAttackMode
+    WeaponAttackMode, CurrencyMapUnit
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell
@@ -686,3 +686,21 @@ class AddSpellTemplateView(View):
         character_spell.characterspelltemplate_set.create(spell_template=spell_template)
         return JsonResponse({'status': 'ok'})
 
+
+class XhrModifyCurrencyView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        for k, v in request.POST.items():
+            unit_id = k.split('-')[-1]
+            qs = character.charactercurrency_set.filter(currency_map_unit__id=unit_id)
+            if qs.exists():
+                qs.update(quantity=int(v))
+            else:
+                character.charactercurrency_set.create(
+                    currency_map_unit=CurrencyMapUnit.objects.get(id=unit_id),
+                    quantity=v)
+        return JsonResponse({'status': 'ok'})

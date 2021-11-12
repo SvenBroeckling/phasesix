@@ -80,6 +80,22 @@
                 $('a[href="' + activeTab + '"]').tab('show')
             }
 
+            body.on('submit', '.modify-currency-form', function(e){
+                console.log('submit')
+                refresh_fragments()
+            })
+
+            // currency
+            $('body').on('click', '.modify-currency-form button', function(e){
+                let form = $(this).parent()
+                let url = form.attr('action')
+                $.post(url, form.serialize(), function(data){
+                    refresh_fragments()
+                })
+                e.preventDefault()
+                return false
+            })
+
             // reputation
             body.on('submit', '.add-reputation-form', function (e) {
                 let form = $(this)
