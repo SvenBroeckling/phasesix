@@ -35,9 +35,9 @@
     <table class="table table-bordered table-hover-tr tableFixHead">
         <thead>
             <tr>
-                <th class="bg-light">{% trans 'Template' %}</th>
+                <th class="bg-dark">{% trans 'Template' %}</th>
                 {% for e in extensions %}
-                    <th class="{{ e.is_epoch|yesno:"bg-secondary,bg-light" }}">{{ e.name }}</th>
+                    <th class="bg-dark">{{ e.name }}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -50,7 +50,7 @@
                         </a>
                     </td>
                     {% for e in extensions %}
-                        <td class="{{ e.is_epoch|yesno:"bg-secondary,bg-light" }}">
+                        <td class="{{ e.is_epoch|yesno:",bg-dark" }}">
                             <a
                                     href="{% url 'gmtools:extension_grid' type=type %}"
                                     class="set-epoch"
