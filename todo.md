@@ -1,13 +1,3 @@
-## Generell
-
-- Suche in die Add Modals
-- Weapon Addon add bug?
-- Add Modals Flexbox statt Masonry
-
-## Items
-
-- Plus / Minus in die Item Sidebar
-
 ## Notizen
 
 * Privat / Öffentlich
@@ -83,3 +73,14 @@ Steigerbar:
 
 - Weniger Bonuswürfel
 - Kapazität
+
+## Generell
+
+- Suche in die Add Modals
+- Weapon Addon add bug?
+- Add Modals Flexbox statt Masonry
+
+## Items
+
+- Plus / Minus in die Item Sidebar
+

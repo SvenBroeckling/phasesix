@@ -81,11 +81,6 @@ Zauber in Phase Six sind Schulen zugeordnet, welche Zauber in grobe Kategorien e
 
 Zauberschablonen verändern die Werte eines Zaubers, können zudem Effekte hinzufügen oder das Verhalten des Zaubers komplett ändern.
 
-* Twinspell
-* Starker Spell
-* Longrange
-* Arkana Kosten-
-* Actions-
 * Typechange (Wasser -> Blut, billiger)
 * Variantchange (Beherrschung -> Schaden, sehr teuer)
 
