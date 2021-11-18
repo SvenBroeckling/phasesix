@@ -1,3 +1,9 @@
+## Currency
+
+* Weapon: Preise anzeigen (wenn currency)
+* Armor: Preise anzeigen (wenn Currency)
+
+
 ## Notizen
 
 * Privat / Öffentlich
