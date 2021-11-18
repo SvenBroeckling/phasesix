@@ -27,17 +27,21 @@
                     <span class="float-end">{{ object.item.type }}</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    <i class="fas fa-balance-scale fa-fw"></i>
                     {% trans 'Weight' %}
                     <span class="float-end">{% color_value_span object.item.weight 100 invert=True %}</span>
                 </li>
+                {% if object.character.currency_map %}
+                    {% with cmu=object.character.currency_map.currencymapunit_set.earliest %}
+                    <li class="list-group-item">
+                         <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+                        {% trans 'Value' %}
+                        <span class="float-end">{% color_value_span object.item.price|floatformat:2 100 invert=True %}</span>
+                    </li>
+                    {% endwith %}
+                {% endif %}
                 <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
-                    {% trans 'Price' %}
-                    <span class="float-end">{% color_value_span object.item.price|floatformat:2 100 invert=True %} €</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
+                    <i class="fas fa-eye-slash fa-fw"></i>
                     {% trans 'Concealment' %}
                     <span class="float-end">{% color_value_span object.item.concealment 5 invert=True %}</span>
                 </li>

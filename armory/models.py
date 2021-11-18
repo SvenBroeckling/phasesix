@@ -309,6 +309,7 @@ class CurrencyMap(models.Model):
     def __str__(self):
         return self.name
 
+
 class CurrencyMapUnit(models.Model):
     FA_ICON_CLASS_CHOICES = (
         ('fas fa-coins', _('Coins')),
@@ -335,3 +336,6 @@ class CurrencyMapUnit(models.Model):
         choices=FA_ICON_CLASS_CHOICES,
         max_length=30,
         default='fas fa-coins')
+
+    class Meta:
+        get_latest_by = 'id',

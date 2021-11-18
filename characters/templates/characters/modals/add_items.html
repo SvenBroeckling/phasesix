@@ -1,8 +1,8 @@
 {% load characters_extras rules_extras i18n %}
 
 <script>
-    $(function(){
-        $('.add-form').on('submit', function(e){
+    $(function () {
+        $('.add-form').on('submit', function (e) {
             var form = $(this);
             var btn = form.find('button');
             var original_btn_html = btn.html();
@@ -29,53 +29,67 @@
     })
 </script>
 
-<div>
-    <ul class="nav nav-tabs justify-content-center" role="tablist">
-        {% for t in item_types %}
-            <li class="nav-item {% if forloop.first %}active{% endif %}">
-                <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab" data-bs-toggle="tab">{{ t }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <div class="tab-content">
-        {% for t in item_types %}
-            <div role="tabpanel" class="tab-pane {% if forloop.first %}active{% endif %}" id="i{{ t.id }}">
-                <div class="row masonry-container">
-                    {% for item in t.item_set.all %}
-                        {% has_extensions item character.extensions.all as has_extensions %}
-                        {% if has_extensions %}
-                            <div class="col-md-6">
-                                <div class="card mt-3">
-                                    <div class="card-header text-center">
+<div class="row">
+    <div class="col-12 col-md-3">
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="{% trans 'Search' %}">
+        </div>
+        <ul class="nav nav-pills flex-column" role="tablist">
+            {% for t in item_types %}
+                <li class="nav-item {% if forloop.first %}active{% endif %}">
+                    <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
+                       data-bs-toggle="tab">{{ t }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-12 col-md-9">
+        <div class="tab-content">
+            {% for t in item_types %}
+                <div role="tabpanel" class="tab-pane {% if forloop.first %}active{% endif %}" id="i{{ t.id }}">
+                    <div class="row masonry-container">
+                        {% for item in t.item_set.all %}
+                            {% has_extensions item character.extensions.all as has_extensions %}
+                            {% if has_extensions %}
+                                <div class="col-md-6">
+                                    <div class="card mt-3">
+                                        <div class="card-header text-center">
                                         <span class="float-start">
                                             {% for e in item.extensions.all %}
                                                 <i class="{{ e.fa_icon_class }}" title="{{ e }}"></i>
                                             {% endfor %}
                                         </span>
-                                        <span>{{ item }}</span>
-                                        <span class="float-end small">{{ item.type }}</span>
-                                    </div>
-                                    <div class="card-body">
-                                        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
-                                        <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span item.concealment 6 invert=True %}<br>
-                                        <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
-                                        <i class="fas fa-asterisk fa-fw"></i> {% trans 'Value' %}: {% color_value_span item.price 500 invert=True %} €
-                                        <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}" class="float-end add-form" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="item_id" value="{{ item.id }}">
-                                            <button class="btn btn-sm btn-primary float-end" data-msg="{% trans 'Added' %}">{% trans 'Add item' %}</button>
-                                        </form>
-                                        {% if user.is_superuser %}
-                                            <a href="{% url 'admin:armory_item_change' item.id %}" style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
-                                        {% endif %}
+                                            <span>{{ item }}</span>
+                                            <span class="float-end small">{{ item.type }}</span>
+                                        </div>
+                                        <div class="card-body">
+                                            {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+                                            <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span item.concealment 6 invert=True %}<br>
+                                            <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
+                                            {% if character.currency_map %}
+                                                {% with cmu=character.currency_map.currencymapunit_set.earliest %}
+                                                    <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i> {% trans 'Value' %}: {% color_value_span item.price 500 invert=True %}
+                                                {% endwith %}
+                                            {% endif %}
+                                            <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}"
+                                                  class="float-end add-form" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                                <button class="btn btn-sm btn-primary float-end"
+                                                        data-msg="{% trans 'Added' %}">{% trans 'Add item' %}</button>
+                                            </form>
+                                            {% if user.is_superuser %}
+                                                <a href="{% url 'admin:armory_item_change' item.id %}"
+                                                   style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </div>
