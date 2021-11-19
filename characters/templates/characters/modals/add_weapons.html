@@ -57,6 +57,14 @@
                                                         {% color_value_span fm.dice_bonus 6 %}
                                                         <i class="fas fa-dice-five"></i><br>{% endfor %}
                                                 {% endif %}
+                                                {% if character.currency_map %}
+                                                    {% with cmu=character.currency_map.currencymapunit_set.earliest %}
+                                                        <br>
+                                                        <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+                                                        {% trans 'Price' %}:
+                                                        {% color_value_span weapon.price 1000 invert=True %}
+                                                    {% endwith %}
+                                                {% endif %}
                                                 <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}"
                                                       class="float-end add-form" method="post">
                                                     {% csrf_token %}

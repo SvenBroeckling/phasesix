@@ -47,6 +47,16 @@
                                                     {% color_value_span wma.status_effect_value 4 %}<br>
                                                 {% endif %}
                                             {% endfor %}
+
+                                            {% if character.currency_map %}
+                                                {% with cmu=character.currency_map.currencymapunit_set.earliest %}
+                                                    <br>
+                                                    <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+                                                    {% trans 'Price' %}:
+                                                    {% color_value_span wm.price 1000 invert=True %}
+                                                {% endwith %}
+                                            {% endif %}
+
                                             <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}"
                                                   class="float-end add-form" method="post">
                                                 {% csrf_token %}

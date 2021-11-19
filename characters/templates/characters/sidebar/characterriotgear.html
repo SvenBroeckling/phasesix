@@ -49,11 +49,6 @@
                     <span class="float-end">{% color_value_span object.riot_gear.weight 100 invert=True %}</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
-                    {% trans 'Price' %}
-                    <span class="float-end">{% color_value_span object.riot_gear.price|floatformat:2 100 invert=True %} €</span>
-                </li>
-                <li class="list-group-item">
                     <i class="fas fa-eye-slash fa-fw"></i>
                     {% trans 'Concealment' %}
                     <span class="float-end">{% color_value_span object.riot_gear.concealment 5 invert=True %}</span>
@@ -63,6 +58,15 @@
                     {% trans 'Condition' %}
                     <span class="float-end">{% color_value_span object.condition 100 %}%</span>
                 </li>
+                {% if object.character.currency_map %}
+                    {% with cmu=object.character.currency_map.currencymapunit_set.earliest %}
+                        <li class="list-group-item">
+                            <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+                            {% trans 'Price' %}
+                            <span class="float-end">{% color_value_span object.riot_gear.price 1000 invert=True %}</span>
+                        </li>
+                    {% endwith %}
+                {% endif %}
             </ul>
         </div>
     </div>

@@ -13,6 +13,14 @@
                     <i class="fas fa-running fa-fw"></i> {% trans 'Evasion' %}: {% color_value_span r.evasion 3 %}<br>
                     <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.concealment 6 invert=True %}<br>
                     <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.weight }}<br>
+                    {% if character.currency_map %}
+                        {% with cmu=character.currency_map.currencymapunit_set.earliest %}
+                            <br>
+                            <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+                            {% trans 'Price' %}:
+                            {% color_value_span r.price 500 invert=True %}
+                        {% endwith %}
+                    {% endif %}
                     <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=r.id %}" method="post"
                           class="float-end add-form">
                         {% csrf_token %}
