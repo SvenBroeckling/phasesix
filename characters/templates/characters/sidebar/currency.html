@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <form class="modify-currency-form" action="{% url 'characters:xhr_modify_currency' pk=object.id %}" method="post">
+            <form class="add-form" action="{% url 'characters:xhr_modify_currency' pk=object.id %}" method="post">
                 <ul class="list-group list-group-flush">
                     {% for unit in object.currency_map.currencymapunit_set.all %}
                         <li class="list-group-item">
@@ -15,7 +15,8 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <button class="btn btn-primary w-100">{% trans 'Set Currency' %}</button>
+                <button data-refresh-fragments="yes" data-success="{% trans 'Currency changed' %}" data-danger="Not possible"
+                        class="btn btn-primary w-100">{% trans 'Set Currency' %}</button>
             </form>
         </div>
     </div>

@@ -2,27 +2,6 @@
 
 <script>
     $(function () {
-        $('.add-form').on('submit', function (e) {
-            var form = $(this);
-            var btn = form.find('button');
-            var original_btn_html = btn.html();
-
-            btn.text(btn.data('msg'));
-            btn.addClass('btn-success');
-
-            setTimeout(function () {
-                btn.html(original_btn_html);
-                btn.removeClass('btn-success');
-            }, 1000);
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize()
-            });
-            e.preventDefault();
-            return false;
-        });
-
         $('.modal-body a.nav-link').first().addClass('active')
         $('.modal-body div.tab-pane').first().addClass('active')
         $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
@@ -68,7 +47,9 @@
                                             <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
                                             {% if character.currency_map %}
                                                 {% with cmu=character.currency_map.currencymapunit_set.earliest %}
-                                                    <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i> {% trans 'Value' %}: {% color_value_span item.price 500 invert=True %}
+                                                    <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+                                                    {% trans 'Value' %}:
+                                                    {% color_value_span item.price 500 invert=True %}
                                                 {% endwith %}
                                             {% endif %}
                                             <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}"
@@ -76,7 +57,8 @@
                                                 {% csrf_token %}
                                                 <input type="hidden" name="item_id" value="{{ item.id }}">
                                                 <button class="btn btn-sm btn-primary float-end"
-                                                        data-msg="{% trans 'Added' %}">{% trans 'Add item' %}</button>
+                                                        data-danger="{% trans 'Not possible' %}"
+                                                        data-success="{% trans 'Added' %}">{% trans 'Add item' %}</button>
                                             </form>
                                             {% if user.is_superuser %}
                                                 <a href="{% url 'admin:armory_item_change' item.id %}"

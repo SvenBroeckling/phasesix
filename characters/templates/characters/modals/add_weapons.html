@@ -1,28 +1,7 @@
 {% load characters_extras rules_extras i18n %}
 
 <script>
-    $(function(){
-        $('.add-form').on('submit', function(e){
-            var form = $(this);
-            var btn = form.find('button');
-            var original_btn_html = btn.html();
-
-            btn.text(btn.data('msg'));
-            btn.addClass('btn-success');
-
-            setTimeout(function () {
-                btn.html(original_btn_html);
-                btn.removeClass('btn-success');
-            }, 1000);
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize()
-            });
-            e.preventDefault();
-            return false;
-        });
-
+    $(function () {
         $('.modal-body a.nav-link').first().addClass('active')
         $('.modal-body div.tab-pane').first().addClass('active')
         $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
@@ -63,25 +42,34 @@
                                                 <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.wounds 4 %}<br>
                                                 <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.bonus_dice 4 %}<br>
                                                 {% if not weapon.is_hand_to_hand_weapon %}
-                                                    <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}: {% color_value_span weapon.reload_actions 6 invert=True %}<br>
-                                                    <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}: {% color_value_span weapon.capacity 30 %}<br>
+                                                    <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}:
+                                                    {% color_value_span weapon.reload_actions 6 invert=True %}<br>
+                                                    <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}:
+                                                    {% color_value_span weapon.capacity 30 %}<br>
                                                 {% endif %}
                                                 <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
                                                 <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>
                                                 <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
                                                 {% if weapon.weaponattackmode_set.exists %}
                                                     <br>
-                                                    {% for fm in weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }} + {% color_value_span fm.dice_bonus 6 %} <i class="fas fa-dice-five"></i><br>{% endfor %}
+                                                    {% for fm in weapon.weaponattackmode_set.all %}
+                                                        {{ fm.attack_mode.name }} +
+                                                        {% color_value_span fm.dice_bonus 6 %}
+                                                        <i class="fas fa-dice-five"></i><br>{% endfor %}
                                                 {% endif %}
-                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}" class="float-end add-form" method="post">
+                                                <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}"
+                                                      class="float-end add-form" method="post">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
-                                                    <button class="btn btn-sm btn-primary float-end" data-msg="{% trans 'Added' %}">{% trans 'Add weapon' %}</button>
+                                                    <button class="btn btn-sm btn-primary float-end"
+                                                            data-danger="{% trans 'Not possible' %}"
+                                                            data-success="{% trans 'Added' %}">{% trans 'Add weapon' %}</button>
                                                 </form>
                                             </div>
                                         </div>
                                         {% if user.is_superuser %}
-                                            <a href="{% url 'admin:armory_weapon_change' weapon.id %}" style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+                                            <a href="{% url 'admin:armory_weapon_change' weapon.id %}"
+                                               style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
                                         {% endif %}
                                     </div>
                                 </div>

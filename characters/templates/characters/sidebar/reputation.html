@@ -16,19 +16,19 @@
         </p>
 
         {% if may_edit %}
-        <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post"
-              class="add-reputation-form">
-            {% csrf_token %}
-            <input type="hidden" name="operation" value="add">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Reputation"
-                       aria-label="Reputation" name="reputation">
-                <button type="submit" name="add_reputation" class="btn btn-primary" type="button"
-                        data-flash-message="{% trans 'Added' %}"><i
-                        class="fa fa-eye text-warning"></i> Hinzufügen
-                </button>
-            </div>
-        </form>
+            <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post"
+                  class="add-form">
+                {% csrf_token %}
+                <input type="hidden" name="operation" value="add">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Reputation"
+                           aria-label="Reputation" name="reputation">
+                    <button type="submit" name="add_reputation" class="btn btn-primary" type="button"
+                            data-success="{% trans 'Added' %}" data-danger="{% trans 'Not possible' %}">
+                        <i class="fa fa-eye text-warning"></i> Hinzufügen
+                    </button>
+                </div>
+            </form>
 
             {% if character.reputation_available > 0 %}
                 <p>
@@ -54,6 +54,6 @@
                     {% endblocktrans %}
                 </p>
             {% endif %}
-    {% endif  %}
+        {% endif %}
     </div>
 </div>
