@@ -50,6 +50,11 @@ class Campaign(models.Model):
         return settings.BASE_URL + reverse('campaigns:invitation',
                                            kwargs={'pk': self.id, 'hash': self.get_campaign_hash()})
 
+    @property
+    def ws_room_name(self) -> str:
+        """Websocket room name"""
+        return f'campaign-{self.id}'
+
 
 class Scene(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
@@ -65,4 +70,3 @@ class Handout(models.Model):
     image = models.ImageField(_('image'), upload_to='campaign_handouts', blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
-

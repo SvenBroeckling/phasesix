@@ -356,6 +356,13 @@ class Character(models.Model):
         return max(ic, rc, wc)
 
     @property
+    def ws_room_name(self) -> str:
+        """Websocket room name"""
+        if self.campaign is not None:
+            return self.campaign.ws_room_name
+        return f'character-{self.id}'
+
+    @property
     def skills(self):
         return self.characterskill_set.for_extensions(self.extensions)
 

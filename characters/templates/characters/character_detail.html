@@ -5,6 +5,7 @@
 
 {% block javascript %}
     <script src="{% static 'js/character_detail.js' %}"></script>
+    <script src="{% static 'js/campaign_socket.js' %}"></script>
 {% endblock %}
 
 {% block belownav %}
@@ -52,6 +53,7 @@
 {% endblock %}
 
 {% block content %}
+    <div class="d-none" id="room-name">{{ object.ws_room_name }}</div>
     <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog"
          aria-labelledby="character-modal">
         <div class="modal-dialog modal-xl" role="document">

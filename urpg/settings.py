@@ -12,6 +12,15 @@ ADMINS = [('Sven', 'sven@broeckling.de')]
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ASGI_APPLICATION = "urpg.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = reverse_lazy('login')
@@ -25,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_registration',
     'django_extensions',
+    'channels',
     'sorl.thumbnail',
     'bootstrap4',
     'compressor',
