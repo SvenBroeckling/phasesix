@@ -3,6 +3,10 @@
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
+{% block javascript %}
+    <script src="{% static 'js/campaign_socket.js' %}"></script>
+{% endblock %}
+
 {% block belownav %}
     <div
             class="row campaign-info-row"
@@ -25,6 +29,7 @@
 {% endblock %}
 
 {% block content %}
+    <div class="d-none" id="room-name">{{ object.ws_room_name }}</div>
     <div class="row mt-4">
 
         <div class="col-lg-2 col-md-3">
