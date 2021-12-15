@@ -1,0 +1,5 @@
+<div class="ws-dice-result">
+{% for r in results %}
+    <span class="text-center {% if r > 6 %}exploded{% endif %} {% if r < 6 and r >= 5 %}success{% endif %} {% if r < 5 %}fail{% endif %}">{{ r }}</span>
+{% endfor %}
+</div>

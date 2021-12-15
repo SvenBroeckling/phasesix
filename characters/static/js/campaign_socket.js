@@ -8,14 +8,17 @@ $(function(){
 
     socket.onmessage = (e) => {
         const data = JSON.parse(e.data)
-        Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT)
-        Toast.setMaxCount(20)
-        Toast.create({
-            title: data.message.character,
-            message: `${data.message.header} <small class="text-muted">${data.message.description}</small><br>${data.message.results}`,
-            status: TOAST_STATUS.SUCCESS
-        })
-        console.log(`Message: ${data.message.results}`)
+        const displayResults = $('#display-ws-dice-results').prop('checked')
+
+        if(displayResults){
+            Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT)
+            Toast.setMaxCount(7)
+            Toast.create({
+                title: data.message.character,
+                message: `${data.message.header} <small class="text-muted">${data.message.description}</small><br>${data.message.result_html}`,
+                status: TOAST_STATUS.SUCCESS
+            })
+        }
     }
 
     $('body').on('click', '.dice-roll', function(e) {

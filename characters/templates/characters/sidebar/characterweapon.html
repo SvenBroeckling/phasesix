@@ -2,7 +2,7 @@
 
 {% if may_edit %}
     <div class="row">
-        {% if object.weapon.weaponattackmode_set.exists and object.has_capacity %}
+        {% if object.weapon.weaponattackmode_set.exists %}
             {% for fm in object.attack_modes %}
                 <div class="col-12">
                     <div class="btn-group w-100">

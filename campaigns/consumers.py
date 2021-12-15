@@ -1,6 +1,7 @@
 import json
 
 from asgiref.sync import async_to_sync
+from django.template.loader import render_to_string
 
 from characters.dice import roll
 from channels.generic.websocket import WebsocketConsumer
@@ -27,7 +28,8 @@ class DiceConsumer(WebsocketConsumer):
     # websocket receive
     def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
-        results = roll(data['roll'])
+        result_list = roll(data['roll'])
+        result_html = render_to_string('campaigns/_dice_socket_results.html', {'results': result_list})
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
@@ -35,7 +37,8 @@ class DiceConsumer(WebsocketConsumer):
                 'type': 'dice_roll',
                 'message': {
                     'roll': data['roll'],
-                    'results': results,
+                    'result_list': result_list,
+                    'result_html': result_html,
                     'header': data['header'],
                     'description': data['description'],
                     'character': data['character'],

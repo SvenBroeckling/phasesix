@@ -32,7 +32,8 @@
 
 <div id="sidebar-right" class="sidebar sidebar-right position-fixed h-100">
     <header class="sidebar-header p-3 overflow-auto">
-        <button type="button" class="sidebar-close float-end btn btn-danger btn-sm close" aria-label="Close"><span aria-hidden="true">&times;</span>
+        <button type="button" class="sidebar-close float-end btn btn-danger btn-sm close" aria-label="Close"><span
+                aria-hidden="true">&times;</span>
         </button>
         <h4 class="d-inline-block mb-0">{% trans 'Properties' %}</h4>
     </header>
@@ -132,6 +133,12 @@
                             {% endif %}
                         </ul>
 
+                        <form action="">
+                            <div class="form-check form-switch me-2" title="{% trans 'Display dice roll results' %}">
+                                <input class="form-check-input" type="checkbox" checked id="display-ws-dice-results">
+                                <label class="form-check-label" for="display-ws-dice-results"><i class="fas fa-dice-six text-primary"></i></label>
+                            </div>
+                        </form>
                         <form class="d-flex" method="post"
                               action="{% url 'set_language' %}?next={{ request.path }}">
                             {% csrf_token %}
