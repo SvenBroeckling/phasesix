@@ -1,6 +1,6 @@
 $(function(){
     const room_name = $('#room-name').text()
-    let socket = new WebSocket(`ws://${window.location.host}/ws/campaign/${room_name}/`)
+    let socket = new WebSocket(`wss://${window.location.host}/ws/campaign/${room_name}/`)
 
     socket.onerror = (e) => {
         console.error(`Connection error: ${e}`)
