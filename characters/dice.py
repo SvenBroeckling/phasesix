@@ -8,7 +8,7 @@ def roll_single(kind) -> int:
     return result
 
 
-def roll(dice_string) -> list[int]:
+def roll(dice_string):
     amount, kind = dice_string.split('d')
     return list(reversed(sorted([roll_single(int(kind)) for r in range(int(amount))])))
 
