@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = 'http://phasesix.org'
+BASE_URL = 'http://localhost:8000'
 SECRET_KEY = 'p&90ws3x7(hi+$+v4=(5ni@@3$uqgdpg$s*=w@8yl-w12)0%&$'
 
 ADMINS = [('Sven', 'sven@broeckling.de')]
