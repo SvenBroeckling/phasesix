@@ -15,7 +15,8 @@ $(function(){
             Toast.create({
                 title: data.message.character,
                 message: `${data.message.header} <small class="text-muted">${data.message.description}</small><br>${data.message.result_html}`,
-                status: TOAST_STATUS.SUCCESS
+                status: TOAST_STATUS.SUCCESS,
+                timeout: 10000,
             })
         }
     }

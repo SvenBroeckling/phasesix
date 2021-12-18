@@ -115,7 +115,7 @@
             </tr>
             </thead>
             {% for skill in object.skills.mind_skills %}
-                <tr>
+                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=skill.id model_name="CharacterSkill" sidebar_name="characterskill" %}">
                     <td>
                         {{ skill.skill }}
                         <small class="text-muted">({{ skill.skill.dominant_attribute_name|capfirst }}, {{ skill.skill.supplemental_attribute_name|capfirst }})</small>
@@ -135,7 +135,7 @@
             </tr>
             </thead>
             {% for skill in object.skills.practical_skills %}
-                <tr>
+                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=skill.id model_name="CharacterSkill" sidebar_name="characterskill" %}">
                     <td>
                         {{ skill.skill }}
                         <small class="text-muted">({{ skill.skill.dominant_attribute_name|capfirst }}, {{ skill.skill.supplemental_attribute_name|capfirst }})</small>

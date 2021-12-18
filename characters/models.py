@@ -405,6 +405,9 @@ class CharacterSkill(models.Model):
     def attribute_value(self, attribute_name):
         return getattr(self.character, attribute_name)
 
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+
     @property
     def value(self):
         s = TemplateModifier.objects.filter(
