@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 import random
 
+from channels.layers import get_channel_layer
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView, DetailView, FormView
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType, \
     WeaponAttackMode, CurrencyMapUnit
+from campaigns.consumers import roll_and_send
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell, CharacterSkill
@@ -116,6 +119,7 @@ class XhrCharacterRestView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
+        channel_layer = get_channel_layer()
         character = Character.objects.get(id=kwargs['pk'])
         mode = request.POST.get('mode', 'manual')
         if not character.may_edit(request.user):
@@ -126,18 +130,41 @@ class XhrCharacterRestView(TemplateView):
             character.destiny_dice_used = 0
             character.rerolls_used = 0
 
-            for d in range(character.rest_wound_dice):
-                if random.randint(1, 6) >= 5:
-                    if character.health < character.max_health:
-                        character.health += 1
+            rest_wound_roll = roll_and_send(
+                channel_layer,
+                character.ws_room_name,
+                f'{character.rest_wound_dice}d6',
+                ugettext('Rest'),
+                ugettext('Wound Roll'),
+                character.name)
 
-            for d in range(character.rest_arcana_dice):
-                if random.randint(1, 6) >= 5:
+            for d in filter(lambda x: x >= 5, rest_wound_roll):
+                if character.health < character.max_health:
+                    character.health += 1
+
+            if 'magic' in character.extension_enabled:
+                rest_arcana_roll = roll_and_send(
+                    channel_layer,
+                    character.ws_room_name,
+                    f'{character.rest_arcana_dice}d6',
+                    ugettext('Rest'),
+                    ugettext('Arcana Roll'),
+                    character.name)
+
+                for d in filter(lambda x: x >= 5, rest_arcana_roll):
                     if character.arcana < character.max_arcana:
                         character.arcana += 1
 
-            for d in range(character.rest_stress_dice):
-                if random.randint(1, 6) >= 5:
+            if 'horror' in character.extension_enabled:
+                rest_stress_roll = roll_and_send(
+                    channel_layer,
+                    character.ws_room_name,
+                    f'{character.rest_stress_dice}d6',
+                    ugettext('Rest'),
+                    ugettext('Stress Roll'),
+                    character.name)
+
+                for d in filter(lambda x: x >= 5, rest_stress_roll):
                     if character.stress > 0:
                         character.stress -= 1
 

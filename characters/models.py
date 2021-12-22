@@ -654,7 +654,6 @@ class CharacterSpellTemplate(models.Model):
         return self.spell_template.name
 
 
-
 class CharacterCurrency(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     currency_map_unit = models.ForeignKey('armory.CurrencyMapUnit', on_delete=models.CASCADE)
