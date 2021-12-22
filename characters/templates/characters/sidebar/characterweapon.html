@@ -10,7 +10,7 @@
                            data-dice-roll="{{ fm.1 }}d6"
                            data-dice-header="{{ object.weapon }}"
                            data-dice-description="{{ fm.0 }}"
-                           data-dice-character="{{ object.character }}"
+                           data-dice-character="{{ object.character.id }}"
                            href="{% url 'characters:attack' characterweapon_pk=object.id weapon_attackmode_pk=fm.2 %}">
                             {% trans 'Attack:' %} {{ fm.0 }}
                             {% color_value_span fm.1 8 %} <i class="fas fa-dice-five"></i></a>

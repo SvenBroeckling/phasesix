@@ -131,12 +131,10 @@ class XhrCharacterRestView(TemplateView):
             character.rerolls_used = 0
 
             rest_wound_roll = roll_and_send(
-                channel_layer,
-                character.ws_room_name,
+                character.id,
                 f'{character.rest_wound_dice}d6',
                 ugettext('Rest'),
-                ugettext('Wound Roll'),
-                character.name)
+                ugettext('Wound Roll'))
 
             for d in filter(lambda x: x >= 5, rest_wound_roll):
                 if character.health < character.max_health:
@@ -144,12 +142,10 @@ class XhrCharacterRestView(TemplateView):
 
             if 'magic' in character.extension_enabled:
                 rest_arcana_roll = roll_and_send(
-                    channel_layer,
-                    character.ws_room_name,
+                    character.id,
                     f'{character.rest_arcana_dice}d6',
                     ugettext('Rest'),
-                    ugettext('Arcana Roll'),
-                    character.name)
+                    ugettext('Arcana Roll'))
 
                 for d in filter(lambda x: x >= 5, rest_arcana_roll):
                     if character.arcana < character.max_arcana:
@@ -157,12 +153,10 @@ class XhrCharacterRestView(TemplateView):
 
             if 'horror' in character.extension_enabled:
                 rest_stress_roll = roll_and_send(
-                    channel_layer,
-                    character.ws_room_name,
+                    character.id,
                     f'{character.rest_stress_dice}d6',
                     ugettext('Rest'),
-                    ugettext('Stress Roll'),
-                    character.name)
+                    ugettext('Stress Roll'))
 
                 for d in filter(lambda x: x >= 5, rest_stress_roll):
                     if character.stress > 0:

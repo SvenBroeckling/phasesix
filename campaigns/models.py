@@ -70,3 +70,13 @@ class Handout(models.Model):
     image = models.ImageField(_('image'), upload_to='campaign_handouts', blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
+
+
+class Roll(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    character = models.ForeignKey('characters.Character', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    header = models.CharField(_('header'), max_length=120, blank=True, null=True)
+    description = models.CharField(_('description'), max_length=120, blank=True, null=True)
+    roll_string = models.CharField(_('roll string'), max_length=20, blank=True, null=True)
+    results_csv = models.CharField(_('results_csv'), max_length=120)

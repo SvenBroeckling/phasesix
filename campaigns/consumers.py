@@ -1,18 +1,31 @@
 import json
 
 from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.template.loader import render_to_string
 
 from characters.dice import roll
+from characters.models import Character
 from channels.generic.websocket import WebsocketConsumer
 
 
-def roll_and_send(channel_layer, group_name, roll_string, header, description, character_name):
+def roll_and_send(character_id, roll_string, header, description):
+    channel_layer = get_channel_layer()
+    character = Character.objects.get(id=character_id)
+
     result_list = roll(roll_string)
     result_html = render_to_string('campaigns/_dice_socket_results.html', {'results': result_list})
 
+    if character.campaign is not None:
+        character.campaign.roll_set.create(
+            character=character,
+            header=header,
+            description=description,
+            roll_string=roll_string,
+            results_csv=",".join(str(i) for i in result_list))
+
     async_to_sync(channel_layer.group_send)(
-        group_name,
+        character.ws_room_name,
         {
             'type': 'dice_roll',
             'message': {
@@ -21,7 +34,7 @@ def roll_and_send(channel_layer, group_name, roll_string, header, description, c
                 'result_html': result_html,
                 'header': header,
                 'description': description,
-                'character': character_name,
+                'character': character.name,
             }
         }
     )
@@ -48,13 +61,7 @@ class DiceConsumer(WebsocketConsumer):
     # websocket receive
     def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
-        roll_and_send(
-            self.channel_layer,
-            self.room_name,
-            data['roll'],
-            data['header'],
-            data['description'],
-            data['character'])
+        roll_and_send(data['character'], data['roll'], data['header'], data['description'])
 
     # group receive
     def dice_roll(self, event):
