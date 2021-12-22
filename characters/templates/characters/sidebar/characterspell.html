@@ -1,10 +1,17 @@
 {% load i18n characters_extras %}
+{% spell_type_attribute_dice_value object.character object.spell_type as dice %}
 
 {% if may_edit %}
     <div class="row">
         <div class="col-12">
             <div class="btn-group w-100">
-                <a href="{% url 'characters:cast_spell' pk=object.id %}" class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-magic" title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}</a>
+                <a
+                        href="{% url 'characters:cast_spell' pk=object.id %}"
+                        data-dice-roll="{{ dice }}d6"
+                        data-dice-header="{{ object }}"
+                        data-dice-description="{{ object.variant }}"
+                        data-dice-character="{{ object.character }}"
+                        class="btn btn-sm btn-primary action-link dice-roll"><i class="fas fa-fw fa-dice-five" title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}</a>
             </div>
             <div class="btn-group w-100">
                 <a
@@ -32,7 +39,6 @@
                 <li class="list-group-item">
                     <i class="fas fa-dice-five fa-fw"></i>
                     {% trans 'Spell Casting' %}
-                    {% spell_type_attribute_dice_value object.character object.spell_type as dice %}
                     <span class="float-end"><small class="text-muted">{{ object.spell_type.dominant_attribute_name|capfirst }}</small> {% color_value_span dice 5 %}</span>
                 </li>
                 <li class="list-group-item">
