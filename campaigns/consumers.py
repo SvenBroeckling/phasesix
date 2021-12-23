@@ -4,12 +4,12 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.template.loader import render_to_string
 
-from characters.dice import roll
-from characters.models import Character
 from channels.generic.websocket import WebsocketConsumer
 
 
 def roll_and_send(character_id, roll_string, header, description):
+    from characters.dice import roll
+    from characters.models import Character
     channel_layer = get_channel_layer()
     character = Character.objects.get(id=character_id)
 
