@@ -8,6 +8,7 @@ $(function(){
     socket.onmessage = (e) => {
         const data = JSON.parse(e.data)
         const displayResults = $('#display-ws-dice-results').prop('checked')
+        const audioElement = document.getElementById('room-audio')
 
         if(displayResults){
             Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT)
@@ -18,6 +19,7 @@ $(function(){
                 status: TOAST_STATUS.SUCCESS,
                 timeout: 10000,
             })
+            audioElement.play()
         }
     }
 

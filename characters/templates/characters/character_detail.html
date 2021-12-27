@@ -54,6 +54,7 @@
 
 {% block content %}
     <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
+    <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
     <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog"
          aria-labelledby="character-modal">
         <div class="modal-dialog modal-xl" role="document">
