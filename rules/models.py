@@ -12,6 +12,8 @@ CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_spell_points', _('spell points')),
 
     ('base_actions', _('actions')),
+    ('base_minimum_roll', _('minimum roll')),
+
     ('base_protection', _('protection')),
     ('base_evasion', _('evasion')),
 
@@ -109,6 +111,7 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_spell_points = models.IntegerField(_('spell points'), default=0)
 
     base_actions = models.IntegerField(_('base actions'), default=2)
+    base_minimum_roll = models.IntegerField(_('base minimum roll'), default=5)
 
     base_bonus_dice = models.IntegerField(_('base bonus dice'), default=0)
     base_destiny_dice = models.IntegerField(_('base destiny dice'), default=0)

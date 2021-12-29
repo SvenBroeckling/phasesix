@@ -206,6 +206,10 @@ class Character(models.Model):
         return self.lineage.base_actions + self.get_attribute_modifier('base_actions')
 
     @property
+    def minimum_roll(self):
+        return self.lineage.base_minimum_roll + self.get_attribute_modifier('base_minimum_roll')
+
+    @property
     def combat_walking_range(self):
         return self.quickness
 

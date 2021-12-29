@@ -110,7 +110,7 @@
                     <li class="list-group-item">
                         <i class="fas fa-fw fa-dice-five text-warning" data-bs-toggle="popover" title="{% trans 'Minimum Roll' %}"></i>
                         {% trans 'Minimum Roll' %}
-                        <span class="float-end">{% color_value_span 5 5 invert=True %}+</span>
+                        <span class="float-end">{% color_value_span object.minimum_roll 5 invert=True %}+</span>
                     </li>
                     <li class="list-group-item">
                         <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>

@@ -14,7 +14,13 @@ def roll_and_send(character_id, roll_string, header, description):
     character = Character.objects.get(id=character_id)
 
     result_list = roll(roll_string)
-    result_html = render_to_string('campaigns/_dice_socket_results.html', {'results': result_list})
+    result_html = render_to_string(
+        'campaigns/_dice_socket_results.html',
+        {
+            'results': result_list,
+            'character': character,
+        }
+    )
 
     if character.campaign is not None:
         character.campaign.roll_set.create(
