@@ -1,3 +1,7 @@
+## Minimum roll
+
+schablone anlegen
+
 ## Currency
 
 * Weapon: Preise anzeigen (wenn currency)
