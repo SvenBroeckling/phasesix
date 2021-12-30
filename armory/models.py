@@ -55,6 +55,13 @@ class Item(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
 
+    dice_roll_string = models.CharField(
+        _('dice role string'),
+        blank=True,
+        null=True,
+        max_length=10,
+        help_text=_('Shows a roll button at the item if not empty.'))
+
     image = models.ImageField(_('image'), max_length=256, upload_to='item_images/', null=True, blank=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
