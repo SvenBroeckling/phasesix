@@ -1,13 +1,3 @@
-## Minimum roll
-
-schablone anlegen
-
-## Currency
-
-* Weapon: Preise anzeigen (wenn currency)
-* Armor: Preise anzeigen (wenn Currency)
-
-
 ## Notizen
 
 * Privat / Öffentlich
@@ -48,10 +38,6 @@ Steigerbar:
   Vampir
   
 
-## Base
-
-- penetration -> piercing
-
 ## Regeln
 
 - Kampf Schicksalswürfel Stehlen: Explizit erwähnen, dass man die selbst bekommt
@@ -70,10 +56,6 @@ Steigerbar:
 
 - Viel Equipment fehlt in den 80ern
 - Alienspinne als Foe
-- Highendschablone 1en rerollen
-- Highendschablone 4+ MW
-- Highendschablone 6en sind zusätzliche Erfolge
-- Highendschablone Joker
 - Recherche Knowledge (Achtsamkeit)
   - Schablone Journalist
   - Eigene Schablone
@@ -93,4 +75,8 @@ Steigerbar:
 ## Items
 
 - Plus / Minus in die Item Sidebar
+
+## Base
+
+- penetration -> piercing
 

@@ -39,6 +39,27 @@
     </ul>
 </div>
 
+<div class="row">
+    <div class="col-12 mb-3 mt-2">
+        {% blocktrans %}
+            Roll a custom amount of dice here, just klick on the button with
+            the amount you'd like to roll.
+        {% endblocktrans %}
+    </div>
+    {% with ""|center:12 as range %}
+        {% for _ in range %}
+            <div class="col-2 mb-2">
+                <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+                        data-dice-roll="{{ forloop.counter }}d6"
+                        data-dice-header="{{ forloop.counter }}d6"
+                        data-dice-description="{% trans 'Custom Roll' %}"
+                        data-dice-character="{{ object.id }}">{{ forloop.counter }}
+                </button>
+            </div>
+        {% endfor %}
+    {% endwith %}
+</div>
+
 <div class="row mt-4 mb-2">
     <div class="col-2 mb-2">
         <i class="fas fa-2x fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
