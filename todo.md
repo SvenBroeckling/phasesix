@@ -7,12 +7,10 @@
 
 ## Magieschablonen
 
-  Hermetiker
-  Illusionist
-  Geisterbeschwörer
-  Nekrologe
-  Runenleger
+  Zauberer / Wizard
+  Geisterbeschwörer / Nekrologe
   Seher
+  Runenleger
 
 ## Pantheon
   Mönch
