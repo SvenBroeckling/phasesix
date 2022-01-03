@@ -169,6 +169,7 @@ class Skill(models.Model, metaclass=TransMeta):
         ('m', _('mind')),
     )
     name = models.CharField(_('name'), max_length=120)
+    description = models.TextField(_('description'), blank=True, null=True)
     kind = models.CharField(_('kind'), max_length=1, choices=KIND_CHOICES)
     extensions = models.ManyToManyField('rules.Extension')
 
@@ -200,7 +201,7 @@ class Skill(models.Model, metaclass=TransMeta):
             return ''
 
     class Meta:
-        translate = ('name',)
+        translate = ('name', 'description')
         verbose_name = _('skill')
         verbose_name_plural = _('skills')
 
