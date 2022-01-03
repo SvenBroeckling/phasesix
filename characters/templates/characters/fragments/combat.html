@@ -110,7 +110,7 @@
                         </td>
                         <td class="text-end">
                             {% spell_type_attribute_dice_value s.character s.spell_type as dice %}
-                            {{ s.spell_type.dominant_attribute_name|capfirst }} {% color_value_span dice 5 %} <i class="fas fa-dice-five text-muted"></i>
+                            {{ s.spell_type.reference_attribute.name }} {% color_value_span dice 5 %} <i class="fas fa-dice-five text-muted"></i>
                         </td>
                         <td class="text-end">
                             <i class="fas fa-bolt text-muted"></i> {% trans 'Power' %} {% color_value_span s.power 4 %}<br>

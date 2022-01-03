@@ -79,15 +79,15 @@ class Character(models.Model):
     def get_absolute_url(self):
         return reverse('characters:detail', kwargs={'pk': self.id})
 
-    def get_attribute_modifier(self, attribute_name):
+    def get_aspect_modifier(self, aspect_name):
         m = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.charactertemplate_set.all(),
-            attribute=attribute_name).aggregate(Sum('attribute_modifier'))
+            aspect=aspect_name).aggregate(Sum('aspect_modifier'))
 
         q = QuirkModifier.objects.filter(
             quirk__in=self.quirks.all(),
-            attribute=attribute_name).aggregate(Sum('attribute_modifier'))
-        return (m['attribute_modifier__sum'] or 0) + (q['attribute_modifier__sum'] or 0)
+            aspect=aspect_name).aggregate(Sum('aspect_modifier'))
+        return (m['aspect_modifier__sum'] or 0) + (q['aspect_modifier__sum'] or 0)
 
     def knowledge_dict(self):
         kd = {}
@@ -203,11 +203,11 @@ class Character(models.Model):
 
     @property
     def actions(self):
-        return self.lineage.base_actions + self.get_attribute_modifier('base_actions')
+        return self.lineage.base_actions + self.get_aspect_modifier('base_actions')
 
     @property
     def minimum_roll(self):
-        return self.lineage.base_minimum_roll + self.get_attribute_modifier('base_minimum_roll')
+        return self.lineage.base_minimum_roll + self.get_aspect_modifier('base_minimum_roll')
 
     @property
     def combat_walking_range(self):
@@ -239,31 +239,31 @@ class Character(models.Model):
 
     @property
     def spell_points(self):
-        return self.lineage.base_spell_points + self.get_attribute_modifier('base_spell_points')
+        return self.lineage.base_spell_points + self.get_aspect_modifier('base_spell_points')
 
     @property
     def max_health(self):
-        return self.lineage.base_max_health + self.get_attribute_modifier('base_max_health')
+        return self.lineage.base_max_health + self.get_aspect_modifier('base_max_health')
 
     @property
     def max_stress(self):
-        return self.lineage.base_max_stress + self.get_attribute_modifier('base_max_stress')
+        return self.lineage.base_max_stress + self.get_aspect_modifier('base_max_stress')
 
     @property
     def max_arcana(self):
-        return self.lineage.base_max_arcana + self.get_attribute_modifier('base_max_arcana')
+        return self.lineage.base_max_arcana + self.get_aspect_modifier('base_max_arcana')
 
     @property
     def bonus_dice(self):
-        return self.lineage.base_bonus_dice + self.get_attribute_modifier('base_bonus_dice')
+        return self.lineage.base_bonus_dice + self.get_aspect_modifier('base_bonus_dice')
 
     @property
     def destiny_dice(self):
-        return self.lineage.base_destiny_dice + self.get_attribute_modifier('base_destiny_dice')
+        return self.lineage.base_destiny_dice + self.get_aspect_modifier('base_destiny_dice')
 
     @property
     def rerolls(self):
-        return self.lineage.base_rerolls + self.get_attribute_modifier('base_rerolls')
+        return self.lineage.base_rerolls + self.get_aspect_modifier('base_rerolls')
 
     @property
     def bonus_dice_free(self):
@@ -279,71 +279,71 @@ class Character(models.Model):
 
     @property
     def deftness(self):
-        return self.lineage.base_deftness + self.get_attribute_modifier('base_deftness')
+        return self.lineage.base_deftness + self.get_aspect_modifier('base_deftness')
 
     @property
     def strength(self):
-        return self.lineage.base_strength + self.get_attribute_modifier('base_strength')
+        return self.lineage.base_strength + self.get_aspect_modifier('base_strength')
 
     @property
     def attractiveness(self):
-        return self.lineage.base_attractiveness + self.get_attribute_modifier(
+        return self.lineage.base_attractiveness + self.get_aspect_modifier(
             'base_attractiveness'
         )
 
     @property
     def endurance(self):
-        return self.lineage.base_endurance + self.get_attribute_modifier('base_endurance')
+        return self.lineage.base_endurance + self.get_aspect_modifier('base_endurance')
 
     @property
     def resistance(self):
-        return self.lineage.base_resistance + self.get_attribute_modifier('base_resistance')
+        return self.lineage.base_resistance + self.get_aspect_modifier('base_resistance')
 
     @property
     def quickness(self):
-        return self.lineage.base_quickness + self.get_attribute_modifier('base_quickness')
+        return self.lineage.base_quickness + self.get_aspect_modifier('base_quickness')
 
     @property
     def education(self):
-        return self.lineage.base_education + self.get_attribute_modifier('base_education')
+        return self.lineage.base_education + self.get_aspect_modifier('base_education')
 
     @property
     def conscientiousness(self):
-        return self.lineage.base_conscientiousness + self.get_attribute_modifier(
+        return self.lineage.base_conscientiousness + self.get_aspect_modifier(
             'base_conscientiousness'
         )
 
     @property
     def willpower(self):
-        return self.lineage.base_willpower + self.get_attribute_modifier('base_willpower')
+        return self.lineage.base_willpower + self.get_aspect_modifier('base_willpower')
 
     @property
     def apprehension(self):
-        return self.lineage.base_apprehension + self.get_attribute_modifier(
+        return self.lineage.base_apprehension + self.get_aspect_modifier(
             'base_apprehension'
         )
 
     @property
     def charm(self):
-        return self.lineage.base_charm + self.get_attribute_modifier('base_charm')
+        return self.lineage.base_charm + self.get_aspect_modifier('base_charm')
 
     @property
     def logic(self):
-        return self.lineage.base_logic + self.get_attribute_modifier('base_logic')
+        return self.lineage.base_logic + self.get_aspect_modifier('base_logic')
 
     @property
     def ballistic_protection(self):
         bp = self.characterriotgear_set.aggregate(
             Sum('riot_gear__protection_ballistic')
         )['riot_gear__protection_ballistic__sum'] or 0
-        return self.lineage.base_protection + self.get_attribute_modifier('base_protection') + bp
+        return self.lineage.base_protection + self.get_aspect_modifier('base_protection') + bp
 
     @property
     def evasion(self):
         be = self.characterriotgear_set.aggregate(
             Sum('riot_gear__evasion')
         )['riot_gear__evasion__sum'] or 0
-        return self.lineage.base_evasion + self.get_attribute_modifier('base_evasion') + be
+        return self.lineage.base_evasion + self.get_aspect_modifier('base_evasion') + be
 
     @property
     def max_concealment(self):
@@ -371,6 +371,14 @@ class Character(models.Model):
         return self.characterskill_set.for_extensions(self.extensions)
 
 
+class CharacterAttributeQuerySet(models.QuerySet):
+    def physis_attributes(self):
+        return self.filter(attribute__kind='phy').order_by(f'attribute__name_{get_language()}')
+
+    def persona_attributes(self):
+        return self.filter(attribute__kind='per').order_by(f'attribute__name_{get_language()}')
+
+
 class CharacterSkillQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
@@ -394,6 +402,22 @@ class CharacterSkillQuerySet(models.QuerySet):
         return self.get(skill__name_en='Spell Casting')
 
 
+class CharacterAttribute(models.Model):
+    objects = CharacterAttributeQuerySet.as_manager()
+    character = models.ForeignKey(Character, models.CASCADE)
+    attribute = models.ForeignKey('rules.Attribute', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('attribute__name_de',)
+
+    def __str__(self):
+        return "{} {}".format(self.attribute.name, self.value)
+
+    @property
+    def value(self):
+        return 999
+
+
 class CharacterSkill(models.Model):
     objects = CharacterSkillQuerySet.as_manager()
 
@@ -406,9 +430,6 @@ class CharacterSkill(models.Model):
     def __str__(self):
         return "{} {}".format(self.skill.name, self.value)
 
-    def attribute_value(self, attribute_name):
-        return getattr(self.character, attribute_name)
-
     def may_edit(self, user):
         return self.character.may_edit(user)
 
@@ -420,8 +441,8 @@ class CharacterSkill(models.Model):
         q = QuirkModifier.objects.filter(
             quirk__in=self.character.quirks.all(),
             skill=self.skill).aggregate(Sum('skill_modifier'))
-        dom = self.attribute_value(self.skill.dominant_attribute)
-        sup = self.attribute_value(self.skill.supplemental_attribute)
+        dom = self.character.characterattribute_set.get(attribute=self.skill.reference_attribute_1).value
+        sup = self.character.characterattribute_set.get(attribute=self.skill.reference_attribute_2).value
         attr_mod = math.ceil((dom + sup) / 2)
         return attr_mod + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
 

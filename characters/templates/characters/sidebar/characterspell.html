@@ -39,7 +39,7 @@
                 <li class="list-group-item">
                     <i class="fas fa-dice-five fa-fw"></i>
                     {% trans 'Spell Casting' %}
-                    <span class="float-end"><small class="text-muted">{{ object.spell_type.dominant_attribute_name|capfirst }}</small> {% color_value_span dice 5 %}</span>
+                    <span class="float-end"><small class="text-muted">{{ object.spell_type.reference_attribute.name }}</small> {% color_value_span dice 5 %}</span>
                 </li>
                 <li class="list-group-item">
                     <i class="fas fa-magic fa-fw"></i>

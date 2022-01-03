@@ -39,22 +39,6 @@ CHARACTER_ATTRIBUTE_CHOICES = (
 )
 
 
-BASE_ATTRIBUTE_CHOICES = (
-    ('deftness', _('deftness')),
-    ('strength', _('strength')),
-    ('attractiveness', _('attractiveness')),
-    ('endurance', _('endurance')),
-    ('resistance', _('resistance')),
-    ('quickness', _('quickness')),
-    ('logic', _('logic')),
-    ('education', _('education')),
-    ('conscientiousness', _('conscientiousness')),
-    ('willpower', _('willpower')),
-    ('apprehension', _('apprehension')),
-    ('charm', _('charm')),
-)
-
-
 class ExtensionSelectQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
@@ -159,10 +143,25 @@ class LineageTemplatePoints(models.Model):
         ordering = ('template_category__sort_order',)
 
 
+class Attribute(models.Model, metaclass=TransMeta):
+    KIND_CHOICES = (
+        ('per', _('persona')),
+        ('phy', _('physis')),
+    )
+    name = models.CharField(_('name'), max_length=120)
+    description = models.TextField(_('description'), blank=True, null=True)
+    kind = models.CharField(_('kind'), max_length=3, choices=KIND_CHOICES)
+
+    class Meta:
+        translate = ('name', 'description')
+        verbose_name = _('attribute')
+        verbose_name_plural = _('attributes')
+
+    def __str__(self):
+        return self.name
+
+
 class Skill(models.Model, metaclass=TransMeta):
-    """
-    A URPG skill
-    """
     objects = ExtensionSelectQuerySet.as_manager()
     KIND_CHOICES = (
         ('p', _('practical')),
@@ -173,32 +172,16 @@ class Skill(models.Model, metaclass=TransMeta):
     kind = models.CharField(_('kind'), max_length=1, choices=KIND_CHOICES)
     extensions = models.ManyToManyField('rules.Extension')
 
-    dominant_attribute = models.CharField(
-        _('dominant attribute'),
-        choices=BASE_ATTRIBUTE_CHOICES,
-        max_length=20,
-        blank=True,
-        null=True)
-    supplemental_attribute = models.CharField(
-        _('supplemental attribute'),
-        choices=BASE_ATTRIBUTE_CHOICES,
-        max_length=20,
-        blank=True,
-        null=True)
-
-    @property
-    def dominant_attribute_name(self):
-        try:
-            return next(filter(lambda x: x[0] == self.dominant_attribute, BASE_ATTRIBUTE_CHOICES))[1]
-        except StopIteration:
-            return ''
-
-    @property
-    def supplemental_attribute_name(self):
-        try:
-            return next(filter(lambda x: x[0] == self.supplemental_attribute, BASE_ATTRIBUTE_CHOICES))[1]
-        except StopIteration:
-            return ''
+    reference_attribute_1 = models.ForeignKey(
+        'rules.Attribute',
+        verbose_name=_('reference attribute 1'),
+        related_name='reference_attribute_1_set',
+        on_delete=models.CASCADE)
+    reference_attribute_2 = models.ForeignKey(
+        'rules.Attribute',
+        verbose_name=_('reference attribute 2'),
+        related_name='reference_attribute_2_set',
+        on_delete=models.CASCADE)
 
     class Meta:
         translate = ('name', 'description')
@@ -357,10 +340,20 @@ class Template(models.Model, metaclass=TransMeta):
 
 class TemplateModifier(models.Model, metaclass=TransMeta):
     template = models.ForeignKey(Template, verbose_name=_('template'), on_delete=models.CASCADE)
-    attribute = models.CharField(
-        verbose_name=_('attribute'),
+    aspect = models.CharField(
+        verbose_name=_('aspect'),
         max_length=40,
         choices=CHARACTER_ATTRIBUTE_CHOICES,
+        null=True,
+        blank=True)
+    aspect_modifier = models.IntegerField(
+        verbose_name=_('aspect modifier'),
+        blank=True,
+        null=True)
+    attribute = models.ForeignKey(
+        Attribute,
+        on_delete=models.CASCADE,
+        verbose_name=_('attribute'),
         null=True,
         blank=True)
     attribute_modifier = models.IntegerField(

@@ -1,3 +1,9 @@
+## Attributes
+
+* TemplateModifier umschreiben
+* QuirkModifier umschreiben
+* Template / Quirkdarstellung
+
 ## Notizen
 
 * Privat / Öffentlich

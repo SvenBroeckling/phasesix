@@ -12,30 +12,12 @@
                     <th class="text-end">{% trans 'Dice' %}</th>
                 </tr>
                 </thead>
-                <tr>
-                    <td>{% trans 'Education' %}</td>
-                    <td class="text-end">{% color_value_span object.education 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Logic' %}</td>
-                    <td class="text-end">{% color_value_span object.logic 140 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Conscientiousness' %}</td>
-                    <td class="text-end">{% color_value_span object.conscientiousness 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Willpower' %}</td>
-                    <td class="text-end">{% color_value_span object.willpower 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Apprehension' %}</td>
-                    <td class="text-end">{% color_value_span object.apprehension 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Charm' %}</td>
-                    <td class="text-end">{% color_value_span object.charm 7 %}</td>
-                </tr>
+                {% for attribute in object.characterattribute_set.persona_attributes %}
+                    <tr>
+                        <td>{{ attribute.attribute.name }}</td>
+                        <td class="text-end">{% color_value_span attribute.value 7 %}</td>
+                    </tr>
+                {% endfor %}
             </table>
         </div>
 
@@ -47,30 +29,12 @@
                         <th class="text-end">{% trans 'Dice' %}</th>
                     </tr>
                 </thead>
-                <tr>
-                    <td>{% trans 'Deftness' %}</td>
-                    <td class="text-end">{% color_value_span object.deftness 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Strength' %}</td>
-                    <td class="text-end">{% color_value_span object.strength 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Attractiveness' %}</td>
-                    <td class="text-end">{% color_value_span object.attractiveness 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Endurance' %}</td>
-                    <td class="text-end">{% color_value_span object.endurance 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Resistance' %}</td>
-                    <td class="text-end">{% color_value_span object.resistance 7 %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Quickness' %}</td>
-                    <td class="text-end">{% color_value_span object.quickness 7 %}</td>
-                </tr>
+                {% for attribute in object.characterattribute_set.physis_attributes %}
+                    <tr>
+                        <td>{{ attribute.attribute.name }}</td>
+                        <td class="text-end">{% color_value_span attribute.value 7 %}</td>
+                    </tr>
+                {% endfor %}
             </table>
         </div>
 
@@ -94,7 +58,7 @@
                             <td class="text-end">
                                 {% color_value_span knowledge.1 6 %}
                                 {% if knowledge.0.skill %}
-                                    {% character_knowledge_skil_value object knowledge.0 as cs %}
+                                    {% character_knowledge_skill_value object knowledge.0 as cs %}
                                     + {% color_value_span cs 6 %}
                                 {% endif %}
                             </td>
@@ -118,7 +82,7 @@
                 <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=skill.id model_name="CharacterSkill" sidebar_name="characterskill" %}">
                     <td>
                         {{ skill.skill }}
-                        <small class="text-muted">({{ skill.skill.dominant_attribute_name|capfirst }}, {{ skill.skill.supplemental_attribute_name|capfirst }})</small>
+                        <small class="text-muted">({{ skill.skill.reference_attribute_1.name }}, {{ skill.skill.reference_attribute_2.name }})</small>
                     </td>
                     <td class="text-end">{% color_value_span skill.value 7 %}</td>
                 </tr>
@@ -138,7 +102,7 @@
                 <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=skill.id model_name="CharacterSkill" sidebar_name="characterskill" %}">
                     <td>
                         {{ skill.skill }}
-                        <small class="text-muted">({{ skill.skill.dominant_attribute_name|capfirst }}, {{ skill.skill.supplemental_attribute_name|capfirst }})</small>
+                        <small class="text-muted">({{ skill.skill.reference_attribute_1.name }}, {{ skill.skill.reference_attribute_2.name }})</small>
                     </td>
                     <td class="text-end">{% color_value_span skill.value 7 %}</td>
                 </tr>

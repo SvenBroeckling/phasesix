@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
-from rules.models import BASE_ATTRIBUTE_CHOICES
 
 
 SPELL_ATTRIBUTE_CHOICES = (
@@ -46,32 +45,10 @@ class SpellType(models.Model, metaclass=TransMeta):
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
-    dominant_attribute = models.CharField(
-        _('dominant attribute'),
-        choices=BASE_ATTRIBUTE_CHOICES,
-        max_length=20,
-        blank=True,
-        null=True)
-    supplemental_attribute = models.CharField(
-        _('supplemental attribute'),
-        choices=BASE_ATTRIBUTE_CHOICES,
-        max_length=20,
-        blank=True,
-        null=True)
-
-    @property
-    def dominant_attribute_name(self):
-        try:
-            return next(filter(lambda x: x[0] == self.dominant_attribute, BASE_ATTRIBUTE_CHOICES))[1]
-        except StopIteration:
-            return ''
-
-    @property
-    def supplemental_attribute_name(self):
-        try:
-            return next(filter(lambda x: x[0] == self.supplemental_attribute, BASE_ATTRIBUTE_CHOICES))[1]
-        except StopIteration:
-            return ''
+    reference_attribute = models.ForeignKey(
+        'rules.Attribute',
+        verbose_name=_('reference attribute'),
+        on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('id',)

@@ -19,7 +19,7 @@ from characters.models import Character, CharacterWeapon, CharacterRiotGear, Cha
     CharacterSpell, CharacterSkill
 from horror.models import QuirkCategory
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
-from rules.models import Extension, Template, Lineage, StatusEffect, Skill
+from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute
 
 
 class IndexView(TemplateView):
@@ -299,6 +299,8 @@ class CreateCharacterDataView(FormView):
             self.object.extensions.add(e)
         for skill in Skill.objects.all():
             self.object.characterskill_set.create(skill=skill)
+        for attribute in Attribute.objects.all():
+            self.object.characterattribute_set.create(attribute=attribute)
 
         self.object.created_by = self.request.user if self.request.user.is_authenticated else None
         self.object.save()
