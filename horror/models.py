@@ -36,9 +36,13 @@ class Quirk(models.Model, metaclass=TransMeta):
     def get_modifier_summary_html(self):
         html = ''
         for m in self.quirkmodifier_set.all():
+            if m.aspect:
+                html += '<i class="fas fa-sun"></i> {} {}<br>'.format(
+                    m.get_aspect_display(),
+                    color_value_span(m.aspect_modifier, 3, algebraic_sign=True))
             if m.attribute:
                 html += '<i class="fas fa-asterisk"></i> {} {}<br>'.format(
-                    m.get_attribute_display(),
+                    m.attribute.name,
                     color_value_span(m.attribute_modifier, 3, algebraic_sign=True))
             if m.skill:
                 html += '<i class="fas fa-hand-scissors"></i> {} {}<br>'.format(

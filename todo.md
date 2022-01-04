@@ -1,8 +1,10 @@
 ## Attributes
 
-* TemplateModifier umschreiben
-* QuirkModifier umschreiben
+* Lineage.base_deftness etc?
+* Usage of character.quickness etc? pgrep quickness etc (alle attribute)
+* CHARACTER_ATTRIBUTE_CHOICES => CHARACTER_ASPECT_CHOICES
 * Template / Quirkdarstellung
+* Quirks mit alten OCEAN Modifiern
 
 ## Notizen
 

@@ -17,7 +17,7 @@
             {% with all_modifiers=template.templatemodifier_set.all %}
                 {% for mod in all_modifiers %}
                     {% if mod.aspect %}
-                        <i class="fas fa-sun fa-fw" title="{% trans 'Attribute' %}"></i> {{ mod.aspect }} {% color_value_span mod.aspect_modifier 3 algebraic_sign=True %}<br>
+                        <i class="fas fa-sun fa-fw" title="{% trans 'Aspect' %}"></i> {{ mod.get_aspect_display|capfirst }} {% color_value_span mod.aspect_modifier 3 algebraic_sign=True %}<br>
                     {% endif %}
                 {% endfor %}
                 {% for mod in all_modifiers %}

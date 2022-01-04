@@ -21,20 +21,6 @@ CHARACTER_ATTRIBUTE_CHOICES = (
     ('base_destiny_dice', _('destiny dice')),
     ('base_rerolls', _('rerolls')),
 
-    ('base_deftness', _('deftness')),
-    ('base_strength', _('strength')),
-    ('base_attractiveness', _('attractiveness')),
-    ('base_endurance', _('endurance')),
-    ('base_resistance', _('resistance')),
-    ('base_quickness', _('quickness')),
-
-    ('base_education', _('education')),
-    ('base_logic', _('logic')),
-    ('base_conscientiousness', _('conscientiousness')),
-    ('base_willpower', _('willpower')),
-    ('base_apprehension', _('apprehension')),
-    ('base_charm', _('charm')),
-
     ('base_max_stress', _('max stress')),
 )
 
