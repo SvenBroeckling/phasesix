@@ -13,6 +13,12 @@
 * Quicknote-Modal
 * Tagebuch / Log Theme
 
+## Interface
+
+* Ini Würfeln in Würfeltab
+* Statuseffekte Beschreibungen irgendwo anzeigen
+* Vergiftet etc. auf Mindestwurf anrechnen (DiceSocket)
+
 ## Magieschablonen
 
   Zauberer / Wizard
