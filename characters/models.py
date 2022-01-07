@@ -89,6 +89,9 @@ class Character(models.Model):
             aspect=aspect_name).aggregate(Sum('aspect_modifier'))
         return (m['aspect_modifier__sum'] or 0) + (q['aspect_modifier__sum'] or 0)
 
+    def get_attribute_value(self, attribute_identifier):
+        return self.characterattribute_set.get(attribute__identifier=attribute_identifier).value
+
     def knowledge_dict(self):
         kd = {}
         for t in self.charactertemplate_set.all():
@@ -153,9 +156,7 @@ class Character(models.Model):
             res[e.identifier] = True
         return res
 
-
     # Reputation
-
 
     @property
     def reputation_spent(self):
@@ -189,9 +190,7 @@ class Character(models.Model):
         )
         return template_points - spent_points
 
-
     # Magic and Horror
-
 
     @property
     def spell_points(self):
@@ -221,9 +220,7 @@ class Character(models.Model):
     def spell_points_available(self):
         return self.spell_points - self.spell_points_spent
 
-
     # Dice and Rolls
-
 
     @property
     def minimum_roll(self):
@@ -253,67 +250,7 @@ class Character(models.Model):
     def rerolls_free(self):
         return self.rerolls - self.rerolls_used
 
-
-    # Character Attributes
-
-
-    @property
-    def deftness(self):  # no use
-        return self.lineage.base_deftness + self.get_aspect_modifier('base_deftness')
-
-    @property
-    def strength(self):  # weaponless_bonus_wounds
-        return self.lineage.base_strength + self.get_aspect_modifier('base_strength')
-
-    @property
-    def attractiveness(self):  # no use
-        return self.lineage.base_attractiveness + self.get_aspect_modifier(
-            'base_attractiveness'
-        )
-
-    @property
-    def endurance(self):  # rest_wound_dice
-        return self.lineage.base_endurance + self.get_aspect_modifier('base_endurance')
-
-    @property
-    def resistance(self):  # no use
-        return self.lineage.base_resistance + self.get_aspect_modifier('base_resistance')
-
-    @property
-    def quickness(self):  # combat_walking_range, weaponless_attack_dice
-        return self.lineage.base_quickness + self.get_aspect_modifier('base_quickness')
-
-    @property
-    def education(self):  # no use
-        return self.lineage.base_education + self.get_aspect_modifier('base_education')
-
-    @property
-    def conscientiousness(self):  # rest_arcana_dice
-        return self.lineage.base_conscientiousness + self.get_aspect_modifier(
-            'base_conscientiousness'
-        )
-
-    @property
-    def willpower(self):  # rest_wound_dice, rest_arcana_dice, rest_stress_dice
-        return self.lineage.base_willpower + self.get_aspect_modifier('base_willpower')
-
-    @property
-    def apprehension(self):  # no use
-        return self.lineage.base_apprehension + self.get_aspect_modifier(
-            'base_apprehension'
-        )
-
-    @property
-    def charm(self):  # rest_arcana_dice
-        return self.lineage.base_charm + self.get_aspect_modifier('base_charm')
-
-    @property
-    def logic(self):  # rest_stress_dice
-        return self.lineage.base_logic + self.get_aspect_modifier('base_logic')
-
-
     # Combat
-
 
     @property
     def actions(self):
@@ -321,7 +258,7 @@ class Character(models.Model):
 
     @property
     def combat_walking_range(self):
-        return self.quickness
+        return self.get_attribute_value('quickness')
 
     @property
     def combat_running_range(self):
@@ -347,26 +284,25 @@ class Character(models.Model):
 
     @property
     def rest_wound_dice(self):
-        return self.resistance + self.endurance + self.willpower
+        return self.get_attribute_value('resistance') + self.get_attribute_value(
+            'endurance') + self.get_attribute_value('willpower')
 
     @property
     def rest_arcana_dice(self):
-        return self.charm + self.conscientiousness + self.willpower
+        return self.get_attribute_value('charm') + self.get_attribute_value('conscientiousness') + self.get_attribute_value('willpower')
 
     @property
     def rest_stress_dice(self):
-        return self.willpower + self.logic
+        return self.get_attribute_value('willpower') + self.get_attribute_value('logic')
 
     @property
     def weaponless_attack_dice(self):
-        bonus = 1 if self.quickness > 2 else 0
+        bonus = 1 if self.get_attribute_value('quickness') > 2 else 0
         return self.characterskill_set.hand_to_hand_combat_skill().value + bonus
 
     @property
     def weaponless_bonus_wounds(self):
-        if self.strength > 2:
-            return 1
-        return 0
+        return 1 if self.get_attribute_value('strength') > 2 else 0
 
     @property
     def max_health(self):
@@ -433,9 +369,18 @@ class CharacterAttribute(models.Model):
     def __str__(self):
         return "{} {}".format(self.attribute.name, self.value)
 
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+
     @property
     def value(self):
-        return 999
+        s = TemplateModifier.objects.filter(
+            template__charactertemplate__in=self.character.charactertemplate_set.all(),
+            attribute=self.attribute).aggregate(Sum('attribute_modifier'))
+        q = QuirkModifier.objects.filter(
+            quirk__in=self.character.quirks.all(),
+            attribute=self.attribute).aggregate(Sum('attribute_modifier'))
+        return 1 + (s['attribute_modifier__sum'] or 0) + (q['attribute_modifier__sum'] or 0)
 
 
 class CharacterSkill(models.Model):

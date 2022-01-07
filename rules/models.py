@@ -91,22 +91,6 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_evasion = models.IntegerField(_('base evasion'), default=0)
     base_protection = models.IntegerField(_('base armor'), default=0)
 
-    # physis
-    base_deftness = models.IntegerField(_('base deftness'), default=1)
-    base_strength = models.IntegerField(_('base strength'), default=1)
-    base_attractiveness = models.IntegerField(_('base attractiveness'), default=1)
-    base_endurance = models.IntegerField(_('base endurance'), default=1)
-    base_resistance = models.IntegerField(_('base resistance'), default=1)
-    base_quickness = models.IntegerField(_('base quickness'), default=1)
-
-    # persona
-    base_education = models.IntegerField(_('base education'), default=1)
-    base_logic = models.IntegerField(_('base logic'), default=1)
-    base_conscientiousness = models.IntegerField(_('base conscientiousness'), default=1)
-    base_willpower = models.IntegerField(_('base willpower'), default=1)
-    base_apprehension = models.IntegerField(_('base apprehension'), default=1)
-    base_charm = models.IntegerField(_('base charme'), default=1)
-
     # horror
     base_max_stress = models.IntegerField(_('max stress'), default=6)
 
@@ -135,6 +119,7 @@ class Attribute(models.Model, metaclass=TransMeta):
         ('phy', _('physis')),
     )
     name = models.CharField(_('name'), max_length=120)
+    identifier = models.CharField(_('identifier'), max_length=120)
     description = models.TextField(_('description'), blank=True, null=True)
     kind = models.CharField(_('kind'), max_length=3, choices=KIND_CHOICES)
 
