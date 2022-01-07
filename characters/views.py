@@ -16,7 +16,7 @@ from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationTy
 from campaigns.consumers import roll_and_send
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
-    CharacterSpell, CharacterSkill
+    CharacterSpell, CharacterSkill, CharacterAttribute
 from horror.models import QuirkCategory
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute
@@ -76,6 +76,8 @@ class XhrSidebarView(DetailView):
             return CharacterSpell.objects.all()
         elif self.kwargs['model_name'] == "CharacterSkill":
             return CharacterSkill.objects.all()
+        elif self.kwargs['model_name'] == "CharacterAttribute":
+            return CharacterAttribute.objects.all()
         return Character.objects.all()
 
     def get_context_data(self, **kwargs):

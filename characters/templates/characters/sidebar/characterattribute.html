@@ -1,0 +1,18 @@
+{% load i18n bootstrap4 %}
+
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <button
+                    data-dice-roll="{{ object.value }}d6"
+                    data-dice-header="{{ object.attribute }}"
+                    data-dice-description=""
+                    data-dice-character="{{ object.character.id }}"
+                    class="btn btn-primary btn-sm w-100 dice-roll">
+                <i class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %}</button>
+        </div>
+        <div class="col-12 mt-3">
+            {{ object.attribute.description }}
+        </div>
+    </div>
+{% endif %}

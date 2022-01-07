@@ -13,7 +13,7 @@
                 </tr>
                 </thead>
                 {% for attribute in object.characterattribute_set.persona_attributes %}
-                    <tr>
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=attribute.id model_name="CharacterAttribute" sidebar_name="characterattribute" %}">
                         <td>{{ attribute.attribute.name }}</td>
                         <td class="text-end">{% color_value_span attribute.value 7 %}</td>
                     </tr>
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 {% for attribute in object.characterattribute_set.physis_attributes %}
-                    <tr>
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=attribute.id model_name="CharacterAttribute" sidebar_name="characterattribute" %}">
                         <td>{{ attribute.attribute.name }}</td>
                         <td class="text-end">{% color_value_span attribute.value 7 %}</td>
                     </tr>
