@@ -1,16 +1,9 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse
+from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
-from django.utils.translation import ugettext_lazy as _
-from django.contrib import messages
-
-import random
 
 from armory.models import Item, Weapon, WeaponModification, RiotGear
-from gmtools.forms import CombatSimDummyForm
-from rules.models import Extension, Template, Lineage, Skill, CHARACTER_ATTRIBUTE_CHOICES
+from rules.models import Extension, Template, Lineage, Skill, CHARACTER_ASPECT_CHOICES
 
 
 class TemplateStatisticsView(TemplateView):
@@ -28,7 +21,7 @@ class TemplateStatisticsView(TemplateView):
         skills_max = {}
         skills_min = {}
 
-        for a in CHARACTER_ATTRIBUTE_CHOICES:
+        for a in CHARACTER_ASPECT_CHOICES:
             attributes_sum[a[0]] = [0, []]  # Sum, Templates
             attributes_count[a[0]] = [0, []]  # Sum, Templates
             attributes_max[a[0]] = [-999, []]  # Sum, Template

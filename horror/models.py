@@ -4,7 +4,7 @@ from transmeta import TransMeta
 from django.utils.translation import ugettext_lazy as _
 
 from characters.templatetags.characters_extras import color_value_span
-from rules.models import CHARACTER_ATTRIBUTE_CHOICES, Skill, Attribute
+from rules.models import CHARACTER_ASPECT_CHOICES, Skill, Attribute
 
 
 class QuirkCategory(models.Model, metaclass=TransMeta):
@@ -56,7 +56,7 @@ class QuirkModifier(models.Model, metaclass=TransMeta):
     aspect = models.CharField(
         verbose_name=_('aspect'),
         max_length=40,
-        choices=CHARACTER_ATTRIBUTE_CHOICES,
+        choices=CHARACTER_ASPECT_CHOICES,
         null=True,
         blank=True)
     aspect_modifier = models.IntegerField(

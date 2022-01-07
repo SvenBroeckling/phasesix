@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 
-CHARACTER_ATTRIBUTE_CHOICES = (
+CHARACTER_ASPECT_CHOICES = (
     ('base_max_health', _('max health')),
 
     ('base_max_arcana', _('max arcana')),
@@ -314,7 +314,7 @@ class TemplateModifier(models.Model, metaclass=TransMeta):
     aspect = models.CharField(
         verbose_name=_('aspect'),
         max_length=40,
-        choices=CHARACTER_ATTRIBUTE_CHOICES,
+        choices=CHARACTER_ASPECT_CHOICES,
         null=True,
         blank=True)
     aspect_modifier = models.IntegerField(
