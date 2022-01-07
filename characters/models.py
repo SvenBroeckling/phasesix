@@ -100,6 +100,25 @@ class Character(models.Model):
                         kd[m.knowledge] = m.knowledge_modifier
         return kd
 
+    def shadow_list(self):
+        sl = []
+        for t in self.charactertemplate_set.all():
+            for m in t.template.templatemodifier_set.all():
+                if m.shadow:
+                    sl.append(m.shadow)
+        return sl
+
+    @property
+    def ws_room_name(self) -> str:
+        """Websocket room name"""
+        if self.campaign is not None:
+            return self.campaign.ws_room_name
+        return f'character-{self.id}'
+
+    @property
+    def skills(self):
+        return self.characterskill_set.for_extensions(self.extensions)
+
     @property
     def currency_map(self):
         cc = self.campaign.currency_map if self.campaign is not None else None
@@ -110,32 +129,12 @@ class Character(models.Model):
         return qs.latest('id').quantity if qs.exists() else 0
 
     @property
-    def rest_wound_dice(self):
-        return self.resistance + self.endurance + self.willpower
-
-    @property
-    def rest_arcana_dice(self):
-        return self.charm + self.conscientiousness + self.willpower
-
-    @property
-    def rest_stress_dice(self):
-        return self.willpower + self.logic
-
-    @property
     def templates_with_shadow_rules(self):
         return self.charactertemplate_set.filter(template__show_rules_in_shadows=True)
 
     @property
     def templates_with_combat_rules(self):
         return self.charactertemplate_set.filter(template__show_rules_in_combat=True)
-
-    def shadow_list(self):
-        sl = []
-        for t in self.charactertemplate_set.all():
-            for m in t.template.templatemodifier_set.all():
-                if m.shadow:
-                    sl.append(m.shadow)
-        return sl
 
     def add_template(self, template):
         if not self.charactertemplate_set.filter(template=template).exists():
@@ -154,36 +153,9 @@ class Character(models.Model):
             res[e.identifier] = True
         return res
 
-    @property
-    def weaponless_attack_dice(self):
-        bonus = 1 if self.quickness > 2 else 0
-        return self.characterskill_set.hand_to_hand_combat_skill().value + bonus
 
-    @property
-    def weaponless_bonus_wounds(self):
-        if self.strength > 2:
-            return 1
-        return 0
+    # Reputation
 
-    @property
-    def wounds_taken(self):
-        return self.max_health - self.health
-
-    @property
-    def arcana_used(self):
-        return self.max_arcana - self.arcana
-
-    @property
-    def available_stress(self):
-        return self.max_stress - self.stress
-
-    @property
-    def spell_points_spent(self):
-        return sum([s.spell_point_cost for s in self.characterspell_set.all()])
-
-    @property
-    def spell_points_available(self):
-        return self.spell_points - self.spell_points_spent
 
     @property
     def reputation_spent(self):
@@ -202,26 +174,6 @@ class Character(models.Model):
         self.save()
 
     @property
-    def actions(self):
-        return self.lineage.base_actions + self.get_aspect_modifier('base_actions')
-
-    @property
-    def minimum_roll(self):
-        return self.lineage.base_minimum_roll + self.get_aspect_modifier('base_minimum_roll')
-
-    @property
-    def combat_walking_range(self):
-        return self.quickness
-
-    @property
-    def combat_running_range(self):
-        return self.combat_walking_range * 2
-
-    @property
-    def combat_crawling_range(self):
-        return math.ceil(self.combat_walking_range / 2)
-
-    @property
     def remaining_template_points(self):
         template_points = (
                 self.lineage.lineagetemplatepoints_set.aggregate(Sum('points'))[
@@ -237,13 +189,17 @@ class Character(models.Model):
         )
         return template_points - spent_points
 
+
+    # Magic and Horror
+
+
     @property
     def spell_points(self):
         return self.lineage.base_spell_points + self.get_aspect_modifier('base_spell_points')
 
     @property
-    def max_health(self):
-        return self.lineage.base_max_health + self.get_aspect_modifier('base_max_health')
+    def available_stress(self):
+        return self.max_stress - self.stress
 
     @property
     def max_stress(self):
@@ -252,6 +208,26 @@ class Character(models.Model):
     @property
     def max_arcana(self):
         return self.lineage.base_max_arcana + self.get_aspect_modifier('base_max_arcana')
+
+    @property
+    def arcana_used(self):
+        return self.max_arcana - self.arcana
+
+    @property
+    def spell_points_spent(self):
+        return sum([s.spell_point_cost for s in self.characterspell_set.all()])
+
+    @property
+    def spell_points_available(self):
+        return self.spell_points - self.spell_points_spent
+
+
+    # Dice and Rolls
+
+
+    @property
+    def minimum_roll(self):
+        return self.lineage.base_minimum_roll + self.get_aspect_modifier('base_minimum_roll')
 
     @property
     def bonus_dice(self):
@@ -277,59 +253,83 @@ class Character(models.Model):
     def rerolls_free(self):
         return self.rerolls - self.rerolls_used
 
+
+    # Character Attributes
+
+
     @property
-    def deftness(self):
+    def deftness(self):  # no use
         return self.lineage.base_deftness + self.get_aspect_modifier('base_deftness')
 
     @property
-    def strength(self):
+    def strength(self):  # weaponless_bonus_wounds
         return self.lineage.base_strength + self.get_aspect_modifier('base_strength')
 
     @property
-    def attractiveness(self):
+    def attractiveness(self):  # no use
         return self.lineage.base_attractiveness + self.get_aspect_modifier(
             'base_attractiveness'
         )
 
     @property
-    def endurance(self):
+    def endurance(self):  # rest_wound_dice
         return self.lineage.base_endurance + self.get_aspect_modifier('base_endurance')
 
     @property
-    def resistance(self):
+    def resistance(self):  # no use
         return self.lineage.base_resistance + self.get_aspect_modifier('base_resistance')
 
     @property
-    def quickness(self):
+    def quickness(self):  # combat_walking_range, weaponless_attack_dice
         return self.lineage.base_quickness + self.get_aspect_modifier('base_quickness')
 
     @property
-    def education(self):
+    def education(self):  # no use
         return self.lineage.base_education + self.get_aspect_modifier('base_education')
 
     @property
-    def conscientiousness(self):
+    def conscientiousness(self):  # rest_arcana_dice
         return self.lineage.base_conscientiousness + self.get_aspect_modifier(
             'base_conscientiousness'
         )
 
     @property
-    def willpower(self):
+    def willpower(self):  # rest_wound_dice, rest_arcana_dice, rest_stress_dice
         return self.lineage.base_willpower + self.get_aspect_modifier('base_willpower')
 
     @property
-    def apprehension(self):
+    def apprehension(self):  # no use
         return self.lineage.base_apprehension + self.get_aspect_modifier(
             'base_apprehension'
         )
 
     @property
-    def charm(self):
+    def charm(self):  # rest_arcana_dice
         return self.lineage.base_charm + self.get_aspect_modifier('base_charm')
 
     @property
-    def logic(self):
+    def logic(self):  # rest_stress_dice
         return self.lineage.base_logic + self.get_aspect_modifier('base_logic')
+
+
+    # Combat
+
+
+    @property
+    def actions(self):
+        return self.lineage.base_actions + self.get_aspect_modifier('base_actions')
+
+    @property
+    def combat_walking_range(self):
+        return self.quickness
+
+    @property
+    def combat_running_range(self):
+        return self.combat_walking_range * 2
+
+    @property
+    def combat_crawling_range(self):
+        return math.ceil(self.combat_walking_range / 2)
 
     @property
     def ballistic_protection(self):
@@ -346,6 +346,37 @@ class Character(models.Model):
         return self.lineage.base_evasion + self.get_aspect_modifier('base_evasion') + be
 
     @property
+    def rest_wound_dice(self):
+        return self.resistance + self.endurance + self.willpower
+
+    @property
+    def rest_arcana_dice(self):
+        return self.charm + self.conscientiousness + self.willpower
+
+    @property
+    def rest_stress_dice(self):
+        return self.willpower + self.logic
+
+    @property
+    def weaponless_attack_dice(self):
+        bonus = 1 if self.quickness > 2 else 0
+        return self.characterskill_set.hand_to_hand_combat_skill().value + bonus
+
+    @property
+    def weaponless_bonus_wounds(self):
+        if self.strength > 2:
+            return 1
+        return 0
+
+    @property
+    def max_health(self):
+        return self.lineage.base_max_health + self.get_aspect_modifier('base_max_health')
+
+    @property
+    def wounds_taken(self):
+        return self.max_health - self.health
+
+    @property
     def max_concealment(self):
         ic = self.characteritem_set.aggregate(
             Max('item__concealment')
@@ -358,17 +389,6 @@ class Character(models.Model):
             if w.modified_concealment > wc:
                 wc = w.modified_concealment
         return max(ic, rc, wc)
-
-    @property
-    def ws_room_name(self) -> str:
-        """Websocket room name"""
-        if self.campaign is not None:
-            return self.campaign.ws_room_name
-        return f'character-{self.id}'
-
-    @property
-    def skills(self):
-        return self.characterskill_set.for_extensions(self.extensions)
 
 
 class CharacterAttributeQuerySet(models.QuerySet):
