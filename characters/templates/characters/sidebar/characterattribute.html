@@ -11,8 +11,11 @@
                     class="btn btn-primary btn-sm w-100 dice-roll">
                 <i class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %}</button>
         </div>
-        <div class="col-12 mt-3">
-            {{ object.attribute.description }}
-        </div>
     </div>
 {% endif %}
+
+<div class="row">
+    <div class="col-12 {% if may_edit %}mt-3{% endif %}">
+        {{ object.attribute.description }}
+    </div>
+</div>
