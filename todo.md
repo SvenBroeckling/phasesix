@@ -16,13 +16,6 @@
 * Statuseffekte Beschreibungen irgendwo anzeigen
 * Vergiftet etc. auf Mindestwurf anrechnen (DiceSocket)
 
-## Magieschablonen
-
-  Zauberer / Wizard
-  Geisterbeschwörer / Nekrologe
-  Seher
-  Runenleger
-
 ## Pantheon
   Mönch
   Paladin

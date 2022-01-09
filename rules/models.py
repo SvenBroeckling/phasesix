@@ -358,6 +358,9 @@ class TemplateModifier(models.Model, metaclass=TransMeta):
         null=True,
         blank=True)
 
+    def __str__(self):
+        return self.template.name
+
 
 class TemplateRequirement(models.Model, metaclass=TransMeta):
     template = models.ForeignKey(Template, verbose_name=_('template'), on_delete=models.CASCADE)
