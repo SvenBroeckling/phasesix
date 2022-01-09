@@ -31,7 +31,7 @@ class Campaign(models.Model):
     extensions = models.ManyToManyField(
         'rules.Extension', limit_choices_to={'is_mandatory': False, 'is_epoch': False}, blank=True
     )
-    forbidden_templates = models.ManyToManyField('rules.Template')
+    forbidden_templates = models.ManyToManyField('rules.Template', blank=True)
 
     discord_webhook_url = models.URLField(
         _('discord webhook url'),
