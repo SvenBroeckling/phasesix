@@ -168,9 +168,9 @@ urlpatterns = [
         views.AddItemView.as_view(),
         name='add_item'),
     url(
-        r'^xhr_remove_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
-        views.XhrRemoveItemView.as_view(),
-        name='xhr_remove_item'),
+        r'^xhr_modify_item/(?P<pk>\d+)/(?P<item_pk>\d+)/(?P<mode>\w+)$',
+        views.XhrModifyItemView.as_view(),
+        name='xhr_modify_item'),
     url(
         r'^modify_currency/(?P<pk>\d+)$',
         views.XhrModifyCurrencyView.as_view(),

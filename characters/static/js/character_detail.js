@@ -13,7 +13,11 @@ $(function () {
 
         let sc = $('.sidebar-content')
         if (sc.data('sidebar-url') !== undefined) {
-            sc.load(sc.data('sidebar-url'))
+            sc.load(sc.data('sidebar-url'), (response, status, xhr) => {
+                if(xhr.status === 404) {
+                    $('#sidebar-right').css('width', '');
+                }
+            })
         }
     }
 

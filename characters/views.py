@@ -567,17 +567,22 @@ class AddItemView(View):
         return JsonResponse({'status': 'ok'})
 
 
-class XhrRemoveItemView(View):
+class XhrModifyItemView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
         item = CharacterItem.objects.get(id=kwargs['item_pk'])
-        if item.quantity > 1:
-            item.quantity -= 1
-            item.save()
-        else:
+
+        if self.kwargs['mode'] == 'add':
+            item.quantity += 1
+        if self.kwargs['mode'] == 'remove':
+            if item.quantity > 0:
+                item.quantity -= 1
+        item.save()
+        if item.quantity <= 0:
             item.delete()
+
         return JsonResponse({'status': 'ok'})
 
 
