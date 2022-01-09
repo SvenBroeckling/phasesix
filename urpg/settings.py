@@ -10,6 +10,7 @@ SECRET_KEY = 'p&90ws3x7(hi+$+v4=(5ni@@3$uqgdpg$s*=w@8yl-w12)0%&$'
 ADMINS = [('Sven', 'sven@broeckling.de')]
 
 DEBUG = True
+DEBUG_DISCORD = False
 
 ALLOWED_HOSTS = []
 ASGI_APPLICATION = "urpg.asgi.application"

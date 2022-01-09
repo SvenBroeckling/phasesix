@@ -4,6 +4,7 @@ import requests
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.template.loader import render_to_string
+from django.conf import settings
 
 from channels.generic.websocket import WebsocketConsumer
 
@@ -47,7 +48,7 @@ def roll_and_send(character_id, roll_string, header, description):
     )
 
     url = character.campaign.discord_webhook_url
-    if url is not None:
+    if url is not None and not settings.DEBUG_DISCORD:
         result = ', '.join(str(r) for r in result_list)
         json_data = {
             'content': f'**{header}** {result}',
@@ -56,7 +57,6 @@ def roll_and_send(character_id, roll_string, header, description):
         if description:
             json_data['embeds'] = [{'description': description}]
         requests.post(url, json=json_data)
-
 
     return result_list
 
