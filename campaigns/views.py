@@ -46,7 +46,8 @@ class CampaignDetailView(CampaignMixin, DetailView):
 class CampaignUpdateView(CampaignMixin, UpdateView):
     model = Campaign
     active_tab = 'update'
-    fields = ('name', 'epoch', 'extensions', 'abstract', 'currency_map', 'image', 'backdrop_image')
+    fields = (
+    'name', 'epoch', 'extensions', 'abstract', 'currency_map', 'discord_webhook_url', 'image', 'backdrop_image')
     template_name = 'campaigns/campaign_update.html'
 
     def get_success_url(self):

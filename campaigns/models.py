@@ -33,6 +33,13 @@ class Campaign(models.Model):
     )
     forbidden_templates = models.ManyToManyField('rules.Template')
 
+    discord_webhook_url = models.URLField(
+        _('discord webhook url'),
+        max_length=256,
+        help_text=_("Create a discord webhook and paste it's url here to display dice results."),
+        blank=True,
+        null=True)
+
     currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):

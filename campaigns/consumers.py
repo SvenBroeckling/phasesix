@@ -1,4 +1,5 @@
 import json
+import requests
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
@@ -44,6 +45,19 @@ def roll_and_send(character_id, roll_string, header, description):
             }
         }
     )
+
+    url = character.campaign.discord_webhook_url
+    if url is not None:
+        result = ', '.join(str(r) for r in result_list)
+        json_data = {
+            'content': f'**{header}** {result}',
+            'username': character.name,
+        }
+        if description:
+            json_data['embeds'] = [{'description': description}]
+        requests.post(url, json=json_data)
+
+
     return result_list
 
 
