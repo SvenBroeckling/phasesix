@@ -47,7 +47,7 @@ def roll_and_send(character_id, roll_string, header, description):
         }
     )
 
-    url = character.campaign.discord_webhook_url
+    url = character.campaign.discord_webhook_url if character.campaign is not None else None
     if url is not None and not settings.DEBUG_DISCORD:
         result = ', '.join(str(r) for r in result_list)
         json_data = {
