@@ -471,11 +471,11 @@ class CharacterWeapon(models.Model):
         return modes
 
     @property
-    def modified_penetration(self):
-        pen = self.weapon.penetration
+    def modified_piercing(self):
+        pen = self.weapon.piercing
         mods = 0
         for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='penetration'):
+            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='piercing'):
                 mods += wmm.attribute_modifier
         return pen + mods
 

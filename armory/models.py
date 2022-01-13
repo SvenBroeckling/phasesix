@@ -148,7 +148,7 @@ class Weapon(models.Model, metaclass=TransMeta):
     bonus_dice = models.IntegerField(_('bonus dice'), default=0)
     capacity = models.IntegerField(_('capacity'), null=True, blank=True)
     wounds = models.IntegerField(_('bonus wounds'), default=0)
-    penetration = models.IntegerField(_('penetration'), default=0)
+    piercing = models.IntegerField(_('piercing'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
     reload_actions = models.IntegerField(_('reload actions'), default=1)
 
@@ -260,7 +260,7 @@ class WeaponModificationAttributeChange(models.Model):
         ('capacity', _('Capacity')),
         ('wounds', _('Bonus wounds')),
         ('bonus_dice', _('Bonus dice')),
-        ('penetration', _('Penetration')),
+        ('piercing', _('Piercing')),
         ('concealment', _('Concealment')),
         ('reload_actions', _('Reload actions')),
         ('range_meter', _('Range (meter)')),

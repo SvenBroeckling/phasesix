@@ -4,7 +4,6 @@
 - Suche in die Add Modals
 - Weapon Addon add bug?
 - Add Modals Flexbox statt Masonry
-- penetration -> piercing
 - Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
 - Ini Würfeln in Würfeltab
 - Status Effekte:

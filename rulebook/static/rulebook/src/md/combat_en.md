@@ -104,11 +104,11 @@ If the distance is increased up to the double of the weapon, the hit dice of the
 
 If the target's distance is more than twice the weapon's range away, it is not possible to shoot or attack at the target.
 
-#### Hit and penetration
+#### Hits and piercing
 
 Any success of the *hit roll* is a *hit* on the target of the attack. Other circumstances can also cause *hits*, for example a grenade can cause "3 hits with 2 wounds each".
 
-If a character takes *hits*, they are reduced by the target's *protection value*. The *protection* is reduced by the *penetration* of the attacker's weapon.
+If a character takes *hits*, they are reduced by the target's *protection value*. The *protection* is reduced by the *piercing* of the attacker's weapon.
 
 Any hit not prevented by the *protection value* becomes as many wounds as the weapon or effect specifies.
 
@@ -129,7 +129,7 @@ If the character's *Strength* value is higher than 2, the successful attack caus
 
 If the character's *Quickness* value is higher than 2, the character adds one die to the roll. 
 
-The penetration of an unarmed melee attack is 0, and the range is 1 meter.
+The piercing of an unarmed melee attack is 0, and the range is 1 meter.
 
 #### Evasion
 

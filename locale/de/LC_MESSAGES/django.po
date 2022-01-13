@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 21:34+0000\n"
-"PO-Revision-Date: 2022-01-13 21:40+0100\n"
+"POT-Creation-Date: 2022-01-13 21:52+0000\n"
+"PO-Revision-Date: 2022-01-13 22:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -200,7 +200,7 @@ msgid "bonus wounds"
 msgstr "Bonuswunden"
 
 #: armory/models.py:151
-msgid "penetration"
+msgid "piercing"
 msgstr "Durchschlag"
 
 #: armory/models.py:153
@@ -286,7 +286,9 @@ msgstr "Bonuswürfel"
 #: characters/templates/characters/fragments/gear.html:88
 #: characters/templates/characters/modals/add_weapons.html:41
 #: characters/templates/characters/sidebar/characterweapon.html:84
-msgid "Penetration"
+#: gmtools/templates/gmtools/combat_sim_results.html:10
+#: gmtools/templates/gmtools/combat_sim_results.html:25
+msgid "Piercing"
 msgstr "Durchschlag"
 
 #: armory/models.py:264 characters/templates/characters/fragments/gear.html:29
@@ -1945,12 +1947,6 @@ msgstr "Iterationen"
 msgid "Fight!"
 msgstr "Kämpft!"
 
-#: gmtools/templates/gmtools/combat_sim_results.html:10
-#: gmtools/templates/gmtools/combat_sim_results.html:25
-#, fuzzy
-msgid "Pen."
-msgstr "DS"
-
 #: gmtools/templates/gmtools/combat_sim_results.html:14
 msgid "Wins Player 1"
 msgstr "Gewinne Spieler 1"
@@ -2505,6 +2501,16 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#, fuzzy
+#~ msgid "Pen."
+#~ msgstr "DS"
+
+#~ msgid "penetration"
+#~ msgstr "Durchschlag"
+
+#~ msgid "Penetration"
+#~ msgstr "Durchschlag"
 
 #~ msgid "Display dice roll results"
 #~ msgstr "Würfelergebnisse anzeigen"

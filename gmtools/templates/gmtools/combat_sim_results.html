@@ -7,7 +7,7 @@
             {{ dummy_1.health }} health<br>
             {{ dummy_1.attack_value }} attack<br>
             {{ dummy_1.cover }}+ cover<br>
-            {{ dummy_1.weapon }}: {{ dummy_1.weapon.penetration }} {% trans 'Pen.' %} / {{ dummy_1.weapon.wounds }} {% trans 'Wounds' %}<br>
+            {{ dummy_1.weapon }}: {{ dummy_1.weapon.piercing }} {% trans 'Piercing' %} / {{ dummy_1.weapon.wounds }} {% trans 'Wounds' %}<br>
             {{ dummy_1.riot_gear|default:"" }}{% if dummy_1.riot_gear %}: {{ dummy_1.riot_gear.protection_ballistic }} {% trans "Protection" %}{% endif %}
         </div>
         <div class="col-md-4 text-center">
@@ -22,7 +22,7 @@
             {{ dummy_2.health }} health<br>
             {{ dummy_2.attack_value }} attack<br>
             {{ dummy_2.cover }}+ cover<br>
-            {{ dummy_2.weapon }}: {{ dummy_2.weapon.penetration }} {% trans 'Pen.' %} / {{ dummy_2.weapon.wounds }} {% trans 'Wounds' %}<br>
+            {{ dummy_2.weapon }}: {{ dummy_2.weapon.piercing }} {% trans 'Piercing' %} / {{ dummy_2.weapon.wounds }} {% trans 'Wounds' %}<br>
             {{ dummy_2.riot_gear|default:"" }}{% if dummy_2.riot_gear %}: {{ dummy_2.riot_gear.protection_ballistic }} {% trans "Protection" %}{% endif %}
         </div>
     </div>
