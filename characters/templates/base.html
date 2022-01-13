@@ -133,7 +133,11 @@
                             {% endif %}
 
                             <li class="nav-item">
-                                <a class="nav-link text-warning" id="dice-ws-connected" data-message-connected="{% trans 'Dice server connected' %}" data-message-disconnected="{% trans 'Dice server disconnected' %}">
+                                <a title="{% trans 'Dice server disconnected' %}"
+                                   class="nav-link text-warning"
+                                   id="dice-ws-connected"
+                                   data-message-connected="{% trans 'Dice server connected' %}"
+                                   data-message-disconnected="{% trans 'Dice server disconnected' %}">
                                     <i class="fas fa-dice-five"></i>
                                 </a>
                             </li>

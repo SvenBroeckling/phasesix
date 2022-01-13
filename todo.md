@@ -1,8 +1,5 @@
 ## Misc
 
-* Quirkdarstellung
-* Quirks mit alten OCEAN Modifiern
-
 ## Notizen
 
 * Privat / Öffentlich
@@ -12,8 +9,8 @@
 
 ## Interface
 
+* Quirkdarstellung
 * Ini Würfeln in Würfeltab
-* Statuseffekte Beschreibungen irgendwo anzeigen
 * Vergiftet etc. auf Mindestwurf anrechnen (DiceSocket)
 
 ## Pantheon
