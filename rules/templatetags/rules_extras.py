@@ -15,4 +15,6 @@ def template_widget(context, template):
 
 @register.filter
 def urpg_markup(value):
+    if value is None:
+        return ''
     return mark_safe(markdown(value, extensions=['markdown.extensions.tables']))

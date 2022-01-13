@@ -1,4 +1,4 @@
-{% load characters_extras i18n %}
+{% load characters_extras i18n rules_extras %}
 
 {% if may_edit %}
     <div class="row">
@@ -48,7 +48,12 @@
         <div class="col-12 mb-2">
             <div class="card">
                 <div class="card-header">{{ q }}</div>
-                <div class="card-body">{{ q.get_modifier_summary_html|safe }}</div>
+                <div class="card-body">
+                    <div class="text-muted">
+                        {{ q.description|urpg_markup }}
+                    </div>
+                    {{ q.get_modifier_summary_html|safe }}
+                </div>
             </div>
         </div>
     {% endfor %}

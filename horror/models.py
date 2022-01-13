@@ -23,10 +23,11 @@ class QuirkCategory(models.Model, metaclass=TransMeta):
 class Quirk(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=60)
     category = models.ForeignKey(QuirkCategory, verbose_name=_("category"), on_delete=models.CASCADE)
+    description = models.TextField(_('description'), blank=True, null=True)
 
     class Meta:
         ordering = ('id',)
-        translate = ('name',)
+        translate = ('name', 'description')
         verbose_name = _('quirk')
         verbose_name_plural = _('quirks')
 

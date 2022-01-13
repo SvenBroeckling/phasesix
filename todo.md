@@ -11,9 +11,9 @@
 
 * Quirkdarstellung
 * Ini Würfeln in Würfeltab
-* Vergiftet auf Mindestwurf anrechnen (DiceSocket)
-* In der Hocke auf Mindestwurf anrechnen (DiceSocket)
-* Geschockt auf anzahl der Würfel anrechnen
+* Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
+* In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
+* Geschockt auf Anzahl der Würfel anrechnen
 * Brennend auf Angriffe und Wahrnehmung anrechnen
 
 ## Generell
