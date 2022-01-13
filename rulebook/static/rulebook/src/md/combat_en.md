@@ -4,7 +4,7 @@ When it comes to combat, the game proceeds in rounds.
 
 As soon as a conflict arises, time is frozen, and the group decides the order in which the participants of the combat will act. 
 
-To do this, each participant rolls on a D6, and adds the *speed value*. The participant with the highest score starts the combat, all others follow in the order of their scores. 
+To do this, each participant rolls on a D6, and adds the *Quickness value*. Here also the rule of *Exploding Dice* applies. The participant with the highest score starts the combat, all others follow in the order of their scores. 
 
 If two participants have the same result, the *Quickness* value decides first, and if this is also identical, the *Deftness* value.
 

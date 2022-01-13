@@ -4,7 +4,7 @@ Wenn es zum Kampf kommt, verläuft das Spiel in Runden.
 
 Sobald sich ein Konflikt ergibt wird die Zeit eingefroren, und die Gruppe bestimmt die Reihenfolge in der die Teilnehmer des Kampfes agieren. 
 
-Hierzu wirft jeder Teilnehmer auf einen W6, und addiert den *Schnelligkeitswert* hinzu. Der Teilnehmer mit dem höchsten Ergebnis beginnt den Kampf, alle Weiteren folgen in der Reihenfolge ihrer Ergebnisse. 
+Hierzu wirft jeder Teilnehmer auf einen W6, und addiert den *Schnelligkeitswert* hinzu. Hierbei gilt auch die Regel der *Exploding Dice*. Der Teilnehmer mit dem höchsten Ergebnis beginnt den Kampf, alle Weiteren folgen in der Reihenfolge ihrer Ergebnisse. 
 
 Haben zwei Teilnehmer dasselbe Ergebnis, so entscheidet zunächst der Wert *Schnelligkeit*, und falls dieser auch identisch ist der *Geschickwert*.
 
