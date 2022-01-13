@@ -127,18 +127,19 @@
                                     </ul>
                                 </li>
                             {% else %}
-                                <li class="nav-item  me-1 active">
+                                <li class="nav-item me-1 active">
                                     <a class="nav-link" href="{% url 'login' %}?next=/">{% trans 'Login' %}</a>
                                 </li>
                             {% endif %}
+
+                            <li class="nav-item">
+                                <a class="nav-link text-warning" id="dice-ws-connected" data-message-connected="{% trans 'Dice server connected' %}" data-message-disconnected="{% trans 'Dice server disconnected' %}">
+                                    <i class="fas fa-dice-five"></i>
+                                </a>
+                            </li>
+
                         </ul>
 
-                        <form action="">
-                            <div class="form-check form-switch me-2" title="{% trans 'Display dice roll results' %}">
-                                <input class="form-check-input" type="checkbox" checked id="display-ws-dice-results">
-                                <label class="form-check-label" for="display-ws-dice-results"><i class="fas fa-dice-six text-primary"></i></label>
-                            </div>
-                        </form>
                         <form class="d-flex" method="post"
                               action="{% url 'set_language' %}?next={{ request.path }}">
                             {% csrf_token %}
@@ -182,6 +183,7 @@
     <script src="{% static 'js/bootstrap-slider.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-toaster.min.js' %}"></script>
     <script src="{% static 'js/tilt.jquery.min.js' %}"></script>
+    <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 {% endcompress %}
 
 <script>
