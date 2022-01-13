@@ -103,11 +103,10 @@ Der Mindestwurf des Charakters ist für alle Würfe um den Wert dieses Zustands 
 
 Zu Beginn jeder Runde kann der Charakter auf seine *Resistenz* werfen. Er kann den Wert des Zustands um die Anzahl der Erfolge verringern. Erreicht der Zustand dabei einen Wert von 0, so wird er entfernt.
 
-
 #### In der Hocke
 
-Der Charakter hat Halbe Deckung, gegnerische Angriffe sind unm 2 Würfel verringert (s. Kampf)
+Der Charakter hat Halbe Deckung, gegnerische Angriffe sind um 2 Würfel verringert (s. Kampf)
 
-Alle Aktionen welche körperliches Handeln erfordern (Physis Attribute, Angriffe und Fähigkeiten) haben einen um +1 erhöhten Mindestwurf.
+Alle Aktionen, welche körperliches Handeln erfordern (Physis Attribute, Angriffe und Fähigkeiten) haben einen um +1 erhöhten Mindestwurf.
 
 Es kostet eine Aktion, sich hinzulegen oder aufzustehen.

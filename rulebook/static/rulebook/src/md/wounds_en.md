@@ -103,7 +103,7 @@ The character's minimum roll is increased by the value of this condition for all
 
 At the beginning of each round, the character can roll for his *Resistance*. He can reduce the value of this condition by the number of successes. If the condition reaches a value of 0 in the process, it is removed.
 
- #### Hunkered
+#### Hunkered
 
 The character has a half combat defense, enemy attacks have 2 less hit die (see combat).
 
