@@ -1,12 +1,3 @@
-## Misc
-
-## Interface
-
-* Ini Würfeln in Würfeltab
-* Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
-* In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
-* Geschockt auf Anzahl der Würfel anrechnen
-* Brennend auf Angriffe und Wahrnehmung anrechnen
 
 ## Generell
 
@@ -14,20 +5,18 @@
 - Weapon Addon add bug?
 - Add Modals Flexbox statt Masonry
 - penetration -> piercing
+- Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
+- Ini Würfeln in Würfeltab
+- Status Effekte:
+  - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
+  - In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
+  - Geschockt auf Anzahl der Würfel anrechnen
+  - Brennend auf Angriffe und Wahrnehmung anrechnen
 
 ## Data
 
 - Quirks: Attribute bereinigen + Description
 - Viel Equipment fehlt in den 80ern
-- Alienspinne als Foe
-- Recherche Knowledge (Achtsamkeit)
-  - Schablone Journalist
-  - Eigene Schablone
-
-## Regeln
-
-- Vollautomatisch konsumiert alle bleibenden Aktionen einer Runde und schießt für jede Aktion
-- Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
 
 ## Notizen
 

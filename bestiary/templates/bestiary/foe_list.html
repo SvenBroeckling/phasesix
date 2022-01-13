@@ -19,6 +19,7 @@
                     <th>{% trans 'Foe' %}</th>
                     <th>{% trans 'Type' %}</th>
                     <th>{% trans 'Health' %}</th>
+                    <th>{% trans 'Protection' %}</th>
                     <th>{% trans 'Actions' %}</th>
                     <th>{% trans 'Movement' %}</th>
                     <th>{% trans 'Minimum Roll' %}</th>
@@ -32,6 +33,7 @@
                         <td><a href="{% url 'bestiary:detail' pk=object.id %}">{{ object }}</a></td>
                         <td>{{ object.type }}</td>
                         <td>{% color_value_span object.health 10 %}</td>
+                        <td>{% color_value_span object.protection 2 %}</td>
                         <td>{% color_value_span object.actions 4 %}</td>
                         <td>{% color_value_span object.movement 3 %}</td>
                         <td>{% color_value_span object.minimum_roll 5 invert=True %}+</td>

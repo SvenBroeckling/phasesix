@@ -25,6 +25,7 @@
         <div class="col-12">
             <h4>{% trans 'Statistics' %}</h4>
             <b>{% trans 'Health' %}</b>: {% color_value_span object.health 10 %}<br>
+            <b>{% trans 'Protection' %}</b>: {% color_value_span object.protection 2 %}<br>
             <b>{% trans 'Actions' %}</b>: {% color_value_span object.actions 4 %}<br>
             <b>{% trans 'Movement' %}</b>: {% color_value_span object.movement 3 %}<br>
             <b>{% trans 'Minimum Roll' %}</b>: {% color_value_span object.minimum_roll 5 invert=True %}+<br>
@@ -34,7 +35,7 @@
             <h4>{% trans 'Actions' %}</h4>
             <ul>
                 {% for action in object.foeaction_set.all %}
-                    <li>{{ action.name }} {% color_value_span action.skill 8 %} <i>({{ action.effect }})</i></li>
+                    <li>{{ action.name }} {% color_value_span action.skill 8 %} <i class="text-muted">({{ action.effect }})</i></li>
                 {% endfor %}
             </ul>
         </div>
