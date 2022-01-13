@@ -11,14 +11,17 @@
 
 * Quirkdarstellung
 * Ini Würfeln in Würfeltab
-* Vergiftet etc. auf Mindestwurf anrechnen (DiceSocket)
+* Vergiftet auf Mindestwurf anrechnen (DiceSocket)
+* In der Hocke auf Mindestwurf anrechnen (DiceSocket)
+* Geschockt auf anzahl der Würfel anrechnen
+* Brennend auf Angriffe und Wahrnehmung anrechnen
 
-## Pantheon
-  Mönch
-  Paladin
-  Priester
-  Vampir
-  
+## Generell
+
+- Suche in die Add Modals
+- Weapon Addon add bug?
+- Add Modals Flexbox statt Masonry
+- penetration -> piercing
 
 ## Regeln
 
@@ -48,10 +51,10 @@
 - Weniger Bonuswürfel
 - Kapazität
 
-## Generell
-
-- Suche in die Add Modals
-- Weapon Addon add bug?
-- Add Modals Flexbox statt Masonry
-- penetration -> piercing
+## Pantheon
+  Mönch
+  Paladin
+  Priester
+  Vampir
+  
 
