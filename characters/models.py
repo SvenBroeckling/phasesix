@@ -258,15 +258,15 @@ class Character(models.Model):
 
     @property
     def combat_walking_range(self):
-        return self.get_attribute_value('quickness')
+        return self.get_attribute_value('quickness') + 1
 
     @property
     def combat_running_range(self):
-        return self.combat_walking_range * 2
+        return self.get_attribute_value('quickness') * 2 + 1
 
     @property
     def combat_crawling_range(self):
-        return math.ceil(self.combat_walking_range / 2)
+        return self.get_attribute_value('quickness') / 2 + 1
 
     @property
     def ballistic_protection(self):

@@ -102,3 +102,11 @@ This condition ends when the character is bandaged (e.g. by *first aid*).
 The character's minimum roll is increased by the value of this condition for all rolls.
 
 At the beginning of each round, the character can roll for his *Resistance*. He can reduce the value of this condition by the number of successes. If the condition reaches a value of 0 in the process, it is removed.
+
+ #### Hunkered
+
+The character has a half combat defense, enemy attacks have 2 less hit die (see combat).
+
+All actions involving manual work (physis attributes, attacks and skills) have a +1 minimum roll.
+
+It takes an action to hunker down or stand up.

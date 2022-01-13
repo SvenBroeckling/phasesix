@@ -32,10 +32,11 @@ Sind die Aktionen aufgefrischt, kann der Teilnehmer im Kampf handeln. Dazu führ
 * Eine Waffe **nachladen**
 * Einen Gegenstand **benutzen**
 * Einem Nahkampfangriff **ausweichen**
-* **Hinknien** oder auf den Boden legen
-* *Schnelligkeit* Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)
-* *Schnelligkeit* * 2 Meter **rennen**
-* *Schnelligkeit* / 2 Meter **robben**
+* **Hinhocken** oder auf den Boden legen (Der "In der Hocke" Status Effekt ist aktiv, s. "Wunden und Heilung")
+* **Aufstehen**
+* *Schnelligkeit* + 1 Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)
+* *Schnelligkeit* * 2 + 1 Meter **rennen**
+* *Schnelligkeit* / 2 + 1 Meter **robben**, der Charakter muss *In der Hocke* sein. (s. Wunden und Heilung: Status Effekte)
 
 Aktionen sollten nicht zusammen, sondern immer nacheinander ausgeführt werden, da es mögliche Reaktionen gibt.
 
