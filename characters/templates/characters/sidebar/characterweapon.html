@@ -74,7 +74,7 @@
             <ul class="list-group list-group-flush">
                 {% if object.has_capacity %}
                     <li class="list-group-item">
-                        <i class="fas fa-angle-double-right fa-fw"></i>
+                        <i class="fas fa-list-ol fa-fw"></i>
                         {% trans 'Capacity' %}
                         <span class="float-end">{% color_value_span object.capacity_available object.weapon.capacity %} / {% color_value_span object.modified_capacity object.weapon.capacity %}</span>
                     </li>
@@ -99,11 +99,6 @@
                         <i class="fas fa-clock fa-fw"></i>
                         {% trans 'Reload actions' %}
                         <span class="float-end">{% color_value_span object.weapon.reload_actions 6 invert=True %} {% display_modifications object 'reload_actions' %}</span>
-                    </li>
-                    <li class="list-group-item">
-                        <i class="fas fa-list-ol fa-fw"></i>
-                        {% trans 'Capacity' %}
-                        <span class="float-end">{% color_value_span object.weapon.capacity 30 %} {% display_modifications object 'capacity' %}</span>
                     </li>
                 {% endif %}
                 <li class="list-group-item">
