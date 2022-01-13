@@ -84,7 +84,7 @@ class XhrSidebarView(DetailView):
         context = super().get_context_data(**kwargs)
         context['sidebar_name'] = self.kwargs['sidebar_name']
         context['model_name'] = self.kwargs['model_name']
-        context['status_effects'] = StatusEffect.objects.filter(is_active=True)
+        context['status_effects'] = StatusEffect.objects.filter(is_active=True).order_by('ordering')
         context['character_form'] = CharacterImageForm(instance=self.object)
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context

@@ -1,4 +1,4 @@
-{% load i18n characters_extras %}
+{% load i18n characters_extras rules_extras %}
 
 {% if may_edit %}
     <div class="row">
@@ -80,6 +80,11 @@
                                 <a class="action-link pointer no-decoration text-muted"
                                    href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='increase' %}">+</a>
                             </span>
+                            {% if se_value %}
+                                <div class="text-muted">
+                                    {{ se.rules|urpg_markup }}
+                                </div>
+                            {% endif %}
                         </li>
                     {% endwith %}
                 {% endfor %}
