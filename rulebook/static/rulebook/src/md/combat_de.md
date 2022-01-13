@@ -34,7 +34,7 @@ Sind die Aktionen aufgefrischt, kann der Teilnehmer im Kampf handeln. Dazu führ
 * Einem Nahkampfangriff **ausweichen**
 * **Hinhocken** oder auf den Boden legen (Der "In der Hocke" Status Effekt ist aktiv, s. "Wunden und Heilung")
 * **Aufstehen**
-* *Schnelligkeit* + 1 Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist jeder Wurf um 2 erschwert)
+* *Schnelligkeit* + 1 Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist der Mindestwurf um 2 erhöht)
 * *Schnelligkeit* * 2 + 1 Meter **rennen**
 * *Schnelligkeit* / 2 + 1 Meter **robben**, der Charakter muss *In der Hocke* sein. (s. Wunden und Heilung: Status Effekte)
 

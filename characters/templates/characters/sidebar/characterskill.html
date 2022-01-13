@@ -1,4 +1,4 @@
-{% load i18n bootstrap4 %}
+{% load i18n bootstrap4 rules_extras %}
 
 {% if may_edit %}
     <div class="row">
@@ -16,6 +16,6 @@
 
 <div class="row">
     <div class="col-12 {% if may_edit %}mt-3{% endif %}">
-        {{ object.skill.description }}
+        {{ object.skill.description|urpg_markup }}
     </div>
 </div>

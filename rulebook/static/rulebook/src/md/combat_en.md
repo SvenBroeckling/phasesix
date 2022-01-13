@@ -33,7 +33,7 @@ Once the actions are refreshed, the participant can act in combat. To do this, h
 * **Evade** a melee attack.
 * **Hunker** or lay on the ground (Apply the "Hunkered" status effect, see "Wounds and healing").
 * **Stand up**
-* **Walk** *Quickness* + 1 Meters (performing another action without consuming an action, but each roll is reduced by 2).
+* **Walk** *Quickness* + 1 Meters (performing another action without consuming an action, but the minimum roll is raised by 2).
 * **Run** *Quickness* * 2 + 1 meters.
 * **Crawl** *Quickness* / 2 + 1 meters. The charakter needs to be *hunkered*. (see Wounds and healing: Status Effects)
 
