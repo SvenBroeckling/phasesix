@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 20:54+0000\n"
+"POT-Creation-Date: 2022-01-13 21:34+0000\n"
 "PO-Revision-Date: 2022-01-13 21:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 #: armory/models.py:117 armory/models.py:143 armory/models.py:222
 #: armory/models.py:244 armory/models.py:296 armory/models.py:314
 #: armory/models.py:339 bestiary/models.py:8 bestiary/models.py:20
-#: bestiary/models.py:40 bestiary/models.py:78 campaigns/models.py:10
+#: bestiary/models.py:40 bestiary/models.py:79 campaigns/models.py:10
 #: campaigns/models.py:68 campaigns/models.py:76 characters/models.py:23
 #: forum/models.py:33 forum/models.py:51 horror/models.py:11
 #: horror/models.py:24 magic/models.py:16 magic/models.py:29 magic/models.py:42
@@ -429,49 +429,53 @@ msgstr "Gegner Widerstände oder Schwächen"
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: bestiary/models.py:46 magic/models.py:10 magic/models.py:78
+#: bestiary/models.py:46 rules/models.py:17
+msgid "protection"
+msgstr "Schutz"
+
+#: bestiary/models.py:47 magic/models.py:10 magic/models.py:78
 #: rules/models.py:14
 msgid "actions"
 msgstr "Aktionen"
 
-#: bestiary/models.py:47
+#: bestiary/models.py:48
 msgid "movement"
 msgstr "Bewegung"
 
-#: bestiary/models.py:48 rules/models.py:15
+#: bestiary/models.py:49 rules/models.py:15
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: bestiary/models.py:54
+#: bestiary/models.py:55
 msgid "resistances"
 msgstr "Widerstände"
 
-#: bestiary/models.py:59
+#: bestiary/models.py:60
 msgid "weaknesses"
 msgstr "Schwächen"
 
-#: bestiary/models.py:63 bestiary/models.py:77
+#: bestiary/models.py:64 bestiary/models.py:78
 msgid "foe"
 msgstr "Gegner"
 
-#: bestiary/models.py:64
+#: bestiary/models.py:65
 msgid "foes"
 msgstr "Gegner"
 
-#: bestiary/models.py:79 horror/models.py:80 rules/models.py:159
+#: bestiary/models.py:80 horror/models.py:80 rules/models.py:159
 #: rules/models.py:337
 msgid "skill"
 msgstr "Fertigkeit"
 
-#: bestiary/models.py:80
+#: bestiary/models.py:81
 msgid "effect"
 msgstr "Effekt"
 
-#: bestiary/models.py:84
+#: bestiary/models.py:85
 msgid "foe action"
 msgstr "Gegneraktion"
 
-#: bestiary/models.py:85
+#: bestiary/models.py:86
 msgid "foe actions"
 msgstr "Gegneraktionen"
 
@@ -490,8 +494,19 @@ msgid "Health"
 msgstr "Lebenspunkte"
 
 #: bestiary/templates/bestiary/foe_detail.html:28
-#: bestiary/templates/bestiary/foe_detail.html:34
 #: bestiary/templates/bestiary/foe_list.html:22
+#: characters/templates/characters/fragments/gear.html:34
+#: characters/templates/characters/fragments/health.html:23
+#: characters/templates/characters/modals/add_riot_gear.html:12
+#: characters/templates/characters/sidebar/characterriotgear.html:38
+#: gmtools/templates/gmtools/combat_sim_results.html:11
+#: gmtools/templates/gmtools/combat_sim_results.html:26
+msgid "Protection"
+msgstr "Schutz"
+
+#: bestiary/templates/bestiary/foe_detail.html:29
+#: bestiary/templates/bestiary/foe_detail.html:35
+#: bestiary/templates/bestiary/foe_list.html:23
 #: characters/templates/characters/fragments/combat.html:132
 #: characters/templates/characters/fragments/health.html:15
 #: characters/templates/characters/fragments/health.html:17
@@ -501,8 +516,8 @@ msgstr "Lebenspunkte"
 msgid "Actions"
 msgstr "Aktionen"
 
-#: bestiary/templates/bestiary/foe_detail.html:29
-#: bestiary/templates/bestiary/foe_list.html:23
+#: bestiary/templates/bestiary/foe_detail.html:30
+#: bestiary/templates/bestiary/foe_list.html:24
 #: characters/templates/characters/fragments/combat.html:147
 #: characters/templates/characters/fragments/combat.html:158
 #: characters/templates/characters/fragments/combat.html:175
@@ -511,20 +526,20 @@ msgstr "Aktionen"
 msgid "Movement"
 msgstr "Bewegung"
 
-#: bestiary/templates/bestiary/foe_detail.html:30
-#: bestiary/templates/bestiary/foe_list.html:24
+#: bestiary/templates/bestiary/foe_detail.html:31
+#: bestiary/templates/bestiary/foe_list.html:25
 #: characters/templates/characters/fragments/health.html:111
 #: characters/templates/characters/fragments/health.html:112
 msgid "Minimum Roll"
 msgstr "Mindestwurf"
 
-#: bestiary/templates/bestiary/foe_detail.html:31
-#: bestiary/templates/bestiary/foe_list.html:25
+#: bestiary/templates/bestiary/foe_detail.html:32
+#: bestiary/templates/bestiary/foe_list.html:26
 msgid "Resistances"
 msgstr "Widerstände"
 
-#: bestiary/templates/bestiary/foe_detail.html:32
-#: bestiary/templates/bestiary/foe_list.html:26
+#: bestiary/templates/bestiary/foe_detail.html:33
+#: bestiary/templates/bestiary/foe_list.html:27
 msgid "Weaknesses"
 msgstr "Schwächen"
 
@@ -1128,15 +1143,6 @@ msgstr "Rüstung hinzufügen"
 #: characters/templates/characters/fragments/gear.html:18 gmtools/forms.py:16
 msgid "Armor"
 msgstr "Rüstung"
-
-#: characters/templates/characters/fragments/gear.html:34
-#: characters/templates/characters/fragments/health.html:23
-#: characters/templates/characters/modals/add_riot_gear.html:12
-#: characters/templates/characters/sidebar/characterriotgear.html:38
-#: gmtools/templates/gmtools/combat_sim_results.html:11
-#: gmtools/templates/gmtools/combat_sim_results.html:26
-msgid "Protection"
-msgstr "Schutz"
 
 #: characters/templates/characters/fragments/gear.html:35
 #: characters/templates/characters/fragments/health.html:27
@@ -2182,10 +2188,6 @@ msgstr "Max Arkana"
 #: rules/models.py:12 rules/models.py:81
 msgid "spell points"
 msgstr "Zauberpunkte"
-
-#: rules/models.py:17
-msgid "protection"
-msgstr "Schutz"
 
 #: rules/models.py:21
 msgid "destiny dice"
