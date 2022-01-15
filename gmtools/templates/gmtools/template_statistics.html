@@ -30,6 +30,18 @@
     </div>
 
     <div class="row mb-4">
+        <div class="col-12">
+            <ul class="nav nav-pills nav-fill">
+                <a class="nav-link me-2 mb-1 {% if active_extension is None %}active{% endif %}" href="{% url 'gmtools:template_statistics' %}">{% trans 'All Extensions' %}</a>
+                {% for e in all_extensions %}
+                    <a class="nav-link me-2 mb-1 {% if active_extension.id == e.id %}active{% endif %}" href="{% url 'gmtools:template_statistics' %}?e={{ e.id }}">{{ e }}</a>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row mb-4">
         <div class="col-12 text-center">
             <h1>{% trans 'Template Aspects' %}</h1>
         </div>

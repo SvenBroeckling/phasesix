@@ -49,7 +49,15 @@ class TemplateStatisticsView(TemplateView):
             attributes_max[a] = [-999, []]
             attributes_min[a] = [999, []]
 
-        for t in Template.objects.all():
+        extension_id = self.request.GET.get('e', None)
+        if extension_id is not None:
+            active_extension = Extension.objects.get(id=extension_id)
+            templates = Template.objects.filter(extensions=active_extension)
+        else:
+            active_extension = None
+            templates = Template.objects.all()
+
+        for t in templates:
             for m in t.templatemodifier_set.all():
                 if m.aspect:
                     aspects_sum[m.aspect][0] += m.aspect_modifier
@@ -133,6 +141,8 @@ class TemplateStatisticsView(TemplateView):
             'skills_count': dict(reversed(sorted(skills_count.items(), key=lambda item: item[1][0]))),
             'skills_sum': dict(reversed(sorted(skills_sum.items(), key=lambda item: item[1][0]))),
             'skills_positive_sum': dict(reversed(sorted(skills_positive_sum.items(), key=lambda item: item[1][0]))),
+            'all_extensions': Extension.objects.filter(is_active=True),
+            'active_extension': active_extension,
         })
         return context
 
