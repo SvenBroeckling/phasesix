@@ -31,6 +31,24 @@
 
     <div class="row mb-4">
         <div class="col-12 text-center">
+            <h1>{% trans 'Template Aspects' %}</h1>
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=aspects_max header="Aspects Max"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=aspects_min header="Aspects Min"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=aspects_count header="Aspects Count"%}
+        </div>
+        <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=aspects_sum header="Aspects Sum"%}
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
             <h1>{% trans 'Template Attributes' %}</h1>
         </div>
         <div class="col-12 col-md-3">

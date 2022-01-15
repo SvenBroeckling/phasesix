@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 
 from armory.models import Item, Weapon, WeaponModification, RiotGear
-from rules.models import Extension, Template, Lineage, Skill, CHARACTER_ASPECT_CHOICES
+from rules.models import Extension, Template, Lineage, Skill, CHARACTER_ASPECT_CHOICES, Attribute
 
 
 class TemplateStatisticsView(TemplateView):
@@ -12,6 +12,10 @@ class TemplateStatisticsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        aspects_sum = {}
+        aspects_count = {}
+        aspects_max = {}
+        aspects_min = {}
         attributes_sum = {}
         attributes_count = {}
         attributes_max = {}
@@ -22,36 +26,43 @@ class TemplateStatisticsView(TemplateView):
         skills_min = {}
 
         for a in CHARACTER_ASPECT_CHOICES:
-            attributes_sum[a[0]] = [0, []]  # Sum, Templates
-            attributes_count[a[0]] = [0, []]  # Sum, Templates
-            attributes_max[a[0]] = [-999, []]  # Sum, Template
-            attributes_min[a[0]] = [999, []]  # Sum, Template
+            aspects_sum[a[0]] = [0, []]  # Sum, Templates
+            aspects_count[a[0]] = [0, []]
+            aspects_max[a[0]] = [-999, []]
+            aspects_min[a[0]] = [999, []]
 
         for s in Skill.objects.all():
             skills_sum[s] = [0, []]  # Sum, Templates
             skills_count[s] = [0, []]
-            skills_max[s] = [-999, []]  # Sum, Template
+            skills_max[s] = [-999, []]
             skills_min[s] = [999, []]
+
+        for a in Attribute.objects.all():
+            attributes_sum[a] = [0, []]  # Sum, Templates
+            attributes_count[a] = [0, []]
+            attributes_max[a] = [-999, []]
+            attributes_min[a] = [999, []]
 
         for t in Template.objects.all():
             for m in t.templatemodifier_set.all():
-                if m.attribute:
-                    attributes_sum[m.attribute][0] += m.attribute_modifier
-                    attributes_sum[m.attribute][1].append(t)
+                if m.aspect:
+                    aspects_sum[m.aspect][0] += m.aspect_modifier
+                    aspects_sum[m.aspect][1].append(t)
 
-                    attributes_count[m.attribute][0] += 1
-                    attributes_count[m.attribute][1].append(t)
+                    aspects_count[m.aspect][0] += 1
+                    aspects_count[m.aspect][1].append(t)
 
-                    if m.attribute_modifier > attributes_max[m.attribute][0]:
-                        attributes_max[m.attribute][0] = m.attribute_modifier
-                        attributes_max[m.attribute][1] = [t]
-                    elif m.attribute_modifier == attributes_max[m.attribute][0]:
-                        attributes_max[m.attribute][1].append(t)
-                    if m.attribute_modifier < attributes_max[m.attribute][0]:
-                        attributes_min[m.attribute][0] = m.attribute_modifier
-                        attributes_min[m.attribute][1] = [t]
-                    elif m.attribute_modifier == attributes_min[m.attribute][0]:
-                        attributes_min[m.attribute][1].append(t)
+                    if m.aspect_modifier > aspects_max[m.aspect][0]:
+                        aspects_max[m.aspect][0] = m.aspect_modifier
+                        aspects_max[m.aspect][1] = [t]
+                    elif m.aspect_modifier == aspects_max[m.aspect][0]:
+                        aspects_max[m.aspect][1].append(t)
+                    if m.aspect_modifier < aspects_max[m.aspect][0]:
+                        aspects_min[m.aspect][0] = m.aspect_modifier
+                        aspects_min[m.aspect][1] = [t]
+                    elif m.aspect_modifier == aspects_min[m.aspect][0]:
+                        aspects_min[m.aspect][1].append(t)
+
                 if m.skill:
                     skills_sum[m.skill][0] += m.skill_modifier
                     skills_sum[m.skill][1].append(t)
@@ -70,7 +81,29 @@ class TemplateStatisticsView(TemplateView):
                     elif m.skill_modifier == skills_min[m.skill][0]:
                         skills_min[m.skill][1].append(t)
 
+                if m.attribute:
+                    attributes_sum[m.attribute][0] += m.attribute_modifier
+                    attributes_sum[m.attribute][1].append(t)
+
+                    attributes_count[m.attribute][0] += 1
+                    attributes_count[m.attribute][1].append(t)
+
+                    if m.attribute_modifier > attributes_max[m.attribute][0]:
+                        attributes_max[m.attribute][0] = m.attribute_modifier
+                        attributes_max[m.attribute][1] = [t]
+                    elif m.attribute_modifier == attributes_max[m.attribute][0]:
+                        attributes_max[m.attribute][1].append(t)
+                    if m.attribute_modifier < attributes_min[m.attribute][0]:
+                        attributes_min[m.attribute][0] = m.attribute_modifier
+                        attributes_min[m.attribute][1] = [t]
+                    elif m.attribute_modifier == attributes_min[m.attribute][0]:
+                        attributes_min[m.attribute][1].append(t)
+
         context.update({
+            'aspects_max': dict(reversed(sorted(aspects_max.items(), key=lambda item: item[1][0]))),
+            'aspects_min': dict(sorted(aspects_min.items(), key=lambda item: item[1][0])),
+            'aspects_count': dict(reversed(sorted(aspects_count.items(), key=lambda item: item[1][0]))),
+            'aspects_sum': dict(reversed(sorted(aspects_sum.items(), key=lambda item: item[1][0]))),
             'attributes_max': dict(reversed(sorted(attributes_max.items(), key=lambda item: item[1][0]))),
             'attributes_min': dict(sorted(attributes_min.items(), key=lambda item: item[1][0])),
             'attributes_count': dict(reversed(sorted(attributes_count.items(), key=lambda item: item[1][0]))),
