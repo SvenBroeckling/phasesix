@@ -34,16 +34,19 @@
             <h1>{% trans 'Template Aspects' %}</h1>
         </div>
         <div class="col-12 col-md-3">
-            {% include 'gmtools/_template_statistics_column.html' with objects=aspects_max header="Aspects Max"%}
-        </div>
-        <div class="col-12 col-md-3">
             {% include 'gmtools/_template_statistics_column.html' with objects=aspects_min header="Aspects Min"%}
         </div>
         <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=aspects_max header="Aspects Max"%}
+        </div>
+        <div class="col-12 col-md-2">
             {% include 'gmtools/_template_statistics_column.html' with objects=aspects_count header="Aspects Count"%}
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-2">
             {% include 'gmtools/_template_statistics_column.html' with objects=aspects_sum header="Aspects Sum"%}
+        </div>
+        <div class="col-12 col-md-2">
+            {% include 'gmtools/_template_statistics_column.html' with objects=aspects_positive_sum header="Aspects Positive Sum"%}
         </div>
     </div>
 
@@ -52,16 +55,19 @@
             <h1>{% trans 'Template Attributes' %}</h1>
         </div>
         <div class="col-12 col-md-3">
-            {% include 'gmtools/_template_statistics_column.html' with objects=attributes_max header="Attributes Max"%}
-        </div>
-        <div class="col-12 col-md-3">
             {% include 'gmtools/_template_statistics_column.html' with objects=attributes_min header="Attributes Min"%}
         </div>
         <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=attributes_max header="Attributes Max"%}
+        </div>
+        <div class="col-12 col-md-2">
             {% include 'gmtools/_template_statistics_column.html' with objects=attributes_count header="Attributes Count"%}
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-2">
             {% include 'gmtools/_template_statistics_column.html' with objects=attributes_sum header="Attributes Sum"%}
+        </div>
+        <div class="col-12 col-md-2">
+            {% include 'gmtools/_template_statistics_column.html' with objects=attributes_positive_sum header="Attributes Positive Sum"%}
         </div>
     </div>
 
@@ -70,16 +76,19 @@
             <h1>{% trans 'Template Skills' %}</h1>
         </div>
         <div class="col-12 col-md-3">
-            {% include 'gmtools/_template_statistics_column.html' with objects=skills_max header="Skills Max"%}
-        </div>
-        <div class="col-12 col-md-3">
             {% include 'gmtools/_template_statistics_column.html' with objects=skills_min header="Skills Min"%}
         </div>
         <div class="col-12 col-md-3">
+            {% include 'gmtools/_template_statistics_column.html' with objects=skills_max header="Skills Max"%}
+        </div>
+        <div class="col-12 col-md-2">
             {% include 'gmtools/_template_statistics_column.html' with objects=skills_count header="Skills Count"%}
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-2">
             {% include 'gmtools/_template_statistics_column.html' with objects=skills_sum header="Skills Sum"%}
+        </div>
+        <div class="col-12 col-md-2">
+            {% include 'gmtools/_template_statistics_column.html' with objects=skills_positive_sum header="Skills Positive Sum"%}
         </div>
     </div>
 {% endblock %}

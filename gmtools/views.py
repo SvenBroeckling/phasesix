@@ -13,32 +13,38 @@ class TemplateStatisticsView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         aspects_sum = {}
+        aspects_positive_sum = {}
         aspects_count = {}
         aspects_max = {}
         aspects_min = {}
         attributes_sum = {}
+        attributes_positive_sum = {}
         attributes_count = {}
         attributes_max = {}
         attributes_min = {}
         skills_sum = {}
+        skills_positive_sum = {}
         skills_count = {}
         skills_max = {}
         skills_min = {}
 
         for a in CHARACTER_ASPECT_CHOICES:
             aspects_sum[a[0]] = [0, []]  # Sum, Templates
+            aspects_positive_sum[a[0]] = [0, []]
             aspects_count[a[0]] = [0, []]
             aspects_max[a[0]] = [-999, []]
             aspects_min[a[0]] = [999, []]
 
         for s in Skill.objects.all():
             skills_sum[s] = [0, []]  # Sum, Templates
+            skills_positive_sum[s] = [0, []]
             skills_count[s] = [0, []]
             skills_max[s] = [-999, []]
             skills_min[s] = [999, []]
 
         for a in Attribute.objects.all():
             attributes_sum[a] = [0, []]  # Sum, Templates
+            attributes_positive_sum[a] = [0, []]  # Sum, Templates
             attributes_count[a] = [0, []]
             attributes_max[a] = [-999, []]
             attributes_min[a] = [999, []]
@@ -48,6 +54,10 @@ class TemplateStatisticsView(TemplateView):
                 if m.aspect:
                     aspects_sum[m.aspect][0] += m.aspect_modifier
                     aspects_sum[m.aspect][1].append(t)
+
+                    if m.aspect_modifier > 0:
+                        aspects_positive_sum[m.aspect][0] += m.aspect_modifier
+                        aspects_positive_sum[m.aspect][1].append(t)
 
                     aspects_count[m.aspect][0] += 1
                     aspects_count[m.aspect][1].append(t)
@@ -67,6 +77,10 @@ class TemplateStatisticsView(TemplateView):
                     skills_sum[m.skill][0] += m.skill_modifier
                     skills_sum[m.skill][1].append(t)
 
+                    if m.skill_modifier > 0:
+                        skills_positive_sum[m.skill][0] += m.skill_modifier
+                        skills_positive_sum[m.skill][1].append(t)
+
                     skills_count[m.skill][0] += 1
                     skills_count[m.skill][1].append(t)
 
@@ -84,6 +98,10 @@ class TemplateStatisticsView(TemplateView):
                 if m.attribute:
                     attributes_sum[m.attribute][0] += m.attribute_modifier
                     attributes_sum[m.attribute][1].append(t)
+
+                    if m.attribute_modifier > 0:
+                        attributes_positive_sum[m.attribute][0] += m.attribute_modifier
+                        attributes_positive_sum[m.attribute][1].append(t)
 
                     attributes_count[m.attribute][0] += 1
                     attributes_count[m.attribute][1].append(t)
@@ -104,14 +122,17 @@ class TemplateStatisticsView(TemplateView):
             'aspects_min': dict(sorted(aspects_min.items(), key=lambda item: item[1][0])),
             'aspects_count': dict(reversed(sorted(aspects_count.items(), key=lambda item: item[1][0]))),
             'aspects_sum': dict(reversed(sorted(aspects_sum.items(), key=lambda item: item[1][0]))),
+            'aspects_positive_sum': dict(reversed(sorted(aspects_positive_sum.items(), key=lambda item: item[1][0]))),
             'attributes_max': dict(reversed(sorted(attributes_max.items(), key=lambda item: item[1][0]))),
             'attributes_min': dict(sorted(attributes_min.items(), key=lambda item: item[1][0])),
             'attributes_count': dict(reversed(sorted(attributes_count.items(), key=lambda item: item[1][0]))),
             'attributes_sum': dict(reversed(sorted(attributes_sum.items(), key=lambda item: item[1][0]))),
+            'attributes_positive_sum': dict(reversed(sorted(attributes_positive_sum.items(), key=lambda item: item[1][0]))),
             'skills_max': dict(reversed(sorted(skills_max.items(), key=lambda item: item[1][0]))),
             'skills_min': dict(sorted(skills_min.items(), key=lambda item: item[1][0])),
             'skills_count': dict(reversed(sorted(skills_count.items(), key=lambda item: item[1][0]))),
             'skills_sum': dict(reversed(sorted(skills_sum.items(), key=lambda item: item[1][0]))),
+            'skills_positive_sum': dict(reversed(sorted(skills_positive_sum.items(), key=lambda item: item[1][0]))),
         })
         return context
 
