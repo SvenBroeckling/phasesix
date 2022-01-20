@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 21:52+0000\n"
-"PO-Revision-Date: 2022-01-13 22:51+0100\n"
+"POT-Creation-Date: 2022-01-20 19:22+0000\n"
+"PO-Revision-Date: 2022-01-20 20:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -441,8 +441,8 @@ msgid "actions"
 msgstr "Aktionen"
 
 #: bestiary/models.py:48
-msgid "movement"
-msgstr "Bewegung"
+msgid "quickness"
+msgstr "Schnelligkeit"
 
 #: bestiary/models.py:49 rules/models.py:15
 msgid "minimum roll"
@@ -520,13 +520,8 @@ msgstr "Aktionen"
 
 #: bestiary/templates/bestiary/foe_detail.html:30
 #: bestiary/templates/bestiary/foe_list.html:24
-#: characters/templates/characters/fragments/combat.html:147
-#: characters/templates/characters/fragments/combat.html:158
-#: characters/templates/characters/fragments/combat.html:175
-#: characters/templates/characters/fragments/combat.html:192
-#: characters/templates/characters/fragments/combat.html:209
-msgid "Movement"
-msgstr "Bewegung"
+msgid "Quickness"
+msgstr "Schnelligkeit"
 
 #: bestiary/templates/bestiary/foe_detail.html:31
 #: bestiary/templates/bestiary/foe_list.html:25
@@ -1070,6 +1065,14 @@ msgstr "Stärke"
 #: characters/templates/characters/fragments/combat.html:146
 msgid "Evade"
 msgstr "Ausweichen"
+
+#: characters/templates/characters/fragments/combat.html:147
+#: characters/templates/characters/fragments/combat.html:158
+#: characters/templates/characters/fragments/combat.html:175
+#: characters/templates/characters/fragments/combat.html:192
+#: characters/templates/characters/fragments/combat.html:209
+msgid "Movement"
+msgstr "Bewegung"
 
 #: characters/templates/characters/fragments/combat.html:157
 msgid "Walk"
@@ -2012,11 +2015,19 @@ msgstr "Rüstungsgrid"
 msgid "Template"
 msgstr "Schablone"
 
-#: gmtools/templates/gmtools/template_statistics.html:34
+#: gmtools/templates/gmtools/template_statistics.html:35
+msgid "All Extensions"
+msgstr "Alle Erweiterungen"
+
+#: gmtools/templates/gmtools/template_statistics.html:46
+msgid "Template Aspects"
+msgstr "Schablonenaspekte"
+
+#: gmtools/templates/gmtools/template_statistics.html:67
 msgid "Template Attributes"
 msgstr "Schablonenattribute"
 
-#: gmtools/templates/gmtools/template_statistics.html:52
+#: gmtools/templates/gmtools/template_statistics.html:88
 msgid "Template Skills"
 msgstr "Schablonenfertigkeiten"
 
@@ -2502,6 +2513,9 @@ msgstr "Registrieren"
 msgid "Create Account"
 msgstr "Konto erstellen"
 
+#~ msgid "movement"
+#~ msgstr "Bewegung"
+
 #, fuzzy
 #~ msgid "Pen."
 #~ msgstr "DS"
@@ -2548,9 +2562,6 @@ msgstr "Konto erstellen"
 #~ msgid "Resistance"
 #~ msgstr "Resistenz"
 
-#~ msgid "Quickness"
-#~ msgstr "Schnelligkeit"
-
 #~ msgid "Change Stance"
 #~ msgstr "Stellung ändern"
 
@@ -2574,9 +2585,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "resistance"
 #~ msgstr "Resistenz"
-
-#~ msgid "quickness"
-#~ msgstr "Schnelligkeit"
 
 #~ msgid "education"
 #~ msgstr "Bildung"

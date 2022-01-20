@@ -19,9 +19,10 @@
                     <th>{% trans 'Foe' %}</th>
                     <th>{% trans 'Type' %}</th>
                     <th>{% trans 'Health' %}</th>
+                    <th>{% trans 'Arcana' %}</th>
                     <th>{% trans 'Protection' %}</th>
                     <th>{% trans 'Actions' %}</th>
-                    <th>{% trans 'Movement' %}</th>
+                    <th>{% trans 'Quickness' %}</th>
                     <th>{% trans 'Minimum Roll' %}</th>
                     <th>{% trans 'Resistances' %}</th>
                     <th>{% trans 'Weaknesses' %}</th>
@@ -33,9 +34,10 @@
                         <td><a href="{% url 'bestiary:detail' pk=object.id %}">{{ object }}</a></td>
                         <td>{{ object.type }}</td>
                         <td>{% color_value_span object.health 10 %}</td>
+                        <td>{% color_value_span object.arcana 6 %}</td>
                         <td>{% color_value_span object.protection 2 %}</td>
                         <td>{% color_value_span object.actions 4 %}</td>
-                        <td>{% color_value_span object.movement 3 %}</td>
+                        <td>{% color_value_span object.quickness 3 %}</td>
                         <td>{% color_value_span object.minimum_roll 5 invert=True %}+</td>
                         <td>{{ object.resistance_string }}</td>
                         <td>{{ object.weakness_string }}</td>

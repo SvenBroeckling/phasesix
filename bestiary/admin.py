@@ -9,9 +9,9 @@ class FoeActionInline(admin.StackedInline):
 
 class FoeAdmin(admin.ModelAdmin):
     inlines = [FoeActionInline]
-    list_display = ('name_de', 'name_en', 'type', 'health', 'protection', 'actions', 'movement', 'minimum_roll')
-    list_filter = ('type', 'health', 'protection', 'actions', 'movement', 'minimum_roll')
-    list_editable = ('health', 'protection', 'actions', 'movement', 'minimum_roll')
+    list_display = ('name_de', 'name_en', 'type', 'health', 'protection', 'actions', 'quickness', 'minimum_roll')
+    list_filter = ('type', 'health', 'protection', 'actions', 'quickness', 'minimum_roll')
+    list_editable = ('health', 'protection', 'actions', 'quickness', 'minimum_roll')
 
 
 admin.site.register(FoeType)

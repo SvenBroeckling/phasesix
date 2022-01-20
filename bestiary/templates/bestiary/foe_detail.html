@@ -25,9 +25,10 @@
         <div class="col-12">
             <h4>{% trans 'Statistics' %}</h4>
             <b>{% trans 'Health' %}</b>: {% color_value_span object.health 10 %}<br>
+            <b>{% trans 'Arcana' %}</b>: {% color_value_span object.arcana 6 %}<br>
             <b>{% trans 'Protection' %}</b>: {% color_value_span object.protection 2 %}<br>
             <b>{% trans 'Actions' %}</b>: {% color_value_span object.actions 4 %}<br>
-            <b>{% trans 'Movement' %}</b>: {% color_value_span object.movement 3 %}<br>
+            <b>{% trans 'Quickness' %}</b>: {% color_value_span object.quickness 3 %}<br>
             <b>{% trans 'Minimum Roll' %}</b>: {% color_value_span object.minimum_roll 5 invert=True %}+<br>
             <b>{% trans 'Resistances' %}</b>: {{ object.resistance_string }}<br>
             <b>{% trans 'Weaknesses' %}</b>: {{ object.weakness_string }}<br><br>

@@ -43,9 +43,11 @@ class Foe(models.Model, metaclass=TransMeta):
     type = models.ForeignKey(FoeType, verbose_name=_('type'), on_delete=models.CASCADE)
 
     health = models.IntegerField(_('health'), default=6)
+    arcana = models.IntegerField(_('arcana'), default=0)
     protection = models.IntegerField(_('protection'), default=0)
+
     actions = models.IntegerField(_('actions'), default=2)
-    movement = models.IntegerField(_('movement'), default=1)
+    quickness = models.IntegerField(_('quickness'), default=1)
     minimum_roll = models.IntegerField(_('minimum roll'), default=5)
 
     resistances = models.ManyToManyField(
