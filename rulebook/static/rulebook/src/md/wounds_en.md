@@ -105,7 +105,7 @@ At the beginning of each round, the character can roll for his *Resistance*. He 
 
 #### Hunkered
 
-The character has a half combat defense, enemy attacks have 2 less hit die (see combat).
+The character has a 6+ cover (see combat rules).
 
 All actions involving manual work (physis attributes, attacks and skills) have a +1 minimum roll.
 

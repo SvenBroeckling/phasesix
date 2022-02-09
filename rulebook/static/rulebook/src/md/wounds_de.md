@@ -105,7 +105,7 @@ Zu Beginn jeder Runde kann der Charakter auf seine *Resistenz* werfen. Er kann d
 
 #### In der Hocke
 
-Der Charakter hat Halbe Deckung, gegnerische Angriffe sind um 2 Würfel verringert (s. Kampf)
+Der Charakter hat 6+ Deckung (s. Kampregeln).
 
 Alle Aktionen, welche körperliches Handeln erfordern (Physis Attribute, Angriffe und Fähigkeiten) haben einen um +1 erhöhten Mindestwurf.
 

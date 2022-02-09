@@ -8,14 +8,15 @@ Hierzu wirft jeder Teilnehmer auf einen W6, und addiert den *Schnelligkeitswert*
 
 Haben zwei Teilnehmer dasselbe Ergebnis, so entscheidet zunächst der Wert *Schnelligkeit*, und falls dieser auch identisch ist der *Geschickwert*.
 
-Alle Teilnehmer des Kampfes beginnen haben zu Beginn des Kampfes keine Aktionen verfügbar. Erst wenn sie das erste mal die *Priorität* erhalten frischen sich ihre Aktionen auf. 
+Alle Teilnehmer des Kampfes beginnen haben zu Beginn des Kampfes keine Aktionen verfügbar. Erst, wenn sie das erste Mal die *Priorität* erhalten frischen sich ihre Aktionen auf. 
 
 ### Ablauf der Runden
 
 Der Kampf ist in *Kampfrunden* aufgeteilt. In jeder Kampfrunde bekommt jeder Teilnehmer einmal die *Priorität*, d. h. er ist am Zug und kann bestimmen welche *Aktionen* er ausführt. 
 
-Hat der letzte Teilnehmer agiert, beginnt die nächste *Kampfrunde* mit dem ersten Teilnehmer. 
+Der Teilnehmer kann für jede seiner verfügbaren Aktionen eine Handlung ausführen (s. *Akteur und Aktionen*), oder die Aktion aufsparen, um in der Gegnerrunde zu reagieren (s. *Reaktionen*).
 
+Hat der letzte Teilnehmer agiert, beginnt die nächste *Kampfrunde* mit dem ersten Teilnehmer. 
 
 #### Akteur und Aktionen
 
@@ -34,7 +35,7 @@ Sind die Aktionen aufgefrischt, kann der Teilnehmer im Kampf handeln. Dazu führ
 * Einem Nahkampfangriff **ausweichen**
 * **Hinhocken** oder auf den Boden legen (Der "In der Hocke" Status Effekt ist aktiv, s. "Wunden und Heilung")
 * **Aufstehen**
-* *Schnelligkeit* + 1 Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist der Mindestwurf um 2 erhöht)
+* *Schnelligkeit* + 1 Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist der Mindestwurf um 1 erhöht)
 * *Schnelligkeit* * 2 + 1 Meter **rennen**
 * *Schnelligkeit* / 2 + 1 Meter **robben**, der Charakter muss *In der Hocke* sein. (s. Wunden und Heilung: Status Effekte)
 
@@ -67,21 +68,15 @@ Das Ausgeben von Würfeln für Aktionen nimmt selbst keine Aktion in Anspruch.
 
 Angriffe mit Waffen werden im Nahkampf und im Fernkampf genau gleich gehandhabt. Der einzige Unterschied ist, dass Angriffe mit Nahkampfwaffen auf die Fertigkeit *Nahkampf* geworfen werden, Angriffe mit Schusswaffen auf die Fertigkeit *Schießen* und Angriffe mit Wurfwaffen auf die Fertigkeit *Werfen*.
 
-#### Der Trefferwurf und Deckung
+#### Der Trefferwurf
 
 Um einen Angriff durchzuführen wird ein Wurf mit einer bestimmten Anzahl Würfeln geworfen. Der *Mindestwurf* dieses Wurfs entspricht dem *Mindestwurf* des Charakters.
 
 Die Anzahl der Würfel entspricht zunächst dem jeweiligen Fertigkeitswert des Charakters (Schießen, Nahkampf, Werfen).
 
-Je nach Deckung werden von diesem Wurf eine bestimmte Anzahl an Würfeln entfernt:
-
-* Leichte Deckung: -1 Würfel
-* Halbe Deckung: -2 Würfel
-* Fast vollständige Deckung: -3 Würfel
+Der Trefferwurf kann auch durch weitere Umstände verändert werden. Unterschiedliche Feuermodi und Schüsse bei falscher Distanz sorgen u.U. für eine Änderung der verfügbaren Würfel.
 
 Jeder Erfolg verursacht einen *Treffer* beim Ziel des Angriffs. Wie das Ziel Schaden verhindern kann, ist unter *Treffer* beschrieben.
-
-Der Trefferwurf kann auch durch weitere Umstände verändert werden. Unterschiedliche Feuermodi und Schüsse bei falscher Distanz sorgen u.U. für eine Änderung der verfügbaren Würfel.
 
 ##### Bonuswürfel: Feuermodi
 
@@ -99,15 +94,23 @@ Wird in einem anderen Modus als dem Standardmodus geschossen verändert sich die
 
 Jede Waffe hat eine angegebene Distanz, auf der sie effektiv ist. Weicht die Distanz des Ziels von der bei der Waffe angegebenen ab, ergibt sich ein Malus auf die Trefferwürfel.
 
-Wenn die wirkliche Schussdistanz geringer ist als die angegebene Distanz der Waffe, wird der Angriff normal durchgeführt. 
-
-Ist die Distanz bis zum Doppelten der Waffe erhöht, werden die Würfel des Trefferwurfes um 2 verringert.
+Wenn die wirkliche Schussdistanz geringer ist als die angegebene Distanz der Waffe, wird der Angriff normal durchgeführt. Ist die Distanz bis zum Doppelten der Waffe erhöht, werden die Würfel des Trefferwurfes um 2 verringert.
 
 Wenn die Entfernung des Ziels mehr als das Doppelte der Waffenreichweite entfernt ist, ist es nicht möglich auf das Ziel zu schießen oder anzugreifen.
 
-#### Treffer und Durchschlag
+#### Deckung
 
-Jeder Erfolg des *Trefferwurfs* ist ein *Treffer* beim Ziel des Angriffs. Auch andere Umstände können *Treffer* verursachen, so kann eine Granate z. B. "3 Treffer mit je 2 Wunden" verursachen.
+Sind Teile des Angegriffenen aus der Sicht des Angreifers verborgen, so gilt für den Angegeiffenen die Regel der Deckung. Hierbei kommt es darauf an, wie sehr der Angegriffene verborgen ist. Die Deckung ist hierbei in 3 Stufen eingeteilt:
+
+* 4+ Deckung: Das Meiste des Angegriffenen ist verborgen
+* 5+ Deckung: Der Angegriffene ist halb verborgen
+* 6+ Deckung: Es ist etwas schwerer den Angegriffenen hinter leichter Deckung zu treffen. Dieser Effekt wird u.A. durch den "In der Hocke" Zustand erreicht.
+
+Hat der Angegriffene mindestens eine 6+ Deckung, so steht ihm nach dem *Trefferwurf* ein Deckungswurf zu. Hierfür wirft er so viele Würfel, wie der Angreifer *Treffer* hatte. Für jeden Erfolg (auf dem Mindestwurf gemäß der Deckung) wird ein Treffer entfernt.
+
+#### Wunden und Durchschlag
+
+Jeder Erfolg des *Trefferwurfs*, welcher nicht durch *Deckung* verhindert wurde, ist ein *Treffer* beim Ziel des Angriffs. Auch andere Umstände können *Treffer* verursachen, so kann eine Granate z. B. "3 Treffer mit je 2 Wunden" verursachen. Auch hier können Treffer durch Deckung verhindert werden.
 
 Nimmt ein Charakter *Treffer* hin, werden diese um den *Schutzwert* des Ziels verringert. Der *Schutzwert* ist dabei verringert um den *Durchschlag* der Waffe des Angreifers.
 
@@ -115,12 +118,11 @@ Jeder nicht durch den *Schutzwert* verhinderte Treffer wird zu so vielen Wunden,
 
 #### Bonuswunden
 
-Sind bei der Waffe Bonuswunden angegeben, so werden diese direkt verursacht, sobald einer der regulären Treffer der Waffe in eine Wunde umgewandelt wird. Sie werden also der Summe der Wunden hinzugefügt, und stellen *nicht* die Wunden pro Treffer dar.
+Sind bei der Waffe Bonuswunden angegeben, so werden diese direkt verursacht, sobald einer der regulären Treffer der Waffe in eine Wunde umgewandelt wird. Sie werden also einmal der Summe der Wunden hinzugefügt, und stellen *nicht* die Wunden pro Treffer dar.
 
 #### Wunden
 
 Eine *Wunde* wird direkt zu den hingenommenen Wunden hinzugefügt. Sie kann nur verhindert werden, wenn eine *Schablone*, Ausrüstung oder anderes explizit eine Regel enthält, welche Wunden verändert.
-
 
 #### Waffenloser Nahkampf
 
