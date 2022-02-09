@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 19:22+0000\n"
-"PO-Revision-Date: 2022-01-20 20:22+0100\n"
+"POT-Creation-Date: 2022-02-09 21:12+0000\n"
+"PO-Revision-Date: 2022-02-09 22:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: armory/models.py:117 armory/models.py:143 armory/models.py:222
 #: armory/models.py:244 armory/models.py:296 armory/models.py:314
 #: armory/models.py:339 bestiary/models.py:8 bestiary/models.py:20
-#: bestiary/models.py:40 bestiary/models.py:79 campaigns/models.py:10
+#: bestiary/models.py:40 bestiary/models.py:81 campaigns/models.py:10
 #: campaigns/models.py:68 campaigns/models.py:76 characters/models.py:23
 #: forum/models.py:33 forum/models.py:51 horror/models.py:11
 #: horror/models.py:24 magic/models.py:16 magic/models.py:29 magic/models.py:42
@@ -431,53 +431,57 @@ msgstr "Gegner Widerstände oder Schwächen"
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: bestiary/models.py:46 rules/models.py:17
+#: bestiary/models.py:46 characters/models.py:60 magic/models.py:11
+msgid "arcana"
+msgstr "Arkana"
+
+#: bestiary/models.py:47 rules/models.py:17
 msgid "protection"
 msgstr "Schutz"
 
-#: bestiary/models.py:47 magic/models.py:10 magic/models.py:78
+#: bestiary/models.py:49 magic/models.py:10 magic/models.py:78
 #: rules/models.py:14
 msgid "actions"
 msgstr "Aktionen"
 
-#: bestiary/models.py:48
+#: bestiary/models.py:50
 msgid "quickness"
 msgstr "Schnelligkeit"
 
-#: bestiary/models.py:49 rules/models.py:15
+#: bestiary/models.py:51 rules/models.py:15
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: bestiary/models.py:55
+#: bestiary/models.py:57
 msgid "resistances"
 msgstr "Widerstände"
 
-#: bestiary/models.py:60
+#: bestiary/models.py:62
 msgid "weaknesses"
 msgstr "Schwächen"
 
-#: bestiary/models.py:64 bestiary/models.py:78
+#: bestiary/models.py:66 bestiary/models.py:80
 msgid "foe"
 msgstr "Gegner"
 
-#: bestiary/models.py:65
+#: bestiary/models.py:67
 msgid "foes"
 msgstr "Gegner"
 
-#: bestiary/models.py:80 horror/models.py:80 rules/models.py:159
+#: bestiary/models.py:82 horror/models.py:80 rules/models.py:159
 #: rules/models.py:337
 msgid "skill"
 msgstr "Fertigkeit"
 
-#: bestiary/models.py:81
+#: bestiary/models.py:83
 msgid "effect"
 msgstr "Effekt"
 
-#: bestiary/models.py:85
+#: bestiary/models.py:87
 msgid "foe action"
 msgstr "Gegneraktion"
 
-#: bestiary/models.py:86
+#: bestiary/models.py:88
 msgid "foe actions"
 msgstr "Gegneraktionen"
 
@@ -497,6 +501,17 @@ msgstr "Lebenspunkte"
 
 #: bestiary/templates/bestiary/foe_detail.html:28
 #: bestiary/templates/bestiary/foe_list.html:22
+#: campaigns/templates/campaigns/campaign_status.html:13
+#: characters/templates/characters/fragments/magic.html:41
+#: characters/templates/characters/modals/add_spell.html:111
+#: characters/templates/characters/modals/rest.html:33
+#: characters/templates/characters/sidebar/characterspell.html:46
+#: characters/templates/characters/sidebar/magic.html:33
+msgid "Arcana"
+msgstr "Arkana"
+
+#: bestiary/templates/bestiary/foe_detail.html:29
+#: bestiary/templates/bestiary/foe_list.html:23
 #: characters/templates/characters/fragments/gear.html:34
 #: characters/templates/characters/fragments/health.html:23
 #: characters/templates/characters/modals/add_riot_gear.html:12
@@ -506,9 +521,9 @@ msgstr "Lebenspunkte"
 msgid "Protection"
 msgstr "Schutz"
 
-#: bestiary/templates/bestiary/foe_detail.html:29
-#: bestiary/templates/bestiary/foe_detail.html:35
-#: bestiary/templates/bestiary/foe_list.html:23
+#: bestiary/templates/bestiary/foe_detail.html:30
+#: bestiary/templates/bestiary/foe_detail.html:36
+#: bestiary/templates/bestiary/foe_list.html:24
 #: characters/templates/characters/fragments/combat.html:132
 #: characters/templates/characters/fragments/health.html:15
 #: characters/templates/characters/fragments/health.html:17
@@ -518,25 +533,25 @@ msgstr "Schutz"
 msgid "Actions"
 msgstr "Aktionen"
 
-#: bestiary/templates/bestiary/foe_detail.html:30
-#: bestiary/templates/bestiary/foe_list.html:24
+#: bestiary/templates/bestiary/foe_detail.html:31
+#: bestiary/templates/bestiary/foe_list.html:25
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
-#: bestiary/templates/bestiary/foe_detail.html:31
-#: bestiary/templates/bestiary/foe_list.html:25
+#: bestiary/templates/bestiary/foe_detail.html:32
+#: bestiary/templates/bestiary/foe_list.html:26
 #: characters/templates/characters/fragments/health.html:111
 #: characters/templates/characters/fragments/health.html:112
 msgid "Minimum Roll"
 msgstr "Mindestwurf"
 
-#: bestiary/templates/bestiary/foe_detail.html:32
-#: bestiary/templates/bestiary/foe_list.html:26
+#: bestiary/templates/bestiary/foe_detail.html:33
+#: bestiary/templates/bestiary/foe_list.html:27
 msgid "Resistances"
 msgstr "Widerstände"
 
-#: bestiary/templates/bestiary/foe_detail.html:33
-#: bestiary/templates/bestiary/foe_list.html:27
+#: bestiary/templates/bestiary/foe_detail.html:34
+#: bestiary/templates/bestiary/foe_list.html:28
 msgid "Weaknesses"
 msgstr "Schwächen"
 
@@ -672,15 +687,6 @@ msgstr "Spieler"
 msgid "Wounds"
 msgstr "Wunden"
 
-#: campaigns/templates/campaigns/campaign_status.html:13
-#: characters/templates/characters/fragments/magic.html:41
-#: characters/templates/characters/modals/add_spell.html:111
-#: characters/templates/characters/modals/rest.html:33
-#: characters/templates/characters/sidebar/characterspell.html:46
-#: characters/templates/characters/sidebar/magic.html:33
-msgid "Arcana"
-msgstr "Arkana"
-
 #: campaigns/templates/campaigns/campaign_status.html:14
 #: characters/templates/characters/fragments/character.html:12
 #: characters/templates/characters/fragments/character.html:29
@@ -762,10 +768,6 @@ msgstr "Reputation"
 #: characters/models.py:59
 msgid "boost"
 msgstr "Boost"
-
-#: characters/models.py:60 magic/models.py:11
-msgid "arcana"
-msgstr "Arkana"
 
 #: characters/models.py:61
 msgid "stress"
@@ -1082,12 +1084,12 @@ msgstr "Gehen"
 msgid ""
 "\n"
 "                                    You can perform an action while walking. "
-"The minimum roll for this action is raised by 2.\n"
+"The minimum roll for this action is raised by 1.\n"
 "                                "
 msgstr ""
 "\n"
 "                                    Du kannst eine Aktion beim Gehen "
-"ausführen. Der Mindestwurf für diese Aktion ist um 2 erhöht.\n"
+"ausführen. Der Mindestwurf für diese Aktion ist um 1 erhöht.\n"
 "                                "
 
 #: characters/templates/characters/fragments/combat.html:174
@@ -1129,13 +1131,13 @@ msgstr "In die Hocke gehen"
 msgid ""
 "\n"
 "                            Applies the \"Hunkered\" status effect. Hunkered "
-"characters have a half combat defense and a\n"
+"characters have a 6+ cover and a\n"
 "                            +1 minimum roll for physis, attacks and skills.\n"
 "                        "
 msgstr ""
 "\n"
 "                            Aktiviert den \"In der Hocke\" Status Effekt. "
-"Charaktere \"in der Hocke\" haben eine halbe Deckung und\n"
+"Charaktere \"in der Hocke\" haben eine 6+ Deckung und\n"
 "                            einen um 1 erhöhten Mindestwurf auf Physis, "
 "Angriffe und Fertigkeiten.\n"
 "       "
