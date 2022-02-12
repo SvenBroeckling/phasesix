@@ -1,7 +1,7 @@
+- uk regel sync combat
 
 ## Generell
 
-- Deckungsregel (4+, 5+, 6+ Wurf)
 - Knowledge Würfeln
 - Suche in die Add Modals
 - Weapon Addon add bug?
