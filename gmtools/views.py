@@ -13,13 +13,16 @@ class AssignSpellCostView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object'] = BaseSpell.objects.filter(spell_point_cost=1).order_by('?')[0]
+        try:
+            context['object'] = BaseSpell.objects.filter(arcana_cost=0).order_by('?')[0]
+        except IndexError:
+            context['object'] = None
         return context
 
     def post(self, request, *args, **kwargs):
         base_spell = BaseSpell.objects.get(id=request.POST.get('spell_id'))
         spell_cost = request.POST.get('spell_cost')
-        base_spell.spell_point_cost = spell_cost
+        base_spell.arcana_cost = spell_cost
         base_spell.save()
         return HttpResponseRedirect(reverse('gmtools:assign_spell_cost'))
 

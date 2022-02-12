@@ -3,12 +3,14 @@
 
 {% block content %}
     <div class="row">
+    {% if object %}
         <div class="col-12">
             <h1>{{ object }}</h1>
             <span class="badge bg-primary me-1">{{ object.power }} power</span>
             <span class="badge bg-secondary me-1">{{ object.range }} range</span>
             <span class="badge bg-danger me-1">{{ object.actions }} actions</span>
-            <span class="badge bg-warning">{{ object.arcana_cost }} arcana cost</span>
+            <span class="badge bg-warning">{{ object.spell_point_cost }} spell point cost</span>
+            <span class="badge bg-info">{{ object.arcana_cost }} arcana cost</span>
             <small><a href="{% url 'admin:magic_basespell_change' object.id %}">admin</a></small>
 
             <p class="mt-4">
@@ -19,14 +21,17 @@
             <form action="{% url 'gmtools:assign_spell_cost' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="spell_id" value="{{ object.id }}">
+                <button type="submit" name="spell_cost" value="1" class="btn btn-success">1</button>
+                <button type="submit" name="spell_cost" value="2" class="btn btn-primary">2</button>
                 <button type="submit" name="spell_cost" value="3" class="btn btn-primary">3</button>
-                <button type="submit" name="spell_cost" value="5" class="btn btn-primary">5</button>
-                <button type="submit" name="spell_cost" value="7" class="btn btn-primary">7</button>
-                <button type="submit" name="spell_cost" value="9" class="btn btn-warning">9</button>
-                <button type="submit" name="spell_cost" value="11" class="btn btn-warning">11</button>
-                <button type="submit" name="spell_cost" value="13" class="btn btn-danger">13</button>
-                <button type="submit" name="spell_cost" value="15" class="btn btn-danger">15</button>
+                <button type="submit" name="spell_cost" value="4" class="btn btn-danger">4</button>
+                <button type="submit" name="spell_cost" value="5" class="btn btn-danger">5</button>
             </form>
         </div>
+    {% else %}
+        <div class="col-12 text-center">
+            <h1>No matches found :)</h1>
+        </div>
+    {% endif %}
     </div>
 {% endblock %}
