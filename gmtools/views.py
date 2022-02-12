@@ -1,9 +1,27 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 
 from armory.models import Item, Weapon, WeaponModification, RiotGear
 from rules.models import Extension, Template, Lineage, Skill, CHARACTER_ASPECT_CHOICES, Attribute
+from magic.models import BaseSpell
+
+
+class AssignSpellCostView(TemplateView):
+    template_name = 'gmtools/assign_spell_cost.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = BaseSpell.objects.filter(spell_point_cost=1).order_by('?')[0]
+        return context
+
+    def post(self, request, *args, **kwargs):
+        base_spell = BaseSpell.objects.get(id=request.POST.get('spell_id'))
+        spell_cost = request.POST.get('spell_cost')
+        base_spell.spell_point_cost = spell_cost
+        base_spell.save()
+        return HttpResponseRedirect(reverse('gmtools:assign_spell_cost'))
 
 
 class TemplateStatisticsView(TemplateView):
