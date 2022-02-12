@@ -100,7 +100,7 @@ Wenn die Entfernung des Ziels mehr als das Doppelte der Waffenreichweite entfern
 
 #### Deckung
 
-Sind Teile des Angegriffenen aus der Sicht des Angreifers verborgen, so gilt für den Angegeiffenen die Regel der Deckung. Hierbei kommt es darauf an, wie sehr der Angegriffene verborgen ist. Die Deckung ist hierbei in 3 Stufen eingeteilt:
+Sind Teile des Angegriffenen aus der Sicht des Angreifers verborgen, so gilt die Regel der Deckung. Hierbei kommt es darauf an, wie sehr der Angegriffene verborgen ist. Die Deckung ist hierbei in 3 Stufen eingeteilt:
 
 * 4+ Deckung: Das Meiste des Angegriffenen ist verborgen
 * 5+ Deckung: Der Angegriffene ist halb verborgen

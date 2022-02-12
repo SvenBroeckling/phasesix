@@ -1,5 +1,3 @@
-- uk regel sync combat
-
 ## Generell
 
 - Knowledge Würfeln

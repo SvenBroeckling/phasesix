@@ -8,11 +8,13 @@ To do this, each participant rolls on a D6, and adds the *Quickness value*. Here
 
 If two participants have the same result, the *Quickness* value decides first, and if this is also identical, the *Deftness* value.
 
-All participants of the combat have no actions available at the beginning of the combat. Only when they receive the *priority* for the first time do their actions refresh. 
+All participants of the combat have no actions available at the beginning of the combat. Only when they receive the *priority* for the first time their actions do refresh. 
 
 ### Sequence of rounds
 
-The combat is divided into *combat rounds*. In each combat round, each participant gets *priority* once, i.e. it is his turn and he can determine which *actions* he will perform. 
+The combat is divided into *combat rounds*. In each combat round, each participant gets *priority* once, i.e. it is his turn, and he can assign which *actions* he will perform. 
+
+The participant can perform an action for each of his available actions (see *Actor and Actions*), or save the action to react in the opponent's turn (see *Reactions*).
 
 If the last participant has acted, the next *combat round* begins with the first participant. 
 
@@ -27,10 +29,10 @@ At the beginning of the turn, the *actions* of the participant refresh. The numb
 Once the actions are refreshed, the participant can act in combat. To do this, he performs actions one after another, each action taking a certain number of *actions*. Actions can be, among others, the following:
 
 * To **attack** with a weapon
-* Parry **with a weapon or object**.
-* Reload a weapon
+* **Parry** with a weapon or object
+* **Reload** a weapon
 * **Use** an object
-* **Evade** a melee attack.
+* **Evade** a melee attack
 * **Hunker** or lay on the ground (Apply the "Hunkered" status effect, see "Wounds and healing").
 * **Stand up**
 * **Walk** *Quickness* + 1 Meters (performing another action without consuming an action, but the minimum roll is raised by 2).
@@ -66,21 +68,15 @@ Spending dice for actions does not itself take an action.
 
 Attacks with weapons are handled exactly the same in melee and ranged combat. The only difference is that attacks with melee weapons are rolled on the *Hand to Hand combat* skill, attacks with firearms are rolled on the *Shooting* skill, and attacks with throwing weapons are rolled on the *Throwing* skill.
 
-#### The hit roll and cover
+#### The hit roll
 
 To make an attack, a roll of a certain number of dice is made. The *minimum* roll of this die is equal to the *minimum* roll of the character.
 
 The number of dice initially corresponds to the character's respective skill value (shooting, hand to hand combat, throwing).
 
-Depending on the cover, a certain number of dice are removed from this roll:
-
-* Light cover: -1 die
-* Half cover: -2 dice
-* Almost complete cover: -3 dice
+The hit roll can also be changed by other circumstances. Different fire modes and firing at the wrong distance may cause the available dice to change.
 
 Each success causes a *hit* to the target of the attack. How the target can prevent damage is described under *hit*.
-
-The hit roll can also be changed by other circumstances. Different fire modes and firing at the wrong distance may cause the available dice to change.
 
 ##### Bonus dice: Fire modes
 
@@ -98,15 +94,23 @@ When firing in a mode other than the default mode, the number of shots and the a
 
 Each weapon has a specified distance at which it is effective. If the target's distance differs from that specified on the weapon, there is a penalty to the hit dice.
 
-If the real shooting distance is less than the specified distance of the weapon, the attack is performed normally. 
-
-If the distance is increased up to the double of the weapon, the hit dice of the hit roll are reduced by 2.
+If the real shooting distance is less than the specified distance of the weapon, the attack is performed normally. If the distance is increased up to the double of the weapon, the hit dice of the hit roll are reduced by 2.
 
 If the target's distance is more than twice the weapon's range away, it is not possible to shoot or attack at the target.
 
-#### Hits and piercing
+#### Cover
 
-Any success of the *hit roll* is a *hit* on the target of the attack. Other circumstances can also cause *hits*, for example a grenade can cause "3 hits with 2 wounds each".
+If parts of the attacked target are hidden from the view of the attacker, the rule of cover applies. It depends on how much the target is hidden. The cover is divided into 3 levels:
+
+* 4+ Cover: Most of the attacked target is hidden.
+* 5+ cover: The attacked target is half hidden
+* 6+ Cover: It is a bit harder to hit the attacked target behind light cover. This effect is achieved, among other things, by the "hunker" condition.
+
+If the attacked target has at least 6+ cover, it is entitled to a cover roll after the *hit roll*. For this, he rolls as many dice as the attacker had *hits*. For each success (on the minimum roll according to the cover), one hit is removed.
+
+#### Wounds and piercing
+
+Any success of the *hit roll*, which is not prevented by cover, is a *hit* on the target of the attack. Other circumstances can also cause *hits*, for example a grenade can cause "3 hits with 2 wounds each".
 
 If a character takes *hits*, they are reduced by the target's *protection value*. The *protection* is reduced by the *piercing* of the attacker's weapon.
 
@@ -119,7 +123,6 @@ If bonus wounds are specified with the weapon, they are caused directly as soon 
 #### Wounds
 
 A *wound* is added directly to the wounds taken. It can only be prevented if a *template*, equipment or other explicitly contains a rule that modifies wounds.
-
 
 #### Weaponless melee
 
