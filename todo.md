@@ -1,11 +1,19 @@
+- Magieregeln
+
+- Spell Mods: Arkana Kosten
+
 ## Generell
 
-- Knowledge Würfeln
 - Suche in die Add Modals
+- Itemmodal  bei XL kaputt
+- Kampagnenseite bei XL kaputt
+- Zauberaddon Modal formatting
+
+- Ini Würfeln in Würfeltab
+- Knowledge Würfeln
 - Weapon Addon add bug?
 - Add Modals Flexbox statt Masonry
 - Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
-- Ini Würfeln in Würfeltab
 - Status Effekte:
   - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
   - In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
@@ -24,8 +32,11 @@
 * Quicknote-Modal
 * Tagebuch / Log Theme
 
-## Kampagnenansicht
+## Kampagnen
 
+- Join / Create fertigstellen
+- Evtl. Initracker?
+- GM: Remove Player
 - Szenen -> Gamelog (Gemeinsam mit Charaktertagebuch)
 - Alle Items in Ansicht (Aufgeschluesselt nach Charakter)
 - Alle Schablonen in Ansicht (Aufgeschluesselt nach Charakter)?
