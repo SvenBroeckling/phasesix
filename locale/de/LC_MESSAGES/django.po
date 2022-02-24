@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-09 21:12+0000\n"
-"PO-Revision-Date: 2022-02-09 22:12+0100\n"
+"POT-Creation-Date: 2022-02-24 21:39+0000\n"
+"PO-Revision-Date: 2022-02-24 22:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -556,7 +556,7 @@ msgid "Weaknesses"
 msgstr "Schwächen"
 
 #: bestiary/templates/bestiary/foe_list.html:9
-#: characters/templates/base.html:76
+#: characters/templates/base.html:78 characters/templates/base.html:205
 msgid "Foes"
 msgstr "Gegner"
 
@@ -817,62 +817,101 @@ msgstr "Menge"
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: characters/templates/base.html:61
+#: characters/templates/base.html:63
 msgid "Play"
 msgstr "Spielen"
 
-#: characters/templates/base.html:64
+#: characters/templates/base.html:66
 #: characters/templates/characters/character_form.html:65
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/base.html:67
+#: characters/templates/base.html:69
 msgid "My Characters"
 msgstr "Meine Charaktere"
 
-#: characters/templates/base.html:69
+#: characters/templates/base.html:71
 msgid "My Campaigns"
 msgstr "Meine Kampagnen"
 
-#: characters/templates/base.html:74
+#: characters/templates/base.html:76
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:78
+#: characters/templates/base.html:80 characters/templates/base.html:201
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:101
+#: characters/templates/base.html:103
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
-#: characters/templates/base.html:113
+#: characters/templates/base.html:115
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/base.html:118
+#: characters/templates/base.html:120
 msgid "Extension Grids"
 msgstr "Erweiterungstabellen"
 
-#: characters/templates/base.html:121
+#: characters/templates/base.html:123
 msgid "Template Statistics"
 msgstr "Schablonenstatistiken"
 
-#: characters/templates/base.html:128
+#: characters/templates/base.html:126
+msgid "Assign Spell Cost"
+msgstr "Zauber Kosten zuweisen"
+
+#: characters/templates/base.html:133
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/base.html:133 templates/registration/login.html:11
+#: characters/templates/base.html:138 templates/registration/login.html:11
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:138 characters/templates/base.html:142
+#: characters/templates/base.html:143 characters/templates/base.html:147
 msgid "Dice server disconnected"
 msgstr "Würfelserver nicht verbunden"
 
-#: characters/templates/base.html:141
+#: characters/templates/base.html:146
 msgid "Dice server connected"
 msgstr "Würfelserver verbunden"
+
+#: characters/templates/base.html:191
+#: characters/templates/characters/character_list.html:17
+#: characters/templates/index.html:32
+msgid "Create a character"
+msgstr "Erstelle einen Charakter"
+
+#: characters/templates/base.html:192
+msgid "My Charactes"
+msgstr "Meine Charaktere"
+
+#: characters/templates/base.html:193
+msgid "Campaigns"
+msgstr "Kampagnen"
+
+#: characters/templates/base.html:194
+msgid "Rules"
+msgstr "Regeln"
+
+#: characters/templates/base.html:195
+msgid "Privacy"
+msgstr "Privatsphäre"
+
+#: characters/templates/base.html:202
+#: characters/templates/characters/fragments/gear.html:70
+msgid "Weapons"
+msgstr "Waffen"
+
+#: characters/templates/base.html:203
+msgid "Spells"
+msgstr "Zauber"
+
+#: characters/templates/base.html:204
+msgid "Armour"
+msgstr "Rüstung"
 
 #: characters/templates/characters/character_detail.html:70
 msgid "Loading"
@@ -916,11 +955,6 @@ msgstr "Neuer Charakter"
 #: characters/templates/characters/character_form.html:28
 msgid "Choose a name and additional extensions for your character"
 msgstr "Wähle einen Namen und zusätzliche Erweiterungen für deinen Charakter"
-
-#: characters/templates/characters/character_list.html:17
-#: characters/templates/index.html:37
-msgid "Create a character"
-msgstr "Erstelle einen Charakter"
 
 #: characters/templates/characters/character_list.html:26
 msgid "Your characters"
@@ -1167,10 +1201,6 @@ msgstr "Noch keine Rüstung."
 #: characters/templates/characters/fragments/gear.html:154
 msgid "Add Weapon"
 msgstr "Waffe hinzufügen"
-
-#: characters/templates/characters/fragments/gear.html:70
-msgid "Weapons"
-msgstr "Waffen"
 
 #: characters/templates/characters/fragments/gear.html:155
 msgid "No weapon yet."
@@ -1708,7 +1738,7 @@ msgstr "Heilen"
 
 #: characters/templates/characters/sidebar/wounds.html:25
 #: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:138 characters/views.py:149 characters/views.py:160
+#: characters/views.py:144 characters/views.py:155 characters/views.py:166
 msgid "Rest"
 msgstr "Rast"
 
@@ -1738,13 +1768,27 @@ msgstr ""
 msgid "Status effects"
 msgstr "Statuseffekte"
 
-#: characters/templates/index.html:18
+#: characters/templates/index.html:17
+msgid "A free, flexible role playing game."
+msgstr "Ein freies, flexibles Rollenspiel."
+
+#: characters/templates/index.html:30
+msgid "Have a look at the rules"
+msgstr "Schau in die Regeln"
+
+#: characters/templates/index.html:43
+msgid "Free online pen and paper rpg"
+msgstr "Freies online Pen'n'Paper Rollenspiel"
+
+#: characters/templates/index.html:45
 msgid ""
 "\n"
 "                            Do you need a simple and fast rulebook to play "
-"your stories as a pen'n'paper roleplaying game?\n"
+"your stories as a pen'n'paper roleplaying\n"
+"                            game?\n"
 "                            <em>Phase Six</em> is a quick to play "
-"roleplaying game rulebook that can be used in any setting.\n"
+"roleplaying game rulebook that can be used in any\n"
+"                            setting.\n"
 "                            All you need to play is a handfull of regular "
 "six-sided dice and some paper.\n"
 "                        "
@@ -1758,7 +1802,7 @@ msgstr ""
 "etwas Papier.\n"
 " "
 
-#: characters/templates/index.html:25
+#: characters/templates/index.html:54
 msgid ""
 "\n"
 "                            This website lets you create and manage your "
@@ -1776,10 +1820,10 @@ msgstr ""
 "<a href=\"https://roll20.net\">Roll20</a> für deine Sitzungen zu benutzen.\n"
 " "
 
-#: characters/templates/index.html:32
+#: characters/templates/index.html:61
 msgid ""
 "\n"
-"                             Start now by taking a look at the rules or "
+"                            Start now by taking a look at the rules or "
 "creating a character.\n"
 "                        "
 msgstr ""
@@ -1788,27 +1832,19 @@ msgstr ""
 "zu erstellen.\n"
 " "
 
-#: characters/templates/index.html:36
-msgid "Have a look at the rules"
-msgstr "Schau in die Regeln"
-
-#: characters/templates/index.html:40
-msgid "Photo by Unsplash.com"
-msgstr "Foto von Unsplash.com"
-
-#: characters/views.py:58
+#: characters/views.py:64
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:139
+#: characters/views.py:145
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:150
+#: characters/views.py:156
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:161
+#: characters/views.py:167
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
@@ -2515,6 +2551,12 @@ msgstr "Registrieren"
 msgid "Create Account"
 msgstr "Konto erstellen"
 
+#~ msgid "All Charactes"
+#~ msgstr "Alle Charaktere"
+
+#~ msgid "Photo by Unsplash.com"
+#~ msgstr "Foto von Unsplash.com"
+
 #~ msgid "movement"
 #~ msgstr "Bewegung"
 
@@ -2690,9 +2732,6 @@ msgstr "Konto erstellen"
 #~ "Wurf im Spiel erneut zu würfeln.<br><br>Wiederholungswürfe werden bei der "
 #~ "Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
 
-#~ msgid "Spell"
-#~ msgstr "Zauber"
-
 #~ msgid "Stats"
 #~ msgstr "Werte"
 
@@ -2719,9 +2758,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "Description / Additional Rules"
 #~ msgstr "Beschreibung / Weitere Regeln"
-
-#~ msgid "spell cost"
-#~ msgstr "Zauber Kosten"
 
 #~ msgid "spell costs"
 #~ msgstr "Zauber Kosten"

@@ -25,6 +25,12 @@ from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attr
 class IndexView(TemplateView):
     template_name = 'index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user_characters'] = self.request.user.character_set.all()
+        return context
+
 
 class CharacterListView(TemplateView):
     template_name = 'characters/character_list.html'

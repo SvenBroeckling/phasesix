@@ -41,6 +41,8 @@
     </div>
 </div>
 
+{% block container_content %}{% endblock %}
+
 <div class="container-fluid">
 
     <div class="row pt-lg-3 pb-3">
@@ -169,6 +171,7 @@
         <div class="default-belownav"></div>
     {% endblock %}
 
+
     <div class="row">
         <div class="col-md-10 offset-md-1">
             {% bootstrap_messages messages %}
@@ -176,6 +179,33 @@
         </div>
     </div>
 </div>
+
+<footer class="bg-gradient mt-5">
+    <div class="container pt-4">
+        <div class="row">
+            <div class="col-12 col-md-3 offset-md-3 text-md-end">
+                <h5>Phase Six</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
+                    <li><a href="{% url 'characters:list' %}">{% trans 'My Charactes' %}</a></li>
+                    <li><a href="{% url 'campaigns:list' %}">{% trans 'Campaigns' %}</a></li>
+                    <li><a href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rules' %}</a></li>
+                    <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-3">
+                <h5>Material</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
+                    <li><a href="">{% trans 'Weapons' %}</a></li>
+                    <li><a href="">{% trans 'Spells' %}</a></li>
+                    <li><a href="">{% trans 'Armour' %}</a></li>
+                    <li><a href="{% url 'bestiary:list' %}">{% trans 'Foes' %}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 
 {% compress js %}
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
