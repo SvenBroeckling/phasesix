@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-25 08:31+0000\n"
-"PO-Revision-Date: 2022-02-25 09:31+0100\n"
+"POT-Creation-Date: 2022-02-27 21:14+0000\n"
+"PO-Revision-Date: 2022-02-27 22:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: armory/models.py:23 armory/models.py:40 armory/models.py:89
 #: armory/models.py:117 armory/models.py:143 armory/models.py:222
@@ -297,7 +297,7 @@ msgstr "Durchschlag"
 #: characters/templates/characters/fragments/gear.html:209
 #: characters/templates/characters/fragments/health.html:33
 #: characters/templates/characters/fragments/health.html:35
-#: characters/templates/characters/modals/add_items.html:46
+#: characters/templates/characters/modals/add_items.html:89
 #: characters/templates/characters/modals/add_riot_gear.html:14
 #: characters/templates/characters/modals/add_weapons.html:51
 #: characters/templates/characters/sidebar/characteritem.html:56
@@ -608,33 +608,36 @@ msgstr "Würfelstring"
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
-#: campaigns/templates/campaigns/campaign_base.html:24
+#: campaigns/templates/campaigns/campaign_base.html:39
+msgid "Copied"
+msgstr "Kopiert"
+
+#: campaigns/templates/campaigns/campaign_base.html:39
 msgid "Invite Link"
 msgstr "Einladungslink"
 
-#: campaigns/templates/campaigns/campaign_base.html:26
+#: campaigns/templates/campaigns/campaign_base.html:41
 msgid "A campaign by"
 msgstr "Eine Kampagne von"
 
-#: campaigns/templates/campaigns/campaign_base.html:38 characters/models.py:53
+#: campaigns/templates/campaigns/campaign_base.html:54 characters/models.py:53
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: campaigns/templates/campaigns/campaign_base.html:43
-#: campaigns/templates/campaigns/campaign_invitation.html:7
-msgid "Join Campaign"
-msgstr "Kampagne beitreten"
+#: campaigns/templates/campaigns/campaign_base.html:59
+msgid "Join"
+msgstr "Beitreten"
 
-#: campaigns/templates/campaigns/campaign_base.html:49
+#: campaigns/templates/campaigns/campaign_base.html:66
 #: characters/templates/characters/fragments/health.html:44
 msgid "Status"
 msgstr "Status"
 
-#: campaigns/templates/campaigns/campaign_base.html:52
+#: campaigns/templates/campaigns/campaign_base.html:70
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: campaigns/templates/campaigns/campaign_base.html:55
+#: campaigns/templates/campaigns/campaign_base.html:74
 #: campaigns/templates/campaigns/campaign_scenes.html:5
 msgid "Scenes"
 msgstr "Szenen"
@@ -650,6 +653,10 @@ msgstr "Sende den Einladungslink an deine Spieler um sie einzuladen."
 #: campaigns/templates/campaigns/campaign_form.html:10
 msgid "Create campaign"
 msgstr "Kampagne erstellen"
+
+#: campaigns/templates/campaigns/campaign_invitation.html:7
+msgid "Join Campaign"
+msgstr "Kampagne beitreten"
 
 #: campaigns/templates/campaigns/campaign_list.html:7
 msgid "Create a campaign"
@@ -968,7 +975,7 @@ msgstr "Charakterer anderer Leute"
 msgid "Anonymous characters"
 msgstr "Anonyme Charaktere"
 
-#: characters/templates/characters/character_list.html:66
+#: characters/templates/characters/character_list.html:65
 msgid "You can see these because you are an admin"
 msgstr "Du kannst diese sehen da du Admin bist"
 
@@ -990,7 +997,7 @@ msgstr ""
 "alle Werte und Fähigkeiten deines Charakters."
 
 #: characters/templates/characters/create_character_constructed.html:124
-#: characters/templates/characters/modals/add_items.html:14
+#: characters/templates/characters/modals/add_items.html:55
 #: rules/templates/rules/template_list.html:53
 msgid "Search"
 msgstr "Suchen"
@@ -1213,7 +1220,7 @@ msgstr "Gegenstand hinzufügen"
 
 #: characters/templates/characters/fragments/gear.html:171
 #: characters/templates/characters/fragments/gear.html:228
-#: characters/templates/characters/modals/add_items.html:62
+#: characters/templates/characters/modals/add_items.html:105
 msgid "Add item"
 msgstr "Gegenstand hinzufügen"
 
@@ -1226,7 +1233,7 @@ msgid "Currency"
 msgstr "Währung"
 
 #: characters/templates/characters/fragments/gear.html:211
-#: characters/templates/characters/modals/add_items.html:47
+#: characters/templates/characters/modals/add_items.html:90
 #: characters/templates/characters/modals/add_riot_gear.html:15
 #: characters/templates/characters/modals/add_weapons.html:52
 #: characters/templates/characters/sidebar/characteritem.html:51
@@ -1335,7 +1342,7 @@ msgstr "Ritual"
 msgid "Shape"
 msgstr "Form"
 
-#: characters/templates/characters/modals/add_items.html:52
+#: characters/templates/characters/modals/add_items.html:95
 #: characters/templates/characters/modals/add_riot_gear.html:20
 #: characters/templates/characters/modals/add_weapon_mod.html:55
 #: characters/templates/characters/modals/add_weapons.html:64
@@ -1345,7 +1352,7 @@ msgstr "Form"
 msgid "Price"
 msgstr "Preis"
 
-#: characters/templates/characters/modals/add_items.html:61
+#: characters/templates/characters/modals/add_items.html:104
 #: characters/templates/characters/modals/add_riot_gear.html:29
 #: characters/templates/characters/modals/add_spell_template.html:75
 #: characters/templates/characters/modals/add_weapon_mod.html:64
@@ -1354,7 +1361,7 @@ msgstr "Preis"
 msgid "Not possible"
 msgstr "Nicht möglich"
 
-#: characters/templates/characters/modals/add_items.html:62
+#: characters/templates/characters/modals/add_items.html:105
 #: characters/templates/characters/modals/add_riot_gear.html:29
 #: characters/templates/characters/modals/add_spell_template.html:76
 #: characters/templates/characters/modals/add_weapon_mod.html:65
@@ -1767,10 +1774,6 @@ msgstr ""
 #: characters/templates/characters/sidebar/wounds.html:67
 msgid "Status effects"
 msgstr "Statuseffekte"
-
-#: characters/templates/index.html:6
-msgid "Images by unsplash.com"
-msgstr "Fotos von Unsplash.com"
 
 #: characters/templates/index.html:18
 msgid "A free, flexible role playing game."
@@ -2554,6 +2557,9 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "Images by unsplash.com"
+#~ msgstr "Fotos von Unsplash.com"
 
 #~ msgid "All Charactes"
 #~ msgstr "Alle Charaktere"

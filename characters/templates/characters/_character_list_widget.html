@@ -1,5 +1,5 @@
 {% load i18n static thumbnail characters_extras %}
-<a href="{{ object.get_absolute_url }}" data-character-id="{{ object.id }}">
+<a class="character-list-widget" href="{{ object.get_absolute_url }}" data-character-id="{{ object.id }}">
     <div class="card character-list-item" style="
             background-size: 100%;
             {% if object.backdrop_image %}

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import random
 
 from channels.layers import get_channel_layer
 from django.contrib import messages
@@ -14,6 +13,7 @@ from django.views.generic import TemplateView, DetailView, FormView
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType, \
     WeaponAttackMode, CurrencyMapUnit
 from campaigns.consumers import roll_and_send
+from campaigns.models import Campaign
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell, CharacterSkill, CharacterAttribute
@@ -326,7 +326,12 @@ class CreateCharacterDataView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        campaign_pk = self.request.GET.get('campaign_pk', None)
         context['extensions'] = Extension.objects.filter(is_epoch=False, is_mandatory=False, is_active=True)
+        context['campaign'] = None
+        if campaign_pk is not None:
+            print(campaign_pk)
+            context['campaign'] = Campaign.objects.get(id=campaign_pk)
         return context
 
     def get_success_url(self):

@@ -74,6 +74,14 @@ def has_extensions(template, extensions):
     return False
 
 
+@register.filter
+def for_extensions(queryset, extension_queryset):
+    return queryset.filter(
+        Q(extensions__id__in=extension_queryset.all()) |
+        Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
+    )
+
+
 @register.simple_tag
 def weaponmodification_type_valid_for_weapon(wmt, weapon):
     for wm in wmt.weaponmodification_set.all():
@@ -104,14 +112,6 @@ def to_range(value):
     if value:
         return range(int(value))
     return []
-
-
-@register.filter
-def for_extensions(queryset, extension_queryset):
-    return queryset.filter(
-        Q(extensions__id__in=extension_queryset.all()) |
-        Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
-    )
 
 
 @register.filter

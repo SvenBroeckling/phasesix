@@ -1,19 +1,34 @@
 {% extends 'campaigns/campaign_base.html' %}
-{% load rules_extras i18n %}
+{% load rules_extras i18n characters_extras %}
+
+{% block javascript %}
+    <script>
+        $(function () {
+            $('.character-list-widget').on('click', function(e){
+                alert("Hello")
+                e.preventDefault()
+                return false
+            })
+        })
+    </script>
+{% endblock %}
 
 {% block campaign_content %}
     <div class="row">
-        <div class="col-12">
-            <h2>{% trans 'Join Campaign' %}</h2>
-            <p>
-
-            </p>
+        <div class="col-12 mb-4">
+            <a href="{% url 'characters:create_character_data' extension_pk=campaign.epoch.id %}?campaign_pk={{ campaign.id }}" class="btn btn-primary float-end">{% trans 'Create a new character for this campaign' %}</a>
         </div>
     </div>
     <div class="row">
-        {% for object in request.user.character_set.all %}
+        {% for object in request.user.character_set.all|for_extensions:object.extensions %}
             <div class="col-12 col-sm-6 col-md-6 mb-3">
                 {% include "characters/_character_list_widget.html" %}
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p>
+                    {% trans "You don't have a character matching the campaign's extensions." %}
+                </p>
             </div>
         {% endfor %}
     </div>

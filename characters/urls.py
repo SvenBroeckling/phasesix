@@ -83,6 +83,10 @@ urlpatterns = [
         r'^new/data/(?P<extension_pk>\d+)/$',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
+    url(
+        r'^new/data/(?P<extension_pk>\d+)/(?P<campaign_pk>\d+)/$',
+        views.CreateCharacterDataView.as_view(),
+        name='create_character_data'),
 
     # constructed
     url(
