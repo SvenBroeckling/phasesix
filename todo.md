@@ -4,7 +4,6 @@
 
 ## Generell
 
-- Suche in die Add Modals
 - Itemmodal  bei XL kaputt
 - Kampagnenseite bei XL kaputt
 - Zauberaddon Modal formatting

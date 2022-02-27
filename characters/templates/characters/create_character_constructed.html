@@ -4,15 +4,15 @@
 {% block javascript %}
     <script>
         $(function () {
-            var timer = null;
+            let timer = null;
 
             $('#id_q').on('keyup', function (e) {
-                var q = $(this).val();
+                let q = $(this).val();
 
                 function updateTabs() {
                     $('.tab-pane').each(function (index) {
-                        var elem = $(this);
-                        var ct = elem.find('.constructed-template:not(.d-none)');
+                        let elem = $(this);
+                        let ct = elem.find('.constructed-template:not(.d-none)');
                         if (ct.length === 0) {
                             elem.addClass('d-none');
                             $(elem.data('rel')).addClass('disabled');
