@@ -15,11 +15,16 @@ def roll_and_send(character_id, roll_string, header, description):
     channel_layer = get_channel_layer()
     character = Character.objects.get(id=character_id)
 
-    result_list = roll(roll_string)
+    result = roll(roll_string)
+
+    result_list = result['list']
+    result_sum = result['sum']
+    print(result)
     result_html = render_to_string(
         'campaigns/_dice_socket_results.html',
         {
-            'results': result_list,
+            'result_list': result_list,
+            'result_sum': result_sum,
             'character': character,
         }
     )
@@ -49,7 +54,7 @@ def roll_and_send(character_id, roll_string, header, description):
 
     url = character.campaign.discord_webhook_url if character.campaign is not None else None
     if url is not None and not settings.DEBUG_DISCORD:
-        result = ', '.join(str(r) for r in result_list)
+        result = ', '.join(str(r) for r in result_list) + f' = {result_sum}'
         json_data = {
             'content': f'**{header}** {result}',
             'username': character.name,

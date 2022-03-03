@@ -14,6 +14,19 @@
 <div class="tab-content">
     <div class="tab-pane active" id="character-sidebar-roll" role="tabpanel">
         <div class="row">
+            <div class="col-6 mb-3 mt-3">
+                {% trans 'Initiative' %}
+            </div>
+            <div class="col-6 mb-3 mt-3">
+                <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+                        data-dice-roll="1d6+{{ object.attributes.quickness }}"
+                        data-dice-header="{% trans 'Initiative' %}"
+                        data-dice-description="{% trans '1d6+Quickness' %}"
+                        data-dice-character={{ object.id }}>{% trans '1d6' %}+{{ object.attributes.quickness }}
+                </button>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 mb-3 mt-2">
                 {% blocktrans %}
                     Roll a custom amount of dice here, just klick on the button with

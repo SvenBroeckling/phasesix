@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-27 21:14+0000\n"
-"PO-Revision-Date: 2022-02-27 22:14+0100\n"
+"POT-Creation-Date: 2022-03-03 21:31+0000\n"
+"PO-Revision-Date: 2022-03-03 22:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -44,7 +44,7 @@ msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:47 armory/models.py:91
 #: armory/models.py:139 armory/models.py:294 bestiary/models.py:33
-#: campaigns/models.py:85 characters/models.py:434 forum/models.py:22
+#: campaigns/models.py:85 characters/models.py:437 forum/models.py:22
 #: forum/models.py:28 forum/models.py:32 forum/models.py:48 forum/models.py:79
 #: magic/models.py:130 rules/models.py:51 rules/models.py:75
 #: rules/models.py:175 rules/models.py:201 rules/models.py:272
@@ -654,9 +654,15 @@ msgstr "Sende den Einladungslink an deine Spieler um sie einzuladen."
 msgid "Create campaign"
 msgstr "Kampagne erstellen"
 
-#: campaigns/templates/campaigns/campaign_invitation.html:7
-msgid "Join Campaign"
-msgstr "Kampagne beitreten"
+#: campaigns/templates/campaigns/campaign_invitation.html:19
+#, fuzzy
+#| msgid "No characters in your campaign"
+msgid "Create a new character for this campaign"
+msgstr "Keine Charaktere in deiner Kampagne"
+
+#: campaigns/templates/campaigns/campaign_invitation.html:30
+msgid "You don't have a character matching the campaign's extensions."
+msgstr ""
 
 #: campaigns/templates/campaigns/campaign_list.html:7
 msgid "Create a campaign"
@@ -796,27 +802,27 @@ msgstr "Benutzte Wiederholungswürfe"
 msgid "quirks"
 msgstr "Eigenarten"
 
-#: characters/models.py:418
+#: characters/models.py:421
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:448
+#: characters/models.py:451
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:528
+#: characters/models.py:531
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:549
+#: characters/models.py:552
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:570
+#: characters/models.py:573
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:650
+#: characters/models.py:653
 msgid "quantity"
 msgstr "Menge"
 
@@ -829,7 +835,7 @@ msgid "Play"
 msgstr "Spielen"
 
 #: characters/templates/base.html:66
-#: characters/templates/characters/character_form.html:65
+#: characters/templates/characters/character_form.html:69
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
@@ -954,12 +960,12 @@ msgstr ""
 "Dieser Charakter wurde erschaffen ohne dass jemand angemeldet war. Er wird "
 "morgen gelöscht sein."
 
-#: characters/templates/characters/character_form.html:27
+#: characters/templates/characters/character_form.html:26
 #: characters/templates/characters/create_character.html:7
 msgid "New Character"
 msgstr "Neuer Charakter"
 
-#: characters/templates/characters/character_form.html:28
+#: characters/templates/characters/character_form.html:27
 msgid "Choose a name and additional extensions for your character"
 msgstr "Wähle einen Namen und zusätzliche Erweiterungen für deinen Charakter"
 
@@ -1451,6 +1457,19 @@ msgid "Edit Character"
 msgstr "Editieren"
 
 #: characters/templates/characters/sidebar/character.html:18
+#: characters/templates/characters/sidebar/character.html:23
+msgid "Initiative"
+msgstr "Initiative"
+
+#: characters/templates/characters/sidebar/character.html:24
+msgid "1d6+Quickness"
+msgstr "1W6+Schnelligkeit"
+
+#: characters/templates/characters/sidebar/character.html:25
+msgid "1d6"
+msgstr "1W6"
+
+#: characters/templates/characters/sidebar/character.html:31
 msgid ""
 "\n"
 "                    Roll a custom amount of dice here, just klick on the "
@@ -1464,20 +1483,20 @@ msgstr ""
 "der passenden Anzahl.\n"
 "\t"
 
-#: characters/templates/characters/sidebar/character.html:29
+#: characters/templates/characters/sidebar/character.html:42
 #: characters/templates/characters/sidebar/dice.html:55
 msgid "Custom Roll"
 msgstr "Individueller Wurf"
 
-#: characters/templates/characters/sidebar/character.html:47
+#: characters/templates/characters/sidebar/character.html:60
 msgid "Save"
 msgstr "Speichern"
 
-#: characters/templates/characters/sidebar/character.html:57
+#: characters/templates/characters/sidebar/character.html:70
 msgid "Delete character"
 msgstr "Charackter löschen"
 
-#: characters/templates/characters/sidebar/character.html:60
+#: characters/templates/characters/sidebar/character.html:73
 msgid "Delete Character"
 msgstr "Charakter löschen"
 
@@ -2557,6 +2576,9 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "Join Campaign"
+#~ msgstr "Kampagne beitreten"
 
 #~ msgid "Images by unsplash.com"
 #~ msgstr "Fotos von Unsplash.com"

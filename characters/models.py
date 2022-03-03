@@ -92,6 +92,9 @@ class Character(models.Model):
     def get_attribute_value(self, attribute_identifier):
         return self.characterattribute_set.get(attribute__identifier=attribute_identifier).value
 
+    def attributes(self) -> dict:
+        return {a.attribute.identifier: a.value for a in self.characterattribute_set.all()}
+
     def knowledge_dict(self):
         kd = {}
         for t in self.charactertemplate_set.all():
