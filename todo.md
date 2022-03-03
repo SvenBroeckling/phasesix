@@ -8,7 +8,6 @@
 - Kampagnenseite bei XL kaputt
 - Zauberaddon Modal formatting
 
-- Ini Würfeln in Würfeltab
 - Knowledge Würfeln
 - Weapon Addon add bug?
 - Add Modals Flexbox statt Masonry

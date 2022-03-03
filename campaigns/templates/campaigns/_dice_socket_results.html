@@ -2,5 +2,5 @@
 {% for r in result_list %}
     <span class="text-center {% if r > 6 %}exploded{% endif %} {% if r < 6 and r >= character.minimum_roll %}success{% endif %} {% if r < character.minimum_roll %}fail{% endif %}">{{ r }}</span>
 {% endfor %}
-<span>= {{ result_sum }}</span>
+<span class="text-muted">= {{ result_sum }}</span>
 </div>

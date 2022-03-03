@@ -54,6 +54,12 @@ class Item(models.Model, metaclass=TransMeta):
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
+    skill = models.ForeignKey(
+        'rules.Skill',
+        verbose_name=_('skill for usage'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     dice_roll_string = models.CharField(
         _('dice role string'),
