@@ -1,3 +1,5 @@
+- Icon Stamp: https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
+- GM Dice Roller
 - Magieregeln
 
 - Spell Mods: Arkana Kosten
