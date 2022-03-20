@@ -40,7 +40,8 @@ $(function(){
             roll: elem.data('dice-roll'),
             header: elem.data('dice-header'),
             description: elem.data('dice-description'),
-            character: elem.data('dice-character')
+            character: elem.data('dice-character'),
+            campaign: elem.data('dice-campaign')
         }
         socket.send(JSON.stringify(data))
     })

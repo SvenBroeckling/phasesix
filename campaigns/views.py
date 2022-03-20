@@ -85,3 +85,11 @@ class CampaignScenesView(CampaignMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = SceneForm
         return context
+
+
+class XhrSidebarView(DetailView):
+    queryset = Campaign.objects.all()
+
+    def get_template_names(self):
+        return ['campaigns/sidebar/' + self.kwargs['sidebar_name'] + '.html']
+

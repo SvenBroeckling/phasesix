@@ -81,7 +81,11 @@ class Handout(models.Model):
 
 class Roll(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
-    character = models.ForeignKey('characters.Character', on_delete=models.CASCADE)
+    character = models.ForeignKey(
+        'characters.Character',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     header = models.CharField(_('header'), max_length=120, blank=True, null=True)
     description = models.CharField(_('description'), max_length=120, blank=True, null=True)

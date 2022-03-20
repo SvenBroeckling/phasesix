@@ -13,4 +13,8 @@ urlpatterns = [
     url(r'^scenes/(?P<pk>\d+)$', login_required(views.CampaignScenesView.as_view()), name='scenes'),
     url(r'^status/(?P<pk>\d+)$', login_required(views.CampaignStatusView.as_view()), name='status'),
     url(r'^invitation/(?P<pk>\d+)/(?P<hash>.+)$', login_required(views.CampaignInvitationView.as_view()), name='invitation'),
+    url(
+        r'^sidebar/(?P<pk>\d+)/(?P<sidebar_name>[a-z_]+)$',
+        views.XhrSidebarView.as_view(),
+        name='xhr_sidebar'),
 ]
