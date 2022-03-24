@@ -461,7 +461,7 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
 
-        bonus_dice = 0
+        bonus_dice = self.weapon.bonus_dice
         for wm in self.modifications.all():
             for wma in wm.weaponmodificationattributechange_set.all():
                 if wma.attribute == 'bonus_dice':
