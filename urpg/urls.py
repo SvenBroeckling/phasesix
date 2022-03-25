@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'bestiary/', include('bestiary.urls', namespace='bestiary')),
     url(r'homebrew/', include('homebrew.urls', namespace='homebrew')),
     url(r'rules/', include('rules.urls', namespace='rules')),
+    url(r'armory/', include('armory.urls', namespace='armory')),
     url(r'gmtools/', include('gmtools.urls', namespace='gmtools')),
     path('you/', include('django.contrib.auth.urls')),
     path('you/', include('django_registration.backends.activation.urls')),

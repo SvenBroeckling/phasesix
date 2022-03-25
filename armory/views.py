@@ -1,3 +1,22 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from armory.models import Weapon, WeaponType
+from rules.models import Extension
+
+
+class WeaponListView(ListView):
+    model = Weapon
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        extension = self.request.GET.get('extension', None)
+        if extension is not None:
+            qs = qs.filter(extensions__in=extension)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        extension = self.request.GET.get('extension', None)
+        context['extensions'] = Extension.objects.first_class_extensions()
+        context['selected_extension'] = Extension.objects.get(id=extension)
+        return context

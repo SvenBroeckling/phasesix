@@ -33,10 +33,17 @@ class ExtensionSelectQuerySet(models.QuerySet):
         )
 
 
+class ExtensionQuerySet(models.QuerySet):
+    def first_class_extensions(self):
+        return self.filter(Q(is_epoch=True) | Q(is_mandatory=True)).filter(is_active=True)
+
+
 class Extension(models.Model, metaclass=TransMeta):
     """
     A URPG source book extension
     """
+    objects = ExtensionQuerySet.as_manager()
+
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
     name = models.CharField(_('name'), max_length=120)
