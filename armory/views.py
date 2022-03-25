@@ -18,5 +18,6 @@ class WeaponListView(ListView):
         context = super().get_context_data(**kwargs)
         extension = self.request.GET.get('extension', None)
         context['extensions'] = Extension.objects.first_class_extensions()
-        context['selected_extension'] = Extension.objects.get(id=extension)
+        if extension is not None:
+            context['selected_extension'] = Extension.objects.get(id=extension)
         return context
