@@ -1,5 +1,8 @@
 ## Generell
 
+- Achtsamkeit, Achtsamkeit -> ? (Aufmerksamkeit)
+- Akrobatik oder Athletik -> ?
+
 - Magieregeln
 - Detailseiten: Weapon, Armour, BaseSpell
 - Weapon List/Detail: Statuseffekte
