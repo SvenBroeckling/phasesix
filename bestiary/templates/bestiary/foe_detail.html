@@ -4,19 +4,30 @@
 {% block belownav %}
     {% if object.image %}
     <div
-            style="height: 36vh; background-image: url({{ object.image.url }})"
+            style="position: relative; height: 36vh; background-image: url({{ object.image.url }})"
             class="row character-info-row mb-3">
     {% else %}
         <div
-                style="height: 36vh; background-image: url({% static 'img/jonas-friese-pS_S00R9_6I-unsplash.jpg' %})"
+                style="position: relative; height: 36vh; background-image: url({% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %})"
                 class="row character-info-row mb-3">
     {% endif %}
+
         <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
             <div>
                 <h1>{{ object }}</h1>
                 <small>{{ object.type }}</small>
             </div>
         </div>
+        <div class="background-image-copyright">
+            {% if object.image %}
+                {% if object.image_copyright %}
+                    Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
+                {% endif %}
+            {% else %}
+                Photo by <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Jensen</a> on <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+            {% endif %}
+        </div>
+
     </div>
 {% endblock %}
 

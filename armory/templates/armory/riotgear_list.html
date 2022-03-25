@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 {% load i18n static rules_extras characters_extras %}
 
+{% block belownav %}
+    <div
+            style="position: relative; height: 36vh; background-image: url({% static 'img/hugo-l-casanova-GDre1q4wEJk-unsplash.jpg' %})"
+            class="row character-info-row mb-4">
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <h1>{% trans 'Armour' %}</h1>
+        </div>
+        <div class="background-image-copyright">
+            Photo by <a href="https://unsplash.com/@hlcasan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Hugo L. Casanova</a> on <a href="https://unsplash.com/s/photos/armor?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+        </div>
+    </div>
+{% endblock %}
+
 {% block javascript %}
     <script>
         $(function () {

@@ -3,17 +3,20 @@
 
 {% block belownav %}
     <div
-            style="height: 36vh; background-image: url({% static 'img/jonas-friese-pS_S00R9_6I-unsplash.jpg' %})"
+            style="position: relative; height: 36vh; background-image: url({% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %})"
             class="row character-info-row mb-3">
         <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
             <h1>{% trans 'Foes' %}</h1>
+        </div>
+        <div class="background-image-copyright">
+            Photo by <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Jensen</a> on <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-sortable">
             <thead>
                 <tr>
                     <th>{% trans 'Foe' %}</th>
