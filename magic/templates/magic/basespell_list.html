@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load i18n static rules_extras %}
+
+{% block belownav %}
+    <div
+            style="position: relative; height: 36vh; background-image: url({% static 'img/michael-dziedzic-1bjsASjhfkE-unsplash.jpg' %})"
+            class="row character-info-row mb-4">
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <h1>{% trans 'Spells' %}</h1>
+        </div>
+        <span class="background-image-copyright">
+            Photo by <a href="https://unsplash.com/@lazycreekimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Michael Dziedzic</a> on <a href="https://unsplash.com/s/photos/magic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+        </span>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+    $(function(){
+        let timer = null;
+        let masonry = $('.masonry-container').masonry()
+
+        $('#id_q').on('keyup', function(e){
+            var q = $(this).val();
+
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function(){
+                $('.template').each(function(index){
+                    if($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                        $(this).parent().removeClass('d-none');
+                    } else {
+                        $(this).parent().addClass('d-none');
+                    };
+                });
+                history.replaceState({q: q}, '', '?q=' + q);
+                masonry.masonry({percentPosition: true})
+            }, 10);
+        });
+
+        var matches = /q=([^&#=]*)/.exec(window.location.search);
+        if(matches && matches[1]) {
+            $('#id_q').val(matches[1]);
+            $('.template').each(function(index){
+                if($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
+                    $(this).removeClass('d-none');
+                } else {
+                    $(this).addClass('d-none');
+                };
+            });
+            masonry.masonry({percentPosition: true})
+        }
+
+        $('.template').tilt({
+            glare: false,
+            perspective: 1800
+        })
+    })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-6 mb-4">
+            <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
+        </div>
+    </div>
+    <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
+        {% for object in object_list %}
+            <div class="col col-md-4">
+                {% basespell_widget object %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -13,6 +13,15 @@ def template_widget(context, template):
     return context
 
 
+@register.inclusion_tag('magic/_basespell_widget.html', takes_context=True)
+def basespell_widget(context, basespell, character=None):
+    context.update({
+        'basespell': basespell,
+        'character': character,
+    })
+    return context
+
+
 @register.filter
 def urpg_markup(value):
     if value is None:

@@ -78,7 +78,6 @@
         {% endfor %}
     </div>
 </div>
-
 {% for t in spell_types %}
     <div class="container spell-selection" id="spell-selection-{{ t.id }}" style="display: none">
         <div class="row">
@@ -90,35 +89,7 @@
         <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
             {% for s in t.basespell_set.all %}
                 <div class="col-12 col-lg-6 col-xl-4">
-                    <div
-                            class="card spell-selection-card pointer mt-3"
-                            data-select-message="{% blocktrans with t_spell=s.name t_cost=s.spell_point_cost %}Add spell {{ t_spell }} for {{ t_cost }} spell points?{% endblocktrans %}"
-                            data-spell-id="{{ s.id }}"
-                            data-add-url="{% url 'characters:xhr_add_spell' pk=character.id %}"
-                            data-spell-point-cost="{{ s.spell_point_cost }}">
-                        <div class="card-header">
-                            <span class="badge bg-dark float-end">{{ s.spell_point_cost }}</span>
-                            {{ s }} <small class="text-muted">{{ s.variant }}</small>
-                        </div>
-                        <div class="card-body">
-                            {% if s.is_ritual %}
-                                <span class="text-muted text-center">{% trans 'Ritual' %}</span>
-                            {% endif %}
-                            <p>
-                                {{ s.rules }}
-                            </p>
-                            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ s.type.reference_attribute.name }}<br>
-                            <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
-                            {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
-                            <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
-                            <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
-                            <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ s.shape|default:"-" }}<br>
-                            <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
-                            {% if user.is_superuser %}
-                                <a href="{% url 'admin:magic_basespell_change' s.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                            {% endif %}
-                        </div>
-                    </div>
+                    {% basespell_widget s character=character %}
                 </div>
             {% endfor %}
         </div>
