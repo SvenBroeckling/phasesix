@@ -1,12 +1,10 @@
 from django.views.generic import ListView
 
-from armory.models import Weapon, WeaponType
+from armory.models import Weapon, RiotGear
 from rules.models import Extension
 
 
-class WeaponListView(ListView):
-    model = Weapon
-
+class MaterialListView(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         extension = self.request.GET.get('extension', None)
@@ -21,3 +19,11 @@ class WeaponListView(ListView):
         if extension is not None:
             context['selected_extension'] = Extension.objects.get(id=extension)
         return context
+
+
+class WeaponListView(MaterialListView):
+    model = Weapon
+
+
+class RiotGearListView(MaterialListView):
+    model = RiotGear

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load i18n static rules_extras characters_extras %}
+
+{% block javascript %}
+    <script>
+        $(function () {
+            let timer = null;
+
+            $('#id_q').on('keyup', function(e){
+                let q = $(this).val()
+
+                if(timer) {
+                    clearTimeout(timer)
+                }
+
+                timer = setTimeout(function(){
+                    $('tbody tr').each(function(index){
+                        if($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                            $(this).removeClass('d-none')
+                        } else {
+                            $(this).addClass('d-none')
+                        }
+                    })
+                }, 10)
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-6 mb-4">
+            <div class="input-group mb-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">{% if selected_extension %}{{ selected_extension }}{% else %}
+                    {% trans 'Filter by Extension' %}{% endif %}
+                </button>
+                <ul class="dropdown-menu">
+                    {% for extension in extensions %}
+                        <li><a class="dropdown-item"
+                               href="{% url 'armory:riot_gear_list' %}?extension={{ extension.id }}">{{ extension }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <input type="text" id="id_q" name="q" class="form-control" aria-label="{% trans 'Search' %}"
+                       placeholder="{% trans 'Search' %}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-sortable">
+                    <thead>
+                    <tr>
+                        <th>{% trans 'Armour' %}</th>
+                        <th>{% trans 'Protection' %}</th>
+                        <th>{% trans 'Evasion' %}</th>
+                        <th>{% trans 'Concealment' %}</th>
+                        <th>{% trans 'Price' %}</th>
+                        {% if user.is_superuser %}
+                            <th>{% trans 'Admin' %}</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for object in object_list %}
+                        <tr>
+                            <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
+                            <td>{% color_value_span object.protection_ballistic 4 %}</td>
+                            <td>{% color_value_span object.evasion 4 %}</td>
+                            <td>{% color_value_span object.concealment 4 invert=True %}</td>
+                            <td>{% color_value_span object.price 8000 invert=True %}</td>
+                            {% if user.is_superuser %}
+                                <td><a href="{% url 'admin:armory_riotgear_change' object.id %}">admin</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
