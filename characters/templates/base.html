@@ -220,6 +220,7 @@
     <script src="{% static 'js/bootstrap-slider.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-toaster.min.js' %}"></script>
     <script src="{% static 'js/tilt.jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"></script>
     <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 {% endcompress %}
 
@@ -255,6 +256,7 @@
                 }
             }
         });
+        $('table.table-sortable').tablesorter();
     });
 </script>
 {% block javascript %}{% endblock %}
