@@ -1,7 +1,5 @@
-- Bonuswunden der Waffe werden in attack_modes nicht berücksichtigt
 - Magieregeln
 - Icon Stamp: https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
-
 - Spell Mods: Arkana Kosten
 
 ## Generell
