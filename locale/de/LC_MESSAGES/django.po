@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-25 13:43+0000\n"
-"PO-Revision-Date: 2022-03-25 14:43+0100\n"
+"POT-Creation-Date: 2022-03-25 18:32+0000\n"
+"PO-Revision-Date: 2022-03-25 19:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -223,7 +223,7 @@ msgstr "Waffe"
 msgid "weapons"
 msgstr "Waffen"
 
-#: armory/models.py:183 armory/templates/armory/weapon_list.html:27
+#: armory/models.py:183 armory/templates/armory/weapon_list.html:70
 #: gmtools/forms.py:15
 msgid "Weapon"
 msgstr "Waffe"
@@ -265,7 +265,7 @@ msgstr "Waffenmodifikationstyp"
 msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
-#: armory/models.py:266 armory/templates/armory/weapon_list.html:33
+#: armory/models.py:266 armory/templates/armory/weapon_list.html:76
 #: characters/templates/characters/fragments/combat.html:14
 #: characters/templates/characters/fragments/gear.html:95
 #: characters/templates/characters/modals/add_weapons.html:47
@@ -285,7 +285,7 @@ msgstr "Bonuswunden"
 msgid "Bonus dice"
 msgstr "Bonuswürfel"
 
-#: armory/models.py:269 armory/templates/armory/weapon_list.html:29
+#: armory/models.py:269 armory/templates/armory/weapon_list.html:72
 #: characters/templates/characters/fragments/combat.html:29
 #: characters/templates/characters/fragments/combat.html:55
 #: characters/templates/characters/fragments/gear.html:88
@@ -296,7 +296,8 @@ msgstr "Bonuswürfel"
 msgid "Piercing"
 msgstr "Durchschlag"
 
-#: armory/models.py:270 characters/templates/characters/fragments/gear.html:29
+#: armory/models.py:270 armory/templates/armory/riotgear_list.html:73
+#: characters/templates/characters/fragments/gear.html:29
 #: characters/templates/characters/fragments/gear.html:81
 #: characters/templates/characters/fragments/gear.html:198
 #: characters/templates/characters/fragments/gear.html:209
@@ -416,16 +417,78 @@ msgstr "Gefahr"
 msgid "FA Icon Class"
 msgstr "FA Icon Klasse"
 
-#: armory/templates/armory/weapon_list.html:9
-msgid "Filter by Extension"
-msgstr "Nach Erweiterung filtern"
+#: armory/templates/armory/riotgear_list.html:9
+#: armory/templates/armory/riotgear_list.html:70
+#: characters/templates/base.html:204
+msgid "Armour"
+msgstr "Rüstung"
 
-#: armory/templates/armory/weapon_list.html:28
+#: armory/templates/armory/riotgear_list.html:49
+#: armory/templates/armory/weapon_list.html:49
+msgid "Select Extension"
+msgstr "Wähle Erweiterung"
+
+#: armory/templates/armory/riotgear_list.html:58
+#: armory/templates/armory/riotgear_list.html:59
+#: armory/templates/armory/weapon_list.html:58
+#: armory/templates/armory/weapon_list.html:59
+#: characters/templates/characters/create_character_constructed.html:124
+#: characters/templates/characters/modals/add_items.html:55
+#: rules/templates/rules/template_list.html:66
+msgid "Search"
+msgstr "Suchen"
+
+#: armory/templates/armory/riotgear_list.html:71
+#: bestiary/templates/bestiary/foe_detail.html:40
+#: bestiary/templates/bestiary/foe_list.html:26
+#: characters/templates/characters/fragments/gear.html:34
+#: characters/templates/characters/fragments/health.html:23
+#: characters/templates/characters/modals/add_riot_gear.html:12
+#: characters/templates/characters/sidebar/characterriotgear.html:38
+#: gmtools/templates/gmtools/combat_sim_results.html:11
+#: gmtools/templates/gmtools/combat_sim_results.html:26
+msgid "Protection"
+msgstr "Schutz"
+
+#: armory/templates/armory/riotgear_list.html:72
+#: characters/templates/characters/fragments/gear.html:35
+#: characters/templates/characters/fragments/health.html:27
+#: characters/templates/characters/fragments/health.html:29
+#: characters/templates/characters/modals/add_riot_gear.html:13
+#: characters/templates/characters/sidebar/characterriotgear.html:43
+msgid "Evasion"
+msgstr "Ausweichen"
+
+#: armory/templates/armory/riotgear_list.html:74
+#: armory/templates/armory/weapon_list.html:77
+#: characters/templates/characters/modals/add_items.html:95
+#: characters/templates/characters/modals/add_riot_gear.html:20
+#: characters/templates/characters/modals/add_weapon_mod.html:55
+#: characters/templates/characters/modals/add_weapons.html:64
+#: characters/templates/characters/sidebar/characteritem.html:78
+#: characters/templates/characters/sidebar/characterriotgear.html:65
+#: characters/templates/characters/sidebar/characterweapon.html:123
+msgid "Price"
+msgstr "Preis"
+
+#: armory/templates/armory/riotgear_list.html:76
+#: armory/templates/armory/weapon_list.html:79
+#: characters/templates/base.html:115
+msgid "Admin"
+msgstr "Admin"
+
+#: armory/templates/armory/weapon_list.html:9
+#: characters/templates/base.html:202
+#: characters/templates/characters/fragments/gear.html:70
+msgid "Weapons"
+msgstr "Waffen"
+
+#: armory/templates/armory/weapon_list.html:71
 #: characters/templates/characters/sidebar/characterweapon.html:136
 msgid "Attack Modes"
 msgstr "Angriffsmodi"
 
-#: armory/templates/armory/weapon_list.html:30
+#: armory/templates/armory/weapon_list.html:73
 #: characters/templates/characters/fragments/health.html:116
 #: characters/templates/characters/fragments/health.html:117
 #: characters/templates/characters/modals/rest.html:40
@@ -437,11 +500,11 @@ msgstr "Angriffsmodi"
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
-#: armory/templates/armory/weapon_list.html:31
+#: armory/templates/armory/weapon_list.html:74
 msgid "Bonus Wounds"
 msgstr "Bonuswunden"
 
-#: armory/templates/armory/weapon_list.html:32
+#: armory/templates/armory/weapon_list.html:75
 #: characters/templates/characters/fragments/combat.html:15
 #: characters/templates/characters/fragments/gear.html:99
 #: characters/templates/characters/fragments/magic.html:44
@@ -451,22 +514,6 @@ msgstr "Bonuswunden"
 #: characters/templates/characters/sidebar/characterweapon.html:106
 msgid "Range"
 msgstr "Reichweite"
-
-#: armory/templates/armory/weapon_list.html:34
-#: characters/templates/characters/modals/add_items.html:95
-#: characters/templates/characters/modals/add_riot_gear.html:20
-#: characters/templates/characters/modals/add_weapon_mod.html:55
-#: characters/templates/characters/modals/add_weapons.html:64
-#: characters/templates/characters/sidebar/characteritem.html:78
-#: characters/templates/characters/sidebar/characterriotgear.html:65
-#: characters/templates/characters/sidebar/characterweapon.html:123
-msgid "Price"
-msgstr "Preis"
-
-#: armory/templates/armory/weapon_list.html:36
-#: characters/templates/base.html:115
-msgid "Admin"
-msgstr "Admin"
 
 #: bestiary/models.py:12
 msgid "foe type"
@@ -542,12 +589,12 @@ msgstr "Gegneraktion"
 msgid "foe actions"
 msgstr "Gegneraktionen"
 
-#: bestiary/templates/bestiary/foe_detail.html:26
+#: bestiary/templates/bestiary/foe_detail.html:37
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: bestiary/templates/bestiary/foe_detail.html:27
-#: bestiary/templates/bestiary/foe_list.html:21
+#: bestiary/templates/bestiary/foe_detail.html:38
+#: bestiary/templates/bestiary/foe_list.html:24
 #: campaigns/templates/campaigns/campaign_status.html:25
 #: characters/templates/characters/fragments/health.html:50
 #: characters/templates/characters/modals/rest.html:18
@@ -556,8 +603,8 @@ msgstr "Statistiken"
 msgid "Health"
 msgstr "Lebenspunkte"
 
-#: bestiary/templates/bestiary/foe_detail.html:28
-#: bestiary/templates/bestiary/foe_list.html:22
+#: bestiary/templates/bestiary/foe_detail.html:39
+#: bestiary/templates/bestiary/foe_list.html:25
 #: campaigns/templates/campaigns/campaign_status.html:13
 #: characters/templates/characters/fragments/magic.html:41
 #: characters/templates/characters/modals/add_spell.html:111
@@ -567,20 +614,9 @@ msgstr "Lebenspunkte"
 msgid "Arcana"
 msgstr "Arkana"
 
-#: bestiary/templates/bestiary/foe_detail.html:29
-#: bestiary/templates/bestiary/foe_list.html:23
-#: characters/templates/characters/fragments/gear.html:34
-#: characters/templates/characters/fragments/health.html:23
-#: characters/templates/characters/modals/add_riot_gear.html:12
-#: characters/templates/characters/sidebar/characterriotgear.html:38
-#: gmtools/templates/gmtools/combat_sim_results.html:11
-#: gmtools/templates/gmtools/combat_sim_results.html:26
-msgid "Protection"
-msgstr "Schutz"
-
-#: bestiary/templates/bestiary/foe_detail.html:30
-#: bestiary/templates/bestiary/foe_detail.html:36
-#: bestiary/templates/bestiary/foe_list.html:24
+#: bestiary/templates/bestiary/foe_detail.html:41
+#: bestiary/templates/bestiary/foe_detail.html:47
+#: bestiary/templates/bestiary/foe_list.html:27
 #: characters/templates/characters/fragments/combat.html:132
 #: characters/templates/characters/fragments/health.html:15
 #: characters/templates/characters/fragments/health.html:17
@@ -590,25 +626,25 @@ msgstr "Schutz"
 msgid "Actions"
 msgstr "Aktionen"
 
-#: bestiary/templates/bestiary/foe_detail.html:31
-#: bestiary/templates/bestiary/foe_list.html:25
+#: bestiary/templates/bestiary/foe_detail.html:42
+#: bestiary/templates/bestiary/foe_list.html:28
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
-#: bestiary/templates/bestiary/foe_detail.html:32
-#: bestiary/templates/bestiary/foe_list.html:26
+#: bestiary/templates/bestiary/foe_detail.html:43
+#: bestiary/templates/bestiary/foe_list.html:29
 #: characters/templates/characters/fragments/health.html:111
 #: characters/templates/characters/fragments/health.html:112
 msgid "Minimum Roll"
 msgstr "Mindestwurf"
 
-#: bestiary/templates/bestiary/foe_detail.html:33
-#: bestiary/templates/bestiary/foe_list.html:27
+#: bestiary/templates/bestiary/foe_detail.html:44
+#: bestiary/templates/bestiary/foe_list.html:30
 msgid "Resistances"
 msgstr "Widerstände"
 
-#: bestiary/templates/bestiary/foe_detail.html:34
-#: bestiary/templates/bestiary/foe_list.html:28
+#: bestiary/templates/bestiary/foe_detail.html:45
+#: bestiary/templates/bestiary/foe_list.html:31
 msgid "Weaknesses"
 msgstr "Schwächen"
 
@@ -617,11 +653,11 @@ msgstr "Schwächen"
 msgid "Foes"
 msgstr "Gegner"
 
-#: bestiary/templates/bestiary/foe_list.html:19
+#: bestiary/templates/bestiary/foe_list.html:22
 msgid "Foe"
 msgstr "Gegner"
 
-#: bestiary/templates/bestiary/foe_list.html:20
+#: bestiary/templates/bestiary/foe_list.html:23
 #: characters/templates/characters/sidebar/characteritem.html:61
 msgid "Type"
 msgstr "Typ"
@@ -941,6 +977,7 @@ msgid "Rulebook"
 msgstr "Regelbuch"
 
 #: characters/templates/base.html:80 characters/templates/base.html:201
+#: rules/templates/rules/template_list.html:9
 msgid "Templates"
 msgstr "Schablonen"
 
@@ -998,18 +1035,9 @@ msgstr "Regeln"
 msgid "Privacy"
 msgstr "Privatsphäre"
 
-#: characters/templates/base.html:202
-#: characters/templates/characters/fragments/gear.html:70
-msgid "Weapons"
-msgstr "Waffen"
-
 #: characters/templates/base.html:203
 msgid "Spells"
 msgstr "Zauber"
-
-#: characters/templates/base.html:204
-msgid "Armour"
-msgstr "Rüstung"
 
 #: characters/templates/characters/character_detail.html:71
 msgid "Loading"
@@ -1086,12 +1114,6 @@ msgid ""
 msgstr ""
 "Dies sind die Schablonen mit denen dein Charakter startet. Sie definieren "
 "alle Werte und Fähigkeiten deines Charakters."
-
-#: characters/templates/characters/create_character_constructed.html:124
-#: characters/templates/characters/modals/add_items.html:55
-#: rules/templates/rules/template_list.html:53
-msgid "Search"
-msgstr "Suchen"
 
 #: characters/templates/characters/create_character_constructed.html:127
 msgid "Character Points "
@@ -1272,14 +1294,6 @@ msgstr "Rüstung hinzufügen"
 #: characters/templates/characters/fragments/gear.html:18 gmtools/forms.py:16
 msgid "Armor"
 msgstr "Rüstung"
-
-#: characters/templates/characters/fragments/gear.html:35
-#: characters/templates/characters/fragments/health.html:27
-#: characters/templates/characters/fragments/health.html:29
-#: characters/templates/characters/modals/add_riot_gear.html:13
-#: characters/templates/characters/sidebar/characterriotgear.html:43
-msgid "Evasion"
-msgstr "Ausweichen"
 
 #: characters/templates/characters/fragments/gear.html:54
 msgid "No armor yet."
@@ -2613,6 +2627,9 @@ msgstr "Registrieren"
 #: templates/registration/login.html:12
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#~ msgid "Filter by Extension"
+#~ msgstr "Nach Erweiterung filtern"
 
 #~ msgid "Join Campaign"
 #~ msgstr "Kampagne beitreten"
