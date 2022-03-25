@@ -18,7 +18,7 @@
                 <small>{{ object.type }}</small>
             </div>
         </div>
-        <div class="background-image-copyright">
+        <span class="background-image-copyright">
             {% if object.image %}
                 {% if object.image_copyright %}
                     Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
@@ -26,7 +26,7 @@
             {% else %}
                 Photo by <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Jensen</a> on <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
             {% endif %}
-        </div>
+        </span>
 
     </div>
 {% endblock %}
