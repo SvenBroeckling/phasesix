@@ -9,54 +9,58 @@
             <h1>{% trans 'Spells' %}</h1>
         </div>
         <span class="background-image-copyright">
-            Photo by <a href="https://unsplash.com/@lazycreekimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Michael Dziedzic</a> on <a href="https://unsplash.com/s/photos/magic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+            Photo by <a
+                href="https://unsplash.com/@lazycreekimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Michael Dziedzic</a> on <a
+                href="https://unsplash.com/s/photos/magic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
         </span>
     </div>
 {% endblock %}
 
 {% block javascript %}
     <script>
-    $(function(){
-        let timer = null;
-        let masonry = $('.masonry-container').masonry()
+        $(function () {
+            let timer = null;
+            let masonry = $('.masonry-container').masonry()
 
-        $('#id_q').on('keyup', function(e){
-            var q = $(this).val();
+            $('#id_q').on('keyup', function (e) {
+                var q = $(this).val();
 
-            if (timer) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(function(){
-                $('.template').each(function(index){
-                    if($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                        $(this).parent().removeClass('d-none');
-                    } else {
-                        $(this).parent().addClass('d-none');
-                    };
-                });
-                history.replaceState({q: q}, '', '?q=' + q);
-                masonry.masonry({percentPosition: true})
-            }, 10);
-        });
-
-        var matches = /q=([^&#=]*)/.exec(window.location.search);
-        if(matches && matches[1]) {
-            $('#id_q').val(matches[1]);
-            $('.template').each(function(index){
-                if($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
-                    $(this).removeClass('d-none');
-                } else {
-                    $(this).addClass('d-none');
-                };
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(function () {
+                    $('.template').each(function (index) {
+                        if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                            $(this).parent().removeClass('d-none');
+                        } else {
+                            $(this).parent().addClass('d-none');
+                        }
+                        ;
+                    });
+                    history.replaceState({q: q}, '', '?q=' + q);
+                    masonry.masonry({percentPosition: true})
+                }, 10);
             });
-            masonry.masonry({percentPosition: true})
-        }
 
-        $('.template').tilt({
-            glare: false,
-            perspective: 1800
+            var matches = /q=([^&#=]*)/.exec(window.location.search);
+            if (matches && matches[1]) {
+                $('#id_q').val(matches[1]);
+                $('.template').each(function (index) {
+                    if ($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
+                        $(this).removeClass('d-none');
+                    } else {
+                        $(this).addClass('d-none');
+                    }
+                    ;
+                });
+                masonry.masonry({percentPosition: true})
+            }
+
+            $('.template').tilt({
+                glare: false,
+                perspective: 1800
+            })
         })
-    })
     </script>
 {% endblock %}
 
@@ -72,5 +76,13 @@
                 {% basespell_widget object %}
             </div>
         {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% if user.is_superuser %}
+                <a href="{% url 'admin:magic_basespell_add' %}" class="btn btn-warning"><i
+                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

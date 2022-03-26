@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-25 18:32+0000\n"
-"PO-Revision-Date: 2022-03-25 19:32+0100\n"
+"POT-Creation-Date: 2022-03-26 12:34+0000\n"
+"PO-Revision-Date: 2022-03-26 13:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -303,7 +303,7 @@ msgstr "Durchschlag"
 #: characters/templates/characters/fragments/gear.html:209
 #: characters/templates/characters/fragments/health.html:33
 #: characters/templates/characters/fragments/health.html:35
-#: characters/templates/characters/modals/add_items.html:89
+#: characters/templates/characters/modals/add_items.html:93
 #: characters/templates/characters/modals/add_riot_gear.html:14
 #: characters/templates/characters/modals/add_weapons.html:51
 #: characters/templates/characters/sidebar/characteritem.html:71
@@ -434,6 +434,7 @@ msgstr "Wähle Erweiterung"
 #: armory/templates/armory/weapon_list.html:59
 #: characters/templates/characters/create_character_constructed.html:124
 #: characters/templates/characters/modals/add_items.html:55
+#: magic/templates/magic/basespell_list.html:70
 #: rules/templates/rules/template_list.html:66
 msgid "Search"
 msgstr "Suchen"
@@ -461,7 +462,7 @@ msgstr "Ausweichen"
 
 #: armory/templates/armory/riotgear_list.html:74
 #: armory/templates/armory/weapon_list.html:77
-#: characters/templates/characters/modals/add_items.html:95
+#: characters/templates/characters/modals/add_items.html:99
 #: characters/templates/characters/modals/add_riot_gear.html:20
 #: characters/templates/characters/modals/add_weapon_mod.html:55
 #: characters/templates/characters/modals/add_weapons.html:64
@@ -476,6 +477,15 @@ msgstr "Preis"
 #: characters/templates/base.html:115
 msgid "Admin"
 msgstr "Admin"
+
+#: armory/templates/armory/riotgear_list.html:96
+#: armory/templates/armory/weapon_list.html:113
+#: bestiary/templates/bestiary/foe_list.html:52
+#: characters/templates/characters/modals/add_items.html:58
+#: magic/templates/magic/basespell_list.html:84
+#: rules/templates/rules/template_list.html:80
+msgid "Add in admin"
+msgstr "Im Admin hinzufügen"
 
 #: armory/templates/armory/weapon_list.html:9
 #: characters/templates/base.html:202
@@ -508,10 +518,10 @@ msgstr "Bonuswunden"
 #: characters/templates/characters/fragments/combat.html:15
 #: characters/templates/characters/fragments/gear.html:99
 #: characters/templates/characters/fragments/magic.html:44
-#: characters/templates/characters/modals/add_spell.html:114
 #: characters/templates/characters/modals/add_weapons.html:50
 #: characters/templates/characters/sidebar/characterspell.html:57
 #: characters/templates/characters/sidebar/characterweapon.html:106
+#: magic/templates/magic/_basespell_widget.html:25
 msgid "Range"
 msgstr "Reichweite"
 
@@ -607,10 +617,10 @@ msgstr "Lebenspunkte"
 #: bestiary/templates/bestiary/foe_list.html:25
 #: campaigns/templates/campaigns/campaign_status.html:13
 #: characters/templates/characters/fragments/magic.html:41
-#: characters/templates/characters/modals/add_spell.html:111
 #: characters/templates/characters/modals/rest.html:33
 #: characters/templates/characters/sidebar/characterspell.html:46
 #: characters/templates/characters/sidebar/magic.html:33
+#: magic/templates/magic/_basespell_widget.html:22
 msgid "Arcana"
 msgstr "Arkana"
 
@@ -621,8 +631,8 @@ msgstr "Arkana"
 #: characters/templates/characters/fragments/health.html:15
 #: characters/templates/characters/fragments/health.html:17
 #: characters/templates/characters/fragments/magic.html:46
-#: characters/templates/characters/modals/add_spell.html:116
 #: characters/templates/characters/sidebar/characterspell.html:67
+#: magic/templates/magic/_basespell_widget.html:27
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -1036,6 +1046,7 @@ msgid "Privacy"
 msgstr "Privatsphäre"
 
 #: characters/templates/base.html:203
+#: magic/templates/magic/basespell_list.html:9
 msgid "Spells"
 msgstr "Zauber"
 
@@ -1203,8 +1214,8 @@ msgstr "Meter"
 
 #: characters/templates/characters/fragments/combat.html:131
 #: characters/templates/characters/fragments/magic.html:43
-#: characters/templates/characters/modals/add_spell.html:113
 #: characters/templates/characters/sidebar/characterspell.html:52
+#: magic/templates/magic/_basespell_widget.html:24
 msgid "Power"
 msgstr "Stärke"
 
@@ -1315,7 +1326,7 @@ msgstr "Gegenstand hinzufügen"
 
 #: characters/templates/characters/fragments/gear.html:171
 #: characters/templates/characters/fragments/gear.html:228
-#: characters/templates/characters/modals/add_items.html:105
+#: characters/templates/characters/modals/add_items.html:109
 msgid "Add item"
 msgstr "Gegenstand hinzufügen"
 
@@ -1328,7 +1339,7 @@ msgid "Currency"
 msgstr "Währung"
 
 #: characters/templates/characters/fragments/gear.html:211
-#: characters/templates/characters/modals/add_items.html:90
+#: characters/templates/characters/modals/add_items.html:94
 #: characters/templates/characters/modals/add_riot_gear.html:15
 #: characters/templates/characters/modals/add_weapons.html:52
 #: characters/templates/characters/sidebar/characteritem.html:66
@@ -1414,19 +1425,19 @@ msgid "Spell point cost"
 msgstr "Zauberpunkte Kosten"
 
 #: characters/templates/characters/fragments/magic.html:34
-#: characters/templates/characters/modals/add_spell.html:105
+#: magic/templates/magic/_basespell_widget.html:16
 msgid "Ritual"
 msgstr "Ritual"
 
 #: characters/templates/characters/fragments/magic.html:45
-#: characters/templates/characters/modals/add_spell.html:115
 #: characters/templates/characters/modals/add_spell_template.html:65
 #: characters/templates/characters/modals/add_spell_template.html:66
 #: characters/templates/characters/sidebar/characterspell.html:62
+#: magic/templates/magic/_basespell_widget.html:26
 msgid "Shape"
 msgstr "Form"
 
-#: characters/templates/characters/modals/add_items.html:104
+#: characters/templates/characters/modals/add_items.html:108
 #: characters/templates/characters/modals/add_riot_gear.html:29
 #: characters/templates/characters/modals/add_spell_template.html:75
 #: characters/templates/characters/modals/add_weapon_mod.html:64
@@ -1435,7 +1446,7 @@ msgstr "Form"
 msgid "Not possible"
 msgstr "Nicht möglich"
 
-#: characters/templates/characters/modals/add_items.html:105
+#: characters/templates/characters/modals/add_items.html:109
 #: characters/templates/characters/modals/add_riot_gear.html:29
 #: characters/templates/characters/modals/add_spell_template.html:76
 #: characters/templates/characters/modals/add_weapon_mod.html:65
@@ -1452,23 +1463,13 @@ msgstr "Rüstung hinzufügen"
 msgid "Choose a school"
 msgstr "Wähle eine Schule"
 
-#: characters/templates/characters/modals/add_spell.html:86
+#: characters/templates/characters/modals/add_spell.html:85
 msgid "Choose a spell"
 msgstr "Wähle einen Zauber"
 
-#: characters/templates/characters/modals/add_spell.html:87
+#: characters/templates/characters/modals/add_spell.html:86
 msgid "Choose another school"
 msgstr "Wähle eine andere Schule"
-
-#: characters/templates/characters/modals/add_spell.html:95
-#, python-format
-msgid "Add spell %(t_spell)s for %(t_cost)s spell points?"
-msgstr "Zauber %(t_spell)s für %(t_cost)s Zauberpunkte hinzufügen?"
-
-#: characters/templates/characters/modals/add_spell.html:110
-#: characters/templates/characters/sidebar/characterspell.html:41
-msgid "Spell Casting"
-msgstr "Zaubern"
 
 #: characters/templates/characters/modals/add_spell_template.html:43
 #: rules/templates/rules/_template_widget.html:25
@@ -1618,6 +1619,11 @@ msgstr "Modifikatoren hinzufügen"
 #: characters/templates/characters/sidebar/characterspell.html:26
 msgid "Forget"
 msgstr "Vergessen"
+
+#: characters/templates/characters/sidebar/characterspell.html:41
+#: magic/templates/magic/_basespell_widget.html:21
+msgid "Spell Casting"
+msgstr "Zaubern"
 
 #: characters/templates/characters/sidebar/characterweapon.html:15
 msgid "Attack:"
@@ -2294,6 +2300,11 @@ msgstr "Typänderung"
 #: magic/models.py:174
 msgid "shape change"
 msgstr "Formänderung"
+
+#: magic/templates/magic/_basespell_widget.html:4
+#, python-format
+msgid "Add spell %(t_spell)s for %(t_cost)s spell points?"
+msgstr "Zauber %(t_spell)s für %(t_cost)s Zauberpunkte hinzufügen?"
 
 #: rulebook/templates/rulebook/chapter_detail.html:21
 msgid "Chapters"

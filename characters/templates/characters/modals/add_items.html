@@ -53,6 +53,10 @@
     <div class="col-12 col-md-3">
         <div class="input-group input-group-sm mb-3">
             <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">
+            {% if user.is_superuser %}
+                <a href="{% url 'admin:armory_item_add' %}" class="btn btn-warning"><i
+                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
+            {% endif %}
         </div>
         <ul class="nav nav-pills flex-column" role="tablist">
             {% for t in item_types %}

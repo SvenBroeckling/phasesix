@@ -73,4 +73,12 @@
             </div>
         {% endfor %}
     </div>
+    <div class="row">
+        <div class="col-12">
+            {% if user.is_superuser %}
+                <a href="{% url 'admin:rules_template_add' %}" class="btn btn-warning"><i
+                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
