@@ -54,13 +54,6 @@
 
 ## Zukünftige Erweiterungen
 
-### Pantheon
-  Mönch
-  Paladin
-  Priester
-  Vampir
-  
-### Körpermodifikationen
 
 ### Fahrzeuge und Dronen
 
@@ -70,3 +63,11 @@
 - Retainer Schable 
 - Immobilien / Eigentum
 - etc
+
+### Pantheon
+  Mönch
+  Paladin
+  Priester
+  Vampir
+  
+### Körpermodifikationen
