@@ -260,6 +260,9 @@ class WeaponModification(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def extension_string(self):
+        return ", ".join([e.name for e in self.extensions.all()])
+
 
 class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTE_CHOICES = (

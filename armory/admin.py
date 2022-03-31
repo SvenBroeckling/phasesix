@@ -62,7 +62,8 @@ class WeaponModificationAttributeChangeInline(admin.TabularInline):
 
 
 class WeaponModificationAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'type', 'price')
+    list_display = ('name_de', 'name_en', 'extension_string', 'type', 'price')
+    list_filter = 'type',
     inlines = [WeaponModificationAttributeChangeInline]
 
 

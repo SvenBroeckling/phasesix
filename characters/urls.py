@@ -186,7 +186,7 @@ urlpatterns = [
         views.XhrAddWeaponModView.as_view(),
         name='xhr_add_weapon_modifications'),
     url(
-        r'^add_weapon_modification/(?P<pk>\d+)/(?P<weapon_modification_pk>\d+)/(?P<weapon_pk>\d+)$',
+        r'^add_weapon_modification/(?P<pk>\d+)/(?P<weapon_modification_pk>\d+)/(?P<character_weapon_pk>\d+)$',
         views.AddWeaponModificationView.as_view(),
         name='add_weapon_modification'),
 ]

@@ -43,11 +43,11 @@
                 {% if has_valid_wm %}
                     <a
                             class="btn btn-primary btn-sm modal-trigger close-sidebar mt-1"
-                            data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.character.id %}?weapon_id={{ object.id }}"
+                            data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.character.id %}?character_weapon_id={{ object.id }}"
                             data-bs-toggle="modal"
                             data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Modification' %}"
-                            href=""><i class="fas fa-plus"></i> {% trans 'Add Modification' %}</a>
+                            href=""><i class="fas fa-puzzle-piece"></i> {% trans 'Modifications' %}</a>
                 {% endif %}
             </div>
         </div>
@@ -173,7 +173,7 @@
                         {% endfor %}
                         <a
                                 class="action-link btn btn-danger btn-sm float-end"
-                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?weapon_id={{ weapon.id }}"
+                                data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?character_weapon_id={{ weapon.id }}"
                                 title="{% trans 'Remove Modification' %}"
                                 href="{% url 'characters:xhr_remove_weapon_modification' pk=object.character.id weapon_pk=object.id weapon_modification_pk=wm.id %}">
                             <i class="fas fa-trash"></i> {% trans 'Remove' %}</a>

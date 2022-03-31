@@ -12,7 +12,7 @@
 <div>
     <ul class="nav nav-tabs justify-content-center" role="tablist">
         {% for t in weapon_modification_types %}
-            {% weaponmodification_type_valid_for_weapon t weapon.weapon as wmt %}
+            {% weaponmodification_type_valid_for_weapon t character_weapon.weapon as wmt %}
             {% if wmt %}
                 <li class="{% if forloop.first %}active{% endif %} nav-item">
                     <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
@@ -24,16 +24,16 @@
 
     <div class="tab-content">
         {% for t in weapon_modification_types %}
-            {% weaponmodification_type_valid_for_weapon t weapon.weapon as wmt %}
+            {% weaponmodification_type_valid_for_weapon t character_weapon.weapon as wmt %}
             {% if wmt %}
                 <div role="tabpanel" class="tab-pane {% if forloop.first %} active {% endif %}" id="i{{ t.id }}">
                     <div class="row masonry-container">
                         {% for wm in t.weaponmodification_set.all|for_extensions:character.extensions %}
-                            {% if weapon.weapon.type in wm.available_for_weapon_types.all %}
+                            {% if character_weapon.weapon.type in wm.available_for_weapon_types.all %}
                                 <div class="col-lg-6 mt-3">
                                     <div class="card match-height">
                                         <div class="card-header">
-                                            {{ wm }}
+                                            {{ wm }} {% if wm in character_weapon.modifications.all %}<span class="small text-muted">{% trans '(equipped)' %}</span>{% endif %}
                                         </div>
                                         <div class="card-body">
                                             {% for wma in wm.weaponmodificationattributechange_set.all %}
@@ -57,7 +57,7 @@
                                                 {% endwith %}
                                             {% endif %}
 
-                                            <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id weapon_pk=weapon.id %}"
+                                            <form action="{% url 'characters:add_weapon_modification' pk=character.id weapon_modification_pk=wm.id character_weapon_pk=character_weapon.id %}"
                                                   class="float-end add-form" method="post">
                                                 {% csrf_token %}
                                                 <button class="btn btn-sm btn-primary float-end"

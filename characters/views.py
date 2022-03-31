@@ -602,10 +602,11 @@ class XhrAddWeaponModView(TemplateView):
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        weapon = CharacterWeapon.objects.get(id=self.request.GET.get('weapon_id'))
+        character_weapon = CharacterWeapon.objects.get(id=self.request.GET.get('character_weapon_id'))
+
         context = super(XhrAddWeaponModView, self).get_context_data(**kwargs)
         context['character'] = character
-        context['weapon'] = weapon
+        context['character_weapon'] = character_weapon
         context['weapon_modification_types'] = WeaponModificationType.objects.for_extensions(
             character.extensions).filter(
             weaponmodification__in=WeaponModification.objects.for_extensions(
@@ -617,14 +618,16 @@ class AddWeaponModificationView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         weapon_modification = WeaponModification.objects.get(id=kwargs['weapon_modification_pk'])
-        weapon = CharacterWeapon.objects.get(id=kwargs['weapon_pk'])
+        character_weapon = CharacterWeapon.objects.get(id=kwargs['character_weapon_pk'])
 
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
 
-        if weapon.weapon.type in weapon_modification.available_for_weapon_types.all():
-            weapon.modifications.filter(type=weapon_modification.type).delete()
-            weapon.modifications.add(weapon_modification)
+        if character_weapon.weapon.type in weapon_modification.available_for_weapon_types.all():
+            if weapon_modification.type.unique_equip:
+                for active_weapon_mod in character_weapon.modifications.filter(type=weapon_modification.type):
+                    character_weapon.modifications.remove(active_weapon_mod)
+            character_weapon.modifications.add(weapon_modification)
         return JsonResponse({'status': 'ok'})
 
 
