@@ -109,7 +109,7 @@
                 <li class="list-group-item">
                     <i class="fas fa-eye-slash fa-fw"></i>
                     {% trans 'Concealment' %}
-                    <span class="float-end">{% color_value_span object.modified_concealment 5 invert=True %}</span>
+                    <span class="float-end">{% color_value_span object.weapon.concealment 5 invert=True %} {% display_modifications object 'concealment' %}</span>
                 </li>
                 <li class="list-group-item">
                     <i class="fas fa-arrows-alt-h fa-fw"></i>
