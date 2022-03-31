@@ -50,11 +50,20 @@ class Thread(models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
     name = models.CharField(_('name'), max_length=60)
 
+    class Meta:
+        ordering = '-created_at',
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('forum:thread_detail', kwargs={'pk': self.id})
+
+    def post_count(self):
+        return self.post_set.all().count() - 1
+
+    def earliest_post(self):
+        return self.post_set.earliest('created_at')
 
     def latest_post(self):
         return self.post_set.latest('created_at')

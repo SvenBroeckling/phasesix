@@ -2,28 +2,33 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="row mb-5">
-        <div class="col-md-12">
-            <h1>{% trans 'Forum' %}</h1>
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-3">
+            Forum
         </div>
-    </div>
-    {% for board in boards %}
-        {% if not board.is_staff_only or request.user.is_staff %}
-            <div class="row">
-                <div class="col-md-12">
+        {% for board in boards %}
+            {% if not board.is_staff_only or request.user.is_staff %}
+                <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
                     <a href="{{ board.get_absolute_url }}">
-                        <h2>{{ board }}</h2>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3>{{ board }}</h3>
+                                {% if board.thread_set.exists %}
+                                    {% with post=board.latest_thread.latest_post %}
+                                        <a class="no-link-colors"
+                                           href="{{ post.thread.get_absolute_url }}">{{ post.thread.name }}</a>
+                                        <span class="small text-muted">
+                                        {% blocktrans with t_created_by=post.created_by t_timesince=post.created_at|timesince %}
+                                            created by {{ t_created_by }} {{ t_timesince }} ago
+                                        {% endblocktrans %}
+                                        </span>
+                                    {% endwith %}
+                                {% endif %}
+                            </div>
+                        </div>
                     </a>
-                    {% if board.thread_set.exists %}
-                        {% with post=board.latest_thread.latest_post %}
-                            {% trans 'Latest Post' %}: <a href="{{ post.thread.get_absolute_url }}">{{ post.thread.name }}</a> {% trans 'by' %} {{ post.created_by }}  <small class="text-muted">{{ post.created_at|date:"d.m.Y h:i:s" }}</small>
-                        {% endwith %}
-                    {% else %}
-                        {% trans 'No posts yet.' %}
-                    {% endif %}
                 </div>
-            </div>
-            <hr>
-        {% endif %}
-    {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}

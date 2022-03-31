@@ -1,6 +1,5 @@
 ## Generell
 
-- Weapon Addon add bug?
 - Detailseiten: Weapon, Armour, BaseSpell
 - Weapon List/Detail: Statuseffekte
 
@@ -25,6 +24,7 @@
 
 - Knowledge würfeln
 - WaLo Nahkampf würfeln
+- evade würfeln
 
 ### Status Effekte:
   - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
