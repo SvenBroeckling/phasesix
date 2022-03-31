@@ -474,6 +474,11 @@ class CharacterWeapon(models.Model):
         return modes
 
     @property
+    def has_modifications_with_rules(self):
+        return self.modifications.filter(
+            Q(rules_de__isnull=False) | Q(rules_en__isnull=False)).exists()
+
+    @property
     def modified_piercing(self):
         pen = self.weapon.piercing
         mods = 0

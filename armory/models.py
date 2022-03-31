@@ -249,11 +249,16 @@ class WeaponModification(models.Model, metaclass=TransMeta):
     available_for_weapon_types = models.ManyToManyField(WeaponType)
     name = models.CharField(_('name'), max_length=40)
     description = models.TextField(_('description'), blank=True, null=True)
+    rules = models.TextField(
+        _('rules'),
+        help_text=_('Rules for this weapon modification. May be blank if only attribute changes apply.'),
+        blank=True,
+        null=True)
     type = models.ForeignKey(WeaponModificationType, on_delete=models.CASCADE)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
 
     class Meta:
-        translate = ('name', 'description')
+        translate = ('name', 'description', 'rules')
         verbose_name = _('weapon modification')
         verbose_name_plural = _('weapon modification')
 
@@ -261,7 +266,7 @@ class WeaponModification(models.Model, metaclass=TransMeta):
         return self.name
 
     def extension_string(self):
-        return ", ".join([e.name for e in self.extensions.all()])
+        return ", ".join([e.identifier for e in self.extensions.all()])
 
 
 class WeaponModificationAttributeChange(models.Model):

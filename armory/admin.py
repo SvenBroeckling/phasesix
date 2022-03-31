@@ -57,6 +57,10 @@ class WeaponTypeAdmin(admin.ModelAdmin):
     list_display = ('name_en', 'name_de')
 
 
+class WeaponModificationTypeAdmin(admin.ModelAdmin):
+    list_display = ('name_de', 'name_en', 'unique_equip')
+
+
 class WeaponModificationAttributeChangeInline(admin.TabularInline):
     model = WeaponModificationAttributeChange
 
@@ -64,6 +68,7 @@ class WeaponModificationAttributeChangeInline(admin.TabularInline):
 class WeaponModificationAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'extension_string', 'type', 'price')
     list_filter = 'type',
+    filter_horizontal = ('extensions', 'available_for_weapon_types')
     inlines = [WeaponModificationAttributeChangeInline]
 
 
@@ -83,7 +88,7 @@ class CurrencyMapAdmin(admin.ModelAdmin):
 admin.site.register(AttackMode, AttackModeAdmin)
 admin.site.register(WeaponType, WeaponTypeAdmin)
 admin.site.register(Weapon, WeaponAdmin)
-admin.site.register(WeaponModificationType)
+admin.site.register(WeaponModificationType, WeaponModificationTypeAdmin)
 admin.site.register(WeaponModification, WeaponModificationAdmin)
 admin.site.register(RiotGear, RiotGearAdmin)
 admin.site.register(ItemType)
