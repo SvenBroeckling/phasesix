@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% load i18n bootstrap4 rules_extras static %}
+{% load i18n bootstrap4 rules_extras static thumbnail %}
 
 {% block javascript %}
     <script>
         $(function () {
-            $('#new-thread-collapse').on('shown.bs.collapse', function(e){
+            $('#new-thread-collapse').on('shown.bs.collapse', function (e) {
                 let elem = document.getElementById('id_text')
                 elem.scrollIntoView(true);
                 elem.focus()
@@ -63,11 +63,16 @@
             {% for post in object.post_set.all %}
                 <div class="card mb-4">
                     <div class="card-header">
-                        <img
-                                class="rounded-circle me-1"
-                                style="width: 28px; height: 28px"
-                                src="{% static 'img/silhuette.png' %}"
-                                alt="{{ post.created_by }}">
+                        {% latest_user_image post.created_by as image %}
+                        {% if image %}
+                            {% thumbnail image "28x28" as im %}
+                                <img
+                                        class="rounded-circle me-1"
+                                        style="width: 28px; height: 28px"
+                                        src="{{ im.url }}"
+                                        alt="{{ post.created_by }}">
+                            {% endthumbnail %}
+                        {% endif %}
                         <span class="small text-muted">
                             {% blocktrans with t_created_by=post.created_by t_timesince=post.created_at|timesince %}
                                 created by {{ t_created_by }} {{ t_timesince }} ago

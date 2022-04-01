@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load rules_extras %}
-{% load i18n bootstrap4 static %}
+{% load i18n bootstrap4 static thumbnail %}
 
 {% block javascript %}
     <script>
@@ -64,11 +64,16 @@
             {% for thread in object.thread_set.all %}
                 <div class="card mb-4">
                     <div class="card-header">
-                        <img
-                                class="rounded-circle me-1"
-                                style="width: 28px; height: 28px"
-                                src="{% static 'img/silhuette.png' %}"
-                                alt="{{ thread.created_by }}">
+                        {% latest_user_image thread.created_by as image %}
+                        {% if image %}
+                            {% thumbnail image "28x28" as im %}
+                                <img
+                                        class="rounded-circle me-1"
+                                        style="width: 28px; height: 28px"
+                                        src="{{ im.url }}"
+                                        alt="{{ thread.created_by }}">
+                            {% endthumbnail %}
+                        {% endif %}
                         <a class="no-link-colors" href="{{ thread.get_absolute_url }}">{{ thread.name }}</a>
                         <span class="small text-muted">
                             {% blocktrans with t_created_by=thread.created_by t_timesince=thread.created_at|timesince %}
@@ -78,7 +83,8 @@
                     </div>
                     <div class="card-body">
                         {{ thread.earliest_post.text|urpg_markup }}
-                        <a href="{{ thread.get_absolute_url }}" class="card-link">{{ thread.post_count }} comment{{ thread.post_count|pluralize }}</a>
+                        <a href="{{ thread.get_absolute_url }}" class="card-link">{{ thread.post_count }}
+                            comment{{ thread.post_count|pluralize }}</a>
                     </div>
                 </div>
             {% endfor %}
