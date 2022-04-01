@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n rules_extras %}
 
+{% block title %}{% trans 'Assign Spell Cost' %} - {{ block.super }}{% endblock %}
+
 {% block content %}
     <div class="row">
     {% if object %}

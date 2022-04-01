@@ -11,6 +11,8 @@
     </div>
 {% endblock %}
 
+{% block title %}{{ object.title }} - {% trans 'Rulebook' %} - {{ block.super }}{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="d-block d-lg-none col-12">

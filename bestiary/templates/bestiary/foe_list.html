@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static i18n characters_extras %}
 
+{% block title %}{% trans 'Foes' %} - {{ block.super }}{% endblock %}
+
 {% block belownav %}
     <div
             style="position: relative; height: 36vh; background-image: url({% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %})"

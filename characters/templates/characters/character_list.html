@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n static thumbnail characters_extras %}
 
+{% block title %}{% trans 'My characters' %} - {{ block.super }}{% endblock %}
+
 {% block javascript %}
     <script>
     $(function(){

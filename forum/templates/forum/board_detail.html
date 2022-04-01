@@ -2,6 +2,8 @@
 {% load rules_extras %}
 {% load i18n bootstrap4 static thumbnail %}
 
+{% block title %}{{ board }} - Forum - {{ block.super }}{% endblock %}
+
 {% block javascript %}
     <script>
         $(function () {

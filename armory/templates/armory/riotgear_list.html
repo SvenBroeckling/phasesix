@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n static rules_extras characters_extras %}
 
+{% block title %}{% trans 'Armour' %} - {{ block.super }}{% endblock %}
+
 {% block belownav %}
     <div
             style="position: relative; height: 36vh; background-image: url({% static 'img/hugo-l-casanova-GDre1q4wEJk-unsplash.jpg' %})"
