@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'bootstrap4',
     'compressor',
-    'simplemde',
     'gmtools',
     'armory',
     'bestiary',
