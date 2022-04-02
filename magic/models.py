@@ -68,6 +68,9 @@ class BaseSpell(models.Model, metaclass=TransMeta):
         blank=True,
         verbose_name=_('created by'))
 
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
     is_tirakan_spell = models.BooleanField(_('is tirakan spell'), default=False)
 
     spell_point_cost = models.IntegerField(_('spell point cost'))

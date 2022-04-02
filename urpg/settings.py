@@ -9,6 +9,8 @@ SECRET_KEY = 'p&90ws3x7(hi+$+v4=(5ni@@3$uqgdpg$s*=w@8yl-w12)0%&$'
 
 ADMINS = [('Sven', 'sven@broeckling.de')]
 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
+
 DEBUG = True
 DEBUG_DISCORD = False
 
