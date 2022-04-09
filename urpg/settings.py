@@ -3,10 +3,12 @@ import os
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
-load_dotenv()
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
 BASE_URL = os.environ['BASE_URL']
 SECRET_KEY = os.environ['SECRET_KEY']
 
