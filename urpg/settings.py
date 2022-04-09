@@ -15,7 +15,7 @@ ADMINS = [('Sven', 'sven@broeckling.de')]
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
 
-DEBUG = True
+DEBUG = True if os.environ['DEBUG'] == 'True' else False
 DEBUG_DISCORD = False
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
