@@ -45,7 +45,7 @@
                 </div>
                 <div class="card-body">
                     <div class="sidebar-trigger" data-sidebar-title="{% trans 'Wounds' %}"
-                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="wounds" %}">
+                         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">
                         {% for i in object.health|to_range %}
                             <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
                         {% endfor %}
@@ -59,7 +59,7 @@
 
                     {% if object.extension_enabled.magic %}
                         <div class="sidebar-trigger" data-sidebar-title="{% trans 'Magic' %}"
-                             data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="magic" %}">
+                             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="magic" %}">
                             {% for i in object.arcana|to_range %}
                                 <i class="fas fa-magic text-warning"></i>
                             {% endfor %}
@@ -71,7 +71,7 @@
 
                     {% if object.extension_enabled.horror %}
                         <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
-                             data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="horror" %}">
+                             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
                             {% for i in object.stress|to_range %}
                                 <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
                             {% endfor %}
@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
-                             data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="horror" %}">
+                             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
                             {% for q in object.quirks.all %}
                                 <i class="fas fa-frown text-light" title="{{ q }}"></i>
                             {% endfor %}
@@ -89,7 +89,7 @@
                     {% endif %}
 
                     <div class="sidebar-trigger mt-2" data-sidebar-title="{% trans 'Wounds' %}"
-                         data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="wounds" %}">
+                         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">
                         {% for cse in object.characterstatuseffect_set.all %}
                             <span class="fa-layers fa-fw fa-3x">
                                 <i title="{{ cse }}: {{ cse.value }}" class="{{ cse.status_effect.fa_icon_class }}"></i>
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-4 mb-5 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="dice" %}">
+        <div class="col-12 col-md-4 mb-5 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="dice" %}">
             <div class="card h-100">
                 <div class="card-header text-center">
                     {% trans 'Dice' %}

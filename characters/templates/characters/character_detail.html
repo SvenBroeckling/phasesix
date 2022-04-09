@@ -39,7 +39,7 @@
             </div>
 
             <div class="character-image {% if may_edit %}sidebar-trigger{% endif %} mt-2" data-sidebar-title="{% trans 'Character' %}"
-                 data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="character" %}">
+                 data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}">
                 {% if character.image %}
                     {% thumbnail character.image "140x140" crop="center" as im %}
                         <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">

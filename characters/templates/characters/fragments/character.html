@@ -13,7 +13,7 @@
                 </tr>
                 </thead>
                 {% for attribute in object.characterattribute_set.persona_attributes %}
-                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=attribute.id model_name="CharacterAttribute" sidebar_name="characterattribute" %}">
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_characterattribute_sidebar' pk=attribute.id sidebar_template="characterattribute" %}">
                         <td>{{ attribute.attribute.name }}</td>
                         <td class="text-end">{% color_value_span attribute.value 7 %}</td>
                     </tr>
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 {% for attribute in object.characterattribute_set.physis_attributes %}
-                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=attribute.id model_name="CharacterAttribute" sidebar_name="characterattribute" %}">
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_characterattribute_sidebar' pk=attribute.id sidebar_template="characterattribute" %}">
                         <td>{{ attribute.attribute.name }}</td>
                         <td class="text-end">{% color_value_span attribute.value 7 %}</td>
                     </tr>
@@ -48,7 +48,7 @@
                     </tr>
                     </thead>
                     {% for knowledge in object.knowledge_dict.items %}
-                        <tr>
+                        <tr class="sidebar-trigger" data-sidebar-title="{{ knowledge.0 }}" data-sidebar-url="{% url 'characters:xhr_characterknowledge_sidebar' pk=object.id sidebar_template="characterknowledge" knowledge_pk=knowledge.0.id %}">
                             <td>
                                 {{ knowledge.0 }}
                                 {% if knowledge.0.skill %}
@@ -79,7 +79,7 @@
             </tr>
             </thead>
             {% for skill in object.skills.mind_skills %}
-                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=skill.id model_name="CharacterSkill" sidebar_name="characterskill" %}">
+                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_characterskill_sidebar' pk=skill.id sidebar_template="characterskill" %}">
                     <td>
                         {{ skill.skill }}
                         <small class="text-muted">({{ skill.skill.reference_attribute_1.name }}, {{ skill.skill.reference_attribute_2.name }})</small>
@@ -99,7 +99,7 @@
             </tr>
             </thead>
             {% for skill in object.skills.practical_skills %}
-                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=skill.id model_name="CharacterSkill" sidebar_name="characterskill" %}">
+                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_characterskill_sidebar' pk=skill.id sidebar_template="characterskill" %}">
                     <td>
                         {{ skill.skill }}
                         <small class="text-muted">({{ skill.skill.reference_attribute_1.name }}, {{ skill.skill.reference_attribute_2.name }})</small>

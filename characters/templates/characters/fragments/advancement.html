@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-primary float-end mb-2 sidebar-trigger" data-sidebar-title="{% trans 'Reputation' %}" data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="reputation" %}">{% trans "Reputation and advancement" %}</button>
+                    <button class="btn btn-primary float-end mb-2 sidebar-trigger" data-sidebar-title="{% trans 'Reputation' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="reputation" %}">{% trans "Reputation and advancement" %}</button>
                 </div>
             </div>
             <div class="row masonry-container">

@@ -20,7 +20,7 @@
 
             {% for r in character.characterriotgear_set.all %}
                 <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
-                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=r.id model_name="CharacterRiotGear" sidebar_name="characterriotgear" %}">
+                     data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
                     <div class="card-header">
                         {{ r.riot_gear }}
                         {% if r.riot_gear.concealment > 0 %}
@@ -72,7 +72,7 @@
 
             {% for weapon in object.characterweapon_set.all %}
                 <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ weapon.weapon }}"
-                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=weapon.id model_name="CharacterWeapon" sidebar_name="characterweapon" %}">
+                     data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=weapon.id sidebar_template="characterweapon" %}">
                     <div class="card-header">
                         {{ weapon.weapon }} <span class="small text-muted">{{ weapon.weapon.type }}</span>
                         {% if weapon.modified_concealment > 0 %}
@@ -182,7 +182,7 @@
 
             {% if object.currency_map %}
                 <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Currency' %}"
-                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=object.id model_name="Character" sidebar_name="currency" %}">
+                     data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="currency" %}">
                     <div class="card-body text-center">
                         {% for unit in object.currency_map.currencymapunit_set.all %}
                         <i class="{{ unit.fa_icon_class }} {{ unit.color_class }}"></i> {{ object|currency_quantity:unit }}
@@ -193,7 +193,7 @@
 
             {% for ci in character.characteritem_set.by_type %}
                 <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ ci.item }}"
-                     data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=ci.id model_name="CharacterItem" sidebar_name="characteritem" %}">
+                     data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=ci.id sidebar_template="characteritem" %}">
                     <div class="card-header">
                         {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
                         <span class="small text-muted">{{ ci.item.type }}</span>

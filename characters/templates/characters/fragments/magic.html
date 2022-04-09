@@ -22,7 +22,7 @@
                 <div class="col col-md-6 col-xl-4 mb-2">
                     <div
                             data-sidebar-title="{{ s.name }}"
-                            data-sidebar-url="{% url 'characters:xhr_detail_sidebar' pk=s.id model_name="CharacterSpell" sidebar_name="characterspell" %}"
+                            data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}"
                             class="card mb-2 sidebar-trigger">
                         <div class="card-header">
                             <span class="badge bg-dark float-end ms-2" title="{% trans 'Spell point cost' %}">{{ s.spell_point_cost }}</span>

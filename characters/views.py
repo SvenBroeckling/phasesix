@@ -19,7 +19,7 @@ from characters.models import Character, CharacterWeapon, CharacterRiotGear, Cha
     CharacterSpell, CharacterSkill, CharacterAttribute
 from horror.models import QuirkCategory
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
-from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute
+from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge
 
 
 class IndexView(TemplateView):
@@ -70,33 +70,58 @@ class XhrDeleteCharacterView(View):
 
 
 class XhrSidebarView(DetailView):
-
-    def get_queryset(self):
-        if self.kwargs['model_name'] == "CharacterWeapon":
-            return CharacterWeapon.objects.all()
-        if self.kwargs['model_name'] == "CharacterRiotGear":
-            return CharacterRiotGear.objects.all()
-        elif self.kwargs['model_name'] == "CharacterItem":
-            return CharacterItem.objects.all()
-        elif self.kwargs['model_name'] == "CharacterSpell":
-            return CharacterSpell.objects.all()
-        elif self.kwargs['model_name'] == "CharacterSkill":
-            return CharacterSkill.objects.all()
-        elif self.kwargs['model_name'] == "CharacterAttribute":
-            return CharacterAttribute.objects.all()
-        return Character.objects.all()
+    model = Character
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sidebar_name'] = self.kwargs['sidebar_name']
-        context['model_name'] = self.kwargs['model_name']
-        context['status_effects'] = StatusEffect.objects.filter(is_active=True).order_by('ordering')
-        context['character_form'] = CharacterImageForm(instance=self.object)
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 
     def get_template_names(self):
-        return ['characters/sidebar/' + self.kwargs['sidebar_name'] + '.html']
+        return ['characters/sidebar/' + self.kwargs['sidebar_template'] + '.html']
+
+
+class XhrCharacterSidebarView(XhrSidebarView):
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['status_effects'] = StatusEffect.objects.filter(is_active=True).order_by('ordering')
+        context['character_form'] = CharacterImageForm(instance=self.object)
+        return context
+
+
+class XhrCharacterWeaponSidebarView(XhrSidebarView):
+    model = CharacterWeapon
+
+
+class XhrCharacterRiotGearSidebarView(XhrSidebarView):
+    model = CharacterRiotGear
+
+
+class XhrCharacterItemSidebarView(XhrSidebarView):
+    model = CharacterItem
+
+
+class XhrCharacterSpellSidebarView(XhrSidebarView):
+    model = CharacterSpell
+
+
+class XhrCharacterSkillSidebarView(XhrSidebarView):
+    model = CharacterSkill
+
+
+class XhrCharacterAttributeSidebarView(XhrSidebarView):
+    model = CharacterAttribute
+
+
+class XhrCharacterKnowledgeSidebarView(XhrSidebarView):
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['knowledge'] = Knowledge.objects.get(id=self.kwargs['knowledge_pk'])
+        return context
 
 
 class XhrDetailFragmentView(DetailView):

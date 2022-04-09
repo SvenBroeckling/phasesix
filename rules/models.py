@@ -181,6 +181,7 @@ class Knowledge(models.Model, metaclass=TransMeta):
     extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+    description = models.TextField(_('description'), blank=True, null=True)
     skill = models.ForeignKey(
         Skill,
         verbose_name=_('Skill'),
@@ -189,7 +190,7 @@ class Knowledge(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL)
 
     class Meta:
-        translate = ('name',)
+        translate = ('name', 'description')
         verbose_name = _('knowledge')
         verbose_name_plural = _('knowledge')
 

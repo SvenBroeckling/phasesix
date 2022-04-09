@@ -98,12 +98,11 @@ class Character(models.Model):
     def knowledge_dict(self):
         kd = {}
         for t in self.charactertemplate_set.all():
-            for m in t.template.templatemodifier_set.all():
-                if m.knowledge is not None:
-                    if m.knowledge in kd.keys():
-                        kd[m.knowledge] += m.knowledge_modifier if m.knowledge_modifier is not None else 0
-                    else:
-                        kd[m.knowledge] = m.knowledge_modifier
+            for m in t.template.templatemodifier_set.exclude(knowledge__isnull=True):
+                if m.knowledge in kd.keys():
+                    kd[m.knowledge] += m.knowledge_modifier if m.knowledge_modifier is not None else 0
+                else:
+                    kd[m.knowledge] = m.knowledge_modifier
         return kd
 
     def shadow_list(self):

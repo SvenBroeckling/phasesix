@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path
 
 from characters import views
 
@@ -10,10 +11,40 @@ urlpatterns = [
     url(r'^list/$', views.CharacterListView.as_view(), name='list'),
     url(r'^xhr_delete/(?P<pk>\d+)$', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
 
-    url(
-        r'^xhr_detail_sidebar/(?P<pk>\d+)/(?P<model_name>[A-Za-z_]+)/(?P<sidebar_name>[a-z_]+)$',
-        views.XhrSidebarView.as_view(),
-        name='xhr_detail_sidebar'),
+    # Sidebars
+    path(
+        r'sidebar_character/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterSidebarView.as_view(),
+        name='xhr_character_sidebar'),
+    path(
+        r'sidebar_characteritem/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterItemSidebarView.as_view(),
+        name='xhr_characteritem_sidebar'),
+    path(
+        r'sidebar_characterskill/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterSkillSidebarView.as_view(),
+        name='xhr_characterskill_sidebar'),
+    path(
+        r'sidebar_characterspell/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterSpellSidebarView.as_view(),
+        name='xhr_characterspell_sidebar'),
+    path(
+        r'sidebar_characterweapon/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterWeaponSidebarView.as_view(),
+        name='xhr_characterweapon_sidebar'),
+    path(
+        r'sidebar_characterriotgear/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterRiotGearSidebarView.as_view(),
+        name='xhr_characterriotgear_sidebar'),
+    path(
+        r'sidebar_characterattribute/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterAttributeSidebarView.as_view(),
+        name='xhr_characterattribute_sidebar'),
+    path(
+        r'sidebar_characterknowledge/<int:pk>/<str:sidebar_template>/<int:knowledge_pk>/',
+        views.XhrCharacterKnowledgeSidebarView.as_view(),
+        name='xhr_characterknowledge_sidebar'),
+
     url(
         r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<model_name>[A-Za-z_]+)/(?P<fragment_name>[a-z_]+)$',
         views.XhrDetailFragmentView.as_view(),

@@ -130,6 +130,14 @@ def character_knowledge_skill_value(character, knowledge):
 
 
 @register.simple_tag
+def character_knowledge_value(character, knowledge):
+    cnd = character.knowledge_dict().get(knowledge, None)
+    if cnd is None:
+        return None
+    return character.characterskill_set.get(skill=knowledge.skill).value + cnd
+
+
+@register.simple_tag
 def character_skill_value(character, skill):
     return character.characterskill_set.get(skill=skill).value
 
