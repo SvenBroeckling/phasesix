@@ -9,15 +9,12 @@
 - https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
 
 ### Fertigkeiten
-- Redundant: Achtsamkeit oder Wahrnehmung
-- Redundant: Athletik oder Akrobatik
+- Wackelkandidaten: Achtsamkeit und Athletik
 - Fehlend: Recherche? (Evtl Untersuchen?)
 - Fehlend: (Selbst)beherrschung?
 
 ## UI
 - Erhaltene Reputation anzeigen
-- Schatten in die Sidebar
-- Status Combat klickbar machen
 - Itemmodal bei XL kaputt
 - Kampagnenseite bei XL kaputt
 - Zauberaddon Modal formatting
@@ -32,6 +29,8 @@
 
 ## Data
 
+- Knowledge Descriptions
+- Shadow Descriptions
 - Quirks: Attribute bereinigen + Description
 - Viel Equipment fehlt in den 80ern
 - Spell Mods: Arkana Kosten
