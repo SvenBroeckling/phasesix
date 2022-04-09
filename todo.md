@@ -26,7 +26,6 @@
 
 ### Fehlende Würfel
 
-- Knowledge würfeln
 - WaLo Nahkampf würfeln
 - Evade würfeln
 - Ini Wurf evtl. auf Kampftab

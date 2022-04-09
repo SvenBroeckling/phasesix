@@ -5,7 +5,7 @@
     <div class="row">
 
         <div class="col-12 col-md-4 mb-5">
-            <div class="card h-100">
+            <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Combat' %} "data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="charactercombat" %}">
                 <div class="card-header text-center">
                     {% trans 'Combat' %}
                 </div>
