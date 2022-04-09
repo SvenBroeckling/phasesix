@@ -19,7 +19,7 @@ from characters.models import Character, CharacterWeapon, CharacterRiotGear, Cha
     CharacterSpell, CharacterSkill, CharacterAttribute
 from horror.models import QuirkCategory
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
-from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge
+from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge, Shadow
 
 
 class IndexView(TemplateView):
@@ -74,7 +74,10 @@ class XhrSidebarView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['may_edit'] = self.object.may_edit(self.request.user)
+        try:
+            context['may_edit'] = self.object.may_edit(self.request.user)
+        except AttributeError:
+            context['may_edit'] = False
         return context
 
     def get_template_names(self):
@@ -122,6 +125,19 @@ class XhrCharacterKnowledgeSidebarView(XhrSidebarView):
         context = super().get_context_data(**kwargs)
         context['knowledge'] = Knowledge.objects.get(id=self.kwargs['knowledge_pk'])
         return context
+
+
+class XhrCharacterShadowSidebarView(XhrSidebarView):
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['shadow'] = Shadow.objects.get(id=self.kwargs['shadow_pk'])
+        return context
+
+
+class XhrCharacterTemplateShadowSidebarView(XhrSidebarView):
+    model = Template
 
 
 class XhrDetailFragmentView(DetailView):

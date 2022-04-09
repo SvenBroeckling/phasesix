@@ -108,9 +108,8 @@ class Character(models.Model):
     def shadow_list(self):
         sl = []
         for t in self.charactertemplate_set.all():
-            for m in t.template.templatemodifier_set.all():
-                if m.shadow:
-                    sl.append(m.shadow)
+            for m in t.template.templatemodifier_set.exclude(shadow__isnull=True):
+                sl.append(m.shadow)
         return sl
 
     @property

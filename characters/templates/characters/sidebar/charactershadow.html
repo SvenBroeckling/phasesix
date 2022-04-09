@@ -1,0 +1,21 @@
+{% load i18n bootstrap4 rules_extras characters_extras %}
+
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <button
+                    data-dice-roll="{% character_knowledge_value object knowledge %}d6"
+                    data-dice-header="{{ knowledge }}"
+                    data-dice-description=""
+                    data-dice-character="{{ object.id }}"
+                    class="btn btn-primary btn-sm w-100 dice-roll">
+                <i class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %}</button>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col-12 {% if may_edit %}mt-3{% endif %}">
+        {{ shadow.description|urpg_markup }}
+    </div>
+</div>

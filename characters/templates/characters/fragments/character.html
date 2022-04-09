@@ -119,17 +119,13 @@
                 </tr>
                 </thead>
                 {% for shadow in object.shadow_list %}
-                    <tr>
-                        {% if shadow.description %}
-                            <td><a role="button" tabindex="0" data-bs-toggle="popover" data-bs-container="body" data-trigger="focus" title="{{ shadow }}" data-bs-content="{{ shadow.description }}">{{ shadow }}</a></td>
-                        {% else %}
-                            <td>{{ shadow }}</td>
-                        {% endif %}
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ shadow }}" data-sidebar-url="{% url 'characters:xhr_charactershadow_sidebar' pk=shadow.id sidebar_template="charactershadow" shadow_pk=shadow.pk %}">
+                        <td>{{ shadow }}</td>
                     </tr>
                 {% endfor %}
                 {% for template in object.templates_with_shadow_rules.all %}
-                    <tr>
-                        <td><a role="button" tabindex="0" data-bs-toggle="popover" data-bs-container="body" data-trigger="focus" title="{{ template.template.name }}" data-bs-html="true" data-bs-content="{{ template.template.rules|urpg_markup }}">{{ template.template.name }}</a></td>
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ template.template.name }}" data-sidebar-url="{% url 'characters:xhr_charactertemplateshadow_sidebar' pk=template.template.id sidebar_template="charactertemplateshadow" %}">
+                        <td>{{ template.template.name }}</td>
                     </tr>
                 {% endfor %}
             </table>
