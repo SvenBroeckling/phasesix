@@ -2,18 +2,22 @@
 
 - Detailseiten: Weapon, Armour, BaseSpell
 - Weapon List/Detail: Statuseffekte
+- Dietrich: Knowledge würfeln
 
 ## Icon Stamp
 
 - https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
 
 ### Fertigkeiten
-- Achtsamkeit, Achtsamkeit -> ? (Aufmerksamkeit)
-- Akrobatik oder Athletik -> ?
-- Recherche?
+- Redundant: Achtsamkeit oder Wahrnehmung
+- Redundant: Athletik oder Akrobatik
+- Fehlend: Recherche? (Evtl Untersuchen?)
+- Fehlend: (Selbst)beherrschung?
 
 ## UI
-
+- Erhaltene Reputation anzeigen
+- Schatten in die Sidebar
+- Status Combat klickbar machen
 - Itemmodal bei XL kaputt
 - Kampagnenseite bei XL kaputt
 - Zauberaddon Modal formatting
@@ -24,7 +28,8 @@
 
 - Knowledge würfeln
 - WaLo Nahkampf würfeln
-- evade würfeln
+- Evade würfeln
+- Ini Wurf evtl. auf Kampftab
 
 ### Status Effekte:
   - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)

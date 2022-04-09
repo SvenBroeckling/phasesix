@@ -1,26 +1,30 @@
 import os
 
 from django.urls import reverse_lazy
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = 'http://localhost:8000'
-SECRET_KEY = 'p&90ws3x7(hi+$+v4=(5ni@@3$uqgdpg$s*=w@8yl-w12)0%&$'
+BASE_URL = os.environ['BASE_URL']
+SECRET_KEY = os.environ['SECRET_KEY']
 
 ADMINS = [('Sven', 'sven@broeckling.de')]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
 
 DEBUG = True
 DEBUG_DISCORD = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
 ASGI_APPLICATION = "urpg.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(os.environ['REDIS_HOST'], int(os.environ['REDIS_PORT']))],
         },
     },
 }
@@ -96,8 +100,12 @@ WSGI_APPLICATION = 'urpg.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': os.environ['DATABASE_NAME'],
+        'USER': os.environ['DATABASE_USER'],
+        'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        'HOST': os.environ['DATABASE_HOST'],
+        'PORT': int(os.environ['DATABASE_PORT']),
     }
 }
 
@@ -127,6 +135,10 @@ LANGUAGES = (
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 DEFAULT_FROM_EMAIL = 'game@phasesix.org'
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+EMAIL_HOST_USER = os.environ['EMAIL_USER']
+
 
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -150,10 +162,6 @@ COMPRESS_PRECOMPILERS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_files')
 
-RULEBOOK_ROOT = os.path.join(STATIC_ROOT, 'rulebook')
+RULEBOOK_ROOT = os.path.join(BASE_DIR, 'rulebook', 'static', 'rulebook')
 
 LOGIN_REDIRECT_URL = "/"
-try:
-    from .localsettings import *
-except ImportError:
-    pass
