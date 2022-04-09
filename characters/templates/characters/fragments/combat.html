@@ -4,6 +4,16 @@
 {% block fragment %}
     <div class="row">
         <div class="col-12">
+            <button class="btn btn-primary btn-sm float-end dice-roll mb-1"
+                    data-dice-roll="1d6+{{ object.attributes.quickness }}"
+                    data-dice-header="{% trans 'Initiative' %}"
+                    data-dice-description="{% trans 'Initiative (1d6+Quickness)' %}"
+                    data-dice-character={{ object.id }}>Roll Initiative ({% trans '1d6' %}+{{ object.attributes.quickness }})
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -16,7 +26,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr class="sidebar-trigger" data-sidebar-title="{% trans 'Weaponless' %}"
+                            data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="weaponless" %}">
                         <td>
                             <i class="fas fa-hand-rock text-success"></i> {% trans 'Weaponless' %}
                             <small class="text-muted">{% trans 'Melee' %}</small>

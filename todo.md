@@ -24,12 +24,6 @@
 - Sortierbare Gegenstände
 - Gegenstände in Containern
 
-### Fehlende Würfel
-
-- WaLo Nahkampf würfeln
-- Evade würfeln
-- Ini Wurf evtl. auf Kampftab
-
 ### Status Effekte:
   - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
   - In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
