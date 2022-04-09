@@ -158,7 +158,7 @@
                             <i class="fas fa-running text-warning"></i> {% trans "Evade" %}
                             <small class="text-muted">{% trans 'Movement' %}</small>
                         </td>
-                        <td class="text-end">
+                        <td class="text-end sidebar-trigger" data-sidebar-title="{% trans 'Combat' %} " data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="charactercombat" %}">
                             {% color_value_span character.evasion 6 %} <i class="fas fa-dice-five text-muted"></i>
                         </td>
                         <td colspan="3"></td>
