@@ -3,8 +3,6 @@ import os
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 load_dotenv(os.path.join(BASE_DIR, '.env'))
@@ -102,7 +100,7 @@ WSGI_APPLICATION = 'urpg.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ['DATABASE_NAME'],
         'USER': os.environ['DATABASE_USER'],
         'PASSWORD': os.environ['DATABASE_PASSWORD'],
@@ -140,7 +138,6 @@ DEFAULT_FROM_EMAIL = 'game@phasesix.org'
 EMAIL_HOST = os.environ['EMAIL_HOST']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
 EMAIL_HOST_USER = os.environ['EMAIL_USER']
-
 
 TIME_ZONE = 'UTC'
 USE_I18N = True
