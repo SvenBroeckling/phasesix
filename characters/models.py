@@ -105,13 +105,6 @@ class Character(models.Model):
                     kd[m.knowledge] = m.knowledge_modifier
         return kd
 
-    def shadow_list(self):
-        sl = []
-        for t in self.charactertemplate_set.all():
-            for m in t.template.templatemodifier_set.exclude(shadow__isnull=True):
-                sl.append(m.shadow)
-        return sl
-
     @property
     def ws_room_name(self) -> str:
         """Websocket room name"""
@@ -133,8 +126,9 @@ class Character(models.Model):
         return qs.latest('id').quantity if qs.exists() else 0
 
     @property
-    def templates_with_shadow_rules(self):
-        return self.charactertemplate_set.filter(template__show_rules_in_shadows=True)
+    def templates_with_rules(self):
+        return self.charactertemplate_set.exclude(
+            template__rules_de__isnull=True).exclude(template__rules_de='')
 
     @property
     def templates_with_combat_rules(self):

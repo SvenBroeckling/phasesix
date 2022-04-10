@@ -198,27 +198,6 @@ class Knowledge(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Shadow(models.Model, metaclass=TransMeta):
-    """
-    A URPG quirk
-    """
-    objects = ExtensionSelectQuerySet.as_manager()
-
-    name = models.CharField(_('name'), max_length=120)
-    description = models.TextField(_('description'), blank=True, null=True)
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
-    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
-    extensions = models.ManyToManyField('rules.Extension')
-
-    class Meta:
-        translate = ('name', 'description')
-        verbose_name = _('shadow')
-        verbose_name_plural = _('shadows')
-
-    def __str__(self):
-        return self.name
-
-
 class TemplateCategory(models.Model, metaclass=TransMeta):
     COLOR_CLASS_CHOICES = (
         ('', _('None')),
@@ -282,10 +261,6 @@ class Template(models.Model, metaclass=TransMeta):
     category = models.ForeignKey(TemplateCategory, models.CASCADE, verbose_name=_('category'))
 
     rules = models.TextField(_('rules'), blank=True, null=True)
-    show_rules_in_shadows = models.BooleanField(
-        _('Show rules in shadows'),
-        default=False,
-        help_text=_('Show the rule as shadow on the main character sheet.'))
     show_rules_in_combat = models.BooleanField(
         _('Show rules in combat'),
         default=False,
@@ -359,12 +334,6 @@ class TemplateModifier(models.Model, metaclass=TransMeta):
         verbose_name=_('knowledge modifier'),
         blank=True,
         null=True)
-    shadow = models.ForeignKey(
-        Shadow,
-        on_delete=models.CASCADE,
-        verbose_name=_('shadow'),
-        null=True,
-        blank=True)
 
     def __str__(self):
         return self.template.name

@@ -111,19 +111,14 @@
     </div>
 
     <div class="col-md-4">
-        {% if object.shadow_list or object.templates_with_shadow_rules.exists %}
+        {% if object.templates_with_rules.exists %}
             <table class="table">
                 <thead>
                 <tr>
                     <th>{% trans 'Shadows' %}</th>
                 </tr>
                 </thead>
-                {% for shadow in object.shadow_list %}
-                    <tr class="sidebar-trigger" data-sidebar-title="{{ shadow }}" data-sidebar-url="{% url 'characters:xhr_charactershadow_sidebar' pk=shadow.id sidebar_template="charactershadow" shadow_pk=shadow.pk %}">
-                        <td>{{ shadow }}</td>
-                    </tr>
-                {% endfor %}
-                {% for template in object.templates_with_shadow_rules.all %}
+                {% for template in object.templates_with_rules.all %}
                     <tr class="sidebar-trigger" data-sidebar-title="{{ template.template.name }}" data-sidebar-url="{% url 'characters:xhr_charactertemplateshadow_sidebar' pk=template.template.id sidebar_template="charactertemplateshadow" %}">
                         <td>{{ template.template.name }}</td>
                     </tr>

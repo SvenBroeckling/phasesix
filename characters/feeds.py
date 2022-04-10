@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from armory.models import ItemType, Item, WeaponType, Weapon, RiotGear
 from magic.models import BaseSpell
-from rules.models import Knowledge, Shadow, Extension, Template, Lineage
+from rules.models import Knowledge, Extension, Template, Lineage
 
 
 class LatestNewAdmin(Feed):
@@ -22,7 +22,6 @@ class LatestNewAdmin(Feed):
         return itertools.chain(
             Lineage.objects.order_by('-created_at')[:30],
             Knowledge.objects.order_by('-created_at')[:30],
-            Shadow.objects.order_by('-created_at')[:30],
             Extension.objects.order_by('-created_at')[:30],
             Template.objects.order_by('-created_at')[:30],
             ItemType.objects.order_by('-created_at')[:30],
@@ -56,7 +55,6 @@ class LatestModifiedAdmin(LatestNewAdmin):
         return itertools.chain(
             Lineage.objects.order_by('-modified_at')[:30],
             Knowledge.objects.order_by('-modified_at')[:30],
-            Shadow.objects.order_by('-modified_at')[:30],
             Extension.objects.order_by('-modified_at')[:30],
             Template.objects.order_by('-modified_at')[:30],
             BaseSpell.objects.order_by('-modified_at')[:30],

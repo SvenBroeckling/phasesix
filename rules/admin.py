@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from rules.models import Skill, Extension, Shadow, Knowledge, Template, TemplateModifier, TemplateRequirement, \
+from rules.models import Skill, Extension, Knowledge, Template, TemplateModifier, TemplateRequirement, \
     TemplateCategory, LineageTemplatePoints, Lineage, StatusEffect, Attribute
 
 
@@ -31,8 +31,8 @@ class TemplateAdmin(admin.ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
     search_fields = ('name_de', 'name_en')
     list_display = (
-        'name', 'cost', 'category', 'has_rules', 'show_rules_in_shadows', 'show_rules_in_combat', 'has_quote')
-    list_editable = ('category', 'cost', 'show_rules_in_shadows', 'show_rules_in_combat')
+        'name', 'cost', 'category', 'has_rules', 'show_rules_in_combat', 'has_quote')
+    list_editable = ('category', 'cost', 'show_rules_in_combat')
     list_filter = ('extensions', 'category')
     save_as = True
 
@@ -69,7 +69,6 @@ admin.site.register(Extension, ExtensionAdmin)
 admin.site.register(Attribute, AttributeAdmin)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Knowledge, KnowledgeAdmin)
-admin.site.register(Shadow)
 admin.site.register(TemplateCategory, TemplateCategoryAdmin)
 admin.site.register(Template, TemplateAdmin)
 admin.site.register(Lineage, LineageAdmin)

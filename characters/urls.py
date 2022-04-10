@@ -45,10 +45,6 @@ urlpatterns = [
         views.XhrCharacterKnowledgeSidebarView.as_view(),
         name='xhr_characterknowledge_sidebar'),
     path(
-        r'sidebar_charactershadow/<int:pk>/<str:sidebar_template>/<int:shadow_pk>/',
-        views.XhrCharacterShadowSidebarView.as_view(),
-        name='xhr_charactershadow_sidebar'),
-    path(
         r'sidebar_charactertemplateshadow/<int:pk>/<str:sidebar_template>/',
         views.XhrCharacterTemplateShadowSidebarView.as_view(),
         name='xhr_charactertemplateshadow_sidebar'),
