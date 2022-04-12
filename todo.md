@@ -29,8 +29,6 @@
 
 ## Data
 
-- Knowledge Descriptions
-- Shadow Descriptions
 - Quirks: Attribute bereinigen + Description
 - Viel Equipment fehlt in den 80ern
 - Spell Mods: Arkana Kosten
