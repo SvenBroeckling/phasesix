@@ -1,57 +1,6 @@
-{% load characters_extras rules_extras i18n %}
+{% load characters_extras static rules_extras i18n %}
 
-<script>
-    $(function () {
-        let timer = null
-
-        function updateMasonry() {
-            $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
-        }
-
-        function updateTabs() {
-            $('.add-item-tab-pane').each(function(index){
-                let elem = $(this)
-                let ct = elem.find('.add-item-card:not(.d-none)')
-
-                if (ct.length === 0) {
-                    elem.addClass('d-none')
-                    $(elem.data('rel')).addClass('d-none')
-                } else {
-                    elem.removeClass('d-none')
-                    $(elem.data('rel')).removeClass('d-none')
-                    $('li.add-item-nav-item:not(.d-none):first').find('a').tab('show')
-                }
-            })
-        }
-
-        $('.search-items-input').on('keyup', function(e){
-            let q = $(this).val()
-
-            if (timer) clearTimeout(timer)
-
-            timer = setTimeout(function(){
-                $('.add-item-card').each(function(index){
-                    if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                        $(this).removeClass('d-none')
-                    } else {
-                        $(this).addClass('d-none')
-                    }
-                })
-                updateTabs()
-                updateMasonry()
-            }, 10)
-
-        })
-
-        $('.add-item-nav-item').on('click', function() {
-            $('#add-item-mobile-nav').collapse('hide')
-            $('.btn-add-item-mobile-nav-toggle').text($(this).find('a').text())
-        })
-        $('.modal-body a.nav-link').first().addClass('active')
-        $('.modal-body div.tab-pane').first().addClass('active')
-        updateMasonry()
-    })
-</script>
+<script src="{% static 'js/add_items_weapons.js' %}"></script>
 
 <div class="row">
     <div class="col-12 col-md-4 col-lg-3">
@@ -71,21 +20,23 @@
         <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
             <ul class="nav nav-pills flex-column" role="tablist">
                 {% for t in item_types %}
-                    <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}" id="nav-item-{{ t.id }}">
+                    <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}"
+                        id="nav-item-{{ t.id }}">
                         <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
                            data-bs-toggle="tab">{{ t }}</a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
-
     </div>
+
     <div class="col-12 col-md-8 col-lg-9">
         <div class="tab-content">
             {% for t in item_types %}
                 <div role="tabpanel"
                      data-rel="#nav-item-{{ t.id }}"
-                     class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}" id="i{{ t.id }}">
+                     class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
+                     id="i{{ t.id }}">
                     <div class="row masonry-container">
                         {% for item in t.item_set.all %}
                             {% has_extensions item character.extensions.all as has_extensions %}
@@ -93,8 +44,7 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="card mb-3 add-item-card">
                                         <div class="card-header">
-                                            <span>{{ item }}</span>
-                                            <span class="float-end small">{{ item.type }}</span>
+                                            {{ item }}
                                         </div>
                                         <div class="card-body">
                                             {% if item.description %}<p>{{ item.description }}</p>{% endif %}

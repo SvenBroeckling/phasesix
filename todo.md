@@ -15,7 +15,6 @@
 
 ## UI
 - Erhaltene Reputation anzeigen
-- Itemmodal bei XL kaputt
 - Kampagnenseite bei XL kaputt
 - Zauberaddon Modal formatting
 - Sortierbare Gegenstände
