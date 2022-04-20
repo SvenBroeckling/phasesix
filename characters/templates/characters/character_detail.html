@@ -27,18 +27,9 @@
                         {% endif %}
                     {% endif %}">
 
-        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-            <div>
-                <h3 class="mb-0">{{ object.name }}</h3>
-                <small>{% template_category_string object 3 "" %}</small><br>
-                <small>{% template_category_string object 2 "" %}</small><br>
-                <small>{% template_category_string object 6 "" %}</small><br>
-                {% if object.campaign %}
-                <small><a href="{% url 'campaigns:detail' pk=object.campaign.id %}">{{ object.campaign }}</a></small>
-                {% endif %}
-            </div>
-
-            <div class="character-image {% if may_edit %}sidebar-trigger{% endif %} mt-2" data-sidebar-title="{% trans 'Character' %}"
+        <div class="col-md-10 offset-md-1 pb-5">
+            <div class="character-image float-start me-4 {% if may_edit %}sidebar-trigger{% endif %}"
+                 data-sidebar-title="{% trans 'Character' %}"
                  data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}">
                 {% if character.image %}
                     {% thumbnail character.image "140x140" crop="center" as im %}
@@ -48,8 +39,19 @@
                     <img class="rounded img-fluid" width="140" height="140" src="{% static 'img/silhuette.png' %}"
                          alt="{{ object.name }}">
                 {% endif %}
-            <span class="dice-icon"><i class="fas fa-dice-five text-light shadow fa-2x"></i></span>
-        </div>
+                <span class="dice-icon"><i class="fas fa-dice-five text-light shadow fa-2x"></i></span>
+            </div>
+
+            <div>
+                <h3 class="mb-0">{{ object.name }}</h3>
+                <small>{% template_category_string object 3 "" %}</small><br>
+                <small>{% template_category_string object 2 "" %}</small><br>
+                <small>{% template_category_string object 6 "" %}</small><br>
+                {% if object.campaign %}
+                    <small><a
+                            href="{% url 'campaigns:detail' pk=object.campaign.id %}">{{ object.campaign }}</a></small>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -59,7 +61,7 @@
     <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
     <div id="character-modal" class="modal fade character-modal" tabindex="-1" role="dialog"
          aria-labelledby="character-modal">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl modal-fullscreen-lg-down" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modal</h5>
