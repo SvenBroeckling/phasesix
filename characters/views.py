@@ -610,6 +610,18 @@ class AddItemView(View):
         return JsonResponse({'status': 'ok'})
 
 
+class XhrUpdateItemSortOrderView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        for pk, order in request.POST.items():
+            character.characteritem_set.filter(id=pk).update(ordering=order)
+
+        return JsonResponse({'status': 'ok'})
+
+
 class XhrModifyItemView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])

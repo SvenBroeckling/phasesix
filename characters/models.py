@@ -542,9 +542,6 @@ class CharacterItemQuerySet(models.QuerySet):
     def usable_in_combat(self):
         return self.filter(item__usable_in_combat=True)
 
-    def by_type(self):
-        return self.order_by('item__type')
-
 
 class CharacterItem(models.Model):
     objects = CharacterItemQuerySet.as_manager()
@@ -552,9 +549,10 @@ class CharacterItem(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'), default=1)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
+    ordering = models.IntegerField(_('Ordering'), default=1)
 
     class Meta:
-        ordering = ('item__id',)
+        ordering = 'ordering',
 
     @property
     def use_skill(self):

@@ -7,6 +7,29 @@
     <script src="{% static 'js/character_detail.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/campaign_socket.js' %}"></script>
+    <script>
+        $(function () {
+            function saveSortOrder(selector, url){
+                let order = {}
+                $(selector).each((idx, e) => {
+                    order[$(e).data('pk')] = idx
+                })
+                $.post(url, order)
+            }
+
+            for (const element of [".item-sortable"]) {
+                $(element).sortable({
+                    tolerance: 'pointer',
+                    items: 'div.card',
+                    placeholder: '<div class="card mb-3"><div class="card-header">&nbsp;</div></div>'
+                }).bind('sortstart', function (e, ui) {
+                }).bind('sortstop', function (e, ui) {
+                }).bind('sortupdate', function (e, ui) {
+                    saveSortOrder(`${element} > div`, $(this).data('url'))
+                })
+            }
+        })
+    </script>
 {% endblock %}
 
 {% block belownav %}
@@ -47,7 +70,9 @@
                 <small>{% template_category_string object 3 "" %}</small><br>
                 <small>{% template_category_string object 2 "" %}</small><br>
                 <small>{% template_category_string object 6 "" %}</small><br>
-                <small class="sidebar-trigger" data-sidebar-title="{% trans 'Reputation' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="reputation" %}"><span>{% trans 'Reputation' %}</span> <span class="badge bg-secondary">{{ object.reputation_gained }}</span></small><br>
+                <small class="sidebar-trigger" data-sidebar-title="{% trans 'Reputation' %}"
+                       data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="reputation" %}"><span>{% trans 'Reputation' %}</span>
+                    <span class="badge bg-secondary">{{ object.reputation_gained }}</span></small><br>
                 {% if object.campaign %}
                     <small><a
                             href="{% url 'campaigns:detail' pk=object.campaign.id %}">{{ object.campaign }}</a></small>

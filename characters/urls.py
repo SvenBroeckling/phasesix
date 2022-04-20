@@ -211,6 +211,10 @@ urlpatterns = [
         views.XhrModifyItemView.as_view(),
         name='xhr_modify_item'),
     url(
+        r'^xhr_update_item_sort_order/(?P<pk>\d+)$',
+        views.XhrUpdateItemSortOrderView.as_view(),
+        name='xhr_update_item_sort_order'),
+    url(
         r'^modify_currency/(?P<pk>\d+)$',
         views.XhrModifyCurrencyView.as_view(),
         name='xhr_modify_currency'),
