@@ -29,6 +29,12 @@
                                    title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
                             </span>
                         {% endif %}
+                        {% if r.condition < 100 %}
+                            <span class="float-end me-1">
+                                <span title="{% trans 'Condition' %}">{% color_value_span r.condition 100 %}%</span>
+
+                            </span>
+                        {% endif %}
                     </div>
                     <div class="card-body">
                         <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
@@ -79,6 +85,11 @@
                             <span class="float-end">
                                 <i class="fas fa-eye-slash fa-fw"
                                    title="{% trans 'Concealment' %}"></i> {% color_value_span weapon.modified_concealment 7 invert=True %}
+                            </span>
+                        {% endif %}
+                        {% if weapon.condition < 100 %}
+                            <span class="float-end me-1">
+                                <span title="{% trans 'Condition' %}">{% color_value_span weapon.condition 100 %}%</span>
                             </span>
                         {% endif %}
                     </div>
@@ -199,9 +210,9 @@
                         <span class="small text-muted">{{ ci.item.type }}</span>
                         {% if ci.item.concealment > 0 %}
                             <span class="float-end">
-                        <i class="fas fa-eye-slash fa-fw"
-                           title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
-                        </span>
+                                <i class="fas fa-eye-slash fa-fw"
+                                   title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
+                            </span>
                         {% endif %}
                     </div>
                     {% if ci.item.description %}

@@ -1,8 +1,8 @@
 ### UI
 
-- Zauberaddon Modal formatting
 - Sortierbare Gegenstände
 - Gegenstände in Containern
+- Zauberaddon Modal formatting
 - Detailseiten: Weapon, Armour, BaseSpell
 - Dietrich: Knowledge würfeln
 - Weapon List/Detail: Statuseffekte
