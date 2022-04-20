@@ -1,36 +1,22 @@
-### Generell
+### UI
 
+- Zauberaddon Modal formatting
+- Sortierbare Gegenstände
+- Gegenstände in Containern
 - Detailseiten: Weapon, Armour, BaseSpell
-- Weapon List/Detail: Statuseffekte
 - Dietrich: Knowledge würfeln
+- Weapon List/Detail: Statuseffekte
 
 ### Icon Stamp
 
 - https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
 
-### UI
-- Erhaltene Reputation anzeigen
-- Zauberaddon Modal formatting
-- Sortierbare Gegenstände
-- Gegenstände in Containern
-
 ### Status Effekte:
-  - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
-  - In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
-  - Geschockt auf Anzahl der Würfel anrechnen
-  - Brennend auf Angriffe und Wahrnehmung anrechnen
 
-### Data
-
-- Quirks: Attribute bereinigen + Description
-- Viel Equipment fehlt in den 80ern
-- Spell Mods: Arkana Kosten
-
-### Fertigkeiten
-
-- Wackelkandidaten: Achtsamkeit und Athletik
-- Fehlend: Recherche? (Evtl Untersuchen?)
-- Fehlend: (Selbst)beherrschung?
+- Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
+- In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
+- Geschockt auf Anzahl der Würfel anrechnen
+- Brennend auf Angriffe und Wahrnehmung anrechnen
 
 ### Notizen
 
@@ -57,7 +43,20 @@
 ### Waffenaddons überarbeiten
 
 - Weniger Bonuswürfel
+- Bonuswürfel -> Strärke o.ä?
 - Kapazität
+
+### Data
+
+- Quirks: Attribute bereinigen + Description
+- Viel Equipment fehlt in den 80ern
+- Spell Mods: Arkana Kosten
+
+### Fertigkeiten
+
+- Wackelkandidaten: Achtsamkeit und Athletik
+- Fehlend: Recherche? (Evtl Untersuchen?)
+- Fehlend: (Selbst)beherrschung?
 
 ## Zukünftige Erweiterungen
 
@@ -66,14 +65,15 @@
 ### Währung von Mechanik zu Erweiterung
 
 - 4-5 Startkapital Schablonen
-- Retainer Schable 
+- Retainer Schable
 - Immobilien / Eigentum
 - etc
 
 ### Pantheon
-  Mönch
-  Paladin
-  Priester
-  Vampir
-  
+
+Mönch
+Paladin
+Priester
+Vampir
+
 ### Körpermodifikationen

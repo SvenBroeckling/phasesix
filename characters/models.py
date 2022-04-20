@@ -163,6 +163,10 @@ class Character(models.Model):
     def reputation_available(self):
         return self.reputation - self.reputation_spent
 
+    @property
+    def reputation_gained(self):
+        return self.reputation - self.lineage.template_point_sum
+
     def set_initial_reputation(self, initial_reputation=None):
         self.reputation = (
             self.reputation_spent if initial_reputation is None else initial_reputation

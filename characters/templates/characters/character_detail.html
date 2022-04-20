@@ -47,6 +47,7 @@
                 <small>{% template_category_string object 3 "" %}</small><br>
                 <small>{% template_category_string object 2 "" %}</small><br>
                 <small>{% template_category_string object 6 "" %}</small><br>
+                <small class="sidebar-trigger" data-sidebar-title="{% trans 'Reputation' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="reputation" %}"><span>{% trans 'Reputation' %}</span> <span class="badge bg-secondary">{{ object.reputation_gained }}</span></small><br>
                 {% if object.campaign %}
                     <small><a
                             href="{% url 'campaigns:detail' pk=object.campaign.id %}">{{ object.campaign }}</a></small>

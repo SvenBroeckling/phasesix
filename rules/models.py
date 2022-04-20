@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib import admin
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 
@@ -108,6 +108,11 @@ class Lineage(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    @property
+    def template_point_sum(self):
+        tp = self.lineagetemplatepoints_set.aggregate(Sum('points'))
+        return tp['points__sum'] if tp else 0
 
 
 class LineageTemplatePoints(models.Model):
