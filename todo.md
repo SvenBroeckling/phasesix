@@ -11,14 +11,6 @@
 
 - https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
 
-
-### Notizen
-
-* Privat / Öffentlich
-* Reihenfolge?
-* Quicknote-Modal
-* Tagebuch / Log Theme
-
 ### Kampagnen
 
 - Join / Create fertigstellen
