@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-21 20:15+0000\n"
-"PO-Revision-Date: 2022-04-21 22:15+0200\n"
+"POT-Creation-Date: 2022-04-21 21:04+0000\n"
+"PO-Revision-Date: 2022-04-21 23:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -526,6 +526,8 @@ msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
 #: armory/templates/armory/weapon_list.html:76
+#: characters/templates/characters/sidebar/characterweapon.html:12
+#: characters/templates/characters/sidebar/weaponless.html:9
 msgid "Bonus Wounds"
 msgstr "Bonuswunden"
 
@@ -1665,6 +1667,36 @@ msgstr "Charakter löschen"
 msgid "Roll Evasion"
 msgstr "Ausweichen würfeln"
 
+#: characters/templates/characters/sidebar/charactercombat.html:20
+msgid ""
+"\n"
+"                The attacked character can dodge a melee attack as a "
+"reaction. This requires that the attacked character has an action available "
+"and can perceive the attacker. Thus, an attack from behind cannot be "
+"dodged.\n"
+"            "
+msgstr ""
+"\n"
+"\t\tDer Angegriffene kann einem Nahkampfangriff als Reaktion ausweichen. "
+"Voraussetzung hierfür ist, dass der angegriffene Charakter eine Aktion "
+"verfügbar hat und den Angreifer wahrnehmen kann. Einem Angriff von hinten "
+"kann also nicht ausgewichen werden.\n"
+"\t"
+
+#: characters/templates/characters/sidebar/charactercombat.html:25
+msgid ""
+"\n"
+"                To dodge an attack, the character rolls a die to his value "
+"in Evasion on his normal minimum roll. The character has completely dodged "
+"the attack if the roll is successful.\n"
+"            "
+msgstr ""
+"\n"
+"\t\tUm einem Angriff auszuweichen, wirft der Charakter einen Wurf auf seinen "
+"Wert in Ausweichen auf seinen normalen Mindestwurf. Der Charakter ist dem "
+"Angriff komplett ausgewichen, wenn der Wurf erfolgreich ist.\n"
+"\t"
+
 #: characters/templates/characters/sidebar/characteritem.html:9
 #: characters/templates/characters/sidebar/magic.html:9
 msgid "Use Arcana"
@@ -1742,6 +1774,12 @@ msgstr "Vergessen"
 #: magic/templates/magic/_basespell_widget.html:21
 msgid "Spell Casting"
 msgstr "Zaubern"
+
+#: characters/templates/characters/sidebar/characterweapon.html:12
+#, fuzzy
+#| msgid "Piercing"
+msgid "Pierce"
+msgstr "Durchschlag"
 
 #: characters/templates/characters/sidebar/characterweapon.html:15
 msgid "Attack:"
@@ -1933,6 +1971,56 @@ msgstr ""
 #: characters/templates/characters/sidebar/weaponless.html:12
 msgid "Attack"
 msgstr "Angriff"
+
+#: characters/templates/characters/sidebar/weaponless.html:19
+msgid ""
+"\n"
+"                    If the character attacks without a weapon, the player "
+"rolls hit dice equal to his Hand to hand combat value. The minimum roll is "
+"equal to the character's minimum roll, which is usually 5+.\n"
+"                "
+msgstr ""
+"\n"
+"\t\tGreift der Character ohne Waffe an, so wirft der Spieler Trefferwürfel "
+"entsprechend seinem Wert Nahkampf. Der Mindestwurf entspricht dem "
+"Mindestwurf des Charakters, also in der Regel 5+.\n"
+"\t"
+
+#: characters/templates/characters/sidebar/weaponless.html:24
+msgid ""
+"\n"
+"                    If the character's Strength value is higher than 2, the "
+"successful attack causes 1 bonus wound.\n"
+"                "
+msgstr ""
+"\n"
+"\t\tIst der Wert Kraft des Charakters höher als 2, so verursacht der "
+"erfolgreiche Angriff 1 Bonuswunde.\n"
+"\t"
+
+#: characters/templates/characters/sidebar/weaponless.html:29
+msgid ""
+"\n"
+"                    If the character's Quickness value is higher than 2, the "
+"character adds one die to the roll.\n"
+"                "
+msgstr ""
+"\n"
+"\t\tIst der Wert Schnelligkeit des Charakters höher als 2, so fügt der "
+"Charakter dem Wurf einen Würfel hinzu. \n"
+"\t"
+
+#: characters/templates/characters/sidebar/weaponless.html:34
+msgid ""
+"\n"
+"                    The piercing of an unarmed melee attack is 0, and the "
+"range is 1 meter.\n"
+"                "
+msgstr ""
+"\n"
+"\t\tDer Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die "
+"Reichweite beträgt 1 Meter.\n"
+"\t"
 
 #: characters/templates/characters/sidebar/wounds.html:12
 msgid "Heal"
