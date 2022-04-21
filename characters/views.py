@@ -795,7 +795,6 @@ class XhrCreateNoteView(View):
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
 
-        print(request.POST)
         character.characternote_set.create(
             is_private=request.POST.get('private', 'off') == 'on',
             subject=request.POST.get('subject', None),
