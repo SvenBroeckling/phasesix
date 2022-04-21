@@ -2,25 +2,29 @@
 {% load characters_extras rules_extras i18n bootstrap4 %}
 
 {% block campaign_content %}
-    <h2>{% trans 'Character status' %}</h2>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table campaign-status-sortable">
             <thead>
-                <tr>
+                <tr class="pointer">
                     <th>{% trans 'Character' %}</th>
-                    <th>{% trans 'Player' %}</th>
-                    <th>{% trans 'Wounds' %}</th>
-                    <th>{% trans 'Arcana' %}</th>
-                    <th>{% trans 'Dice' %}</th>
+                    <th class="data column-player">{% trans 'Player' %}</th>
+                    <th class="data column-wounds">{% trans 'Wounds' %}</th>
+                    <th class="data column-status">{% trans 'Status' %}</th>
+                    <th class="data column-arcana">{% trans 'Arcana' %}</th>
+                    <th class="data column-stress">{% trans 'Stress' %}</th>
+                    <th class="data column-dice">{% trans 'Dice' %}</th>
                 </tr>
             </thead>
             <tbody>
                 {% for c in object.character_set.all %}
                     <tr>
-                        <td><a href="{{ c.get_absolute_url }}">{{ c }}</a></td>
-                        <td>{{ c.created_by }}</td>
+                        <td class="column-dice">
+                            <a href="{{ c.get_absolute_url }}">{{ c }}</a>
+                        </td>
+                        <td class="column-player">{{ c.created_by }}</td>
 
-                        <td>
+                        <td class="column-wounds">
+                            <span class="sort-key d-none">{{ c.health|add:c.boost }}</span>
                             {% for i in c.health|to_range %}
                                 <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
                             {% endfor %}
@@ -32,7 +36,17 @@
                             {% endfor %}
                         </td>
 
-                        <td>
+                        <td class="character-status">
+                            <span class="sort-key d-none">{{ c.characterstatuseffect_set.count }}</span>
+                            {% for cse in c.characterstatuseffect_set.all %}
+                                {% for v in cse.value|to_range %}
+                                    <i title="{{ cse }}: {{ cse.value }}" class="{{ cse.status_effect.fa_icon_class }}"></i>
+                                {% endfor %}
+                            {% endfor %}
+                        </td>
+
+                        <td class="column-arcana">
+                            <span class="sort-key d-none">{{ c.arcana }}</span>
                             {% for i in c.arcana|to_range %}
                                 <i class="fas fa-magic text-warning"></i>
                             {% endfor %}
@@ -41,7 +55,20 @@
                             {% endfor %}
                         </td>
 
-                        <td>
+                        <td class="column-stress">
+                            <span class="sort-key d-none">{{ c.stress }}</span>
+                            {% if c.extension_enabled.horror %}
+                                {% for i in c.stress|to_range %}
+                                    <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
+                                {% endfor %}
+                                {% for i in c.available_stress|to_range %}
+                                    <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+
+                        <td class="column-dice">
+                            <span class="sort-key d-none">{{ c.bonus_dice_free|add:c.destiny_dice_free|add:c.rerolls_free }}</span>
                             {% for i in c.bonus_dice_free|to_range %}
                                 <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Die' %}"></i>
                             {% endfor %}

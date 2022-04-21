@@ -19,6 +19,14 @@
             e.preventDefault()
             return false
         })
+
+        $('table.campaign-status-sortable').tablesorter({
+            textExtraction: {
+                '.data': function(node, table, cellIndex) {
+                    return $(node).find('span.sort-key').text()
+                }
+            }
+        })
     </script>
 {% endblock %}
 

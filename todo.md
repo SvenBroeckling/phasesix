@@ -1,22 +1,16 @@
 ### UI
 
-- Sortierbare Gegenstände
 - Gegenstände in Containern
-- Zauberaddon Modal formatting
-- Detailseiten: Weapon, Armour, BaseSpell
+- Combat Sidebar fertig machen
+- Detailseiten: Weapon, Armour, BaseSpell, Template
 - Dietrich: Knowledge würfeln
 - Weapon List/Detail: Statuseffekte
+- Zauberaddon Modal formatting
 
 ### Icon Stamp
 
 - https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
 
-### Status Effekte:
-
-- Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
-- In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
-- Geschockt auf Anzahl der Würfel anrechnen
-- Brennend auf Angriffe und Wahrnehmung anrechnen
 
 ### Notizen
 
@@ -45,6 +39,13 @@
 - Weniger Bonuswürfel
 - Bonuswürfel -> Strärke o.ä?
 - Kapazität
+
+### Status Effekte:
+
+- Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
+- In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
+- Geschockt auf Anzahl der Würfel anrechnen
+- Brennend auf Angriffe und Wahrnehmung anrechnen
 
 ### Data
 
