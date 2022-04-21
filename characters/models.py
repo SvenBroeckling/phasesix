@@ -650,3 +650,20 @@ class CharacterCurrency(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     currency_map_unit = models.ForeignKey('armory.CurrencyMapUnit', on_delete=models.CASCADE)
     quantity = models.IntegerField(_('quantity'), default=0)
+
+
+class CharacterNote(models.Model):
+    objects = CharacterItemQuerySet.as_manager()
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    subject = models.CharField(_('subject'), max_length=80, null=True, blank=True)
+    text = models.TextField(_('text'))
+    ordering = models.IntegerField(_('ordering'), default=1)
+
+    class Meta:
+        ordering = 'ordering', 'created_at'
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+

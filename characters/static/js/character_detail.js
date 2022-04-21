@@ -65,6 +65,22 @@ $(function () {
         return false
     })
 
+    body.on('click', '.submit-button', function (e) {
+        let form = $(this).closest('form')
+        let url = form.attr('action')
+        let form_data = form.serialize()
+
+        $.post(url, form_data, function (data) {
+            refresh_fragments()
+        })
+
+        if ($(this).hasClass('close-sidebar')) {
+            $('#sidebar-right').css('width', '');
+        }
+        e.preventDefault()
+        return false
+    })
+
     body.on('submit', '.add-form', function (e) {
         let form = $(this)
         let btn = form.find('button')

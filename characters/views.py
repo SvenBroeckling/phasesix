@@ -16,7 +16,7 @@ from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
-    CharacterSpell, CharacterSkill, CharacterAttribute
+    CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
 from horror.models import QuirkCategory
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge
@@ -116,6 +116,10 @@ class XhrCharacterSkillSidebarView(XhrSidebarView):
 
 class XhrCharacterAttributeSidebarView(XhrSidebarView):
     model = CharacterAttribute
+
+
+class XhrCharacterNoteSidebarView(XhrSidebarView):
+    model = CharacterNote
 
 
 class XhrCharacterKnowledgeSidebarView(XhrSidebarView):
@@ -780,4 +784,46 @@ class XhrModifyCurrencyView(View):
                 character.charactercurrency_set.create(
                     currency_map_unit=CurrencyMapUnit.objects.get(id=unit_id),
                     quantity=v)
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrCreateNoteView(View):
+
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        character.characternote_set.create(
+            subject=request.POST.get('subject', None),
+            text=request.POST.get('text', None)
+        )
+
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrUpdateNoteView(View):
+
+    def post(self, request, *args, **kwargs):
+        note = CharacterNote.objects.get(id=kwargs['note_pk'])
+
+        if not note.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        note.subject = request.POST.get('subject', None)
+        note.text = request.POST.get('text', None)
+        note.save()
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrDeleteNoteView(View):
+
+    def post(self, request, *args, **kwargs):
+        note = CharacterNote.objects.get(id=kwargs['note_pk'])
+
+        if not note.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        note.delete()
         return JsonResponse({'status': 'ok'})

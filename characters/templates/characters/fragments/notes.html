@@ -1,0 +1,31 @@
+{% extends 'characters/fragments/fragment_base.html' %}
+{% load characters_extras rules_extras i18n %}
+
+{% block fragment %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary float-end mb-2 sidebar-trigger" data-sidebar-title="{% trans 'Take a note' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">{% trans "Take a note" %}</button>
+                </div>
+            </div>
+            <div class="row masonry-container">
+                {% for note in character.characternote_set.all %}
+                    <div class="col-12 col-md-6">
+                        <div
+                                data-sidebar-title="{% trans 'Note' %}"
+                                data-sidebar-url="{% url 'characters:xhr_characternote_sidebar' pk=note.id sidebar_template="characternote" %}"
+                                class="card mb-3 sidebar-trigger">
+                            <div class="card-header">
+                                {{ note.subject|default:"Note" }}
+                            </div>
+                            <div class="card-body">
+                                {{ note.text|default:""|urpg_markup }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
+    {% if may_edit %}
     <div class="row">
         <div class="col-12">
             <button class="btn btn-primary btn-sm float-end dice-roll mb-1"
@@ -12,6 +13,8 @@
             </button>
         </div>
     </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">

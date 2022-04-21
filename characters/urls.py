@@ -48,6 +48,10 @@ urlpatterns = [
         r'sidebar_charactertemplateshadow/<int:pk>/<str:sidebar_template>/',
         views.XhrCharacterTemplateShadowSidebarView.as_view(),
         name='xhr_charactertemplateshadow_sidebar'),
+    path(
+        r'sidebar_characternote/<int:pk>/<str:sidebar_template>/',
+        views.XhrCharacterNoteSidebarView.as_view(),
+        name='xhr_characternote_sidebar'),
 
     url(
         r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<model_name>[A-Za-z_]+)/(?P<fragment_name>[a-z_]+)$',
@@ -228,4 +232,18 @@ urlpatterns = [
         r'^add_weapon_modification/(?P<pk>\d+)/(?P<weapon_modification_pk>\d+)/(?P<character_weapon_pk>\d+)$',
         views.AddWeaponModificationView.as_view(),
         name='add_weapon_modification'),
+
+    # Notes
+    url(
+        r'^xhr_create_note/(?P<pk>\d+)$',
+        views.XhrCreateNoteView.as_view(),
+        name='xhr_create_note'),
+    url(
+        r'^xhr_update_note/(?P<pk>\d+)/(?P<note_pk>\d+)$',
+        views.XhrUpdateNoteView.as_view(),
+        name='xhr_update_note'),
+    url(
+        r'^xhr_delete_note/(?P<pk>\d+)/(?P<note_pk>\d+)$',
+        views.XhrDeleteNoteView.as_view(),
+        name='xhr_delete_note'),
 ]

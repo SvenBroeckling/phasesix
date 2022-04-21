@@ -131,6 +131,10 @@
                    aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
                     <span class="badge bg-primary ms-2">{{ object.reputation_available }}</span>
                 </a>
+                <a class="nav-link" data-bs-toggle="tab" href="#v-notes" role="tab" aria-controls="v-notes"
+                   aria-selected="true"><i class="fas fa-fw fa-feather"></i>&nbsp;{% trans 'Notes' %}
+                    <button class="btn btn-primary btn-sm ms-2 sidebar-trigger"data-sidebar-title="{% trans 'Take a note' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">+</button>
+                </a>
             </div>
 
             {% if not object.created_by %}
@@ -158,6 +162,10 @@
 
                 <div class="tab-pane fade" id="v-background" role="tabpanel">
                     {% detail_fragment 'Character' 'advancement' %}
+                </div>
+
+                <div class="tab-pane fade" id="v-notes" role="tabpanel">
+                    {% detail_fragment 'Character' 'notes' %}
                 </div>
             </div>
         </div>

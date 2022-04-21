@@ -1,0 +1,22 @@
+{% load i18n bootstrap4 rules_extras %}
+
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <form action="{% url 'characters:xhr_create_note' pk=object.id %}" method="post">
+                <input type="text" name="subject" class="form-control mb-2"
+                       placeholder="{% trans 'Subject (optional)' %}">
+                <textarea
+                        class="form-control mb-2"
+                        name="text"
+                        required
+                        placeholder="{% trans 'Note Text (Markdown allowed)' %}"
+                        rows="7"></textarea>
+                <button
+                        class="btn btn-primary btn-sm w-100 submit-button close-sidebar">
+                    <i class="fas fa-feather fa-fw"></i> {% trans 'Create Note' %}</button>
+            </form>
+        </div>
+    </div>
+{% endif %}
+
