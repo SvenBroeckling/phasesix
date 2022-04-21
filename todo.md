@@ -1,10 +1,10 @@
 ### UI
 
 - Gegenstände in Containern
-- Combat Sidebar fertig machen
 - Detailseiten: Weapon, Armour, BaseSpell, Template
-- Dietrich: Knowledge würfeln
 - Weapon List/Detail: Statuseffekte
+- Laute: Knowledge würfeln
+- Dietrich: Knowledge würfeln
 - Zauberaddon Modal formatting
 
 ### Icon Stamp
@@ -13,6 +13,7 @@
 
 ### Kampagnen
 
+- Onepager wie Detail
 - Join / Create fertigstellen
 - Evtl. Initracker?
 - GM: Remove Player
@@ -64,9 +65,9 @@
 
 ### Pantheon
 
-Mönch
-Paladin
-Priester
-Vampir
+- Mönch
+- Paladin
+- Priester
+- Vampir
 
 ### Körpermodifikationen
