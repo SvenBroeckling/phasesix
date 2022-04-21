@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-21 19:22+0000\n"
-"PO-Revision-Date: 2022-04-21 21:24+0200\n"
+"POT-Creation-Date: 2022-04-21 20:15+0000\n"
+"PO-Revision-Date: 2022-04-21 22:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -711,7 +711,7 @@ msgstr ""
 "Lege einen Discord Webhook an und kopiere seine URL hier herein, um "
 "Würfelergebnisse anzuzeigen."
 
-#: campaigns/models.py:69 characters/models.py:661 forum/models.py:91
+#: campaigns/models.py:69 characters/models.py:662 forum/models.py:91
 msgid "text"
 msgstr "Text"
 
@@ -998,10 +998,14 @@ msgid "quantity"
 msgstr "Menge"
 
 #: characters/models.py:660
+msgid "is private"
+msgstr "Ist Privat"
+
+#: characters/models.py:661
 msgid "subject"
 msgstr "Thema"
 
-#: characters/models.py:662 rules/models.py:62 rules/models.py:367
+#: characters/models.py:663 rules/models.py:62 rules/models.py:367
 msgid "ordering"
 msgstr "Sortierung"
 
@@ -1147,12 +1151,12 @@ msgstr "Werdegang"
 msgid "Notes"
 msgstr "Notizen"
 
-#: characters/templates/characters/character_detail.html:136
-#: characters/templates/characters/fragments/notes.html:9
+#: characters/templates/characters/character_detail.html:137
+#: characters/templates/characters/fragments/notes.html:10
 msgid "Take a note"
 msgstr "Notiz anlegen"
 
-#: characters/templates/characters/character_detail.html:142
+#: characters/templates/characters/character_detail.html:144
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -1521,7 +1525,7 @@ msgstr "Ritual"
 msgid "Shape"
 msgstr "Form"
 
-#: characters/templates/characters/fragments/notes.html:16
+#: characters/templates/characters/fragments/notes.html:19
 msgid "Note"
 msgstr "Notiz"
 
@@ -1697,10 +1701,15 @@ msgid "Note Text (Markdown allowed)"
 msgstr "Notiztext (Markdown erlaubt)"
 
 #: characters/templates/characters/sidebar/characternote.html:19
+#: characters/templates/characters/sidebar/createnote.html:17
+msgid "Private Note"
+msgstr "Private Notiz"
+
+#: characters/templates/characters/sidebar/characternote.html:23
 msgid "Save Note"
 msgstr "Notiz speichern"
 
-#: characters/templates/characters/sidebar/characternote.html:23
+#: characters/templates/characters/sidebar/characternote.html:27
 msgid "Delete Note"
 msgstr "Notiz Löschen"
 
@@ -1751,7 +1760,7 @@ msgstr "Modifikationen"
 msgid "Remove Modification"
 msgstr "Modifikatoren entfernen"
 
-#: characters/templates/characters/sidebar/createnote.html:17
+#: characters/templates/characters/sidebar/createnote.html:21
 msgid "Create Note"
 msgstr "Notiz anlegen"
 
