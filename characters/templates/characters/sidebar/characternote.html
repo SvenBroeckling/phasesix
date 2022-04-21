@@ -14,6 +14,10 @@
                         required
                         placeholder="{% trans 'Note Text (Markdown allowed)' %}"
                         rows="7">{{ object.text }}</textarea>
+                <div class="form-check form-switch mb-2">
+                    <input {% if object.is_private %}checked{% endif %} type="checkbox" name="private" id="create-note-private-switch" class="form-check-input">
+                    <label for="create-note-private-switch" class="form-check-label">{% trans 'Private Note' %}</label>
+                </div>
                 <button
                         class="btn btn-primary btn-sm w-100 mb-2 submit-button close-sidebar">
                     <i class="fas fa-feather fa-fw"></i> {% trans 'Save Note' %}</button>

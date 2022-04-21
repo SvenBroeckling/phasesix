@@ -133,7 +133,9 @@
                 </a>
                 <a class="nav-link" data-bs-toggle="tab" href="#v-notes" role="tab" aria-controls="v-notes"
                    aria-selected="true"><i class="fas fa-fw fa-feather"></i>&nbsp;{% trans 'Notes' %}
-                    <button class="btn btn-primary btn-sm ms-2 sidebar-trigger"data-sidebar-title="{% trans 'Take a note' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">+</button>
+                    {% if may_edit %}
+                        <button class="btn btn-primary btn-sm ms-2 sidebar-trigger"data-sidebar-title="{% trans 'Take a note' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">+</button>
+                    {% endif %}
                 </a>
             </div>
 

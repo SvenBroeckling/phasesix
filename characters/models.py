@@ -657,6 +657,7 @@ class CharacterNote(models.Model):
 
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    is_private = models.BooleanField(_('is private'), default=False)
     subject = models.CharField(_('subject'), max_length=80, null=True, blank=True)
     text = models.TextField(_('text'))
     ordering = models.IntegerField(_('ordering'), default=1)

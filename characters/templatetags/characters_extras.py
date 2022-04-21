@@ -153,3 +153,10 @@ def spell_type_attribute_dice_value(character, spell_type):
 @register.filter
 def currency_quantity(object, currency_map_unit):
     return object.currency_quantity(currency_map_unit)
+
+
+@register.simple_tag
+def character_notes(character, user):
+    if character.may_edit(user):
+        return character.characternote_set.all()
+    return character.characternote_set.filter(is_private=False)
