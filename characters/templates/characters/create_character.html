@@ -12,7 +12,7 @@
 
         {% for extension in extensions %}
             <div class="col-12 col-md-6 col-lg-4">
-                <a href="{% url 'characters:create_character_data' extension_pk=extension.id %}">
+                <a href="{% url 'characters:create_character_data' epoch_pk=extension.id %}">
                     <div class="card text-center create-epoch-card mb-4">
                         {% thumbnail extension.image "1024" as im %}
                         <div class="card-body" style="background-image: url({{ im.url }}); background-size: cover">

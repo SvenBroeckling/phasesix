@@ -28,7 +28,7 @@ class Campaign(models.Model):
     )
 
     epoch = models.ForeignKey(
-        'rules.Extension', limit_choices_to={'is_epoch': True}, on_delete=models.CASCADE,
+            'rules.Extension', limit_choices_to={'is_epoch': True, 'is_mandatory': False}, on_delete=models.CASCADE,
         related_name="campaign_epoch_set",
         verbose_name=_('Epoch')
     )

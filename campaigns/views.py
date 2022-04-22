@@ -20,7 +20,7 @@ class CampaignListView(ListView):
 
 class CampaignCreateView(CreateView):
     model = Campaign
-    fields = ('name', 'epoch', 'abstract', 'currency_map')
+    fields = ('name', 'epoch', 'abstract', 'character_visibility', 'currency_map')
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -37,6 +37,7 @@ class CampaignDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['may_join'] = self.kwargs.get('hash', '') == self.object.campaign_hash
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 

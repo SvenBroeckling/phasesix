@@ -158,7 +158,6 @@ class XhrCharacterRestView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        channel_layer = get_channel_layer()
         character = Character.objects.get(id=kwargs['pk'])
         mode = request.POST.get('mode', 'manual')
         if not character.may_edit(request.user):
@@ -328,6 +327,15 @@ class CreateCharacterDataView(FormView):
     form_class = CreateCharacterForm
     template_name = 'characters/character_form.html'
 
+    @property
+    def campaign_to_join(self):
+        campaign_pk = self.kwargs.get('campaign_pk', None)
+        if campaign_pk is not None:
+            campaign = Campaign.objects.get(id=campaign_pk)
+            if campaign.campaign_hash == self.kwargs.get('hash', ''):
+                return campaign
+        return None
+
     def form_valid(self, form):
         self.object = Character.objects.create(
             name=form.cleaned_data['name'],
@@ -341,6 +349,11 @@ class CreateCharacterDataView(FormView):
         for attribute in Attribute.objects.all():
             self.object.characterattribute_set.create(attribute=attribute)
 
+        if self.campaign_to_join is not None:
+            for ext in self.campaign_to_join.extensions.all():
+                self.object.extensions.add(ext)
+            self.object.campaign = self.campaign_to_join
+
         self.object.created_by = self.request.user if self.request.user.is_authenticated else None
         self.object.save()
 
@@ -348,21 +361,17 @@ class CreateCharacterDataView(FormView):
 
     def get_initial(self):
         lineages = Lineage.objects.filter(
-            Q(extensions__id=self.kwargs['extension_pk']) |
+            Q(extensions__id=self.kwargs['epoch_pk']) |
             Q(extensions__id__in=Extension.objects.filter(is_mandatory=True)))
         return {
-            'epoch': self.kwargs['extension_pk'],
+            'epoch': self.kwargs['epoch_pk'],
             'lineage': lineages.earliest('id')
         }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        campaign_pk = self.request.GET.get('campaign_pk', None)
         context['extensions'] = Extension.objects.filter(is_epoch=False, is_mandatory=False, is_active=True)
-        context['campaign'] = None
-        if campaign_pk is not None:
-            print(campaign_pk)
-            context['campaign'] = Campaign.objects.get(id=campaign_pk)
+        context['campaign'] = self.campaign_to_join
         return context
 
     def get_success_url(self):

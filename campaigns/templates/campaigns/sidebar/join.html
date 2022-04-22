@@ -1,0 +1,22 @@
+{% load i18n bootstrap4 %}
+<div class="row">
+    <div class="col-12">
+        <p>
+            {% blocktrans with t_gm=object.created_by|capfirst t_campaign=object %}
+                {{ t_gm }} has invited you to join their campaign {{ t_campaign }}.
+            {% endblocktrans %}
+        </p>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'characters:create_character_data' epoch_pk=object.epoch.id campaign_pk=object.id hash=object.campaign_hash %}" class="btn btn-primary">{% trans 'Create a new character' %}</a>
+        {% else %}
+            {% url 'login' as login_url %}
+            {% url 'django_registration_register' as register_url %}
+                <p>
+                    {% blocktrans with t_login=login_url t_register=register_url %}
+                        You have to be logged in to join a campaign. <a href="{{ t_login }}">Login</a> or <a href="{{ t_register }}">create an account</a> to join.
+                    {% endblocktrans %}
+                </p>
+        {% endif %}
+    </div>
+</div>

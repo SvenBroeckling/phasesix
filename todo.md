@@ -1,11 +1,11 @@
 ### UI
 
-- Gegenstände in Containern
 - Detailseiten: Weapon, Armour, BaseSpell, Template
 - Weapon List/Detail: Statuseffekte
 - Laute: Knowledge würfeln
 - Dietrich: Knowledge würfeln
 - Zauberaddon Modal formatting
+- Gegenstände in Containern
 
 ### Icon Stamp
 
@@ -13,8 +13,7 @@
 
 ### Kampagnen
 
-- Onepager wie Detail
-- Join / Create fertigstellen
+- campaign detail: playerliste strange
 - Evtl. Initracker?
 - GM: Remove Player
 - Szenen -> Gamelog (Gemeinsam mit Charaktertagebuch)

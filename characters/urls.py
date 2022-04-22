@@ -119,11 +119,11 @@ urlpatterns = [
     # new character
     url(r'^new/$', views.CreateCharacterView.as_view(), name='create_character'),
     url(
-        r'^new/data/(?P<extension_pk>\d+)/$',
+        r'^new/data/(?P<epoch_pk>\d+)/$',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
     url(
-        r'^new/data/(?P<extension_pk>\d+)/(?P<campaign_pk>\d+)/$',
+        r'^new/data/(?P<epoch_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/$',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
 

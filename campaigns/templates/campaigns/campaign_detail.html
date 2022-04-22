@@ -25,14 +25,25 @@
                         {% endif %}
                     {% endif %}">
         <div class="col-md-10 offset-md-1 info mt-4">
+            {% if may_edit %}
             <a
                     href=""
                     data-sidebar-title="{% trans 'Roll' %}"
                     data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}"
                     class="sidebar-trigger btn btn-primary float-end"><i
                     class="fas fa-dice-five"></i> {% trans 'Roll' %}</a>
-            <a href="{{ object.invite_link }}" class="btn campaign-link btn-primary float-end me-2"
-               data-msg="{% trans 'Copied' %}">{% trans 'Invite Link' %}</a>
+                <a href="{{ object.invite_link }}" class="btn campaign-link btn-primary float-end me-2"
+                   data-msg="{% trans 'Copied' %}">{% trans 'Invite Link' %}</a>
+            {% endif %}
+            {% if may_join %}
+            <a
+                    href=""
+                    data-sidebar-title="{% trans 'Join campaign' %}"
+                    data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"
+                    class="sidebar-trigger btn btn-success me-2 float-end"><i
+                    class="fas fa-dice-five"></i> {% trans 'Join campaign' %}</a>
+            {% endif %}
+
             <h1>{{ object.name }}</h1>
             <small>{% trans 'A campaign by' %} {{ object.created_by }}</small>
             <p>{{ object.abstract|urpg_markup }}</p>
