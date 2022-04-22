@@ -59,11 +59,10 @@ def display_modifications(character_weapon, attribute):
 
 
 @register.simple_tag(takes_context=True)
-def detail_fragment(context, model_name, fragment_name):
+def detail_fragment(context, fragment_template):
     context = context.flatten()
-    context['fragment_name'] = fragment_name
-    context['model_name'] = model_name
-    return render_to_string('characters/fragments/' + fragment_name + '.html', context=context)
+    context['fragment_template'] = fragment_template
+    return render_to_string('characters/fragments/' + fragment_template + '.html', context=context)
 
 
 @register.simple_tag

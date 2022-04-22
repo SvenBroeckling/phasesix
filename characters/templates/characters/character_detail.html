@@ -6,30 +6,8 @@
 {% block javascript %}
     <script src="{% static 'js/character_detail.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/fragments.js' %}"></script>
     <script src="{% static 'js/campaign_socket.js' %}"></script>
-    <script>
-        $(function () {
-            function saveSortOrder(selector, url){
-                let order = {}
-                $(selector).each((idx, e) => {
-                    order[$(e).data('pk')] = idx
-                })
-                $.post(url, order)
-            }
-
-            for (const element of [".item-sortable"]) {
-                $(element).sortable({
-                    tolerance: 'pointer',
-                    items: 'div.card',
-                    placeholder: '<div class="card mb-3"><div class="card-header">&nbsp;</div></div>'
-                }).bind('sortstart', function (e, ui) {
-                }).bind('sortstop', function (e, ui) {
-                }).bind('sortupdate', function (e, ui) {
-                    saveSortOrder(`${element} > div`, $(this).data('url'))
-                })
-            }
-        })
-    </script>
 {% endblock %}
 
 {% block belownav %}
@@ -109,7 +87,7 @@
     <div class="row mt-4">
 
         <div class="col-12">
-            {% detail_fragment 'Character' 'health' %}
+            {% detail_fragment 'health' %}
 
             <div class="nav nav-tabs justify-content-center mb-3" id="v-pills-tab" role="tablist">
                 <a class="nav-link active" data-bs-toggle="tab" href="#v-character"
@@ -147,27 +125,27 @@
 
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="v-character" role="tabpanel">
-                    {% detail_fragment 'Character' 'character' %}
+                    {% detail_fragment 'character' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-gear" role="tabpanel">
-                    {% detail_fragment 'Character' 'gear' %}
+                    {% detail_fragment 'gear' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-combat" role="tabpanel">
-                    {% detail_fragment 'Character' 'combat' %}
+                    {% detail_fragment 'combat' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-magic" role="tabpanel">
-                    {% detail_fragment 'Character' 'magic' %}
+                    {% detail_fragment 'magic' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-background" role="tabpanel">
-                    {% detail_fragment 'Character' 'advancement' %}
+                    {% detail_fragment 'advancement' %}
                 </div>
 
                 <div class="tab-pane fade" id="v-notes" role="tabpanel">
-                    {% detail_fragment 'Character' 'notes' %}
+                    {% detail_fragment 'notes' %}
                 </div>
             </div>
         </div>

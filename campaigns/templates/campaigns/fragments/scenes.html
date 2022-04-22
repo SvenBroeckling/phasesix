@@ -1,0 +1,15 @@
+{% extends 'campaigns/fragments/fragment_base.html' %}
+{% load i18n rules_extras bootstrap4%}
+
+{% block fragment %}
+    {% for scene in object.scene_set.all %}
+        <div class="card mb-3">
+            <div class="card-header">
+                {{ scene.name }}
+            </div>
+            <div class="card-body">
+                {{ scene.text|urpg_markup }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

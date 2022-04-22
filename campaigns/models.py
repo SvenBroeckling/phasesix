@@ -7,6 +7,10 @@ import hashlib
 
 
 class Campaign(models.Model):
+    CHARACTER_VISIBILITY_CHOICES = (
+        ('G', _('GM Only')),
+        ('A', _('All')),
+    )
     name = models.CharField(_('name'), max_length=80)
     image = models.ImageField(_('image'), upload_to='campaign_images', blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
@@ -42,20 +46,37 @@ class Campaign(models.Model):
 
     currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
 
+    character_visibility = models.CharField(
+        _('character visibility'),
+        max_length=1,
+        default='G',
+        choices=CHARACTER_VISIBILITY_CHOICES)
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('campaigns:detail', kwargs={'pk': self.id})
 
-    def get_campaign_hash(self):
+    def may_edit(self, user):
+        if self.created_by == user:
+            return True
+        return False
+
+    @property
+    def extension_string(self):
+        return ", ".join([e.name for e in self.extensions.all()])
+
+    @property
+    def campaign_hash(self):
         return hashlib.md5(
             "{}{}{}".format(self.id, self.name, self.created_by.id).encode('utf-8')
         ).hexdigest()
 
-    def get_invite_link(self):
-        return settings.BASE_URL + reverse('campaigns:invitation',
-                                           kwargs={'pk': self.id, 'hash': self.get_campaign_hash()})
+    @property
+    def invite_link(self):
+        return settings.BASE_URL + reverse('campaigns:detail',
+                                           kwargs={'pk': self.id, 'hash': self.campaign_hash})
 
     @property
     def ws_room_name(self) -> str:

@@ -2,25 +2,6 @@ $(function () {
     let body = $('body')
 
     // helper
-    function refresh_fragments() {
-        $('.fragment').each(function (index) {
-            $(this).load($(this).data('fragment-url'), function (response, status, xhr) {
-                $(this).children(':first').unwrap() // keep the original fragment container
-                $('[data-bs-toggle="popover"]').popover()
-                $('.masonry-container').masonry({percentPosition: true})
-            })
-        })
-
-        let sc = $('.sidebar-content')
-        if (sc.data('sidebar-url') !== undefined) {
-            sc.load(sc.data('sidebar-url'), (response, status, xhr) => {
-                if(xhr.status === 404) {
-                    $('#sidebar-right').css('width', '');
-                }
-            })
-        }
-    }
-
     function flash_message_on_button(btn, kind = 'success') {
         let original_btn_html = btn.html();
 
@@ -113,6 +94,27 @@ $(function () {
         e.preventDefault()
         return false
     })
+
+    // Sortable Items
+    function saveSortOrder(selector, url){
+        let order = {}
+        $(selector).each((idx, e) => {
+            order[$(e).data('pk')] = idx
+        })
+        $.post(url, order)
+    }
+
+    for (const element of [".item-sortable"]) {
+        $(element).sortable({
+            tolerance: 'pointer',
+            items: 'div.card',
+            placeholder: '<div class="card mb-3"><div class="card-header">&nbsp;</div></div>'
+        }).bind('sortstart', function (e, ui) {
+        }).bind('sortstop', function (e, ui) {
+        }).bind('sortupdate', function (e, ui) {
+            saveSortOrder(`${element} > div`, $(this).data('url'))
+        })
+    }
 
     // save bootstrap tabs
     $('a[data-bs-toggle="tab"]').on('click', function (e) {

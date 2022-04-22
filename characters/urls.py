@@ -54,7 +54,7 @@ urlpatterns = [
         name='xhr_characternote_sidebar'),
 
     url(
-        r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<model_name>[A-Za-z_]+)/(?P<fragment_name>[a-z_]+)$',
+        r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<fragment_template>[a-z_]+)$',
         views.XhrDetailFragmentView.as_view(),
         name='xhr_detail_fragment'),
 

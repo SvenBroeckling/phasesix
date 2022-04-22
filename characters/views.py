@@ -136,21 +136,16 @@ class XhrCharacterTemplateShadowSidebarView(XhrSidebarView):
 
 
 class XhrDetailFragmentView(DetailView):
-
-    def get_queryset(self):
-        if self.kwargs['model_name'] == "CharacterWeapon":
-            return CharacterWeapon.objects.all()
-        return Character.objects.all()
+    model = Character
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['fragment_name'] = self.kwargs['fragment_name']
-        context['model_name'] = self.kwargs['model_name']
+        context['fragment_template'] = self.kwargs['fragment_template']
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 
     def get_template_names(self):
-        return ['characters/fragments/' + self.kwargs['fragment_name'] + '.html']
+        return ['characters/fragments/' + self.kwargs['fragment_template'] + '.html']
 
 
 class XhrCharacterRestView(TemplateView):

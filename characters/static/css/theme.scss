@@ -342,7 +342,7 @@ table.table-sortable thead {
   background-position: center;
   background-size: cover;
   padding-top: 40px;
-  height: 30vh;
+  height: 40vh;
 }
 
 .character-list-item {
@@ -422,6 +422,19 @@ table.table-sortable thead {
 .character-list a {
   text-decoration: none;
 }
+
+.campaign-characters img {
+  filter: drop-shadow(0 0 10px black);
+}
+
+.campaign-characters img:hover {
+  filter: drop-shadow(0 0 20px black);
+}
+
+.campaign-characters img {
+  width: 90%;
+}
+
 
 /* Magic */
 

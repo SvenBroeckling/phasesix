@@ -1,10 +1,12 @@
 from django.conf import settings
+from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.views import View
+from django.views.generic import ListView, CreateView, DetailView
 
-from campaigns.forms import SceneForm
+from campaigns.forms import SettingsForm
 from campaigns.models import Campaign
+from characters.models import Character
 
 
 class CampaignListView(ListView):
@@ -30,66 +32,51 @@ class CampaignCreateView(CreateView):
         return self.object.get_absolute_url()
 
 
-class CampaignMixin(object):
+class CampaignDetailView(DetailView):
+    model = Campaign
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['may_edit'] = self.object.created_by == self.request.user or settings.DEBUG
-        context['active_tab'] = self.active_tab
+        context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 
 
-class CampaignDetailView(CampaignMixin, DetailView):
-    model = Campaign
-    active_tab = 'detail'
-
-
-class CampaignUpdateView(CampaignMixin, UpdateView):
-    model = Campaign
-    active_tab = 'update'
-    fields = (
-    'name', 'epoch', 'extensions', 'abstract', 'currency_map', 'discord_webhook_url', 'image', 'backdrop_image')
-    template_name = 'campaigns/campaign_update.html'
-
-    def get_success_url(self):
-        return reverse('campaigns:detail', kwargs={'pk': self.object.id})
-
-
-class CampaignInvitationView(CampaignMixin, DetailView):
-    model = Campaign
-    template_name = 'campaigns/campaign_invitation.html'
-    active_tab = 'invitation'
-
-
-class CampaignStatusView(CampaignMixin, DetailView):
-    template_name = 'campaigns/campaign_status.html'
-    model = Campaign
-    active_tab = 'status'
-
-
-class CampaignScenesView(CampaignMixin, DetailView):
-    template_name = 'campaigns/campaign_scenes.html'
-    model = Campaign
-    active_tab = 'scenes'
-
+class SaveSettingsView(View):
     def post(self, request, *args, **kwargs):
-        form = SceneForm(request.POST)
-        campaign = Campaign.objects.get(id=request.POST.get('campaign'))
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.campaign = campaign
-            obj.save()
-
-        return HttpResponseRedirect(reverse('campaigns:scenes', kwargs={'pk': campaign.id}))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = SceneForm
-        return context
+        campaign = Campaign.objects.get(id=kwargs['pk'])
+        if campaign.may_edit(request.user):
+            form = SettingsForm(request.POST, instance=campaign, files=request.FILES)
+            if form.is_valid():
+                form.save()
+        return HttpResponseRedirect(campaign.get_absolute_url())
 
 
-class XhrSidebarView(DetailView):
-    queryset = Campaign.objects.all()
+class BaseSidebarView(DetailView):
 
     def get_template_names(self):
-        return ['campaigns/sidebar/' + self.kwargs['sidebar_name'] + '.html']
+        return ['campaigns/sidebar/' + self.kwargs['sidebar_template'] + '.html']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context['may_edit'] = self.object.may_edit(self.request.user)
+        except AttributeError:
+            context['may_edit'] = False
+        return context
+
+
+class XhrSidebarView(BaseSidebarView):
+    model = Campaign
+
+
+class XhrSettingsSidebarView(BaseSidebarView):
+    model = Campaign
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = SettingsForm(instance=self.object)
+        return context
+
+
+class XhrCharacterSidebarView(BaseSidebarView):
+    model = Character

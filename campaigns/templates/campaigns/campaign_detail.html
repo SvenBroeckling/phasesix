@@ -1,22 +1,88 @@
-{% extends 'campaigns/campaign_base.html' %}
-{% load rules_extras i18n %}
+{% extends 'base.html' %}
+{% load i18n thumbnail static rules_extras campaign_extras %}
 
-{% block campaign_content %}
-    <div class="row">
-        <div class="col-12">
-            <p>{{ object.abstract }}</p>
+{% block title %}{{ object }} - {{ block.super }}{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/campaign_socket.js' %}"></script>
+    <script src="{% static 'js/clipboard.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/fragments.js' %}"></script>
+    <script src="{% static 'js/campaign_detail.js' %}"></script>
+{% endblock %}
+
+{% block belownav %}
+    <div
+            class="row campaign-info-row"
+            style="
+                    {% if object.backdrop_image %}
+                        background-image: url({{ object.backdrop_image.url }})
+                    {% else %}
+                        {% if object.epoch.image %}
+                            background-image: url({{ object.epoch.image.url }})
+                        {% else %}
+                            background-color: silver
+                        {% endif %}
+                    {% endif %}">
+        <div class="col-md-10 offset-md-1 info mt-4">
+            <a
+                    href=""
+                    data-sidebar-title="{% trans 'Roll' %}"
+                    data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}"
+                    class="sidebar-trigger btn btn-primary float-end"><i
+                    class="fas fa-dice-five"></i> {% trans 'Roll' %}</a>
+            <a href="{{ object.invite_link }}" class="btn campaign-link btn-primary float-end me-2"
+               data-msg="{% trans 'Copied' %}">{% trans 'Invite Link' %}</a>
+            <h1>{{ object.name }}</h1>
+            <small>{% trans 'A campaign by' %} {{ object.created_by }}</small>
+            <p>{{ object.abstract|urpg_markup }}</p>
         </div>
     </div>
-    <div class="row">
-        {% for object in object.character_set.all %}
-            <div class="col-12 col-lg-6 mb-3 character-list">
-                {% include 'characters/_character_list_widget.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
+    <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
+
+    {% campaign_fragment 'characters' %}
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="nav nav-tabs justify-content-center mb-2" aria-orientation="horizontal">
+
+                <a class="nav-link active" data-bs-toggle="tab" role="tab" aria-controls="v-settings"
+                   href="#v-settings">
+                    <i class="fas fa-fw fa-edit"></i>&nbsp;{% trans 'Settings' %}
+                </a>
+
+                {% if may_edit or object.character_visibility == 'A' %}
+                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-status"
+                       href="#v-status">
+                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Status' %}
+                    </a>
+                {% endif %}
+
+                {% if may_edit %}
+                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-scenes"
+                       href="#v-scenes">
+                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Scenes' %}
+                    </a>
+                {% endif %}
             </div>
-        {% empty %}
-            <div class="col-12">
-                <h1 class="text-center mb-3 mt-3">- {% trans 'No characters in your campaign' %} -</h1>
-                <p class="text-center muted">{% trans 'Send the invite link to your players to invite them.' %}</p>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="v-settings" role="tabpanel">
+                {% campaign_fragment 'settings' %}
             </div>
-        {% endfor %}
+
+            <div class="tab-pane fade show" id="v-status" role="tabpanel">
+                {% campaign_fragment 'status' %}
+            </div>
+
+            <div class="tab-pane fade show" id="v-scenes" role="tabpanel">
+                {% campaign_fragment 'scenes' %}
+            </div>
+        </div>
     </div>
 {% endblock %}
