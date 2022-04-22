@@ -34,6 +34,6 @@ def urpg_markup(value):
 @register.simple_tag
 def latest_user_image(user):
     try:
-        return Character.objects.filter(created_by=user).latest('id').image
+        return Character.objects.filter(created_by=user, image__isnull=False).exclude(image='').latest('id').image
     except Character.DoesNotExist:
         return None
