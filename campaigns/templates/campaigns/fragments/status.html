@@ -8,6 +8,7 @@
             <tr class="pointer">
                 <th>{% trans 'Character' %}</th>
                 <th class="data column-player">{% trans 'Player' %}</th>
+                <th class="data column-wounds">{% trans 'Latest Initiative' %}</th>
                 <th class="data column-wounds">{% trans 'Wounds' %}</th>
                 <th class="data column-status">{% trans 'Status' %}</th>
                 <th class="data column-arcana">{% trans 'Arcana' %}</th>
@@ -22,6 +23,7 @@
                         <a href="{{ c.get_absolute_url }}">{{ c }}</a>
                     </td>
                     <td class="column-player">{{ c.created_by }}</td>
+                    <td>{{ c.latest_initiative }}</td>
 
                     <td class="column-wounds">
                         <span class="sort-key d-none">{{ c.health|add:c.boost }}</span>

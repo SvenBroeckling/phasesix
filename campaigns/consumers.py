@@ -1,18 +1,15 @@
 import json
-import requests
 
+import requests
 from asgiref.sync import async_to_sync
+from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _
-from django.conf import settings
-
-from channels.generic.websocket import WebsocketConsumer
 
 from campaigns.models import Campaign
 
 
-def roll_and_send(character_id, roll_string, header, description, campaign_id=None):
+def roll_and_send(character_id, roll_string, header, description, campaign_id=None, save_to=None):
     from characters.dice import roll
     from characters.models import Character
     channel_layer = get_channel_layer()
@@ -52,6 +49,11 @@ def roll_and_send(character_id, roll_string, header, description, campaign_id=No
             description=description,
             roll_string=roll_string,
             results_csv=",".join(str(i) for i in result_list))
+
+    if save_to is not None and character is not None:
+        if save_to == 'initiative':
+            character.latest_initiative = result_sum
+            character.save()
 
     async_to_sync(channel_layer.group_send)(
         ws_room_name,
@@ -107,7 +109,8 @@ class DiceConsumer(WebsocketConsumer):
             data['roll'],
             data['header'],
             data['description'],
-            data.get('campaign', None))
+            data.get('campaign', None),
+            data.get('save_to', None))
 
     # group receive
     def dice_roll(self, event):

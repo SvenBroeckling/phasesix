@@ -41,7 +41,8 @@ $(function(){
             header: elem.data('dice-header'),
             description: elem.data('dice-description'),
             character: elem.data('dice-character'),
-            campaign: elem.data('dice-campaign')
+            campaign: elem.data('dice-campaign'),
+            save_to: elem.data('dice-save-to')
         }
         socket.send(JSON.stringify(data))
     })

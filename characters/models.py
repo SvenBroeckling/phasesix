@@ -64,6 +64,8 @@ class Character(models.Model):
     destiny_dice_used = models.IntegerField(_('Destiny dice used'), default=0)
     rerolls_used = models.IntegerField(_('Rerolls used'), default=0)
 
+    latest_initiative = models.IntegerField(_('latest initiative'), default=0)
+
     quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
 
     def __str__(self):

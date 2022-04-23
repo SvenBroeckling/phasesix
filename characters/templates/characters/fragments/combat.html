@@ -9,6 +9,7 @@
                     data-dice-roll="1d6+{{ object.attributes.quickness }}"
                     data-dice-header="{% trans 'Initiative' %}"
                     data-dice-description="{% trans 'Initiative (1d6+Quickness)' %}"
+                    data-dice-save-to="initiative"
                     data-dice-character={{ object.id }}>Roll Initiative ({% trans '1d6' %}+{{ object.attributes.quickness }})
             </button>
         </div>
