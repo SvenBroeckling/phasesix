@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 02:54+0000\n"
-"PO-Revision-Date: 2022-04-22 04:55+0200\n"
+"POT-Creation-Date: 2022-04-23 18:16+0000\n"
+"PO-Revision-Date: 2022-04-23 20:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -44,7 +44,7 @@ msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:47 armory/models.py:97
 #: armory/models.py:145 armory/models.py:308 bestiary/models.py:33
-#: campaigns/models.py:110 characters/models.py:433 characters/models.py:659
+#: campaigns/models.py:110 characters/models.py:435 characters/models.py:661
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:88 magic/models.py:71 magic/models.py:133 rules/models.py:58
 #: rules/models.py:82 rules/models.py:187 rules/models.py:264
@@ -278,7 +278,7 @@ msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
 #: armory/models.py:274 armory/templates/armory/weapon_list.html:78
-#: characters/templates/characters/fragments/combat.html:27
+#: characters/templates/characters/fragments/combat.html:28
 #: characters/templates/characters/fragments/gear.html:107
 #: characters/templates/characters/modals/add_weapons.html:57
 #: characters/templates/characters/sidebar/characterweapon.html:78
@@ -298,8 +298,8 @@ msgid "Bonus dice"
 msgstr "Bonuswürfel"
 
 #: armory/models.py:277 armory/templates/armory/weapon_list.html:74
-#: characters/templates/characters/fragments/combat.html:43
-#: characters/templates/characters/fragments/combat.html:69
+#: characters/templates/characters/fragments/combat.html:44
+#: characters/templates/characters/fragments/combat.html:70
 #: characters/templates/characters/fragments/gear.html:100
 #: characters/templates/characters/modals/add_weapons.html:51
 #: characters/templates/characters/sidebar/characterweapon.html:84
@@ -532,7 +532,7 @@ msgid "Bonus Wounds"
 msgstr "Bonuswunden"
 
 #: armory/templates/armory/weapon_list.html:77
-#: characters/templates/characters/fragments/combat.html:28
+#: characters/templates/characters/fragments/combat.html:29
 #: characters/templates/characters/fragments/gear.html:111
 #: characters/templates/characters/fragments/magic.html:44
 #: characters/templates/characters/modals/add_weapons.html:60
@@ -622,7 +622,7 @@ msgstr "Statistiken"
 
 #: bestiary/templates/bestiary/foe_detail.html:40
 #: bestiary/templates/bestiary/foe_list.html:26
-#: campaigns/templates/campaigns/fragments/status.html:29
+#: campaigns/templates/campaigns/fragments/status.html:31
 #: campaigns/templates/campaigns/sidebar/character.html:18
 #: characters/templates/characters/fragments/health.html:50
 #: characters/templates/characters/modals/rest.html:18
@@ -633,7 +633,7 @@ msgstr "Lebenspunkte"
 
 #: bestiary/templates/bestiary/foe_detail.html:41
 #: bestiary/templates/bestiary/foe_list.html:27
-#: campaigns/templates/campaigns/fragments/status.html:13
+#: campaigns/templates/campaigns/fragments/status.html:14
 #: characters/templates/characters/fragments/magic.html:41
 #: characters/templates/characters/modals/rest.html:33
 #: characters/templates/characters/sidebar/characterspell.html:46
@@ -645,7 +645,7 @@ msgstr "Arkana"
 #: bestiary/templates/bestiary/foe_detail.html:43
 #: bestiary/templates/bestiary/foe_detail.html:49
 #: bestiary/templates/bestiary/foe_list.html:29
-#: characters/templates/characters/fragments/combat.html:147
+#: characters/templates/characters/fragments/combat.html:148
 #: characters/templates/characters/fragments/health.html:15
 #: characters/templates/characters/fragments/health.html:17
 #: characters/templates/characters/fragments/magic.html:46
@@ -728,7 +728,7 @@ msgstr ""
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:90 characters/models.py:662 forum/models.py:91
+#: campaigns/models.py:90 characters/models.py:664 forum/models.py:91
 msgid "text"
 msgstr "Text"
 
@@ -744,8 +744,8 @@ msgstr "Würfelstring"
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
-#: campaigns/templates/campaigns/campaign_detail.html:30
-#: campaigns/templates/campaigns/campaign_detail.html:33
+#: campaigns/templates/campaigns/campaign_detail.html:31
+#: campaigns/templates/campaigns/campaign_detail.html:34
 #: characters/templates/characters/sidebar/characterattribute.html:12
 #: characters/templates/characters/sidebar/characteritem.html:28
 #: characters/templates/characters/sidebar/characteritem.html:42
@@ -754,29 +754,34 @@ msgstr "Ergebniss csv"
 msgid "Roll"
 msgstr "Wurf"
 
-#: campaigns/templates/campaigns/campaign_detail.html:35
+#: campaigns/templates/campaigns/campaign_detail.html:36
 msgid "Copied"
 msgstr "Kopiert"
 
-#: campaigns/templates/campaigns/campaign_detail.html:35
+#: campaigns/templates/campaigns/campaign_detail.html:36
 msgid "Invite Link"
 msgstr "Einladungslink"
 
-#: campaigns/templates/campaigns/campaign_detail.html:37
+#: campaigns/templates/campaigns/campaign_detail.html:41
+#: campaigns/templates/campaigns/campaign_detail.html:44
+msgid "Join campaign"
+msgstr "Kampagne beitreten"
+
+#: campaigns/templates/campaigns/campaign_detail.html:48
 msgid "A campaign by"
 msgstr "Eine Kampagne von"
 
-#: campaigns/templates/campaigns/campaign_detail.html:55
+#: campaigns/templates/campaigns/campaign_detail.html:66
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: campaigns/templates/campaigns/campaign_detail.html:61
-#: campaigns/templates/campaigns/fragments/status.html:12
+#: campaigns/templates/campaigns/campaign_detail.html:72
+#: campaigns/templates/campaigns/fragments/status.html:13
 #: characters/templates/characters/fragments/health.html:44
 msgid "Status"
 msgstr "Status"
 
-#: campaigns/templates/campaigns/campaign_detail.html:68
+#: campaigns/templates/campaigns/campaign_detail.html:79
 msgid "Scenes"
 msgstr "Szenen"
 
@@ -833,6 +838,10 @@ msgid "Player"
 msgstr "Spieler"
 
 #: campaigns/templates/campaigns/fragments/status.html:11
+msgid "Latest Initiative"
+msgstr "Letzte Initiative"
+
+#: campaigns/templates/campaigns/fragments/status.html:12
 #: characters/templates/characters/fragments/health.html:47
 #: characters/templates/characters/fragments/health.html:91
 #: characters/templates/characters/modals/rest.html:18
@@ -841,8 +850,8 @@ msgstr "Spieler"
 msgid "Wounds"
 msgstr "Wunden"
 
-#: campaigns/templates/campaigns/fragments/status.html:14
-#: campaigns/templates/campaigns/fragments/status.html:62
+#: campaigns/templates/campaigns/fragments/status.html:15
+#: campaigns/templates/campaigns/fragments/status.html:64
 #: characters/templates/characters/fragments/health.html:73
 #: characters/templates/characters/fragments/health.html:76
 #: characters/templates/characters/fragments/health.html:83
@@ -852,13 +861,13 @@ msgstr "Wunden"
 msgid "Stress"
 msgstr "Stress"
 
-#: campaigns/templates/campaigns/fragments/status.html:15
+#: campaigns/templates/campaigns/fragments/status.html:16
 #: characters/templates/characters/fragments/character.html:12
 #: characters/templates/characters/fragments/character.html:29
 #: characters/templates/characters/fragments/character.html:47
 #: characters/templates/characters/fragments/character.html:78
 #: characters/templates/characters/fragments/character.html:98
-#: characters/templates/characters/fragments/combat.html:25
+#: characters/templates/characters/fragments/combat.html:26
 #: characters/templates/characters/fragments/health.html:104
 #: characters/templates/characters/fragments/health.html:107
 #: characters/templates/characters/modals/rest.html:20
@@ -867,7 +876,7 @@ msgstr "Stress"
 msgid "Dice"
 msgstr "Würfel"
 
-#: campaigns/templates/campaigns/fragments/status.html:32
+#: campaigns/templates/campaigns/fragments/status.html:34
 #: campaigns/templates/campaigns/sidebar/character.html:21
 #: characters/templates/characters/fragments/health.html:53
 #: characters/templates/characters/sidebar/wounds.html:37
@@ -875,7 +884,7 @@ msgstr "Würfel"
 msgid "Wound"
 msgstr "Wunde"
 
-#: campaigns/templates/campaigns/fragments/status.html:35
+#: campaigns/templates/campaigns/fragments/status.html:37
 #: campaigns/templates/campaigns/sidebar/character.html:24
 #: characters/templates/characters/fragments/health.html:56
 #: characters/templates/characters/sidebar/wounds.html:15
@@ -884,22 +893,22 @@ msgstr "Wunde"
 msgid "Boost"
 msgstr "Boost"
 
-#: campaigns/templates/campaigns/fragments/status.html:65
+#: campaigns/templates/campaigns/fragments/status.html:67
 #: characters/templates/characters/fragments/health.html:79
 #: characters/templates/characters/sidebar/horror.html:24
 #: characters/templates/characters/sidebar/horror.html:37
 msgid "Possible Stress"
 msgstr "Möglicher Stress"
 
-#: campaigns/templates/campaigns/fragments/status.html:73
+#: campaigns/templates/campaigns/fragments/status.html:75
 msgid "Bonus Die"
 msgstr "Bonuswürfel"
 
-#: campaigns/templates/campaigns/fragments/status.html:76
+#: campaigns/templates/campaigns/fragments/status.html:78
 msgid "Destiny Die"
 msgstr "Schicksalswürfel"
 
-#: campaigns/templates/campaigns/fragments/status.html:79
+#: campaigns/templates/campaigns/fragments/status.html:81
 msgid "Reroll"
 msgstr "Wiederholungswurf"
 
@@ -908,8 +917,44 @@ msgid "Go to character"
 msgstr "Gehe zum Charakter"
 
 #: campaigns/templates/campaigns/sidebar/character.html:40
+msgid "Remove character from campaign?"
+msgstr "Charakter aus der Kampagne entfernen?"
+
+#: campaigns/templates/campaigns/sidebar/character.html:41
 msgid "Remove from campaign"
 msgstr "Aus der Kampagne entfernen"
+
+#: campaigns/templates/campaigns/sidebar/join.html:5
+#, python-format
+msgid ""
+"\n"
+"                %(t_gm)s has invited you to join their campaign "
+"%(t_campaign)s.\n"
+"            "
+msgstr ""
+"\n"
+"                %(t_gm)s hat dich eingeladen der Kampagne %(t_campaign)s "
+"beizutreten.\n"
+"            "
+
+#: campaigns/templates/campaigns/sidebar/join.html:11
+msgid "Create a new character"
+msgstr "Erstelle einen neuen Charakter"
+
+#: campaigns/templates/campaigns/sidebar/join.html:16
+#, python-format
+msgid ""
+"\n"
+"                        You have to be logged in to join a campaign. <a href="
+"\"%(t_login)s\">Login</a> or <a href=\"%(t_register)s\">create an account</"
+"a> to join.\n"
+"                    "
+msgstr ""
+"\n"
+"                        Du musst angemeldet sein um einer Kampagne beitreten "
+"zu können. <a href=\"%(t_login)s\">Melde dich an</a> oder <a href="
+"\"%(t_register)s\">erstelle ein Konto</a> um beizutreten.\n"
+"                    "
 
 #: campaigns/templates/campaigns/sidebar/roll.html:4
 #: characters/templates/characters/sidebar/dice.html:44
@@ -931,13 +976,13 @@ msgid "D6"
 msgstr "W6"
 
 #: campaigns/templates/campaigns/sidebar/roll.html:18
-#: characters/templates/characters/sidebar/character.html:42
+#: characters/templates/characters/sidebar/character.html:43
 #: characters/templates/characters/sidebar/dice.html:55
 msgid "Custom Roll"
 msgstr "Individueller Wurf"
 
 #: campaigns/templates/campaigns/sidebar/settings.html:8
-#: characters/templates/characters/sidebar/character.html:60
+#: characters/templates/characters/sidebar/character.html:61
 msgid "Save"
 msgstr "Speichern"
 
@@ -993,47 +1038,51 @@ msgstr "Benutzte Schicksalswürfel"
 msgid "Rerolls used"
 msgstr "Benutzte Wiederholungswürfe"
 
-#: characters/models.py:67 horror/models.py:32
+#: characters/models.py:67
+msgid "latest initiative"
+msgstr "Letzte Initiative"
+
+#: characters/models.py:69 horror/models.py:32
 msgid "quirks"
 msgstr "Eigenarten"
 
-#: characters/models.py:417
+#: characters/models.py:419
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:447
+#: characters/models.py:449
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:532
+#: characters/models.py:534
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:550
+#: characters/models.py:552
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:552
+#: characters/models.py:554
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:572
+#: characters/models.py:574
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:652
+#: characters/models.py:654
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:660
+#: characters/models.py:662
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:661
+#: characters/models.py:663
 msgid "subject"
 msgstr "Thema"
 
-#: characters/models.py:663 rules/models.py:62 rules/models.py:367
+#: characters/models.py:665 rules/models.py:62 rules/models.py:367
 msgid "ordering"
 msgstr "Sortierung"
 
@@ -1047,7 +1096,7 @@ msgstr "Spielen"
 
 #: characters/templates/base.html:65
 #: characters/templates/characters/character_form.html:4
-#: characters/templates/characters/character_form.html:72
+#: characters/templates/characters/character_form.html:74
 #: characters/templates/characters/create_character.html:4
 #: characters/templates/characters/create_character_constructed.html:4
 msgid "Create Character"
@@ -1159,7 +1208,7 @@ msgid "Gear"
 msgstr "Ausrüstung"
 
 #: characters/templates/characters/character_detail.html:99
-#: characters/templates/characters/fragments/combat.html:164
+#: characters/templates/characters/fragments/combat.html:165
 #: characters/templates/characters/fragments/health.html:8
 #: characters/templates/characters/fragments/health.html:10
 msgid "Combat"
@@ -1175,7 +1224,7 @@ msgid "Background"
 msgstr "Werdegang"
 
 #: characters/templates/characters/character_detail.html:113
-#: characters/templates/characters/fragments/combat.html:26
+#: characters/templates/characters/fragments/combat.html:27
 msgid "Notes"
 msgstr "Notizen"
 
@@ -1197,7 +1246,11 @@ msgstr ""
 msgid "New Character"
 msgstr "Neuer Charakter"
 
-#: characters/templates/characters/character_form.html:30
+#: characters/templates/characters/character_form.html:32
+msgid "Choose a name and a lineage"
+msgstr "Wähle einen Namen und eine Abstammung"
+
+#: characters/templates/characters/character_form.html:34
 msgid "Choose a name and additional extensions for your character"
 msgstr "Wähle einen Namen und zusätzliche Erweiterungen für deinen Charakter"
 
@@ -1291,75 +1344,75 @@ msgstr "Initiative"
 msgid "Initiative (1d6+Quickness)"
 msgstr "Initiative (1W6+Schnelligkeit)"
 
-#: characters/templates/characters/fragments/combat.html:12
-#: characters/templates/characters/sidebar/character.html:25
+#: characters/templates/characters/fragments/combat.html:13
+#: characters/templates/characters/sidebar/character.html:26
 msgid "1d6"
 msgstr "1W6"
 
-#: characters/templates/characters/fragments/combat.html:24
+#: characters/templates/characters/fragments/combat.html:25
 msgid "Action"
 msgstr "Aktion"
 
-#: characters/templates/characters/fragments/combat.html:27
+#: characters/templates/characters/fragments/combat.html:28
 msgid "Cap."
 msgstr "Kap."
 
-#: characters/templates/characters/fragments/combat.html:32
-#: characters/templates/characters/fragments/combat.html:35
+#: characters/templates/characters/fragments/combat.html:33
+#: characters/templates/characters/fragments/combat.html:36
 msgid "Weaponless"
 msgstr "Waffenlos"
 
-#: characters/templates/characters/fragments/combat.html:36
+#: characters/templates/characters/fragments/combat.html:37
 msgid "Melee"
 msgstr "Nahkampf"
 
-#: characters/templates/characters/fragments/combat.html:39
+#: characters/templates/characters/fragments/combat.html:40
 #: characters/templates/characters/sidebar/weaponless.html:8
 msgid "Weaponless Attack"
 msgstr "Waffenloser Angriff"
 
-#: characters/templates/characters/fragments/combat.html:45
-#: characters/templates/characters/fragments/combat.html:71
+#: characters/templates/characters/fragments/combat.html:46
+#: characters/templates/characters/fragments/combat.html:72
 msgid "Bonus wounds:"
 msgstr "Bonuswunden:"
 
-#: characters/templates/characters/fragments/combat.html:51
-#: characters/templates/characters/fragments/combat.html:95
-#: characters/templates/characters/fragments/combat.html:154
-#: characters/templates/characters/fragments/combat.html:183
-#: characters/templates/characters/fragments/combat.html:200
-#: characters/templates/characters/fragments/combat.html:217
+#: characters/templates/characters/fragments/combat.html:52
+#: characters/templates/characters/fragments/combat.html:96
+#: characters/templates/characters/fragments/combat.html:155
+#: characters/templates/characters/fragments/combat.html:184
+#: characters/templates/characters/fragments/combat.html:201
+#: characters/templates/characters/fragments/combat.html:218
 msgid "Meter"
 msgstr "Meter"
 
-#: characters/templates/characters/fragments/combat.html:83
+#: characters/templates/characters/fragments/combat.html:84
 msgid "Mods with rules"
 msgstr "Mods mit Regeln"
 
-#: characters/templates/characters/fragments/combat.html:146
+#: characters/templates/characters/fragments/combat.html:147
 #: characters/templates/characters/fragments/magic.html:43
 #: characters/templates/characters/sidebar/characterspell.html:52
 #: magic/templates/magic/_basespell_widget.html:24
 msgid "Power"
 msgstr "Stärke"
 
-#: characters/templates/characters/fragments/combat.html:161
+#: characters/templates/characters/fragments/combat.html:162
 msgid "Evade"
 msgstr "Ausweichen"
 
-#: characters/templates/characters/fragments/combat.html:162
-#: characters/templates/characters/fragments/combat.html:173
-#: characters/templates/characters/fragments/combat.html:190
-#: characters/templates/characters/fragments/combat.html:207
-#: characters/templates/characters/fragments/combat.html:224
+#: characters/templates/characters/fragments/combat.html:163
+#: characters/templates/characters/fragments/combat.html:174
+#: characters/templates/characters/fragments/combat.html:191
+#: characters/templates/characters/fragments/combat.html:208
+#: characters/templates/characters/fragments/combat.html:225
 msgid "Movement"
 msgstr "Bewegung"
 
-#: characters/templates/characters/fragments/combat.html:172
+#: characters/templates/characters/fragments/combat.html:173
 msgid "Walk"
 msgstr "Gehen"
 
-#: characters/templates/characters/fragments/combat.html:177
+#: characters/templates/characters/fragments/combat.html:178
 msgid ""
 "\n"
 "                                    You can perform an action while walking. "
@@ -1371,11 +1424,11 @@ msgstr ""
 "ausführen. Der Mindestwurf für diese Aktion ist um 1 erhöht.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:189
+#: characters/templates/characters/fragments/combat.html:190
 msgid "Run"
 msgstr "Laufen"
 
-#: characters/templates/characters/fragments/combat.html:194
+#: characters/templates/characters/fragments/combat.html:195
 msgid ""
 "\n"
 "                                    You can't perform an action while "
@@ -1387,11 +1440,11 @@ msgstr ""
 "Laufen ausführen.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:206
+#: characters/templates/characters/fragments/combat.html:207
 msgid "Crawl"
 msgstr "Robben"
 
-#: characters/templates/characters/fragments/combat.html:211
+#: characters/templates/characters/fragments/combat.html:212
 msgid ""
 "\n"
 "                                    Crawling is only possible while "
@@ -1402,11 +1455,11 @@ msgstr ""
 "                                    Robben ist nur in der Hocke möglich.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:223
+#: characters/templates/characters/fragments/combat.html:224
 msgid "Hunker"
 msgstr "In die Hocke gehen"
 
-#: characters/templates/characters/fragments/combat.html:228
+#: characters/templates/characters/fragments/combat.html:229
 msgid ""
 "\n"
 "                            Applies the \"Hunkered\" status effect. Hunkered "
@@ -1663,7 +1716,7 @@ msgstr "Editieren"
 msgid "1d6+Quickness"
 msgstr "1W6+Schnelligkeit"
 
-#: characters/templates/characters/sidebar/character.html:31
+#: characters/templates/characters/sidebar/character.html:32
 msgid ""
 "\n"
 "                    Roll a custom amount of dice here, just klick on the "
@@ -1677,11 +1730,11 @@ msgstr ""
 "der passenden Anzahl.\n"
 "\t"
 
-#: characters/templates/characters/sidebar/character.html:70
+#: characters/templates/characters/sidebar/character.html:71
 msgid "Delete character"
 msgstr "Charackter löschen"
 
-#: characters/templates/characters/sidebar/character.html:73
+#: characters/templates/characters/sidebar/character.html:74
 msgid "Delete Character"
 msgstr "Charakter löschen"
 
@@ -2048,7 +2101,7 @@ msgstr "Heilen"
 
 #: characters/templates/characters/sidebar/wounds.html:25
 #: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:175 characters/views.py:186 characters/views.py:197
+#: characters/views.py:174 characters/views.py:185 characters/views.py:196
 msgid "Rest"
 msgstr "Rast"
 
@@ -2158,15 +2211,15 @@ msgstr ""
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:176
+#: characters/views.py:175
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:187
+#: characters/views.py:186
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:198
+#: characters/views.py:197
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
@@ -2912,9 +2965,6 @@ msgstr "Konto erstellen"
 
 #~ msgid "Filter by Extension"
 #~ msgstr "Nach Erweiterung filtern"
-
-#~ msgid "Join Campaign"
-#~ msgstr "Kampagne beitreten"
 
 #~ msgid "Images by unsplash.com"
 #~ msgstr "Fotos von Unsplash.com"
