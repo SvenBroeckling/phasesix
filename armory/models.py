@@ -60,6 +60,12 @@ class Item(models.Model, metaclass=TransMeta):
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
+    knowledge = models.ForeignKey(
+        'rules.Knowledge',
+        verbose_name=_('knowledge for usage'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     dice_roll_string = models.CharField(
         _('dice role string'),

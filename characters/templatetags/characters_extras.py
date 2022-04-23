@@ -159,3 +159,8 @@ def character_notes(character, user):
     if character.may_edit(user):
         return character.characternote_set.all()
     return character.characternote_set.filter(is_private=False)
+
+
+@register.filter
+def has_knowledge(character, knowledge):
+    return character.knowledge_dict().get(knowledge, None) is not None

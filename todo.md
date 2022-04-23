@@ -2,8 +2,6 @@
 
 - Detailseiten: Weapon, Armour, BaseSpell, Template
 - Weapon List/Detail: Statuseffekte
-- Laute: Knowledge würfeln
-- Dietrich: Knowledge würfeln
 - Zauberaddon Modal formatting
 - Gegenstände in Containern
 
@@ -13,7 +11,6 @@
 
 ### Kampagnen
 
-- Evtl. Initracker?
 - Szenen -> Gamelog (Gemeinsam mit Charaktertagebuch)
 - Alle Items in Ansicht (Aufgeschlüsselt nachw/- Charakter)
 - Alle Schablonen in Ansicht (Aufgeschlüsselt nach Charakter)?
