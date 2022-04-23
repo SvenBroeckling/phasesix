@@ -17,3 +17,15 @@ $('table.campaign-status-sortable').tablesorter({
         }
     }
 })
+
+$('body').on('click', '.remove-character-from-campaign', function (e) {
+    let elem = $(this)
+    if (confirm(elem.data('message'))) {
+        $.post(elem.attr('href'), function (data) {
+            refresh_fragments()
+        })
+    }
+    e.preventDefault()
+    return false
+})
+

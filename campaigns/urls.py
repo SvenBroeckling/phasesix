@@ -14,6 +14,16 @@ urlpatterns = [
     url(r'^detail/settings/(?P<pk>\d+)$', views.SaveSettingsView.as_view(), name='save_settings'),
 
     url(
+        r'^xhr_campaign_fragment/(?P<pk>\d+)/(?P<fragment_template>[a-z_]+)$',
+        views.XhrCampaignFragmentView.as_view(),
+        name='xhr_campaign_fragment'),
+
+    url(
+        r'^sremove_character/(?P<pk>\d+)/(?P<character_pk>\d+)$',
+        views.XhrRemoveCharacterView.as_view(),
+        name='xhr_remove_character'),
+
+    url(
         r'^sidebar/(?P<pk>\d+)/(?P<sidebar_template>[a-z_]+)$',
         views.XhrSidebarView.as_view(),
         name='xhr_sidebar'),

@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views import View
 from django.views.generic import ListView, CreateView, DetailView
 
@@ -42,6 +42,20 @@ class CampaignDetailView(DetailView):
         return context
 
 
+class XhrCampaignFragmentView(DetailView):
+    model = Campaign
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['fragment_template'] = self.kwargs['fragment_template']
+        context['may_edit'] = self.object.may_edit(self.request.user)
+        return context
+
+    def get_template_names(self):
+        return ['campaigns/fragments/' + self.kwargs['fragment_template'] + '.html']
+
+
+
 class SaveSettingsView(View):
     def post(self, request, *args, **kwargs):
         campaign = Campaign.objects.get(id=kwargs['pk'])
@@ -52,6 +66,16 @@ class SaveSettingsView(View):
         return HttpResponseRedirect(campaign.get_absolute_url())
 
 
+class XhrRemoveCharacterView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = Campaign.objects.get(id=kwargs['pk'])
+        if campaign.may_edit(request.user):
+            character = Character.objects.get(id=kwargs['character_pk'])
+            character.campaign = None
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
 class BaseSidebarView(DetailView):
 
     def get_template_names(self):
@@ -60,9 +84,9 @@ class BaseSidebarView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            context['may_edit'] = self.object.may_edit(self.request.user)
+            context['may_edit'] = self.object.campaign.may_edit(self.request.user)
         except AttributeError:
-            context['may_edit'] = False
+            context['may_edit'] = self.object.may_edit(self.request.user)
         return context
 
 

@@ -13,11 +13,9 @@
 
 ### Kampagnen
 
-- campaign detail: playerliste strange
 - Evtl. Initracker?
-- GM: Remove Player
 - Szenen -> Gamelog (Gemeinsam mit Charaktertagebuch)
-- Alle Items in Ansicht (Aufgeschlüsselt nach Charakter)
+- Alle Items in Ansicht (Aufgeschlüsselt nachw/- Charakter)
 - Alle Schablonen in Ansicht (Aufgeschlüsselt nach Charakter)?
 - Alle Werte in Ansicht (Aufgeschlüsselt nach Charakter)?
 

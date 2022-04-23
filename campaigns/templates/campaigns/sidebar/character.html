@@ -36,8 +36,9 @@
 
     {% if may_edit %}
     <div class="col-12">
-        <a class="btn btn-danger w-100 btn-sm mb-2"
-           href=""><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+        <a class="btn btn-danger w-100 btn-sm mb-2 remove-character-from-campaign"
+           data-message="{% trans 'Remove character from campaign?' %}"
+           href="{% url 'campaigns:xhr_remove_character' pk=object.campaign.id character_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
     </div>
     {% endif %}
 </div>
