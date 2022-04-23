@@ -137,6 +137,11 @@ def character_knowledge_value(character, knowledge):
 
 
 @register.simple_tag
+def character_attribute_value(character, attribute):
+    return character.characterattribute_set.get(attribute=attribute).value
+
+
+@register.simple_tag
 def character_skill_value(character, skill):
     return character.characterskill_set.get(skill=skill).value
 

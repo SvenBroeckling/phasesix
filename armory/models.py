@@ -54,6 +54,12 @@ class Item(models.Model, metaclass=TransMeta):
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
+    attribute = models.ForeignKey(
+        'rules.Attribute',
+        verbose_name=_('attribute for usage'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
     skill = models.ForeignKey(
         'rules.Skill',
         verbose_name=_('skill for usage'),
