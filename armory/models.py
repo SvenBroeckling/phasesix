@@ -51,7 +51,14 @@ class Item(models.Model, metaclass=TransMeta):
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
+
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    homebrew_campaign = models.ForeignKey(
+        'campaigns.Campaign',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
     attribute = models.ForeignKey(
@@ -172,6 +179,20 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=8)
+
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('created by'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+
+    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    homebrew_campaign = models.ForeignKey(
+        'campaigns.Campaign',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     range_meter = models.IntegerField(_('range (meter)'), default=0)
 
@@ -317,6 +338,12 @@ class RiotGear(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('created by'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     name = models.CharField(_('name'), max_length=256)
@@ -326,6 +353,13 @@ class RiotGear(models.Model, metaclass=TransMeta):
     protection_ballistic = models.IntegerField(_('protection ballistic'), default=0)
     evasion = models.IntegerField(_('evasion'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
+
+    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    homebrew_campaign = models.ForeignKey(
+        'campaigns.Campaign',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         translate = ('name', 'description')

@@ -20,6 +20,7 @@ class WeaponAdmin(admin.ModelAdmin):
             'fields': (
                 ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
                 ('type', 'capacity', 'wounds', 'piercing', 'weight'),
+                ('created_by', 'is_homebrew', 'homebrew_campaign'),
                 ('range_meter', 'concealment', 'price', 'reload_actions', 'bonus_dice'),
                 ('description_en', 'description_de',),
                 ('image', 'image_copyright', 'image_copyright_url')
@@ -37,6 +38,7 @@ class RiotGearAdmin(admin.ModelAdmin):
         (None, {
             'fields': (
                 ('name_en', 'name_de', 'extensions'),
+                ('created_by', 'is_homebrew', 'homebrew_campaign'),
                 ('price', 'weight'),
                 ('protection_ballistic',),
                 ('concealment', 'evasion'),

@@ -13,7 +13,14 @@
                             data-bs-toggle="modal"
                             data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Armor' %}"
-                            href=""><i class="fas fa-plus"></i></a>
+                            href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
+                    <a
+                            class="btn btn-warning btn-sm float-end me-1 modal-trigger"
+                            data-url="{% url 'homebrew:xhr_create_riot_gear' character_pk=object.id %}"
+                            data-bs-toggle="modal"
+                            data-bs-target=".character-modal"
+                            data-modal-title="{% trans 'Create Armor' %}"
+                            href=""><i class="fas fa-plus"></i> {% trans 'Create' %}</a>
                 {% endif %}
                 <h2 class="mb-2 h4">{% trans 'Armor' %}</h2>
             </div>
@@ -71,7 +78,14 @@
                             data-bs-toggle="modal"
                             data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Weapon' %}"
-                            href=""><i class="fas fa-plus"></i></a>
+                            href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
+                    <a
+                            class="btn btn-warning btn-sm me-1 float-end modal-trigger"
+                            data-url="{% url 'homebrew:xhr_create_weapon' character_pk=object.id %}"
+                            data-bs-toggle="modal"
+                            data-bs-target=".character-modal"
+                            data-modal-title="{% trans 'Add Weapon' %}"
+                            href=""><i class="fas fa-plus"></i> {% trans 'Create' %}</a>
                 {% endif %}
                 <h2 class="mb-2 h4">{% trans 'Weapons' %}</h2>
             </div>
@@ -188,7 +202,15 @@
                             data-bs-toggle="modal"
                             data-modal-title="{% trans 'Add item' %}"
                             data-bs-target=".character-modal"
-                            href=""><i class="fa fa-plus"></i></a>
+                            href=""><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
+                    <a
+                            class="btn btn-warning btn-sm me-1 float-end modal-trigger"
+                            data-url="{% url 'homebrew:xhr_create_item' character_pk=object.id %}"
+                            title="{% trans 'Create Item' %}"
+                            data-bs-toggle="modal"
+                            data-modal-title="{% trans 'Create item' %}"
+                            data-bs-target=".character-modal"
+                            href=""><i class="fa fa-plus"></i> {% trans 'Create' %}</a>
                 {% endif %}
                 <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
             </div>

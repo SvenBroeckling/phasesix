@@ -1,0 +1,36 @@
+{% load i18n bootstrap4 %}
+
+<script>
+    $(function () {
+        $('.create-item-button').on('click', function (e) {
+            let form = $(this).closest('form')
+            $.post(form.attr('action'), form.serialize(), function (data) {
+                alert('a')
+            })
+            e.preventDefault()
+            return false
+        })
+    })
+</script>
+
+<form action="{% url 'homebrew:create_weapon' character_pk=character.id %}" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            {% csrf_token %}
+            {% bootstrap_field form.name %}
+            {% bootstrap_field form.type %}
+            {% bootstrap_field form.description %}
+            {% bootstrap_field form.is_hand_to_hand_weapon %}
+            {% bootstrap_field form.bonus_dice %}
+            {% bootstrap_field form.wounds %}
+            {% bootstrap_field form.range_meter %}
+            {% bootstrap_field form.piercing %}
+            {% bootstrap_field form.capacity %}
+            {% bootstrap_field form.weight %}
+            {% bootstrap_field form.price %}
+            {% bootstrap_field form.concealment %}
+            {% bootstrap_field form.add_to_character %}
+            <button class="btn btn-primary mt-1 create-item-button w-100">{% trans 'Create Item' %}</button>
+        </div>
+    </div>
+</form>
