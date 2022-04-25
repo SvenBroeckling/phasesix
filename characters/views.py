@@ -385,7 +385,7 @@ class XhrCreateCharacterPreviewView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'fragment_name': 'character',
+            'fragment_template': 'character',
             'model_name': 'Character'
         })
         return context
