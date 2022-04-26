@@ -1,5 +1,3 @@
-> Work in progress
-
 It's Magic!
 
 Deine Kampagne soll Magie enthalten? Also versteht mich nicht falsch, verwechselt Magie nicht mit göttlichem Wirken oder gar mit Körpermodifikationen. Magie ist eine sonderbare Macht, welche je nach Universum ganz anders dargestellt sein kann.
@@ -39,7 +37,7 @@ Die Fertigkeit *Zaubern* wird zum Ausführen von Zaubern und Ritualen verwendet.
 
 ### Zauber erlernen
 
-Um einen Zauber zu erlernen, benötigt ein Charakter zwei Dinge: Ruhe (es kann nur zwischen den Spielsitzungen ein Zauber erlernt werden) und verfügbare Zauberpunkte.
+Um einen Zauber zu erlernen, benötigt ein Charakter drei Dinge: Ruhe (es kann nur zwischen den Spielsitzungen ein Zauber erlernt werden) und verfügbare Zauberpunkte. Zudem benötigt er eine Thesis, eine Möglichkeit auch an das Wissen über diesen Zauber zu gelangen. Letzteres ist Sache der Kampagne, oder des Spielleiters.
 
 *Zauberpunkte* sind dann verfügbar, wenn die Zahl der ausgegebenen *Zauberpunkte* kleiner ist als die durch Schablonen erhaltenen *Zauberpunkte*. Jeder Zauber hat bestimmte Punktekosten. Um ihn zu erlernen wird der Zauber auf dem Charakterbogen als gelernt vermerkt.
 
@@ -87,7 +85,13 @@ Zauberschablonen verändern die Werte eines Zaubers, können zudem Effekte hinzu
   * Schnelle Ausführung (3 Zauberpunkte): Der Zauber benötigt eine Aktion weniger, jedoch mindestens 1 Aktion.
 * Affinität (1 Zauberpunkt): Das Element des Zaubers wird geändert. Dies hat zunächst keine Auswirkung in der Spielmechanik, jedoch kann so z.B. ein Säurezauber zu einem Feuerzauber werden.
 * Form (3 Zauberpunkte): ändert die Form des Zaubers, zum Beispiel von einem Punkt auf eine Sphäre mit gewissem Durchmesser.
-* Schule: ändert die Schule des Zaubers, z.B. von Beschwörung auf Schaden. Damit wird auch das Attribut geändert, auf das was geworfen wird. Diese Schablonen sind in der Regel sehr teuer.
+* Schule (7 Zauberpunkte): ändert die Schule des Zaubers, z.B. von Beschwörung auf Schaden. Damit wird auch das Attribut geändert, auf das was geworfen wird.
+
+Zauberschablonen können zu jedem gelernten Zauber hinzugefügt werden. Hierzu wird auf dem Charakterbogen beim Zauber vermerkt, dass er die spezielle Schablone enthält, z.B. "Einfache Heilung (Kraftvoller Zauber)"
+
+Jede Zauberschablone kann auch öfter als ein mal zu einem Zauber hinzugefügt werden.
+
+
 
 ### Zauber vergessen
 
@@ -97,7 +101,7 @@ Ebenso wie das Lernen von Zaubern ist es mit der notwendigen Ruhe möglich, Zaub
 
 Ein Zauber kann ausgeführt werden, wenn der Charakter noch mindestens die beim Zauber angegebenen Arkana verfügbar hat.
 
-Um einen Zauber zu wirken, wirft der Spieler auf den *Zaubern* Wert, welcher beim Zauber angegeben ist. Dieser Wert setzt sich aus der Zaubern-Fertigkeit des Charakters und dem Attribut der Zauberschule zusammen.
+Um einen Zauber zu wirken, wirft der Spieler auf den *Zaubern* Wert, welcher beim Zauber angegeben ist. Dieser Wert setzt sich aus der *Zaubern-Fertigkeit* des Charakters und dem Attribut der Zauberschule zusammen.
 
 Erreicht der Wurf mindestens einen Erfolg, so ist der Zauber gelungen. Für jeden erzielten Erfolg wird nun die *Stärke des Zaubers* um eins erhöht.
 

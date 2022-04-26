@@ -18,7 +18,6 @@
 
 ### Regeln
 
-- Magieregeln
 - Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
 
 ### Waffenaddons überarbeiten
