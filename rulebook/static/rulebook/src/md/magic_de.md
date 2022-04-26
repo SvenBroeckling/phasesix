@@ -10,24 +10,24 @@ Die Magie Erweiterung ist unabhängig von Epochen oder anderen Erweiterungen. Si
 
 ### Grundlegende Attribute
 
-Die Magie Erweiterung basiert auf zwei grundlegenden Attributen, welche Charaktere mit aktivierter Erweiterung automatisch haben und welche durch Schablonen erlangt werden können.
+Die Magie Erweiterung basiert auf zwei grundlegenden Attributen, welche Charaktere mit aktivierter Erweiterung haben und welche durch Schablonen erlangt werden können.
 
 #### Arkana
 
-Arkana spiegelt die Menge an Magie wider, die der Charakter in sich vereinen und speichern kann. Mit Arkana wirkt der Charakter Zauber und führt Rituale aus. Schablonen, wie z.B. "Arkaner Lehrmeister" steigern das maximal mögliche Arkana, welches ein Charakter haben kann.
+*Arkana* spiegelt die Menge an Magie wider, die der Charakter in sich vereinen und speichern kann. Mit *Arkana* wirkt der Charakter Zauber und führt Rituale aus. Schablonen, wie z.B. "Arkaner Lehrmeister" steigern das maximal mögliche Arkana, welches ein Charakter haben kann.
 
-Arkana regeneriert sich durch eine Rast.
+*Arkana* regeneriert sich durch eine Rast.
 
 #### Zauberpunkte
 
-Zauberpunkte werden verwendet, um Zauber zu erschaffen. Zauberpunkte kann der Charakter auch durch Schablonen erlangen. So gibt die Schablone "Arkane Schule" zum Beispiel 10 Zauberpunkte.
+*Zauberpunkte* werden verwendet, um Zauber zu erschaffen. *Zauberpunkte* kann der Charakter auch durch Schablonen erlangen. So gibt die Schablone "Arkane Schule" zum Beispiel 10 Zauberpunkte.
 
-Sind Zauberpunkte einmal für einen Zauber ausgegeben, so sind sie verbraucht und können nicht erneut verwendet werden. Im Gegensatz zu Arkana ist dies kein Wert, der sich durch Rast auffrischt.
+Sind *Zauberpunkte* einmal für einen Zauber ausgegeben, so sind sie verbraucht und können nicht erneut verwendet werden. Im Gegensatz zu *Arkana* ist dies kein Wert, der sich durch Rast auffrischt.
 
 
 ### Fertigkeiten
 
-Mit der Magieerweiterung erhält jeder Charakter zwei neue Fertigkeiten, welche er für das Handeln in der Magischen Welt verwenden kann.
+Mit der Magie Erweiterung erhält jeder Charakter zwei neue Fertigkeiten, welche er für das Handeln in der magischen Welt verwenden kann.
 
 #### Zaubern
 
@@ -41,7 +41,7 @@ Die Fertigkeit *Zaubern* wird zum Ausführen von Zaubern und Ritualen verwendet.
 
 Um einen Zauber zu erlernen, benötigt ein Charakter zwei Dinge: Ruhe (es kann nur zwischen den Spielsitzungen ein Zauber erlernt werden) und verfügbare Zauberpunkte.
 
-Zauberpunkte sind dann verfügbar, wenn die Zahl der ausgegebenen Zauberpunkte kleiner ist als die durch Schablonen erhaltenen Zauberpunkte. Jeder Zauber hat bestimmte Punktekosten. Um ihn zu erlernen wird der Zauber auf dem Charakterbogen als gelernt vermerkt.
+*Zauberpunkte* sind dann verfügbar, wenn die Zahl der ausgegebenen *Zauberpunkte* kleiner ist als die durch Schablonen erhaltenen *Zauberpunkte*. Jeder Zauber hat bestimmte Punktekosten. Um ihn zu erlernen wird der Zauber auf dem Charakterbogen als gelernt vermerkt.
 
 Ein Zauber kann mehrfach gelernt werden. Dies ist möglich, da man Zauber durch Zauberschablonen verändern kann. So kann man zum Beispiel einen Energieblitz einmal als Energiezauber und einmal als Lichtzauber gestalten.
 
@@ -49,9 +49,9 @@ Ein Zauber kann mehrfach gelernt werden. Dies ist möglich, da man Zauber durch 
 
 Ein Zauber hat verschiedene Werte, welche im Spiel berücksichtigt werden.
 
-Das *Zauberattribut* gibt vor, mit welchem Attribut (zusammen mit dem Wert *Zaubern*) zum Ausführen des Zaubers geworfen wird. Es wird von der Schule der Magie vorgegeben (s.U.).
+Das *Zauberattribut* gibt vor, auf welches Attribut (zusammen mit dem Wert *Zaubern*) zum Ausführen des Zaubers geworfen wird. Es wird von der Schule der Magie vorgegeben (s.U.).
 
-Der Wert unter *Arkana* beschreibt die Kosten des Zaubers beim Ausführen. Um einen Zauber mit einem Arkanawert von 2 auszuführen, muss der Spieler auch zwei Arkana verfügbar haben und beim Ausführen abstreichen.
+Der Wert unter *Arkana* beschreibt die Kosten des Zaubers beim Ausführen. Um einen Zauber mit einem *Arkanawert* von 2 auszuführen, muss der Spieler auch zwei Arkana verfügbar haben und beim Ausführen abstreichen.
 
 Die *Stärke* des Zaubers beschreibt, wie effektiv der Zauber wirkt. Bei neu erlernten Zaubern ist die Stärke in der Regel 1, kann aber durch Zauberschablonen gesteigert werden. Zudem wird die Stärke beim Ausführen durch die Erfolge des Zauberwurfs gesteigert (s. Zauber ausführen).
 
@@ -65,23 +65,29 @@ Die *Aktionen* eines Zaubers geben an, wie viele Aktionen das Ausführen des Zau
 
 Zauber in Phase Six sind Schulen zugeordnet, welche Zauber in grobe Kategorien einordnen. Jeder Charakter kann aus beliebigen Schulen Zauber wählen, der Schule ist jedoch jeweils ein unterstützendes Attribut zugeordnet.
 
-* *Schaden (Kraft)*
-* *Kontrolle (Willenskraft)*
-* *Transmutation (Geschick)*
-* Heilung (Gewissenhaftigkeit)
-* *Illusion (Schnelligkeit)*
-* *Weissagung (Auffassungsgabe)*
-* *Widerrufung (Logik)*
-* *Beschwörung (Charme)*
-* *Verzauberung (Attraktivität)*
+* Schaden *(Kraft)*
+* Kontrolle *(Willenskraft)*
+* Transmutation *(Geschick)*
+* Heilung *(Gewissenhaftigkeit)*
+* Illusion *(Schnelligkeit)*
+* Weissagung *(Auffassungsgabe)*
+* Widerrufung *(Logik)*
+* Beschwörung *(Charme)*
+* Verzauberung *(Attraktivität)*
 
 ### Zauberschablonen
 
-> Work in progress
+Zauberschablonen verändern die Werte eines Zaubers, können zudem Effekte hinzufügen oder das Verhalten des Zaubers komplett ändern. Zauberschablonen sind in vier Kategorien eingeteilt:
 
-Zauberschablonen verändern die Werte eines Zaubers, können zudem Effekte hinzufügen oder das Verhalten des Zaubers komplett ändern.
-
-* Variantchange (Beherrschung -> Schaden, sehr teuer)
+* Grundlegend: Grundlegende Anpassungen von Zaubern
+  * Kraftvoller Zauber (1 Zauberpunkt): Die Stärke des Zaubers wird um eins erhöht.
+  * Einfach auszuführen (5 Zauberpunkte): Der Zauber benötigt 1 Arkana weniger, jedoch mindestens 1 Arkana.
+  * Zwillingszauber (5 Zauberpunkte): Der Zauber erfasst ein Ziel zusätzlich. Für alle Ziele tritt die Wirkung ein.
+  * Große Reichweite (2 Zauberpunkte): Die Reichweite des Zaubers ist um 20 Meter erhöht.
+  * Schnelle Ausführung (3 Zauberpunkte): Der Zauber benötigt eine Aktion weniger, jedoch mindestens 1 Aktion.
+* Affinität (1 Zauberpunkt): Das Element des Zaubers wird geändert. Dies hat zunächst keine Auswirkung in der Spielmechanik, jedoch kann so z.B. ein Säurezauber zu einem Feuerzauber werden.
+* Form (3 Zauberpunkte): ändert die Form des Zaubers, zum Beispiel von einem Punkt auf eine Sphäre mit gewissem Durchmesser.
+* Schule: ändert die Schule des Zaubers, z.B. von Beschwörung auf Schaden. Damit wird auch das Attribut geändert, auf das was geworfen wird. Diese Schablonen sind in der Regel sehr teuer.
 
 ### Zauber vergessen
 

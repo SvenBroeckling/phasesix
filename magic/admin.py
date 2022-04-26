@@ -28,6 +28,7 @@ class SpellTemplateModifierInline(admin.TabularInline):
 
 class SpellTemplateAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'category', 'spell_point_cost')
+    list_editable = 'category', 'spell_point_cost'
     list_filter = 'spell_point_cost', 'category'
     inlines = [SpellTemplateModifierInline]
     fields = (
