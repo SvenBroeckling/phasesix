@@ -4,7 +4,7 @@ import yaml
 from django.conf import settings
 from django.utils.translation import get_language
 from django.views.generic import TemplateView
-from markdown import markdown
+import markdown2
 
 
 class ChapterDetailView(TemplateView):
@@ -19,7 +19,7 @@ class ChapterDetailView(TemplateView):
 
         chapter = structure[int(kwargs['pk']) - 1]
         with open(os.path.join(settings.RULEBOOK_ROOT, 'src', 'md', chapter['file'])) as chapter_file:
-            chapter['content'] = markdown(chapter_file.read(), extensions=['markdown.extensions.tables'])
+            chapter['content'] = markdown2.markdown(chapter_file.read(), extras=['tables'])
             chapter['image_url'] = 'rulebook/src/img/{}'.format(chapter['image'])
 
         context['object'] = chapter

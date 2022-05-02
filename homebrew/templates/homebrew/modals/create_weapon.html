@@ -4,9 +4,7 @@
     $(function () {
         $('.create-item-button').on('click', function (e) {
             let form = $(this).closest('form')
-            $.post(form.attr('action'), form.serialize(), function (data) {
-                alert('a')
-            })
+            $.post(form.attr('action'), form.serialize(), function (data) {})
             e.preventDefault()
             return false
         })
@@ -30,7 +28,7 @@
             {% bootstrap_field form.price %}
             {% bootstrap_field form.concealment %}
             {% bootstrap_field form.add_to_character %}
-            <button class="btn btn-primary mt-1 create-item-button w-100">{% trans 'Create Item' %}</button>
+            <button class="btn btn-primary mt-1 create-item-button w-100" data-bs-dismiss="modal">{% trans 'Create Item' %}</button>
         </div>
     </div>
 </form>

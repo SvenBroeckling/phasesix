@@ -14,13 +14,15 @@
                             data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Armor' %}"
                             href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
-                    <a
-                            class="btn btn-warning btn-sm float-end me-1 modal-trigger"
-                            data-url="{% url 'homebrew:xhr_create_riot_gear' character_pk=object.id %}"
-                            data-bs-toggle="modal"
-                            data-bs-target=".character-modal"
-                            data-modal-title="{% trans 'Create Armor' %}"
-                            href=""><i class="fas fa-plus"></i> {% trans 'Create' %}</a>
+                    {% if user.is_authenticated %}
+                        <a
+                                class="btn btn-warning btn-sm float-end me-1 modal-trigger"
+                                data-url="{% url 'homebrew:xhr_create_riot_gear' character_pk=object.id %}"
+                                data-bs-toggle="modal"
+                                data-bs-target=".character-modal"
+                                data-modal-title="{% trans 'Create Armor' %}"
+                                href=""><i class="fas fa-plus"></i> {% trans 'Create' %}</a>
+                    {% endif %}
                 {% endif %}
                 <h2 class="mb-2 h4">{% trans 'Armor' %}</h2>
             </div>
@@ -79,19 +81,22 @@
                             data-bs-target=".character-modal"
                             data-modal-title="{% trans 'Add Weapon' %}"
                             href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
-                    <a
-                            class="btn btn-warning btn-sm me-1 float-end modal-trigger"
-                            data-url="{% url 'homebrew:xhr_create_weapon' character_pk=object.id %}"
-                            data-bs-toggle="modal"
-                            data-bs-target=".character-modal"
-                            data-modal-title="{% trans 'Add Weapon' %}"
-                            href=""><i class="fas fa-plus"></i> {% trans 'Create' %}</a>
+                    {% if user.is_authenticated %}
+                        <a
+                                class="btn btn-warning btn-sm me-1 float-end modal-trigger"
+                                data-url="{% url 'homebrew:xhr_create_weapon' character_pk=object.id %}"
+                                data-bs-toggle="modal"
+                                data-bs-target=".character-modal"
+                                data-modal-title="{% trans 'Create Weapon' %}"
+                                href=""><i class="fas fa-plus"></i> {% trans 'Create' %}</a>
+                    {% endif %}
                 {% endif %}
                 <h2 class="mb-2 h4">{% trans 'Weapons' %}</h2>
             </div>
 
             {% for weapon in object.characterweapon_set.all %}
-                <div class="weapon-sortable" data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
+                <div class="weapon-sortable"
+                     data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
                     <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ weapon.weapon }}"
                          data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=weapon.id sidebar_template="characterweapon" %}">
                         <div class="card-header">
@@ -125,9 +130,11 @@
                                     <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m {% display_modifications weapon 'range_meter' %}<br>
                                     <br>
                                     {% if weapon.weapon.weaponattackmode_set.exists %}
-                                        {% for fm in weapon.weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }} +
+                                        {% for fm in weapon.weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }}
+                                            +
                                             {% color_value_span fm.dice_bonus 6 %}
-                                            {% display_modifications weapon 'bonus_dice' %} <i class="fas fa-dice-five"></i>
+                                            {% display_modifications weapon 'bonus_dice' %}
+                                            <i class="fas fa-dice-five"></i>
                                             <br>{% endfor %}
                                     {% endif %}
 
@@ -203,14 +210,16 @@
                             data-modal-title="{% trans 'Add item' %}"
                             data-bs-target=".character-modal"
                             href=""><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
-                    <a
-                            class="btn btn-warning btn-sm me-1 float-end modal-trigger"
-                            data-url="{% url 'homebrew:xhr_create_item' character_pk=object.id %}"
-                            title="{% trans 'Create Item' %}"
-                            data-bs-toggle="modal"
-                            data-modal-title="{% trans 'Create item' %}"
-                            data-bs-target=".character-modal"
-                            href=""><i class="fa fa-plus"></i> {% trans 'Create' %}</a>
+                    {% if user.is_authenticated %}
+                        <a
+                                class="btn btn-warning btn-sm me-1 float-end modal-trigger"
+                                data-url="{% url 'homebrew:xhr_create_item' character_pk=object.id %}"
+                                title="{% trans 'Create Item' %}"
+                                data-bs-toggle="modal"
+                                data-modal-title="{% trans 'Create item' %}"
+                                data-bs-target=".character-modal"
+                                href=""><i class="fa fa-plus"></i> {% trans 'Create' %}</a>
+                    {% endif %}
                 {% endif %}
                 <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
             </div>
@@ -220,7 +229,8 @@
                      data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="currency" %}">
                     <div class="card-body text-center">
                         {% for unit in object.currency_map.currencymapunit_set.all %}
-                        <i class="{{ unit.fa_icon_class }} {{ unit.color_class }}"></i> {{ object|currency_quantity:unit }}
+                            <i class="{{ unit.fa_icon_class }} {{ unit.color_class }}"></i>
+                            {{ object|currency_quantity:unit }}
                         {% endfor %}
                     </div>
                 </div>

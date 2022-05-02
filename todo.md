@@ -41,8 +41,8 @@
 
 ### Fertigkeiten
 
-- Wackelkandidaten: Achtsamkeit und Athletik
-- Fehlend: Recherche? (Evtl Untersuchen?)
+- Athletik raus? (2 Schablonen, Freisprechung, Athlet)
+- Achtsamkeit raus? (10 Schablonen) || Wahrnehmung
 - Fehlend: (Selbst)beherrschung?
 
 ## Zukünftige Erweiterungen

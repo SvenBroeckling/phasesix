@@ -1,6 +1,6 @@
 from django.template import Library
 from django.utils.safestring import mark_safe
-from markdown import markdown
+import markdown2
 
 from characters.models import Character
 
@@ -28,7 +28,7 @@ def basespell_widget(context, basespell, character=None):
 def urpg_markup(value):
     if value is None:
         return ''
-    return mark_safe(markdown(value, extensions=['markdown.extensions.tables']))
+    return mark_safe(markdown2.markdown(value, safe_mode=True, extras=['tables']))
 
 
 @register.simple_tag

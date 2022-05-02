@@ -71,6 +71,13 @@ class BaseSpell(models.Model, metaclass=TransMeta):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
+    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    homebrew_campaign = models.ForeignKey(
+        'campaigns.Campaign',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+
     is_tirakan_spell = models.BooleanField(_('is tirakan spell'), default=False)
 
     spell_point_cost = models.IntegerField(_('spell point cost'))

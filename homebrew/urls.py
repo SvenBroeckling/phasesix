@@ -32,4 +32,13 @@ urlpatterns = [
         r'^create/weapon/(?P<character_pk>\d+)$',
         views.CreateWeaponView.as_view(),
         name='create_weapon'),
+
+    url(
+        r'^xhr_create/basespell/(?P<character_pk>\d+)$',
+        views.XhrCreateBaseSpellView.as_view(),
+        name='xhr_create_base_spell'),
+    url(
+        r'^create/basespell/(?P<character_pk>\d+)$',
+        views.CreateBaseSpellView.as_view(),
+        name='create_base_spell'),
 ]
