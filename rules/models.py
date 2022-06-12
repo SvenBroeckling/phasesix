@@ -270,6 +270,10 @@ class Template(models.Model, metaclass=TransMeta):
         _('Show rules in combat'),
         default=False,
         help_text=_('Show the rule as combat action on the combat tab.'))
+    show_in_attack_dice_rolls = models.BooleanField(
+        _('Show in attack dice rolls'),
+        default=False,
+        help_text=_('Show the name in attack dice rolls.'))
     quote = models.TextField(_('quote'), blank=True, null=True)
     quote_author = models.CharField(_('quote author'), max_length=50, null=True, blank=True)
 

@@ -472,6 +472,20 @@ class CharacterWeapon(models.Model):
         return modes
 
     @property
+    def roll_info_display(self):
+        traits = []
+        if self.modified_piercing:
+            traits.append(f"{_('Pierce')}: {self.modified_piercing}")
+        if self.modified_wounds:
+            traits.append(f"{_('Bonus Wounds')}: {self.modified_wounds}")
+        for template in self.character.charactertemplate_set.filter(
+                template__show_in_attack_dice_rolls=True):
+            traits.append(template.template.name)
+        if traits:
+            return f"({', '.join(traits)})"
+        return ''
+
+    @property
     def has_modifications_with_rules(self):
         return self.modifications.filter(
             Q(rules_de__isnull=False) | Q(rules_en__isnull=False)).exists()

@@ -9,7 +9,7 @@
                         <a class="btn btn-primary btn-sm action-link dice-roll mb-1"
                            data-dice-roll="{{ fm.1 }}d6"
                            data-dice-header="{{ object.weapon }}"
-                           data-dice-description="{{ fm.0 }} ({% trans 'Pierce' %} {{ object.modified_piercing }}, {% trans 'Bonus Wounds' %} {{ object.modified_wounds }})"
+                           data-dice-description="{{ fm.0 }} {{ object.roll_info_display }}"
                            data-dice-character="{{ object.character.id }}"
                            href="{% url 'characters:attack' characterweapon_pk=object.id weapon_attackmode_pk=fm.2 %}">
                             {% trans 'Attack:' %} {{ fm.0 }}
