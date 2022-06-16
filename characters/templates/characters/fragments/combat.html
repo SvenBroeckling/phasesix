@@ -105,8 +105,11 @@
                                 <small class="text-muted">{{ i.item.type }}</small>
                             </td>
                             <td class="text-end">
-                                {{ i.use_skill.skill.name }} {% color_value_span i.use_skill.value 5 %} <i
-                                    class="fas text-muted fa-dice-five"></i>
+                                {% if i.item.skill %}
+                                   {% character_skill_value character i.item.skill as skill_value %}
+                                    {{ i.item.skill.name }} {% color_value_span skill_value 5 %} <i
+                                        class="fas text-muted fa-dice-five"></i>
+                                {% endif %}
                             </td>
                             <td class="text-end">
                             </td>

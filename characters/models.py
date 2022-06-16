@@ -570,14 +570,6 @@ class CharacterItem(models.Model):
     class Meta:
         ordering = 'ordering',
 
-    @property
-    def use_skill(self):
-        if self.item.type.name_en == 'Grenades':
-            return self.character.characterskill_set.get(skill__name_en="Throwing")
-        if self.item.type.name_en == 'First Aid':
-            return self.character.characterskill_set.get(skill__name_en="First Aid")
-        return None
-
     def may_edit(self, user):
         return self.character.may_edit(user)
 

@@ -48,6 +48,14 @@
                                         </div>
                                         <div class="card-body">
                                             {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+                                            {% if item.skill %}
+                                                {% character_skill_value character item.skill as skill_value %}
+                                                <i class="fas fa-hand-scissors fa-fw"></i> {% trans 'Skill' %}: {{ item.skill }} ({% color_value_span skill_value 5 %})<br>
+                                            {% endif %}
+                                            {% if item.knowledge %}
+                                                {% character_knowledge_value character item.knowledge as knowledge_value %}
+                                                <i class="fas fa-book fa-fw"></i> {% trans 'Knowledge' %}: {{ item.knowledge }} ({% if knowledge_value %}{% color_value_span knowledge_value 10 %}{% else %}-{% endif %})<br>
+                                            {% endif %}
                                             <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span item.concealment 6 invert=True %}<br>
                                             <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
                                             {% if character.currency_map %}
