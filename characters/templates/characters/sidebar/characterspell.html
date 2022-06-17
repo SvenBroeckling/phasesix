@@ -1,4 +1,4 @@
-{% load i18n characters_extras %}
+{% load i18n characters_extras rules_extras %}
 {% spell_type_attribute_dice_value object.character object.spell_type as dice %}
 
 {% if may_edit %}
@@ -32,7 +32,7 @@
 <div class="row mt-4 mb-4">
     <div class="col-12">
         <p class="mb-4">
-            {{ object.spell.rules }}
+            {{ object.spell.rules|urpg_markup }}
         </p>
         <div class="card mb-2 mt-2">
             <ul class="list-group list-group-flush">

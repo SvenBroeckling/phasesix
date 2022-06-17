@@ -44,7 +44,7 @@
                                 <span class="text-muted text-center">{% trans 'Ritual' %}</span>
                             {% endif %}
                             <p>
-                                {{ s.spell.rules }}
+                                {{ s.spell.rules|urpg_markup }}
                             </p>
                             {% spell_type_attribute_dice_value object s.spell_type as dice %}
                             <i class="fas fa-dice-five fa-fw"></i> {{ object.characterskill_set.spell_casting_skill.skill.name }}: {% color_value_span dice 5 %} <small class="text-muted">{{ s.spell_type.reference_attribute.name }}</small><br>

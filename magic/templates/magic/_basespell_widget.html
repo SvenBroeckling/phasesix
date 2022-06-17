@@ -16,7 +16,7 @@
             <span class="text-muted text-center">{% trans 'Ritual' %}</span>
         {% endif %}
         <p>
-            {{ basespell.rules }}
+            {{ basespell.rules|urpg_markup }}
         </p>
         <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
         <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
