@@ -3,7 +3,139 @@
 
 {% block content %}
     <div class="col-12">
-        <h1 class="text-center">- {% trans 'Create an item' %} -</h1>
-        <p class="text-muted text-center">{% trans 'Choose an epoch for your character to live in' %}</p>
+        <h1 class="text-center">- {% trans 'Homebrew' %} -</h1>
+        <table class="table mb-4">
+            <thead>
+                <tr>
+                    <th>{% trans 'Item' %}</th>
+                    <th>{% trans 'Created by' %}</th>
+                    <th>{% trans 'Type' %}</th>
+                    <th>{% trans 'DE' %}</th>
+                    <th>{% trans 'EN' %}</th>
+                    <th>{% trans 'Accept' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <td><a href="{% url 'admin:armory_item_change' item.id %}">{{ item }}</a></td>
+                    <td>{{ item.created_by }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>{% if item.description_de %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>{% if item.description_en %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>
+                        <form class="d-inline" action="{% url 'homebrew:process_item' item_pk=item.id mode="accept" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-primary">{% trans 'Accept' %}</button>
+                        </form>
+                        <form class="d-inline" action="{% url 'homebrew:process_item' item_pk=item.id mode="keep" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-secondary">{% trans 'Keep as Homebrew' %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table mb-4">
+            <thead>
+            <tr>
+                <th>{% trans 'Weapon' %}</th>
+                <th>{% trans 'Created by' %}</th>
+                <th>{% trans 'Type' %}</th>
+                <th>{% trans 'DE' %}</th>
+                <th>{% trans 'EN' %}</th>
+                <th>{% trans 'Accept' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for weapon in weapons %}
+                <tr>
+                    <td><a href="{% url 'admin:armory_weapon_change' weapon.id %}">{{ weapon }}</a></td>
+                    <td>{{ weapon.created_by }}</td>
+                    <td>{{ weapon.type }}</td>
+                    <td>{% if weapon.description_de %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>{% if weapon.description_en %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>
+                        <form class="d-inline" action="{% url 'homebrew:process_weapon' weapon_pk=weapon.id mode="accept" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-primary">{% trans 'Accept' %}</button>
+                        </form>
+                        <form class="d-inline" action="{% url 'homebrew:process_weapon' weapon_pk=weapon.id mode="keep" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-secondary">{% trans 'Keep as Homebrew' %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table mb-4">
+            <thead>
+            <tr>
+                <th>{% trans 'Armour' %}</th>
+                <th>{% trans 'Created by' %}</th>
+                <th>{% trans 'DE' %}</th>
+                <th>{% trans 'EN' %}</th>
+                <th>{% trans 'Accept' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for r in riot_gear %}
+                <tr>
+                    <td><a href="{% url 'admin:armory_riotgear_change' r.id %}">{{ r }}</a></td>
+                    <td>{{ r.created_by }}</td>
+                    <td>{% if r.description_de %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>{% if r.description_en %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>
+                        <form class="d-inline" action="{% url 'homebrew:process_riot_gear' riot_gear_pk=r.id mode="accept" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-primary">{% trans 'Accept' %}</button>
+                        </form>
+                        <form class="d-inline" action="{% url 'homebrew:process_riot_gear' riot_gear_pk=r.id mode="keep" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-secondary">{% trans 'Keep as Homebrew' %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table mb-4">
+            <thead>
+            <tr>
+                <th>{% trans 'Spell' %}</th>
+                <th>{% trans 'Created by' %}</th>
+                <th>{% trans 'Type' %}</th>
+                <th>{% trans 'DE' %}</th>
+                <th>{% trans 'EN' %}</th>
+                <th>{% trans 'Accept' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for base_spell in base_spells %}
+                <tr>
+                    <td><a href="{% url 'admin:magic_basespell_change' base_spell.id %}">{{ base_spell }}</a></td>
+                    <td>{{ base_spell.created_by }}</td>
+                    <td>{{ base_spell.type }}</td>
+                    <td>{% if base_spell.description_de %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>{% if base_spell.description_en %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>
+                        <form class="d-inline" action="{% url 'homebrew:process_base_spell' base_spell_pk=base_spell.id mode="accept" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-primary">{% trans 'Accept' %}</button>
+                        </form>
+                        <form class="d-inline" action="{% url 'homebrew:process_base_spell' base_spell_pk=base_spell.id mode="keep" %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-secondary">{% trans 'Keep as Homebrew' %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

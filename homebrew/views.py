@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 from django.utils.translation import ugettext_lazy as _
@@ -11,6 +12,49 @@ from magic.models import BaseSpell
 
 class IndexView(TemplateView):
     template_name = 'homebrew/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['items'] = Item.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+        context['weapons'] = Weapon.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+        context['riot_gear'] = RiotGear.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+        context['base_spells'] = BaseSpell.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+        return context
+
+
+class ProcessHomebrewView(View):
+    @staticmethod
+    def process_object(obj, mode='keep'):
+        if mode == 'accept':
+            obj.is_homebrew = False
+            obj.homebrew_campaign = None
+        else:
+            obj.keep_as_homebrew = True
+        obj.save()
+
+
+class ProcessItemView(ProcessHomebrewView):
+    def post(self, request, *args, **kwargs):
+        self.process_object(Item.objects.get(id=kwargs['item_pk']), kwargs.get('mode', 'keep'))
+        return HttpResponseRedirect(reverse('homebrew:index'))
+
+
+class ProcessWeaponView(ProcessHomebrewView):
+    def post(self, request, *args, **kwargs):
+        self.process_object(Weapon.objects.get(id=kwargs['weapon_pk']), kwargs.get('mode', 'keep'))
+        return HttpResponseRedirect(reverse('homebrew:index'))
+
+
+class ProcessRiotGearView(ProcessHomebrewView):
+    def post(self, request, *args, **kwargs):
+        self.process_object(RiotGear.objects.get(id=kwargs['riot_gear_pk']), kwargs.get('mode', 'keep'))
+        return HttpResponseRedirect(reverse('homebrew:index'))
+
+
+class ProcessBaseSpellView(ProcessHomebrewView):
+    def post(self, request, *args, **kwargs):
+        self.process_object(BaseSpell.objects.get(id=kwargs['base_spell_pk']), kwargs.get('mode', 'keep'))
+        return HttpResponseRedirect(reverse('homebrew:index'))
 
 
 class XhrCreateItemView(TemplateView):

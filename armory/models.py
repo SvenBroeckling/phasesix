@@ -53,6 +53,10 @@ class Item(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL)
 
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    keep_as_homebrew = models.BooleanField(
+        _('keep as homebrew'),
+        help_text=_('This was not accepted as general item and is kept as homebrew.'),
+        default=False)
     homebrew_campaign = models.ForeignKey(
         'campaigns.Campaign',
         blank=True,
@@ -188,6 +192,10 @@ class Weapon(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL)
 
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    keep_as_homebrew = models.BooleanField(
+        _('keep as homebrew'),
+        help_text=_('This was not accepted as general weapon and is kept as homebrew.'),
+        default=False)
     homebrew_campaign = models.ForeignKey(
         'campaigns.Campaign',
         blank=True,
@@ -355,6 +363,10 @@ class RiotGear(models.Model, metaclass=TransMeta):
     concealment = models.IntegerField(_('concealment'), default=0)
 
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    keep_as_homebrew = models.BooleanField(
+        _('keep as homebrew'),
+        help_text=_('This was not accepted as general riot gear and is kept as homebrew.'),
+        default=False)
     homebrew_campaign = models.ForeignKey(
         'campaigns.Campaign',
         blank=True,

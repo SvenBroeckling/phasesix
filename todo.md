@@ -1,20 +1,4 @@
 - Javascript Compress
-- "Kritische Treffer" Schablone bei Würfelstrings in Discord etc. anzeigen
-  - 
-  - evtl. "Show name in attack rolls bei templates"
-
-### Data
-
-- Quirks: Attribute bereinigen + Description
-- Waffenmodifikationen
-- Viel Equipment fehlt in den 80ern
-- Spell Mods: Arkana Kosten
-
-### Fertigkeiten
-
-- Athletik raus? (2 Schablonen, Freisprechung, Athlet)
-- Achtsamkeit raus? (10 Schablonen) || Wahrnehmung
-- Fehlend: (Selbst)beherrschung?
 
 ### UI
 
@@ -34,22 +18,22 @@
 - Alle Schablonen in Ansicht (Aufgeschlüsselt nach Charakter)?
 - Alle Werte in Ansicht (Aufgeschlüsselt nach Charakter)?
 
-### Regeln
+### Waffen
 
 - Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
 - Modi?:
-  - Einzelschuss: Zielen
+  - Einzelschuss: Zielen, Evtl. die Bonusschablonen (Kritische Treffer etc) auf Einzelschuss beschränken
   - Burst: + Würfel
   - Auto: Alle Kamphandlungen, mehr Würfel
 
-### Waffenaddons überarbeiten
+#### Waffenaddons überarbeiten
 
 - Weniger Bonuswürfel
-- Bonuswürfel -> Strärke o.ä?
+- Bonuswürfel -> Stärke o.ä?
 - Kapazität
 
 ### Status Effekte:
-
+- RollModifier (minimum_roll-x, minimum_roll+x, dice-count+x, dice_count-x)
 - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
 - In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
 - Geschockt auf Anzahl der Würfel anrechnen
@@ -59,18 +43,32 @@
 
 ### Fahrzeuge und Dronen
 
-### Währung von Mechanik zu Erweiterung
+### Data
+
+- Quirks: Attribute bereinigen + Description
+- Waffenmodifikationen
+- Viel Equipment fehlt in den 80ern
+- Spell Mods: Arkana Kosten
+
+#### Fertigkeiten
+
+- Athletik raus? (2 Schablonen, Freisprechung, Athlet)
+- Achtsamkeit raus? (10 Schablonen) || Wahrnehmung
+- Fehlend: (Selbst)beherrschung?
+
+
+#### Währung von Mechanik zu Erweiterung
 
 - 4-5 Startkapital Schablonen
 - Retainer Schable
 - Immobilien / Eigentum
 - etc
 
-### Pantheon
+#### Pantheon
 
 - Mönch
 - Paladin
 - Priester
 - Vampir
 
-### Körpermodifikationen
+#### Körpermodifikationen

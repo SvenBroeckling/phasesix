@@ -72,6 +72,10 @@ class BaseSpell(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    keep_as_homebrew = models.BooleanField(
+        _('keep as homebrew'),
+        help_text=_('This was not accepted as general spell and is kept as homebrew.'),
+        default=False)
     homebrew_campaign = models.ForeignKey(
         'campaigns.Campaign',
         blank=True,
