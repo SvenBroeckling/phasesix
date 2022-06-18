@@ -4,6 +4,8 @@
 {% block content %}
     <div class="col-12">
         <h1 class="text-center">- {% trans 'Homebrew' %} -</h1>
+
+    {% if items %}
         <table class="table mb-4">
             <thead>
                 <tr>
@@ -37,7 +39,9 @@
             {% endfor %}
             </tbody>
         </table>
+    {% endif %}
 
+    {% if weapons %}
         <table class="table mb-4">
             <thead>
             <tr>
@@ -71,7 +75,9 @@
             {% endfor %}
             </tbody>
         </table>
+    {% endif %}
 
+    {% if riot_gear %}
         <table class="table mb-4">
             <thead>
             <tr>
@@ -103,7 +109,9 @@
             {% endfor %}
             </tbody>
         </table>
+    {% endif %}
 
+    {% if base_spells %}
         <table class="table mb-4">
             <thead>
             <tr>
@@ -121,8 +129,8 @@
                     <td><a href="{% url 'admin:magic_basespell_change' base_spell.id %}">{{ base_spell }}</a></td>
                     <td>{{ base_spell.created_by }}</td>
                     <td>{{ base_spell.type }}</td>
-                    <td>{% if base_spell.description_de %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
-                    <td>{% if base_spell.description_en %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>{% if base_spell.rules_de %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                    <td>{% if base_spell.rules_en %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
                     <td>
                         <form class="d-inline" action="{% url 'homebrew:process_base_spell' base_spell_pk=base_spell.id mode="accept" %}" method="post">
                             {% csrf_token %}
@@ -137,5 +145,6 @@
             {% endfor %}
             </tbody>
         </table>
+    {% endif %}
     </div>
 {% endblock %}
