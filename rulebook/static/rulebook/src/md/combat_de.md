@@ -36,7 +36,7 @@ Sind die Aktionen aufgefrischt, kann der Teilnehmer im Kampf handeln. Dazu führ
 * **Hinhocken** oder auf den Boden legen (Der "In der Hocke" Status Effekt ist aktiv, s. "Wunden und Heilung")
 * **Aufstehen**
 * *Schnelligkeit* + 1 Meter **gehen** (und dabei eine weitere Handlung ausführen, ohne dass sie eine Aktion verbraucht, jedoch ist der Mindestwurf um 1 erhöht)
-* *Schnelligkeit* * 2 + 1 Meter **rennen**
+* *Schnelligkeit* + 5 Meter **rennen**
 * *Schnelligkeit* / 2 + 1 Meter **robben**, der Charakter muss *In der Hocke* sein. (s. Wunden und Heilung: Status Effekte)
 
 Aktionen sollten nicht zusammen, sondern immer nacheinander ausgeführt werden, da es mögliche Reaktionen gibt.
@@ -139,7 +139,8 @@ Der Durchschlag eines waffenlosen Nahkampfangriffs beträgt 0, die Reichweite be
 
 Der Angegriffene kann einem Nahkampfangriff als Reaktion ausweichen. Voraussetzung hierfür ist, dass der angegriffene Charakter eine Aktion verfügbar hat und den Angreifer wahrnehmen kann. Einem Angriff von hinten kann also nicht ausgewichen werden.
 
-Um einem Angriff auszuweichen, wirft der Charakter einen Wurf auf seinen Wert in *Ausweichen* auf seinen normalen Mindestwurf. Der Charakter ist dem Angriff komplett ausgewichen, wenn der Wurf erfolgreich ist.
+Um einem Angriff auszuweichen, wirft der Charakter einen Wurf auf seinen Wert in *Ausweichen*. Der Mindestwurf (5) hierfür ist um die Anzahl an Treffern des Gegners erhöht. Erzielt der Angegriffene mindestens einen Erfolg, so ist er dem Angriff komplett ausgewichen.
+
 
 ### Werfen von Gegenständen
 

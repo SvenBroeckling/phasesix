@@ -263,7 +263,7 @@ class Character(models.Model):
 
     @property
     def combat_running_range(self):
-        return self.get_attribute_value('quickness') * 2 + 1
+        return self.get_attribute_value('quickness') + 5
 
     @property
     def combat_crawling_range(self):
@@ -278,10 +278,13 @@ class Character(models.Model):
 
     @property
     def evasion(self):
-        be = self.characterriotgear_set.aggregate(
+        gear = self.characterriotgear_set.aggregate(
             Sum('riot_gear__evasion')
         )['riot_gear__evasion__sum'] or 0
-        return self.lineage.base_evasion + self.get_aspect_modifier('base_evasion') + be
+        skill = self.characterskill_set.hand_to_hand_combat_skill().value
+        base = self.lineage.base_evasion
+        mods = self.get_aspect_modifier('base_evasion')
+        return gear + skill + base + mods
 
     @property
     def rest_wound_dice(self):
@@ -354,6 +357,9 @@ class CharacterSkillQuerySet(models.QuerySet):
 
     def hand_to_hand_combat_skill(self):
         return self.get(skill__name_en='Hand to Hand Combat')
+
+    def evasion_skill(self):
+        return self.get(skill__name_en='Acrobatics')
 
     def spell_casting_skill(self):
         return self.get(skill__name_en='Spell Casting')

@@ -1,5 +1,24 @@
 - Javascript Compress
 
+Treffer die durch rüstung verhindert werden machen je treffer 5% schaden an der weste
+  -> Rüstung Schutz verringern bei schaden
+
+Rast heilt keinen Stress oder bei Erfolgreichem Wurf 1 Stress
+
+Status Waffe abgestützt -> Mindestwurf -1?
+  Waffenfertigkeiten:
+   - Abstützbar
+   - Status Effekte -> Waffenperk
+
+Horrorerweiterung Weihwasser
+
+Speed generell erhöhen: Dnd hat z.B. per default Move 6
+  Robben 1m
+  Gehen 2m + SNL
+  Laufen 5m + SNL
+  Rennen: Go For It?? Athletik Wurf. Erfolge=Meter, Misserfolg=Fail
+  Fall Prone=Free
+
 ### UI
 
 - Detailseiten: Weapon, Armour, BaseSpell, Template

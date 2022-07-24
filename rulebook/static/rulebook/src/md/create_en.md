@@ -13,7 +13,7 @@ The ancestry determines the starting values of the following traits of the chara
 * Minimum roll (5+)
 * Bonus, destiny and rerolls (0)
 * Basic protection (0)
-* Evasion (1)
+* Evasion (0)
 * Maximum Health (6)
 
 ##### Magic Extension

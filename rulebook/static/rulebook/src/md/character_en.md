@@ -63,9 +63,13 @@ Speed is both the speed at which the character can move and the ability to react
 
 The minimum roll is a central property of your character. It specifies what result a die must reach to represent a success. The minimum roll is inherited from the lineage and is 5+ for most characters. It can only be changed by special events or rare objects, and often only for a short time.
 
-### Protection and evasion
+### Evasion
 
-Both values are used in combat to prevent possible damage. The initial values of these traits are taken from the lineage, they can be changed by templates. The *Protection* reduces damage taken in combat, *Evasion* allows to dodge a melee attack. Both values are usually changed by armor as well.
+*Evasion* is used in combat. It allows you to dodge a melee attack. This value is taken from the lineage and increased by the skill *Acrobatics*. Armor or templates can change this value.
+
+### Protection
+
+The *Protection* reduces damage taken in combat. This value is taken from the lineage, armor or templates can change this value.
 
 ### Additional dice
 

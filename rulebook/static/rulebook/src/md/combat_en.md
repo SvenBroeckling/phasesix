@@ -36,7 +36,7 @@ Once the actions are refreshed, the participant can act in combat. To do this, h
 * **Hunker** or lay on the ground (Apply the "Hunkered" status effect, see "Wounds and healing").
 * **Stand up**
 * **Walk** *Quickness* + 1 Meters (performing another action without consuming an action, but the minimum roll is raised by 2).
-* **Run** *Quickness* * 2 + 1 meters.
+* **Run** *Quickness* + 5 meters.
 * **Crawl** *Quickness* / 2 + 1 meters. The charakter needs to be *hunkered*. (see Wounds and healing: Status Effects)
 
 Actions should not be performed together, but always one after the other, as there are possible reactions.
@@ -138,7 +138,7 @@ The piercing of an unarmed melee attack is 0, and the range is 1 meter.
 
 The attacked character can dodge a melee attack as a reaction. This requires that the attacked character has an action available and can perceive the attacker. Thus, an attack from behind cannot be dodged.
 
-To dodge an attack, the character rolls a die to his value in *Evasion* on his normal minimum roll. The character has completely dodged the attack if the roll is successful.
+To evade an attack, the character rolls dice equal to his value in *evasion*. The minimum roll (5) for this is increased by the number of hits the opponent has. If the attacked person scores at least one success, he has completely dodged the attack.
 
 ### Throwing objects
 

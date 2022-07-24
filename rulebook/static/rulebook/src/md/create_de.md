@@ -13,7 +13,7 @@ Die Abstammung bestimmt die Startwerte folgender Eigenschaften des Charakters:
 * Mindestwurf (5+)
 * Bonus-, Schicksals- und Wiederholungswürfe (0)
 * Basisschutz (0)
-* Ausweichen (1)
+* Ausweichen (0)
 * Maximale Lebenspunkte (6)
 
 ##### Magie Erweiterung

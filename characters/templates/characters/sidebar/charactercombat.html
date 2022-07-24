@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <button
-                    data-dice-roll="1d6"
+                    data-dice-roll="{{ object.evasion }}d6"
                     data-dice-header="{% trans 'Evasion' %}"
                     data-dice-description=""
                     data-dice-character="{{ object.id }}"
@@ -23,7 +23,7 @@
         </p>
         <p>
             {% blocktrans %}
-                To dodge an attack, the character rolls a die to his value in Evasion on his normal minimum roll. The character has completely dodged the attack if the roll is successful.
+                To evade an attack, the character rolls dice equal to his value in evasion. The minimum roll (5) for this is increased by the number of hits the opponent has. If the attacked person scores at least one success, he has completely dodged the attack.
             {% endblocktrans %}
         </p>
     </div>

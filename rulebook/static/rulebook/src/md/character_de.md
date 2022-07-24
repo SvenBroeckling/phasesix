@@ -63,9 +63,13 @@ Schnelligkeit ist sowohl die Geschwindigkeit, mit der der Charakter sich bewegen
 
 Der Mindestwurf ist eine zentrale Eigenschaft deines Charakters. Er gibt an welches Ergebnis ein Würfel erreichen muss, um einen Erfolg darzustellen. Der Mindestwurf wird von der Abstammung übernommen und ist bei den meisten Charakteren 5+. Er kann nur durch besondere Geschehnisse oder seltene Objekte verändert werden, und dies auch häufig nur kurzzeitig.
 
-### Schutz und Ausweichen
+### Ausweichen
 
-Beide Werte werden im Kampf verwendet, um möglichen Schaden zu verhindern. Die Anfangswerte dieser Eigenschaften werden von der Abstammung übernommen, sie können durch Schablonen verändert werden. Der *Schutz* vermindert im Kampf hingenommenen Schaden, *Ausweichen* erlaubt es, einem Nahkampfangriff auszuweichen. Beide Werte werden in der Regel auch durch Rüstungen verändert.
+*Ausweichen* wird im Kampf verwendet. Es erlaubt es, einem Nahkampfangriff auszuweichen. Dieser Wert wird von der Abstammung übernommen und um die Fähigkeit *Akrobatik* erhöht. Rüstungen oder Schablonen können diesen Wert verändern.
+
+### Schutz
+
+Der *Schutz* vermindert im Kampf hingenommenen Schaden. Dieser Wert wird von der Abstammung übernommen, Rüstung oder Schablonen können diesen Wert verändern.
 
 ### Zusatzwürfel
 
