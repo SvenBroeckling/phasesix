@@ -10,6 +10,16 @@ The character can gain stress by encountering otherworldly entities or having ot
 
 If the character reaches his maixmal stress level by an action, he gets a *tick*, and the stress is set to 0.
 
+#### Stress Test
+
+Whenever it is important to judge whether the character can withstand a stressful situation, a *Stress Test* is rolled. To do this, add the character's *Logic* and *Willpower* values, and roll that many dice. If the roll shows at least one success, the Stress Test is successful.
+
+#### Reduce Stress
+
+To reduce stress, the character must rest, and not have any encounters with extraordinary beings. When *resting* (see Wounds and Healing), the player rolls a *Stress Test*. If this roll succeeds, the character's stress can be reduced by one.
+
+Therapy can relieve more stress, this is up to the game master and depends very much on the epoch played.
+
 ### Ticks
 
 If the character reaches the maximum stress level, he gets a *tick*, and the stress level is set to 0 again.

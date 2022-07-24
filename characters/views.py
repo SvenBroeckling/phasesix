@@ -159,7 +159,9 @@ class XhrCharacterRestView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
+        minimum_roll = character.minimum_roll
         mode = request.POST.get('mode', 'manual')
+
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
 
@@ -174,7 +176,7 @@ class XhrCharacterRestView(TemplateView):
                 ugettext('Rest'),
                 ugettext('Wound Roll'))
 
-            for d in filter(lambda x: x >= 5, rest_wound_roll):
+            for d in filter(lambda x: x >= minimum_roll, rest_wound_roll):
                 if character.health < character.max_health:
                     character.health += 1
 
@@ -185,7 +187,7 @@ class XhrCharacterRestView(TemplateView):
                     ugettext('Rest'),
                     ugettext('Arcana Roll'))
 
-                for d in filter(lambda x: x >= 5, rest_arcana_roll):
+                for d in filter(lambda x: x >= minimum_roll, rest_arcana_roll):
                     if character.arcana < character.max_arcana:
                         character.arcana += 1
 
@@ -196,7 +198,7 @@ class XhrCharacterRestView(TemplateView):
                     ugettext('Rest'),
                     ugettext('Stress Roll'))
 
-                for d in filter(lambda x: x >= 5, rest_stress_roll):
+                if len(list(filter(lambda x: x >= minimum_roll, rest_stress_roll))):
                     if character.stress > 0:
                         character.stress -= 1
 

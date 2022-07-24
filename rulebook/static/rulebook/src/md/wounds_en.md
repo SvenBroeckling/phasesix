@@ -57,7 +57,7 @@ All *bonus dice*, *destiny dice* and *rerolls* refresh, so are set to the charac
 
 If the magic extension is used, the character rolls on the sum of the *Charm*, *Conscientiousness*, and *Willpower* stats. For each success, one *arcana* is restored.
 
-When horror extension is active, the character rolls on the sum of *willpower* and *logic*. For each success, the stress can be reduced by one.
+When horror extension is active, the character rolls a *Stress Test*. If the roll succeeds, the stress may be reduced by one.
 
 ### Conditions of the character
 

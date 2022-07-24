@@ -57,7 +57,7 @@ Alle *Bonuswüfel*, *Schicksalswürfel* und *Wiederholungswürfe* frischen auf, 
 
 Wird die Magie Erweiterung verwendet, wirft der Charakter auf die Summe der Werte *Charme*, *Gewissenhaftigkeit* und *Willenskraft*. Für jeden Erfolg wird ein *Arkana* wiederhergestellt.
 
-Bei aktiver Horrorerweiterung wirft der Charakter auf die Summe aus *Willenskraft* und *Logik*. Für jeden Erfolg kann der Stress um eins verringert werden.
+Bei aktiver Horrorerweiterung wirft der Charakter einen *Stress Test*. Ist der Wurf gelungen, so kann der Stress um Eins reduziert werden.
 
 ### Zustände des Charakters
 

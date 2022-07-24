@@ -12,13 +12,6 @@ Status Waffe abgestützt -> Mindestwurf -1?
 
 Horrorerweiterung Weihwasser
 
-Speed generell erhöhen: Dnd hat z.B. per default Move 6
-  Robben 1m
-  Gehen 2m + SNL
-  Laufen 5m + SNL
-  Rennen: Go For It?? Athletik Wurf. Erfolge=Meter, Misserfolg=Fail
-  Fall Prone=Free
-
 ### UI
 
 - Detailseiten: Weapon, Armour, BaseSpell, Template
