@@ -5,4 +5,11 @@ from django.contrib import admin
 
 from characters.models import Character
 
-admin.site.register(Character)
+
+class CharacterAdmin(admin.ModelAdmin):
+    list_display = 'name', 'created_by', 'campaign', 'reputation'
+    list_filter = 'created_by', 'campaign'
+    search_fields = 'name',
+
+
+admin.site.register(Character, CharacterAdmin)
