@@ -17,7 +17,7 @@ class QuirkCategory(models.Model, metaclass=TransMeta):
         verbose_name_plural = _('quirk categories')
 
     def __str__(self):
-        return "{} ({})".format(self.name, self.id)
+        return self.name
 
 
 class Quirk(models.Model, metaclass=TransMeta):
