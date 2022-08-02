@@ -67,6 +67,14 @@ class Character(models.Model):
     latest_initiative = models.IntegerField(_('latest initiative'), default=0)
 
     quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
+    quirks_gained = models.IntegerField(
+        _('quirks gained'),
+        default=0,
+        help_text=_('The amount of quirks gained by excess stress'))
+    quirks_healed = models.IntegerField(
+        _('quirks healed'),
+        default=0,
+        help_text=_('The amount of quirks healed by treatment.'))
 
     def __str__(self):
         return self.name
@@ -204,6 +212,15 @@ class Character(models.Model):
     @property
     def max_stress(self):
         return self.lineage.base_max_stress + self.get_aspect_modifier('base_max_stress')
+
+    @property
+    def quirks_active(self):
+        return self.quirks_gained - self.quirks_healed
+
+    @property
+    def quirks_need_to_be_chosen(self):
+        qa = self.quirks_active - self.quirks.count()
+        return qa if qa >= 0 else 0
 
     @property
     def max_arcana(self):

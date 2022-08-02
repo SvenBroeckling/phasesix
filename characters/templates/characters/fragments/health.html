@@ -82,6 +82,9 @@
 
                         <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
                              data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
+                            {% for q in object.quirks_need_to_be_chosen|to_range %}
+                                <i class="fas fa-frown text-danger" title="{{ q }}"></i>
+                            {% endfor %}
                             {% for q in object.quirks.all %}
                                 <i class="fas fa-frown text-light" title="{{ q }}"></i>
                             {% endfor %}

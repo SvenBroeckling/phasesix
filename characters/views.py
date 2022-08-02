@@ -17,7 +17,7 @@ from campaigns.models import Campaign
 from characters.forms import CharacterImageForm, CreateCharacterForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
-from horror.models import QuirkCategory
+from horror.models import QuirkCategory, Quirk
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge
 
@@ -240,14 +240,35 @@ class CharacterModifyStressView(View):
             if self.kwargs['mode'] == 'gain':
                 character.stress += 1
                 if character.stress >= character.max_stress:
-                    quirk = QuirkCategory.objects.order_by('?')[0].quirk_set.order_by('?')[0]
-                    character.quirks.add(quirk)
+                    character.quirks_gained += 1
                     character.stress = 0
             elif self.kwargs['mode'] == 'remove':
                 if character.stress > 0:
                     character.stress -= 1
             character.save()
         return JsonResponse({'status': 'ok'})
+
+
+class XhrAddQuirkView(TemplateView):
+    template_name = 'characters/modals/add_quirk.html'
+
+    def get_context_data(self, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['character'] = character
+        context['quirk_categories'] = QuirkCategory.objects.all()
+        return context
+
+
+class AddQuirkView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        quirk = Quirk.objects.get(id=kwargs['quirk_pk'])
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        character.quirks.add(quirk)
+        return JsonResponse({'status': 'ok'})
+
 
 
 class CharacterAttackView(View):

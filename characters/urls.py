@@ -115,6 +115,14 @@ urlpatterns = [
         r'^stress/(?P<pk>\d+)/(?P<mode>\w+)/$',
         views.CharacterModifyStressView.as_view(),
         name='modify_stress'),
+    url(
+        r'^choose_quirk/(?P<pk>\d+)/$',
+        views.XhrAddQuirkView.as_view(),
+        name='xhr_choose_quirk'),
+    url(
+        r'^add_quirk/(?P<pk>\d+)/(?P<quirk_pk>\d+)$',
+        views.AddQuirkView.as_view(),
+        name='add_quirk'),
 
     # new character
     url(r'^new/$', views.CreateCharacterView.as_view(), name='create_character'),
