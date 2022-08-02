@@ -1,3 +1,4 @@
+* Homebrew Waffe Kaputt?
 - Javascript Compress
 
 Treffer die durch rüstung verhindert werden machen je treffer 5% schaden an der weste

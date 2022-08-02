@@ -94,10 +94,9 @@
                     <div class="sidebar-trigger mt-2" data-sidebar-title="{% trans 'Wounds' %}"
                          data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">
                         {% for cse in object.characterstatuseffect_set.all %}
-                            <span class="fa-layers fa-fw fa-3x">
-                                <i title="{{ cse }}: {{ cse.value }}" class="{{ cse.status_effect.fa_icon_class }}"></i>
-                                <span class="fa-layers-counter bg-danger">{{ cse.value }}</span>
-                            </span>
+                            {% for v in cse.value|to_range %}
+                                <i title="{{ cse }}: {{ cse.value }}" class="fas fa-fw {{ cse.status_effect.fa_icon_class }}"></i>
+                            {% endfor %}
                         {% endfor %}
                     </div>
                 </div>

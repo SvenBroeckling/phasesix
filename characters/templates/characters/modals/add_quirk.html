@@ -45,6 +45,11 @@
                                         {{ quirk }}
                                     </div>
                                     <div class="card-body">
+                                        <div class="text-muted">
+                                            {{ quirk.description|urpg_markup }}
+                                        </div>
+                                        {{ quirk.get_modifier_summary_html|safe }}
+
                                         <form action="{% url 'characters:add_quirk' pk=character.id quirk_pk=quirk.id %}"
                                               class="float-end add-form" method="post">
                                             {% csrf_token %}

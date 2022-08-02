@@ -44,26 +44,24 @@
 <div class="row mt-3">
     <h4 class="text-center">{% trans 'Your quirks' %}</h4>
 
-    {% if object.quirks_need_to_be_chosen and may_edit%}
-        <div class="row mt-3">
-            <div class="col-12">
-                <p>
-                    {% blocktrans %}
-                        You gained a not yet chosen quirk due to stress. Choose a
-                        Quirk from the list of available quirks or create a new one.
-                        Consult your Gamemaster to decide which quirk matches the
-                        situation.
-                    {% endblocktrans %}
-                </p>
-                <div class="col-12 mb-3 mt-1">
-                    <a
-                            class="btn btn-warning btn-sm w-100 modal-trigger"
-                            data-url="{% url 'characters:xhr_choose_quirk' pk=object.id %}"
-                            data-bs-toggle="modal"
-                            data-bs-target=".character-modal"
-                            data-modal-title="{% trans 'Choose Quirk' %}"
-                            href=""><i class="fas fa-shapes fa-fw"></i> {% trans 'Choose Quirk' %}</a>
-                </div>
+    {% if object.quirks_need_to_be_chosen and may_edit %}
+        <div class="col-12">
+            <p>
+                {% blocktrans %}
+                    You gained a not yet chosen quirk due to stress. Choose a
+                    Quirk from the list of available quirks or create a new one.
+                    Consult your Gamemaster to decide which quirk matches the
+                    situation.
+                {% endblocktrans %}
+            </p>
+            <div class="col-12 mb-3 mt-1">
+                <a
+                        class="btn btn-warning btn-sm w-100 modal-trigger"
+                        data-url="{% url 'characters:xhr_choose_quirk' pk=object.id %}"
+                        data-bs-toggle="modal"
+                        data-bs-target=".character-modal"
+                        data-modal-title="{% trans 'Choose Quirk' %}"
+                        href=""><i class="fas fa-shapes fa-fw"></i> {% trans 'Choose Quirk' %}</a>
             </div>
         </div>
     {% endif %}
