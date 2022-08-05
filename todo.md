@@ -1,17 +1,35 @@
 * Homebrew Waffe Kaputt?
 - Javascript Compress
+- G3 ist schlechter als M16 obwohl es teurer ist
 
-Treffer die durch rüstung verhindert werden machen je treffer 5% schaden an der weste
-  -> Rüstung Schutz verringern bei schaden
+**Rule** Treffer die durch rüstung verhindert werden machen je 2 treffer 10% schaden an der rüstung (abgerundet) -> Rüstung Schutz verringern bei schaden
 
-Rast heilt keinen Stress oder bei Erfolgreichem Wurf 1 Stress
+**Data** Silbermunition wieder anlegen
+**Data** Horrorerweiterung Weihwasser
 
 Status Waffe abgestützt -> Mindestwurf -1?
   Waffenfertigkeiten:
    - Abstützbar
    - Status Effekte -> Waffenperk
 
-Horrorerweiterung Weihwasser
+
+Coup de grace regel: 
+  Opfer muss dying oder bewustlos/schlafend sein
+  Geeignete Waffe: Waffenperk
+  Angriffswurf: Nur Fail bei kein Erfolg, sonst Opfer tot
+
+**Status** Prone
+
+#### Fertigkeiten
+
+- Athletik raus? (2 Schablonen, Freisprechung, Athlet)
+- Achtsamkeit raus? (10 Schablonen) || Wahrnehmung
+- Fehlend:
+   - Survival
+   - Street Knowledge (Empathie?)
+   - Kochen / Kreativ / Art
+   - Computer / Recherche (Nur Moderne, evtl Untersuchen)
+
 
 ### UI
 
@@ -62,12 +80,6 @@ Horrorerweiterung Weihwasser
 - Waffenmodifikationen
 - Viel Equipment fehlt in den 80ern
 - Spell Mods: Arkana Kosten
-
-#### Fertigkeiten
-
-- Athletik raus? (2 Schablonen, Freisprechung, Athlet)
-- Achtsamkeit raus? (10 Schablonen) || Wahrnehmung
-- Fehlend: (Selbst)beherrschung?
 
 
 #### Währung von Mechanik zu Erweiterung
