@@ -141,6 +141,10 @@ Der Angegriffene kann einem Nahkampfangriff als Reaktion ausweichen. Voraussetzu
 
 Um einem Angriff auszuweichen, wirft der Charakter einen Wurf auf seinen Wert in *Ausweichen*. Der Mindestwurf (5) hierfür ist um die Anzahl an Treffern des Gegners erhöht. Erzielt der Angegriffene mindestens einen Erfolg, so ist er dem Angriff komplett ausgewichen.
 
+### Waffe abstützen
+
+Wenn dies mit der verwendeten Waffe möglich ist (in der Regel Schusswaffen ausser Bögen) kann der Charakter die Waffe vor der Benutzung an einer geeigneten Stelle auflegen. Das Abstützen dauert eine Aktion. Wird mit einer abgestützten Waffe geschossen, so ist der Mindestwurf um 1 verringert. Es kostet keine Aktion eine abgestützte Waffe wieder aufzunehmen.
+
 ### Coup de grâce
 
 Ein Charakter kann einen Gegner direkt töten, wenn dieser *bewustlos*, *schlafend* oder *sterbend* ist. Hierzu wirft der Spieler einen normalen Angriffswurf. Ist dieser Wurf mit mindestens einem Erfolg gelungen, so erhält der Gegner den Status *sterbend* mit der Stufe entsprechend den Erfolgen des Angriffs. Ist der Gegner bereits *sterbend*, so wird die Stufe des Zustands um die Anzahl der Erfolge des Angriffs erhöht.
