@@ -2,10 +2,6 @@
 - Javascript Compress
 - G3 ist schlechter als M16 obwohl es teurer ist
 
-**Rule** Treffer die durch rüstung verhindert werden machen je 2 treffer 10% schaden an der rüstung (abgerundet) -> Rüstung Schutz verringern bei schaden
-
-**Data** Silbermunition wieder anlegen
-**Data** Horrorerweiterung Weihwasser
 
 Status Waffe abgestützt -> Mindestwurf -1?
   Waffenfertigkeiten:
@@ -13,12 +9,8 @@ Status Waffe abgestützt -> Mindestwurf -1?
    - Status Effekte -> Waffenperk
 
 
-Rüstungsschaden Regel: 10% für je 2 Absorbierte treffer abgerundet
-
-Coup de grace regel: 
-  Opfer muss dying oder bewustlos/schlafend sein
-  Geeignete Waffe: Waffenperk
-  Angriffswurf: Nur Fail bei kein Erfolg, sonst Opfer tot
+**Rule** Treffer die durch rüstung verhindert werden machen je 2 treffer 10% schaden an der rüstung (abgerundet) -> Rüstung Schutz verringern bei schaden
+**Rule** Rüstungsschaden Regel: 10% für je 2 Absorbierte treffer abgerundet
 
 **Status** Prone
 
@@ -28,7 +20,7 @@ Ticks: Darkest Dungeon Übergang ins Physische (DD Herzinfarkt)
 
 #### Fertigkeiten
 
-- Athletik raus? (2 Schablonen, Freisprechung, Athlet)
+- Athletik raus? (2 Schablonen, Freisprechung, Athlet), zudem gibt es Ausdauer und Akrobatik
 - Achtsamkeit raus? (10 Schablonen) || Wahrnehmung
 - Fehlend:
    - Survival

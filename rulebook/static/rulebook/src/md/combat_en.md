@@ -140,6 +140,13 @@ The attacked character can dodge a melee attack as a reaction. This requires tha
 
 To evade an attack, the character rolls dice equal to his value in *evasion*. The minimum roll (5) for this is increased by the number of hits the opponent has. If the attacked person scores at least one success, he has completely dodged the attack.
 
+### Coup de grâce
+
+A character can kill an opponent directly if the opponent is *unconscious*, *asleep*, or *dying*. To do this, the player rolls a normal attack roll. If this roll succeeds with at least one success, the opponent receives the status *dying* with the level corresponding to the successes of the attack. If the opponent is already *dying*, the level of the state is increased by the number of successes of the attack.
+
+If the attack fails, a sleeping victim will probably wake up.
+
+
 ### Throwing objects
 
 If an object, such as a grenade, is thrown at a target, the character throws to its value in *Throwing*. The minimum roll is equal to the character's minimum roll, usually 5+.
