@@ -116,6 +116,10 @@ If a character takes *hits*, they are reduced by the target's *protection value*
 
 Any hit not prevented by the *protection value* becomes as many wounds as the weapon or effect specifies.
 
+##### Damage to the armor
+
+For every two hits prevented by the *protection*, the armor worn takes 10% damage. If the number of hits is odd, the number is rounded down. So an attack with 5 hits, 4 of which are prevented by a Kevlar vest reduces the condition of the vest by 20%.
+
 #### Bonus wounds
 
 If bonus wounds are specified with the weapon, they are caused directly as soon as one of the weapon's regular hits is converted into a wound. Thus, they are added to the sum of the wounds, and do *not* represent the wounds per hit.

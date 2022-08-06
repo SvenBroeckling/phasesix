@@ -116,6 +116,10 @@ Nimmt ein Charakter *Treffer* hin, werden diese um den *Schutzwert* des Ziels ve
 
 Jeder nicht durch den *Schutzwert* verhinderte Treffer wird zu so vielen Wunden, wie es bei der Waffe oder dem Effekt angegeben ist.
 
+##### Schaden an der Rüstung
+
+Für je zwei durch den *Schutz* verhinderte Treffer nimmt die getragene Rüstung 10% Schaden. Bei einer ungeraden Anzahl an Treffern wird hierbei abgerundet. Ein Angriff mit 5 Treffern, wovon 4 durch eine Kevlar Weste verhindert werden verringert also den Zustand der Weste um 20%.
+
 #### Bonuswunden
 
 Sind bei der Waffe Bonuswunden angegeben, so werden diese direkt verursacht, sobald einer der regulären Treffer der Waffe in eine Wunde umgewandelt wird. Sie werden also einmal der Summe der Wunden hinzugefügt, und stellen *nicht* die Wunden pro Treffer dar.

@@ -1,16 +1,6 @@
 * Homebrew Waffe Kaputt?
-- Javascript Compress
-- G3 ist schlechter als M16 obwohl es teurer ist
-
-
-Status Waffe abgestützt -> Mindestwurf -1?
-  Waffenfertigkeiten:
-   - Abstützbar
-   - Status Effekte -> Waffenperk
-
-
-**Rule** Treffer die durch rüstung verhindert werden machen je 2 treffer 10% schaden an der rüstung (abgerundet) -> Rüstung Schutz verringern bei schaden
-**Rule** Rüstungsschaden Regel: 10% für je 2 Absorbierte treffer abgerundet
+* Javascript Compress
+* G3 ist schlechter als M16 obwohl es teurer ist
 
 **Status** Prone
 
