@@ -8,17 +8,6 @@ Ticks: Darkest Dungeon Übergang ins Physische (DD Herzinfarkt)
  Auch positive Ticks
  Waffen, Rüstung etc: Überall auch Beschreibung anzeigen
 
-#### Fertigkeiten
-
-- Athletik raus? (2 Schablonen, Freisprechung, Athlet), zudem gibt es Ausdauer und Akrobatik
-- Achtsamkeit raus? (10 Schablonen) || Wahrnehmung
-- Fehlend:
-   - Survival
-   - Street Knowledge (Empathie?)
-   - Kochen / Kreativ / Art
-   - Computer / Recherche (Nur Moderne, evtl Untersuchen)
-
-
 ### UI
 
 - Detailseiten: Weapon, Armour, BaseSpell, Template
