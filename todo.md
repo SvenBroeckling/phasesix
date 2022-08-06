@@ -13,12 +13,18 @@ Status Waffe abgestützt -> Mindestwurf -1?
    - Status Effekte -> Waffenperk
 
 
+Rüstungsschaden Regel: 10% für je 2 Absorbierte treffer abgerundet
+
 Coup de grace regel: 
   Opfer muss dying oder bewustlos/schlafend sein
   Geeignete Waffe: Waffenperk
   Angriffswurf: Nur Fail bei kein Erfolg, sonst Opfer tot
 
 **Status** Prone
+
+Ticks: Darkest Dungeon Übergang ins Physische (DD Herzinfarkt)
+ Auch positive Ticks
+ Waffen, Rüstung etc: Überall auch Beschreibung anzeigen
 
 #### Fertigkeiten
 

@@ -48,6 +48,7 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12">
+                                                    {{ weapon.description|urpg_markup }}
                                                     <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
                                                     <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.wounds 4 %}<br>
                                                     <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.bonus_dice 4 %}<br>
