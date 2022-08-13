@@ -1,8 +1,8 @@
 * Homebrew Waffe Kaputt?
-* Javascript Compress
-* G3 ist schlechter als M16 obwohl es teurer ist
+* Javascript Compress / Vite
 
 **Status** Prone
+**Status** Bewustlos
 
 Ticks: Darkest Dungeon Übergang ins Physische (DD Herzinfarkt)
  Auch positive Ticks
@@ -29,6 +29,7 @@ Ticks: Darkest Dungeon Übergang ins Physische (DD Herzinfarkt)
 ### Waffen
 
 - Zielen als Waffenwert? Genauigkeit -> Zielen bei Anbauteilen
+- G3 ist schlechter als M16 obwohl es teurer ist
 - Modi?:
   - Einzelschuss: Zielen, Evtl. die Bonusschablonen (Kritische Treffer etc) auf Einzelschuss beschränken
   - Burst: + Würfel
@@ -40,7 +41,7 @@ Ticks: Darkest Dungeon Übergang ins Physische (DD Herzinfarkt)
 - Bonuswürfel -> Stärke o.ä?
 - Kapazität
 
-### Status Effekte:
+### Status Effekte impl:
 - RollModifier (minimum_roll-x, minimum_roll+x, dice-count+x, dice_count-x)
 - Vergiftet auf Mindestwurf anrechnen (Character.minimum_roll)
 - In der Hocke auf Mindestwurf anrechnen (Character.minimum_roll)
