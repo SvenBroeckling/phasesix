@@ -1,3 +1,19 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as gt
 
-# Create your models here.
+
+class HomebrewModel(models.Model):
+    is_homebrew = models.BooleanField(gt('is homebrew'), default=False)
+    keep_as_homebrew = models.BooleanField(
+        gt('keep as homebrew'),
+        help_text=gt('This was not accepted as general spell and is kept as homebrew.'),
+        default=False)
+    homebrew_campaign = models.ForeignKey(
+        'campaigns.Campaign',
+        blank=True,
+        null=True,
+        verbose_name=gt('homebrew campaign'),
+        on_delete=models.SET_NULL)
+
+    class Meta:
+        abstract = True
