@@ -20,18 +20,13 @@ class ModelWithCreationInfo(models.Model):
         abstract = True
 
 
-class ModelWithImage(models.Model):
-    image = models.ImageField(gt('image'), upload_to='character_images', blank=True, null=True)
-    image_copyright = models.CharField(gt('image copyright'), max_length=40, blank=True, null=True)
-    image_copyright_url = models.CharField(gt('image copyright url'), max_length=150, blank=True, null=True)
-
-    class Meta:
-        abstract = True
-
-
-class Book(ModelWithCreationInfo, HomebrewModel, ModelWithImage, metaclass=TransMeta):
+class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
     name = models.CharField(gt('name'), max_length=40)
     ordering = models.IntegerField(gt('ordering'), default=0)
+
+    image = models.ImageField(gt('image'), upload_to='book_images', blank=True, null=True)
+    image_copyright = models.CharField(gt('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(gt('image copyright url'), max_length=150, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -43,11 +38,15 @@ class Book(ModelWithCreationInfo, HomebrewModel, ModelWithImage, metaclass=Trans
         verbose_name_plural = gt('books')
 
 
-class Chapter(ModelWithCreationInfo, HomebrewModel, ModelWithImage, metaclass=TransMeta):
+class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
     name = models.CharField(gt('name'), max_length=40)
     number = models.IntegerField(gt('number'), default=1)
     fa_icon_class = models.CharField(gt('fa icon class'), max_length=32)
     text = models.TextField(gt('text'))
+
+    image = models.ImageField(gt('image'), upload_to='chapter_images', blank=True, null=True)
+    image_copyright = models.CharField(gt('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(gt('image copyright url'), max_length=150, blank=True, null=True)
 
     def __str__(self):
         return self.name

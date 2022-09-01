@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
-{% load i18n static rules_extras %}
+{% load i18n static rules_extras thumbnail %}
 
 {% block belownav %}
+    {% thumbnail object.image "1200" as im %}
     <div
-            style="height: 36vh; background-image: url({% static object.image_url %})"
+            style="height: 36vh; background-image: url({{ im.url }})"
             class="row character-info-row mb-3">
         <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-            <h1><i class="{{ object.fa_icon_class|default:"fas fa-book" }}"></i> {{ object.title }}</h1>
+            <h1><i class="{{ object.fa_icon_class|default:"fas fa-book" }}"></i> {{ object.name }}</h1>
         </div>
     </div>
+    {% endthumbnail %}
 {% endblock %}
 
-{% block title %}{{ object.title }} - {% trans 'Rulebook' %} - {{ block.super }}{% endblock %}
+{% block title %}{{ object.name }} - {% trans 'Rulebook' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -23,29 +25,31 @@
                     class="btn btn-outline-primary w-100 mb-3">{% trans 'Chapters' %}</button>
             <div class="collapse mb-3" id="rules-mobile-nav">
                 <ul class="nav nav-pills flex-column">
-                    {% for chapter in structure %}
+                    {% for chapter in chapters %}
                         <li class="nav-item">
-                            <a class="nav-link {% if chapter == object %}active{% endif %}" href="{% url 'rulebook:detail' pk=forloop.counter %}">
+                            <a class="nav-link {% if chapter == object %}active{% endif %}" href="{% url 'rulebook:detail' pk=chapter.id %}">
                                 <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
-                                {{ chapter.title }}
+                                {{ chapter.name }}
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
+
         <div class="col-12 col-lg-9 rules">
             <div class="columns">
-                {{ object.content|safe }}
+                {{ object.text|urpg_markup }}
             </div>
         </div>
+
         <div class="col-md-3 d-none d-lg-block">
             <ul class="nav nav-pills flex-column">
-                {% for chapter in structure %}
+                {% for chapter in chapters %}
                     <li class="nav-item">
-                        <a class="nav-link {% if chapter == object %}active{% endif %}" href="{% url 'rulebook:detail' pk=forloop.counter %}">
+                        <a class="nav-link {% if chapter.id == object.id %}active{% endif %}" href="{% url 'rulebook:detail' pk=chapter.id %}">
                             <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
-                            {{ chapter.title }}
+                            {{ chapter.name }}
                         </a>
                     </li>
                 {% endfor %}
