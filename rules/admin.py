@@ -2,12 +2,13 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
 from rules.models import Skill, Extension, Knowledge, Template, TemplateModifier, TemplateRequirement, \
     TemplateCategory, LineageTemplatePoints, Lineage, StatusEffect, Attribute
 
 
-class ExtensionAdmin(admin.ModelAdmin):
+class ExtensionAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'identifier', 'is_mandatory', 'fa_icon_class', 'is_epoch', 'is_active', 'ordering', 'image')
     list_filter = ('is_mandatory', 'is_epoch', 'is_active')
     list_editable = ('ordering', 'is_active')
@@ -22,12 +23,12 @@ class TemplateRequirementInline(admin.TabularInline):
     fk_name = 'template'
 
 
-class TemplateCategoryAdmin(admin.ModelAdmin):
+class TemplateCategoryAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'bg_color_class', 'fg_color_class', 'sort_order')
     list_editable = ('bg_color_class', 'fg_color_class', 'sort_order')
 
 
-class TemplateAdmin(admin.ModelAdmin):
+class TemplateAdmin(VersionAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
     search_fields = ('name_de', 'name_en')
     list_display = (
@@ -37,17 +38,17 @@ class TemplateAdmin(admin.ModelAdmin):
     save_as = True
 
 
-class AttributeAdmin(admin.ModelAdmin):
+class AttributeAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'kind')
     list_editable = ('kind',)
 
 
-class SkillAdmin(admin.ModelAdmin):
+class SkillAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'kind', 'reference_attribute_1', 'reference_attribute_2')
     list_editable = ('kind',)
 
 
-class KnowledgeAdmin(admin.ModelAdmin):
+class KnowledgeAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'skill')
     list_editable = 'skill',
 
@@ -56,11 +57,11 @@ class LineageTemplatePointsInline(admin.TabularInline):
     model = LineageTemplatePoints
 
 
-class LineageAdmin(admin.ModelAdmin):
+class LineageAdmin(VersionAdmin):
     inlines = [LineageTemplatePointsInline]
 
 
-class StatusEffectAdmin(admin.ModelAdmin):
+class StatusEffectAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'fa_icon_class', 'is_active')
     list_editable = 'is_active',
 

@@ -1,10 +1,11 @@
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
 from magic.models import BaseSpell, SpellType, SpellVariant, SpellShape, SpellTemplate, SpellTemplateModifier, \
     SpellTemplateCategory
 
 
-class BaseSpellAdmin(admin.ModelAdmin):
+class BaseSpellAdmin(VersionAdmin):
     list_display = (
         'name_de', 'name_en', 'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions',
         'is_tirakan_spell')
@@ -26,7 +27,7 @@ class SpellTemplateModifierInline(admin.TabularInline):
     model = SpellTemplateModifier
 
 
-class SpellTemplateAdmin(admin.ModelAdmin):
+class SpellTemplateAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'category', 'spell_point_cost')
     list_editable = 'category', 'spell_point_cost'
     list_filter = 'spell_point_cost', 'category'
@@ -39,15 +40,15 @@ class SpellTemplateAdmin(admin.ModelAdmin):
     )
 
 
-class SpellTypeAdmin(admin.ModelAdmin):
+class SpellTypeAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'image', 'reference_attribute')
     list_editable = 'reference_attribute',
 
 
 admin.site.register(BaseSpell, BaseSpellAdmin)
-admin.site.register(SpellTemplateCategory)
+admin.site.register(SpellTemplateCategory, VersionAdmin)
 admin.site.register(SpellTemplate, SpellTemplateAdmin)
-admin.site.register(SpellTemplateModifier)
-admin.site.register(SpellShape)
+admin.site.register(SpellTemplateModifier, VersionAdmin)
+admin.site.register(SpellShape, VersionAdmin)
 admin.site.register(SpellType, SpellTypeAdmin)
-admin.site.register(SpellVariant)
+admin.site.register(SpellVariant, VersionAdmin)

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_registration',
     'django_extensions',
     'channels',
+    'reversion',
     'sorl.thumbnail',
     'bootstrap4',
     'compressor',
