@@ -39,6 +39,7 @@ class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
 
 
 class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     name = models.CharField(gt('name'), max_length=40)
     number = models.IntegerField(gt('number'), default=1)
     fa_icon_class = models.CharField(gt('fa icon class'), max_length=32)

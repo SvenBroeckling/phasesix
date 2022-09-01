@@ -1,0 +1,136 @@
+{% load rules_extras i18n static %}
+<html lang="de">
+    <head>
+        <title>{% trans 'Phase Six Core Rulebook' %}</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css" rel="stylesheet"/>
+
+        <style>
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+
+            body {
+                margin: 0;
+                font-size: 0.9rem;
+                font-family: 'Merriweather';
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Roboto';
+            }
+
+            h2 {
+                margin-bottom: 0.3cm;
+            }
+
+            .chapter-text h3, .chapter-text h4, .chapter-text h5, .chapter-text h6 {
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            .chapter-text p {
+                margin-top: 3mm;
+            }
+
+
+            blockquote {
+                margin-left: 2em;
+                padding-left: 1em;
+                color: #555;
+                border-left: 2px solid silver;
+            }
+
+            .chapter {
+                page-break-before: always;
+                margin: 0;
+            }
+
+            .page {
+                page-break-before: always;
+                margin: 0;
+            }
+
+            .title-page {
+                background-image: url(img/dusan-adamovic-OUCTlrQpspo-unsplash.jpg);
+                background-size: cover;
+                margin: -2cm -1cm;
+                width: 21.0cm;
+                height: 30.7cm;
+            }
+
+            .title-page h1 {
+                margin-top: 8cm;
+                font-size: 32pt;
+                text-align: center;
+            }
+
+            .title-page .credits {
+                font-size: 4pt;
+                font-family: 'Viga';
+                position: absolute;
+                bottom: 5mm;
+                right: 5mm;
+                color: silver;
+            }
+
+            .title-page .credits a {
+                color: silver;
+                text-decoration: none;
+            }
+
+            .title-page p.claim {
+                text-align: center;
+                margin-top: 1cm;
+            }
+
+            .chapter-text {
+                column-count: 2;
+                column-gap: 1cm;
+                text-align: justify;
+            }
+
+            .chapter-image {
+                position: relative;
+                height: 10cm;
+                width: 21cm;
+                margin: -1cm -1cm 1cm -1cm;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .chapter-text img {
+                width: 9cm;
+            }
+
+            .text-danger {
+                color: red;
+            }
+
+            .text-info {
+                color: skyblue;
+            }
+        </style>
+    </head>
+
+    <body>
+    {% include 'rulebook/book_title.html' %}
+
+    {% for chapter in book.chapter_set.all %}
+        <div class="chapter">
+            <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
+                &nbsp;
+            </div>
+            <h2>{{ chapter.name }}</h2>
+            <div class="chapter-text">
+                {{ chapter.text|urpg_markup:False }}
+            </div>
+        </div>
+    {% endfor %}
+    </body>
+</html>

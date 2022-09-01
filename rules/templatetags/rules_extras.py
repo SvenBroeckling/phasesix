@@ -25,10 +25,10 @@ def basespell_widget(context, basespell, character=None):
 
 
 @register.filter
-def urpg_markup(value):
+def urpg_markup(value, safe_mode=True):
     if value is None:
         return ''
-    return mark_safe(markdown2.markdown(value, safe_mode=True, extras=['tables']))
+    return mark_safe(markdown2.markdown(value, safe_mode=safe_mode, extras=['tables']))
 
 
 @register.simple_tag
