@@ -310,7 +310,8 @@ class Character(models.Model):
 
     @property
     def rest_arcana_dice(self):
-        return self.get_attribute_value('charm') + self.get_attribute_value('conscientiousness') + self.get_attribute_value('willpower')
+        return self.get_attribute_value('charm') + self.get_attribute_value(
+            'conscientiousness') + self.get_attribute_value('willpower')
 
     @property
     def rest_stress_dice(self):
@@ -698,4 +699,3 @@ class CharacterNote(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
-
