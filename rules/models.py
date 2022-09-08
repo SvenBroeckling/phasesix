@@ -35,21 +35,30 @@ class ExtensionSelectQuerySet(models.QuerySet):
 
 class ExtensionQuerySet(models.QuerySet):
     def first_class_extensions(self):
-        return self.filter(Q(is_epoch=True) | Q(is_mandatory=True)).filter(is_active=True)
+        return self.filter(Q(type='e') | Q(is_mandatory=True)).filter(is_active=True)
 
 
 class Extension(models.Model, metaclass=TransMeta):
     """
     A URPG source book extension
     """
+    EXTENSION_TYPE_CHOICES = (
+        ('x', _('Extension')),
+        ('e', _('Epoch')),
+        ('w', _('World')),
+    )
     objects = ExtensionQuerySet.as_manager()
 
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
-    fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
+    is_active = models.BooleanField(_('is active'), default=True)
+    type = models.CharField(_('type'), max_length=1, choices=EXTENSION_TYPE_CHOICES, default='x')
+
     name = models.CharField(_('name'), max_length=120)
     identifier = models.CharField(_('identifier'), max_length=20)
     description = models.TextField(_('description'), blank=True, null=True)
+
     year_range = models.CharField(_('year range'), blank=True, null=True, max_length=50)
+    fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
 
     image = models.ImageField(_('image'), upload_to='extension_images', blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
@@ -57,8 +66,6 @@ class Extension(models.Model, metaclass=TransMeta):
 
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
-    is_active = models.BooleanField(_('is active'), default=True)
-    is_epoch = models.BooleanField(_('is epoch'), default=True)
     ordering = models.IntegerField(_('ordering'), default=100)
 
     currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
@@ -68,6 +75,14 @@ class Extension(models.Model, metaclass=TransMeta):
         translate = ('name', 'description', 'year_range')
         verbose_name = _('extension')
         verbose_name_plural = _('extensions')
+
+    @property
+    def is_epoch(self):
+        return self.type == 'e'
+
+    @property
+    def is_world(self):
+        return self.type == 'w'
 
     def __str__(self):
         return self.name

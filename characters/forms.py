@@ -15,11 +15,11 @@ class CreateCharacterForm(forms.Form):
     name = forms.CharField(label=_('Name'), max_length=80)
     lineage = forms.ModelChoiceField(queryset=Lineage.objects.all())
     epoch = forms.ModelChoiceField(
-        queryset=Extension.objects.filter(is_epoch=True, is_mandatory=False, is_active=True),
+        queryset=Extension.objects.filter(type='e', is_mandatory=False, is_active=True),
         label=_('Epoch'),
         widget=forms.HiddenInput())
     extensions = forms.ModelMultipleChoiceField(
-        queryset=Extension.objects.filter(is_epoch=False, is_mandatory=False, is_active=True),
+        queryset=Extension.objects.filter(type__in=['x', 'w'], is_mandatory=False, is_active=True),
         label=_('Extensions'),
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'display: none'}))

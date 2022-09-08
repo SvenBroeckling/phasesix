@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.contrib import admin
@@ -9,9 +8,9 @@ from rules.models import Skill, Extension, Knowledge, Template, TemplateModifier
 
 
 class ExtensionAdmin(VersionAdmin):
-    list_display = ('name_de', 'name_en', 'identifier', 'is_mandatory', 'fa_icon_class', 'is_epoch', 'is_active', 'ordering', 'image')
-    list_filter = ('is_mandatory', 'is_epoch', 'is_active')
-    list_editable = ('ordering', 'is_active')
+    list_display = ('name_de', 'name_en', 'identifier', 'is_mandatory', 'fa_icon_class', 'type', 'is_active', 'ordering', 'image')
+    list_filter = ('is_mandatory', 'type', 'is_active')
+    list_editable = ('ordering', 'is_active', 'type')
 
 
 class TemplateModifierInline(admin.TabularInline):

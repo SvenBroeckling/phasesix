@@ -152,7 +152,7 @@ class Character(models.Model):
         self.charactertemplate_set.filter(template=template).delete()
 
     def get_epoch(self) -> Extension:
-        return self.extensions.filter(is_mandatory=False, is_epoch=True).earliest('id')
+        return self.extensions.filter(is_mandatory=False, type='e').earliest('id')
 
     @property
     def extension_enabled(self):

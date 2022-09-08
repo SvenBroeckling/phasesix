@@ -342,7 +342,7 @@ class CreateCharacterView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['extensions'] = Extension.objects.exclude(
-            is_mandatory=True).exclude(is_epoch=False).exclude(is_active=False)
+            is_mandatory=True).exclude(type__in=['x', 'w']).exclude(is_active=False)
         return context
 
 
@@ -393,7 +393,7 @@ class CreateCharacterDataView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['extensions'] = Extension.objects.filter(is_epoch=False, is_mandatory=False, is_active=True)
+        context['extensions'] = Extension.objects.filter(type__in=['x', 'w'], is_mandatory=False, is_active=True)
         context['campaign'] = self.campaign_to_join
         return context
 

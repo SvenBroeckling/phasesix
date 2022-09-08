@@ -28,12 +28,12 @@ class Campaign(models.Model):
     )
 
     epoch = models.ForeignKey(
-            'rules.Extension', limit_choices_to={'is_epoch': True, 'is_mandatory': False}, on_delete=models.CASCADE,
+            'rules.Extension', limit_choices_to={'type': 'e', 'is_mandatory': False}, on_delete=models.CASCADE,
         related_name="campaign_epoch_set",
         verbose_name=_('Epoch')
     )
     extensions = models.ManyToManyField(
-        'rules.Extension', limit_choices_to={'is_mandatory': False, 'is_epoch': False}, blank=True
+        'rules.Extension', limit_choices_to={'is_mandatory': False, 'type': 'x'}, blank=True
     )
     forbidden_templates = models.ManyToManyField('rules.Template', blank=True)
 
