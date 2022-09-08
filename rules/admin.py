@@ -33,7 +33,7 @@ class TemplateAdmin(VersionAdmin):
     list_display = (
         'name', 'cost', 'category', 'has_rules', 'show_rules_in_combat', 'has_quote')
     list_editable = ('category', 'cost', 'show_rules_in_combat')
-    list_filter = ('extensions', 'category')
+    list_filter = ('extensions', 'category', 'extensions')
     save_as = True
 
 
