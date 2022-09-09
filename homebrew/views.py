@@ -157,14 +157,20 @@ class CreateWeaponView(View):
         if character.may_edit(request.user):
             form = CreateWeaponForm(request.POST)
             if form.is_valid():
+                print(form.cleaned_data)
                 weapon = Weapon.objects.create(
                     name_de=form.cleaned_data['name'],
                     description_de=form.cleaned_data['description'],
                     type=form.cleaned_data['type'],
+                    is_hand_to_hand_weapon=form.cleaned_data['is_hand_to_hand_weapon'],
+                    bonus_dice=form.cleaned_data['bonus_dice'],
+                    capacity=form.cleaned_data['capacity'],
+                    wounds=form.cleaned_data['wounds'],
+                    piercing=form.cleaned_data['piercing'],
+                    concealment=form.cleaned_data['concealment'],
                     weight=form.cleaned_data['weight'],
                     price=form.cleaned_data['price'],
-                    capacity=form.cleaned_data['capacity'],
-                    concealment=form.cleaned_data['concealment'],
+                    range_meter=form.cleaned_data['range_meter'],
                     created_by=request.user,
                     is_homebrew=True,
                     homebrew_campaign=character.campaign)
