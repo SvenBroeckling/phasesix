@@ -1,5 +1,6 @@
-{% load bootstrap4 i18n rules_extras characters_extras %}
+{% load bootstrap4 i18n rules_extras characters_extras static %}
 
+<script src="{% static 'js/add_items_weapons.js' %}?3"></script>
 <script>
     $(function(){
 
@@ -37,44 +38,62 @@
                 }
             }
         });
-
-        $('.modal-body a.nav-link').first().addClass('active')
-        $('.modal-body div.tab-pane').first().addClass('active')
-        $('.modal-body div.tab-pane').first().addClass('show')
-        $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
     })
 </script>
 
-<ul class="nav nav-tabs justify-content-center" role="tablist"  id="reputation" data-initial-reputation="{{ object.reputation_available }}">
-    <li class="nav-item">
-        {% for tp in template_points %}
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
-                    {{ tp.template_category }}
-                </a>
-            </li>
-        {% endfor %}
-    </li>
-</ul>
-
-<div class="tab-content">
-    {% for tp in template_points %}
-        <div class="tab-pane fade" id="tp{{ tp.id }}" data-rel="#tab{{ tp.id }}">
-            <div class="row masonry-container">
-                {% for i in tp.template_category.template_set.all %}
-                    {% has_extensions i object.extensions.all as has_ext %}
-                    {% if has_ext and not i.id in character_template_ids %}
-                        <div class="col col-md-6 constructed-template"
-                             data-select-message="{% trans 'Select Template for Reputation?' %}"
-                             data-reputation-cost="{{ i.cost }}"
-                             data-template-id="{{ i.id }}"
-                             data-tp-id="{{ tp.id }}"
-                             data-add-url="{% url 'characters:xhr_reputation' pk=object.id %}">
-                            {% template_widget i %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+<div class="row">
+    <div class="col-12 col-md-4 col-lg-3">
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">
+            {% if user.is_superuser %}
+                <a href="{% url 'admin:rules_template_add' %}" class="btn btn-warning"><i
+                        class="fas fa-plus"></i> {% trans 'admin' %}</a>
+            {% endif %}
         </div>
-    {% endfor %}
+        <button
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#add-item-mobile-nav"
+                class="btn btn-secondary btn-add-item-mobile-nav-toggle mb-1 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
+
+        <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
+            <ul class="nav nav-pills flex-column" role="tablist">
+                {% for t in template_points %}
+                    <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}"
+                        id="nav-item-{{ t.id }}">
+                        <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
+                           data-bs-toggle="tab">{{ t.template_category }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-8 col-lg-9">
+        <div class="tab-content">
+            {% for t in template_points %}
+                <div
+                    role="tabpanel"
+                    data-rel="#nav-item-{{ t.id }}"
+                    class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
+                    id="i{{ t.id }}">
+                    <div class="row masonry-container">
+                        {% for i in t.template_category.template_set.all %}
+                            {% has_extensions i object.extensions.all as has_ext %}
+                            {% if has_ext and not i.id in character_template_ids %}
+                                <div class="col col-md-6 constructed-template add-item-card"
+                                     data-select-message="{% trans 'Select Template for Reputation?' %}"
+                                     data-reputation-cost="{{ i.cost }}"
+                                     data-template-id="{{ i.id }}"
+                                     data-tp-id="{{ tp.id }}"
+                                     data-add-url="{% url 'characters:xhr_reputation' pk=object.id %}">
+                                    {% template_widget i %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
