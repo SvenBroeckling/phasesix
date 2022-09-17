@@ -75,7 +75,9 @@
     <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
         {% for object in object_list %}
             <div class="col col-md-4">
-                {% basespell_widget object %}
+                <a class="basespell-link" href="{% url 'magic:basespell_detail' pk=object.id %}">
+                    {% basespell_widget object %}
+                </a>
             </div>
         {% endfor %}
     </div>

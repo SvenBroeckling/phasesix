@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static i18n characters_extras rules_extras %}
+
+{% block title %}{{ object }} - {{ block.super }}{% endblock %}
+
+{% block belownav %}
+    {% if object.type.image %}
+    <div
+            style="position: relative; height: 36vh; background-image: url({{ object.type.image.url }})"
+            class="row character-info-row mb-3">
+    {% else %}
+        <div
+                style="position: relative; height: 36vh; background-image: url({% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %})"
+                class="row character-info-row mb-3">
+    {% endif %}
+
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <div>
+                <h1>{{ object }}</h1>
+                <small>{{ object.type }} ({{ object.variant }})</small>
+            </div>
+        </div>
+        <span class="background-image-copyright">
+            {% if object.type.image %}
+                {% if object.type.image_copyright %}
+                    Image by <a href="{{ object.type.image_copyright_url }}">{{ object.type.image_copyright }}</a>
+                {% endif %}
+            {% else %}
+                Photo by <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Jensen</a> on <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+            {% endif %}
+        </span>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row mt-4">
+        <div class="col-12">
+            {{ object.rules|urpg_markup }}
+        </div>
+
+        <div class="col-12">
+            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ object.type.reference_attribute.name }}<br>
+            <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
+            {% for a in object.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
+            <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span object.power 4 %}<br>
+            <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span object.range 4 %}<br>
+            <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ object.shape|default:"-" }}<br>
+            <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span object.actions 3 invert=True %}<br>
+        </div>
+    </div>
+{% endblock %}
