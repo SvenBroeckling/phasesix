@@ -109,6 +109,6 @@ class Roll(models.Model):
         on_delete=models.SET_NULL)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     header = models.CharField(_('header'), max_length=120, blank=True, null=True)
-    description = models.CharField(_('description'), max_length=120, blank=True, null=True)
+    description = models.TextField(_('description'), blank=True, null=True)
     roll_string = models.CharField(_('roll string'), max_length=20, blank=True, null=True)
     results_csv = models.CharField(_('results_csv'), max_length=120)
