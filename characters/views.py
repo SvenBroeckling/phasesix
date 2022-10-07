@@ -375,7 +375,10 @@ class CreateCharacterDataView(FormView):
         if self.campaign_to_join is not None:
             for ext in self.campaign_to_join.extensions.all():
                 self.object.extensions.add(ext)
-            self.object.campaign = self.campaign_to_join
+            if self.kwargs.get('type', 'pc') == 'pc':
+                self.object.campaign = self.campaign_to_join
+            else:
+                self.object.npc_campaign = self.campaign_to_join
 
         self.object.created_by = self.request.user if self.request.user.is_authenticated else None
         self.object.save()

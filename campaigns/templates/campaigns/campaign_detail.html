@@ -69,11 +69,16 @@
                 {% if may_edit or object.character_visibility == 'A' %}
                     <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-status"
                        href="#v-status">
-                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Status' %}
+                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Characters' %}
                     </a>
                 {% endif %}
 
                 {% if may_edit %}
+                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-npc"
+                       href="#v-npc">
+                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'NPC' %}
+                    </a>
+
                     <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-scenes"
                        href="#v-scenes">
                         <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Scenes' %}
@@ -89,6 +94,10 @@
 
             <div class="tab-pane fade show" id="v-status" role="tabpanel">
                 {% campaign_fragment 'status' %}
+            </div>
+
+            <div class="tab-pane fade show" id="v-npc" role="tabpanel">
+                {% campaign_fragment 'npc' %}
             </div>
 
             <div class="tab-pane fade show" id="v-scenes" role="tabpanel">

@@ -55,6 +55,10 @@
                     <br><small><a
                             href="{% url 'campaigns:detail' pk=object.campaign.id %}">{{ object.campaign }}</a></small>
                 {% endif %}
+                {% if object.npc_campaign %}
+                    <br><small><a
+                        href="{% url 'campaigns:detail' pk=object.npc_campaign.id %}">{{ object.npc_campaign }} (NPC)</a></small>
+                {% endif %}
                 {% if object.campaign and object.get_world %} - {% else %}<br>{% endif %}<small>{{ object.get_world|default:"" }}</small>
             </div>
         </div>

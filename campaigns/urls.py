@@ -19,9 +19,13 @@ urlpatterns = [
         name='xhr_campaign_fragment'),
 
     url(
-        r'^sremove_character/(?P<pk>\d+)/(?P<character_pk>\d+)$',
+        r'^remove_character/(?P<pk>\d+)/(?P<character_pk>\d+)$',
         views.XhrRemoveCharacterView.as_view(),
         name='xhr_remove_character'),
+    url(
+        r'^switch_npc/(?P<pk>\d+)/(?P<character_pk>\d+)$',
+        views.XhrSwitchCharacterNPCView.as_view(),
+        name='xhr_switch_npc'),
 
     url(
         r'^sidebar/(?P<pk>\d+)/(?P<sidebar_template>[a-z_]+)$',

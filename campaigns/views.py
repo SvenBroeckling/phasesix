@@ -66,12 +66,28 @@ class SaveSettingsView(View):
         return HttpResponseRedirect(campaign.get_absolute_url())
 
 
+class XhrSwitchCharacterNPCView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = Campaign.objects.get(id=kwargs['pk'])
+        if campaign.may_edit(request.user):
+            character = Character.objects.get(id=kwargs['character_pk'])
+            if character.campaign is not None:
+                character.npc_campaign = character.campaign
+                character.campaign = None
+            else:
+                character.campaign = character.npc_campaign
+                character.npc_campaign = None
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
 class XhrRemoveCharacterView(View):
     def post(self, request, *args, **kwargs):
         campaign = Campaign.objects.get(id=kwargs['pk'])
         if campaign.may_edit(request.user):
             character = Character.objects.get(id=kwargs['character_pk'])
             character.campaign = None
+            character.npc_campaign = None
             character.save()
         return JsonResponse({'status': 'ok'})
 

@@ -36,9 +36,27 @@
 
     {% if may_edit %}
     <div class="col-12">
-        <a class="btn btn-danger w-100 btn-sm mb-2 remove-character-from-campaign"
-           data-message="{% trans 'Remove character from campaign?' %}"
-           href="{% url 'campaigns:xhr_remove_character' pk=object.campaign.id character_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+    {% if object.campaign %}
+        {% url 'campaigns:xhr_switch_npc' pk=object.campaign.id character_pk=object.id as switch_url %}
+    {% else %}
+        {% url 'campaigns:xhr_switch_npc' pk=object.npc_campaign.id character_pk=object.id as switch_url %}
+    {% endif %}
+        <a class="btn btn-warning w-100 btn-sm mb-2 remove-character-from-campaign"
+           data-message="{% trans 'Switch character NPC status?' %}"
+           href="{{ switch_url }}"><i class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}</a>
     </div>
+    {% endif %}
+
+    {% if may_edit %}
+        <div class="col-12">
+            {% if object.campaign %}
+                {% url 'campaigns:xhr_remove_character' pk=object.campaign.id character_pk=object.id as remove_url %}
+            {% else %}
+                {% url 'campaigns:xhr_remove_character' pk=object.npc_campaign.id character_pk=object.id as remove_url %}
+            {% endif %}
+            <a class="btn btn-danger w-100 btn-sm mb-2 remove-character-from-campaign"
+               data-message="{% trans 'Remove character from campaign?' %}"
+               href="{{ remove_url }}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+        </div>
     {% endif %}
 </div>

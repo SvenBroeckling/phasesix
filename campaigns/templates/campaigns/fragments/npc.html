@@ -6,8 +6,7 @@
         <table class="table campaign-status-sortable">
             <thead>
             <tr class="pointer">
-                <th>{% trans 'Character' %}</th>
-                <th class="data column-player">{% trans 'Player' %}</th>
+                <th>{% trans 'NPC' %}</th>
                 <th class="data column-wounds">{% trans 'Latest Initiative' %}</th>
                 <th class="data column-wounds">{% trans 'Wounds' %}</th>
                 <th class="data column-status">{% trans 'Status' %}</th>
@@ -17,12 +16,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for c in object.character_set.all %}
+            {% for c in object.npc_set.all %}
                 <tr class="pointer sidebar-trigger" data-sidebar-title="{{ c }}" data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
                     <td class="column-dice">
                         {{ c }}
                     </td>
-                    <td class="column-player">{{ c.created_by }}</td>
                     <td>{{ c.latest_initiative }}</td>
 
                     <td class="column-wounds">
@@ -87,7 +85,7 @@
         </table>
 
             {% if may_edit %}
-              <a href="{{ object.invite_link }}" class="btn campaign-link btn-primary float-end me-2" data-msg="{% trans 'Copied' %}">{% trans 'Copy Invite Link' %}</a>
+                <a href="{% url 'characters:create_character_data' epoch_pk=object.epoch.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}" class="btn btn-primary float-end">{% trans 'Create npc' %}</a>
             {% endif %}
     </div>
 {% endblock %}
