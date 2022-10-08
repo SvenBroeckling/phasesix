@@ -83,7 +83,7 @@ class CreateItemView(View):
                     concealment=form.cleaned_data['concealment'],
                     created_by=request.user,
                     is_homebrew=True,
-                    homebrew_campaign=character.campaign)
+                    homebrew_campaign=character.pc_or_npc_campaign)
                 for ext in character.extensions.all():
                     item.extensions.add(ext)
                 if form['add_to_character']:
@@ -123,7 +123,7 @@ class CreateRiotGearView(View):
                     concealment=form.cleaned_data['concealment'],
                     created_by=request.user,
                     is_homebrew=True,
-                    homebrew_campaign=character.campaign)
+                    homebrew_campaign=character.pc_or_npc_campaign)
                 for ext in character.extensions.all():
                     riot_gear.extensions.add(ext)
                 if form['add_to_character']:
@@ -173,7 +173,7 @@ class CreateWeaponView(View):
                     range_meter=form.cleaned_data['range_meter'],
                     created_by=request.user,
                     is_homebrew=True,
-                    homebrew_campaign=character.campaign)
+                    homebrew_campaign=character.pc_or_npc_campaign)
                 for ext in character.extensions.all():
                     weapon.extensions.add(ext)
                 if form['add_to_character']:
@@ -221,7 +221,7 @@ class CreateBaseSpellView(View):
                     is_ritual=form.cleaned_data['is_ritual'],
                     created_by=request.user,
                     is_homebrew=True,
-                    homebrew_campaign=character.campaign)
+                    homebrew_campaign=character.pc_or_npc_campaign)
                 if form['add_to_character']:
                     character.characterspell_set.create(spell=base_spell)
             else:

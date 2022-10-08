@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import math
+import random
 
 from django.db import models
 from django.db.models import Sum, Max, Q
@@ -56,7 +57,6 @@ class Character(models.Model):
         'campaigns.Campaign', verbose_name=_('Campaign'), related_name="npc_set", blank=True, null=True, on_delete=models.SET_NULL
     )
 
-
     reputation = models.IntegerField(_('reputation'), default=0)
 
     health = models.IntegerField(_('health'), default=6)
@@ -85,6 +85,8 @@ class Character(models.Model):
 
     def may_edit(self, user):
         if self.created_by == user:
+            return True
+        if self.pc_or_npc_campaign and self.pc_or_npc_campaign.may_edit(user):
             return True
         if not self.created_by:
             return True
@@ -119,11 +121,24 @@ class Character(models.Model):
                     kd[m.knowledge] = m.knowledge_modifier
         return kd
 
+    def switch_pc_npc_campaign(self):
+        if self.campaign is not None:
+            self.npc_campaign = self.campaign
+            self.campaign = None
+        else:
+            self.campaign = self.npc_campaign
+            self.npc_campaign = None
+        self.save()
+
+    @property
+    def pc_or_npc_campaign(self):
+        return self.campaign or self.npc_campaign
+
     @property
     def ws_room_name(self) -> str:
         """Websocket room name"""
-        if self.campaign is not None:
-            return self.campaign.ws_room_name
+        if self.pc_or_npc_campaign is not None:
+            return self.pc_or_npc_campaign.ws_room_name
         return f'character-{self.id}'
 
     @property
@@ -132,7 +147,7 @@ class Character(models.Model):
 
     @property
     def currency_map(self):
-        cc = self.campaign.currency_map if self.campaign is not None else None
+        cc = self.pc_or_npc_campaign.currency_map if self.pc_or_npc_campaign is not None else None
         return cc if cc is not None else self.get_epoch().currency_map
 
     def currency_quantity(self, currency_map_unit):
@@ -357,6 +372,20 @@ class Character(models.Model):
             if w.modified_concealment > wc:
                 wc = w.modified_concealment
         return max(ic, rc, wc)
+
+    def randomize(self, reputation):
+        while reputation > 0:
+            template = Template.objects.for_extensions(self.extensions).order_by('?').first()
+            self.charactertemplate_set.create(template=template)
+            reputation -= template.cost
+        for i in range(2):
+            self.characterriotgear_set.create(riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?').first())
+        for i in range(3):
+            self.characterweapon_set.create(weapon=Weapon.objects.for_extensions(self.extensions).order_by('?').first())
+        for i in range(12):
+            self.characteritem_set.create(
+                item=Item.objects.for_extensions(self.extensions).order_by('?').first(),
+                quantity=random.randint(1, 3))
 
 
 class CharacterAttributeQuerySet(models.QuerySet):

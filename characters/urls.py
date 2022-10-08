@@ -134,6 +134,10 @@ urlpatterns = [
         r'^new/data/(?P<epoch_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
+    url(
+        r'^new/random_npc/(?P<epoch_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
+        views.CreateRandomNPCView.as_view(),
+        name='create_random_npc'),
 
     # constructed
     url(

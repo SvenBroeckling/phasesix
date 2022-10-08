@@ -85,7 +85,8 @@
         </table>
 
             {% if may_edit %}
-                <a href="{% url 'characters:create_character_data' epoch_pk=object.epoch.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}" class="btn btn-primary float-end">{% trans 'Create npc' %}</a>
+                <a href="{% url 'characters:create_random_npc' epoch_pk=object.epoch.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}" class="btn btn-primary float-end">{% trans 'Create random NPC' %}</a>
+                <a href="{% url 'characters:create_character_data' epoch_pk=object.epoch.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}" class="btn btn-primary me-2 float-end">{% trans 'Create npc' %}</a>
             {% endif %}
     </div>
 {% endblock %}

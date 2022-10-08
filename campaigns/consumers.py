@@ -19,7 +19,7 @@ def roll_and_send(character_id, roll_string, header, description, campaign_id=No
 
     if character_id:
         character = Character.objects.get(id=character_id)
-        campaign = character.campaign
+        campaign = character.pc_or_npc_campaign
         ws_room_name = character.ws_room_name
         character_name = character.name
         minimum_roll = character.minimum_roll

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-07 08:57+0000\n"
-"PO-Revision-Date: 2022-10-07 13:15+0200\n"
+"POT-Creation-Date: 2022-10-08 18:51+0000\n"
+"PO-Revision-Date: 2022-10-08 20:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: armory/models.py:291 armory/models.py:357 armory/models.py:386
 #: armory/models.py:411 bestiary/models.py:8 bestiary/models.py:20
 #: bestiary/models.py:40 bestiary/models.py:81 campaigns/models.py:14
-#: campaigns/models.py:89 campaigns/models.py:97 characters/models.py:23
+#: campaigns/models.py:89 campaigns/models.py:97 characters/models.py:24
 #: forum/models.py:33 forum/models.py:51 horror/models.py:11
 #: horror/models.py:24 magic/models.py:16 magic/models.py:29 magic/models.py:42
 #: magic/models.py:111 magic/models.py:127 magic/models.py:139
@@ -36,7 +36,7 @@ msgstr "Name"
 #: armory/models.py:24 armory/models.py:41 armory/models.py:119
 #: armory/models.py:173 armory/models.py:270 armory/models.py:292
 #: armory/models.py:358 bestiary/models.py:41 campaigns/models.py:112
-#: characters/models.py:24 horror/models.py:27 rules/models.py:58
+#: characters/models.py:25 horror/models.py:27 rules/models.py:58
 #: rules/models.py:95 rules/models.py:150 rules/models.py:169
 #: rules/models.py:204 rules/models.py:248 world/models.py:8
 msgid "description"
@@ -44,7 +44,7 @@ msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:47 armory/models.py:120
 #: armory/models.py:168 armory/models.py:355 bestiary/models.py:33
-#: campaigns/models.py:110 characters/models.py:469 characters/models.py:701
+#: campaigns/models.py:110 characters/models.py:498 characters/models.py:730
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:88 magic/models.py:71 magic/models.py:144 rules/models.py:67
 #: rules/models.py:97 rules/models.py:202 rules/models.py:279
@@ -87,7 +87,7 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:50 armory/models.py:189 armory/models.py:351
-#: campaigns/models.py:26 characters/models.py:37 magic/models.py:69
+#: campaigns/models.py:26 characters/models.py:38 magic/models.py:69
 msgid "created by"
 msgstr "Erzeugt von"
 
@@ -131,21 +131,21 @@ msgid "Shows a roll button at the item if not empty."
 msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:94 armory/models.py:207 bestiary/models.py:36
-#: campaigns/models.py:15 campaigns/models.py:98 characters/models.py:26
+#: campaigns/models.py:15 campaigns/models.py:98 characters/models.py:27
 #: magic/models.py:44 rules/models.py:63 world/models.py:18
 msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:95 armory/models.py:208 bestiary/models.py:37
 #: campaigns/models.py:16 campaigns/models.py:20 campaigns/models.py:99
-#: characters/models.py:27 characters/models.py:32 magic/models.py:45
+#: characters/models.py:28 characters/models.py:33 magic/models.py:45
 #: rules/models.py:64 world/models.py:19
 msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:96 armory/models.py:209 bestiary/models.py:38
 #: campaigns/models.py:17 campaigns/models.py:21 campaigns/models.py:100
-#: characters/models.py:28 characters/models.py:33 magic/models.py:46
+#: characters/models.py:29 characters/models.py:34 magic/models.py:46
 #: rules/models.py:65 world/models.py:20
 msgid "image copyright url"
 msgstr "Bild Copyright URL"
@@ -741,7 +741,7 @@ msgstr "Nur SL"
 msgid "All"
 msgstr "Alle"
 
-#: campaigns/models.py:19 characters/models.py:30
+#: campaigns/models.py:19 characters/models.py:31
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
@@ -751,7 +751,7 @@ msgstr "Zusammenfassung"
 
 #: campaigns/models.py:33
 #: campaigns/templates/campaigns/fragments/settings.html:7
-#: characters/forms.py:19 rules/models.py:47
+#: characters/forms.py:19 characters/forms.py:33 rules/models.py:47
 msgid "Epoch"
 msgstr "Epoche"
 
@@ -770,7 +770,7 @@ msgstr ""
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:90 characters/models.py:704 forum/models.py:91
+#: campaigns/models.py:90 characters/models.py:733 forum/models.py:91
 msgid "text"
 msgstr "Text"
 
@@ -937,11 +937,15 @@ msgid "Reroll"
 msgstr "Wiederholungswurf"
 
 #: campaigns/templates/campaigns/fragments/npc.html:88
+msgid "Create random NPC"
+msgstr "Zufälligen NSC erstellen"
+
+#: campaigns/templates/campaigns/fragments/npc.html:89
 msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:11
-#: characters/forms.py:23
+#: characters/forms.py:23 characters/forms.py:40
 msgid "Extensions"
 msgstr "Erweiterungen"
 
@@ -1004,19 +1008,19 @@ msgstr "Einladungslink kopieren"
 msgid "Go to character"
 msgstr "Gehe zum Charakter"
 
-#: campaigns/templates/campaigns/sidebar/character.html:45
+#: campaigns/templates/campaigns/sidebar/character.html:40
 msgid "Switch character NPC status?"
 msgstr "Charakter NSC Status ändern?"
 
-#: campaigns/templates/campaigns/sidebar/character.html:46
+#: campaigns/templates/campaigns/sidebar/character.html:41
 msgid "Switch NPC status"
 msgstr "NSC Status ändern"
 
-#: campaigns/templates/campaigns/sidebar/character.html:58
+#: campaigns/templates/campaigns/sidebar/character.html:48
 msgid "Remove character from campaign?"
 msgstr "Charakter aus der Kampagne entfernen?"
 
-#: campaigns/templates/campaigns/sidebar/character.html:59
+#: campaigns/templates/campaigns/sidebar/character.html:49
 msgid "Remove from campaign"
 msgstr "Aus der Kampagne entfernen"
 
@@ -1094,20 +1098,25 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:15 forum/forms.py:6 homebrew/forms.py:9
-#: homebrew/forms.py:19 homebrew/forms.py:30 homebrew/forms.py:46
+#: characters/forms.py:15 characters/forms.py:29 forum/forms.py:6
+#: homebrew/forms.py:9 homebrew/forms.py:19 homebrew/forms.py:30
+#: homebrew/forms.py:46
 msgid "Name"
 msgstr "Name"
 
-#: characters/models.py:41
+#: characters/forms.py:36
+msgid "Starting Reputation"
+msgstr "Startreputation"
+
+#: characters/models.py:42
 msgid "Characters without user will be cleaned daily."
 msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 
-#: characters/models.py:49 rules/models.py:121 rules/models.py:134
+#: characters/models.py:50 rules/models.py:121 rules/models.py:134
 msgid "lineage"
 msgstr "Abstammung"
 
-#: characters/models.py:53 characters/models.py:56
+#: characters/models.py:54 characters/models.py:57
 msgid "Campaign"
 msgstr "Kampagne"
 
@@ -1160,43 +1169,43 @@ msgstr "Kurierte Eigenarten"
 msgid "The amount of quirks healed by treatment."
 msgstr "Die Anzahl an Eigenarten, die durch Behandlung geheilt wurden."
 
-#: characters/models.py:453
+#: characters/models.py:482
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:483
+#: characters/models.py:512
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:582
+#: characters/models.py:611
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:600
+#: characters/models.py:629
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:602
+#: characters/models.py:631
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:614
+#: characters/models.py:643
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:694
+#: characters/models.py:723
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:702
+#: characters/models.py:731
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:703
+#: characters/models.py:732
 msgid "subject"
 msgstr "Thema"
 
-#: characters/models.py:705 rules/models.py:69 rules/models.py:386
+#: characters/models.py:734 rules/models.py:69 rules/models.py:386
 #: world/models.py:24
 msgid "ordering"
 msgstr "Sortierung"
@@ -1214,6 +1223,7 @@ msgstr "Spielen"
 #: characters/templates/characters/character_form.html:74
 #: characters/templates/characters/create_character.html:4
 #: characters/templates/characters/create_character_constructed.html:4
+#: characters/templates/characters/random_npc_form.html:4
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
@@ -1366,10 +1376,12 @@ msgid "New Character"
 msgstr "Neuer Charakter"
 
 #: characters/templates/characters/character_form.html:32
+#: characters/templates/characters/random_npc_form.html:32
 msgid "Choose a name and a lineage"
 msgstr "Wähle einen Namen und eine Abstammung"
 
 #: characters/templates/characters/character_form.html:34
+#: characters/templates/characters/random_npc_form.html:34
 msgid "Choose a name and additional extensions for your character"
 msgstr "Wähle einen Namen und zusätzliche Erweiterungen für deinen Charakter"
 
@@ -1883,6 +1895,14 @@ msgstr "Raste und ändere nichts"
 #: characters/templates/characters/modals/rest.html:54
 msgid "I prefer to roll my own dice"
 msgstr "Ich würfle lieber selbst"
+
+#: characters/templates/characters/random_npc_form.html:29
+msgid "New Random NPC"
+msgstr "Neuer Zufalls-NSC"
+
+#: characters/templates/characters/random_npc_form.html:75
+msgid "Create NPC"
+msgstr "NSC erstellen"
 
 #: characters/templates/characters/sidebar/character.html:7
 msgid "Roll Dice"
@@ -3755,9 +3775,6 @@ msgstr "Welten"
 #~ msgstr ""
 #~ "Erschaffe einen komplett zufälligen Charakter. Benutz dies für "
 #~ "Nichtspielercharaktere oder Ähnliches."
-
-#~ msgid "New Random Character"
-#~ msgstr "Neuer Zufallscharakter"
 
 #~ msgid "Draft Templates"
 #~ msgstr "Schablonen"

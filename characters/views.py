@@ -14,7 +14,7 @@ from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationTy
     WeaponAttackMode, CurrencyMapUnit
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign
-from characters.forms import CharacterImageForm, CreateCharacterForm
+from characters.forms import CharacterImageForm, CreateCharacterForm, CreateRandomNPCForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
 from horror.models import QuirkCategory, Quirk
@@ -402,6 +402,20 @@ class CreateCharacterDataView(FormView):
 
     def get_success_url(self):
         return reverse('characters:create_character_constructed', kwargs={'pk': self.object.id})
+
+
+class CreateRandomNPCView(CreateCharacterDataView):
+    form_class = CreateRandomNPCForm
+    template_name = 'characters/random_npc_form.html'
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        self.object.randomize(form.cleaned_data['starting_reputation'])
+        self.object.set_initial_reputation(self.object.reputation_spent + self.object.remaining_template_points)
+        return result
+
+    def get_success_url(self):
+        return reverse('campaigns:detail', kwargs={'pk': self.campaign_to_join.id})
 
 
 class XhrCreateCharacterPreviewView(DetailView):

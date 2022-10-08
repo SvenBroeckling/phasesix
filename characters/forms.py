@@ -23,3 +23,20 @@ class CreateCharacterForm(forms.Form):
         label=_('Extensions'),
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'display: none'}))
+
+
+class CreateRandomNPCForm(forms.Form):
+    name = forms.CharField(label=_('Name'), max_length=80)
+    lineage = forms.ModelChoiceField(queryset=Lineage.objects.all())
+    epoch = forms.ModelChoiceField(
+        queryset=Extension.objects.filter(type='e', is_mandatory=False, is_active=True),
+        label=_('Epoch'),
+        widget=forms.HiddenInput())
+    starting_reputation = forms.IntegerField(
+        label=_('Starting Reputation'),
+        initial=50)
+    extensions = forms.ModelMultipleChoiceField(
+        queryset=Extension.objects.filter(type__in=['x', 'w'], is_mandatory=False, is_active=True),
+        label=_('Extensions'),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'display: none'}))

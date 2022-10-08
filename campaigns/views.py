@@ -55,7 +55,6 @@ class XhrCampaignFragmentView(DetailView):
         return ['campaigns/fragments/' + self.kwargs['fragment_template'] + '.html']
 
 
-
 class SaveSettingsView(View):
     def post(self, request, *args, **kwargs):
         campaign = Campaign.objects.get(id=kwargs['pk'])
@@ -71,13 +70,7 @@ class XhrSwitchCharacterNPCView(View):
         campaign = Campaign.objects.get(id=kwargs['pk'])
         if campaign.may_edit(request.user):
             character = Character.objects.get(id=kwargs['character_pk'])
-            if character.campaign is not None:
-                character.npc_campaign = character.campaign
-                character.campaign = None
-            else:
-                character.campaign = character.npc_campaign
-                character.npc_campaign = None
-            character.save()
+            character.switch_pc_npc_campaign()
         return JsonResponse({'status': 'ok'})
 
 
@@ -100,7 +93,7 @@ class BaseSidebarView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            context['may_edit'] = self.object.campaign.may_edit(self.request.user)
+            context['may_edit'] = self.object.pc_or_npc_campaign.may_edit(self.request.user)
         except AttributeError:
             context['may_edit'] = self.object.may_edit(self.request.user)
         return context
@@ -121,3 +114,8 @@ class XhrSettingsSidebarView(BaseSidebarView):
 
 class XhrCharacterSidebarView(BaseSidebarView):
     model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['may_edit'] = self.object.pc_or_npc_campaign.may_edit(self.request.user)
+        return context

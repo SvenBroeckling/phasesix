@@ -12,7 +12,7 @@
     </div>
 </div>
 
-{% if may_edit or object.campaign.character_visibility == 'A'  %}
+{% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A'  %}
     <div class="col-12 text-center mt-1 mb-3">
         {% for i in object.health|to_range %}
             <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
@@ -27,7 +27,7 @@
 {% endif %}
 
 <div class="row">
-    {% if may_edit or object.campaign.character_visibility == 'A' %}
+    {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
     <div class="col-12">
         <a class="btn btn-primary w-100 btn-sm mb-2"
            href="{{ object.get_absolute_url }}"><i class="fas fa-link fa-fw"></i> {% trans 'Go to character' %}</a>
@@ -36,27 +36,17 @@
 
     {% if may_edit %}
     <div class="col-12">
-    {% if object.campaign %}
-        {% url 'campaigns:xhr_switch_npc' pk=object.campaign.id character_pk=object.id as switch_url %}
-    {% else %}
-        {% url 'campaigns:xhr_switch_npc' pk=object.npc_campaign.id character_pk=object.id as switch_url %}
-    {% endif %}
         <a class="btn btn-warning w-100 btn-sm mb-2 remove-character-from-campaign"
            data-message="{% trans 'Switch character NPC status?' %}"
-           href="{{ switch_url }}"><i class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}</a>
+           href="{% url 'campaigns:xhr_switch_npc' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}</a>
     </div>
     {% endif %}
 
     {% if may_edit %}
         <div class="col-12">
-            {% if object.campaign %}
-                {% url 'campaigns:xhr_remove_character' pk=object.campaign.id character_pk=object.id as remove_url %}
-            {% else %}
-                {% url 'campaigns:xhr_remove_character' pk=object.npc_campaign.id character_pk=object.id as remove_url %}
-            {% endif %}
             <a class="btn btn-danger w-100 btn-sm mb-2 remove-character-from-campaign"
                data-message="{% trans 'Remove character from campaign?' %}"
-               href="{{ remove_url }}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+               href="{% url 'campaigns:xhr_remove_character' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
         </div>
     {% endif %}
 </div>
