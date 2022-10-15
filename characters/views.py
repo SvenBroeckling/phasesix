@@ -14,7 +14,7 @@ from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationTy
     WeaponAttackMode, CurrencyMapUnit
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign
-from characters.forms import CharacterImageForm, CreateCharacterForm, CreateRandomNPCForm
+from characters.forms import CharacterImageForm, CreateCharacterDataForm, CreateRandomNPCForm, CreateCharacterExtensionsForm
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
 from horror.models import QuirkCategory, Quirk
@@ -342,12 +342,36 @@ class CreateCharacterView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['extensions'] = Extension.objects.exclude(
+            is_mandatory=True).exclude(type__in=['e', 'x']).exclude(is_active=False)
+        return context
+
+
+class CreateCharacterEpochView(TemplateView):
+    template_name = 'characters/create_character_epoch.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['world_pk'] = self.kwargs['world_pk']
+        context['extensions'] = Extension.objects.exclude(
             is_mandatory=True).exclude(type__in=['x', 'w']).exclude(is_active=False)
         return context
 
 
+class CreateCharacterExtensionsView(FormView):
+    template_name = 'characters/create_character_extensions.html'
+    form_class = CreateCharacterExtensionsForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['world_pk'] = self.kwargs['world_pk']
+        context['epoch_pk'] = self.kwargs['epoch_pk']
+        context['extensions'] = Extension.objects.exclude(
+            is_mandatory=True).exclude(type__in=['e', 'w']).exclude(is_active=False)
+        return context
+
+
 class CreateCharacterDataView(FormView):
-    form_class = CreateCharacterForm
+    form_class = CreateCharacterDataForm
     template_name = 'characters/character_form.html'
 
     @property
@@ -364,6 +388,7 @@ class CreateCharacterDataView(FormView):
             name=form.cleaned_data['name'],
             lineage=form.cleaned_data['lineage'])
         self.object.extensions.add(form.cleaned_data['epoch'])
+        self.object.extensions.add(form.cleaned_data['world'])
 
         for e in form.cleaned_data['extensions']:
             self.object.extensions.add(e)
@@ -388,10 +413,15 @@ class CreateCharacterDataView(FormView):
     def get_initial(self):
         lineages = Lineage.objects.filter(
             Q(extensions__id=self.kwargs['epoch_pk']) |
-            Q(extensions__id__in=Extension.objects.filter(is_mandatory=True)))
+            Q(extensions__id=self.kwargs['world_pk']) |
+            Q(extensions__id__in=Extension.objects.filter(
+                Q(is_mandatory=True) | Q(id__in=self.request.GET.getlist('extensions'))))
+        )
         return {
             'epoch': self.kwargs['epoch_pk'],
-            'lineage': lineages.earliest('id')
+            'world': self.kwargs['world_pk'],
+            'lineage': lineages.earliest('id'),
+            'extensions': Extension.objects.filter(id__in=self.request.GET.getlist('extensions'))
         }
 
     def get_context_data(self, **kwargs):

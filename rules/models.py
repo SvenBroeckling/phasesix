@@ -69,6 +69,12 @@ class Extension(models.Model, metaclass=TransMeta):
     ordering = models.IntegerField(_('ordering'), default=100)
 
     currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
+    fixed_epoch = models.ForeignKey(
+        'self',
+        limit_choices_to={'type': 'e'},
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ('ordering',)

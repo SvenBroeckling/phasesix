@@ -3,25 +3,6 @@
 
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
 
-{% block javascript %}
-    <script>
-        $(() => {
-            $('.create-epoch-card').on('click', function () {
-                let id = $(this).data('extension-id')
-                let option = $(`#id_extensions>option[value=${id}]`)
-                let was_selected = $(this).hasClass('selected')
-                if (was_selected) {
-                    option.removeAttr('selected')
-                    $(this).removeClass('selected')
-                } else {
-                    option.attr('selected', 'selected')
-                    $(this).addClass('selected')
-                }
-            })
-        })
-    </script>
-{% endblock %}
-
 {% block content %}
     <form action="" method="post">
         <div class="row">
@@ -29,48 +10,24 @@
                 <h1>- {% trans 'New Character' %} -</h1>
                 {% if campaign %}
                     <h4 class="text-muted">{{ campaign }}</h4>
-                    <p class="text-muted">{% trans 'Choose a name and a lineage' %}</p>
-                {% else %}
-                    <p class="text-muted">{% trans 'Choose a name and additional extensions for your character' %}</p>
                 {% endif %}
+                    <p class="text-muted">{% trans 'Choose a name and a lineage' %}</p>
             </div>
         </div>
 
         <div class="row">
             {% csrf_token %}
-            <div class="col-12 {% if not campaign %}col-md-6{% else %}col-md-8 offset-md-2{% endif %}">
+            <div class="col-12 col-md-8 offset-md-2">
                 {% bootstrap_field form.name %}
-            </div>
-            <div class="col-12 {% if not campaign %}col-md-6{% else %}col-md-8 offset-md-2{% endif %}">
                 {% bootstrap_field form.lineage %}
                 {% bootstrap_field form.epoch show_label=False %}
+                {% bootstrap_field form.world show_label=False %}
                 {% bootstrap_field form.extensions show_label=False %}
             </div>
         </div>
 
-		{% if not campaign %}
-			<div class="row mt-4">
-				{% for extension in extensions %}
-					{% thumbnail extension.image "1024" as im %}
-						<div class="col-12 col-md-6 col-lg-4">
-							<div class="card text-center create-epoch-card mb-4 pointer"
-								 data-extension-id="{{ extension.id }}">
-								<div class="card-body"
-									 style="background-image: url({{ im.url }}); background-size: cover">
-									<div class="card-text w-100 p-5">
-										<h5 class="text-center p-0 m-0">{{ extension }}</h5>
-										<p class="text-center p-0 m-0">{{ extension.year_range }}</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					{% endthumbnail %}
-				{% endfor %}
-			</div>
-		{% endif %}
-
         <div class="row mb-3">
-            <div class="col-12 {% if campaign %}col-md-8 offset-md-2{% endif %}">
+            <div class="col-12 col-md-8 offset-md-2">
                 <button type="submit" class="btn btn-primary btn-block mt-2">{% trans 'Create Character' %}</button>
             </div>
         </div>

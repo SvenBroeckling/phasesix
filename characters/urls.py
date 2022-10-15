@@ -127,15 +127,23 @@ urlpatterns = [
     # new character
     url(r'^new/$', views.CreateCharacterView.as_view(), name='create_character'),
     url(
-        r'^new/data/(?P<epoch_pk>\d+)/$',
+        r'^new/(?P<world_pk>\d+)/$',
+        views.CreateCharacterEpochView.as_view(),
+        name='create_character_epoch'),
+    url(
+        r'^new/(?P<world_pk>\d+)/(?P<epoch_pk>\d+)/$',
+        views.CreateCharacterExtensionsView.as_view(),
+        name='create_character_extensions'),
+    url(
+        r'^new/data/(?P<world_pk>\d+)/(?P<epoch_pk>\d+)/$',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
     url(
-        r'^new/data/(?P<epoch_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
+        r'^new/data/(?P<epoch_pk>\d+)/(?P<world_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
     url(
-        r'^new/random_npc/(?P<epoch_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
+        r'^new/random_npc/(?P<epoch_pk>\d+)/(?P<world_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
         views.CreateRandomNPCView.as_view(),
         name='create_random_npc'),
 

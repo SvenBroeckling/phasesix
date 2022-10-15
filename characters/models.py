@@ -54,7 +54,7 @@ class Character(models.Model):
         'campaigns.Campaign', verbose_name=_('Campaign'), blank=True, null=True, on_delete=models.SET_NULL
     )
     npc_campaign = models.ForeignKey(
-        'campaigns.Campaign', verbose_name=_('Campaign'), related_name="npc_set", blank=True, null=True, on_delete=models.SET_NULL
+        'campaigns.Campaign', verbose_name=_('NPC Campaign'), related_name="npc_set", blank=True, null=True, on_delete=models.SET_NULL
     )
 
     reputation = models.IntegerField(_('reputation'), default=0)

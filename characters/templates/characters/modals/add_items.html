@@ -58,6 +58,9 @@
                                             {% endif %}
                                             <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span item.concealment 6 invert=True %}<br>
                                             <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ item.weight }}<br>
+
+                                            {% if item.is_container %}<br>{% trans 'Container' %}<br>{% endif %}
+
                                             {% if character.currency_map %}
                                                 {% with cmu=character.currency_map.currencymapunit_set.earliest %}
                                                     <br>

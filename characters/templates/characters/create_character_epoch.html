@@ -9,18 +9,14 @@
             <h1 class="text-center">- {% trans 'New Character' %} -</h1>
             <p class="text-muted text-center">
                 {% blocktrans %}
-                    Choose a world to play in
+                    Choose an epoch to play in
                 {% endblocktrans %}
             </p>
         </div>
 
         {% for extension in extensions %}
             <div class="col-12 col-md-6 col-lg-4">
-            {% if extension.fixed_epoch %}
-                <a href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
-            {% else %}
-                <a href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">
-            {% endif %}
+                <a href="{% url 'characters:create_character_extensions' world_pk=world_pk epoch_pk=extension.id %}">
                     <div class="card text-center create-epoch-card mb-4">
                         {% thumbnail extension.image "1024" as im %}
                         <div class="card-body" style="background-image: url({{ im.url }}); background-size: cover">

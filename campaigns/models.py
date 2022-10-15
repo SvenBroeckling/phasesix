@@ -5,6 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 
 import hashlib
 
+from rules.models import Extension
+
 
 class Campaign(models.Model):
     CHARACTER_VISIBILITY_CHOICES = (
@@ -28,9 +30,18 @@ class Campaign(models.Model):
     )
 
     epoch = models.ForeignKey(
-            'rules.Extension', limit_choices_to={'type': 'e', 'is_mandatory': False}, on_delete=models.CASCADE,
+        'rules.Extension',
+        limit_choices_to={'type': 'e', 'is_mandatory': False},
+        on_delete=models.CASCADE,
         related_name="campaign_epoch_set",
         verbose_name=_('Epoch')
+    )
+    world = models.ForeignKey(
+        'rules.Extension',
+        limit_choices_to={'type': 'w', 'is_mandatory': False},
+        on_delete=models.CASCADE,
+        related_name="campaign_world_set",
+        verbose_name=_('World')
     )
     extensions = models.ManyToManyField(
         'rules.Extension', limit_choices_to={'is_mandatory': False, 'type': 'x'}, blank=True
