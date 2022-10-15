@@ -627,6 +627,7 @@ class CharacterItem(models.Model):
 
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'), default=1)
+    charges_used = models.IntegerField(_('Charges used'), default=0)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
     ordering = models.IntegerField(_('Ordering'), default=1)
 
@@ -635,6 +636,12 @@ class CharacterItem(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+    @property
+    def charges_available(self):
+        if self.item.charges is not None:
+            return self.item.charges - self.charges_used
+        return None
 
 
 class CharacterSpell(models.Model):

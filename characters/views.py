@@ -682,6 +682,10 @@ class XhrModifyItemView(View):
         if self.kwargs['mode'] == 'remove':
             if item.quantity > 0:
                 item.quantity -= 1
+        if self.kwargs['mode'] == 'add_charge':
+            item.charges_used -= 1
+        if self.kwargs['mode'] == 'remove_charge':
+            item.charges_used += 1
         item.save()
         if item.quantity <= 0:
             item.delete()

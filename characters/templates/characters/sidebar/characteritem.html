@@ -6,15 +6,36 @@
             <div class="btn-group w-100">
                 <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove" %}"
                    class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
-                                                                 title="{% trans 'Use Arcana' %}"></i>{% trans 'Remove' %}
+                                                                 title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
                 </a>
                 <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add" %}"
                    class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
-                                                                 title="{% trans 'Restore Arcana' %}"></i>{% trans 'Add' %}
+                                                                 title="{% trans 'Add' %}"></i>{% trans 'Add' %}
                 </a>
             </div>
         </div>
     </div>
+
+    {% if object.item.charges is not None %}
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="btn-group w-100">
+                    <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add_charge" %}"
+                       class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
+                                                                     title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="btn-group w-100">
+                    <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove_charge" %}"
+                       class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
+                                                                     title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <div class="row mt-2">
         {% if object.item.dice_roll_string %}
@@ -31,13 +52,14 @@
             </div>
         {% endif %}
 
-        {% if object.item.attribute  %}
+        {% if object.item.attribute %}
             <div class="col-12">
                 <div class="btn-group w-100">
                     <button class="btn btn-primary btn-sm dice-roll mb-1"
                             data-dice-roll="{% character_attribute_value object.character object.item.attribute %}d6"
                             data-dice-header="{{ object.item }} - {{ object.item.attribute }}"
                             data-dice-description="
+
                                     {% character_attribute_value object.character object.item.attribute %}{% trans 'd6' %}"
                             data-dice-character="{{ object.character.id }}"><i
                             class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.attribute }}</button>
@@ -66,6 +88,7 @@
                             data-dice-roll="{% character_knowledge_value object.character object.item.knowledge %}d6"
                             data-dice-header="{{ object.item }} - {{ object.item.knowledge }}"
                             data-dice-description="
+
                                     {% character_knowledge_value object.character object.item.knowledge %}{% trans 'd6' %}"
                             data-dice-character="{{ object.character.id }}"><i
                             class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.knowledge }}</button>
@@ -90,6 +113,13 @@
                     {% trans 'Type' %}
                     <span class="float-end">{{ object.item.type }}</span>
                 </li>
+                {% if object.item.charges is not None %}
+                    <li class="list-group-item">
+                        <i class="fas fa-bolt fa-fw"></i>
+                        {% trans 'Charges' %}
+                        <span class="float-end">{% color_value_span object.charges_available 100 invert=True %}/{{ object.item.charges }}</span>
+                    </li>
+                {% endif %}
                 <li class="list-group-item">
                     <i class="fas fa-balance-scale fa-fw"></i>
                     {% trans 'Weight' %}

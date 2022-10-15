@@ -12,6 +12,10 @@ class CreateItemForm(forms.Form):
     weight = forms.DecimalField(label=_('Weight (kg)'))
     price = forms.DecimalField(label=_('Price'))
     concealment = forms.DecimalField(label=_('Concealment'))
+    charges = forms.DecimalField(
+        label=_('Charges'),
+        help_text=_('Leave blank for non-chargeable items'),
+        required=False)
     add_to_character = forms.BooleanField(label=_('Add to character'), initial=True, required=False)
 
 

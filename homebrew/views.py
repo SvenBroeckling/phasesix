@@ -81,6 +81,7 @@ class CreateItemView(View):
                     weight=form.cleaned_data['weight'],
                     price=form.cleaned_data['price'],
                     concealment=form.cleaned_data['concealment'],
+                    charges=form.cleaned_data['charges'],
                     created_by=request.user,
                     is_homebrew=True,
                     homebrew_campaign=character.pc_or_npc_campaign)

@@ -63,6 +63,8 @@ class Item(models.Model, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL)
 
+    charges = models.IntegerField(_('charges'), null=True, blank=True)
+
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     usable_in_combat = models.BooleanField(_('usable in combat'), default=False)
     attribute = models.ForeignKey(
