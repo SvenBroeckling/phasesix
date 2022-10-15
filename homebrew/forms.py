@@ -16,6 +16,10 @@ class CreateItemForm(forms.Form):
         label=_('Charges'),
         help_text=_('Leave blank for non-chargeable items'),
         required=False)
+    is_container = forms.BooleanField(
+        label=_('Is Container'),
+        help_text=_('Check if this item can hold other items'),
+        required=False)
     add_to_character = forms.BooleanField(label=_('Add to character'), initial=True, required=False)
 
 

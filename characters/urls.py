@@ -234,6 +234,14 @@ urlpatterns = [
         r'^modify_currency/(?P<pk>\d+)$',
         views.XhrModifyCurrencyView.as_view(),
         name='xhr_modify_currency'),
+    url(
+        r'^xhr_put_into/(?P<pk>\d+)/(?P<item_pk>\d+)/(?P<container_pk>\d+)$',
+        views.XhrPutIntoView.as_view(),
+        name='xhr_put_into'),
+    url(
+        r'^xhr_put_into/(?P<pk>\d+)/(?P<item_pk>\d+)$',
+        views.XhrPutIntoView.as_view(),
+        name='xhr_put_into'),
 
     # weapon modifications
     url(

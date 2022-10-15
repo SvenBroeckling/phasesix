@@ -8,10 +8,12 @@
                    class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
                                                                  title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
                 </a>
+                {% if not object.item.is_container %}
                 <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add" %}"
                    class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
                                                                  title="{% trans 'Add' %}"></i>{% trans 'Add' %}
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -58,9 +60,7 @@
                     <button class="btn btn-primary btn-sm dice-roll mb-1"
                             data-dice-roll="{% character_attribute_value object.character object.item.attribute %}d6"
                             data-dice-header="{{ object.item }} - {{ object.item.attribute }}"
-                            data-dice-description="
-
-                                    {% character_attribute_value object.character object.item.attribute %}{% trans 'd6' %}"
+                            data-dice-description="{% character_attribute_value object.character object.item.attribute %}{% trans 'd6' %}"
                             data-dice-character="{{ object.character.id }}"><i
                             class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.attribute }}</button>
                 </div>
@@ -73,8 +73,7 @@
                     <button class="btn btn-primary btn-sm dice-roll mb-1"
                             data-dice-roll="{% character_skill_value object.character object.item.skill %}d6"
                             data-dice-header="{{ object.item }} - {{ object.item.skill }}"
-                            data-dice-description="
-                                    {% character_skill_value object.character object.item.skill %}{% trans 'd6' %}"
+                            data-dice-description="{% character_skill_value object.character object.item.skill %}{% trans 'd6' %}"
                             data-dice-character="{{ object.character.id }}"><i
                             class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.skill }}</button>
                 </div>
@@ -87,13 +86,34 @@
                     <button class="btn btn-primary btn-sm dice-roll mb-1"
                             data-dice-roll="{% character_knowledge_value object.character object.item.knowledge %}d6"
                             data-dice-header="{{ object.item }} - {{ object.item.knowledge }}"
-                            data-dice-description="
-
-                                    {% character_knowledge_value object.character object.item.knowledge %}{% trans 'd6' %}"
+                            data-dice-description="{% character_knowledge_value object.character object.item.knowledge %}{% trans 'd6' %}"
                             data-dice-character="{{ object.character.id }}"><i
                             class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.knowledge }}</button>
                 </div>
             </div>
+        {% endif %}
+
+        {% if not object.item.is_container %}
+            {% if object.in_container is not None or object.other_containers %}
+                <div class="col-12">
+                    <div class="dropdown mt-1">
+                        <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-arrow-right"></i>
+                            {% trans 'Put into container' %}
+                        </button>
+                        <div class="dropdown-menu">
+                            {% if object.in_container is not None %}
+                                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
+                                   class="dropdown-item action-link">{% trans 'On Body' %}</a>
+                            {% endif %}
+                            {% for container in object.other_containers %}
+                                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
+                                   class="dropdown-item action-link">{{ container.item }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% endif %}

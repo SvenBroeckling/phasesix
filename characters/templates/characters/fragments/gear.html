@@ -237,53 +237,24 @@
                 </div>
             {% endif %}
 
-            <div class="item-sortable" data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
-                {% for ci in character.characteritem_set.all %}
-                    <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ ci.item }}" data-pk="{{ ci.id }}"
-                         data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=ci.id sidebar_template="characteritem" %}">
-                        <div class="card-header">
-                            {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}x {% endif %} {{ ci.item }}
-                            <span class="small text-muted">{{ ci.item.type }}</span>
-                            {% if ci.item.concealment > 0 %}
-                                <span class="float-end">
-                                <i class="fas fa-eye-slash fa-fw"
-                                   title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
-                            </span>
-                            {% endif %}
-                        </div>
-                        {% if ci.item.description %}
-                            <div class="card-body d-none">
-                                <p class="mb-0">{{ ci.item.description }}</p>
-                            </div>
-                        {% endif %}
-                        <div class="card-footer d-none">
-                            <i class="fas fa-eye-slash fa-fw"
-                               title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
-                            <i class="fas fa-balance-scale fa-fw ms-1"
-                               title="{% trans 'Weight' %}"></i> {{ ci.item.weight }}
-                            {% if user.is_superuser %}
-                                <a href="{% url 'admin:armory_item_change' ci.item.id %}"
-                                   style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% empty %}
-                    <div class="card">
-                        <div class="card-body">
-                            <a
-                                    class="modal-trigger"
-                                    data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
-                                    title="{% trans 'Add Item' %}"
-                                    {% if may_edit %}
-                                    data-bs-toggle="modal"
-                                    {% endif %}
-                                    data-modal-title="{% trans 'Add item' %}"
-                                    data-bs-target=".character-modal"
-                                    href="">{% trans 'No items yet.' %}</a>
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="card">
+                <div class="card-header">{% trans 'On Body' %}</div>
+                <div class="card-body">
+                    {% include 'characters/fragments/_gear_item.html' with qs=character.characteritem_set.not_in_container.without_containers %}
+                </div>
             </div>
+
+            {% for container in character.characteritem_set.containers %}
+                <div class="card mt-3 sidebar-trigger"
+                     data-pk="container.id"
+                     data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=container.id sidebar_template="characteritem" %}"
+                     data-sidebar-title="{{ container.item }}">
+                    <div class="card-header">{{ container.item }}</div>
+                    <div class="card-body">
+                        {% include 'characters/fragments/_gear_item.html' with qs=container.characteritem_set.without_containers %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

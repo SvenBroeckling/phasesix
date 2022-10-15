@@ -49,8 +49,9 @@ class RiotGearAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'type', 'weight', 'price', 'skill', 'concealment', 'usable_in_combat')
-    list_editable = ('concealment', 'type', 'usable_in_combat', 'skill')
+    list_display = (
+        'name_de', 'name_en', 'type', 'weight', 'price', 'is_container', 'skill', 'concealment', 'usable_in_combat')
+    list_editable = ('concealment', 'type', 'is_container', 'usable_in_combat', 'skill')
     list_filter = ('type', 'extensions')
     search_fields = ('name_de', 'name_en')
 

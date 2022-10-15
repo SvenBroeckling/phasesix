@@ -621,6 +621,15 @@ class CharacterItemQuerySet(models.QuerySet):
     def usable_in_combat(self):
         return self.filter(item__usable_in_combat=True)
 
+    def without_containers(self):
+        return self.filter(item__is_container=False)
+
+    def containers(self):
+        return self.filter(item__is_container=True)
+
+    def not_in_container(self):
+        return self.filter(in_container__isnull=True)
+
 
 class CharacterItem(models.Model):
     objects = CharacterItemQuerySet.as_manager()
@@ -629,6 +638,7 @@ class CharacterItem(models.Model):
     quantity = models.IntegerField(_('Quantity'), default=1)
     charges_used = models.IntegerField(_('Charges used'), default=0)
     item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
+    in_container = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     ordering = models.IntegerField(_('Ordering'), default=1)
 
     class Meta:
@@ -642,6 +652,10 @@ class CharacterItem(models.Model):
         if self.item.charges is not None:
             return self.item.charges - self.charges_used
         return None
+
+    @property
+    def other_containers(self):
+        return self.character.characteritem_set.containers().exclude(id=self.in_container_id)
 
 
 class CharacterSpell(models.Model):

@@ -39,7 +39,10 @@ class Item(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
+
     type = models.ForeignKey(ItemType, verbose_name=_('type'), on_delete=models.CASCADE)
+    is_container = models.BooleanField(_('is container'), default=False)
+
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
     concealment = models.IntegerField(_('concealment'), default=0)

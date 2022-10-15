@@ -649,7 +649,8 @@ class AddItemView(View):
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
 
-        if character.characteritem_set.filter(item=item).exists():
+        # Containers don't stack
+        if character.characteritem_set.filter(item=item).exists() and not item.is_container:
             ci = character.characteritem_set.filter(item=item).latest('id')
             ci.quantity += 1
             ci.save()
@@ -690,6 +691,23 @@ class XhrModifyItemView(View):
         if item.quantity <= 0:
             item.delete()
 
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrPutIntoView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+        item = CharacterItem.objects.get(id=kwargs['item_pk'])
+
+        container = None
+        if kwargs.get('container_pk', None) is not None:
+            container = CharacterItem.objects.get(id=kwargs['container_pk'])
+
+        if not item.item.is_container:
+            item.in_container = container
+            item.save()
         return JsonResponse({'status': 'ok'})
 
 
