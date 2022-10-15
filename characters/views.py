@@ -383,6 +383,20 @@ class CreateCharacterDataView(FormView):
                 return campaign
         return None
 
+    @property
+    def lineages(self):
+        return Lineage.objects.filter(
+            Q(extensions__id=self.kwargs['epoch_pk']) |
+            Q(extensions__id=self.kwargs['world_pk']) |
+            Q(extensions__id__in=Extension.objects.filter(
+                Q(is_mandatory=True) | Q(id__in=self.request.GET.getlist('extensions'))))
+        )
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['lineage'].queryset = self.lineages
+        return form
+
     def form_valid(self, form):
         self.object = Character.objects.create(
             name=form.cleaned_data['name'],
@@ -411,16 +425,10 @@ class CreateCharacterDataView(FormView):
         return super().form_valid(form)
 
     def get_initial(self):
-        lineages = Lineage.objects.filter(
-            Q(extensions__id=self.kwargs['epoch_pk']) |
-            Q(extensions__id=self.kwargs['world_pk']) |
-            Q(extensions__id__in=Extension.objects.filter(
-                Q(is_mandatory=True) | Q(id__in=self.request.GET.getlist('extensions'))))
-        )
         return {
             'epoch': self.kwargs['epoch_pk'],
             'world': self.kwargs['world_pk'],
-            'lineage': lineages.earliest('id'),
+            'lineage': self.lineages.earliest('id'),
             'extensions': Extension.objects.filter(id__in=self.request.GET.getlist('extensions'))
         }
 

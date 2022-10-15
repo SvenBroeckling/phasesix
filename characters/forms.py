@@ -21,7 +21,7 @@ class CreateCharacterExtensionsForm(forms.Form):
 
 class CreateCharacterDataForm(forms.Form):
     name = forms.CharField(label=_('Name'), max_length=80)
-    lineage = forms.ModelChoiceField(queryset=Lineage.objects.all())
+    lineage = forms.ModelChoiceField(queryset=Lineage.objects.all(), empty_label=None)
     epoch = forms.ModelChoiceField(
         queryset=Extension.objects.filter(type='e', is_mandatory=False, is_active=True),
         label=_('Epoch'),
