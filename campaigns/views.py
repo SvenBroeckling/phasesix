@@ -2,11 +2,13 @@ from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views import View
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, TemplateView, FormView
 
 from campaigns.forms import SettingsForm
 from campaigns.models import Campaign
+from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
+from rules.models import Extension
 
 
 class CampaignListView(ListView):
@@ -18,14 +20,51 @@ class CampaignListView(ListView):
             return Campaign.objects.filter(created_by=user)
 
 
-class CampaignCreateView(CreateView):
+class CreateCampaignView(TemplateView):
+    template_name = 'campaigns/create_campaign.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['extensions'] = Extension.objects.exclude(
+            is_mandatory=True).exclude(type__in=['e', 'x']).exclude(is_active=False)
+        return context
+
+
+class CreateCampaignEpochView(TemplateView):
+    template_name = 'campaigns/create_campaign_epoch.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['world_pk'] = self.kwargs['world_pk']
+        context['extensions'] = Extension.objects.exclude(
+            is_mandatory=True).exclude(type__in=['x', 'w']).exclude(is_active=False)
+        return context
+
+
+class CreateCampaignExtensionsView(FormView):
+    template_name = 'campaigns/create_campaign_extensions.html'
+    form_class = CreateCharacterExtensionsForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['world_pk'] = self.kwargs['world_pk']
+        context['epoch_pk'] = self.kwargs['epoch_pk']
+        context['extensions'] = Extension.objects.exclude(
+            is_mandatory=True).exclude(type__in=['e', 'w']).exclude(is_active=False)
+        return context
+
+
+class CreateCampaignDataView(CreateView):
     model = Campaign
-    fields = ('name', 'epoch', 'abstract', 'character_visibility', 'currency_map')
+    fields = ('name', 'abstract', 'character_visibility', 'currency_map')
 
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.created_by = self.request.user
+        obj.epoch = Extension.objects.get(pk=self.kwargs['epoch_pk'])
+        obj.world = Extension.objects.get(pk=self.kwargs['world_pk'])
         obj.save()
+        obj.extensions.set(Extension.objects.filter(pk__in=self.request.GET.getlist('extensions')))
         return super().form_valid(form)
 
     def get_success_url(self):
