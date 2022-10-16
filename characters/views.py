@@ -411,6 +411,8 @@ class CreateCharacterDataView(FormView):
         for attribute in Attribute.objects.all():
             self.object.characterattribute_set.create(attribute=attribute)
 
+        if self.object.lineage.template is not None:
+            self.object.add_template(self.object.lineage.template)
         if self.campaign_to_join is not None:
             for ext in self.campaign_to_join.extensions.all():
                 self.object.extensions.add(ext)
