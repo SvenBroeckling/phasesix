@@ -2,7 +2,7 @@ import itertools
 
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from armory.models import ItemType, Item, WeaponType, Weapon, RiotGear
 from magic.models import BaseSpell

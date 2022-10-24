@@ -1,9 +1,9 @@
-from django.conf.urls import url
+from django.urls import path
 
 from rules import views
 
 app_name = 'rules'
 
 urlpatterns = [
-    url('^templates/$', views.TemplateListView.as_view(), name='template_list'),
+    path('templates/', views.TemplateListView.as_view(), name='template_list'),
 ]

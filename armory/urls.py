@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from armory import views
 
 app_name = 'armory'
 
 urlpatterns = [
-    url('^weapons/$', views.WeaponListView.as_view(), name='weapon_list'),
-    url('^riot_gear/$', views.RiotGearListView.as_view(), name='riot_gear_list'),
+    path('weapons/', views.WeaponListView.as_view(), name='weapon_list'),
+    path('riot_gear/', views.RiotGearListView.as_view(), name='riot_gear_list'),
 ]

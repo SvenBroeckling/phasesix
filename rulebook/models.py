@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as gt
+from django.utils.translation import gettext_lazy as gt
 from django.conf import settings
 from transmeta import TransMeta
 

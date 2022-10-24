@@ -5,7 +5,7 @@ import random
 from django.db import models
 from django.db.models import Sum, Max, Q
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _, get_language
+from django.utils.translation import gettext_lazy as _, get_language
 
 from armory.models import Item, RiotGear, Weapon
 from horror.models import QuirkModifier

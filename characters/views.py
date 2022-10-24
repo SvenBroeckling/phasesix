@@ -5,8 +5,8 @@ from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView, DetailView, FormView
 
@@ -173,8 +173,8 @@ class XhrCharacterRestView(TemplateView):
             rest_wound_roll = roll_and_send(
                 character.id,
                 f'{character.rest_wound_dice}d6',
-                ugettext('Rest'),
-                ugettext('Wound Roll'))
+                gettext('Rest'),
+                gettext('Wound Roll'))
 
             for d in filter(lambda x: x >= minimum_roll, rest_wound_roll):
                 if character.health < character.max_health:
@@ -184,8 +184,8 @@ class XhrCharacterRestView(TemplateView):
                 rest_arcana_roll = roll_and_send(
                     character.id,
                     f'{character.rest_arcana_dice}d6',
-                    ugettext('Rest'),
-                    ugettext('Arcana Roll'))
+                    gettext('Rest'),
+                    gettext('Arcana Roll'))
 
                 for d in filter(lambda x: x >= minimum_roll, rest_arcana_roll):
                     if character.arcana < character.max_arcana:
@@ -195,8 +195,8 @@ class XhrCharacterRestView(TemplateView):
                 rest_stress_roll = roll_and_send(
                     character.id,
                     f'{character.rest_stress_dice}d6',
-                    ugettext('Rest'),
-                    ugettext('Stress Roll'))
+                    gettext('Rest'),
+                    gettext('Stress Roll'))
 
                 if len(list(filter(lambda x: x >= minimum_roll, rest_stress_roll))):
                     if character.stress > 0:

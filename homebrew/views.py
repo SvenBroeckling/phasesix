@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from armory.models import Item, RiotGear, Weapon
 from characters.models import Character

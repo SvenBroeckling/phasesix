@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'daphne',
+    'channels',
     'django.contrib.staticfiles',
     'django_registration',
     'django_extensions',
-    'channels',
     'reversion',
     'sorl.thumbnail',
     'bootstrap4',
@@ -127,11 +128,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'de'
 
-ugettext = lambda s: s  # dummy ugettext function, as django's docs say
+gettext = lambda s: s  # dummy ugettext function, as django's docs say
 
 LANGUAGES = (
-    ('de', ugettext('German')),
-    ('en', ugettext('English')),
+    ('de', gettext('German')),
+    ('en', gettext('English')),
 )
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 

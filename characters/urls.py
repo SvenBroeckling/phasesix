@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.urls import path
 
 from characters import views
@@ -6,10 +5,10 @@ from characters import views
 app_name = 'characters'
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^detail/(?P<pk>\d+)$', views.CharacterDetailView.as_view(), name='detail'),
-    url(r'^list/$', views.CharacterListView.as_view(), name='list'),
-    url(r'^xhr_delete/(?P<pk>\d+)$', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
+    path('', views.IndexView.as_view(), name='index'),
+    path('detail/<int:pk>', views.CharacterDetailView.as_view(), name='detail'),
+    path('list/', views.CharacterListView.as_view(), name='list'),
+    path('xhr_delete/<int:pk>', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
 
     # Sidebars
     path(
@@ -53,225 +52,225 @@ urlpatterns = [
         views.XhrCharacterNoteSidebarView.as_view(),
         name='xhr_characternote_sidebar'),
 
-    url(
-        r'^xhr_detail_fragment/(?P<pk>\d+)/(?P<fragment_template>[a-z_]+)$',
+    path(
+        'xhr_detail_fragment/<int:pk>/<fragment_template>',
         views.XhrDetailFragmentView.as_view(),
         name='xhr_detail_fragment'),
 
     # health
-    url(
-        r'^health/(?P<pk>\d+)/(?P<mode>\w+)/$',
+    path(
+        'health/<int:pk>/<mode>/',
         views.CharacterModifyHealthView.as_view(),
         name='modify_health'),
-    url(
-        r'^rest/(?P<pk>\d+)/$',
+    path(
+        'rest/<int:pk>/',
         views.XhrCharacterRestView.as_view(),
         name='xhr_rest'),
 
     # magic
-    url(
-        r'^arcana/(?P<pk>\d+)/(?P<mode>\w+)/$',
+    path(
+        'arcana/<int:pk>/<mode>/',
         views.CharacterModifyArcanaView.as_view(),
         name='modify_arcana'),
-    url(
-        r'^xhr_add_spell/(?P<pk>\d+)$',
+    path(
+        'xhr_add_spell/<int:pk>',
         views.XhrAddSpellView.as_view(),
         name='xhr_add_spell'),
-    url(
-        r'^xhr_remove_spell/(?P<pk>\d+)$',
+    path(
+        'xhr_remove_spell/<int:pk>',
         views.XhrRemoveSpellView.as_view(),
         name='xhr_remove_spell'),
-    url(
-        r'^spell/cast/(?P<pk>\d+)/$',
+    path(
+        'spell/cast/<int:pk>/',
         views.CharacterCastSpellView.as_view(),
         name='cast_spell'),
-    url(
-        r'^xhr_add_spell_template/(?P<pk>\d+)$',
+    path(
+        'xhr_add_spell_template/<int:pk>',
         views.XhrAddSpellTemplateView.as_view(),
         name='xhr_add_spell_template'),
-    url(
-        r'^add_spell_template/(?P<pk>\d+)/(?P<spell_template_pk>\d+)/(?P<character_spell_pk>\d+)$',
+    path(
+        'add_spell_template/<int:pk>/<int:spell_template_pk>/<int:character_spell_pk>',
         views.AddSpellTemplateView.as_view(),
         name='add_spell_template'),
 
     # dice
-    url(
-        r'^dice/(?P<pk>\d+)/(?P<mode>\w+)/$',
+    path(
+        'dice/<int:pk>/<mode>/',
         views.CharacterModifyDiceView.as_view(),
         name='modify_dice'),
 
     # Weapons
-    url(
-        r'^attack/(?P<characterweapon_pk>\d+)/(?P<weapon_attackmode_pk>\d+)/$',
+    path(
+        'attack/<int:characterweapon_pk>/<int:weapon_attackmode_pk>/',
         views.CharacterAttackView.as_view(),
         name='attack'),
-    url(
-        r'^reload/(?P<characterweapon_pk>\d+)/$',
+    path(
+        'reload/<int:characterweapon_pk>/',
         views.CharacterReloadView.as_view(),
         name='reload'),
 
     # horror
-    url(
-        r'^stress/(?P<pk>\d+)/(?P<mode>\w+)/$',
+    path(
+        'stress/<int:pk>/<mode>/',
         views.CharacterModifyStressView.as_view(),
         name='modify_stress'),
-    url(
-        r'^choose_quirk/(?P<pk>\d+)/$',
+    path(
+        'choose_quirk/<int:pk>/',
         views.XhrAddQuirkView.as_view(),
         name='xhr_choose_quirk'),
-    url(
-        r'^add_quirk/(?P<pk>\d+)/(?P<quirk_pk>\d+)$',
+    path(
+        'add_quirk/<int:pk>/<int:quirk_pk>',
         views.AddQuirkView.as_view(),
         name='add_quirk'),
 
     # new character
-    url(r'^new/$', views.CreateCharacterView.as_view(), name='create_character'),
-    url(
-        r'^new/(?P<world_pk>\d+)/$',
+    path('new/', views.CreateCharacterView.as_view(), name='create_character'),
+    path(
+        'new/<int:world_pk>/',
         views.CreateCharacterEpochView.as_view(),
         name='create_character_epoch'),
-    url(
-        r'^new/(?P<world_pk>\d+)/(?P<epoch_pk>\d+)/$',
+    path(
+        'new/<int:world_pk>/<int:epoch_pk>/',
         views.CreateCharacterExtensionsView.as_view(),
         name='create_character_extensions'),
-    url(
-        r'^new/data/(?P<world_pk>\d+)/(?P<epoch_pk>\d+)/$',
+    path(
+        'new/data/<int:world_pk>/<int:epoch_pk>/',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
-    url(
-        r'^new/data/(?P<epoch_pk>\d+)/(?P<world_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
+    path(
+        'new/data/<int:epoch_pk>/<int:world_pk>/<int:campaign_pk>/<hash>/<type>/',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
-    url(
-        r'^new/random_npc/(?P<epoch_pk>\d+)/(?P<world_pk>\d+)/(?P<campaign_pk>\d+)/(?P<hash>\w+)/(?P<type>\w+)/$',
+    path(
+        'new/random_npc/<int:epoch_pk>/<int:world_pk>/<int:campaign_pk>/<hash>/<type>/',
         views.CreateRandomNPCView.as_view(),
         name='create_random_npc'),
 
     # constructed
-    url(
-        r'^new/constructed/(?P<pk>\d+)$',
+    path(
+        'new/constructed/<int:pk>',
         views.CreateCharacterConstructedView.as_view(),
         name='create_character_constructed'),
-    url(
-        r'^new/constructed/add_template/(?P<pk>\d+)$',
+    path(
+        'new/constructed/add_template/<int:pk>',
         views.XhrConstructedAddTemplateView.as_view(),
         name='xhr_constructed_add_template'),
-    url(
-        r'^new/constructed/preview/(?P<pk>\d+)$',
+    path(
+        'new/constructed/preview/<int:pk>',
         views.XhrCreateCharacterPreviewView.as_view(),
         name='xhr_create_character_preview'),
-    url(
-        r'^new/constructed/remove_template/(?P<pk>\d+)$',
+    path(
+        'new/constructed/remove_template/<int:pk>',
         views.XhrConstructedRemoveTemplateView.as_view(),
         name='xhr_constructed_remove_template'),
 
     # Images etc
-    url(
-        r'^change_image/(?P<pk>\d+)$',
+    path(
+        'change_image/<int:pk>',
         views.ChangeImageView.as_view(),
         name='change_image'),
 
     # reputation and status
-    url(
-        r'^xhr_reputation/(?P<pk>\d+)$',
+    path(
+        'xhr_reputation/<int:pk>',
         views.XhrReputationView.as_view(),
         name='xhr_reputation'),
-    url(
-        r'^xhr_status_effects/change/(?P<pk>\d+)/(?P<status_effect_pk>\d+)/(?P<mode>\w+)/$',
+    path(
+        'xhr_status_effects/change/<int:pk>/<int:status_effect_pk>/<mode>/',
         views.XhrCharacterStatusEffectsChangeView.as_view(),
         name='xhr_status_effects_change'),
 
     # weapons
-    url(
-        r'^xhr_add_weapons/(?P<pk>\d+)$',
+    path(
+        'xhr_add_weapons/<int:pk>',
         views.XhrAddWeaponsView.as_view(),
         name='xhr_add_weapons'),
-    url(
-        r'^add_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
+    path(
+        'add_weapon/<int:pk>/<int:weapon_pk>',
         views.AddWeaponView.as_view(),
         name='add_weapon'),
-    url(
-        r'^xhr_remove_weapon/(?P<pk>\d+)/(?P<weapon_pk>\d+)$',
+    path(
+        'xhr_remove_weapon/<int:pk>/<int:weapon_pk>',
         views.XhrRemoveWeaponView.as_view(),
         name='xhr_remove_weapon'),
-    url(
-        r'^xhr_remove_weapon_modification/(?P<pk>\d+)/(?P<weapon_pk>\d+)/(?P<weapon_modification_pk>\d+)$',
+    path(
+        'xhr_remove_weapon_modification/<int:pk>/<int:weapon_pk>/<int:weapon_modification_pk>',
         views.XhrRemoveWeaponModificationView.as_view(),
         name='xhr_remove_weapon_modification'),
-    url(
-        r'^xhr_weapon_condition/(?P<pk>\d+)/(?P<weapon_pk>\d+)/(?P<mode>\w+)/$',
+    path(
+        'xhr_weapon_condition/<int:pk>/<int:weapon_pk>/<mode>/',
         views.XhrWeaponConditionView.as_view(),
         name='xhr_weapon_condition'),
 
     # riot gear
-    url(
-        r'^xhr_add_riot_gear/(?P<pk>\d+)$',
+    path(
+        'xhr_add_riot_gear/<int:pk>',
         views.XhrAddRiotGearView.as_view(),
         name='xhr_add_riot_gear'),
-    url(
-        r'^add_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
+    path(
+        'add_riot_gear/<int:pk>/<int:riot_gear_pk>',
         views.AddRiotGearView.as_view(),
         name='add_riot_gear'),
-    url(
-        r'^xhr_remove_riot_gear/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)$',
+    path(
+        'xhr_remove_riot_gear/<int:pk>/<int:riot_gear_pk>',
         views.XhrRemoveRiotGearView.as_view(),
         name='xhr_remove_riot_gear'),
-    url(
-        r'^xhr_riot_gear_condition/(?P<pk>\d+)/(?P<riot_gear_pk>\d+)(?P<mode>\w+)/$',
+    path(
+        'xhr_riot_gear_condition/<int:pk>/<int:riot_gear_pk><mode>/',
         views.XhrRiotGearConditionView.as_view(),
         name='xhr_riot_gear_condition'),
 
     # items
-    url(
-        r'^xhr_add_items/(?P<pk>\d+)$',
+    path(
+        'xhr_add_items/<int:pk>',
         views.XhrAddItemsView.as_view(),
         name='xhr_add_items'),
-    url(
-        r'^add_item/(?P<pk>\d+)/(?P<item_pk>\d+)$',
+    path(
+        'add_item/<int:pk>/<int:item_pk>',
         views.AddItemView.as_view(),
         name='add_item'),
-    url(
-        r'^xhr_modify_item/(?P<pk>\d+)/(?P<item_pk>\d+)/(?P<mode>\w+)$',
+    path(
+        'xhr_modify_item/<int:pk>/<int:item_pk>/<mode>',
         views.XhrModifyItemView.as_view(),
         name='xhr_modify_item'),
-    url(
-        r'^xhr_update_item_sort_order/(?P<pk>\d+)$',
+    path(
+        'xhr_update_item_sort_order/<int:pk>',
         views.XhrUpdateItemSortOrderView.as_view(),
         name='xhr_update_item_sort_order'),
-    url(
-        r'^modify_currency/(?P<pk>\d+)$',
+    path(
+        'modify_currency/<int:pk>',
         views.XhrModifyCurrencyView.as_view(),
         name='xhr_modify_currency'),
-    url(
-        r'^xhr_put_into/(?P<pk>\d+)/(?P<item_pk>\d+)/(?P<container_pk>\d+)$',
+    path(
+        'xhr_put_into/<int:pk>/<int:item_pk>/<int:container_pk>',
         views.XhrPutIntoView.as_view(),
         name='xhr_put_into'),
-    url(
-        r'^xhr_put_into/(?P<pk>\d+)/(?P<item_pk>\d+)$',
+    path(
+        'xhr_put_into/<int:pk>/<int:item_pk>',
         views.XhrPutIntoView.as_view(),
         name='xhr_put_into'),
 
     # weapon modifications
-    url(
-        r'^xhr_add_weapon_modifications/(?P<pk>\d+)$',
+    path(
+        'xhr_add_weapon_modifications/<int:pk>',
         views.XhrAddWeaponModView.as_view(),
         name='xhr_add_weapon_modifications'),
-    url(
-        r'^add_weapon_modification/(?P<pk>\d+)/(?P<weapon_modification_pk>\d+)/(?P<character_weapon_pk>\d+)$',
+    path(
+        'add_weapon_modification/<int:pk>/<int:weapon_modification_pk>/<int:character_weapon_pk>',
         views.AddWeaponModificationView.as_view(),
         name='add_weapon_modification'),
 
     # Notes
-    url(
-        r'^xhr_create_note/(?P<pk>\d+)$',
+    path(
+        'xhr_create_note/<int:pk>',
         views.XhrCreateNoteView.as_view(),
         name='xhr_create_note'),
-    url(
-        r'^xhr_update_note/(?P<pk>\d+)/(?P<note_pk>\d+)$',
+    path(
+        'xhr_update_note/<int:pk>/<int:note_pk>',
         views.XhrUpdateNoteView.as_view(),
         name='xhr_update_note'),
-    url(
-        r'^xhr_delete_note/(?P<pk>\d+)/(?P<note_pk>\d+)$',
+    path(
+        'xhr_delete_note/<int:pk>/<int:note_pk>',
         views.XhrDeleteNoteView.as_view(),
         name='xhr_delete_note'),
 ]

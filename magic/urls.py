@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from magic import views
 
 app_name = 'magic'
 
 urlpatterns = [
-    url('^spell/list/$', views.BaseSpellListView.as_view(), name='basespell_list'),
-    url(r'^spell/detail/(?P<pk>\d+)$', views.BaseSpellDetailView.as_view(), name='basespell_detail'),
+    path('spell/list/', views.BaseSpellListView.as_view(), name='basespell_list'),
+    path('spell/detail/<int:pk>', views.BaseSpellDetailView.as_view(), name='basespell_detail'),
 ]

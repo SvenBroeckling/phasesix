@@ -1,7 +1,7 @@
 from django.db import models
 from transmeta import TransMeta
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from characters.templatetags.characters_extras import color_value_span
 from rules.models import CHARACTER_ASPECT_CHOICES, Skill, Attribute

@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from bestiary import views
 
 app_name = 'bestiary'
 
 urlpatterns = [
-    url(r'^list/$', views.FoeListView.as_view(), name='list'),
-    url(r'^detail/(?P<pk>\d+)$', views.FoeDetailView.as_view(), name='detail'),
+    path('list/', views.FoeListView.as_view(), name='list'),
+    path('detail/<int:pk>', views.FoeDetailView.as_view(), name='detail'),
 ]

@@ -4,7 +4,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormMixin
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .models import Board, Thread
 from .forms import NewThreadForm, NewPostForm
