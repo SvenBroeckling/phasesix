@@ -19,7 +19,7 @@ DEBUG = True if os.environ['DEBUG'] == 'True' else False
 DEBUG_DISCORD = False
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
-CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
+CSRF_TRUSTED_ORIGINS = [f'https://{a}' for a in ALLOWED_HOSTS]
 
 ASGI_APPLICATION = "urpg.asgi.application"
 CHANNEL_LAYERS = {
