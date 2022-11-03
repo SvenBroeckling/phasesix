@@ -31,6 +31,7 @@ CHANNEL_LAYERS = {
 
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = reverse_lazy('login')
+CSRF_COOKIE_MASKED = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
