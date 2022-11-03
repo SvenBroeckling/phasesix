@@ -19,6 +19,8 @@ DEBUG = True if os.environ['DEBUG'] == 'True' else False
 DEBUG_DISCORD = False
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
+CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
+
 ASGI_APPLICATION = "urpg.asgi.application"
 CHANNEL_LAYERS = {
     'default': {
@@ -31,7 +33,6 @@ CHANNEL_LAYERS = {
 
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = reverse_lazy('login')
-CSRF_COOKIE_MASKED = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
