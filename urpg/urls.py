@@ -24,6 +24,7 @@ urlpatterns = [
     path('homebrew/', include('homebrew.urls', namespace='homebrew')),
     path('rules/', include('rules.urls', namespace='rules')),
     path('armory/', include('armory.urls', namespace='armory')),
+    path('world/', include('worlds.urls', namespace='world')),
     path('gmtools/', include('gmtools.urls', namespace='gmtools')),
     path('you/', include('django.contrib.auth.urls')),
     path('you/', include('django_registration.backends.activation.urls')),

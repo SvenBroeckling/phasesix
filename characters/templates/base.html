@@ -1,4 +1,4 @@
-{% load static i18n bootstrap4 compress %}<!doctype html>
+{% load static i18n bootstrap4 compress world_extras %}<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -77,6 +77,17 @@
                                            href="{% url 'bestiary:list' %}">{% trans 'Foes' %}</a></li>
                                     <li><a class="dropdown-item"
                                            href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">{% trans 'Worlds' %}</a>
+                                <ul class="dropdown-menu">
+                                    {% get_all_worlds as worlds %}
+                                    {% for w in worlds %}
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'worlds:detail' pk=w.pk %}">{{ w.name }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </li>
 
