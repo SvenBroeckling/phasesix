@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
-from worlds.models import World, WikiPage, WikiPage
+from worlds.models import World, WikiPage
 
 
-class WorldAdmin(admin.ModelAdmin):
+class WorldAdmin(VersionAdmin):
     list_display = ('name', 'is_active', 'ordering')
     list_filter = ('is_active',)
     search_fields = ('name',)
 
 
-class WikiPageAdmin(admin.ModelAdmin):
+class WikiPageAdmin(VersionAdmin):
     list_display = ('name', 'world', 'is_active', 'parent', 'ordering')
     list_editable = ('is_active', 'ordering')
     list_filter = ('is_active', 'world')
