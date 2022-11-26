@@ -76,7 +76,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
     world = models.ForeignKey(
         'worlds.World',
         verbose_name=_('world'),
-        help_text=_('The world this category belongs to.'),
+        help_text=_('The world this page belongs to.'),
         on_delete=models.CASCADE)
 
     parent = models.ForeignKey(
