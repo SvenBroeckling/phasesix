@@ -1,0 +1,29 @@
+{% load i18n bootstrap4 %}
+
+<script>
+    $(function () {
+        $('.create-item-button').on('click', function (e) {
+            let form = $(this).closest('form')
+            $.post(form.attr('action'), form.serialize(), function (data) {})
+            e.preventDefault()
+            return false
+        })
+    })
+</script>
+
+{% if parent %}
+    <form action="{% url 'world:xhr_create_wiki_page' world_pk=world.id parent_pk=parent.id %}" method="post" enctype="multipart/form-data">
+{% else %}
+    <form action="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}" method="post" enctype="multipart/form-data">
+{% endif %}
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            {% csrf_token %}
+            {% bootstrap_field form.name_de %}
+            {% bootstrap_field form.name_en %}
+            {% bootstrap_field form.abstract_de %}
+            {% bootstrap_field form.abstract_en %}
+            <button class="btn btn-primary mt-1 create-item-button w-100" data-bs-dismiss="modal">{% trans 'Create Page' %}</button>
+        </div>
+    </div>
+</form>

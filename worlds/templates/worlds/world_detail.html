@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static i18n characters_extras rules_extras thumbnail %}
+
+{% block javascript %}
+    <script src="{% static 'js/worlds_detail.js' %}"></script>
+{% endblock %}
+
+{% block title %}{{ object }} - {{ block.super }}{% endblock %}
+
+{% block belownav %}
+    {% if object.image %}
+    <div
+            style="position: relative; height: 36vh; background-image: url({{ object.image.url }})"
+            class="row character-info-row mb-3">
+    {% else %}
+        <div
+                style="position: relative; height: 36vh; background-image: url({% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %})"
+                class="row character-info-row mb-3">
+    {% endif %}
+
+        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+            <div>
+                <h1>{{ object }}</h1>
+            </div>
+        </div>
+
+        <span class="background-image-copyright">
+            {% if object.image %}
+                {% if object.image_copyright %}
+                    Image by <a href="{{ object.type.image_copyright_url }}">{{ object.image_copyright }}</a>
+                {% endif %}
+            {% else %}
+                Photo by <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Jensen</a> on <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+            {% endif %}
+        </span>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% if may_edit %}
+    <div class="row mt-2">
+        <div class="col-12">
+            <a
+                    class="btn btn-warning me-1 float-end modal-trigger"
+                    {% if parent %}
+                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id parent_pk=parent.id %}"
+                    {% else %}
+                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id %}"
+                    {% endif %}
+                    title="{% trans 'Create Wiki Page' %}"
+                    data-bs-toggle="modal"
+                    data-modal-title="{% trans 'Create Wiki Page' %}"
+                    data-bs-target=".page-modal"
+                    href=""><i class="fa fa-plus"></i> {% trans 'Create Page' %}</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row mt-4">
+        <div class="col-12">
+            {{ object.description|urpg_markup }}
+        </div>
+    </div>
+
+    <div class="row masonry-container">
+        {% for page in object.wikipage_set.all %}
+            <div class="col col-md-4">
+                <a class="invisible-link" href="{% url 'world:wiki_page' slug=page.slug %}">
+                    <div class="card pointer mt-3">
+                        <div class="card-header">
+                            {{ page }}
+                        </div>
+                        {% if page.image %}
+                            {% thumbnail page.image "1024" as im %}
+                            <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
+                            {% endthumbnail %}
+                        {% endif %}
+                        <div class="card-body">
+                            {{ page.abstract|urpg_markup }}
+                        </div>
+                        {% if user.is_superuser %}
+                            <a href="{% url 'admin:worlds_wikipage_change' page.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

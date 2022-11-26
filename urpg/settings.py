@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'gmtools',
     'armory',
     'bestiary',
-    'world',
+    'worlds',
     'homebrew',
     'rules',
     'characters',

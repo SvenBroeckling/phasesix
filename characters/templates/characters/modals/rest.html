@@ -5,7 +5,7 @@
         $('.btn-rest').on('click', function(e){
             let btn = $(this)
             $.post(btn.data('url'), {mode: btn.data('mode')}, function(data){
-                $('#character-modal').find('.btn-close').click()
+                $('#page-modal').find('.btn-close').click()
             })
         })
     })
