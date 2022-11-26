@@ -45,7 +45,7 @@
                             class="btn btn-primary btn-sm modal-trigger close-sidebar mt-1"
                             data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.character.id %}?character_weapon_id={{ object.id }}"
                             data-bs-toggle="modal"
-                            data-bs-target=".character-modal"
+                            data-bs-target=".page-modal"
                             data-modal-title="{% trans 'Add Modification' %}"
                             href=""><i class="fas fa-puzzle-piece"></i> {% trans 'Modifications' %}</a>
                 {% endif %}

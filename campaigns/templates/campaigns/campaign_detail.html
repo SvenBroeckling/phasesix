@@ -4,11 +4,9 @@
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
 {% block javascript %}
+    <script src="{% static 'js/campaign_detail.js' %}"></script>
     <script src="{% static 'js/campaign_socket.js' %}"></script>
     <script src="{% static 'js/clipboard.js' %}"></script>
-    <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/fragments.js' %}"></script>
-    <script src="{% static 'js/campaign_detail.js' %}"></script>
 {% endblock %}
 
 {% block belownav %}

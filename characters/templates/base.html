@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {% compress css %}
-        <link href="{% static 'fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet"/>
+        <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/switch.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/animate.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'css/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
@@ -68,15 +68,28 @@
                                            href="{% url 'characters:list' %}">{% trans 'My Characters' %}</a></li>
                                     <li><a class="dropdown-item"
                                            href="{% url 'campaigns:list' %}">{% trans 'My Campaigns' %}</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button"
+                                   data-bs-toggle="dropdown">{% trans 'Read' %}</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rulebook' %}</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li><a class="dropdown-item"
-                                           href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rulebook' %}</a></li>
-                                    <li><a class="dropdown-item"
                                            href="{% url 'bestiary:list' %}">{% trans 'Foes' %}</a></li>
                                     <li><a class="dropdown-item"
                                            href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a></li>
+                                    <li><a class="dropdown-item"
+                                           href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a></li>
                                 </ul>
                             </li>
 
@@ -176,6 +189,28 @@
     <div class="row">
         <div class="col-md-10 offset-md-1">
             {% bootstrap_messages messages %}
+
+            <div id="page-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
+                 aria-labelledby="page-modal">
+                <div class="modal-dialog modal-xl modal-fullscreen-lg-down" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body page-modal-container">
+                            <div class="text-center">
+                                <i class="fa fa-cog fa-spin fa-5x fa-fw"></i>
+                                <span class="sr-only">{% trans 'Loading' %}...</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% block content %}{% endblock %}
         </div>
     </div>
@@ -209,20 +244,24 @@
 </footer>
 
 {% compress js %}
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'fontawesome/js/all.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/jquery.matchHeight.js' %}"></script>
-    <script src="{% static 'js/dropzone.min.js' %}"></script>
-    <script src="{% static 'js/featherlight.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-slider.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-toaster.min.js' %}"></script>
-    <script src="{% static 'js/tilt.jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'vendor/fontawesome/js/all.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/masonry/masonry.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery/jquery.matchHeight.js' %}"></script>
+    <script src="{% static 'vendor/dropzone/dropzone.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.js' %}"></script>
+    <script src="{% static 'vendor/tilt/tilt.jquery.min.js' %}"></script>
     <script src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"></script>
     <script src="{% static 'vendor/sortable/js/html.sortable.min.js' %}"></script>
-    <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
+    <script src="{% static 'vendor/reconnecting-websocket/reconnecting-websocket.js' %}"></script>
+
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/modals.js' %}"></script>
+    <script src="{% static 'js/fragments.js' %}"></script>
+    <script src="{% static 'js/actions.js' %}"></script>
 {% endcompress %}
 
 <script>

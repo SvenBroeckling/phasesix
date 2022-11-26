@@ -9,7 +9,7 @@
                     <button
                             class="btn btn-primary float-end mb-2 modal-trigger"
                             data-bs-toggle="modal"
-                            data-bs-target=".character-modal"
+                            data-bs-target=".page-modal"
                             data-modal-title="{% trans 'Add a spell' %}"
                             data-url="{% url 'characters:xhr_add_spell' pk=object.id %}">
                         <i class="fa fa-magic text-warning"></i> Add a spell <small>({{ object.spell_points_available }} {% trans 'Spell Points' %})</small>
@@ -21,7 +21,7 @@
                                 title="{% trans 'Create Spell' %}"
                                 data-bs-toggle="modal"
                                 data-modal-title="{% trans 'Create Spell' %}"
-                                data-bs-target=".character-modal"
+                                data-bs-target=".page-modal"
                                 href=""><i class="fa fa-plus"></i> {% trans 'Create Spell' %}</a>
                     {% endif %}
                 </div>

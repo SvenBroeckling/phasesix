@@ -72,15 +72,17 @@
             <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
         </div>
     </div>
+
     <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
         {% for object in object_list %}
             <div class="col col-md-4">
-                <a class="basespell-link" href="{% url 'magic:basespell_detail' pk=object.id %}">
+                <a class="invisible-link" href="{% url 'magic:basespell_detail' pk=object.id %}">
                     {% basespell_widget object %}
                 </a>
             </div>
         {% endfor %}
     </div>
+
     <div class="row">
         <div class="col-12">
             {% if user.is_superuser %}
