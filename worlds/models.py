@@ -61,7 +61,13 @@ class World(models.Model, metaclass=TransMeta):
             return None
 
 
+class WikiPageQuerySet(models.QuerySet):
+    def get_top_level(self):
+        return self.filter(parent=None)
+
+
 class WikiPage(models.Model, metaclass=TransMeta):
+    manager = WikiPageQuerySet.as_manager()
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

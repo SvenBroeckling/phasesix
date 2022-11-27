@@ -64,7 +64,7 @@
     </div>
 
     <div class="row masonry-container">
-        {% for page in object.wikipage_set.all %}
+        {% for page in object.wikipage_set.get_top_level %}
             <div class="col col-md-4">
                 <a class="invisible-link" href="{% url 'world:wiki_page' slug=page.slug %}">
                     <div class="card pointer mt-3">
