@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 20:47+0000\n"
-"PO-Revision-Date: 2022-11-26 21:51+0100\n"
+"POT-Creation-Date: 2022-11-27 19:38+0000\n"
+"PO-Revision-Date: 2022-11-27 20:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -29,8 +29,8 @@ msgstr ""
 #: magic/models.py:111 magic/models.py:127 magic/models.py:139
 #: rules/models.py:56 rules/models.py:100 rules/models.py:157
 #: rules/models.py:177 rules/models.py:209 rules/models.py:244
-#: rules/models.py:286 rules/models.py:391 worlds/models.py:20
-#: worlds/models.py:74
+#: rules/models.py:286 rules/models.py:391 worlds/models.py:21
+#: worlds/models.py:75
 msgid "name"
 msgstr "Name"
 
@@ -39,7 +39,7 @@ msgstr "Name"
 #: armory/models.py:363 bestiary/models.py:41 campaigns/models.py:123
 #: characters/models.py:25 horror/models.py:27 rules/models.py:58
 #: rules/models.py:101 rules/models.py:159 rules/models.py:178
-#: rules/models.py:213 rules/models.py:257 worlds/models.py:21
+#: rules/models.py:213 rules/models.py:257 worlds/models.py:22
 msgid "description"
 msgstr "Beschreibung"
 
@@ -49,8 +49,8 @@ msgstr "Beschreibung"
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:88 magic/models.py:71 magic/models.py:144 rules/models.py:67
 #: rules/models.py:106 rules/models.py:211 rules/models.py:288
-#: rules/models.py:393 worlds/models.py:17 worlds/models.py:36
-#: worlds/models.py:71
+#: rules/models.py:393 worlds/models.py:18 worlds/models.py:37
+#: worlds/models.py:72
 msgid "created at"
 msgstr "Erzeugt am"
 
@@ -58,8 +58,8 @@ msgstr "Erzeugt am"
 #: armory/models.py:174 armory/models.py:361 bestiary/models.py:34
 #: magic/models.py:72 magic/models.py:145 rules/models.py:68
 #: rules/models.py:107 rules/models.py:212 rules/models.py:289
-#: rules/models.py:394 worlds/models.py:18 worlds/models.py:37
-#: worlds/models.py:72
+#: rules/models.py:394 worlds/models.py:19 worlds/models.py:38
+#: worlds/models.py:73
 msgid "modified at"
 msgstr "Modifiziert am"
 
@@ -95,7 +95,7 @@ msgstr "Verborgenheit"
 
 #: armory/models.py:53 armory/models.py:194 armory/models.py:356
 #: campaigns/models.py:28 characters/models.py:38 magic/models.py:69
-#: worlds/models.py:15 worlds/models.py:69
+#: worlds/models.py:16 worlds/models.py:70
 msgid "created by"
 msgstr "Erzeugt von"
 
@@ -144,22 +144,24 @@ msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:99 armory/models.py:212 bestiary/models.py:36
 #: campaigns/models.py:17 campaigns/models.py:109 characters/models.py:27
-#: magic/models.py:44 rules/models.py:63 worlds/models.py:32
-#: worlds/models.py:101
+#: magic/models.py:44 rules/models.py:63 worlds/models.py:33
+#: worlds/models.py:102 worlds/models.py:148
 msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:100 armory/models.py:213 bestiary/models.py:37
 #: campaigns/models.py:18 campaigns/models.py:22 campaigns/models.py:110
 #: characters/models.py:28 characters/models.py:33 magic/models.py:45
-#: rules/models.py:64 worlds/models.py:33 worlds/models.py:102
+#: rules/models.py:64 worlds/models.py:34 worlds/models.py:103
+#: worlds/models.py:149
 msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:101 armory/models.py:214 bestiary/models.py:38
 #: campaigns/models.py:19 campaigns/models.py:23 campaigns/models.py:111
 #: characters/models.py:29 characters/models.py:34 magic/models.py:46
-#: rules/models.py:65 worlds/models.py:34 worlds/models.py:103
+#: rules/models.py:65 worlds/models.py:35 worlds/models.py:104
+#: worlds/models.py:150
 msgid "image copyright url"
 msgstr "Bild Copyright URL"
 
@@ -765,7 +767,7 @@ msgstr "Alle"
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
-#: campaigns/models.py:24 worlds/models.py:91
+#: campaigns/models.py:24 worlds/models.py:92
 msgid "abstract"
 msgstr "Zusammenfassung"
 
@@ -795,7 +797,7 @@ msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
 #: campaigns/models.py:101 characters/models.py:754 forum/models.py:91
-#: worlds/models.py:96
+#: worlds/models.py:97
 msgid "text"
 msgstr "Text"
 
@@ -1154,6 +1156,7 @@ msgstr "Individueller Wurf"
 
 #: campaigns/templates/campaigns/sidebar/settings.html:8
 #: characters/templates/characters/sidebar/character.html:61
+#: worlds/templates/worlds/wiki_page_edit.html:47
 msgid "Save"
 msgstr "Speichern"
 
@@ -1284,7 +1287,7 @@ msgid "subject"
 msgstr "Thema"
 
 #: characters/models.py:755 rules/models.py:69 rules/models.py:395
-#: worlds/models.py:38 worlds/models.py:106
+#: worlds/models.py:39 worlds/models.py:107
 msgid "ordering"
 msgstr "Sortierung"
 
@@ -2576,10 +2579,12 @@ msgid "Text"
 msgstr "Text"
 
 #: forum/models.py:10 urpg/settings.py:136
+#: worlds/templates/worlds/wiki_page_edit.html:56
 msgid "German"
 msgstr "Deutsch"
 
 #: forum/models.py:11 urpg/settings.py:137
+#: worlds/templates/worlds/wiki_page_edit.html:59
 msgid "English"
 msgstr "Englisch"
 
@@ -3085,8 +3090,8 @@ msgstr "Erweiterung"
 msgid "is mandatory"
 msgstr "Ist Pflicht"
 
-#: rules/models.py:53 rules/models.py:389 worlds/models.py:22
-#: worlds/models.py:105
+#: rules/models.py:53 rules/models.py:389 worlds/models.py:23
+#: worlds/models.py:106
 msgid "is active"
 msgstr "Ist aktiv"
 
@@ -3098,7 +3103,7 @@ msgstr "Identifier"
 msgid "year range"
 msgstr "Jahr Bereich"
 
-#: rules/models.py:82 worlds/models.py:25
+#: rules/models.py:82 worlds/models.py:26
 msgid "extension"
 msgstr "Erweiterung"
 
@@ -3367,69 +3372,90 @@ msgstr "Registrieren"
 msgid "Create Account"
 msgstr "Konto erstellen"
 
-#: worlds/models.py:26
+#: worlds/models.py:27
 msgid "The corresponding world extension, which is added to the characters."
 msgstr ""
 "Die zugehörige Welterweiterung, welche zu den Charakteren hinzugefügt wird."
 
-#: worlds/models.py:43 worlds/models.py:78
+#: worlds/models.py:44 worlds/models.py:79
 msgid "world"
 msgstr "Welt"
 
-#: worlds/models.py:44
+#: worlds/models.py:45
 msgid "worlds"
 msgstr "Welten"
 
-#: worlds/models.py:75
+#: worlds/models.py:76
 msgid "slug"
 msgstr "Slug"
 
-#: worlds/models.py:79
+#: worlds/models.py:80
 msgid "The world this page belongs to."
 msgstr "Die Welt, zu der diese Seite gehört."
 
-#: worlds/models.py:84
+#: worlds/models.py:85
 msgid "parent"
 msgstr "Übergeordnete Seite"
 
-#: worlds/models.py:85
+#: worlds/models.py:86
 msgid "The parent wiki page."
 msgstr "Die übergeordnete Wiki Seite."
 
-#: worlds/models.py:92
+#: worlds/models.py:93
 msgid "A short summary of the wiki page. This may contain Wiki links."
 msgstr ""
 "Eine Kurzzusammenfassung der Wiki Seite. Diese darf Wiki Links enthalten."
 
-#: worlds/models.py:97
+#: worlds/models.py:98
 msgid "The wiki page text. This may contain Wiki links."
 msgstr "Der Wikiseitentext. Dieser darf Wiki Links enthalten."
 
-#: worlds/models.py:111
+#: worlds/models.py:112 worlds/models.py:144
 msgid "wiki page"
 msgstr "Wikiseite"
 
-#: worlds/models.py:112
+#: worlds/models.py:113
 msgid "wiki pages"
 msgstr "Wikiseiten"
 
-#: worlds/templates/worlds/create_wiki_page.html:26
+#: worlds/models.py:145
+msgid "The wiki page the image belongs to."
+msgstr "Die Wikiseite, zu der das Bild gehört."
+
+#: worlds/models.py:152
+msgid "caption"
+msgstr "Bezeichnung"
+
+#: worlds/models.py:155
+msgid "wiki page image"
+msgstr "Wikiseitenbild"
+
+#: worlds/models.py:156
+msgid "wiki page images"
+msgstr "Wikiseitenbilder"
+
+#: worlds/templates/worlds/create_wiki_page.html:27
 #: worlds/templates/worlds/world_detail.html:55
 msgid "Create Page"
 msgstr "Seite erstellen"
 
+#: worlds/templates/worlds/wiki_page_detail.html:44
 #: worlds/templates/worlds/wiki_page_detail.html:45
-#: worlds/templates/worlds/wiki_page_detail.html:47
+msgid "Edit Page"
+msgstr "Seite editieren"
+
+#: worlds/templates/worlds/wiki_page_detail.html:49
+#: worlds/templates/worlds/wiki_page_detail.html:51
 #: worlds/templates/worlds/world_detail.html:51
 #: worlds/templates/worlds/world_detail.html:53
 msgid "Create Wiki Page"
 msgstr "Wikiseite erstellen"
 
-#: worlds/templates/worlds/wiki_page_detail.html:49
+#: worlds/templates/worlds/wiki_page_detail.html:53
 msgid "Create Subpage"
 msgstr "Unterseite erstellen"
 
-#: worlds/views.py:48
+#: worlds/views.py:75
 msgid "You do not have permission to edit this world."
 msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
@@ -3632,9 +3658,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid "Players"
 #~ msgstr "Spieler"
-
-#~ msgid "Edit"
-#~ msgstr "Editieren"
 
 #~ msgid "Your campaigns"
 #~ msgstr "Deine Kampagnen"

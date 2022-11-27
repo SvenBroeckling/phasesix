@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, CreateView, TemplateView
 from django.utils.translation import gettext_lazy as _
 
-from worlds.forms import WikiPageForm
+from worlds.forms import WikiPageForm, WikiPageTextForm
 from worlds.models import World, WikiPage
 
 
@@ -27,6 +27,33 @@ class WikiPageDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['may_edit'] = self.object.may_edit(self.request.user)
         return context
+
+
+class WikiPageEditTextView(DetailView):
+    model = WikiPage
+    template_name = 'worlds/wiki_page_edit.html'
+    slug_field = 'slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = WikiPageTextForm(instance=self.object)
+        context['may_edit'] = self.object.may_edit(self.request.user)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        form = WikiPageTextForm(request.POST, instance=obj)
+
+        if not obj.may_edit(request.user):
+            return HttpResponseRedirect(obj.get_absolute_url())
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(obj.get_absolute_url())
+        else:
+            context = self.get_context_data()
+            context['form'] = form
+            return self.render_to_response(context)
 
 
 class XhrCreateWikiPageView(TemplateView):

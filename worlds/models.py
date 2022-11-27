@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
@@ -29,7 +30,7 @@ class World(models.Model, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL)
 
-    image = models.ImageField(_('image'), upload_to='extension_images', blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='world_images', blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
@@ -98,7 +99,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
         blank=True,
         null=True)
 
-    image = models.ImageField(_('image'), upload_to='foe_images', blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='wiki_page_images', blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
@@ -113,6 +114,9 @@ class WikiPage(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('world:wiki_page', kwargs={'slug': self.slug})
 
     def save(self, **kwargs):
         unique_slugify(self, str(self.name))
@@ -132,3 +136,33 @@ class WikiPage(models.Model, metaclass=TransMeta):
             return self.parent.get_image()
 
         return self.world.get_image()
+
+
+class WikiPageImage(models.Model):
+    wiki_page = models.ForeignKey(
+        'worlds.WikiPage',
+        verbose_name=_('wiki page'),
+        help_text=_('The wiki page the image belongs to.'),
+        on_delete=models.CASCADE)
+
+    image = models.ImageField(_('image'), upload_to='wiki_page_images')
+    image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
+
+    caption = models.CharField(_('caption'), max_length=120, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('wiki page image')
+        verbose_name_plural = _('wiki page images')
+
+    def __str__(self):
+        return self.caption
+
+    def may_edit(self, user):
+        return user.is_superuser or user == self.wiki_page.created_by
+
+    def get_image(self):
+        return {
+            'image': self.image,
+            'caption': self.caption,
+        }

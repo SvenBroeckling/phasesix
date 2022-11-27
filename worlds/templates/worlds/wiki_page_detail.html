@@ -40,6 +40,10 @@
         <div class="row mt-2">
             <div class="col-12">
                 <a
+                        class="btn btn-warning float-end modal-trigger"
+                        title="{% trans 'Edit Page' %}"
+                        href="{% url 'world:edit_text' slug=object.slug %}"><i class="fa fa-pen"></i> {% trans 'Edit Page' %}</a>
+                <a
                         class="btn btn-warning me-1 float-end modal-trigger"
                         data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id parent_pk=object.id %}"
                         title="{% trans 'Create Wiki Page' %}"

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static bootstrap4 i18n characters_extras rules_extras thumbnail %}
+
+{% block javascript %}
+    <script src="{% static 'js/worlds_detail.js' %}"></script>
+{% endblock %}
+
+{% block title %}{{ object }} - {{ block.super }}{% endblock %}
+
+{% block belownav %}
+    <div
+            {% with img=object.get_image %}
+                {% if img %}
+                    {% thumbnail img.image '1024' as im %}
+                        style="position: relative; height: 36vh; background-image: url({{ im.url }})"
+                    {% endthumbnail %}
+                {% endif %}
+                        class="row character-info-row mb-3">
+            {% endwith %}
+
+    <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
+        <div>
+            <h1>{{ object }}</h1>
+        </div>
+    </div>
+
+    <span class="background-image-copyright">
+            {% with img=object.get_image %}
+                {% if img %}
+                    Image by <a href="{{ img.copyright_url }}">{{ img.copyright }}</a>
+                {% endif %}
+            {% endwith %}
+        </span>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+    {% csrf_token %}
+        {% if may_edit %}
+            <div class="row mt-2">
+                <div class="col-12">
+                    <button
+                            type="submit"
+                            class="btn btn-primary float-end"
+                            title="{% trans 'Save' %}"><i class="fa fa-pen"></i> {% trans 'Save' %}</button>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="nav nav-tabs" id="myTab" role="tablist">
+                    <a class="nav-link active" id="text-de-tab" data-bs-toggle="tab" data-bs-target="#text-de"
+                            type="button" role="tab" aria-controls="text-de" aria-selected="true">{% trans 'German' %}
+                    </a>
+                    <a class="nav-link" id="text-en-tab" data-bs-toggle="tab" data-bs-target="#text-en"
+                            type="button" role="tab" aria-controls="text-en" aria-selected="false">{% trans 'English' %}
+                    </a>
+                </div>
+
+                <div class="tab-content" id="text-tab-content">
+                    <div class="tab-pane fade show active" id="text-de" role="tabpanel" aria-labelledby="text-de-tab">
+                        {% bootstrap_field form.text_de show_label=False %}
+                    </div>
+                    <div class="tab-pane fade" id="text-en" role="tabpanel" aria-labelledby="text-en-tab">
+                        {% bootstrap_field form.text_en show_label=False %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+{% endblock %}

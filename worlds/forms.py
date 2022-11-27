@@ -12,3 +12,16 @@ class WikiPageForm(forms.ModelForm):
             'abstract_de',
             'abstract_en',
         ]
+
+
+class WikiPageTextForm(forms.ModelForm):
+    class Meta:
+        model = WikiPage
+        fields = [
+            'text_de',
+            'text_en',
+        ]
+        widgets = {
+            'text_de': forms.Textarea(attrs={'rows': 40}),
+            'text_en': forms.Textarea(attrs={'rows': 40})
+        }
