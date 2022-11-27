@@ -4,8 +4,12 @@
     $(function () {
         $('.create-item-button').on('click', function (e) {
             let form = $(this).closest('form')
-            $.post(form.attr('action'), form.serialize(), function (data) {})
-            window.location.reload()
+            $.post(
+                form.attr('action'),
+                form.serialize(),
+                function (data) {
+                    window.location.reload()
+                })
             e.preventDefault()
             return false
         })
