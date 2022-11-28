@@ -72,7 +72,7 @@ class WikiPageQuerySet(models.QuerySet):
 
 
 class WikiPage(models.Model, metaclass=TransMeta):
-    manager = WikiPageQuerySet.as_manager()
+    objects = WikiPageQuerySet.as_manager()
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

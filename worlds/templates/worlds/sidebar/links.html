@@ -1,0 +1,51 @@
+{% load i18n characters_extras rules_extras thumbnail static %}
+
+<script src="{% static 'js/clipboard.js' %}"></script>
+<script>
+    $(function(){
+        $('#search-wiki-pages').on('keyup', function(){
+            let search = $(this).val();
+            let url = $(this).data('url');
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {q: search},
+                success: function(data){
+                    $('.wiki-links-search-target').html(data);
+                }
+            });
+        });
+
+        $('.wiki-links-search-target').on('click', '.suggested-wiki-link', function(e){
+            const elem = $(this);
+
+            let orig_text = elem.find('.card-header').text()
+            copyTextToClipboard(elem.data('wiki-link'))
+
+            elem.find('.card-header').text(elem.data('msg'))
+            setTimeout(() => elem.find('.card-header').text(orig_text), 2000)
+
+            e.preventDefault()
+            return false
+        })
+    })
+</script>
+
+<div class="row">
+    <div class="col-12">
+        <div class="input-group">
+            <input id="search-wiki-pages"
+                   type="text"
+                   data-url="{% url 'worlds:xhr_search_links' world_slug=object.world.slug %}"
+                   class="w-100 mb-2"
+                   placeholder="{% trans 'Search' %}">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 wiki-links-search-target">
+        {% include 'worlds/sidebar/_search_links.html' with pages=object.world.wikipage_set.all %}
+    </div>
+</div>

@@ -24,4 +24,15 @@ urlpatterns = [
         'xhr_create/page/<int:world_pk>/<int:parent_pk>',
         views.XhrCreateWikiPageView.as_view(),
         name='xhr_create_wiki_page'),
+
+    # Sidebars
+    path(
+        r'sidebar/<str:slug>/<str:sidebar_template>/',
+        views.XhrSidebarView.as_view(),
+        name='xhr_sidebar'),
+    path(
+        r'search_links/<str:world_slug>/',
+        views.XhrSearchLinksView.as_view(),
+        name='xhr_search_links'),
+
 ]

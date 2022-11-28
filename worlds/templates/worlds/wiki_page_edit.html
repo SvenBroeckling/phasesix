@@ -43,8 +43,22 @@
                 <div class="col-12">
                     <button
                             type="submit"
-                            class="btn btn-primary float-end"
+                            class="btn btn-success float-end"
                             title="{% trans 'Save' %}"><i class="fa fa-pen"></i> {% trans 'Save' %}</button>
+                    <button type="button"
+                            data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
+                            data-sidebar-title="{% trans 'Insert Link' %}"
+                            class="btn btn-primary float-end me-md-1 sidebar-trigger">
+                        <i class="fa fa-plus"></i> {% trans 'Link' %}
+                    </button>
+                    {% comment %}
+                    <button type="button"
+                            data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
+                            data-sidebar-title="{% trans 'Insert Image' %}"
+                            class="btn btn-primary float-end me-md-1 sidebar-trigger">
+                        <i class="fa fa-image"></i> {% trans 'Image' %}
+                    </button>
+                    {% endcomment %}
                 </div>
             </div>
         {% endif %}

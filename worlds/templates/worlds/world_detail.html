@@ -55,7 +55,7 @@
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">
-            {{ object.description|urpg_markup }}
+            {{ object.description|urpg_markup|replace_tags:object }}
         </div>
     </div>
 
@@ -73,7 +73,7 @@
                             {% endthumbnail %}
                         {% endif %}
                         <div class="card-body">
-                            {{ page.abstract|urpg_markup }}
+                            {{ page.abstract|urpg_markup|replace_tags:object }}
                         </div>
                         {% if user.is_superuser %}
                             <a href="{% url 'admin:worlds_wikipage_change' page.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>

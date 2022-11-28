@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, CreateView, TemplateView
@@ -92,3 +93,32 @@ class XhrCreateWikiPageView(TemplateView):
             'status': 'error',
             'error': form.errors
         })
+
+
+class XhrSidebarView(DetailView):
+    model = WikiPage
+    slug_field = 'slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context['may_edit'] = self.object.may_edit(self.request.user)
+        except AttributeError:
+            context['may_edit'] = False
+        return context
+
+    def get_template_names(self):
+        return ['worlds/sidebar/' + self.kwargs['sidebar_template'] + '.html']
+
+
+class XhrSearchLinksView(TemplateView):
+    template_name = 'worlds/sidebar/_search_links.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q')
+        context['pages'] = WikiPage.objects.filter(
+            world__slug=self.kwargs['world_slug']).filter(
+            Q(name_de__icontains=context['query']) | Q(name_en__icontains=context['query'])
+        )
+        return context
