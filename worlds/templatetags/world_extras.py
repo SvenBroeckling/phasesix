@@ -6,8 +6,8 @@ register = Library()
 
 
 @register.simple_tag
-def get_all_worlds():
-    return World.objects.all()
+def get_active_worlds():
+    return World.objects.filter(is_active=True)
 
 
 @register.simple_tag

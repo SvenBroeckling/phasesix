@@ -96,7 +96,7 @@
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">{% trans 'Worlds' %}</a>
                                 <ul class="dropdown-menu">
-                                    {% get_all_worlds as worlds %}
+                                    {% get_active_worlds as worlds %}
                                     {% for w in worlds %}
                                         <li><a class="dropdown-item"
                                                href="{{ w.get_absolute_url }}">{{ w.name }}</a></li>
