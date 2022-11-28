@@ -99,7 +99,7 @@
                                     {% get_all_worlds as worlds %}
                                     {% for w in worlds %}
                                         <li><a class="dropdown-item"
-                                               href="{% url 'worlds:detail' pk=w.pk %}">{{ w.name }}</a></li>
+                                               href="{{ w.get_absolute_url }}">{{ w.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </li>

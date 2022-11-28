@@ -53,7 +53,7 @@ class World(models.Model, metaclass=TransMeta):
         return user.is_superuser or user == self.created_by
 
     def get_absolute_url(self):
-        return reverse('worlds:detail', args=[self.pk])
+        return reverse('worlds:detail', args=[self.slug])
 
     def get_image(self):
         if self.image:
@@ -127,7 +127,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('world:wiki_page', kwargs={'world_pk': self.world.id, 'slug': self.slug})
+        return reverse('world:wiki_page', kwargs={'world_slug': self.world.slug, 'slug': self.slug})
 
     def save(self, **kwargs):
         unique_slugify(self, str(self.name))

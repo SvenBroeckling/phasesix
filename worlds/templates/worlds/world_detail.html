@@ -54,7 +54,7 @@
     {% endif %}
 
     <div class="row mt-4">
-        <div class="col-12">
+        <div class="col-12 wiki-page">
             {{ object.description|urpg_markup }}
         </div>
     </div>
@@ -62,7 +62,7 @@
     <div class="row masonry-container">
         {% for page in object.wikipage_set.get_top_level %}
             <div class="col col-md-4">
-                <a class="invisible-link" href="{% url 'world:wiki_page' world_pk=object.id slug=page.slug %}">
+                <a class="invisible-link" href="{% url 'world:wiki_page' world_slug=object.slug slug=page.slug %}">
                     <div class="card pointer mt-3">
                         <div class="card-header">
                             {{ page }}

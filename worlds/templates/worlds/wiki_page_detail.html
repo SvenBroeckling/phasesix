@@ -54,7 +54,7 @@
                 <a
                         class="btn btn-warning float-end modal-trigger"
                         title="{% trans 'Edit Page' %}"
-                        href="{% url 'world:edit_text' world_pk=object.world.id slug=object.slug %}"><i class="fa fa-pen"></i> {% trans 'Edit Page' %}</a>
+                        href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"><i class="fa fa-pen"></i> {% trans 'Edit Page' %}</a>
                 <a
                         class="btn btn-warning me-md-1 mt-1 mt-md-0 float-end modal-trigger"
                         data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
@@ -69,24 +69,14 @@
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">
-            <div class="columns">
-                {{ object.abstract|urpg_markup }}
-            </div>
+            {{ object.text|urpg_markup }}
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-12 wiki-page">
-            <div class="columns">
-                {{ object.text|urpg_markup }}
-            </div>
-        </div>
-    </div>
-
-    <div class="row masonry-container">
+    <div class="row masonry-container mt-4">
         {% for page in object.wikipage_set.all %}
             <div class="col col-md-4">
-                <a class="invisible-link" href="{% url 'world:wiki_page' world_pk=object.world.id slug=page.slug %}">
+                <a class="invisible-link" href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
                     <div class="card pointer mt-3">
                         <div class="card-header">
                             {{ page }}

@@ -5,14 +5,14 @@ from worlds import views
 app_name = 'worlds'
 
 urlpatterns = [
-    path('<int:pk>', views.WorldDetailView.as_view(), name='detail'),
+    path('<str:slug>', views.WorldDetailView.as_view(), name='detail'),
 
     path(
-        '<int:world_pk>/<str:slug>',
+        '<str:world_slug>/<str:slug>',
         views.WikiPageDetailView.as_view(),
         name='wiki_page'),
     path(
-        '<int:world_pk>/<str:slug>/edit',
+        '<str:world_slug>/<str:slug>/edit',
         views.WikiPageEditTextView.as_view(),
         name='edit_text'),
 
