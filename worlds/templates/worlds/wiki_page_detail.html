@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n characters_extras rules_extras thumbnail %}
+{% load static i18n characters_extras rules_extras thumbnail world_extras %}
 
 {% block javascript %}
     <script src="{% static 'js/worlds_detail.js' %}"></script>
@@ -39,13 +39,25 @@
     {% if may_edit %}
         <div class="row mt-2">
             <div class="col-12">
+
+                {% breadcrumbs object as crumbs %}
+                <div class="float-md-start">
+                    <nav aria-label="breadcrumbs">
+                        <ol class="breadcrumb">
+                            {% for bc in crumbs %}
+                                <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </nav>
+                </div>
+
                 <a
                         class="btn btn-warning float-end modal-trigger"
                         title="{% trans 'Edit Page' %}"
-                        href="{% url 'world:edit_text' slug=object.slug %}"><i class="fa fa-pen"></i> {% trans 'Edit Page' %}</a>
+                        href="{% url 'world:edit_text' world_pk=object.world.id slug=object.slug %}"><i class="fa fa-pen"></i> {% trans 'Edit Page' %}</a>
                 <a
-                        class="btn btn-warning me-1 float-end modal-trigger"
-                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id parent_pk=object.id %}"
+                        class="btn btn-warning me-md-1 mt-1 mt-md-0 float-end modal-trigger"
+                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
                         title="{% trans 'Create Wiki Page' %}"
                         data-bs-toggle="modal"
                         data-modal-title="{% trans 'Create Wiki Page' %}"
@@ -56,21 +68,25 @@
     {% endif %}
 
     <div class="row mt-4">
-        <div class="col-12">
-            {{ object.abstract|urpg_markup }}
+        <div class="col-12 wiki-page">
+            <div class="columns">
+                {{ object.abstract|urpg_markup }}
+            </div>
         </div>
     </div>
 
     <div class="row mt-4">
-        <div class="col-12">
-            {{ object.text|urpg_markup }}
+        <div class="col-12 wiki-page">
+            <div class="columns">
+                {{ object.text|urpg_markup }}
+            </div>
         </div>
     </div>
 
     <div class="row masonry-container">
         {% for page in object.wikipage_set.all %}
             <div class="col col-md-4">
-                <a class="invisible-link" href="{% url 'world:wiki_page' slug=page.slug %}">
+                <a class="invisible-link" href="{% url 'world:wiki_page' world_pk=object.world.id slug=page.slug %}">
                     <div class="card pointer mt-3">
                         <div class="card-header">
                             {{ page }}

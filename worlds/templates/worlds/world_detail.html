@@ -43,11 +43,7 @@
         <div class="col-12">
             <a
                     class="btn btn-warning me-1 float-end modal-trigger"
-                    {% if parent %}
-                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id parent_pk=parent.id %}"
-                    {% else %}
-                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id %}"
-                    {% endif %}
+                    data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id %}"
                     title="{% trans 'Create Wiki Page' %}"
                     data-bs-toggle="modal"
                     data-modal-title="{% trans 'Create Wiki Page' %}"
@@ -66,7 +62,7 @@
     <div class="row masonry-container">
         {% for page in object.wikipage_set.get_top_level %}
             <div class="col col-md-4">
-                <a class="invisible-link" href="{% url 'world:wiki_page' slug=page.slug %}">
+                <a class="invisible-link" href="{% url 'world:wiki_page' world_pk=object.id slug=page.slug %}">
                     <div class="card pointer mt-3">
                         <div class="card-header">
                             {{ page }}

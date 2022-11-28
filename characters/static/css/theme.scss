@@ -2,6 +2,11 @@
 @import '../vendor/bootstrap/scss/bootstrap.scss';
 @import 'bootswatch/phasesix/bootswatch';
 
+$utilities: map-merge(
+    $utilities, ("width": map-merge(
+        map-get($utilities, "width"), (responsive: true),),)
+);
+
 body {
   background-image: url(../img/background.png);
   background-repeat: repeat;
@@ -502,4 +507,39 @@ a.invisible-link {
 
 .ws-dice-result span.fail {
   background-color: $secondary;
+}
+
+/* Wiki */
+
+@media only screen and (min-width: 600px) {
+  .wiki-page .columns {
+    column-count: 2;
+  }
+}
+
+.wiki-page .columns {
+  column-gap: 2em;
+}
+.wiki-page p {
+  font-size: larger;
+  color: $gray-400;
+}
+
+.wiki-page p:empty {
+  display: none;
+}
+
+.wiki-page p {
+  text-align: justify;
+}
+
+.wiki-page blockquote {
+  margin-left: 2em;
+  padding-left: 1em;
+  color: $gray-600;
+  border-left: 2px solid $gray-500;
+}
+
+.wiki-page h3 {
+  font-size: calc(1rem + 1.5vw)
 }

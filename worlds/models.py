@@ -19,6 +19,8 @@ class World(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     name = models.CharField(_('name'), max_length=120)
+    slug = models.SlugField(_('slug'), max_length=220, unique=True, null=True)
+
     description = models.TextField(_('description'), blank=True, null=True)
     is_active = models.BooleanField(_('is active'), default=True)
     extension = models.ForeignKey(
@@ -49,6 +51,9 @@ class World(models.Model, metaclass=TransMeta):
 
     def may_edit(self, user):
         return user.is_superuser or user == self.created_by
+
+    def get_absolute_url(self):
+        return reverse('worlds:detail', args=[self.pk])
 
     def get_image(self):
         if self.image:
@@ -122,7 +127,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('world:wiki_page', kwargs={'slug': self.slug})
+        return reverse('world:wiki_page', kwargs={'world_pk': self.world.id, 'slug': self.slug})
 
     def save(self, **kwargs):
         unique_slugify(self, str(self.name))

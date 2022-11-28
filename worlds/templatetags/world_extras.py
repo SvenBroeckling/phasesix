@@ -8,3 +8,22 @@ register = Library()
 @register.simple_tag
 def get_all_worlds():
     return World.objects.all()
+
+
+@register.simple_tag
+def breadcrumbs(page):
+    bc = []
+    bc.append((page.world.name, page.world.get_absolute_url()))
+
+    if page:
+        pages = []
+        pages.append((page.name, page.get_absolute_url()))
+
+        parent = page.parent
+        while parent:
+            pages.append((parent.name, parent.get_absolute_url()))
+            parent = parent.parent
+
+        bc += pages[::-1]
+
+    return bc

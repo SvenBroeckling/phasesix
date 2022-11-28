@@ -23,6 +23,7 @@
 {% endif %}
     <div class="row">
         <div class="col-12 col-md-8 offset-md-2">
+            {{ world }}
             {% csrf_token %}
             {% bootstrap_field form.name_de %}
             {% bootstrap_field form.name_en %}
