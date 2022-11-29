@@ -1,0 +1,109 @@
+{% load i18n characters_extras rules_extras thumbnail static %}
+
+<script src="{% static 'js/clipboard.js' %}"></script>
+<script>
+    $(function(){
+        $('.additional-upload-button').on('click', function(){
+            let btn = $(this);
+            let btnText = btn.text();
+            let file = btn.parent().find('input[type="file"]');
+            let caption = btn.parent().find('input[name="caption"]');
+            let copyright = btn.parent().find('input[name="copyright"]');
+            let copyrightUrl = btn.parent().find('input[name="copyright-url"]');
+
+            if (!file.val() || !caption.val() || !copyright.val() || !copyrightUrl.val()) {
+                return;
+            }
+
+            let fd = new FormData();
+            fd.append('file', file[0].files[0]);
+            fd.append('caption', caption.val());
+            fd.append('copyright', copyright.val());
+            fd.append('copyright-url', copyrightUrl.val());
+
+            btn.prop('disabled', true);
+            btn.text(btn.data('msg'));
+
+            $.ajax({
+                url: btn.data('upload-url'),
+                type: 'POST',
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    btn.prop('disabled', false);
+                    btn.text(btnText);
+                    $('#upload-collapse-button').click();
+
+                    $.get(btn.data('refresh-url'), function(data) {
+                        $('.additional-images-container').html(data);
+                    });
+                }
+            })
+        });
+
+        $('.additional-images-container').on('click', '.additional-image', function(e){
+            const elem = $(this);
+
+            let orig_text = elem.find('.card-header').text()
+            copyTextToClipboard(elem.data('wiki-link'))
+
+            elem.find('.card-header').text(elem.data('msg'))
+            setTimeout(() => elem.find('.card-header').text(orig_text), 2000)
+
+            e.preventDefault()
+            return false
+        })
+    })
+</script>
+
+{% comment %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                {% trans 'Page Image' %}
+            </div>
+            {% if object.image %}
+                {% thumbnail object.image "300x300" as im %}
+                    <img class="card-img-top" src="{{ im.url }}" alt="{{ object.title }}" />
+                {% endthumbnail %}
+            {% endif %}
+            <div class="card-body">
+                <button class="btn btn-primary">{% trans 'Upload' %}</button>
+                <button class="btn btn-danger">{% trans 'Delete' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endcomment %}
+
+<div class="row">
+    <div class="col-12">
+        <button
+                data-bs-toggle="collapse"
+                data-bs-target="#upload-collapse"
+                id="upload-collapse-button"
+                class="btn btn-primary mt-3 w-100">{% trans 'Upload an additional image' %}</button>
+    </div>
+
+    <div class="col-12 collapse pt-2" id="upload-collapse">
+        <div class="card">
+            <div class="card-body">
+                <input type="file">
+                <input class="form-control" type="text" name="caption" placeholder="{% trans 'Caption' %}">
+                <input class="form-control" type="text" name="copyright" placeholder="{% trans 'Copyright' %}">
+                <input class="form-control" type="text" name="copyright-url" placeholder="{% trans 'Copyright URL' %}">
+                <button
+                        data-msg="{% trans 'Uploading' %}"
+                        data-upload-url="{% url 'worlds:xhr_upload_image' slug=object.slug %}"
+                        data-refresh-url="{% url 'worlds:xhr_additional_images' slug=object.slug %}"
+                        class="btn btn-primary w-100 mt-1 additional-upload-button">{% trans 'Upload' %}</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 additional-images-container">
+        {% include 'worlds/sidebar/_additional_images.html' with object=object %}
+    </div>
+</div>

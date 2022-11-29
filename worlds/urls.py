@@ -34,5 +34,13 @@ urlpatterns = [
         r'search_links/<str:world_slug>/',
         views.XhrSearchLinksView.as_view(),
         name='xhr_search_links'),
+    path(
+        r'upload_image/<str:slug>/',
+        views.XhrUploadImageView.as_view(),
+        name='xhr_upload_image'),
+    path(
+        r'additional_images/<str:slug>/',
+        views.XhrAdditionalImagesView.as_view(),
+        name='xhr_additional_images'),
 
 ]

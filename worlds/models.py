@@ -156,11 +156,22 @@ class WikiPageImage(models.Model):
         help_text=_('The wiki page the image belongs to.'),
         on_delete=models.CASCADE)
 
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_('created by'))
+
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
     image = models.ImageField(_('image'), upload_to='wiki_page_images')
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
-    caption = models.CharField(_('caption'), max_length=120, blank=True, null=True)
+    caption = models.CharField(_('caption'), max_length=120)
+    slug = models.SlugField(_('slug'), max_length=220, unique=True, null=True)
 
     class Meta:
         verbose_name = _('wiki page image')
@@ -168,6 +179,13 @@ class WikiPageImage(models.Model):
 
     def __str__(self):
         return self.caption
+
+    def save(self, **kwargs):
+        unique_slugify(self, str(self.caption))
+        super().save(**kwargs)
+
+    def get_wiki_tag(self):
+        return '{{%s|w-25,float-end}}' % self.slug
 
     def may_edit(self, user):
         return user.is_superuser or user == self.wiki_page.created_by

@@ -51,14 +51,12 @@
                             class="btn btn-primary float-end me-md-1 sidebar-trigger">
                         <i class="fa fa-plus"></i> {% trans 'Link' %}
                     </button>
-                    {% comment %}
                     <button type="button"
                             data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
-                            data-sidebar-title="{% trans 'Insert Image' %}"
+                            data-sidebar-title="{% trans 'Page images' %}"
                             class="btn btn-primary float-end me-md-1 sidebar-trigger">
-                        <i class="fa fa-image"></i> {% trans 'Image' %}
+                        <i class="fa fa-image"></i> {% trans 'Images' %}
                     </button>
-                    {% endcomment %}
                 </div>
             </div>
         {% endif %}

@@ -3,7 +3,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from worlds.models import World, WikiPage
+from worlds.models import World, WikiPage, WikiPageImage
 
 
 class WorldAdmin(VersionAdmin):
@@ -12,11 +12,17 @@ class WorldAdmin(VersionAdmin):
     search_fields = ('name',)
 
 
+class WikiPageImageInline(admin.TabularInline):
+    model = WikiPageImage
+    extra = 1
+
+
 class WikiPageAdmin(VersionAdmin):
     list_display = ('name', 'world', 'is_active', 'parent', 'ordering')
     list_editable = ('is_active', 'ordering')
     list_filter = ('is_active', 'world')
     search_fields = ('name', 'world__name')
+    inlines = (WikiPageImageInline,)
 
 
 admin.site.register(World, WorldAdmin)

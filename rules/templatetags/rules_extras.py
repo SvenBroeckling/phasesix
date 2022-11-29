@@ -5,7 +5,7 @@ from django.template import Library
 from django.utils.safestring import mark_safe
 
 from characters.models import Character
-from worlds.models import WikiPage
+from worlds.models import WikiPage, WikiPageImage
 
 register = Library()
 
@@ -52,8 +52,28 @@ def replace_tags(value, world):
 
         return '<a href="%s">%s</a>' % (obj.get_absolute_url(), text)
 
+    def _repl_image_tags(match_object):
+        formatters = ''
+        tag = match_object.group(0).strip('{}')
+        if '|' in tag:
+            tag, formatters = tag.split('|')
+        css = ' '.join(formatters.split(','))
+
+        try:
+            obj = WikiPageImage.objects.get(wiki_page__world=world, slug=tag)
+        except WikiPageImage.DoesNotExist:
+            return ''
+
+        return '<img class="%s" src="%s" alt="%s" />' % (
+            css,
+            obj.image.url,
+            obj.caption)
+
     tags_re = re.compile(r"\[\[([^\[])+\]\]", flags=re.UNICODE)
+    image_tags_re = re.compile(r"\{\{.*\}\}", flags=re.UNICODE)
+
     value = re.sub(tags_re, _repl_tags, value)
+    value = re.sub(image_tags_re, _repl_image_tags, value)
 
     return mark_safe(value)
 

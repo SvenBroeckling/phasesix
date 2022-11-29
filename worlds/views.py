@@ -2,6 +2,7 @@
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.views import View
 from django.views.generic import DetailView, CreateView, TemplateView
 from django.utils.translation import gettext_lazy as _
 
@@ -122,3 +123,31 @@ class XhrSearchLinksView(TemplateView):
             Q(name_de__icontains=context['query']) | Q(name_en__icontains=context['query'])
         )
         return context
+
+
+class XhrUploadImageView(View):
+    def post(self, request, *args, **kwargs):
+        wiki_page = get_object_or_404(WikiPage, slug=self.kwargs['slug'])
+        if not wiki_page.may_edit(request.user):
+            return JsonResponse({
+                'error': _('You do not have permission to edit this wiki page.'),
+                'status': 'error',
+            })
+
+        wiki_page.wikipageimage_set.create(
+            image=request.FILES.get('file'),
+            created_by=request.user,
+            image_copyright=request.POST.get('copyright'),
+            image_copyright_url=request.POST.get('copyright-url'),
+            caption=request.POST.get('caption'))
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrAdditionalImagesView(TemplateView):
+    template_name = 'worlds/sidebar/_additional_images.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = get_object_or_404(WikiPage, slug=self.kwargs['slug'])
+        return context
+

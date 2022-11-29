@@ -1,0 +1,14 @@
+{% load thumbnail i18n %}
+
+{% for image in object.wikipageimage_set.all %}
+    <div class="card mt-3 additional-image pointer" data-wiki-link="{{ image.get_wiki_tag }}">
+        <div class="card-header">
+            {{ image.caption }}
+        </div>
+        {% if image.image %}
+            {% thumbnail image.image "300x300" as im %}
+                <img class="card-img-top" src="{{ im.url }}" alt="{{ image.caption }}" />
+            {% endthumbnail %}
+        {% endif %}
+    </div>
+{% endfor %}
