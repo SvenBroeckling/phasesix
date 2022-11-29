@@ -31,7 +31,7 @@
                     clearTimeout(timer);
                 }
                 timer = setTimeout(function () {
-                    $('.template').each(function (index) {
+                    $('.spell-selection-card').each(function (index) {
                         if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
                             $(this).parent().removeClass('d-none');
                         } else {
@@ -47,7 +47,7 @@
             var matches = /q=([^&#=]*)/.exec(window.location.search);
             if (matches && matches[1]) {
                 $('#id_q').val(matches[1]);
-                $('.template').each(function (index) {
+                $('.spell-selection-card').each(function (index) {
                     if ($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
                         $(this).removeClass('d-none');
                     } else {
@@ -57,11 +57,6 @@
                 });
                 masonry.masonry({percentPosition: true})
             }
-
-            $('.template').tilt({
-                glare: false,
-                perspective: 1800
-            })
         })
     </script>
 {% endblock %}
