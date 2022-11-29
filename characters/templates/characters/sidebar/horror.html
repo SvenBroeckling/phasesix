@@ -75,6 +75,9 @@
                         {{ q.description|urpg_markup }}
                     </div>
                     {{ q.get_modifier_summary_html|safe }}
+                    <a class="btn btn-danger btn-sm float-end mt-2 action-link"
+                       href="{% url 'characters:remove_quirk' pk=object.id quirk_pk=q.id %}"><i
+                            class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
                 </div>
             </div>
         </div>

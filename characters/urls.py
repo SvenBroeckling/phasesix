@@ -122,6 +122,10 @@ urlpatterns = [
         'add_quirk/<int:pk>/<int:quirk_pk>',
         views.AddQuirkView.as_view(),
         name='add_quirk'),
+    path(
+        'remove_quirk/<int:pk>/<int:quirk_pk>',
+        views.XhrRemoveQuirkView.as_view(),
+        name='remove_quirk'),
 
     # new character
     path('new/', views.CreateCharacterView.as_view(), name='create_character'),

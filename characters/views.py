@@ -270,6 +270,20 @@ class AddQuirkView(View):
         return JsonResponse({'status': 'ok'})
 
 
+class XhrRemoveQuirkView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        quirk = Quirk.objects.get(id=kwargs['quirk_pk'])
+
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        character.quirks.remove(quirk)
+        character.quirks_healed += 1
+        character.save()
+
+        return JsonResponse({'status': 'ok'})
+
 
 class CharacterAttackView(View):
     def post(self, request, *args, **kwargs):
