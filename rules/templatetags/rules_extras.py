@@ -31,7 +31,10 @@ def basespell_widget(context, basespell, character=None):
 
 @register.filter
 def to_first_linebreak(value):
-    return value.splitlines()[0]
+    try:
+        return value.splitlines()[0]
+    except IndexError:
+        return ''
 
 
 @register.filter
