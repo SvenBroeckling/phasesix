@@ -7,7 +7,7 @@ from django.views.generic import DetailView, CreateView, TemplateView
 from django.utils.translation import gettext_lazy as _
 
 from worlds.forms import WikiPageForm, WikiPageTextForm
-from worlds.models import World, WikiPage
+from worlds.models import World, WikiPage, WikiPageImage
 
 
 class WorldDetailView(DetailView):
@@ -151,3 +151,11 @@ class XhrAdditionalImagesView(TemplateView):
         context['object'] = get_object_or_404(WikiPage, slug=self.kwargs['slug'])
         return context
 
+
+class XhrModalImageView(TemplateView):
+    template_name = 'worlds/modal_image.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = get_object_or_404(WikiPageImage, id=self.kwargs['pk'])
+        return context

@@ -2,6 +2,7 @@ import re
 
 import markdown2
 from django.template import Library
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from characters.models import Character
@@ -64,10 +65,18 @@ def replace_tags(value, world):
         except WikiPageImage.DoesNotExist:
             return ''
 
-        return '<img class="%s" src="%s" alt="%s" />' % (
-            css,
-            obj.image.url,
-            obj.caption)
+        modal_url = reverse('worlds:xhr_modal_image', kwargs={'pk': obj.pk})
+        return f'''
+        <a
+            data-url="{modal_url}"
+            data-bs-toggle="modal"
+            data-bs-target=".page-modal"
+            data-modal-title="{obj.caption}"
+            class="invisible-link modal-trigger"
+            href="">
+            <img class="img-fluid m-2 {css}" src="{obj.image.url}" alt="{obj.caption}" />
+        </a>
+        '''
 
     tags_re = re.compile(r"\[\[([^\[])+\]\]", flags=re.UNICODE)
     image_tags_re = re.compile(r"\{\{.*\}\}", flags=re.UNICODE)

@@ -42,5 +42,9 @@ urlpatterns = [
         r'additional_images/<str:slug>/',
         views.XhrAdditionalImagesView.as_view(),
         name='xhr_additional_images'),
+    path(
+        r'xhr_modal_image/<int:pk>/',
+        views.XhrModalImageView.as_view(),
+        name='xhr_modal_image'),
 
 ]
