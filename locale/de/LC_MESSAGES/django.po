@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-29 11:28+0000\n"
-"PO-Revision-Date: 2022-11-29 12:29+0100\n"
+"POT-Creation-Date: 2022-12-01 16:20+0000\n"
+"PO-Revision-Date: 2022-12-01 17:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -29,8 +29,8 @@ msgstr ""
 #: magic/models.py:111 magic/models.py:127 magic/models.py:139
 #: rules/models.py:56 rules/models.py:100 rules/models.py:157
 #: rules/models.py:177 rules/models.py:209 rules/models.py:244
-#: rules/models.py:286 rules/models.py:391 worlds/models.py:21
-#: worlds/models.py:86
+#: rules/models.py:286 rules/models.py:391 worlds/models.py:23
+#: worlds/models.py:89
 msgid "name"
 msgstr "Name"
 
@@ -39,7 +39,7 @@ msgstr "Name"
 #: armory/models.py:363 bestiary/models.py:41 campaigns/models.py:123
 #: characters/models.py:25 horror/models.py:27 rules/models.py:58
 #: rules/models.py:101 rules/models.py:159 rules/models.py:178
-#: rules/models.py:213 rules/models.py:257 worlds/models.py:24
+#: rules/models.py:213 rules/models.py:257 worlds/models.py:26
 msgid "description"
 msgstr "Beschreibung"
 
@@ -49,8 +49,8 @@ msgstr "Beschreibung"
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:88 magic/models.py:71 magic/models.py:144 rules/models.py:67
 #: rules/models.py:106 rules/models.py:211 rules/models.py:288
-#: rules/models.py:393 worlds/models.py:18 worlds/models.py:39
-#: worlds/models.py:83
+#: rules/models.py:393 worlds/models.py:20 worlds/models.py:41
+#: worlds/models.py:86 worlds/models.py:170
 msgid "created at"
 msgstr "Erzeugt am"
 
@@ -58,8 +58,8 @@ msgstr "Erzeugt am"
 #: armory/models.py:174 armory/models.py:361 bestiary/models.py:34
 #: magic/models.py:72 magic/models.py:145 rules/models.py:68
 #: rules/models.py:107 rules/models.py:212 rules/models.py:289
-#: rules/models.py:394 worlds/models.py:19 worlds/models.py:40
-#: worlds/models.py:84
+#: rules/models.py:394 worlds/models.py:21 worlds/models.py:42
+#: worlds/models.py:87 worlds/models.py:171
 msgid "modified at"
 msgstr "Modifiziert am"
 
@@ -95,7 +95,7 @@ msgstr "Verborgenheit"
 
 #: armory/models.py:53 armory/models.py:194 armory/models.py:356
 #: campaigns/models.py:28 characters/models.py:38 magic/models.py:69
-#: worlds/models.py:16 worlds/models.py:81
+#: worlds/models.py:18 worlds/models.py:84 worlds/models.py:168
 msgid "created by"
 msgstr "Erzeugt von"
 
@@ -144,24 +144,24 @@ msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:99 armory/models.py:212 bestiary/models.py:36
 #: campaigns/models.py:17 campaigns/models.py:109 characters/models.py:27
-#: magic/models.py:44 rules/models.py:63 worlds/models.py:35
-#: worlds/models.py:113 worlds/models.py:159
+#: magic/models.py:44 rules/models.py:63 worlds/models.py:37
+#: worlds/models.py:116 worlds/models.py:173
 msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:100 armory/models.py:213 bestiary/models.py:37
 #: campaigns/models.py:18 campaigns/models.py:22 campaigns/models.py:110
 #: characters/models.py:28 characters/models.py:33 magic/models.py:45
-#: rules/models.py:64 worlds/models.py:36 worlds/models.py:114
-#: worlds/models.py:160
+#: rules/models.py:64 worlds/models.py:38 worlds/models.py:117
+#: worlds/models.py:174
 msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:101 armory/models.py:214 bestiary/models.py:38
 #: campaigns/models.py:19 campaigns/models.py:23 campaigns/models.py:111
 #: characters/models.py:29 characters/models.py:34 magic/models.py:46
-#: rules/models.py:65 worlds/models.py:37 worlds/models.py:115
-#: worlds/models.py:161
+#: rules/models.py:65 worlds/models.py:39 worlds/models.py:118
+#: worlds/models.py:175
 msgid "image copyright url"
 msgstr "Bild Copyright URL"
 
@@ -496,7 +496,7 @@ msgstr "Wähle Erweiterung"
 #: characters/templates/characters/modals/add_quirk.html:8
 #: characters/templates/characters/modals/add_weapons.html:8
 #: characters/templates/characters/modals/reputation.html:47
-#: magic/templates/magic/basespell_list.html:72
+#: magic/templates/magic/basespell_list.html:67
 #: rules/templates/rules/template_list.html:68
 #: worlds/templates/worlds/sidebar/links.html:42
 msgid "Search"
@@ -547,7 +547,7 @@ msgstr "Admin"
 #: armory/templates/armory/riotgear_list.html:98
 #: armory/templates/armory/weapon_list.html:115
 #: bestiary/templates/bestiary/foe_list.html:54
-#: magic/templates/magic/basespell_list.html:90
+#: magic/templates/magic/basespell_list.html:85
 #: rules/templates/rules/template_list.html:82
 msgid "Add in admin"
 msgstr "Im Admin hinzufügen"
@@ -768,7 +768,7 @@ msgstr "Alle"
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
-#: campaigns/models.py:24 worlds/models.py:103
+#: campaigns/models.py:24 worlds/models.py:106
 msgid "abstract"
 msgstr "Zusammenfassung"
 
@@ -798,7 +798,7 @@ msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
 #: campaigns/models.py:101 characters/models.py:754 forum/models.py:91
-#: worlds/models.py:108
+#: worlds/models.py:111
 msgid "text"
 msgstr "Text"
 
@@ -828,7 +828,6 @@ msgstr "Wurf"
 
 #: campaigns/templates/campaigns/campaign_detail.html:34
 #: campaigns/templates/campaigns/fragments/status.html:90
-#: worlds/templates/worlds/sidebar/_search_links.html:5
 msgid "Copied"
 msgstr "Kopiert"
 
@@ -1289,7 +1288,7 @@ msgid "subject"
 msgstr "Thema"
 
 #: characters/models.py:755 rules/models.py:69 rules/models.py:395
-#: worlds/models.py:41 worlds/models.py:118
+#: worlds/models.py:43 worlds/models.py:121
 msgid "ordering"
 msgstr "Sortierung"
 
@@ -2585,12 +2584,12 @@ msgid "Text"
 msgstr "Text"
 
 #: forum/models.py:10 urpg/settings.py:136
-#: worlds/templates/worlds/wiki_page_edit.html:71
+#: worlds/templates/worlds/wiki_page_edit.html:68
 msgid "German"
 msgstr "Deutsch"
 
 #: forum/models.py:11 urpg/settings.py:137
-#: worlds/templates/worlds/wiki_page_edit.html:74
+#: worlds/templates/worlds/wiki_page_edit.html:71
 msgid "English"
 msgstr "Englisch"
 
@@ -3096,8 +3095,8 @@ msgstr "Erweiterung"
 msgid "is mandatory"
 msgstr "Ist Pflicht"
 
-#: rules/models.py:53 rules/models.py:389 worlds/models.py:25
-#: worlds/models.py:117
+#: rules/models.py:53 rules/models.py:389 worlds/models.py:27
+#: worlds/models.py:120
 msgid "is active"
 msgstr "Ist aktiv"
 
@@ -3109,7 +3108,7 @@ msgstr "Identifier"
 msgid "year range"
 msgstr "Jahr Bereich"
 
-#: rules/models.py:82 worlds/models.py:28
+#: rules/models.py:82 worlds/models.py:30
 msgid "extension"
 msgstr "Erweiterung"
 
@@ -3378,86 +3377,119 @@ msgstr "Registrieren"
 msgid "Create Account"
 msgstr "Konto erstellen"
 
-#: worlds/models.py:22 worlds/models.py:87
+#: worlds/models.py:24 worlds/models.py:90 worlds/models.py:178
 msgid "slug"
 msgstr "Slug"
 
-#: worlds/models.py:29
+#: worlds/models.py:31
 msgid "The corresponding world extension, which is added to the characters."
 msgstr ""
 "Die zugehörige Welterweiterung, welche zu den Charakteren hinzugefügt wird."
 
-#: worlds/models.py:46 worlds/models.py:90
+#: worlds/models.py:48 worlds/models.py:93
 msgid "world"
 msgstr "Welt"
 
-#: worlds/models.py:47
+#: worlds/models.py:49
 msgid "worlds"
 msgstr "Welten"
 
-#: worlds/models.py:91
+#: worlds/models.py:94
 msgid "The world this page belongs to."
 msgstr "Die Welt, zu der diese Seite gehört."
 
-#: worlds/models.py:96
+#: worlds/models.py:99
 msgid "parent"
 msgstr "Übergeordnete Seite"
 
-#: worlds/models.py:97
+#: worlds/models.py:100
 msgid "The parent wiki page."
 msgstr "Die übergeordnete Wiki Seite."
 
-#: worlds/models.py:104
+#: worlds/models.py:107
 msgid "A short summary of the wiki page. This may contain Wiki links."
 msgstr ""
 "Eine Kurzzusammenfassung der Wiki Seite. Diese darf Wiki Links enthalten."
 
-#: worlds/models.py:109
+#: worlds/models.py:112
 msgid "The wiki page text. This may contain Wiki links."
 msgstr "Der Wikiseitentext. Dieser darf Wiki Links enthalten."
 
-#: worlds/models.py:123 worlds/models.py:155
+#: worlds/models.py:126 worlds/models.py:159
 msgid "wiki page"
 msgstr "Wikiseite"
 
-#: worlds/models.py:124
+#: worlds/models.py:127
 msgid "wiki pages"
 msgstr "Wikiseiten"
 
-#: worlds/models.py:156
+#: worlds/models.py:160
 msgid "The wiki page the image belongs to."
 msgstr "Die Wikiseite, zu der das Bild gehört."
 
-#: worlds/models.py:163
+#: worlds/models.py:177
 msgid "caption"
 msgstr "Bezeichnung"
 
-#: worlds/models.py:166
+#: worlds/models.py:181
 msgid "wiki page image"
 msgstr "Wikiseitenbild"
 
-#: worlds/models.py:167
+#: worlds/models.py:182
 msgid "wiki page images"
 msgstr "Wikiseitenbilder"
 
 #: worlds/templates/worlds/create_wiki_page.html:32
-#: worlds/templates/worlds/world_detail.html:56
+#: worlds/templates/worlds/world_detail.html:59
 msgid "Create Page"
 msgstr "Seite erstellen"
 
-#: worlds/templates/worlds/wiki_page_detail.html:61
-#: worlds/templates/worlds/wiki_page_detail.html:62
+#: worlds/templates/worlds/modal_image.html:9
+msgid "Image by"
+msgstr "Bild von"
+
+#: worlds/templates/worlds/sidebar/_additional_images.html:4
+#: worlds/templates/worlds/sidebar/_search_links.html:5
+msgid "Wiki tag copied"
+msgstr "Wiki Tag kopiert"
+
+#: worlds/templates/worlds/sidebar/images.html:87
+msgid "Upload an additional image"
+msgstr "Lade ein zusätzliches Bild hoch"
+
+#: worlds/templates/worlds/sidebar/images.html:94
+msgid "Caption"
+msgstr "Bezeichnung"
+
+#: worlds/templates/worlds/sidebar/images.html:95
+msgid "Copyright"
+msgstr "Copyright"
+
+#: worlds/templates/worlds/sidebar/images.html:96
+msgid "Copyright URL"
+msgstr "Copyright URL"
+
+#: worlds/templates/worlds/sidebar/images.html:98
+msgid "Uploading"
+msgstr "Lade hoch"
+
+#: worlds/templates/worlds/sidebar/images.html:101
+msgid "Upload"
+msgstr "Hochladen"
+
+#: worlds/templates/worlds/wiki_page_detail.html:64
+#: worlds/templates/worlds/wiki_page_detail.html:65
 msgid "Edit Page"
 msgstr "Seite editieren"
 
-#: worlds/templates/worlds/wiki_page_detail.html:66
-#: worlds/templates/worlds/wiki_page_detail.html:68
-#: worlds/templates/worlds/world_detail.html:52
-#: worlds/templates/worlds/world_detail.html:54
+#: worlds/templates/worlds/wiki_page_detail.html:69
+#: worlds/templates/worlds/wiki_page_detail.html:71
+#: worlds/templates/worlds/world_detail.html:55
+#: worlds/templates/worlds/world_detail.html:57
 msgid "Create Wiki Page"
 msgstr "Wikiseite erstellen"
 
-#: worlds/templates/worlds/wiki_page_detail.html:70
+#: worlds/templates/worlds/wiki_page_detail.html:73
 msgid "Create Subpage"
 msgstr "Unterseite erstellen"
 
@@ -3469,9 +3501,21 @@ msgstr "Link einfügen"
 msgid "Link"
 msgstr "Link"
 
-#: worlds/views.py:76
+#: worlds/templates/worlds/wiki_page_edit.html:56
+msgid "Page images"
+msgstr "Seitenbilder"
+
+#: worlds/templates/worlds/wiki_page_edit.html:58
+msgid "Images"
+msgstr "Bilder"
+
+#: worlds/views.py:81
 msgid "You do not have permission to edit this world."
 msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
+
+#: worlds/views.py:137
+msgid "You do not have permission to edit this wiki page."
+msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "Choose an epoch for your character to live in"
 #~ msgstr "Wähle eine Epoche in der dein Charakter lebt"

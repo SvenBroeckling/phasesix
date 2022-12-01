@@ -1,7 +1,7 @@
 {% load thumbnail i18n %}
 
 {% for image in object.wikipageimage_set.all %}
-    <div class="card mt-3 additional-image pointer" data-wiki-link="{{ image.get_wiki_tag }}">
+    <div class="card mt-3 additional-image pointer" data-wiki-link="{{ image.get_wiki_tag }}" data-msg="{% trans 'Wiki tag copied' %}">
         <div class="card-header">
             {{ image.caption }}
         </div>
