@@ -20,7 +20,7 @@ class WikiPageImageInline(admin.TabularInline):
 class WikiPageAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'world', 'is_active', 'parent', 'ordering')
     list_editable = ('is_active', 'ordering')
-    list_filter = ('is_active', 'world')
+    list_filter = ('is_active', 'world', 'parent')
     search_fields = ('name_de', 'world__name_de', 'name_en', 'world__name_en')
     inlines = (WikiPageImageInline,)
 

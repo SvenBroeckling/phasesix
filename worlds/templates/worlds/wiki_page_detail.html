@@ -44,7 +44,6 @@
 {% endblock %}
 
 {% block content %}
-    {% if may_edit %}
         <div class="row mt-2">
             <div class="col-12">
 
@@ -59,6 +58,7 @@
                     </nav>
                 </div>
 
+                {% if may_edit %}
                 <a
                         class="btn btn-warning float-end modal-trigger"
                         title="{% trans 'Edit Page' %}"
@@ -71,9 +71,9 @@
                         data-modal-title="{% trans 'Create Wiki Page' %}"
                         data-bs-target=".page-modal"
                         href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
+                {% endif %}
             </div>
         </div>
-    {% endif %}
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">
