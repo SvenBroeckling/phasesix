@@ -1,7 +1,7 @@
 {% load thumbnail i18n %}
 <div class="row">
     <div class="col-12">
-        {% thumbnail object.image "1280" as im %}
+        {% thumbnail object.image "1280" format="PNG" as im %}
             <img class="img-fluid w-100" src="{{ im.url }}">
         {% endthumbnail %}
     </div>

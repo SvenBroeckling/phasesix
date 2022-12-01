@@ -4,6 +4,7 @@ import markdown2
 from django.template import Library
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from sorl.thumbnail import get_thumbnail
 
 from characters.models import Character
 from worlds.models import WikiPage, WikiPageImage
@@ -66,6 +67,8 @@ def replace_tags(value, world):
             return ''
 
         modal_url = reverse('worlds:xhr_modal_image', kwargs={'pk': obj.pk})
+        image = get_thumbnail(obj.image, '800', crop='center', quality=99, format='PNG')
+
         return f'''
         <a
             data-url="{modal_url}"
@@ -74,7 +77,7 @@ def replace_tags(value, world):
             data-modal-title="{obj.caption}"
             class="invisible-link modal-trigger"
             href="">
-            <img class="img-fluid m-2 {css}" src="{obj.image.url}" alt="{obj.caption}" />
+            <img class="img-fluid m-2 {css}" src="{image.url}" alt="{obj.caption}" />
         </a>
         '''
 
