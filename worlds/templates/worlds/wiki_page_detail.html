@@ -95,7 +95,7 @@
                             {% endthumbnail %}
                         {% endif %}
                         <div class="card-body">
-                            {{ page.abstract|urpg_markup|replace_tags:page.world }}
+                            {{ page.text|to_first_linebreak|urpg_markup|replace_tags:page.world }}
                         </div>
                         {% if user.is_superuser %}
                             <a href="{% url 'admin:worlds_wikipage_change' page.id %}"

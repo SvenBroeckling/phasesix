@@ -9,8 +9,8 @@ class WikiPageForm(forms.ModelForm):
         fields = [
             'name_de',
             'name_en',
-            'abstract_de',
-            'abstract_en',
+            'text_de',
+            'text_en',
         ]
 
 

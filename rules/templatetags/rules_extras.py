@@ -30,6 +30,11 @@ def basespell_widget(context, basespell, character=None):
 
 
 @register.filter
+def to_first_linebreak(value):
+    return value.splitlines()[0]
+
+
+@register.filter
 def urpg_markup(value, safe_mode=True):
     if value is None:
         return ''

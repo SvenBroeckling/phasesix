@@ -81,7 +81,7 @@
                             {% endthumbnail %}
                         {% endif %}
                         <div class="card-body">
-                            {{ page.abstract|urpg_markup|replace_tags:object }}
+                            {{ page.text|to_first_linebreak|urpg_markup|replace_tags:object }}
                         </div>
                         {% if user.is_superuser %}
                             <a href="{% url 'admin:worlds_wikipage_change' page.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>

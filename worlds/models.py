@@ -102,11 +102,6 @@ class WikiPage(models.Model, metaclass=TransMeta):
         blank=True,
         on_delete=models.SET_NULL)
 
-    abstract = models.TextField(
-        _('abstract'),
-        help_text=_('A short summary of the wiki page. This may contain Wiki links.'),
-        blank=True,
-        null=True)
     text = models.TextField(
         _('text'),
         help_text=_('The wiki page text. This may contain Wiki links.'),
@@ -122,7 +117,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
 
     class Meta:
         ordering = ('ordering',)
-        translate = ('name', 'abstract', 'text')
+        translate = ('name', 'text')
         verbose_name = _('wiki page')
         verbose_name_plural = _('wiki pages')
 
