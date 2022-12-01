@@ -7,9 +7,9 @@ from worlds.models import World, WikiPage, WikiPageImage
 
 
 class WorldAdmin(VersionAdmin):
-    list_display = ('name', 'is_active', 'ordering')
+    list_display = ('name_de', 'name_en', 'is_active', 'ordering')
     list_filter = ('is_active',)
-    search_fields = ('name',)
+    search_fields = ('name_de', 'name_en')
 
 
 class WikiPageImageInline(admin.TabularInline):
@@ -18,10 +18,10 @@ class WikiPageImageInline(admin.TabularInline):
 
 
 class WikiPageAdmin(VersionAdmin):
-    list_display = ('name', 'world', 'is_active', 'parent', 'ordering')
+    list_display = ('name_de', 'name_en', 'world', 'is_active', 'parent', 'ordering')
     list_editable = ('is_active', 'ordering')
     list_filter = ('is_active', 'world')
-    search_fields = ('name', 'world__name')
+    search_fields = ('name_de', 'world__name_de', 'name_en', 'world__name_en')
     inlines = (WikiPageImageInline,)
 
 

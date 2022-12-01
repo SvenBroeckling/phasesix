@@ -1,3 +1,4 @@
+import reversion
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
@@ -7,6 +8,7 @@ from transmeta import TransMeta
 from worlds.unique_slugify import unique_slugify
 
 
+@reversion.register
 class World(models.Model, metaclass=TransMeta):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -71,6 +73,7 @@ class WikiPageQuerySet(models.QuerySet):
         return self.filter(parent=None)
 
 
+@reversion.register
 class WikiPage(models.Model, metaclass=TransMeta):
     objects = WikiPageQuerySet.as_manager()
     created_by = models.ForeignKey(
@@ -149,6 +152,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
         return self.world.get_image()
 
 
+@reversion.register
 class WikiPageImage(models.Model):
     wiki_page = models.ForeignKey(
         'worlds.WikiPage',

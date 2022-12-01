@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import reversion
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -50,7 +51,10 @@ class WikiPageEditTextView(DetailView):
             return HttpResponseRedirect(obj.get_absolute_url())
 
         if form.is_valid():
-            form.save()
+            with reversion.create_revision():
+                form.save()
+                reversion.set_user(request.user)
+                reversion.set_comment("Edit wiki page text from web interface.")
             return HttpResponseRedirect(obj.get_absolute_url())
         else:
             context = self.get_context_data()
