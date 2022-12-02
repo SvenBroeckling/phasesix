@@ -116,6 +116,46 @@ class XhrSidebarView(DetailView):
         return ['worlds/sidebar/' + self.kwargs['sidebar_template'] + '.html']
 
 
+class XhrWorldSortSubPagesSidebarView(XhrSidebarView):
+    model = World
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['model'] = 'world'
+        context['sub_pages'] = WikiPage.objects.filter(
+            world=self.object,
+            parent=None)
+        return context
+
+
+class XhrWikiPageSortSubPagesSidebarView(XhrSidebarView):
+    model = WikiPage
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['model'] = 'wiki_page'
+        context['sub_pages'] = WikiPage.objects.filter(parent=self.object)
+        return context
+
+
+class XhrUpdateItemSortOrderView(View):
+    def post(self, request, *args, **kwargs):
+        if self.kwargs.get('model') == 'world':
+            model = World
+        else:
+            model = WikiPage
+
+        obj = model.objects.get(id=kwargs.get('pk'))
+
+        if not obj.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        for pk, order in request.POST.items():
+            WikiPage.objects.filter(id=pk).update(ordering=order)
+
+        return JsonResponse({'status': 'ok'})
+
+
 class XhrSearchLinksView(TemplateView):
     template_name = 'worlds/sidebar/_search_links.html'
 

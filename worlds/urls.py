@@ -30,6 +30,20 @@ urlpatterns = [
         r'sidebar/<str:slug>/<str:sidebar_template>/',
         views.XhrSidebarView.as_view(),
         name='xhr_sidebar'),
+
+    path(
+        r'world_sidebar/<str:slug>/<str:sidebar_template>',
+        views.XhrWorldSortSubPagesSidebarView.as_view(),
+        name='xhr_world_sort_sidebar'),
+    path(
+        r'wikipage_sidebar/<str:slug>/<str:sidebar_template>',
+        views.XhrWikiPageSortSubPagesSidebarView.as_view(),
+        name='xhr_wiki_page_sort_sidebar'),
+    path(
+        'xhr_update_wiki_page_sort_order/<int:pk>/<str:model>',
+        views.XhrUpdateItemSortOrderView.as_view(),
+        name='xhr_update_wiki_page_sort_order'),
+
     path(
         r'search_links/<str:world_slug>/',
         views.XhrSearchLinksView.as_view(),

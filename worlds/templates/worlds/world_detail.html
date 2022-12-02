@@ -57,6 +57,12 @@
                     data-modal-title="{% trans 'Create Wiki Page' %}"
                     data-bs-target=".page-modal"
                     href=""><i class="fa fa-plus"></i> {% trans 'Create Page' %}</a>
+            <button type="button"
+                    data-sidebar-url="{% url 'worlds:xhr_world_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+                    data-sidebar-title="{% trans 'Sort Subpages' %}"
+                    class="btn btn-primary float-end me-md-1 sidebar-trigger">
+                <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
+            </button>
         </div>
     </div>
     {% endif %}

@@ -1,0 +1,48 @@
+{% load i18n characters_extras rules_extras thumbnail static %}
+
+<script src="{% static 'js/clipboard.js' %}"></script>
+<script>
+    $(function(){
+        function saveSortOrder(selector, url){
+            let order = {}
+            $(selector).each((idx, e) => {
+                order[$(e).data('pk')] = idx
+            })
+            $.post(url, order)
+        }
+
+        for (const element of [".wiki-link-sortable"]) {
+            $(element).sortable({
+                tolerance: 'pointer',
+                items: 'div.card',
+                placeholder: '<div class="card mb-3"><div class="card-header">&nbsp;</div></div>'
+            }).bind('sortstart', function (e, ui) {
+            }).bind('sortstop', function (e, ui) {
+            }).bind('sortupdate', function (e, ui) {
+                saveSortOrder(`${element} > div`, $(this).data('url'))
+            })
+        }
+    })
+</script>
+
+<div class="row">
+    <div class="col-12">
+        <p>
+            {% blocktrans %}
+                Sort sub pages by dragging them. They will automatically be saved.
+            {% endblocktrans %}
+        </p>
+    </div>
+
+    <div
+            data-url="{% url 'worlds:xhr_update_wiki_page_sort_order' pk=object.id model=model %}"
+            class="col-12 mt-3 subpages-container wiki-link-sortable">
+        {% for page in sub_pages %}
+            <div class="card mb-2 pointer" data-pk="{{ page.id }}">
+                <div class="card-header">
+                    {{ page }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
