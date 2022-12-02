@@ -15,6 +15,18 @@
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
+{% block opengraph %}
+    <meta property="og:title" content="Phase Six - {{ object }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://phasesix.org"/>
+    {% if object.image %}
+        {% thumbnail object.image '600' as image %}
+        <meta property="og:image" content="https://phasesix.org{{ image.url }}"/>
+        {% endthumbnail %}
+    {% endif %}
+    <meta property="og:description" content="{{ object.text|to_first_linebreak }}"/>
+{% endblock %}
+
 {% block belownav %}
     <div
         {% with img=object.get_image %}
