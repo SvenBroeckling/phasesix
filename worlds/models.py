@@ -128,7 +128,8 @@ class WikiPage(models.Model, metaclass=TransMeta):
         return reverse('world:wiki_page', kwargs={'world_slug': self.world.slug, 'slug': self.slug})
 
     def save(self, **kwargs):
-        unique_slugify(self, str(self.name))
+        if not self.slug:
+            unique_slugify(self, str(self.name_de))
         super().save(**kwargs)
 
     def may_edit(self, user):
@@ -180,7 +181,8 @@ class WikiPageImage(models.Model):
         return self.caption
 
     def save(self, **kwargs):
-        unique_slugify(self, str(self.caption))
+        if not self.slug:
+            unique_slugify(self, str(self.caption))
         super().save(**kwargs)
 
     def get_wiki_tag(self):
