@@ -127,6 +127,10 @@
                 {% endif %}
             </ul>
         </div>
+        {% if user.is_superuser %}
+            <a href="{% url 'admin:armory_weapon_change' object.weapon.id %}"
+               style="font-size: xx-small">admin</a>
+        {% endif %}
     </div>
 </div>
 

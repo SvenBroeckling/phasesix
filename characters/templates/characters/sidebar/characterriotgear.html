@@ -69,5 +69,9 @@
                 {% endif %}
             </ul>
         </div>
+        {% if user.is_superuser %}
+            <a href="{% url 'admin:armory_riotgear_change' object.riot_gear.id %}"
+               style="font-size: xx-small">admin</a>
+        {% endif %}
     </div>
 </div>

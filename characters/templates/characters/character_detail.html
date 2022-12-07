@@ -59,6 +59,10 @@
                 {% endif %}
                 {% if object.campaign and object.get_world %} - {% else %}<br>{% endif %}<small>{{ object.get_world|default:"" }}</small>
             </div>
+            {% if user.is_superuser %}
+                <a href="{% url 'admin:characters_character_change' object.id %}"
+                   style="font-size: xx-small" class="float-end">admin</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
