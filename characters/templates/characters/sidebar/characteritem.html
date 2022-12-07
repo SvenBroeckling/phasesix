@@ -1,4 +1,4 @@
-{% load i18n characters_extras characters_extras rules_extras %}
+{% load i18n characters_extras characters_extras rules_extras thumbnail %}
 
 {% if may_edit %}
     <div class="row">
@@ -117,6 +117,13 @@
         {% endif %}
     </div>
 {% endif %}
+
+{% if object.item.image %}
+    {% thumbnail object.item.image "500" as thumb %}
+        <img src="{{ thumb.url }}" class="card-img-top mt-4" alt="{{ object.item }}">
+    {% endthumbnail %}
+{% endif %}
+
 
 <div class="row mt-4">
     <div class="col-12">

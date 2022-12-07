@@ -1,4 +1,4 @@
-{% load characters_extras static rules_extras i18n %}
+{% load characters_extras static rules_extras i18n thumbnail %}
 
 <script src="{% static 'js/add_items_weapons.js' %}"></script>
 
@@ -46,6 +46,13 @@
                                         <div class="card-header">
                                             {{ item }}
                                         </div>
+
+                                        {% if item.image %}
+                                            {% thumbnail item.image "500" as thumb %}
+                                                <img src="{{ thumb.url }}" class="card-img-top" alt="{{ item }}">
+                                            {% endthumbnail %}
+                                        {% endif %}
+
                                         <div class="card-body">
                                             {% if item.description %}<p>{{ item.description }}</p>{% endif %}
                                             {% if item.skill %}
