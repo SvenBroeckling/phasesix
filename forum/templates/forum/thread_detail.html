@@ -29,7 +29,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-3">
+        <div class="col-12 col-xl-10 offset-xl-1 mb-3">
             {% if user.is_authenticated %}
                 <button
                         data-bs-toggle="collapse"
@@ -61,7 +61,7 @@
             {{ object.name }}
         </div>
 
-        <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-3">
+        <div class="col-12 col-xl-10 offset-xl-1 mb-3">
             {% for post in object.post_set.all %}
                 <div class="card mb-4">
                     <div class="card-header">
