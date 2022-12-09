@@ -75,13 +75,11 @@
                                         alt="{{ post.created_by }}">
                             {% endthumbnail %}
                         {% endif %}
-                        <span class="small text-muted">
-                            {% blocktrans with t_created_by=post.created_by t_timesince=post.created_at|timesince %}
-                                created by {{ t_created_by }} {{ t_timesince }} ago
-                            {% endblocktrans %}
-                        </span>
+                        {% blocktrans with t_created_by=post.created_by t_timesince=post.created_at|timesince %}
+                            <b>{{ t_created_by }}</b> <span class="text-muted small">{{ t_timesince }} ago</span>
+                        {% endblocktrans %}
                     </div>
-                    <div class="card-body">
+                    <div class="card-body forum-post">
                         {{ post.text|urpg_markup }}
                     </div>
                 </div>

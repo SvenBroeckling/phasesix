@@ -77,11 +77,10 @@
                             {% endthumbnail %}
                         {% endif %}
                         <a class="no-link-colors" href="{{ thread.get_absolute_url }}">{{ thread.name }}</a>
-                        <span class="small text-muted">
-                            {% blocktrans with t_created_by=thread.created_by t_timesince=thread.created_at|timesince %}
-                                created by {{ t_created_by }} {{ t_timesince }} ago
-                            {% endblocktrans %}
-                        </span>
+                        |
+                        {% blocktrans with t_created_by=thread.created_by t_timesince=thread.created_at|timesince %}
+                            <b>{{ t_created_by }}</b> <span class="small text-muted">{{ t_timesince }} ago</span>
+                        {% endblocktrans %}
                     </div>
                     <div class="card-body">
                         {{ thread.earliest_post.text|urpg_markup }}
