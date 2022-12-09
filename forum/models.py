@@ -89,3 +89,6 @@ class Post(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     text = models.TextField(_('text'))
+
+    class Meta:
+        ordering = ('created_at',)
