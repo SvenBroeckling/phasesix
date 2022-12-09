@@ -725,6 +725,22 @@ class XhrUpdateItemSortOrderView(View):
         return JsonResponse({'status': 'ok'})
 
 
+class XhrTurnItemView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        item = CharacterItem.objects.get(id=kwargs['item_pk'])
+        if not character.may_edit(request.user):
+            return JsonResponse({'status': 'forbidden'})
+
+        if kwargs['mode'] == 'damage':
+            item.condition -= 10
+        else:
+            item.condition += 10
+
+        item.save()
+        return JsonResponse({'status': 'ok'})
+
+
 class XhrModifyItemView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])

@@ -5,12 +5,12 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-3">
+        <div class="col-12 col-md-8 offset-md-2 mb-3">
             Forum
         </div>
         {% for board in boards %}
             {% if not board.is_staff_only or request.user.is_staff %}
-                <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
+                <div class="col-12 col-md-8 offset-md-2">
                     <a href="{{ board.get_absolute_url }}">
                         <div class="card mb-3">
                             <div class="card-body">
