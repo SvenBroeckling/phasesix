@@ -50,6 +50,10 @@ class Character(models.Model):
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE
     )
 
+    currency_map = models.ForeignKey(
+        'armory.CurrencyMap', verbose_name=_('currency map'), on_delete=models.CASCADE
+    )
+
     campaign = models.ForeignKey(
         'campaigns.Campaign', verbose_name=_('Campaign'), blank=True, null=True, on_delete=models.SET_NULL
     )
@@ -144,11 +148,6 @@ class Character(models.Model):
     @property
     def skills(self):
         return self.characterskill_set.for_extensions(self.extensions)
-
-    @property
-    def currency_map(self):
-        cc = self.pc_or_npc_campaign.currency_map if self.pc_or_npc_campaign is not None else None
-        return cc if cc is not None else self.get_epoch().currency_map
 
     def currency_quantity(self, currency_map_unit):
         qs = self.charactercurrency_set.filter(currency_map_unit=currency_map_unit)

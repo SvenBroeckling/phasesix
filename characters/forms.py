@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from armory.models import CurrencyMap
 from characters.models import Character
 from rules.models import Lineage, Extension
 
@@ -22,6 +23,8 @@ class CreateCharacterExtensionsForm(forms.Form):
 class CreateCharacterDataForm(forms.Form):
     name = forms.CharField(label=_('Name'), max_length=80)
     lineage = forms.ModelChoiceField(queryset=Lineage.objects.all(), empty_label=None)
+    currency_map = forms.ModelChoiceField(queryset=CurrencyMap.objects.all(), required=True, empty_label=None)
+    seed_money = forms.IntegerField(label=_('Seed Money'), min_value=0, max_value=100000, initial=2000)
     epoch = forms.ModelChoiceField(
         queryset=Extension.objects.filter(type='e', is_mandatory=False, is_active=True),
         label=_('Epoch'),

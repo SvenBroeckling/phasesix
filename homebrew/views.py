@@ -159,7 +159,6 @@ class CreateWeaponView(View):
         if character.may_edit(request.user):
             form = CreateWeaponForm(request.POST)
             if form.is_valid():
-                print(form.cleaned_data)
                 weapon = Weapon.objects.create(
                     name_de=form.cleaned_data['name'],
                     description_de=form.cleaned_data['description'],

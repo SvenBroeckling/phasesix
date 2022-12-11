@@ -420,6 +420,15 @@ class CurrencyMapUnit(models.Model):
         choices=FA_ICON_CLASS_CHOICES,
         max_length=30,
         default='fas fa-coins')
+    is_common = models.BooleanField(
+        _('is common'),
+        help_text=_('Is this the common unit people pay with?'),
+        default=False)
+    ordering = models.IntegerField(_('ordering'), default=10)
 
     class Meta:
         get_latest_by = 'id',
+        ordering = ('-ordering',)
+
+    def __str__(self):
+        return self.name

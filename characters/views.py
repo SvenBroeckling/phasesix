@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from channels.layers import get_channel_layer
+from django import forms
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
@@ -409,14 +410,24 @@ class CreateCharacterDataView(FormView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['lineage'].queryset = self.lineages
+        if self.campaign_to_join:
+            form.fields['currency_map'].widget = forms.HiddenInput()
+            form.fields['seed_money'].widget = forms.HiddenInput()
         return form
 
     def form_valid(self, form):
         self.object = Character.objects.create(
             name=form.cleaned_data['name'],
+            currency_map=form.cleaned_data['currency_map'],
             lineage=form.cleaned_data['lineage'])
         self.object.extensions.add(form.cleaned_data['epoch'])
         self.object.extensions.add(form.cleaned_data['world'])
+
+        self.object.charactercurrency_set.create(
+            currency_map_unit=CurrencyMapUnit.objects.get(
+                currency_map=form.cleaned_data['currency_map'],
+                is_common=True),
+            quantity=form.cleaned_data['seed_money'])
 
         for e in form.cleaned_data['extensions']:
             self.object.extensions.add(e)
@@ -441,12 +452,16 @@ class CreateCharacterDataView(FormView):
         return super().form_valid(form)
 
     def get_initial(self):
-        return {
+        initial = {
             'epoch': self.kwargs['epoch_pk'],
             'world': self.kwargs['world_pk'],
             'lineage': self.lineages.earliest('id'),
             'extensions': Extension.objects.filter(id__in=self.request.GET.getlist('extensions'))
         }
+        if self.campaign_to_join is not None:
+            initial['seed_money'] = self.campaign_to_join.seed_money
+            initial['currency_map'] = self.campaign_to_join.currency_map
+        return initial
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

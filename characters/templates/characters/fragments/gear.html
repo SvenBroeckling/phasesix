@@ -230,7 +230,7 @@
                      data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="currency" %}">
                     <div class="card-body text-center">
                         {% for unit in object.currency_map.currencymapunit_set.all %}
-                            <i class="{{ unit.fa_icon_class }} {{ unit.color_class }}"></i>
+                            <i class="ms-1 {{ unit.fa_icon_class }} {{ unit.color_class }}"></i>
                             {{ object|currency_quantity:unit }}
                         {% endfor %}
                     </div>
