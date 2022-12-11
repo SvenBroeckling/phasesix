@@ -6,7 +6,7 @@ from django.views.generic.edit import FormMixin
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from .models import Board, Thread
+from .models import Board, Thread, Post
 from .forms import NewThreadForm, NewPostForm
 
 
@@ -99,6 +99,20 @@ class ThreadDetailView(FormMixin, DetailView):
             return HttpResponseRedirect(obj.get_absolute_url())
         else:
             return self.form_invalid(form)
+
+
+class RawPostTextView(DetailView):
+    model = Post
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.thread.board.is_staff_only:
+            if not request.user.is_authenticated or not request.user.is_staff:
+                messages.error(request, _('You have no access to this forum'))
+                return HttpResponseRedirect(reverse('forum:index'))
+        return JsonResponse({
+            'text': "\n".join([f'> {line}' for line in obj.text.splitlines()])
+        })
 
 
 class SubscribeView(View):
