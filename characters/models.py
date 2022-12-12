@@ -199,7 +199,8 @@ class Character(models.Model):
 
     @property
     def reputation_gained(self):
-        return self.reputation - self.lineage.template_points
+        campaign_points = self.pc_or_npc_campaign.starting_template_points if self.pc_or_npc_campaign else 0
+        return self.reputation - self.lineage.template_points - campaign_points
 
     def set_initial_reputation(self, initial_reputation=None):
         self.reputation = (
@@ -213,9 +214,9 @@ class Character(models.Model):
                 self.charactertemplate_set.aggregate(Sum('template__cost'))[
                     'template__cost__sum'
                 ]
-                or 0
-        )
-        return self.lineage.template_points - spent_points
+                or 0)
+        campaign_points = self.pc_or_npc_campaign.starting_template_points if self.pc_or_npc_campaign else 0
+        return self.lineage.template_points + campaign_points - spent_points
 
     # Magic and Horror
 

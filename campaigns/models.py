@@ -49,6 +49,9 @@ class Campaign(models.Model):
         'rules.Extension', limit_choices_to={'is_mandatory': False, 'type': 'x'}, blank=True
     )
     forbidden_templates = models.ManyToManyField('rules.Template', blank=True)
+    starting_template_points = models.IntegerField(
+        _('additional starting career points'),
+        default=0)
 
     discord_webhook_url = models.URLField(
         _('discord webhook url'),

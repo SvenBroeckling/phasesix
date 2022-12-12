@@ -17,7 +17,8 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = Campaign
         fields = ('name', 'abstract', 'epoch', 'extensions',
-                  'currency_map', 'seed_money', 'character_visibility', 'discord_webhook_url', 'image', 'backdrop_image')
+                  'currency_map', 'seed_money', 'starting_template_points', 'character_visibility',
+                  'discord_webhook_url', 'image', 'backdrop_image')
 
 
 class SceneForm(forms.ModelForm):
