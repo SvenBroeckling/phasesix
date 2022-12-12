@@ -199,7 +199,7 @@ class Character(models.Model):
 
     @property
     def reputation_gained(self):
-        return self.reputation - self.lineage.template_point_sum
+        return self.reputation - self.lineage.template_points
 
     def set_initial_reputation(self, initial_reputation=None):
         self.reputation = (
@@ -209,19 +209,13 @@ class Character(models.Model):
 
     @property
     def remaining_template_points(self):
-        template_points = (
-                self.lineage.lineagetemplatepoints_set.aggregate(Sum('points'))[
-                    'points__sum'
-                ]
-                or 0
-        )
         spent_points = (
                 self.charactertemplate_set.aggregate(Sum('template__cost'))[
                     'template__cost__sum'
                 ]
                 or 0
         )
-        return template_points - spent_points
+        return self.lineage.template_points - spent_points
 
     # Magic and Horror
 

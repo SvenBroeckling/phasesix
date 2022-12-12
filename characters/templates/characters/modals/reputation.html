@@ -58,11 +58,11 @@
 
         <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
             <ul class="nav nav-pills flex-column" role="tablist">
-                {% for t in template_points %}
+                {% for t in template_categories %}
                     <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}"
                         id="nav-item-{{ t.id }}">
                         <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
-                           data-bs-toggle="tab">{{ t.template_category }}</a>
+                           data-bs-toggle="tab">{{ t }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -71,21 +71,20 @@
 
     <div class="col-12 col-md-8 col-lg-9">
         <div class="tab-content">
-            {% for t in template_points %}
+            {% for t in template_categories %}
                 <div
                     role="tabpanel"
                     data-rel="#nav-item-{{ t.id }}"
                     class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
                     id="i{{ t.id }}">
                     <div class="row masonry-container">
-                        {% for i in t.template_category.template_set.all %}
+                        {% for i in t.template_set.all %}
                             {% has_extensions i object.extensions.all as has_ext %}
                             {% if has_ext and not i.id in character_template_ids %}
                                 <div class="col col-md-6 constructed-template add-item-card"
                                      data-select-message="{% trans 'Select Template for Reputation?' %}"
                                      data-reputation-cost="{{ i.cost }}"
                                      data-template-id="{{ i.id }}"
-                                     data-tp-id="{{ tp.id }}"
                                      data-add-url="{% url 'characters:xhr_reputation' pk=object.id %}">
                                     {% template_widget i %}
                                 </div>

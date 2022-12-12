@@ -20,7 +20,7 @@ from characters.models import Character, CharacterWeapon, CharacterRiotGear, Cha
     CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
 from horror.models import QuirkCategory, Quirk
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
-from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge
+from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge, TemplateCategory
 
 
 class IndexView(TemplateView):
@@ -506,7 +506,7 @@ class CreateCharacterConstructedView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['template_points'] = self.object.lineage.lineagetemplatepoints_set.all()
+        context['template_categories'] = TemplateCategory.objects.filter(allow_at_character_creation=True)
         context['character_template_ids'] = [
             ct.template.id for ct in self.object.charactertemplate_set.all()]
         return context
@@ -570,8 +570,8 @@ class XhrReputationView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         context = super(XhrReputationView, self).get_context_data(**kwargs)
         context['object'] = character
-        context['template_points'] = character.lineage.lineagetemplatepoints_set.filter(
-            template_category__allow_for_reputation=True)
+        context['template_categories'] = TemplateCategory.objects.filter(
+            allow_for_reputation=True)
         context['character_template_ids'] = [
             ct.template.id for ct in character.charactertemplate_set.all()]
         return context

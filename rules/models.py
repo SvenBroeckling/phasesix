@@ -124,6 +124,7 @@ class Lineage(models.Model, metaclass=TransMeta):
 
     # horror
     base_max_stress = models.IntegerField(_('max stress'), default=6)
+    template_points = models.IntegerField(_('template points'), default=20)
 
     class Meta:
         translate = ('name', 'description')
@@ -132,21 +133,6 @@ class Lineage(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
-
-    @property
-    def template_point_sum(self):
-        tp = self.lineagetemplatepoints_set.aggregate(Sum('points'))
-        return tp['points__sum'] if tp else 0
-
-
-class LineageTemplatePoints(models.Model):
-    lineage = models.ForeignKey(Lineage, verbose_name=_('lineage'), on_delete=models.CASCADE)
-    template_category = models.ForeignKey(
-        'rules.TemplateCategory', verbose_name=_('template category'), on_delete=models.CASCADE)
-    points = models.IntegerField(_('points'))
-
-    class Meta:
-        ordering = ('template_category__sort_order',)
 
 
 class Attribute(models.Model, metaclass=TransMeta):
@@ -257,6 +243,7 @@ class TemplateCategory(models.Model, metaclass=TransMeta):
     description = models.TextField(_('description'), blank=True, null=True)
     sort_order = models.IntegerField(_('sort order'), default=1000)
     allow_for_reputation = models.BooleanField(_('Allow for reputation'), default=True)
+    allow_at_character_creation = models.BooleanField(_('Allow at character creation'), default=True)
 
     class Meta:
         translate = ('name', 'description')

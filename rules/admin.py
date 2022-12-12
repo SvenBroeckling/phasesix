@@ -4,7 +4,7 @@ from django.contrib import admin
 from reversion.admin import VersionAdmin
 
 from rules.models import Skill, Extension, Knowledge, Template, TemplateModifier, TemplateRequirement, \
-    TemplateCategory, LineageTemplatePoints, Lineage, StatusEffect, Attribute
+    TemplateCategory, Lineage, StatusEffect, Attribute
 
 
 class ExtensionAdmin(VersionAdmin):
@@ -52,12 +52,8 @@ class KnowledgeAdmin(VersionAdmin):
     list_editable = 'skill',
 
 
-class LineageTemplatePointsInline(admin.TabularInline):
-    model = LineageTemplatePoints
-
-
 class LineageAdmin(VersionAdmin):
-    inlines = [LineageTemplatePointsInline]
+    list_display = ('name_de', 'name_en', 'template_points', 'template')
 
 
 class StatusEffectAdmin(VersionAdmin):
