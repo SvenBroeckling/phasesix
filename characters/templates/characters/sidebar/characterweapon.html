@@ -149,10 +149,7 @@
                 <ul class="list-group list-group-flush">
                     {% for fm in object.weapon.weaponattackmode_set.all %}
                         <li class="list-group-item">
-                            <i class="fas fa-angle-double-right fa-fw"></i>
-                            {{ fm.attack_mode.name }}
-                            <span class="float-end">+{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'damage_potential' %} <i
-                                    class="fas fa-dice-five"></i></span>
+                            <i class="fas fa-angle-double-right fa-fw"></i> {{ fm.attack_mode.name }}
                         </li>
                     {% endfor %}
                 </ul>

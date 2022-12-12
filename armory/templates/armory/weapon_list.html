@@ -88,8 +88,7 @@
                             <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
                             <td>
                                 {% for am in object.weaponattackmode_set.all %}
-                                    {{ am.attack_mode.name }} +{% color_value_span am.dice_bonus 6 %} <i
-                                        class="fas fa-dice-five"></i><br>
+                                    {{ am.attack_mode.name }}<br>
                                 {% endfor %}
                             </td>
                             <td>{% color_value_span object.piercing 4 %}</td>

@@ -64,9 +64,8 @@
                                                     {% if weapon.weaponattackmode_set.exists %}
                                                         <br>
                                                         {% for fm in weapon.weaponattackmode_set.all %}
-                                                            {{ fm.attack_mode.name }} +
-                                                            {% color_value_span fm.dice_bonus 6 %}
-                                                            <i class="fas fa-dice-five"></i><br>{% endfor %}
+                                                            {{ fm.attack_mode.name }}<br>
+                                                        {% endfor %}
                                                     {% endif %}
                                                     {% if character.currency_map %}
                                                         {% with cmu=character.currency_map.currencymapunit_set.earliest %}

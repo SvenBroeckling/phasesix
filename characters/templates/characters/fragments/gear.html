@@ -130,14 +130,10 @@
                                     {% endif %}
                                     <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m {% display_modifications weapon 'range_meter' %}<br>
                                     <br>
-                                    {% if weapon.weapon.weaponattackmode_set.exists %}
-                                        {% for fm in weapon.weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }}
-                                            +
-                                            {% color_value_span fm.dice_bonus 6 %}
-                                            {% display_modifications weapon 'damage_potential' %}
-                                            <i class="fas fa-dice-five"></i>
-                                            <br>{% endfor %}
-                                    {% endif %}
+
+                                    {% for fm in weapon.weapon.weaponattackmode_set.all %}
+                                        {{ fm.attack_mode.name }}<br>
+                                    {% endfor %}
 
                                     {% if weapon.modifications.exists %}
                                         <div class="row mt-3">
