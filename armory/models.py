@@ -179,7 +179,7 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     type = models.ForeignKey(WeaponType, verbose_name=_('type'), on_delete=models.CASCADE)
 
-    bonus_dice = models.IntegerField(_('bonus dice'), default=0)
+    damage_potential = models.IntegerField(_('damage potential'), default=0)
     capacity = models.IntegerField(_('capacity'), null=True, blank=True)
     wounds = models.IntegerField(_('bonus wounds'), default=0)
     piercing = models.IntegerField(_('piercing'), default=0)
@@ -319,7 +319,7 @@ class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTE_CHOICES = (
         ('capacity', _('Capacity')),
         ('wounds', _('Bonus wounds')),
-        ('bonus_dice', _('Bonus dice')),
+        ('damage_potential', _('Damage potential')),
         ('piercing', _('Piercing')),
         ('concealment', _('Concealment')),
         ('reload_actions', _('Reload actions')),

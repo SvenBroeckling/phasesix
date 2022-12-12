@@ -10,18 +10,18 @@ class WeaponAttackModeInline(admin.TabularInline):
 
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
-        'name_en', 'capacity', 'wounds', 'piercing', 'reload_actions', 'weight', 'price', 'range_meter')
+        'name_en', 'capacity', 'damage_potential', 'piercing', 'reload_actions', 'weight', 'price', 'range_meter')
     list_editable = (
-        'capacity', 'wounds', 'piercing', 'weight', 'reload_actions', 'price', 'range_meter')
-    list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon')
+        'capacity', 'damage_potential', 'piercing', 'weight', 'reload_actions', 'price', 'range_meter')
+    list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon', 'damage_potential')
     inlines = [WeaponAttackModeInline]
     fieldsets = [
         (None, {
             'fields': (
                 ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
-                ('type', 'capacity', 'wounds', 'piercing', 'weight'),
+                ('type', 'capacity', 'damage_potential', 'piercing', 'weight'),
                 ('created_by', 'is_homebrew', 'homebrew_campaign'),
-                ('range_meter', 'concealment', 'price', 'reload_actions', 'bonus_dice'),
+                ('range_meter', 'concealment', 'price', 'reload_actions'),
                 ('description_en', 'description_de',),
                 ('image', 'image_copyright', 'image_copyright_url')
             )
@@ -69,7 +69,7 @@ class WeaponModificationAttributeChangeInline(admin.TabularInline):
 
 
 class WeaponModificationAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'extension_string', 'type', 'price')
+    list_display = ('name_de', 'name_en', 'type', 'extension_string', 'price')
     list_filter = 'type',
     filter_horizontal = ('extensions', 'available_for_weapon_types')
     inlines = [WeaponModificationAttributeChangeInline]

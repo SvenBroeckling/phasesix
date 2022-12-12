@@ -119,7 +119,7 @@
                                     {{ weapon.weapon.description|urpg_markup }}
                                     <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Piercing' %}: {% color_value_span weapon.weapon.piercing 4 %} {% display_modifications weapon 'piercing' %}<br>
                                     <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
-                                    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.weapon.bonus_dice 4 %} {% display_modifications weapon 'bonus_dice' %}<br>
+                                    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Damage Potential' %}: {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %} {% display_modifications weapon 'damage_potential' %}<br>
                                     {% if weapon.has_capacity %}
                                         <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}:
                                         {% color_value_span weapon.weapon.reload_actions 6 invert=True %}
@@ -134,7 +134,7 @@
                                         {% for fm in weapon.weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }}
                                             +
                                             {% color_value_span fm.dice_bonus 6 %}
-                                            {% display_modifications weapon 'bonus_dice' %}
+                                            {% display_modifications weapon 'damage_potential' %}
                                             <i class="fas fa-dice-five"></i>
                                             <br>{% endfor %}
                                     {% endif %}

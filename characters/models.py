@@ -516,15 +516,15 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
 
-        bonus_dice = self.weapon.bonus_dice
+        damage_potential = self.weapon.damage_potential
         for wm in self.modifications.all():
             for wma in wm.weaponmodificationattributechange_set.all():
-                if wma.attribute == 'bonus_dice':
-                    bonus_dice += wma.attribute_modifier
+                if wma.attribute == 'damage_potential':
+                    damage_potential += wma.attribute_modifier
 
         modes = []
         for wm in self.weapon.weaponattackmode_set.all():
-            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + bonus_dice, wm.id))
+            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + damage_potential, wm.id))
 
         return modes
 

@@ -72,7 +72,7 @@
                         <th>{% trans 'Weapon' %}</th>
                         <th>{% trans 'Attack Modes' %}</th>
                         <th>{% trans 'Piercing' %}</th>
-                        <th>{% trans 'Bonus Dice' %}</th>
+                        <th>{% trans 'Damage Potential' %}</th>
                         <th>{% trans 'Bonus Wounds' %}</th>
                         <th>{% trans 'Range' %}</th>
                         <th>{% trans 'Capacity' %}</th>
@@ -93,7 +93,13 @@
                                 {% endfor %}
                             </td>
                             <td>{% color_value_span object.piercing 4 %}</td>
-                            <td>{% color_value_span object.bonus_dice 4 %}</td>
+                            <td>
+                                {% for i in object.damage_potential|to_range %}
+                                    <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>
+                                {% empty %}
+                                    -
+                                {% endfor %}
+                            </td>
                             <td>{% color_value_span object.wounds 4 %}</td>
                             <td>{% color_value_span object.range_meter 30 %}m</td>
                             <td>

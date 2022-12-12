@@ -39,7 +39,7 @@ class CreateWeaponForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea, label=_('Description'), required=False)
     type = forms.ModelChoiceField(queryset=WeaponType.objects.all(), label=_('Category'), empty_label=None)
     is_hand_to_hand_weapon = forms.BooleanField(label=_('Is hand to hand weapon'), required=False)
-    bonus_dice = forms.DecimalField(label=_('Bonus Dice'))
+    damage_potential = forms.DecimalField(label=_('Damage Potential'))
     capacity = forms.DecimalField(label=_('Capacity'))
     wounds = forms.DecimalField(label=_('Bonus Wounds'))
     piercing = forms.DecimalField(label=_('Piercing'))

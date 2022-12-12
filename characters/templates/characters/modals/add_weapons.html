@@ -51,7 +51,7 @@
                                                     {{ weapon.description|urpg_markup }}
                                                     <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
                                                     <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.wounds 4 %}<br>
-                                                    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.bonus_dice 4 %}<br>
+                                                    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Damage Potential' %}: {% for i in weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %}<br>
                                                     {% if not weapon.is_hand_to_hand_weapon %}
                                                         <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}:
                                                         {% color_value_span weapon.reload_actions 6 invert=True %}<br>

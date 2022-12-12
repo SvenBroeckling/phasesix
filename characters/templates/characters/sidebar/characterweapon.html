@@ -91,8 +91,15 @@
                 </li>
                 <li class="list-group-item">
                     <i class="fas fa-dice-five fa-fw"></i>
-                    {% trans 'Bonus dice' %}
-                    <span class="float-end">{% color_value_span object.weapon.bonus_dice 4 %} {% display_modifications object 'bonus_dice' %}</span>
+                    {% trans 'Damage Potential' %}
+                    <span class="float-end">
+                        {% for i in object.weapon.damage_potential|to_range %}
+                            <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>
+                        {% empty %}
+                            -
+                        {% endfor %}
+                        {% display_modifications object 'damage_potential' %}
+                    </span>
                 </li>
                 {% if not object.weapon.is_hand_to_hand_weapon %}
                     <li class="list-group-item">
@@ -144,7 +151,7 @@
                         <li class="list-group-item">
                             <i class="fas fa-angle-double-right fa-fw"></i>
                             {{ fm.attack_mode.name }}
-                            <span class="float-end">+{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'bonus_dice' %} <i
+                            <span class="float-end">+{% color_value_span fm.dice_bonus 6 %} {% display_modifications object 'damage_potential' %} <i
                                     class="fas fa-dice-five"></i></span>
                         </li>
                     {% endfor %}

@@ -142,7 +142,7 @@ class XhrCreateWeaponView(TemplateView):
         context['character'] = Character.objects.get(id=self.kwargs['character_pk'])
         context['form'] = CreateWeaponForm(
             initial={
-                'bonus_dice': 0,
+                'damage_potential': 0,
                 'wounds': 0,
                 'piercing': 1,
                 'range_meter': 20,
@@ -164,7 +164,7 @@ class CreateWeaponView(View):
                     description_de=form.cleaned_data['description'],
                     type=form.cleaned_data['type'],
                     is_hand_to_hand_weapon=form.cleaned_data['is_hand_to_hand_weapon'],
-                    bonus_dice=form.cleaned_data['bonus_dice'],
+                    damage_potential=form.cleaned_data['damage_potential'],
                     capacity=form.cleaned_data['capacity'],
                     wounds=form.cleaned_data['wounds'],
                     piercing=form.cleaned_data['piercing'],
