@@ -33,7 +33,7 @@ class Foe(models.Model, metaclass=TransMeta):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
-    image = models.ImageField(_('image'), upload_to='foe_images', blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='foe_images', max_length=200, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
