@@ -356,6 +356,7 @@ class RiotGear(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('created by'),
@@ -364,13 +365,15 @@ class RiotGear(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
-    weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
-    price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
+
     protection_ballistic = models.IntegerField(_('protection ballistic'), default=0)
     evasion = models.IntegerField(_('evasion'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
+    weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
+    price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
 
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
     keep_as_homebrew = models.BooleanField(
