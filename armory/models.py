@@ -179,12 +179,15 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     type = models.ForeignKey(WeaponType, verbose_name=_('type'), on_delete=models.CASCADE)
 
-    damage_potential = models.IntegerField(_('damage potential'), default=0)
-    capacity = models.IntegerField(_('capacity'), null=True, blank=True)
-    wounds = models.IntegerField(_('bonus wounds'), default=0)
     piercing = models.IntegerField(_('piercing'), default=0)
+    damage_potential = models.IntegerField(_('damage potential'), default=0)
+    crit_minimum_roll = models.IntegerField(_('crit minimum roll'), default=11)
+
+    encumbrance = models.IntegerField(_('encumbrance'), default=1)
     concealment = models.IntegerField(_('concealment'), default=0)
     reload_actions = models.IntegerField(_('reload actions'), default=1)
+    actions_to_ready = models.IntegerField(_('actions to ready'), default=1)
+    capacity = models.IntegerField(_('capacity'), null=True, blank=True)
 
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=8)
@@ -318,7 +321,9 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTE_CHOICES = (
         ('capacity', _('Capacity')),
-        ('wounds', _('Bonus wounds')),
+        ('actions_to_ready', _('Actions to ready')),
+        ('crit_minimum_roll', _('Crit minimum roll')),
+        ('encumbrance', _('Encumbrance')),
         ('damage_potential', _('Damage potential')),
         ('piercing', _('Piercing')),
         ('concealment', _('Concealment')),

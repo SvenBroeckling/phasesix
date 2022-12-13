@@ -342,7 +342,7 @@ class Character(models.Model):
         return self.characterskill_set.hand_to_hand_combat_skill().value + bonus
 
     @property
-    def weaponless_bonus_wounds(self):
+    def weaponless_piercing(self):
         return 1 if self.get_attribute_value('strength') > 2 else 0
 
     @property
@@ -533,8 +533,6 @@ class CharacterWeapon(models.Model):
         traits = []
         if self.modified_piercing:
             traits.append(f"{_('Pierce')}: {self.modified_piercing}")
-        if self.modified_wounds:
-            traits.append(f"{_('Bonus Wounds')}: {self.modified_wounds}")
         for template in self.character.charactertemplate_set.filter(
                 template__show_in_attack_dice_rolls=True):
             traits.append(template.template.name)
@@ -547,48 +545,40 @@ class CharacterWeapon(models.Model):
         return self.modifications.filter(
             Q(rules_de__isnull=False) | Q(rules_en__isnull=False)).exists()
 
+    def _get_mods(self, attr):
+        mods = self.modifications.filter(
+            weaponmodificationattributechange__attribute=attr).aggregate(
+            Sum('weaponmodificationattributechange__attribute_modifier'))
+        return mods['weaponmodificationattributechange__attribute_modifier__sum'] or 0
+
     @property
     def modified_piercing(self):
-        pen = self.weapon.piercing
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='piercing'):
-                mods += wmm.attribute_modifier
-        return pen + mods
+        return self.weapon.piercing + self._get_mods('piercing')
 
     @property
     def modified_concealment(self):
-        con = self.weapon.concealment
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='concealment'):
-                mods += wmm.attribute_modifier
-        return con + mods
+        return self.weapon.concealment + self._get_mods('concealment')
 
     @property
-    def modified_wounds(self):
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='wounds'):
-                mods += wmm.attribute_modifier
-        return self.weapon.wounds + mods
+    def modified_actions_to_ready(self):
+        return self.weapon.actions_to_ready + self._get_mods('actions_to_ready')
+
+    @property
+    def modified_encumbrance(self):
+        return self.weapon.encumbrance + self._get_mods('encumbrance')
+
+    @property
+    def modified_crit_minium_roll(self):
+        return self.weapon.crit_minimum_roll + self._get_mods('crit_minimum_roll')
 
     @property
     def modified_range_meter(self):
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='range_meter'):
-                mods += wmm.attribute_modifier
-        return self.weapon.range_meter + mods
+        return self.weapon.range_meter + self._get_mods('range_meter')
 
     @property
     def modified_capacity(self):
         base_capacity = self.weapon.capacity if self.weapon.capacity else 0
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='capacity'):
-                mods += wmm.attribute_modifier
-        return base_capacity + mods
+        return base_capacity + self._get_mods('capacity')
 
     @property
     def has_capacity(self):

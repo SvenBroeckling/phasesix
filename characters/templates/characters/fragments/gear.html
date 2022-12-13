@@ -117,18 +117,19 @@
                             <div class="row">
                                 <div class="col-12">
                                     {{ weapon.weapon.description|urpg_markup }}
-                                    <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Piercing' %}: {% color_value_span weapon.weapon.piercing 4 %} {% display_modifications weapon 'piercing' %}<br>
-                                    <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
-                                    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Damage Potential' %}: {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %} {% display_modifications weapon 'damage_potential' %}<br>
+                                    <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.weapon.piercing 4 %} {% display_modifications weapon 'piercing' %}<br>
+                                    <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %} {% display_modifications weapon 'damage_potential' %}<br>
+                                    <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.weapon.actions_to_ready 4 %} {% display_modifications weapon 'actions_to_ready' %}<br>
                                     {% if weapon.has_capacity %}
-                                        <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}:
+                                        <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:
                                         {% color_value_span weapon.weapon.reload_actions 6 invert=True %}
                                         {% display_modifications weapon 'reload_actions' %}<br>
-                                        <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}:
+                                        <i class="fas fa-list-ol fa-fw text-muted"></i> {% trans 'Capacity' %}:
                                         {% color_value_span weapon.weapon.capacity 30 %}
                                         {% display_modifications weapon 'capacity' %}<br>
                                     {% endif %}
-                                    <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m {% display_modifications weapon 'range_meter' %}<br>
+                                    <i class="fas fa-arrows-alt-h fa-fw text-muted"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m {% display_modifications weapon 'range_meter' %}<br>
+                                    <i class="fas fa-weight fa-fw text-muted"></i> {% trans 'Encumbrance' %}: {% color_value_span weapon.weapon.encumbrance 2 invert=True %} {% display_modifications weapon 'encumbrance' %}<br>
                                     <br>
 
                                     {% for fm in weapon.weapon.weaponattackmode_set.all %}

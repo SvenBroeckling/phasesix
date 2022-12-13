@@ -41,11 +41,7 @@
                                 class="fas text-muted fa-dice-five"></i>
                         </td>
                         <td class="text-end">
-                            {% trans 'Piercing' %} {% color_value_span 0 6 %} <i class="fas fa-angle-double-right text-muted"></i>
-                            {% if object.weaponless_bonus_wounds %}
-                                <br><i class="fas fa-heart text-muted"></i> {% trans 'Bonus wounds:' %}
-                                {% color_value_span object.weaponless_bonus_wounds 3 %}
-                            {% endif %}
+                            {% trans 'Piercing' %} {% color_value_span object.weaponless_piercing 6 %}
                         </td>
                         <td class="text-end">-</td>
                         <td class="text-end">
@@ -67,10 +63,9 @@
                                 {% endfor %}
                             </td>
                             <td class="text-end">
-                                {% trans 'Piercing' %} {% color_value_span w.modified_piercing 3 %} <i class="fas fa-fw fa-angle-double-right text-muted"></i>
-                                {% if w.modified_wounds %}
-                                    <br>{% trans 'Bonus wounds:' %} <i class="fas fa-fw fa-heart text-muted"></i>
-                                    {% color_value_span w.modified_wounds 3 %}
+                                {% trans 'Piercing' %} {% color_value_span w.modified_piercing 3 %}
+                                {% if w.modified_crit_minium_roll != 11 %}
+                                    <br>{% trans 'Crit MR' %} {% color_value_span w.modified_crit_minium_roll 11 invert=True %}
                                 {% endif %}
                                 {% for wm in w.modifications.all %}
                                     {% for wma in wm.weaponmodificationattributechange_set.all %}

@@ -73,9 +73,11 @@
                         <th>{% trans 'Attack Modes' %}</th>
                         <th>{% trans 'Piercing' %}</th>
                         <th>{% trans 'Damage Potential' %}</th>
-                        <th>{% trans 'Bonus Wounds' %}</th>
+                        <th>{% trans 'Actions to ready' %}</th>
                         <th>{% trans 'Range' %}</th>
                         <th>{% trans 'Capacity' %}</th>
+                        <th>{% trans 'Encumbrance' %}</th>
+                        <th>{% trans 'Concealment' %}</th>
                         <th>{% trans 'Price' %}</th>
                         {% if user.is_superuser %}
                             <th>{% trans 'Admin' %}</th>
@@ -99,7 +101,7 @@
                                     -
                                 {% endfor %}
                             </td>
-                            <td>{% color_value_span object.wounds 4 %}</td>
+                            <td>{% color_value_span object.actions_to_ready 1 invert=True %}</td>
                             <td>{% color_value_span object.range_meter 30 %}m</td>
                             <td>
                                 {% if object.capacity %}
@@ -107,6 +109,12 @@
                                 {% else %}
                                     -
                                 {% endif %}
+                            </td>
+                            <td>
+                                {% color_value_span object.encumbrance 2 invert=True %}
+                            </td>
+                            <td>
+                                {% color_value_span object.concealment 5 invert=True %}
                             </td>
                             <td>{% color_value_span object.price 10000 invert=True %}</td>
                             {% if user.is_superuser %}

@@ -4,7 +4,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.utils.translation import gettext_lazy as _
 
-from armory.models import Item, RiotGear, Weapon
+from armory.models import Item, RiotGear, Weapon, AttackMode
 from characters.models import Character
 from homebrew.forms import CreateItemForm, CreateRiotGearForm, CreateWeaponForm, CreateBaseSpellForm
 from magic.models import BaseSpell
@@ -143,7 +143,8 @@ class XhrCreateWeaponView(TemplateView):
         context['form'] = CreateWeaponForm(
             initial={
                 'damage_potential': 0,
-                'wounds': 0,
+                'actions_to_ready': 1,
+                'encumbrance': 1,
                 'piercing': 1,
                 'range_meter': 20,
                 'capacity': 1,
@@ -166,7 +167,8 @@ class CreateWeaponView(View):
                     is_hand_to_hand_weapon=form.cleaned_data['is_hand_to_hand_weapon'],
                     damage_potential=form.cleaned_data['damage_potential'],
                     capacity=form.cleaned_data['capacity'],
-                    wounds=form.cleaned_data['wounds'],
+                    actions_to_ready=form.cleaned_data['actions_to_ready'],
+                    encumbrance=form.cleaned_data['encumbrance'],
                     piercing=form.cleaned_data['piercing'],
                     concealment=form.cleaned_data['concealment'],
                     weight=form.cleaned_data['weight'],
@@ -175,6 +177,13 @@ class CreateWeaponView(View):
                     created_by=request.user,
                     is_homebrew=True,
                     homebrew_campaign=character.pc_or_npc_campaign)
+                if weapon.is_hand_to_hand_weapon:
+                    weapon.weaponattackmode_set.create(
+                        attack_mode=AttackMode.objects.get(name_en="Hand to Hand"))
+                else:
+                    for am in AttackMode.objects.exclude(name_en="Hand to Hand"):
+                        weapon.weaponattackmode_set.create(attack_mode=am)
+
                 for ext in character.extensions.all():
                     weapon.extensions.add(ext)
                 if form['add_to_character']:

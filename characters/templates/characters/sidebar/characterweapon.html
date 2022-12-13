@@ -85,9 +85,9 @@
                     <span class="float-end">{% color_value_span object.weapon.piercing 4 %} {% display_modifications object 'piercing' %}</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fas fa-heart fa-fw"></i>
-                    {% trans 'Bonus wounds' %}
-                    <span class="float-end">{% color_value_span object.weapon.wounds 4 %} {% display_modifications object 'wounds' %}</span>
+                    <i class="fas fa-clock fa-fw"></i>
+                    {% trans 'Actions to ready' %}
+                    <span class="float-end">{% color_value_span object.weapon.actions_to_ready 5 invert=True %} {% display_modifications object 'actions_to_ready' %}</span>
                 </li>
                 <li class="list-group-item">
                     <i class="fas fa-dice-five fa-fw"></i>
@@ -112,6 +112,11 @@
                     <i class="fas fa-arrows-alt-h fa-fw"></i>
                     {% trans 'Range' %}
                     <span class="float-end">{{ object.weapon.range_meter }}m {% display_modifications object 'range_meter' %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-weight fa-fw"></i>
+                    {% trans 'Encumbrance' %}
+                    <span class="float-end">{% color_value_span object.weapon.encumbrance 6 invert=True %} {% display_modifications object 'encumbrance' %}</span>
                 </li>
                 <li class="list-group-item">
                     <i class="fas fa-eye-slash fa-fw"></i>
