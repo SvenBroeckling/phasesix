@@ -108,7 +108,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
         blank=True,
         null=True)
 
-    image = models.ImageField(_('image'), upload_to='wiki_page_images', blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='wiki_page_images', max_length=200, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
@@ -166,7 +166,7 @@ class WikiPageImage(models.Model):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
-    image = models.ImageField(_('image'), upload_to='wiki_page_images')
+    image = models.ImageField(_('image'), max_length=200, upload_to='wiki_page_images')
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
