@@ -249,6 +249,7 @@ class TemplateCategory(models.Model, metaclass=TransMeta):
         translate = ('name', 'description')
         verbose_name = _('template category')
         verbose_name_plural = _('template categories')
+        ordering = 'sort_order',
 
     def __str__(self):
         return self.name
