@@ -5,7 +5,9 @@ import random
 from django.db import models
 from django.db.models import Sum, Max, Q
 from django.urls import reverse
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _, get_language
+from sorl.thumbnail import get_thumbnail
 
 from armory.models import Item, RiotGear, Weapon
 from horror.models import QuirkModifier
@@ -98,6 +100,12 @@ class Character(models.Model):
 
     def get_absolute_url(self):
         return reverse('characters:detail', kwargs={'pk': self.id})
+
+    def get_image_url(self):
+        if self.image:
+            return get_thumbnail(self.image, '180', crop='center', quality=99).url
+
+        return f'{settings.STATIC_URL}/img/silhuette.png'
 
     def get_aspect_modifier(self, aspect_name):
         m = TemplateModifier.objects.filter(
