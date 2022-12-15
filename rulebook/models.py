@@ -24,7 +24,7 @@ class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
     name = models.CharField(gt('name'), max_length=40)
     ordering = models.IntegerField(gt('ordering'), default=0)
 
-    image = models.ImageField(gt('image'), upload_to='book_images', blank=True, null=True)
+    image = models.ImageField(gt('image'), upload_to='book_images', max_length=256, blank=True, null=True)
     image_copyright = models.CharField(gt('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(gt('image copyright url'), max_length=150, blank=True, null=True)
 
@@ -46,7 +46,7 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
 
     rules_file = models.FileField(gt('rules file'), upload_to='rulebook/', blank=True, null=True)
 
-    image = models.ImageField(gt('image'), upload_to='chapter_images', blank=True, null=True)
+    image = models.ImageField(gt('image'), upload_to='chapter_images', max_length=256, blank=True, null=True)
     image_copyright = models.CharField(gt('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(gt('image copyright url'), max_length=150, blank=True, null=True)
 

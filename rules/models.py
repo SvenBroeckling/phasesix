@@ -60,7 +60,7 @@ class Extension(models.Model, metaclass=TransMeta):
     year_range = models.CharField(_('year range'), blank=True, null=True, max_length=50)
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
 
-    image = models.ImageField(_('image'), upload_to='extension_images', blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='extension_images', max_length=256, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 

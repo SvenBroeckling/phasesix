@@ -16,11 +16,16 @@ class Campaign(models.Model):
         ('A', _('All')),
     )
     name = models.CharField(_('name'), max_length=80)
-    image = models.ImageField(_('image'), upload_to='campaign_images', blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='campaign_images', max_length=200, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
-    backdrop_image = models.ImageField(_('backdrop image'), upload_to='campaign_backdrop_images', blank=True, null=True)
+    backdrop_image = models.ImageField(
+        _('backdrop image'),
+        upload_to='campaign_backdrop_images',
+        max_length=200,
+        blank=True,
+        null=True)
     backdrop_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     backdrop_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
     abstract = models.TextField(_('abstract'), blank=True, null=True)
@@ -121,7 +126,7 @@ class Scene(models.Model):
 class Handout(models.Model):
     scene = models.ForeignKey(Scene, on_delete=models.CASCADE)
     name = models.CharField(_('name'), max_length=80)
-    image = models.ImageField(_('image'), upload_to='campaign_handouts', blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='campaign_handouts', max_length=200, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
