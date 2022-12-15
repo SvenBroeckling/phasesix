@@ -12,16 +12,7 @@
 {% block belownav %}
     <div
             class="row campaign-info-row"
-            style="
-                    {% if object.backdrop_image %}
-                        background-image: url({{ object.backdrop_image.url }})
-                    {% else %}
-                        {% if object.epoch.image %}
-                            background-image: url({{ object.epoch.image.url }})
-                        {% else %}
-                            background-color: silver
-                        {% endif %}
-                    {% endif %}">
+            style="background-image: url({{ object.get_backdrop_image_url }})">
         <div class="col-md-10 offset-md-1 info mt-4">
             {% if may_edit %}
             <a

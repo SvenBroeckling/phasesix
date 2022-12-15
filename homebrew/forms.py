@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from armory.models import ItemType, WeaponType
+from armory.models import ItemType, WeaponType, RiotGearType
 from magic.models import SpellType, SpellVariant, SpellShape
 
 
@@ -25,9 +25,10 @@ class CreateItemForm(forms.Form):
 
 class CreateRiotGearForm(forms.Form):
     name = forms.CharField(label=_('Name'))
+    type = forms.ModelChoiceField(label=_('Type'), queryset=RiotGearType.objects.all(), required=True)
     description = forms.CharField(widget=forms.Textarea, label=_('Description'), required=False)
     protection = forms.DecimalField(label=_('Protection'))
-    evasion = forms.DecimalField(label=_('Evasion'))
+    encumbrance = forms.DecimalField(label=_('Encumbrance'))
     weight = forms.DecimalField(label=_('Weight (kg)'))
     price = forms.DecimalField(label=_('Price'))
     concealment = forms.DecimalField(label=_('Concealment'))
@@ -39,9 +40,10 @@ class CreateWeaponForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea, label=_('Description'), required=False)
     type = forms.ModelChoiceField(queryset=WeaponType.objects.all(), label=_('Category'), empty_label=None)
     is_hand_to_hand_weapon = forms.BooleanField(label=_('Is hand to hand weapon'), required=False)
-    bonus_dice = forms.DecimalField(label=_('Bonus Dice'))
+    damage_potential = forms.DecimalField(label=_('Damage Potential'))
     capacity = forms.DecimalField(label=_('Capacity'))
-    wounds = forms.DecimalField(label=_('Bonus Wounds'))
+    actions_to_ready = forms.DecimalField(label=_('Actions to ready'))
+    encumbrance = forms.DecimalField(label=_('Encumbrance'))
     piercing = forms.DecimalField(label=_('Piercing'))
     concealment = forms.DecimalField(label=_('Concealment'))
     weight = forms.DecimalField(label=_('Weight (kg)'))

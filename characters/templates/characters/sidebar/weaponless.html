@@ -6,7 +6,7 @@
             <button
                     data-dice-roll="{{ object.weaponless_attack_dice }}d6"
                     data-dice-header="{% trans 'Weaponless Attack' %}"
-                    data-dice-description="{% trans 'Bonus Wounds' %}: {{ object.weaponless_bonus_wounds }}"
+                    data-dice-description="{% trans 'Piercing' %}: {{ object.weaponless_piercing }}"
                     data-dice-character="{{ object.id }}"
                     class="btn btn-primary btn-sm w-100 dice-roll">
                 <i class="fas fa-dice-five fa-fw"></i> {% trans 'Attack' %}</button>
@@ -22,17 +22,12 @@
             </p>
             <p>
                 {% blocktrans %}
-                    If the character's Strength value is higher than 2, the successful attack causes 1 bonus wound.
+                    If the character's Strength value is higher than 2, the successful attack gains piercing 1.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans %}
                     If the character's Quickness value is higher than 2, the character adds one die to the roll.
-                {% endblocktrans %}
-            </p>
-            <p>
-                {% blocktrans %}
-                    The piercing of an unarmed melee attack is 0, and the range is 1 meter.
                 {% endblocktrans %}
             </p>
         </div>

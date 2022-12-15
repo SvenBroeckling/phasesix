@@ -56,7 +56,8 @@ class CreateCampaignExtensionsView(FormView):
 
 class CreateCampaignDataView(CreateView):
     model = Campaign
-    fields = ('name', 'abstract', 'character_visibility', 'currency_map')
+    fields = ('name', 'abstract', 'character_visibility', 'currency_map',
+              'seed_money', 'starting_template_points')
 
     def form_valid(self, form):
         obj = form.save(commit=False)

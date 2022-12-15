@@ -10,18 +10,20 @@ class WeaponAttackModeInline(admin.TabularInline):
 
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
-        'name_en', 'capacity', 'wounds', 'piercing', 'reload_actions', 'weight', 'price', 'range_meter')
+        'name_en', 'actions_to_ready', 'damage_potential', 'piercing', 'crit_minimum_roll', 'encumbrance', 'price',
+        'range_meter')
     list_editable = (
-        'capacity', 'wounds', 'piercing', 'weight', 'reload_actions', 'price', 'range_meter')
-    list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon')
+        'actions_to_ready', 'damage_potential', 'piercing', 'encumbrance', 'crit_minimum_roll', 'price', 'range_meter')
+    list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon', 'damage_potential')
     inlines = [WeaponAttackModeInline]
     fieldsets = [
         (None, {
             'fields': (
                 ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
-                ('type', 'capacity', 'wounds', 'piercing', 'weight'),
+                ('type', 'capacity', 'damage_potential', 'piercing', 'weight'),
+                ('crit_minimum_roll', 'actions_to_ready'),
                 ('created_by', 'is_homebrew', 'homebrew_campaign'),
-                ('range_meter', 'concealment', 'price', 'reload_actions', 'bonus_dice'),
+                ('range_meter', 'concealment', 'price', 'reload_actions'),
                 ('description_en', 'description_de',),
                 ('image', 'image_copyright', 'image_copyright_url')
             )
@@ -31,17 +33,17 @@ class WeaponAdmin(admin.ModelAdmin):
 
 class RiotGearAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'weight', 'price', 'protection_ballistic',
-                    'evasion', 'concealment')
-    list_editable = ('weight', 'price', 'protection_ballistic', 'evasion', 'concealment')
+                    'encumbrance', 'concealment')
+    list_editable = ('weight', 'price', 'protection_ballistic', 'encumbrance', 'concealment')
     list_filter = ('extensions',)
     fieldsets = [
         (None, {
             'fields': (
                 ('name_en', 'name_de', 'extensions'),
+                ('type', 'price', 'weight'),
                 ('created_by', 'is_homebrew', 'homebrew_campaign'),
-                ('price', 'weight'),
                 ('protection_ballistic',),
-                ('concealment', 'evasion'),
+                ('concealment', 'encumbrance'),
                 ('description_en', 'description_de'),
             )
         }),
@@ -69,7 +71,7 @@ class WeaponModificationAttributeChangeInline(admin.TabularInline):
 
 
 class WeaponModificationAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'extension_string', 'type', 'price')
+    list_display = ('name_de', 'name_en', 'type', 'extension_string', 'price')
     list_filter = 'type',
     filter_horizontal = ('extensions', 'available_for_weapon_types')
     inlines = [WeaponModificationAttributeChangeInline]

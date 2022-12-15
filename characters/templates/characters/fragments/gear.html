@@ -31,7 +31,7 @@
                 <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
                      data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
                     <div class="card-header">
-                        {{ r.riot_gear }}
+                        {{ r.riot_gear }} <span class="small text-muted">{{ r.riot_gear.type }}</span>
                         {% if r.riot_gear.concealment > 0 %}
                             <span class="float-end">
                                 <i class="fas fa-eye-slash fa-fw"
@@ -47,7 +47,7 @@
                     </div>
                     <div class="card-body">
                         <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
-                        <i class="fas fa-running fa-fw"></i> {% trans 'Evasion' %}: {% color_value_span r.riot_gear.evasion 7 %}<br>
+                        <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 6 invert=True %}<br>
                         {% if user.is_superuser %}
                             <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}"
                                style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
@@ -117,27 +117,24 @@
                             <div class="row">
                                 <div class="col-12">
                                     {{ weapon.weapon.description|urpg_markup }}
-                                    <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Piercing' %}: {% color_value_span weapon.weapon.piercing 4 %} {% display_modifications weapon 'piercing' %}<br>
-                                    <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.weapon.wounds 4 %} {% display_modifications weapon 'wounds' %}<br>
-                                    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.weapon.bonus_dice 4 %} {% display_modifications weapon 'bonus_dice' %}<br>
+                                    <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.weapon.piercing 4 %} {% display_modifications weapon 'piercing' %}<br>
+                                    <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %} {% display_modifications weapon 'damage_potential' %}<br>
+                                    <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.weapon.actions_to_ready 4 %} {% display_modifications weapon 'actions_to_ready' %}<br>
                                     {% if weapon.has_capacity %}
-                                        <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}:
+                                        <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:
                                         {% color_value_span weapon.weapon.reload_actions 6 invert=True %}
                                         {% display_modifications weapon 'reload_actions' %}<br>
-                                        <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}:
+                                        <i class="fas fa-list-ol fa-fw text-muted"></i> {% trans 'Capacity' %}:
                                         {% color_value_span weapon.weapon.capacity 30 %}
                                         {% display_modifications weapon 'capacity' %}<br>
                                     {% endif %}
-                                    <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m {% display_modifications weapon 'range_meter' %}<br>
+                                    <i class="fas fa-arrows-alt-h fa-fw text-muted"></i> {% trans 'Range' %}: {{ weapon.weapon.range_meter }}m {% display_modifications weapon 'range_meter' %}<br>
+                                    <i class="fas fa-weight fa-fw text-muted"></i> {% trans 'Encumbrance' %}: {% color_value_span weapon.weapon.encumbrance 2 invert=True %} {% display_modifications weapon 'encumbrance' %}<br>
                                     <br>
-                                    {% if weapon.weapon.weaponattackmode_set.exists %}
-                                        {% for fm in weapon.weapon.weaponattackmode_set.all %}{{ fm.attack_mode.name }}
-                                            +
-                                            {% color_value_span fm.dice_bonus 6 %}
-                                            {% display_modifications weapon 'bonus_dice' %}
-                                            <i class="fas fa-dice-five"></i>
-                                            <br>{% endfor %}
-                                    {% endif %}
+
+                                    {% for fm in weapon.weapon.weaponattackmode_set.all %}
+                                        {{ fm.attack_mode.name }}<br>
+                                    {% endfor %}
 
                                     {% if weapon.modifications.exists %}
                                         <div class="row mt-3">
@@ -230,7 +227,7 @@
                      data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="currency" %}">
                     <div class="card-body text-center">
                         {% for unit in object.currency_map.currencymapunit_set.all %}
-                            <i class="{{ unit.fa_icon_class }} {{ unit.color_class }}"></i>
+                            <i class="ms-1 {{ unit.fa_icon_class }} {{ unit.color_class }}"></i>
                             {{ object|currency_quantity:unit }}
                         {% endfor %}
                     </div>

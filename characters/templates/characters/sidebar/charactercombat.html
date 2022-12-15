@@ -1,4 +1,4 @@
-{% load i18n bootstrap4 rules_extras %}
+{% load i18n bootstrap4 rules_extras characters_extras %}
 
 {% if may_edit %}
     <div class="row">
@@ -15,12 +15,38 @@
 {% endif %}
 
 <div class="row">
+    <div class="col-12">
+        <div class="card mb-2">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fas fa-fw fa-running" title="{% trans 'Evasion' %}"></i>
+                    {% trans 'Evasion' %}
+                    <span class="float-end">{% color_value_span object.evasion 6 %}</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-fw fa-weight" title="{% trans 'Total encumbrance' %}"></i>
+                    {% trans 'Total encumbrance' %}
+                    <span class="float-end">{% color_value_span object.total_encumbrance 6 invert=True %}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-12 {% if may_edit %}mt-3{% endif %}">
         <p>
             {% blocktrans %}
                 The attacked character can dodge a melee attack as a reaction. This requires that the attacked character has an action available and can perceive the attacker. Thus, an attack from behind cannot be dodged.
             {% endblocktrans %}
         </p>
+
+        <p>
+            {% blocktrans %}
+                The Evasion value is equal to the Evasion value of the lineage plus the average of Quickness and Deftness (rounded up). The load of armor and weapons reduces this value. Character templates can change it.
+            {% endblocktrans %}
+        </p>
+
         <p>
             {% blocktrans %}
                 To evade an attack, the character rolls dice equal to his value in evasion. The minimum roll (5) for this is increased by the number of hits the opponent has. If the attacked person scores at least one success, he has completely dodged the attack.

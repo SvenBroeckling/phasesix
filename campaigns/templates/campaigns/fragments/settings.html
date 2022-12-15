@@ -4,6 +4,10 @@
 {% block fragment %}
     <div class="row">
         <div class="col-12 col-md-8 offset-md-2 pt-4">
+            {% trans 'World' %}
+            <span class="float-end">{{ object.world }}</span>
+            <hr>
+
             {% trans 'Epoch' %}
             <span class="float-end">{{ object.epoch }}</span>
             <hr>
@@ -14,6 +18,14 @@
 
             {% trans 'Currency Map' %}
             <span class="float-end">{{ object.currency_map }}</span>
+            <hr>
+
+            {% trans 'Seed Money' %}
+            <span class="float-end">{{ object.seed_money }}</span>
+            <hr>
+
+            {% trans 'Additional starting career points' %}
+            <span class="float-end">{{ object.starting_template_points }}</span>
             <hr>
 
             {% trans 'Character Visibility' %}

@@ -50,6 +50,10 @@ class Character(models.Model):
         'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE
     )
 
+    currency_map = models.ForeignKey(
+        'armory.CurrencyMap', verbose_name=_('currency map'), on_delete=models.CASCADE
+    )
+
     campaign = models.ForeignKey(
         'campaigns.Campaign', verbose_name=_('Campaign'), blank=True, null=True, on_delete=models.SET_NULL
     )
@@ -145,11 +149,6 @@ class Character(models.Model):
     def skills(self):
         return self.characterskill_set.for_extensions(self.extensions)
 
-    @property
-    def currency_map(self):
-        cc = self.pc_or_npc_campaign.currency_map if self.pc_or_npc_campaign is not None else None
-        return cc if cc is not None else self.get_epoch().currency_map
-
     def currency_quantity(self, currency_map_unit):
         qs = self.charactercurrency_set.filter(currency_map_unit=currency_map_unit)
         return qs.latest('id').quantity if qs.exists() else 0
@@ -200,7 +199,8 @@ class Character(models.Model):
 
     @property
     def reputation_gained(self):
-        return self.reputation - self.lineage.template_point_sum
+        campaign_points = self.pc_or_npc_campaign.starting_template_points if self.pc_or_npc_campaign else 0
+        return self.reputation - self.lineage.template_points - campaign_points
 
     def set_initial_reputation(self, initial_reputation=None):
         self.reputation = (
@@ -210,19 +210,13 @@ class Character(models.Model):
 
     @property
     def remaining_template_points(self):
-        template_points = (
-                self.lineage.lineagetemplatepoints_set.aggregate(Sum('points'))[
-                    'points__sum'
-                ]
-                or 0
-        )
         spent_points = (
                 self.charactertemplate_set.aggregate(Sum('template__cost'))[
                     'template__cost__sum'
                 ]
-                or 0
-        )
-        return template_points - spent_points
+                or 0)
+        campaign_points = self.pc_or_npc_campaign.starting_template_points if self.pc_or_npc_campaign else 0
+        return self.lineage.template_points + campaign_points - spent_points
 
     # Magic and Horror
 
@@ -309,7 +303,7 @@ class Character(models.Model):
 
     @property
     def combat_crawling_range(self):
-        return self.get_attribute_value('quickness') / 2 + 1
+        return int(math.ceil(self.get_attribute_value('quickness') / 2)) + 1
 
     @property
     def ballistic_protection(self):
@@ -319,14 +313,21 @@ class Character(models.Model):
         return self.lineage.base_protection + self.get_aspect_modifier('base_protection') + bp
 
     @property
+    def total_encumbrance(self):
+        riot_gear_encumbrance = self.characterriotgear_set.aggregate(
+            Sum('riot_gear__encumbrance')
+        )['riot_gear__encumbrance__sum'] or 0
+        weapon_encumbrance = self.characterweapon_set.aggregate(
+            Sum('weapon__encumbrance')
+        )['weapon__encumbrance__sum'] or 0
+        return weapon_encumbrance + riot_gear_encumbrance
+
+    @property
     def evasion(self):
-        gear = self.characterriotgear_set.aggregate(
-            Sum('riot_gear__evasion')
-        )['riot_gear__evasion__sum'] or 0
-        skill = self.characterskill_set.hand_to_hand_combat_skill().value
-        base = self.lineage.base_evasion
+        character_evasion = int(
+            math.ceil((self.get_attribute_value('deftness') + self.get_attribute_value('quickness')) / 2))
         mods = self.get_aspect_modifier('base_evasion')
-        return gear + skill + base + mods
+        return character_evasion + self.lineage.base_evasion + mods - self.total_encumbrance
 
     @property
     def rest_wound_dice(self):
@@ -348,7 +349,7 @@ class Character(models.Model):
         return self.characterskill_set.hand_to_hand_combat_skill().value + bonus
 
     @property
-    def weaponless_bonus_wounds(self):
+    def weaponless_piercing(self):
         return 1 if self.get_attribute_value('strength') > 2 else 0
 
     @property
@@ -522,15 +523,15 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
 
-        bonus_dice = self.weapon.bonus_dice
+        damage_potential = self.weapon.damage_potential
         for wm in self.modifications.all():
             for wma in wm.weaponmodificationattributechange_set.all():
-                if wma.attribute == 'bonus_dice':
-                    bonus_dice += wma.attribute_modifier
+                if wma.attribute == 'damage_potential':
+                    damage_potential += wma.attribute_modifier
 
         modes = []
         for wm in self.weapon.weaponattackmode_set.all():
-            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + bonus_dice, wm.id))
+            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + damage_potential, wm.id))
 
         return modes
 
@@ -539,8 +540,6 @@ class CharacterWeapon(models.Model):
         traits = []
         if self.modified_piercing:
             traits.append(f"{_('Pierce')}: {self.modified_piercing}")
-        if self.modified_wounds:
-            traits.append(f"{_('Bonus Wounds')}: {self.modified_wounds}")
         for template in self.character.charactertemplate_set.filter(
                 template__show_in_attack_dice_rolls=True):
             traits.append(template.template.name)
@@ -553,48 +552,40 @@ class CharacterWeapon(models.Model):
         return self.modifications.filter(
             Q(rules_de__isnull=False) | Q(rules_en__isnull=False)).exists()
 
+    def _get_mods(self, attr):
+        mods = self.modifications.filter(
+            weaponmodificationattributechange__attribute=attr).aggregate(
+            Sum('weaponmodificationattributechange__attribute_modifier'))
+        return mods['weaponmodificationattributechange__attribute_modifier__sum'] or 0
+
     @property
     def modified_piercing(self):
-        pen = self.weapon.piercing
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='piercing'):
-                mods += wmm.attribute_modifier
-        return pen + mods
+        return self.weapon.piercing + self._get_mods('piercing')
 
     @property
     def modified_concealment(self):
-        con = self.weapon.concealment
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='concealment'):
-                mods += wmm.attribute_modifier
-        return con + mods
+        return self.weapon.concealment + self._get_mods('concealment')
 
     @property
-    def modified_wounds(self):
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='wounds'):
-                mods += wmm.attribute_modifier
-        return self.weapon.wounds + mods
+    def modified_actions_to_ready(self):
+        return self.weapon.actions_to_ready + self._get_mods('actions_to_ready')
+
+    @property
+    def modified_encumbrance(self):
+        return self.weapon.encumbrance + self._get_mods('encumbrance')
+
+    @property
+    def modified_crit_minium_roll(self):
+        return self.weapon.crit_minimum_roll + self._get_mods('crit_minimum_roll')
 
     @property
     def modified_range_meter(self):
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='range_meter'):
-                mods += wmm.attribute_modifier
-        return self.weapon.range_meter + mods
+        return self.weapon.range_meter + self._get_mods('range_meter')
 
     @property
     def modified_capacity(self):
         base_capacity = self.weapon.capacity if self.weapon.capacity else 0
-        mods = 0
-        for wm in self.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.filter(attribute='capacity'):
-                mods += wmm.attribute_modifier
-        return base_capacity + mods
+        return base_capacity + self._get_mods('capacity')
 
     @property
     def has_capacity(self):

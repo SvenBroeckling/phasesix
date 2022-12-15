@@ -38,10 +38,8 @@
                         }
                     });
                     updateTabs();
-                    //history.replaceState({q: q}, '', '?q=' + q);
-                }, 10);
+                }, 100);
             });
-
 
             $('.row').on('click', '.constructed-template', function (e) {
                 var template_div = $(this);
@@ -109,7 +107,6 @@
                     })
                 })
             })
-
         })
     </script>
 {% endblock %}
@@ -145,11 +142,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
-                        {% for tp in template_points %}
+                        {% for tc in template_categories %}
                             <li class="nav-item">
                                 <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab"
-                                   href="#tp{{ tp.id }}" id="tab{{ tp.id }}">
-                                    {{ tp.template_category }}
+                                   href="#tc{{ tc.id }}" id="tab{{ tc.id }}">
+                                    {{ tc }}
                                 </a>
                             </li>
                         {% endfor %}
@@ -157,16 +154,15 @@
                 </div>
 
                 <div class="col-md-12 tab-content">
-                    {% for tp in template_points %}
-                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tp{{ tp.id }}"
-                             data-rel="#tab{{ tp.id }}">
+                    {% for tc in template_categories %}
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tc{{ tc.id }}"
+                             data-rel="#tab{{ tc.id }}">
                             <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
-                                {% for i in tp.template_category.template_set.all %}
+                                {% for i in tc.template_set.all %}
                                     {% has_extensions i object.extensions.all as has_extension %}
                                     {% if has_extension %}
                                         <div class="col col-md-6 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
                                              data-template-id="{{ i.id }}"
-                                             data-tp-id="{{ tp.id }}"
                                              data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
                                              data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
                                              data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">

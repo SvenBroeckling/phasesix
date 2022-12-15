@@ -41,10 +41,8 @@
                                 class="fas text-muted fa-dice-five"></i>
                         </td>
                         <td class="text-end">
-                            {% trans 'Piercing' %} {% color_value_span 0 6 %} <i class="fas fa-angle-double-right text-muted"></i>
-                            {% if object.weaponless_bonus_wounds %}
-                                <br><i class="fas fa-heart text-muted"></i> {% trans 'Bonus wounds:' %}
-                                {% color_value_span object.weaponless_bonus_wounds 3 %}
+                            {% if object.weaponless_pierceing > 0 %}
+                                {% trans 'Piercing' %} {% color_value_span object.weaponless_piercing 6 %}
                             {% endif %}
                         </td>
                         <td class="text-end">-</td>
@@ -67,22 +65,22 @@
                                 {% endfor %}
                             </td>
                             <td class="text-end">
-                                {% trans 'Piercing' %} {% color_value_span w.modified_piercing 3 %} <i class="fas fa-fw fa-angle-double-right text-muted"></i>
-                                {% if w.modified_wounds %}
-                                    <br>{% trans 'Bonus wounds:' %} <i class="fas fa-fw fa-heart text-muted"></i>
-                                    {% color_value_span w.modified_wounds 3 %}
+                                {% if w.modified_piercing > 0 %}
+                                    {% trans 'Piercing' %} {% color_value_span w.modified_piercing 3 %}
+                                {% endif %}
+                                {% if w.modified_crit_minium_roll != 11 %}
+                                    {% trans 'Crit MR' %} {% color_value_span w.modified_crit_minium_roll 11 invert=True %}<br>
                                 {% endif %}
                                 {% for wm in w.modifications.all %}
                                     {% for wma in wm.weaponmodificationattributechange_set.all %}
                                         {% if wma.status_effect %}
-                                            <br>{{ wma.status_effect|capfirst }}
+                                            {{ wma.status_effect|capfirst }}
                                             {% color_value_span wma.status_effect_value 4 %}
-                                            <i class="{{ wma.status_effect.fa_icon_class }} fa-fw"></i>
+                                            <i class="{{ wma.status_effect.fa_icon_class }} fa-fw"></i><br>
                                         {% endif %}
                                     {% endfor %}
                                 {% endfor %}
-                                {% if w.has_modifications_with_rules %}<br>{% trans 'Mods with rules' %} <i class="fas fa-gavel fa-fw text-muted"></i>{% endif %}
-                                <br>
+                                {% if w.has_modifications_with_rules %}{% trans 'Mods with rules' %} <i class="fas fa-gavel fa-fw text-muted"></i>{% endif %}
                             </td>
                             <td class="text-end">
                                 {% if w.has_capacity %}
@@ -236,6 +234,21 @@
                         </span>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td>
+                            <i class="fas fa-bullseye text-warning"></i> {% trans "Aim" %}
+                            <small class="text-muted">{% trans 'Combat' %}</small>
+                        </td>
+                        <td colspan="4">
+                            <span class="text-muted">
+                                {% blocktrans %}
+                                    Reduces the minimum roll for critical hits by 2 per action. This is not possible when using burst mode. The aim bonus is lost when the character is hit.
+                                {% endblocktrans %}
+                            </span>
+                        </td>
+                    </tr>
+
                     </tbody>
                 </table>
             </div>

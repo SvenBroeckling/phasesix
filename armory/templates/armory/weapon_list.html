@@ -72,10 +72,12 @@
                         <th>{% trans 'Weapon' %}</th>
                         <th>{% trans 'Attack Modes' %}</th>
                         <th>{% trans 'Piercing' %}</th>
-                        <th>{% trans 'Bonus Dice' %}</th>
-                        <th>{% trans 'Bonus Wounds' %}</th>
+                        <th>{% trans 'Damage Potential' %}</th>
+                        <th>{% trans 'Actions to ready' %}</th>
                         <th>{% trans 'Range' %}</th>
                         <th>{% trans 'Capacity' %}</th>
+                        <th>{% trans 'Encumbrance' %}</th>
+                        <th>{% trans 'Concealment' %}</th>
                         <th>{% trans 'Price' %}</th>
                         {% if user.is_superuser %}
                             <th>{% trans 'Admin' %}</th>
@@ -88,13 +90,18 @@
                             <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
                             <td>
                                 {% for am in object.weaponattackmode_set.all %}
-                                    {{ am.attack_mode.name }} +{% color_value_span am.dice_bonus 6 %} <i
-                                        class="fas fa-dice-five"></i><br>
+                                    {{ am.attack_mode.name }}<br>
                                 {% endfor %}
                             </td>
                             <td>{% color_value_span object.piercing 4 %}</td>
-                            <td>{% color_value_span object.bonus_dice 4 %}</td>
-                            <td>{% color_value_span object.wounds 4 %}</td>
+                            <td>
+                                {% for i in object.damage_potential|to_range %}
+                                    <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>
+                                {% empty %}
+                                    -
+                                {% endfor %}
+                            </td>
+                            <td>{% color_value_span object.actions_to_ready 1 invert=True %}</td>
                             <td>{% color_value_span object.range_meter 30 %}m</td>
                             <td>
                                 {% if object.capacity %}
@@ -102,6 +109,12 @@
                                 {% else %}
                                     -
                                 {% endif %}
+                            </td>
+                            <td>
+                                {% color_value_span object.encumbrance 2 invert=True %}
+                            </td>
+                            <td>
+                                {% color_value_span object.concealment 5 invert=True %}
                             </td>
                             <td>{% color_value_span object.price 10000 invert=True %}</td>
                             {% if user.is_superuser %}

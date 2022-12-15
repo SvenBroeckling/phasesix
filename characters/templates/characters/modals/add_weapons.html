@@ -49,24 +49,24 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     {{ weapon.description|urpg_markup }}
-                                                    <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
-                                                    <i class="fas fa-heart fa-fw"></i> {% trans 'Bonus wounds' %}: {% color_value_span weapon.wounds 4 %}<br>
-                                                    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Bonus dice' %}: {% color_value_span weapon.bonus_dice 4 %}<br>
+                                                    <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
+                                                    <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %}<br>
+                                                    <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.actions_to_ready 5 invert=True %}<br>
                                                     {% if not weapon.is_hand_to_hand_weapon %}
-                                                        <i class="fas fa-clock fa-fw"></i> {% trans 'Reload actions' %}:
+                                                        <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:
                                                         {% color_value_span weapon.reload_actions 6 invert=True %}<br>
-                                                        <i class="fas fa-list-ol fa-fw"></i> {% trans 'Capacity' %}:
+                                                        <i class="fas fa-list-ol fa-fw text-muted"></i> {% trans 'Capacity' %}:
                                                         {% color_value_span weapon.capacity 30 %}<br>
                                                     {% endif %}
-                                                    <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
-                                                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>
-                                                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
+                                                    <i class="fas fa-arrows-alt-h fa-fw text-muted"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
+                                                    <i class="fas fa-weight fa-fw text-muted"></i> {% trans 'Encumbrance' %}: {% color_value_span weapon.encumbrance 2 invert=True %}<br>
+                                                    <i class="fas fa-eye-slash fa-fw text-muted"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>
+                                                    <i class="fas fa-balance-scale fa-fw text-muted"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
                                                     {% if weapon.weaponattackmode_set.exists %}
                                                         <br>
                                                         {% for fm in weapon.weaponattackmode_set.all %}
-                                                            {{ fm.attack_mode.name }} +
-                                                            {% color_value_span fm.dice_bonus 6 %}
-                                                            <i class="fas fa-dice-five"></i><br>{% endfor %}
+                                                            {{ fm.attack_mode.name }}<br>
+                                                        {% endfor %}
                                                     {% endif %}
                                                     {% if character.currency_map %}
                                                         {% with cmu=character.currency_map.currencymapunit_set.earliest %}

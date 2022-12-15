@@ -179,12 +179,15 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     type = models.ForeignKey(WeaponType, verbose_name=_('type'), on_delete=models.CASCADE)
 
-    bonus_dice = models.IntegerField(_('bonus dice'), default=0)
-    capacity = models.IntegerField(_('capacity'), null=True, blank=True)
-    wounds = models.IntegerField(_('bonus wounds'), default=0)
     piercing = models.IntegerField(_('piercing'), default=0)
+    damage_potential = models.IntegerField(_('damage potential'), default=0)
+    crit_minimum_roll = models.IntegerField(_('crit minimum roll'), default=11)
+
+    encumbrance = models.IntegerField(_('encumbrance'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
     reload_actions = models.IntegerField(_('reload actions'), default=1)
+    actions_to_ready = models.IntegerField(_('actions to ready'), default=1)
+    capacity = models.IntegerField(_('capacity'), null=True, blank=True)
 
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=8)
@@ -318,8 +321,10 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTE_CHOICES = (
         ('capacity', _('Capacity')),
-        ('wounds', _('Bonus wounds')),
-        ('bonus_dice', _('Bonus dice')),
+        ('actions_to_ready', _('Actions to ready')),
+        ('crit_minimum_roll', _('Crit minimum roll')),
+        ('encumbrance', _('Encumbrance')),
+        ('damage_potential', _('Damage potential')),
         ('piercing', _('Piercing')),
         ('concealment', _('Concealment')),
         ('reload_actions', _('Reload actions')),
@@ -347,10 +352,22 @@ class WeaponModificationAttributeChange(models.Model):
         return "%+d" % self.attribute_modifier
 
 
+class RiotGearType(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=256)
+    description = models.TextField(_('description'), blank=True, null=True)
+
+    class Meta:
+        translate = 'name', 'description'
+
+    def __str__(self):
+        return self.name
+
+
 class RiotGear(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('created by'),
@@ -359,13 +376,17 @@ class RiotGear(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
+    type = models.ForeignKey(RiotGearType, verbose_name=_('type'), on_delete=models.CASCADE)
+
+    protection_ballistic = models.IntegerField(_('protection ballistic'), default=0)
+    encumbrance = models.IntegerField(_('encumbrance'), default=1)
+
+    concealment = models.IntegerField(_('concealment'), default=0)
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
-    protection_ballistic = models.IntegerField(_('protection ballistic'), default=0)
-    evasion = models.IntegerField(_('evasion'), default=0)
-    concealment = models.IntegerField(_('concealment'), default=0)
 
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
     keep_as_homebrew = models.BooleanField(
@@ -420,6 +441,15 @@ class CurrencyMapUnit(models.Model):
         choices=FA_ICON_CLASS_CHOICES,
         max_length=30,
         default='fas fa-coins')
+    is_common = models.BooleanField(
+        _('is common'),
+        help_text=_('Is this the common unit people pay with?'),
+        default=False)
+    ordering = models.IntegerField(_('ordering'), default=10)
 
     class Meta:
         get_latest_by = 'id',
+        ordering = ('-ordering',)
+
+    def __str__(self):
+        return self.name

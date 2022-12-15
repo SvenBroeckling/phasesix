@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 import hashlib
 
+from sorl.thumbnail import get_thumbnail
+
 from rules.models import Extension
 
 
@@ -47,6 +49,9 @@ class Campaign(models.Model):
         'rules.Extension', limit_choices_to={'is_mandatory': False, 'type': 'x'}, blank=True
     )
     forbidden_templates = models.ManyToManyField('rules.Template', blank=True)
+    starting_template_points = models.IntegerField(
+        _('additional starting career points'),
+        default=0)
 
     discord_webhook_url = models.URLField(
         _('discord webhook url'),
@@ -55,7 +60,8 @@ class Campaign(models.Model):
         blank=True,
         null=True)
 
-    currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
+    currency_map = models.ForeignKey('armory.CurrencyMap', on_delete=models.CASCADE)
+    seed_money = models.IntegerField(_('seed money'), default=2000)
 
     character_visibility = models.CharField(
         _('character visibility'),
@@ -88,6 +94,15 @@ class Campaign(models.Model):
     def invite_link(self):
         return settings.BASE_URL + reverse('campaigns:detail',
                                            kwargs={'pk': self.id, 'hash': self.campaign_hash})
+
+    def get_backdrop_image_url(self):
+        image = self.epoch.image
+        if self.backdrop_image:
+            image = self.backdrop_image
+        if self.world.image:
+            image = self.world.image
+
+        return get_thumbnail(image, '800', crop='center', quality=99).url
 
     @property
     def ws_room_name(self) -> str:

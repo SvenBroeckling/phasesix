@@ -19,6 +19,8 @@
             {% csrf_token %}
             <div class="col-12 col-md-8 offset-md-2">
                 {% bootstrap_field form.name %}
+                {% bootstrap_field form.currency_map %}
+                {% bootstrap_field form.seed_money %}
                 {% bootstrap_field form.lineage %}
                 {% bootstrap_field form.epoch show_label=False %}
                 {% bootstrap_field form.world show_label=False %}
