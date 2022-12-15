@@ -102,8 +102,9 @@ class XhrCreateRiotGearView(TemplateView):
         context['character'] = Character.objects.get(id=self.kwargs['character_pk'])
         context['form'] = CreateRiotGearForm(
             initial={'weight': 1,
+                     'type': 1,
                      'protection': 1,
-                     'evasion': 0,
+                     'encumbrance': 1,
                      'price': 10,
                      'concealment': 0})
         return context
@@ -116,10 +117,11 @@ class CreateRiotGearView(View):
             form = CreateRiotGearForm(request.POST)
             if form.is_valid():
                 riot_gear = RiotGear.objects.create(
+                    type=form.cleaned_data['type'],
                     name_de=form.cleaned_data['name'],
                     description_de=form.cleaned_data['description'],
                     protection_ballistic=form.cleaned_data['protection'],
-                    evasion=form.cleaned_data['evasion'],
+                    encumbrance=form.cleaned_data['encumbrance'],
                     weight=form.cleaned_data['weight'],
                     price=form.cleaned_data['price'],
                     concealment=form.cleaned_data['concealment'],

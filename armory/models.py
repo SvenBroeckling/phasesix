@@ -352,6 +352,17 @@ class WeaponModificationAttributeChange(models.Model):
         return "%+d" % self.attribute_modifier
 
 
+class RiotGearType(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=256)
+    description = models.TextField(_('description'), blank=True, null=True)
+
+    class Meta:
+        translate = 'name', 'description'
+
+    def __str__(self):
+        return self.name
+
+
 class RiotGear(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
@@ -368,9 +379,11 @@ class RiotGear(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
+    type = models.ForeignKey(RiotGearType, verbose_name=_('type'), on_delete=models.CASCADE)
 
     protection_ballistic = models.IntegerField(_('protection ballistic'), default=0)
-    evasion = models.IntegerField(_('evasion'), default=0)
+    encumbrance = models.IntegerField(_('encumbrance'), default=1)
+
     concealment = models.IntegerField(_('concealment'), default=0)
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)

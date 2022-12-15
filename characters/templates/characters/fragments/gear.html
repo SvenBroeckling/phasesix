@@ -31,7 +31,7 @@
                 <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
                      data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
                     <div class="card-header">
-                        {{ r.riot_gear }}
+                        {{ r.riot_gear }} <span class="small text-muted">{{ r.riot_gear.type }}</span>
                         {% if r.riot_gear.concealment > 0 %}
                             <span class="float-end">
                                 <i class="fas fa-eye-slash fa-fw"
@@ -47,7 +47,7 @@
                     </div>
                     <div class="card-body">
                         <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
-                        <i class="fas fa-running fa-fw"></i> {% trans 'Evasion' %}: {% color_value_span r.riot_gear.evasion 7 %}<br>
+                        <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 6 invert=True %}<br>
                         {% if user.is_superuser %}
                             <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}"
                                style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>

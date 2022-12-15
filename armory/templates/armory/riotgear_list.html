@@ -70,8 +70,9 @@
                     <thead>
                     <tr>
                         <th>{% trans 'Armour' %}</th>
+                        <th>{% trans 'Type' %}</th>
                         <th>{% trans 'Protection' %}</th>
-                        <th>{% trans 'Evasion' %}</th>
+                        <th>{% trans 'Encumbrance' %}</th>
                         <th>{% trans 'Concealment' %}</th>
                         <th>{% trans 'Price' %}</th>
                         {% if user.is_superuser %}
@@ -83,8 +84,9 @@
                     {% for object in object_list %}
                         <tr>
                             <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
+                            <td>{{ object.type }}</td>
                             <td>{% color_value_span object.protection_ballistic 4 %}</td>
-                            <td>{% color_value_span object.evasion 4 %}</td>
+                            <td>{% color_value_span object.encumbrance 5 invert=True %}</td>
                             <td>{% color_value_span object.concealment 4 invert=True %}</td>
                             <td>{% color_value_span object.price 8000 invert=True %}</td>
                             {% if user.is_superuser %}
