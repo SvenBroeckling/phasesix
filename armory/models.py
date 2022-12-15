@@ -183,7 +183,7 @@ class Weapon(models.Model, metaclass=TransMeta):
     damage_potential = models.IntegerField(_('damage potential'), default=0)
     crit_minimum_roll = models.IntegerField(_('crit minimum roll'), default=11)
 
-    encumbrance = models.IntegerField(_('encumbrance'), default=1)
+    encumbrance = models.IntegerField(_('encumbrance'), default=0)
     concealment = models.IntegerField(_('concealment'), default=0)
     reload_actions = models.IntegerField(_('reload actions'), default=1)
     actions_to_ready = models.IntegerField(_('actions to ready'), default=1)

@@ -313,12 +313,21 @@ class Character(models.Model):
         return self.lineage.base_protection + self.get_aspect_modifier('base_protection') + bp
 
     @property
+    def total_encumbrance(self):
+        riot_gear_encumbrance = self.characterriotgear_set.aggregate(
+            Sum('riot_gear__encumbrance')
+        )['riot_gear__encumbrance__sum'] or 0
+        weapon_encumbrance = self.characterweapon_set.aggregate(
+            Sum('weapon__encumbrance')
+        )['weapon__encumbrance__sum'] or 0
+        return weapon_encumbrance + riot_gear_encumbrance
+
+    @property
     def evasion(self):
-        # gear + weapons
-        skill = self.characterskill_set.hand_to_hand_combat_skill().value
-        base = self.lineage.base_evasion
+        character_evasion = int(
+            math.ceil((self.get_attribute_value('deftness') + self.get_attribute_value('quickness')) / 2))
         mods = self.get_aspect_modifier('base_evasion')
-        return skill + base + mods
+        return character_evasion + self.lineage.base_evasion + mods - self.total_encumbrance
 
     @property
     def rest_wound_dice(self):
