@@ -45,6 +45,8 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
     fa_icon_class = models.CharField(gt('fa icon class'), max_length=32)
     text = models.TextField(gt('text'))
 
+    rules_file = models.FileField(gt('rules file'), upload_to='rulebook/', blank=True, null=True)
+
     image = models.ImageField(gt('image'), upload_to='chapter_images', blank=True, null=True)
     image_copyright = models.CharField(gt('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(gt('image copyright url'), max_length=150, blank=True, null=True)
@@ -54,6 +56,6 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
 
     class Meta:
         ordering = 'number',
-        translate = 'name', 'text'
+        translate = 'name', 'text', 'rules_file'
         verbose_name = gt('chapter')
         verbose_name_plural = gt('chapters')
