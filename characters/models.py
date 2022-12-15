@@ -303,7 +303,7 @@ class Character(models.Model):
 
     @property
     def combat_crawling_range(self):
-        return self.get_attribute_value('quickness') / 2 + 1
+        return int(math.ceil(self.get_attribute_value('quickness') / 2)) + 1
 
     @property
     def ballistic_protection(self):
