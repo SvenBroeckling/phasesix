@@ -14,7 +14,8 @@ class WeaponAdmin(admin.ModelAdmin):
         'range_meter')
     list_editable = (
         'actions_to_ready', 'damage_potential', 'piercing', 'encumbrance', 'crit_minimum_roll', 'price', 'range_meter')
-    list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon', 'damage_potential')
+    list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon', 'damage_potential', 'piercing', 'crit_minimum_roll')
+    search_fields = 'name_en', 'name_de'
     inlines = [WeaponAttackModeInline]
     fieldsets = [
         (None, {
@@ -32,10 +33,11 @@ class WeaponAdmin(admin.ModelAdmin):
 
 
 class RiotGearAdmin(admin.ModelAdmin):
-    list_display = ('name_de', 'name_en', 'weight', 'price', 'protection_ballistic',
-                    'encumbrance', 'concealment')
+    list_display = ('name_de', 'name_en', 'type', 'price', 'protection_ballistic',
+                    'encumbrance', 'concealment', 'weight')
     list_editable = ('weight', 'price', 'protection_ballistic', 'encumbrance', 'concealment')
-    list_filter = ('extensions',)
+    list_filter = ('extensions', 'type')
+    search_fields = 'name_de', 'name_en'
     fieldsets = [
         (None, {
             'fields': (
@@ -73,6 +75,7 @@ class WeaponModificationAttributeChangeInline(admin.TabularInline):
 class WeaponModificationAdmin(admin.ModelAdmin):
     list_display = ('name_de', 'name_en', 'type', 'extension_string', 'price')
     list_filter = 'type',
+    search_fields = 'name_de', 'name_en'
     filter_horizontal = ('extensions', 'available_for_weapon_types')
     inlines = [WeaponModificationAttributeChangeInline]
 

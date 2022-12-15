@@ -15,6 +15,7 @@ class BaseSpellAdmin(VersionAdmin):
         'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions', 'is_tirakan_spell')
     fields = (
         ('name_de', 'name_en', 'is_tirakan_spell'),
+        ('created_by', 'is_homebrew', 'homebrew_campaign', 'keep_as_homebrew'),
         ('spell_point_cost', 'arcana_cost', 'power', 'range', 'actions'),
         ('variant', 'type', 'shape'),
         'is_ritual',
