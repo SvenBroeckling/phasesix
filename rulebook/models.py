@@ -43,7 +43,6 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
     name = models.CharField(gt('name'), max_length=40)
     number = models.IntegerField(gt('number'), default=1)
     fa_icon_class = models.CharField(gt('fa icon class'), max_length=32)
-    text = models.TextField(gt('text'))
 
     rules_file = models.FileField(gt('rules file'), upload_to='rulebook/', blank=True, null=True)
 
@@ -56,6 +55,11 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
 
     class Meta:
         ordering = 'number',
-        translate = 'name', 'text', 'rules_file'
+        translate = 'name', 'rules_file'
         verbose_name = gt('chapter')
         verbose_name_plural = gt('chapters')
+
+    @property
+    def text(self):
+        with open(self.rules_file.path, 'r') as f:
+            return f.read()
