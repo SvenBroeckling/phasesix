@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-15 13:43+0000\n"
-"PO-Revision-Date: 2022-12-15 14:49+0100\n"
+"POT-Creation-Date: 2022-12-22 20:42+0000\n"
+"PO-Revision-Date: 2022-12-22 21:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -23,11 +23,11 @@ msgstr ""
 #: armory/models.py:299 armory/models.py:356 armory/models.py:380
 #: armory/models.py:412 armory/models.py:437 bestiary/models.py:8
 #: bestiary/models.py:20 bestiary/models.py:40 bestiary/models.py:81
-#: campaigns/models.py:18 campaigns/models.py:115 campaigns/models.py:123
-#: characters/models.py:24 forum/models.py:33 forum/models.py:51
+#: campaigns/models.py:18 campaigns/models.py:120 campaigns/models.py:128
+#: characters/models.py:26 forum/models.py:33 forum/models.py:51
 #: horror/models.py:11 horror/models.py:24 magic/models.py:16
-#: magic/models.py:29 magic/models.py:42 magic/models.py:111
-#: magic/models.py:127 magic/models.py:139 rules/models.py:56
+#: magic/models.py:29 magic/models.py:42 magic/models.py:64 magic/models.py:135
+#: magic/models.py:151 magic/models.py:163 rules/models.py:56
 #: rules/models.py:100 rules/models.py:143 rules/models.py:163
 #: rules/models.py:195 rules/models.py:230 rules/models.py:274
 #: rules/models.py:379 worlds/models.py:23 worlds/models.py:89
@@ -37,7 +37,7 @@ msgstr "Name"
 #: armory/models.py:24 armory/models.py:41 armory/models.py:124
 #: armory/models.py:178 armory/models.py:278 armory/models.py:300
 #: armory/models.py:357 armory/models.py:381 bestiary/models.py:41
-#: campaigns/models.py:138 characters/models.py:25 horror/models.py:27
+#: campaigns/models.py:143 characters/models.py:27 horror/models.py:27
 #: rules/models.py:58 rules/models.py:101 rules/models.py:145
 #: rules/models.py:164 rules/models.py:199 rules/models.py:243
 #: worlds/models.py:26
@@ -46,9 +46,9 @@ msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:50 armory/models.py:125
 #: armory/models.py:173 armory/models.py:377 bestiary/models.py:33
-#: campaigns/models.py:136 characters/models.py:499 characters/models.py:742
+#: campaigns/models.py:141 characters/models.py:511 characters/models.py:754
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
-#: forum/models.py:88 magic/models.py:71 magic/models.py:144 rules/models.py:67
+#: forum/models.py:88 magic/models.py:88 magic/models.py:168 rules/models.py:67
 #: rules/models.py:106 rules/models.py:197 rules/models.py:276
 #: rules/models.py:381 worlds/models.py:20 worlds/models.py:41
 #: worlds/models.py:86 worlds/models.py:166
@@ -57,7 +57,7 @@ msgstr "Erzeugt am"
 
 #: armory/models.py:26 armory/models.py:71 armory/models.py:126
 #: armory/models.py:174 armory/models.py:378 bestiary/models.py:34
-#: magic/models.py:72 magic/models.py:145 rules/models.py:68
+#: magic/models.py:89 magic/models.py:169 rules/models.py:68
 #: rules/models.py:107 rules/models.py:198 rules/models.py:277
 #: rules/models.py:382 worlds/models.py:21 worlds/models.py:42
 #: worlds/models.py:87 worlds/models.py:167
@@ -73,7 +73,7 @@ msgid "item types"
 msgstr "Gegenstandstypen"
 
 #: armory/models.py:43 armory/models.py:180 armory/models.py:382
-#: bestiary/models.py:43 magic/models.py:103 rules/models.py:54
+#: bestiary/models.py:43 magic/models.py:116 rules/models.py:54
 msgid "type"
 msgstr "Typ"
 
@@ -95,18 +95,18 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:53 armory/models.py:197 armory/models.py:373
-#: campaigns/models.py:30 characters/models.py:38 magic/models.py:69
+#: campaigns/models.py:35 characters/models.py:44 magic/models.py:86
 #: worlds/models.py:18 worlds/models.py:84 worlds/models.py:164
 msgid "created by"
 msgstr "Erzeugt von"
 
 #: armory/models.py:58 armory/models.py:202 armory/models.py:391
-#: magic/models.py:74
+#: magic/models.py:91
 msgid "is homebrew"
 msgstr "Ist Homebrew"
 
 #: armory/models.py:60 armory/models.py:204 armory/models.py:393
-#: magic/models.py:76
+#: magic/models.py:93
 msgid "keep as homebrew"
 msgstr "Als Homebrew belassen"
 
@@ -144,25 +144,25 @@ msgid "Shows a roll button at the item if not empty."
 msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:99 armory/models.py:215 bestiary/models.py:36
-#: campaigns/models.py:19 campaigns/models.py:124 characters/models.py:27
-#: magic/models.py:44 rules/models.py:63 worlds/models.py:37
+#: campaigns/models.py:19 campaigns/models.py:129 characters/models.py:29
+#: magic/models.py:44 magic/models.py:66 rules/models.py:63 worlds/models.py:37
 #: worlds/models.py:111 worlds/models.py:169
 msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:100 armory/models.py:216 bestiary/models.py:37
-#: campaigns/models.py:20 campaigns/models.py:24 campaigns/models.py:125
-#: characters/models.py:28 characters/models.py:33 magic/models.py:45
-#: rules/models.py:64 worlds/models.py:38 worlds/models.py:112
-#: worlds/models.py:170
+#: campaigns/models.py:20 campaigns/models.py:29 campaigns/models.py:130
+#: characters/models.py:30 characters/models.py:39 magic/models.py:45
+#: magic/models.py:67 rules/models.py:64 worlds/models.py:38
+#: worlds/models.py:112 worlds/models.py:170
 msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:101 armory/models.py:217 bestiary/models.py:38
-#: campaigns/models.py:21 campaigns/models.py:25 campaigns/models.py:126
-#: characters/models.py:29 characters/models.py:34 magic/models.py:46
-#: rules/models.py:65 worlds/models.py:39 worlds/models.py:113
-#: worlds/models.py:171
+#: campaigns/models.py:21 campaigns/models.py:30 campaigns/models.py:131
+#: characters/models.py:31 characters/models.py:40 magic/models.py:46
+#: magic/models.py:68 rules/models.py:65 worlds/models.py:39
+#: worlds/models.py:113 worlds/models.py:171
 msgid "image copyright url"
 msgstr "Bild Copyright URL"
 
@@ -308,8 +308,8 @@ msgstr ""
 msgid "weapon modification type"
 msgstr "Waffenmodifikationstyp"
 
-#: armory/models.py:302 horror/models.py:26 magic/models.py:112
-#: magic/models.py:147 rules/models.py:280 rules/models.py:380
+#: armory/models.py:302 horror/models.py:26 magic/models.py:136
+#: magic/models.py:171 rules/models.py:280 rules/models.py:380
 msgid "rules"
 msgstr "Regeln"
 
@@ -401,12 +401,12 @@ msgstr "Nachladeaktionen"
 msgid "Range (meter)"
 msgstr "Reichweite (Meter)"
 
-#: armory/models.py:334 horror/models.py:71 magic/models.py:164
+#: armory/models.py:334 horror/models.py:71 magic/models.py:188
 #: rules/models.py:150 rules/models.py:331
 msgid "attribute"
 msgstr "Attribut"
 
-#: armory/models.py:335 horror/models.py:75 magic/models.py:170
+#: armory/models.py:335 horror/models.py:75 magic/models.py:194
 #: rules/models.py:335
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
@@ -491,8 +491,8 @@ msgstr "Warnung"
 msgid "Danger"
 msgstr "Gefahr"
 
-#: armory/models.py:440 magic/models.py:43 rules/models.py:61
-#: rules/models.py:378
+#: armory/models.py:440 magic/models.py:43 magic/models.py:65
+#: rules/models.py:61 rules/models.py:378
 msgid "FA Icon Class"
 msgstr "FA Icon Klasse"
 
@@ -504,7 +504,7 @@ msgstr "Ist die übliche Einheit"
 msgid "Is this the common unit people pay with?"
 msgstr "Ist dies die übliche Einheit, mit der Menschen bezahlen?"
 
-#: armory/models.py:448 characters/models.py:746 rules/models.py:69
+#: armory/models.py:448 characters/models.py:758 rules/models.py:69
 #: rules/models.py:383 worlds/models.py:43 worlds/models.py:116
 msgid "ordering"
 msgstr "Sortierung"
@@ -635,11 +635,11 @@ msgstr "Gegner Widerstand oder Schwäche"
 msgid "foe resistances or weaknesses"
 msgstr "Gegner Widerstände oder Schwächen"
 
-#: bestiary/models.py:45 characters/models.py:66
+#: bestiary/models.py:45 characters/models.py:72
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: bestiary/models.py:46 characters/models.py:68 magic/models.py:11
+#: bestiary/models.py:46 characters/models.py:74 magic/models.py:11
 msgid "arcana"
 msgstr "Arkana"
 
@@ -647,7 +647,7 @@ msgstr "Arkana"
 msgid "protection"
 msgstr "Schutz"
 
-#: bestiary/models.py:49 magic/models.py:10 magic/models.py:92
+#: bestiary/models.py:49 magic/models.py:10 magic/models.py:109
 #: rules/models.py:14
 msgid "actions"
 msgstr "Aktionen"
@@ -781,62 +781,62 @@ msgstr "Nur SL"
 msgid "All"
 msgstr "Alle"
 
-#: campaigns/models.py:23 characters/models.py:31
+#: campaigns/models.py:24 characters/models.py:34
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
-#: campaigns/models.py:26
+#: campaigns/models.py:31
 msgid "abstract"
 msgstr "Zusammenfassung"
 
-#: campaigns/models.py:39
+#: campaigns/models.py:44
 #: campaigns/templates/campaigns/fragments/settings.html:11
 #: characters/forms.py:30 characters/forms.py:34 rules/models.py:47
 msgid "Epoch"
 msgstr "Epoche"
 
-#: campaigns/models.py:46
+#: campaigns/models.py:51
 #: campaigns/templates/campaigns/fragments/settings.html:7 rules/models.py:48
 msgid "World"
 msgstr "Welt"
 
-#: campaigns/models.py:53
+#: campaigns/models.py:58
 msgid "additional starting career points"
 msgstr "Zusätzliche Werdegangspunkte"
 
-#: campaigns/models.py:57
+#: campaigns/models.py:62
 msgid "discord webhook url"
 msgstr "Discord Webhook URL"
 
-#: campaigns/models.py:59
+#: campaigns/models.py:64
 msgid ""
 "Create a discord webhook and paste it's url here to display dice results."
 msgstr ""
 "Lege einen Discord Webhook an und kopiere seine URL hier herein, um "
 "Würfelergebnisse anzuzeigen."
 
-#: campaigns/models.py:64
+#: campaigns/models.py:69
 msgid "seed money"
 msgstr "Startkapital"
 
-#: campaigns/models.py:67
+#: campaigns/models.py:72
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:116 characters/models.py:745 forum/models.py:91
+#: campaigns/models.py:121 characters/models.py:757 forum/models.py:91
 #: worlds/models.py:106
 msgid "text"
 msgstr "Text"
 
-#: campaigns/models.py:137
+#: campaigns/models.py:142
 msgid "header"
 msgstr "Kopfzeile"
 
-#: campaigns/models.py:139
+#: campaigns/models.py:144
 msgid "roll string"
 msgstr "Würfelstring"
 
-#: campaigns/models.py:140
+#: campaigns/models.py:145
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
@@ -1101,7 +1101,7 @@ msgstr "Einstellungen bearbeiten"
 
 #: campaigns/templates/campaigns/fragments/status.html:9
 #: characters/templates/characters/character_detail.html:31
-#: characters/templates/characters/character_detail.html:82
+#: characters/templates/characters/character_detail.html:75
 msgid "Character"
 msgstr "Charakter"
 
@@ -1217,112 +1217,112 @@ msgstr "Name"
 msgid "Starting Reputation"
 msgstr "Startreputation"
 
-#: characters/models.py:42
+#: characters/models.py:48
 msgid "Characters without user will be cleaned daily."
 msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 
-#: characters/models.py:50 rules/models.py:131
+#: characters/models.py:56 rules/models.py:131
 msgid "lineage"
 msgstr "Abstammung"
 
-#: characters/models.py:54
+#: characters/models.py:60
 msgid "currency map"
 msgstr "Währungstabelle"
 
-#: characters/models.py:58
+#: characters/models.py:64
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: characters/models.py:61
+#: characters/models.py:67
 msgid "NPC Campaign"
 msgstr "Kampagne NPC"
 
-#: characters/models.py:64
+#: characters/models.py:70
 msgid "reputation"
 msgstr "Reputation"
 
-#: characters/models.py:67
+#: characters/models.py:73
 msgid "boost"
 msgstr "Boost"
 
-#: characters/models.py:69
+#: characters/models.py:75
 msgid "stress"
 msgstr "Stress"
 
-#: characters/models.py:71
+#: characters/models.py:77
 msgid "Bonus dice used"
 msgstr "Benutzte Bonuswürfel"
 
-#: characters/models.py:72
+#: characters/models.py:78
 msgid "Destiny dice used"
 msgstr "Benutzte Schicksalswürfel"
 
-#: characters/models.py:73
+#: characters/models.py:79
 msgid "Rerolls used"
 msgstr "Benutzte Wiederholungswürfe"
 
-#: characters/models.py:75
+#: characters/models.py:81
 msgid "latest initiative"
 msgstr "Letzte Initiative"
 
-#: characters/models.py:77 horror/models.py:33
+#: characters/models.py:83 horror/models.py:33
 msgid "quirks"
 msgstr "Eigenarten"
 
-#: characters/models.py:79
+#: characters/models.py:85
 msgid "quirks gained"
 msgstr "Erhaltene Eigenarten"
 
-#: characters/models.py:81
+#: characters/models.py:87
 msgid "The amount of quirks gained by excess stress"
 msgstr ""
 "Die Anzahl an Eigenarten, die durch überschüssigen Stress verursacht wurden"
 
-#: characters/models.py:83
+#: characters/models.py:89
 msgid "quirks healed"
 msgstr "Kurierte Eigenarten"
 
-#: characters/models.py:85
+#: characters/models.py:91
 msgid "The amount of quirks healed by treatment."
 msgstr "Die Anzahl an Eigenarten, die durch Behandlung geheilt wurden."
 
-#: characters/models.py:483
+#: characters/models.py:495
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:513
+#: characters/models.py:525
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:602
+#: characters/models.py:614
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:629
+#: characters/models.py:641
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:630
+#: characters/models.py:642
 msgid "Charges used"
 msgstr "Ladungen benutzt"
 
-#: characters/models.py:633
+#: characters/models.py:645
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:655
+#: characters/models.py:667
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:735
+#: characters/models.py:747
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:743
+#: characters/models.py:755
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:744
+#: characters/models.py:756
 msgid "subject"
 msgstr "Thema"
 
@@ -1462,18 +1462,18 @@ msgstr "Regeln"
 msgid "Privacy"
 msgstr "Privatsphäre"
 
-#: characters/templates/characters/character_detail.html:49
-#: characters/templates/characters/character_detail.html:50
+#: characters/templates/characters/character_detail.html:42
+#: characters/templates/characters/character_detail.html:43
 #: characters/templates/characters/fragments/advancement.html:9
 #: characters/templates/characters/sidebar/reputation.html:45
 msgid "Reputation"
 msgstr "Reputation"
 
-#: characters/templates/characters/character_detail.html:84
+#: characters/templates/characters/character_detail.html:77
 msgid "Gear"
 msgstr "Ausrüstung"
 
-#: characters/templates/characters/character_detail.html:86
+#: characters/templates/characters/character_detail.html:79
 #: characters/templates/characters/fragments/combat.html:166
 #: characters/templates/characters/fragments/combat.html:241
 #: characters/templates/characters/fragments/health.html:8
@@ -1481,26 +1481,26 @@ msgstr "Ausrüstung"
 msgid "Combat"
 msgstr "Kampf"
 
-#: characters/templates/characters/character_detail.html:89
+#: characters/templates/characters/character_detail.html:82
 #: characters/templates/characters/fragments/health.html:61
 msgid "Magic"
 msgstr "Magie"
 
-#: characters/templates/characters/character_detail.html:96
+#: characters/templates/characters/character_detail.html:89
 msgid "Background"
 msgstr "Werdegang"
 
-#: characters/templates/characters/character_detail.html:100
+#: characters/templates/characters/character_detail.html:93
 #: characters/templates/characters/fragments/combat.html:27
 msgid "Notes"
 msgstr "Notizen"
 
-#: characters/templates/characters/character_detail.html:102
+#: characters/templates/characters/character_detail.html:95
 #: characters/templates/characters/fragments/notes.html:10
 msgid "Take a note"
 msgstr "Notiz anlegen"
 
-#: characters/templates/characters/character_detail.html:109
+#: characters/templates/characters/character_detail.html:102
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -3049,11 +3049,11 @@ msgstr "Aspekt Modifikator"
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: magic/models.py:8 magic/models.py:90
+#: magic/models.py:8 magic/models.py:107
 msgid "power"
 msgstr "Stärke"
 
-#: magic/models.py:9 magic/models.py:91
+#: magic/models.py:9 magic/models.py:108
 msgid "range"
 msgstr "Reichweite"
 
@@ -3085,75 +3085,87 @@ msgstr "Zaubertyp"
 msgid "spell types"
 msgstr "Zaubertypen"
 
-#: magic/models.py:77
+#: magic/models.py:73
+msgid "spell origin"
+msgstr "Zauberursprung"
+
+#: magic/models.py:74
+msgid "spell origins"
+msgstr "Zauberursprünge"
+
+#: magic/models.py:94
 msgid "This was not accepted as general spell and is kept as homebrew."
 msgstr "Dieser Zauber wurde nicht als Generell akzeptiert und bleibt Homebrew."
 
-#: magic/models.py:85
+#: magic/models.py:102
 msgid "is tirakan spell"
 msgstr "Ist ein Tirakan Zauber"
 
-#: magic/models.py:87 magic/models.py:142
+#: magic/models.py:104 magic/models.py:166
 msgid "spell point cost"
 msgstr "Zauberpunkte Kosten"
 
-#: magic/models.py:88
+#: magic/models.py:105
 msgid "arcana cost"
 msgstr "Arkana Kosten"
 
-#: magic/models.py:94
+#: magic/models.py:111
 msgid "is ritual"
 msgstr "Ist Ritual"
 
-#: magic/models.py:99
+#: magic/models.py:122
+msgid "origin"
+msgstr "Ursprung"
+
+#: magic/models.py:127
 msgid "variant"
 msgstr "Variante"
 
-#: magic/models.py:107
+#: magic/models.py:131
 msgid "shape"
 msgstr "Form"
 
-#: magic/models.py:113 magic/models.py:149 rules/models.py:289
+#: magic/models.py:137 magic/models.py:173 rules/models.py:289
 msgid "quote"
 msgstr "Zitat"
 
-#: magic/models.py:114 magic/models.py:150 rules/models.py:290
+#: magic/models.py:138 magic/models.py:174 rules/models.py:290
 msgid "quote author"
 msgstr "Zitatautor"
 
-#: magic/models.py:122
+#: magic/models.py:146
 msgid "base spell"
 msgstr "Basiszauber"
 
-#: magic/models.py:123
+#: magic/models.py:147
 msgid "base spells"
 msgstr "Basiszauber"
 
-#: magic/models.py:131
+#: magic/models.py:155
 msgid "spell template category"
 msgstr "Zauberschablonenkategorie"
 
-#: magic/models.py:132
+#: magic/models.py:156
 msgid "spell template categories"
 msgstr "Zauberschablonenkategorien"
 
-#: magic/models.py:154
+#: magic/models.py:178
 msgid "spell template"
 msgstr "Zauberschablone"
 
-#: magic/models.py:155
+#: magic/models.py:179
 msgid "spell templates"
 msgstr "Zauberschablonen"
 
-#: magic/models.py:176
+#: magic/models.py:200
 msgid "variant change"
 msgstr "Variantenänderung"
 
-#: magic/models.py:182
+#: magic/models.py:206
 msgid "type change"
 msgstr "Typänderung"
 
-#: magic/models.py:188
+#: magic/models.py:212
 msgid "shape change"
 msgstr "Formänderung"
 

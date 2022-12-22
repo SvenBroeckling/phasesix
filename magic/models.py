@@ -60,6 +60,23 @@ class SpellType(models.Model, metaclass=TransMeta):
         return self.name
 
 
+class SpellOrigin(models.Model, metaclass=TransMeta):
+    name = models.CharField(_('name'), max_length=30)
+    fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
+    image = models.ImageField(_('image'), upload_to='spelltype_images', max_length=256, blank=True, null=True)
+    image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
+    image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
+
+    class Meta:
+        ordering = ('id',)
+        translate = ('name',)
+        verbose_name = _('spell origin')
+        verbose_name_plural = _('spell origins')
+
+    def __str__(self):
+        return self.name
+
+
 class BaseSpell(models.Model, metaclass=TransMeta):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -93,14 +110,21 @@ class BaseSpell(models.Model, metaclass=TransMeta):
 
     is_ritual = models.BooleanField(_('is ritual'), default=False)
 
-    variant = models.ForeignKey(
-        SpellVariant,
-        on_delete=models.CASCADE,
-        verbose_name=_('variant'))
     type = models.ForeignKey(
         SpellType,
         on_delete=models.CASCADE,
         verbose_name=_('type'))
+    origin = models.ForeignKey(
+        SpellOrigin,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name=_('origin')
+    )
+    variant = models.ForeignKey(
+        SpellVariant,
+        on_delete=models.CASCADE,
+        verbose_name=_('variant'))
     shape = models.ForeignKey(
         SpellShape,
         on_delete=models.CASCADE,
