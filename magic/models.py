@@ -63,7 +63,7 @@ class SpellType(models.Model, metaclass=TransMeta):
 class SpellOrigin(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=30)
     fa_icon_class = models.CharField(_('FA Icon Class'), max_length=30, default='fas fa-book')
-    image = models.ImageField(_('image'), upload_to='spelltype_images', max_length=256, blank=True, null=True)
+    image = models.ImageField(_('image'), upload_to='spellorigin_images', max_length=256, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
