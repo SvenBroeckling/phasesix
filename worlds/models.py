@@ -87,6 +87,12 @@ class WikiPage(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     name = models.CharField(_('name'), max_length=120)
+    short_name = models.CharField(
+        _('short name'),
+        help_text=_('An optional short name for the default link text.'),
+        blank=True,
+        null=True,
+        max_length=90)
     slug = models.SlugField(_('slug'), max_length=220, unique=True)
     world = models.ForeignKey(
         'worlds.World',
@@ -117,7 +123,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
 
     class Meta:
         ordering = ('ordering',)
-        translate = ('name', 'text')
+        translate = ('name', 'short_name', 'text')
         verbose_name = _('wiki page')
         verbose_name_plural = _('wiki pages')
 
@@ -134,6 +140,11 @@ class WikiPage(models.Model, metaclass=TransMeta):
 
     def may_edit(self, user):
         return user.is_superuser or user == self.created_by
+
+    def get_wiki_link_text(self):
+        if self.short_name:
+            return self.short_name
+        return self.name
 
     def get_image(self):
         if self.image:
