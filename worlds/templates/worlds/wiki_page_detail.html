@@ -101,7 +101,7 @@
 
     <div class="row masonry-container mt-4">
         {% for page in object.wikipage_set.all %}
-            <div class="col col-md-4">
+            <div class="col col-md-6 col-xl-4">
                 <a class="invisible-link" href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
                     <div class="card pointer mb-4">
                         <div class="card-header">
