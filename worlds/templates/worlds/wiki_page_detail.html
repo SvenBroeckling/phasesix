@@ -4,12 +4,12 @@
 {% block javascript %}
     <script src="{% static 'js/worlds_detail.js' %}"></script>
     <script>
-    $(function(){
-        let masonry = $('.masonry-container').masonry()
-        setTimeout(function(){
-            masonry.masonry('layout')
+      $ (function () {
+        let masonry = $ ('.masonry-container').masonry ()
+        setTimeout (function () {
+          masonry.masonry ('layout')
         }, 1000)
-    })
+      })
     </script>
 {% endblock %}
 
@@ -21,80 +21,64 @@
     <meta property="og:url" content="https://phasesix.org"/>
     {% if object.image %}
         {% thumbnail object.image '600' as image %}
-        <meta property="og:image" content="https://phasesix.org{{ image.url }}"/>
+            <meta property="og:image" content="https://phasesix.org{{ image.url }}"/>
         {% endthumbnail %}
     {% endif %}
     <meta property="og:description" content="{{ object.text|to_first_linebreak }}"/>
 {% endblock %}
 
-{% block belownav %}
-    <div
-        {% with img=object.get_image %}
-            {% if img %}
-                {% thumbnail img.image '1024' as im %}
-                    style="position: relative; height: 36vh; background-image: url({{ im.url }})"
-                {% endthumbnail %}
-            {% endif %}
-                class="row character-info-row mb-3">
-        {% endwith %}
-
-        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-            <div>
-                <h1>{{ object }}</h1>
-            </div>
-        </div>
-
-        <span class="background-image-copyright">
-            {% with img=object.get_image %}
-                {% if img %}
-                    Image by <a href="{{ img.copyright_url }}">{{ img.copyright }}</a>
-                {% endif %}
-            {% endwith %}
-        </span>
-
-    </div>
-{% endblock %}
-
 {% block content %}
-        <div class="row mt-2">
-            <div class="col-12">
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-3">
 
-                {% breadcrumbs object as crumbs %}
-                <div class="float-md-start">
-                    <nav aria-label="breadcrumbs">
-                        <ol class="breadcrumb">
-                            {% for bc in crumbs %}
-                                <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
-                            {% endfor %}
-                        </ol>
-                    </nav>
-                </div>
+            <div class="card">
+                {% with img=object.get_image %}
+                    {% if img %}
+                        {% thumbnail img.image '1024' as im %}
+                            <img class="card-img-top" src="{{ im.url }}" alt="{{ object }}"/>
+                            <span class="background-image-copyright">
+                                Image by <a href="{{ img.copyright_url }}">{{ img.copyright }}</a>
+                            </span>
+                        {% endthumbnail %}
+                    {% endif %}
+                {% endwith %}
+            </div>
 
-                {% if may_edit %}
+            {% if may_edit %}
                 <a
-                        class="btn btn-warning float-end modal-trigger"
+                        class="btn btn-outline-primary w-100 modal-trigger"
                         title="{% trans 'Edit Page' %}"
                         href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"><i class="fa fa-pen"></i> {% trans 'Edit Page' %}</a>
                 <a
-                        class="btn btn-warning me-md-1 mt-1 mt-md-0 float-end modal-trigger"
+                        class="btn btn-outline-secondary mt-1 w-100 modal-trigger"
                         data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
                         title="{% trans 'Create Wiki Page' %}"
                         data-bs-toggle="modal"
                         data-modal-title="{% trans 'Create Wiki Page' %}"
                         data-bs-target=".page-modal"
                         href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
-                    <button type="button"
-                            data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-                            data-sidebar-title="{% trans 'Sort Subpages' %}"
-                            class="btn btn-primary float-end me-md-1 sidebar-trigger">
-                        <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
-                    </button>
-                {% endif %}
-            </div>
+                <button type="button"
+                        data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+                        data-sidebar-title="{% trans 'Sort Subpages' %}"
+                        class="btn btn-outline-secondary w-100 mt-1 sidebar-trigger">
+                    <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
+                </button>
+            {% endif %}
+
         </div>
 
-    <div class="row mt-4">
-        <div class="col-12 wiki-page">
+        <div class="col-12 col-sm-8 col-md-9 wiki-page">
+            <h1>{{ object.name }}</h1>
+
+            <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
+                <ol class="breadcrumb">
+                    {% breadcrumbs object as crumbs %}
+                    {% for bc in crumbs %}
+                        <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
+                    {% endfor %}
+                </ol>
+            </nav>
+
             {{ object.text|urpg_markup|replace_tags:object.world }}
         </div>
     </div>
@@ -102,7 +86,8 @@
     <div class="row masonry-container mt-4">
         {% for page in object.wikipage_set.all %}
             <div class="col col-md-6 col-xl-4">
-                <a class="invisible-link" href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
+                <a class="invisible-link"
+                   href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
                     <div class="card pointer mb-4">
                         <div class="card-header">
                             {{ page }}
