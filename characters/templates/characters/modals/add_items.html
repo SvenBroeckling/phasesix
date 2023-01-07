@@ -38,7 +38,7 @@
                      class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
                      id="i{{ t.id }}">
                     <div class="row masonry-container">
-                        {% for item in t.item_set.all %}
+                        {% for item in t.item_set.distinct %}
                             {% has_extensions item character.extensions.all as has_extensions %}
                             {% if has_extensions %}
                                 <div class="col-12 col-lg-6">

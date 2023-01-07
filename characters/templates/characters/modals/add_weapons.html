@@ -31,7 +31,7 @@
 
     <div class="col-12 col-md-8 col-lg-9">
         <div class="tab-content">
-            {% for t in weapon_types %}
+            {% for t in weapon_types.distinct %}
                 <div role="tabpanel"
                      data-rel="#nav-item-{{ t.id }}"
                      class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"

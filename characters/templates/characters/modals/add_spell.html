@@ -78,7 +78,7 @@
         {% endfor %}
     </div>
 </div>
-{% for t in spell_types %}
+{% for t in spell_types.distinct %}
     <div class="container spell-selection" id="spell-selection-{{ t.id }}" style="display: none">
         <div class="row">
             <div class="col-12 text-center">

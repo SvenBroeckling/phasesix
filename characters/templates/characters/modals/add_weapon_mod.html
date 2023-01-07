@@ -24,7 +24,7 @@
     </ul>
 
     <div class="tab-content">
-        {% for t in weapon_modification_types %}
+        {% for t in weapon_modification_types.distinct %}
             {% weaponmodification_type_valid_for_weapon t character_weapon.weapon as wmt %}
             {% if wmt %}
                 <div role="tabpanel" class="tab-pane {% if forloop.first %} active {% endif %}" id="i{{ t.id }}">

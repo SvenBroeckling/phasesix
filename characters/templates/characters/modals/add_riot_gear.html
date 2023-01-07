@@ -1,7 +1,7 @@
 {% load i18n characters_extras rules_extras %}
 
 <div class="row">
-    {% for r in riot_gear %}
+    {% for r in riot_gear.distinct %}
         <div class="col-md-6">
             <div class="card mt-3">
                 <div class="card-header">
