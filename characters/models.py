@@ -184,7 +184,8 @@ class Character(models.Model):
     def get_epoch(self) -> Extension:
         return self.extensions.filter(is_mandatory=False, type='e').earliest('id')
 
-    def get_world(self):
+    @property
+    def world(self):
         try:
             return self.extensions.filter(is_mandatory=False, type='w').earliest('id')
         except Extension.DoesNotExist:

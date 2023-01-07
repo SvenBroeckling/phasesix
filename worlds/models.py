@@ -38,8 +38,6 @@ class World(models.Model, metaclass=TransMeta):
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
-    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     ordering = models.IntegerField(_('ordering'), default=100)
 
     class Meta:

@@ -27,36 +27,29 @@
                     {% endif %}">
 
         <div class="col-md-10 offset-md-1 pb-5 d-flex">
-            <div class="character-image me-4 {% if may_edit %}sidebar-trigger{% endif %}"
-                 data-sidebar-title="{% trans 'Character' %}"
-                 data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}">
-                <img class="rounded img-fluid" src="{{ object.get_image_url }}" alt="{{ object.name }}">
-                <span class="dice-icon"><i class="fas fa-dice-five text-light shadow fa-2x"></i></span>
-            </div>
 
-            <div>
-                <h3 class="mb-0">{{ object.name }}</h3>
-                <small>{% template_category_string object 3 "" %}</small><br>
-                <small>{% template_category_string object 2 "" %}</small><br>
-                <small>{% template_category_string object 6 "" %}</small><br>
-                <small class="sidebar-trigger" data-sidebar-title="{% trans 'Reputation' %}"
-                       data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="reputation" %}"><span>{% trans 'Reputation' %}</span>
-                    <span class="badge bg-secondary">{{ object.reputation_gained }}</span></small>
-                {% if object.campaign %}
-                    <br><small><a
-                            href="{% url 'campaigns:detail' pk=object.campaign.id %}">{{ object.campaign }}</a></small>
-                {% endif %}
-                {% if object.npc_campaign %}
-                    <br><small><a
-                        href="{% url 'campaigns:detail' pk=object.npc_campaign.id %}">{{ object.npc_campaign }} (NPC)</a></small>
-                {% endif %}
-                {% if object.campaign and object.get_world %} - {% else %}<br>{% endif %}<small>{{ object.get_world|default:"" }}</small>
+            <div class="card">
+                <div class="card-body d-flex flex-wrap">
+                    <div class="character-image me-4 {% if may_edit %}sidebar-trigger{% endif %}"
+                         data-sidebar-title="{% trans 'Character' %}"
+                         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}">
+                        <img class="rounded img-fluid" src="{{ object.get_image_url }}" alt="{{ object.name }}">
+                        <span class="dice-icon"><i class="fas fa-dice-five text-light shadow fa-2x"></i></span>
+                    </div>
+                    <div class="mt-3 mt-sm-0">
+                        <h3 class="mb-0">{{ object.name }}</h3>
+                        <small><span>{{ object.lineage }}</span></small><br>
+                        {% template_category_string object 3 %}
+                        {% template_category_string object 2 %}
+                        {% if object.pc_or_npc_campaign %}
+                            <small>{% trans 'Campaign' %}: <a href="{% url 'campaigns:detail' pk=object.pc_or_npc_campaign.id %}">{{ object.pc_or_npc_campaign }}</a></small>
+                            <br>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            {% if user.is_superuser %}
-                <a href="{% url 'admin:characters_character_change' object.id %}"
-                   style="font-size: xx-small" class="float-end">admin</a>
-            {% endif %}
         </div>
+
     </div>
 {% endblock %}
 
@@ -87,7 +80,7 @@
                 {% endif %}
                 <a class="nav-link" data-bs-toggle="tab" href="#v-background" role="tab" aria-controls="v-background"
                    aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
-                    <span class="badge bg-primary ms-2">{{ object.reputation_available }}</span>
+                    <span class="badge bg-primary ms-2">{{ object.reputation_available }}/{{ object.reputation_gained }}</span>
                 </a>
                 <a class="nav-link" data-bs-toggle="tab" href="#v-notes" role="tab" aria-controls="v-notes"
                    aria-selected="true"><i class="fas fa-fw fa-feather"></i>&nbsp;{% trans 'Notes' %}

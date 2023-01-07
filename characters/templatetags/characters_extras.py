@@ -99,11 +99,14 @@ def has_valid_weaponmodifications(weapon, character):
 
 
 @register.simple_tag
-def template_category_string(character, template_category, css="text-light"):
-    tc = character.charactertemplate_set.filter(template__category__id=template_category)
-    return mark_safe(
-        '<span class="{}">{}</span>'.format(css, ", ".join([str(t.template) for t in tc]))
-    )
+def template_category_string(character, template_category):
+    tc = character.charactertemplate_set.filter(
+        template__category__id=template_category).order_by('template__cost')[:3]
+    if tc.exists():
+        return mark_safe(
+            '<small><span>{}</span></small><br>'.format(", ".join([str(t.template) for t in tc]))
+        )
+    return ''
 
 
 @register.filter
