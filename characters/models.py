@@ -9,7 +9,7 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _, get_language
 from sorl.thumbnail import get_thumbnail
 
-from armory.models import Item, RiotGear, Weapon
+from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit
 from horror.models import QuirkModifier
 from magic.models import SpellTemplateModifier
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
@@ -164,6 +164,14 @@ class Character(models.Model):
     def currency_quantity(self, currency_map_unit):
         qs = self.charactercurrency_set.filter(currency_map_unit=currency_map_unit)
         return qs.latest('id').quantity if qs.exists() else 0
+
+    @property
+    def common_currency_unit(self):
+        return CurrencyMapUnit.objects.filter(
+            currency_map__character__id=self.id,
+            is_common=True
+        ).latest('id')
+
 
     @property
     def templates_with_rules(self):
