@@ -55,6 +55,7 @@ $(function () {
                 success: function (data) {
                     if (data.status === 'ok') {
                         flash_message_on_button(btn)
+                        refresh_fragments()
                     } else {
                         flash_message_on_button(btn, 'danger')
                     }
