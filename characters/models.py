@@ -111,6 +111,11 @@ class Character(models.Model):
 
         return f'{settings.STATIC_URL}/img/silhuette.png'
 
+    def get_backdrop_image_url(self):
+        if self.backdrop_image:
+            return get_thumbnail(self.backdrop_image, "1800", crop="center", quality=99).url
+        return get_thumbnail(self.get_epoch().image, "1800", crop="center", quality=99).url
+
     def get_aspect_modifier(self, aspect_name):
         m = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.charactertemplate_set.all(),

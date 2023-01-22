@@ -9,23 +9,8 @@
 {% endblock %}
 
 {% block belownav %}
-    <div
-            class="row character-info-row"
-            style="
-                    {% if character.backdrop_image %}
-                        {% thumbnail character.backdrop_image "1800" as im %}
-                            background-image: url({{ im.url }})
-                        {% endthumbnail %}
-                    {% else %}
-                        {% if character.get_epoch.image %}
-                            {% thumbnail character.get_epoch.image "1800" as im %}
-                                background-image: url({{ im.url }})
-                            {% endthumbnail %}
-                        {% else %}
-                            background-color: silver
-                        {% endif %}
-                    {% endif %}">
-
+    <div class="row character-info-row"
+         style="background-image: url({{ object.get_backdrop_image_url }});">
         <div class="col-md-10 offset-md-1 pb-5 d-flex">
 
             <div class="card">
