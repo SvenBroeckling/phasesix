@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
+import io
 
 from channels.layers import get_channel_layer
 from django import forms
 from django.contrib import messages
 from django.db.models import Q
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView, DetailView, FormView
+from weasyprint import HTML
+from weasyprint.text.fonts import FontConfiguration
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType, \
     WeaponAttackMode, CurrencyMapUnit
@@ -980,3 +984,20 @@ class XhrDeleteNoteView(View):
 
         note.delete()
         return JsonResponse({'status': 'ok'})
+
+
+class CharacterPDFView(View):
+    def get(self, request, *args, **kwargs):
+        font_config = FontConfiguration()
+        html = HTML(
+            file_obj=io.BytesIO(bytes(render_to_string(
+                'characters/character_pdf.html',
+                {
+                    'object': Character.objects.get(id=kwargs['pk'])
+                }),
+                encoding='utf-8')
+            ), base_url='src/', encoding='utf-8')
+        response = HttpResponse(content_type='application/pdf')
+        html.write_pdf(response, font_config=font_config)
+
+        return response
