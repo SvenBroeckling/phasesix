@@ -121,6 +121,13 @@
                         </ul>
 
                         <ul class="navbar-nav justify-content-end">
+                            {% if user.is_superuser %}
+                                <li class="nav-item">
+                                    {% block edit_link %}
+                                    {% endblock %}
+                                </li>
+                            {% endif %}
+
                             {% if user.is_authenticated %}
                                 <li class="nav-item dropdown" id="theme-dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
