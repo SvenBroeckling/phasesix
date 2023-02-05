@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-07 19:05+0000\n"
-"PO-Revision-Date: 2023-01-07 20:06+0100\n"
+"POT-Creation-Date: 2023-01-13 13:15+0000\n"
+"PO-Revision-Date: 2023-01-13 14:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1101,7 +1101,7 @@ msgstr "Einstellungen bearbeiten"
 
 #: campaigns/templates/campaigns/fragments/status.html:9
 #: characters/templates/characters/character_detail.html:34
-#: characters/templates/characters/character_detail.html:68
+#: characters/templates/characters/fragments/character_nav.html:8
 msgid "Character"
 msgstr "Charakter"
 
@@ -1393,7 +1393,7 @@ msgstr "Welten"
 msgid "Forum"
 msgstr "Forum"
 
-#: characters/templates/base.html:119
+#: characters/templates/base.html:119 characters/templates/contact.html:11
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
@@ -1463,38 +1463,7 @@ msgstr "Regeln"
 msgid "Privacy"
 msgstr "Privatsphäre"
 
-#: characters/templates/characters/character_detail.html:70
-msgid "Gear"
-msgstr "Ausrüstung"
-
-#: characters/templates/characters/character_detail.html:72
-#: characters/templates/characters/fragments/combat.html:166
-#: characters/templates/characters/fragments/combat.html:241
-#: characters/templates/characters/fragments/health.html:8
-#: characters/templates/characters/fragments/health.html:10
-msgid "Combat"
-msgstr "Kampf"
-
-#: characters/templates/characters/character_detail.html:75
-#: characters/templates/characters/fragments/health.html:61
-msgid "Magic"
-msgstr "Magie"
-
-#: characters/templates/characters/character_detail.html:82
-msgid "Background"
-msgstr "Werdegang"
-
-#: characters/templates/characters/character_detail.html:86
-#: characters/templates/characters/fragments/combat.html:27
-msgid "Notes"
-msgstr "Notizen"
-
-#: characters/templates/characters/character_detail.html:88
-#: characters/templates/characters/fragments/notes.html:10
-msgid "Take a note"
-msgstr "Notiz anlegen"
-
-#: characters/templates/characters/character_detail.html:95
+#: characters/templates/characters/character_detail.html:68
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -1619,6 +1588,37 @@ msgstr "Fertigkeiten"
 #: characters/templates/characters/fragments/character.html:118
 msgid "Shadows"
 msgstr "Schatten"
+
+#: characters/templates/characters/fragments/character_nav.html:10
+msgid "Gear"
+msgstr "Ausrüstung"
+
+#: characters/templates/characters/fragments/character_nav.html:12
+#: characters/templates/characters/fragments/combat.html:166
+#: characters/templates/characters/fragments/combat.html:241
+#: characters/templates/characters/fragments/health.html:8
+#: characters/templates/characters/fragments/health.html:10
+msgid "Combat"
+msgstr "Kampf"
+
+#: characters/templates/characters/fragments/character_nav.html:15
+#: characters/templates/characters/fragments/health.html:61
+msgid "Magic"
+msgstr "Magie"
+
+#: characters/templates/characters/fragments/character_nav.html:22
+msgid "Background"
+msgstr "Werdegang"
+
+#: characters/templates/characters/fragments/character_nav.html:26
+#: characters/templates/characters/fragments/combat.html:27
+msgid "Notes"
+msgstr "Notizen"
+
+#: characters/templates/characters/fragments/character_nav.html:28
+#: characters/templates/characters/fragments/notes.html:10
+msgid "Take a note"
+msgstr "Notiz anlegen"
 
 #: characters/templates/characters/fragments/combat.html:10
 #: characters/templates/characters/sidebar/character.html:18
@@ -2597,6 +2597,53 @@ msgstr ""
 #: characters/templates/contact.html:4
 msgid "Contact"
 msgstr "Kontakt"
+
+#: characters/templates/contact.html:14
+msgid "Licenses"
+msgstr "Lizenzen"
+
+#: characters/templates/contact.html:302
+msgid ""
+"\n"
+"                <h2>Game Content</h2>\n"
+"                All content of this platform is licensed under the <a "
+"href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\">CC BY NC SA</a> "
+"License. This affects\n"
+"                all content including rules, images and game content like "
+"character templates, spells etc. You may use the content of this game for "
+"own purposes,\n"
+"                but you have to state the origin of the material, and you "
+"have no permission to use this material commercially.\n"
+"                <h2 class=\"mt-2\">Source Code</h2>\n"
+"                This source code of this plattform is available in a <a "
+"href=\"https://gitlab.nimbostratus.de/sven/urpg\">gitlab repository</a>.\n"
+"                The code is licensed under the GPL3 Licence, which allow "
+"free usage. The Django Project may be used freely and commercially too. "
+"This\n"
+"                persmission does not include the permission to use game "
+"content freely.\n"
+"            "
+msgstr ""
+"\n"
+"                <h2>Spielinhalt</h2>\n"
+"                Alle Inhalte auf dieser Plattform sind unter der <a "
+"href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\">CC BY NC SA</a> "
+"Lizenz lizensiert. Dies betrifft\n"
+"                jeglichen Inhalt, unter Anderem Regeln, Bilder, Zauber und "
+"Charakterschablonen. Du darfst diese Inhalte für deine eigenen Zwecke "
+"nutzen ,\n"
+"                aber du musst die Herkunft des Matierals benennen und darfst "
+"diese Inhalte nicht kommerziell nutzen .\n"
+"                <h2 class=\"mt-2\">Quellcode</h2>\n"
+"                Der Quellcode dieser Plattform ist in einem <a "
+"href=\"https://gitlab.nimbostratus.de/sven/urpg\">gitlab repository</a> "
+"verfügbar.\n"
+"                Dieser Code ist mit der GPL3 lizensiert und darf frei "
+"verwendet werden. Das Django Projekt darf frei und kommerziell genutzt "
+"werden. Diese\n"
+"                Berechtigung schließt keine Spielinhalte ein.\n"
+"\n"
+"            "
 
 #: characters/templates/index.html:18
 msgid "A free, flexible role playing game."

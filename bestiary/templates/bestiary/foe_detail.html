@@ -3,6 +3,10 @@
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
+{% block edit_link %}
+    <a class="nav-link" href="{% url 'admin:bestiary_foe_change' object.id %}">{% trans 'Edit' %}</a>
+{% endblock %}
+
 {% block belownav %}
     {% if object.image %}
     <div

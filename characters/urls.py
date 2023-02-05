@@ -7,6 +7,7 @@ app_name = 'characters'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('detail/<int:pk>', views.CharacterDetailView.as_view(), name='detail'),
+    path('pdf/<int:pk>', views.CharacterPDFView.as_view(), name='pdf'),
     path('list/', views.CharacterListView.as_view(), name='list'),
     path('xhr_delete/<int:pk>', views.XhrDeleteCharacterView.as_view(), name='xhr_delete'),
 
