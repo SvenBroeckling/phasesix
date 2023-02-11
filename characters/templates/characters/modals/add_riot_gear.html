@@ -1,41 +1,83 @@
-{% load i18n characters_extras rules_extras %}
+{% load i18n characters_extras static rules_extras %}
+
+<script src="{% static 'js/add_items_weapons.js' %}"></script>
 
 <div class="row">
-    {% for r in riot_gear.distinct %}
-        <div class="col-md-6">
-            <div class="card mt-3">
-                <div class="card-header">
-                    <i class="{{ r.extension.fa_icon_class }}" title="{{ r.extension }}"></i>
-                    {{ r }}
-                </div>
-                <div class="card-body">
-                    <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.protection_ballistic 3 %}<br>
-                    <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.encumbrance 5 invert=True %}<br>
-                    <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}: {% color_value_span r.concealment 6 invert=True %}<br>
-                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ r.weight }}<br>
-                    {% if character.currency_map %}
-                        {% with cmu=character.currency_map.currencymapunit_set.earliest %}
-                            <br>
-                            <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
-                            {% trans 'Price' %}:
-                            {% color_value_span r.price 500 invert=True %}
-                        {% endwith %}
-                    {% endif %}
-                    <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=r.id %}" method="post"
-                          class="float-end add-form">
-                        {% csrf_token %}
-                        <input type="hidden" name="riot_gear_id" value="{{ r.id }}">
-                        <button type="submit" class="btn btn-primary btn-sm float-end"
-                                data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
-                            {% trans 'Add armor' %}
-                        </button>
-                    </form>
-                    {% if user.is_superuser %}
-                        <a href="{% url 'admin:armory_riotgear_change' r.id %}"
-                           style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
-                    {% endif %}
+
+    <div class="col-12 col-md-4 col-lg-3">
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">
+            {% if user.is_superuser %}
+                <a href="{% url 'admin:armory_riotgear_add' %}" class="btn btn-warning"><i
+                        class="fas fa-plus"></i> {% trans 'admin' %}</a>
+            {% endif %}
+        </div>
+        <button
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#add-item-mobile-nav"
+                class="btn btn-secondary btn-add-item-mobile-nav-toggle mb-1 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
+
+        <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
+            <ul class="nav nav-pills flex-column" role="tablist">
+                {% for t in riot_gear_types %}
+                    <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}" id="nav-item-{{ t.id }}">
+                        <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
+                           data-bs-toggle="tab">{{ t }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-md-8 col-lg-9">
+        <div class="tab-content">
+            {% for t in riot_gear_types.distinct %}
+            <div role="tabpanel"
+                 data-rel="#nav-item-{{ t.id }}"
+                 class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
+                 id="i{{ t.id }}">
+                <div class="row masonry-container">
+                    {% for riot_gear in t.riotgear_set.all.distinct|for_extensions:character.extensions.all %}
+                        <div class="col-12 col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    {{ riot_gear }}
+                                    {% if riot_gear.concealment %}
+                                        <span class="float-end"><i class="fas fa-eye-slash fa-fw"></i> {% color_value_span riot_gear.concealment 6 invert=True %}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span riot_gear.protection_ballistic 3 %}<br>
+                                    <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
+                                    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ riot_gear.weight }}<br>
+
+                                    {% with currency_unit=character.common_currency_unit %}
+                                        <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=riot_gear.id %}" method="post"
+                                              class="float-end add-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="riot_gear_id" value="{{ riot_gear.id }}">
+                                            <button type="submit" class="btn btn-primary btn-sm float-end"
+                                                    data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                                                {% trans 'Add' %}
+                                                <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+                                                {% color_value_span riot_gear.price 2000 invert=True %}
+                                            </button>
+                                        </form>
+                                    {% endwith %}
+
+                                    {% if user.is_superuser %}
+                                        <a href="{% url 'admin:armory_riotgear_change' riot_gear.id %}"
+                                           style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 </div>

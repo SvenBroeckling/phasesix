@@ -24,8 +24,10 @@ class ItemType(models.Model, metaclass=TransMeta):
     description = models.TextField(_('description'), blank=True, null=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+    ordering = models.IntegerField(_('ordering'), default=10)
 
     class Meta:
+        ordering = '-ordering',
         translate = ('name', 'description')
         verbose_name = _('item type')
         verbose_name_plural = _('item types')
@@ -117,6 +119,14 @@ class WeaponTypeQuerySet(models.QuerySet):
         ).distinct()
 
 
+class RiotGearQuerySet(models.QuerySet):
+    def for_extensions(self, extension_rm):
+        return self.filter(
+            Q(riotgear__extensions__id__in=extension_rm.all()) |
+            Q(riotgear__extensions__id__in=Extension.objects.filter(is_mandatory=True))
+        ).distinct()
+
+
 class WeaponType(models.Model, metaclass=TransMeta):
     objects = WeaponTypeQuerySet.as_manager()
 
@@ -124,8 +134,10 @@ class WeaponType(models.Model, metaclass=TransMeta):
     description = models.TextField(_('description'), blank=True, null=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+    ordering = models.IntegerField(_('ordering'), default=10)
 
     class Meta:
+        ordering = '-ordering',
         translate = ('name', 'description')
         verbose_name = _('weapon type')
         verbose_name_plural = _('weapon types')
@@ -161,13 +173,8 @@ class AttackMode(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class WeaponQuerySet(ExtensionSelectQuerySet):
-    def with_price(self):
-        return self.exclude(price=0).order_by('price')
-
-
 class Weapon(models.Model, metaclass=TransMeta):
-    objects = WeaponQuerySet.as_manager()
+    objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
@@ -353,10 +360,14 @@ class WeaponModificationAttributeChange(models.Model):
 
 
 class RiotGearType(models.Model, metaclass=TransMeta):
+    objects = RiotGearQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
+    ordering = models.IntegerField(_('ordering'), default=10)
 
     class Meta:
+        ordering = '-ordering',
         translate = 'name', 'description'
 
     def __str__(self):

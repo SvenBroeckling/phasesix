@@ -37,63 +37,62 @@
                      class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
                      id="i{{ t.id }}">
                     <div class="row masonry-container">
-                        {% for weapon in t.weapon_set.with_price %}
-                            {% has_extensions weapon character.extensions.all as has_extensions %}
-                            {% if has_extensions %}
-                                <div class="col-12 col-md-6">
-                                    <div class="card mb-3 add-item-card">
-                                        <div class="card-header">
-                                            {{ weapon }}
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    {{ weapon.description|urpg_markup }}
-                                                    <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
-                                                    <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %}<br>
-                                                    <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.actions_to_ready 5 invert=True %}<br>
-                                                    {% if not weapon.is_hand_to_hand_weapon %}
-                                                        <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:
-                                                        {% color_value_span weapon.reload_actions 6 invert=True %}<br>
-                                                        <i class="fas fa-list-ol fa-fw text-muted"></i> {% trans 'Capacity' %}:
-                                                        {% color_value_span weapon.capacity 30 %}<br>
-                                                    {% endif %}
-                                                    <i class="fas fa-arrows-alt-h fa-fw text-muted"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
-                                                    <i class="fas fa-weight fa-fw text-muted"></i> {% trans 'Encumbrance' %}: {% color_value_span weapon.encumbrance 2 invert=True %}<br>
-                                                    <i class="fas fa-eye-slash fa-fw text-muted"></i> {% trans 'Concealment' %}: {% color_value_span weapon.concealment 7 invert=True %}<br>
-                                                    <i class="fas fa-balance-scale fa-fw text-muted"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
-                                                    {% if weapon.weaponattackmode_set.exists %}
-                                                        <br>
-                                                        {% for fm in weapon.weaponattackmode_set.all %}
-                                                            {{ fm.attack_mode.name }}<br>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                    {% if character.currency_map %}
-                                                        {% with cmu=character.currency_map.currencymapunit_set.earliest %}
-                                                            <br>
-                                                            <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
-                                                            {% trans 'Price' %}:
-                                                            {% color_value_span weapon.price 1000 invert=True %}
-                                                        {% endwith %}
-                                                    {% endif %}
+                        {% for weapon in t.weapon_set.all.distinct|for_extensions:character.extensions.all %}
+                            <div class="col-12 col-md-6">
+                                <div class="card mb-3 add-item-card">
+                                    <div class="card-header">
+                                        {{ weapon }}
+                                        {% if weapon.concealment %}
+                                            <span class="float-end"><i class="fas fa-eye-slash fa-fw"></i> {% color_value_span weapon.concealment 6 invert=True %}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                {{ weapon.description|urpg_markup }}
+                                                <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
+                                                <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %}<br>
+                                                <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.actions_to_ready 5 invert=True %}<br>
+                                                {% if not weapon.is_hand_to_hand_weapon %}
+                                                    <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:
+                                                    {% color_value_span weapon.reload_actions 6 invert=True %}<br>
+                                                    <i class="fas fa-list-ol fa-fw text-muted"></i> {% trans 'Capacity' %}:
+                                                    {% color_value_span weapon.capacity 30 %}<br>
+                                                {% endif %}
+                                                <i class="fas fa-arrows-alt-h fa-fw text-muted"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
+                                                <i class="fas fa-weight fa-fw text-muted"></i> {% trans 'Encumbrance' %}: {% color_value_span weapon.encumbrance 2 invert=True %}<br>
+                                                <i class="fas fa-balance-scale fa-fw text-muted"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
+
+                                                {% if weapon.weaponattackmode_set.exists %}
+                                                    <br>
+                                                    {% for fm in weapon.weaponattackmode_set.all %}
+                                                        {{ fm.attack_mode.name }}<br>
+                                                    {% endfor %}
+                                                {% endif %}
+
+                                                {% with currency_unit=character.common_currency_unit %}
                                                     <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}"
                                                           class="float-end add-form" method="post">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
                                                         <button class="btn btn-sm btn-primary float-end"
                                                                 data-danger="{% trans 'Not possible' %}"
-                                                                data-success="{% trans 'Added' %}">{% trans 'Add weapon' %}</button>
+                                                                data-success="{% trans 'Added' %}">
+                                                            {% trans 'Add' %}
+                                                            <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+                                                            {% color_value_span weapon.price 1000 invert=True %}
+                                                        </button>
                                                     </form>
-                                                </div>
+                                                {% endwith %}
                                             </div>
-                                            {% if user.is_superuser %}
-                                                <a href="{% url 'admin:armory_weapon_change' weapon.id %}"
-                                                   style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
-                                            {% endif %}
                                         </div>
+                                        {% if user.is_superuser %}
+                                            <a href="{% url 'admin:armory_weapon_change' weapon.id %}"
+                                               style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+                                        {% endif %}
                                     </div>
                                 </div>
-                            {% endif %}
+                            </div>
                         {% endfor %}
                     </div>
                 </div>

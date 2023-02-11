@@ -16,7 +16,7 @@ from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
 
 from armory.models import Weapon, RiotGear, ItemType, Item, WeaponModificationType, WeaponModification, WeaponType, \
-    WeaponAttackMode, CurrencyMapUnit
+    WeaponAttackMode, CurrencyMapUnit, RiotGearType
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign
 from characters.forms import CharacterImageForm, CreateCharacterDataForm, CreateRandomNPCForm, CreateCharacterExtensionsForm
@@ -663,7 +663,7 @@ class XhrAddRiotGearView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         context = super(XhrAddRiotGearView, self).get_context_data(**kwargs)
         context['character'] = character
-        context['riot_gear'] = RiotGear.objects.for_extensions(character.extensions)
+        context['riot_gear_types'] = RiotGearType.objects.for_extensions(character.extensions)
         return context
 
 

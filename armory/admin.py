@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from armory.models import WeaponModificationAttributeChange, WeaponType, Weapon, WeaponModificationType, \
-    WeaponModification, RiotGear, ItemType, Item, AttackMode, WeaponAttackMode, CurrencyMap, CurrencyMapUnit
+    WeaponModification, RiotGear, ItemType, Item, AttackMode, WeaponAttackMode, CurrencyMap, CurrencyMapUnit, \
+    RiotGearType
 
 
 class WeaponAttackModeInline(admin.TabularInline):
@@ -52,6 +53,11 @@ class RiotGearAdmin(admin.ModelAdmin):
     ]
 
 
+class ItemTypeAdmin(admin.ModelAdmin):
+    list_display = ('name_en', 'name_de', 'ordering')
+    list_editable = 'ordering',
+
+
 class ItemAdmin(admin.ModelAdmin):
     list_display = (
         'name_de', 'name_en', 'type', 'weight', 'price', 'is_container', 'skill', 'concealment', 'usable_in_combat')
@@ -61,7 +67,13 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 class WeaponTypeAdmin(admin.ModelAdmin):
-    list_display = ('name_en', 'name_de')
+    list_display = ('name_en', 'name_de', 'ordering')
+    list_editable = 'ordering',
+
+
+class RiotGearTypeAdmin(admin.ModelAdmin):
+    list_display = ('name_en', 'name_de', 'ordering')
+    list_editable = 'ordering',
 
 
 class WeaponModificationTypeAdmin(admin.ModelAdmin):
@@ -98,8 +110,9 @@ admin.site.register(WeaponType, WeaponTypeAdmin)
 admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(WeaponModificationType, WeaponModificationTypeAdmin)
 admin.site.register(WeaponModification, WeaponModificationAdmin)
+admin.site.register(RiotGearType, RiotGearTypeAdmin)
 admin.site.register(RiotGear, RiotGearAdmin)
-admin.site.register(ItemType)
+admin.site.register(ItemType, ItemTypeAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(CurrencyMap, CurrencyMapAdmin)
 admin.site.register(CurrencyMapUnit)
