@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'magic',
     'horror',
     'campaigns',
+    'pantheon',
 ]
 
 MIDDLEWARE = [

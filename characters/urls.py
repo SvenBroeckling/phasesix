@@ -143,6 +143,10 @@ urlpatterns = [
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),
     path(
+        'new/info/<int:world_pk>/<int:epoch_pk>/',
+        views.CreateCharacterInfoView.as_view(),
+        name='create_character_info'),
+    path(
         'new/data/<int:epoch_pk>/<int:world_pk>/<int:campaign_pk>/<hash>/<type>/',
         views.CreateCharacterDataView.as_view(),
         name='create_character_data'),

@@ -1,0 +1,6 @@
+{% load rules_extras %}
+<h4>{{ title }}</h4>
+{% if lineage %}
+  {% template_widget lineage.template %}
+{% endif %}
+{{ description|urpg_markup }}

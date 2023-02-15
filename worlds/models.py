@@ -38,11 +38,14 @@ class World(models.Model, metaclass=TransMeta):
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
+    info_name_cm = models.CharField(_('Name for centimeter'), max_length=20, default="cm")
+    info_name_kg = models.CharField(_('Name for kilogram'), max_length=20, default="kg")
+
     ordering = models.IntegerField(_('ordering'), default=100)
 
     class Meta:
         ordering = ('ordering',)
-        translate = ('name', 'description')
+        translate = ('name', 'description', 'info_name_cm', 'info_name_kg')
         verbose_name = _('world')
         verbose_name_plural = _('worlds')
 

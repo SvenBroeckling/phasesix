@@ -24,7 +24,9 @@ from characters.models import Character, CharacterWeapon, CharacterRiotGear, Cha
     CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
 from horror.models import QuirkCategory, Quirk
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
+from pantheon.models import Entity
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge, TemplateCategory
+from rules.templatetags.rules_extras import template_widget
 
 
 class IndexView(TemplateView):
@@ -414,6 +416,11 @@ class CreateCharacterDataView(FormView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['lineage'].queryset = self.lineages
+
+        world = Extension.objects.get(id=self.kwargs['world_pk'])
+        if world.currency_map is not None:
+            form.fields['currency_map'].widget = forms.HiddenInput()
+
         if self.campaign_to_join:
             form.fields['currency_map'].widget = forms.HiddenInput()
             form.fields['seed_money'].widget = forms.HiddenInput()
@@ -442,6 +449,7 @@ class CreateCharacterDataView(FormView):
 
         if self.object.lineage.template is not None:
             self.object.add_template(self.object.lineage.template)
+
         if self.campaign_to_join is not None:
             for ext in self.campaign_to_join.extensions.all():
                 self.object.extensions.add(ext)
@@ -462,6 +470,12 @@ class CreateCharacterDataView(FormView):
             'lineage': self.lineages.earliest('id'),
             'extensions': Extension.objects.filter(id__in=self.request.GET.getlist('extensions'))
         }
+
+        world = Extension.objects.get(id=self.kwargs['world_pk'])
+        if world.currency_map is not None:
+            initial['currency_map'] = world.currency_map
+
+        # Campaign overrides world currency map
         if self.campaign_to_join is not None:
             initial['seed_money'] = self.campaign_to_join.seed_money
             initial['currency_map'] = self.campaign_to_join.currency_map
@@ -471,10 +485,82 @@ class CreateCharacterDataView(FormView):
         context = super().get_context_data(**kwargs)
         context['extensions'] = Extension.objects.filter(type__in=['x', 'w'], is_mandatory=False, is_active=True)
         context['campaign'] = self.campaign_to_join
+        context['world_pk'] = self.kwargs['world_pk']
+        context['epoch_pk'] = self.kwargs['epoch_pk']
         return context
 
     def get_success_url(self):
         return reverse('characters:create_character_constructed', kwargs={'pk': self.object.id})
+
+
+class CreateCharacterInfoView(TemplateView):
+    template_name = 'characters/_create_character_info.html'
+
+    def get_context_data(self, **kwargs):
+        field = self.request.GET.get('field')
+        value = self.request.GET.get('value')
+        try:
+            return getattr(self, f'{field}_info')(value)
+        except AttributeError:
+            return {}
+
+    def entity_info(self, value):
+        entity = Entity.objects.get(id=value)
+        return {
+            'title': entity.name,
+            'description': entity.description
+        }
+
+    def name_info(self, value):
+        return {
+            'title': gettext('Name'),
+            'description': gettext('Choose a suitable name for your character.')
+        }
+
+    def size_info(self, value):
+        world = Extension.objects.get(id=self.kwargs['world_pk']).world_set.latest('id')
+        return {
+            'title': gettext('Size'),
+            'description': gettext(f'Enter the size of your character in {world.info_name_cm}.')
+        }
+
+    def weight_info(self, value):
+        world = Extension.objects.get(id=self.kwargs['world_pk']).world_set.latest('id')
+        return {
+            'title': gettext('Weight'),
+            'description': gettext(f'Enter the weight of your character in {world.info_name_kg}.')
+        }
+
+    def date_of_birth_info(self, value):
+        return {
+            'title': gettext('Date of birth'),
+            'description': gettext('Enter the birthdate of your character.'),
+        }
+
+    def seed_money_info(self, value):
+        return {
+            'title': gettext('Seed Money'),
+            'description': gettext("""Specify a starting capital for your character. The seed money is usually
+            defined by the game master and determines how much equipment the character can have at the
+            beginning of the game.""")
+        }
+
+    def lineage_info(self, value):
+        lineage = Lineage.objects.get(id=value)
+        return {
+            'title': lineage.name,
+            'description': lineage.description,
+            'lineage': lineage
+        }
+
+    def attitude_info(self, value):
+        return {
+            'title': gettext('Attitude'),
+            'description': gettext("""The attitude indicates the morality of the character. The value ranges
+            from 0 to 100, with an attitude of 0 corresponding to a deeply evil character and a value of 100
+            corresponding to a good character. The value is freely selectable and can be changed by actions in the game.
+            """)
+        }
 
 
 class CreateRandomNPCView(CreateCharacterDataView):
