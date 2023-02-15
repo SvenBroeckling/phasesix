@@ -26,6 +26,17 @@ class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
 
+    size = models.IntegerField(_('size'), blank=True, null=True)
+    weight = models.IntegerField(_('weight'), blank=True, null=True)
+    date_of_birth = models.CharField(_('date of birth'), max_length=40, blank=True, null=True)
+    entity = models.ForeignKey(
+        'pantheon.Entity',
+        verbose_name=_('entity'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+    attitude = models.IntegerField(_('attitude'), blank=True, null=True)
+
     image = models.ImageField(_('image'), upload_to='character_images', max_length=256, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)

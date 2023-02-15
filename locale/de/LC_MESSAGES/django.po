@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-15 17:32+0000\n"
-"PO-Revision-Date: 2023-02-15 18:34+0100\n"
+"POT-Creation-Date: 2023-02-15 18:28+0000\n"
+"PO-Revision-Date: 2023-02-15 19:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1060,12 +1060,12 @@ msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:34
+#: characters/forms.py:34 characters/views.py:577
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
 #: campaigns/templates/campaigns/fragments/settings.html:23
-#: characters/forms.py:35 characters/views.py:542
+#: characters/forms.py:35 characters/views.py:552
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1220,7 +1220,7 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:25 characters/views.py:516 forum/forms.py:6
+#: characters/forms.py:25 characters/views.py:526 forum/forms.py:6
 #: homebrew/forms.py:9 homebrew/forms.py:27 homebrew/forms.py:39
 #: homebrew/forms.py:56
 msgid "Name"
@@ -1230,7 +1230,7 @@ msgstr "Name"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:49 characters/views.py:523
+#: characters/forms.py:49 characters/views.py:533
 msgid "Size"
 msgstr "Größe"
 
@@ -1240,11 +1240,11 @@ msgstr "Größe"
 #: characters/templates/characters/modals/add_weapons.html:64
 #: characters/templates/characters/sidebar/characteritem.html:152
 #: characters/templates/characters/sidebar/characterriotgear.html:48
-#: characters/views.py:530
+#: characters/views.py:540
 msgid "Weight"
 msgstr "Gewicht"
 
-#: characters/forms.py:51 characters/views.py:536
+#: characters/forms.py:51 characters/views.py:546
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1256,7 +1256,7 @@ msgstr "Keine"
 msgid "Entity"
 msgstr "Gottheit"
 
-#: characters/forms.py:57 characters/views.py:558
+#: characters/forms.py:57 characters/views.py:568
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -2787,25 +2787,25 @@ msgstr "Arkanawurf"
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:517
+#: characters/views.py:527
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:524
+#: characters/views.py:534
 #, python-brace-format
 msgid "Enter the size of your character in {world.info_name_cm}."
 msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
 
-#: characters/views.py:531
+#: characters/views.py:541
 #, python-brace-format
 msgid "Enter the weight of your character in {world.info_name_kg}."
 msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
-#: characters/views.py:537
+#: characters/views.py:547
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:543
+#: characters/views.py:553
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -2818,7 +2818,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:559
+#: characters/views.py:569
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -2834,6 +2834,16 @@ msgstr ""
 "     einem guten Charakter. Der Wert ist frei wählbar und kann durch "
 "Aktionen im Spiel verändert werden.\n"
 "     "
+
+#: characters/views.py:578
+msgid ""
+"The currency map specifies which currency units are available to the "
+"character.\n"
+"            It is usually set by the campaign or the world."
+msgstr ""
+"Die Währungstabelle gibt vor, welche Währungseinheiten dem Charakter zur "
+"Verfügung stehen. \n"
+"     Sie wird normalerweise von der Kampagne oder der Welt vorgegeben."
 
 #: forum/forms.py:7 forum/forms.py:11
 msgid "Text"

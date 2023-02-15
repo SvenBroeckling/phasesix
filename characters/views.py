@@ -413,9 +413,19 @@ class CreateCharacterDataView(FormView):
                 Q(is_mandatory=True) | Q(id__in=self.request.GET.getlist('extensions'))))
         )
 
+    @property
+    def entities(self):
+        return Entity.objects.filter(
+            Q(extensions__id=self.kwargs['epoch_pk']) |
+            Q(extensions__id=self.kwargs['world_pk']) |
+            Q(extensions__id__in=Extension.objects.filter(
+                Q(is_mandatory=True) | Q(id__in=self.request.GET.getlist('extensions'))))
+        )
+
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['lineage'].queryset = self.lineages
+        form.fields['entity'].queryset = self.entities
 
         world = Extension.objects.get(id=self.kwargs['world_pk'])
         if world.currency_map is not None:
@@ -430,7 +440,11 @@ class CreateCharacterDataView(FormView):
         self.object = Character.objects.create(
             name=form.cleaned_data['name'],
             currency_map=form.cleaned_data['currency_map'],
-            lineage=form.cleaned_data['lineage'])
+            lineage=form.cleaned_data['lineage'],
+            size=form.cleaned_data['size'],
+            weight=form.cleaned_data['weight'],
+            entity=form.cleaned_data['entity'],
+            attitude=form.cleaned_data['attitude'])
         self.object.extensions.add(form.cleaned_data['epoch'])
         self.object.extensions.add(form.cleaned_data['world'])
 
@@ -525,6 +539,7 @@ class CreateCharacterInfoView(TemplateView):
         }
 
     def weight_info(self, value):
+        print(self.kwargs['world_pk'])
         world = Extension.objects.get(id=self.kwargs['world_pk']).world_set.latest('id')
         return {
             'title': gettext('Weight'),
@@ -560,6 +575,13 @@ class CreateCharacterInfoView(TemplateView):
             from 0 to 100, with an attitude of 0 corresponding to a deeply evil character and a value of 100
             corresponding to a good character. The value is freely selectable and can be changed by actions in the game.
             """)
+        }
+    
+    def currency_map_info(self, value):
+        return {
+            'title': gettext('Currency Map'),
+            'description': gettext("""The currency map specifies which currency units are available to the character.
+            It is usually set by the campaign or the world.""")
         }
 
 
