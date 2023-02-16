@@ -478,18 +478,23 @@ class CreateCharacterDataView(FormView):
         return super().form_valid(form)
 
     def get_initial(self):
+        world = Extension.objects.get(id=self.kwargs['world_pk'])
+
+        extensions = Extension.objects.filter(id__in=self.request.GET.getlist('extensions'))
+        if world.fixed_extensions.exists():
+            extensions = world.fixed_extensions.all()
+
         initial = {
             'epoch': self.kwargs['epoch_pk'],
             'world': self.kwargs['world_pk'],
             'lineage': self.lineages.earliest('id'),
-            'extensions': Extension.objects.filter(id__in=self.request.GET.getlist('extensions'))
+            'extensions': extensions
         }
 
-        world = Extension.objects.get(id=self.kwargs['world_pk'])
         if world.currency_map is not None:
             initial['currency_map'] = world.currency_map
 
-        # Campaign overrides world currency map
+        # Campaign overrides world currency map and seed money
         if self.campaign_to_join is not None:
             initial['seed_money'] = self.campaign_to_join.seed_money
             initial['currency_map'] = self.campaign_to_join.currency_map
@@ -522,7 +527,8 @@ class CreateCharacterInfoView(TemplateView):
         entity = Entity.objects.get(id=value)
         return {
             'title': entity.name,
-            'description': entity.description
+            'description': entity.description,
+            'image': entity.image
         }
 
     def name_info(self, value):

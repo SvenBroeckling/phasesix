@@ -17,7 +17,11 @@
         {% for extension in extensions %}
             <div class="col-12 col-md-6 col-lg-4">
             {% if extension.fixed_epoch %}
-                <a href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
+                {% if extension.fixed_extensions.exists %}
+                  <a href="{% url 'characters:create_character_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
+                {% else %}
+                  <a href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
+                {% endif %}
             {% else %}
                 <a href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">
             {% endif %}

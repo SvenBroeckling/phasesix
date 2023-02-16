@@ -1,5 +1,10 @@
-{% load rules_extras %}
+{% load rules_extras thumbnail %}
 <h4>{{ title }}</h4>
+{% if image %}
+  {% thumbnail image "512" as im %}
+    <img class="img-fluid mb-1" src="{{ im.url }}" alt="{{ title }}">
+  {% endthumbnail %}
+{% endif %}
 {% if lineage %}
   {% template_widget lineage.template %}
 {% endif %}
