@@ -18,11 +18,11 @@
       <p>The transition duration should be around 2s. Also, the carousel shouldn't slide when its window/tab is hidden. Check the console log.</p>
 
       <div id="carousel-example-generic" class="carousel slide" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-bs-target="#carousel-example-generic" data-bs-slide-to="0" class="active"></li>
-          <li data-bs-target="#carousel-example-generic" data-bs-slide-to="1"></li>
-          <li data-bs-target="#carousel-example-generic" data-bs-slide-to="2"></li>
-        </ol>
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carousel-example-generic" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carousel-example-generic" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carousel-example-generic" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="https://i.imgur.com/iEZgY7Y.jpg" alt="First slide">
@@ -34,34 +34,30 @@
             <img src="https://i.imgur.com/Nm7xoti.jpg" alt="Third slide">
           </div>
         </div>
-        <a class="carousel-control-prev" href="#carousel-example-generic" role="button" data-bs-slide="prev">
+        <button class="carousel-control-prev" data-bs-target="#carousel-example-generic" type="button" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carousel-example-generic" role="button" data-bs-slide="next">
+        </button>
+        <button class="carousel-control-next" data-bs-target="#carousel-example-generic" type="button" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
-        </a>
+        </button>
       </div>
     </div>
 
-    <script src="../../dist/dom/event-handler.js"></script>
-    <script src="../../dist/dom/selector-engine.js"></script>
-    <script src="../../dist/dom/manipulator.js"></script>
-    <script src="../../dist/dom/data.js"></script>
-    <script src="../../dist/carousel.js"></script>
+    <script src="../../../dist/js/bootstrap.bundle.js"></script>
     <script>
-      var t0
-      var t1
-      var carousel = document.getElementById('carousel-example-generic')
+      let t0
+      let t1
+      const carousel = document.getElementById('carousel-example-generic')
 
       // Test to show that the carousel doesn't slide when the current tab isn't visible
       // Test to show that transition-duration can be changed with css
-      carousel.addEventListener('slid.bs.carousel', function (event) {
+      carousel.addEventListener('slid.bs.carousel', event => {
         t1 = performance.now()
-        console.log('transition-duration took ' + (t1 - t0) + 'ms, slid at ', event.timeStamp)
+        console.log(`transition-duration took ${t1 - t0}ms, slid at ${event.timeStamp}`)
       })
-      carousel.addEventListener('slide.bs.carousel', function () {
+      carousel.addEventListener('slide.bs.carousel', () => {
         t0 = performance.now()
       })
     </script>

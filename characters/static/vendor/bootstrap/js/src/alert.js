@@ -1,154 +1,87 @@
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v5.0.0-beta1): alert.js
+ * Bootstrap (v5.3.0-alpha1): alert.js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
 
-import {
-  getjQuery,
-  onDOMContentLoaded,
-  TRANSITION_END,
-  emulateTransitionEnd,
-  getElementFromSelector,
-  getTransitionDurationFromElement
-} from './util/index'
-import Data from './dom/data'
-import EventHandler from './dom/event-handler'
-import BaseComponent from './base-component'
+import { defineJQueryPlugin } from './util/index.js'
+import EventHandler from './dom/event-handler.js'
+import BaseComponent from './base-component.js'
+import { enableDismissTrigger } from './util/component-functions.js'
 
 /**
- * ------------------------------------------------------------------------
  * Constants
- * ------------------------------------------------------------------------
  */
 
 const NAME = 'alert'
 const DATA_KEY = 'bs.alert'
 const EVENT_KEY = `.${DATA_KEY}`
-const DATA_API_KEY = '.data-api'
-
-const SELECTOR_DISMISS = '[data-bs-dismiss="alert"]'
 
 const EVENT_CLOSE = `close${EVENT_KEY}`
 const EVENT_CLOSED = `closed${EVENT_KEY}`
-const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`
-
-const CLASSNAME_ALERT = 'alert'
-const CLASSNAME_FADE = 'fade'
-const CLASSNAME_SHOW = 'show'
+const CLASS_NAME_FADE = 'fade'
+const CLASS_NAME_SHOW = 'show'
 
 /**
- * ------------------------------------------------------------------------
- * Class Definition
- * ------------------------------------------------------------------------
+ * Class definition
  */
 
 class Alert extends BaseComponent {
   // Getters
-
-  static get DATA_KEY() {
-    return DATA_KEY
+  static get NAME() {
+    return NAME
   }
 
   // Public
+  close() {
+    const closeEvent = EventHandler.trigger(this._element, EVENT_CLOSE)
 
-  close(element) {
-    const rootElement = element ? this._getRootElement(element) : this._element
-    const customEvent = this._triggerCloseEvent(rootElement)
-
-    if (customEvent === null || customEvent.defaultPrevented) {
+    if (closeEvent.defaultPrevented) {
       return
     }
 
-    this._removeElement(rootElement)
+    this._element.classList.remove(CLASS_NAME_SHOW)
+
+    const isAnimated = this._element.classList.contains(CLASS_NAME_FADE)
+    this._queueCallback(() => this._destroyElement(), this._element, isAnimated)
   }
 
   // Private
-
-  _getRootElement(element) {
-    return getElementFromSelector(element) || element.closest(`.${CLASSNAME_ALERT}`)
-  }
-
-  _triggerCloseEvent(element) {
-    return EventHandler.trigger(element, EVENT_CLOSE)
-  }
-
-  _removeElement(element) {
-    element.classList.remove(CLASSNAME_SHOW)
-
-    if (!element.classList.contains(CLASSNAME_FADE)) {
-      this._destroyElement(element)
-      return
-    }
-
-    const transitionDuration = getTransitionDurationFromElement(element)
-
-    EventHandler.one(element, TRANSITION_END, () => this._destroyElement(element))
-    emulateTransitionEnd(element, transitionDuration)
-  }
-
-  _destroyElement(element) {
-    if (element.parentNode) {
-      element.parentNode.removeChild(element)
-    }
-
-    EventHandler.trigger(element, EVENT_CLOSED)
+  _destroyElement() {
+    this._element.remove()
+    EventHandler.trigger(this._element, EVENT_CLOSED)
+    this.dispose()
   }
 
   // Static
-
   static jQueryInterface(config) {
     return this.each(function () {
-      let data = Data.getData(this, DATA_KEY)
+      const data = Alert.getOrCreateInstance(this)
 
-      if (!data) {
-        data = new Alert(this)
+      if (typeof config !== 'string') {
+        return
       }
 
-      if (config === 'close') {
-        data[config](this)
+      if (data[config] === undefined || config.startsWith('_') || config === 'constructor') {
+        throw new TypeError(`No method named "${config}"`)
       }
+
+      data[config](this)
     })
-  }
-
-  static handleDismiss(alertInstance) {
-    return function (event) {
-      if (event) {
-        event.preventDefault()
-      }
-
-      alertInstance.close(this)
-    }
   }
 }
 
 /**
- * ------------------------------------------------------------------------
- * Data Api implementation
- * ------------------------------------------------------------------------
+ * Data API implementation
  */
-EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DISMISS, Alert.handleDismiss(new Alert()))
+
+enableDismissTrigger(Alert, 'close')
 
 /**
- * ------------------------------------------------------------------------
  * jQuery
- * ------------------------------------------------------------------------
- * add .Alert to jQuery only if jQuery is present
  */
 
-onDOMContentLoaded(() => {
-  const $ = getjQuery()
-  /* istanbul ignore if */
-  if ($) {
-    const JQUERY_NO_CONFLICT = $.fn[NAME]
-    $.fn[NAME] = Alert.jQueryInterface
-    $.fn[NAME].Constructor = Alert
-    $.fn[NAME].noConflict = () => {
-      $.fn[NAME] = JQUERY_NO_CONFLICT
-      return Alert.jQueryInterface
-    }
-  }
-})
+defineJQueryPlugin(Alert)
 
 export default Alert

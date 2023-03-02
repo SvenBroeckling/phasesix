@@ -5,16 +5,15 @@
  * Remember to use the same vendor files as the CDN ones,
  * otherwise the hashes won't match!
  *
- * Copyright 2017-2020 The Bootstrap Authors
- * Copyright 2017-2020 Twitter, Inc.
+ * Copyright 2017-2022 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
 'use strict'
 
-const crypto = require('crypto')
-const fs = require('fs')
-const path = require('path')
+const crypto = require('node:crypto')
+const fs = require('node:fs')
+const path = require('node:path')
 const sh = require('shelljs')
 
 sh.config.fatal = true
@@ -47,10 +46,10 @@ const files = [
   }
 ]
 
-files.forEach(file => {
-  fs.readFile(file.file, 'utf8', (err, data) => {
-    if (err) {
-      throw err
+for (const file of files) {
+  fs.readFile(file.file, 'utf8', (error, data) => {
+    if (error) {
+      throw error
     }
 
     const algo = 'sha384'
@@ -61,4 +60,4 @@ files.forEach(file => {
 
     sh.sed('-i', new RegExp(`^(\\s+${file.configPropertyName}:\\s+["'])\\S*(["'])`), `$1${integrity}$2`, configFile)
   })
-})
+}

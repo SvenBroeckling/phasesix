@@ -1,131 +1,106 @@
 import Data from '../../../src/dom/data'
-
-/** Test helpers */
 import { getFixture, clearFixture } from '../../helpers/fixture'
 
 describe('Data', () => {
+  const TEST_KEY = 'bs.test'
+  const UNKNOWN_KEY = 'bs.unknown'
+  const TEST_DATA = {
+    test: 'bsData'
+  }
+
   let fixtureEl
+  let div
 
   beforeAll(() => {
     fixtureEl = getFixture()
   })
 
+  beforeEach(() => {
+    fixtureEl.innerHTML = '<div></div>'
+    div = fixtureEl.querySelector('div')
+  })
+
   afterEach(() => {
+    Data.remove(div, TEST_KEY)
     clearFixture()
   })
 
-  describe('setData', () => {
-    it('should set data in an element by adding a bsKey attribute', () => {
-      fixtureEl.innerHTML = '<div></div>'
+  it('should return null for unknown elements', () => {
+    const data = { ...TEST_DATA }
 
-      const div = fixtureEl.querySelector('div')
-      const data = {
-        test: 'bsData'
-      }
+    Data.set(div, TEST_KEY, data)
 
-      Data.setData(div, 'test', data)
-      expect(div.bsKey).toBeDefined()
-    })
-
-    it('should change data if something is already stored', () => {
-      fixtureEl.innerHTML = '<div></div>'
-
-      const div = fixtureEl.querySelector('div')
-      const data = {
-        test: 'bsData'
-      }
-
-      Data.setData(div, 'test', data)
-
-      data.test = 'bsData2'
-      Data.setData(div, 'test', data)
-
-      expect(div.bsKey).toBeDefined()
-    })
+    expect(Data.get(null)).toBeNull()
+    expect(Data.get(undefined)).toBeNull()
+    expect(Data.get(document.createElement('div'), TEST_KEY)).toBeNull()
   })
 
-  describe('getData', () => {
-    it('should return stored data', () => {
-      fixtureEl.innerHTML = '<div></div>'
+  it('should return null for unknown keys', () => {
+    const data = { ...TEST_DATA }
 
-      const div = fixtureEl.querySelector('div')
-      const data = {
-        test: 'bsData'
-      }
+    Data.set(div, TEST_KEY, data)
 
-      Data.setData(div, 'test', data)
-      expect(Data.getData(div, 'test')).toEqual(data)
-    })
-
-    it('should return null on undefined element', () => {
-      expect(Data.getData(null)).toEqual(null)
-      expect(Data.getData(undefined)).toEqual(null)
-    })
-
-    it('should return null when an element have nothing stored', () => {
-      fixtureEl.innerHTML = '<div></div>'
-
-      const div = fixtureEl.querySelector('div')
-
-      expect(Data.getData(div, 'test')).toEqual(null)
-    })
-
-    it('should return null when an element have nothing stored with the provided key', () => {
-      fixtureEl.innerHTML = '<div></div>'
-
-      const div = fixtureEl.querySelector('div')
-      const data = {
-        test: 'bsData'
-      }
-
-      Data.setData(div, 'test', data)
-
-      expect(Data.getData(div, 'test2')).toEqual(null)
-    })
+    expect(Data.get(div, null)).toBeNull()
+    expect(Data.get(div, undefined)).toBeNull()
+    expect(Data.get(div, UNKNOWN_KEY)).toBeNull()
   })
 
-  describe('removeData', () => {
-    it('should do nothing when an element have nothing stored', () => {
-      fixtureEl.innerHTML = '<div></div>'
+  it('should store data for an element with a given key and return it', () => {
+    const data = { ...TEST_DATA }
 
-      const div = fixtureEl.querySelector('div')
+    Data.set(div, TEST_KEY, data)
 
-      Data.removeData(div, 'test')
-      expect().nothing()
-    })
-
-    it('should should do nothing if it\'s not a valid key provided', () => {
-      fixtureEl.innerHTML = '<div></div>'
-
-      const div = fixtureEl.querySelector('div')
-      const data = {
-        test: 'bsData'
-      }
-
-      Data.setData(div, 'test', data)
-
-      expect(div.bsKey).toBeDefined()
-
-      Data.removeData(div, 'test2')
-
-      expect(div.bsKey).toBeDefined()
-    })
-
-    it('should remove data if something is stored', () => {
-      fixtureEl.innerHTML = '<div></div>'
-
-      const div = fixtureEl.querySelector('div')
-      const data = {
-        test: 'bsData'
-      }
-
-      Data.setData(div, 'test', data)
-
-      expect(div.bsKey).toBeDefined()
-
-      Data.removeData(div, 'test')
-
-      expect(div.bsKey).toBeUndefined()
-    })
+    expect(Data.get(div, TEST_KEY)).toEqual(data)
   })
+
+  it('should overwrite data if something is already stored', () => {
+    const data = { ...TEST_DATA }
+    const copy = { ...data }
+
+    Data.set(div, TEST_KEY, data)
+    Data.set(div, TEST_KEY, copy)
+
+    // Using `toBe` since spread creates a shallow copy
+    expect(Data.get(div, TEST_KEY)).not.toBe(data)
+    expect(Data.get(div, TEST_KEY)).toBe(copy)
+  })
+
+  it('should do nothing when an element has nothing stored', () => {
+    Data.remove(div, TEST_KEY)
+
+    expect().nothing()
+  })
+
+  it('should remove nothing for an unknown key', () => {
+    const data = { ...TEST_DATA }
+
+    Data.set(div, TEST_KEY, data)
+    Data.remove(div, UNKNOWN_KEY)
+
+    expect(Data.get(div, TEST_KEY)).toEqual(data)
+  })
+
+  it('should remove data for a given key', () => {
+    const data = { ...TEST_DATA }
+
+    Data.set(div, TEST_KEY, data)
+    Data.remove(div, TEST_KEY)
+
+    expect(Data.get(div, TEST_KEY)).toBeNull()
+  })
+
+  /* eslint-disable no-console */
+  it('should console.error a message if called with multiple keys', () => {
+    console.error = jasmine.createSpy('console.error')
+
+    const data = { ...TEST_DATA }
+    const copy = { ...data }
+
+    Data.set(div, TEST_KEY, data)
+    Data.set(div, UNKNOWN_KEY, copy)
+
+    expect(console.error).toHaveBeenCalled()
+    expect(Data.get(div, UNKNOWN_KEY)).toBeNull()
+  })
+  /* eslint-enable no-console */
 })

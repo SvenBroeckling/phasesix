@@ -234,6 +234,10 @@ legend {
   color: $white;
 }
 
+.form-control {
+  color-scheme: light;
+}
+
 .input-group-addon {
   @include btn-shadow($secondary);
   color: $white;
@@ -346,7 +350,7 @@ legend {
     &,
     a:not(.btn),
     .alert-link {
-      color: $body-bg;
+      color: $dark;
     }
   }
 }
@@ -360,6 +364,14 @@ legend {
 // Containers
 
 .list-group {
+  &-item {
+    color: $white;
+
+    &-light {
+      color: $dark;
+    }
+  }
+
   &-item-action:hover {
     background-color: shade-color($gray-900, 10%);
   }

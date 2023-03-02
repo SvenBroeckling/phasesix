@@ -1,16 +1,13 @@
 {
-  "root": true,
   "extends": [
     "../../../.eslintrc.json"
   ],
-  "overrides": [
-    {
-      "files": [
-        "**/*.spec.js"
-      ],
-      "env": {
-        "jasmine": true
-      }
-    }
-  ]
+  "env": {
+    "jasmine": true
+  },
+  "rules": {
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/no-useless-undefined": "off",
+    "unicorn/prefer-add-event-listener": "off"
+  }
 }

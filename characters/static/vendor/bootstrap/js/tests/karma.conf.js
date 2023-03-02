@@ -1,21 +1,20 @@
 /* eslint-env node */
 
-const path = require('path')
+'use strict'
+
+const path = require('node:path')
 const ip = require('ip')
 const { babel } = require('@rollup/plugin-babel')
 const istanbul = require('rollup-plugin-istanbul')
 const { nodeResolve } = require('@rollup/plugin-node-resolve')
 const replace = require('@rollup/plugin-replace')
+const { browsers } = require('./browsers')
 
-const {
-  browsers,
-  browsersKeys
-} = require('./browsers')
+const ENV = process.env
+const BROWSERSTACK = Boolean(ENV.BROWSERSTACK)
+const DEBUG = Boolean(ENV.DEBUG)
+const JQUERY_TEST = Boolean(ENV.JQUERY)
 
-const { env } = process
-const browserStack = env.BROWSER === 'true'
-const debug = env.DEBUG === 'true'
-const jQueryTest = env.JQUERY === 'true'
 const frameworks = [
   'jasmine'
 ]
@@ -30,36 +29,34 @@ const reporters = ['dots']
 const detectBrowsers = {
   usePhantomJS: false,
   postDetection(availableBrowser) {
-    if (env.CI === true || availableBrowser.includes('Chrome')) {
-      return debug ? ['Chrome'] : ['ChromeHeadless']
+    // On CI just use Chrome
+    if (ENV.CI === true) {
+      return ['ChromeHeadless']
+    }
+
+    if (availableBrowser.includes('Chrome')) {
+      return DEBUG ? ['Chrome'] : ['ChromeHeadless']
     }
 
     if (availableBrowser.includes('Chromium')) {
-      return debug ? ['Chromium'] : ['ChromiumHeadless']
+      return DEBUG ? ['Chromium'] : ['ChromiumHeadless']
     }
 
     if (availableBrowser.includes('Firefox')) {
-      return debug ? ['Firefox'] : ['FirefoxHeadless']
+      return DEBUG ? ['Firefox'] : ['FirefoxHeadless']
     }
 
     throw new Error('Please install Chrome, Chromium or Firefox')
   }
 }
 
-const customLaunchers = {
-  FirefoxHeadless: {
-    base: 'Firefox',
-    flags: ['-headless']
-  }
-}
-
-const conf = {
+const config = {
   basePath: '../..',
   port: 9876,
   colors: true,
   autoWatch: false,
   singleRun: true,
-  concurrency: Infinity,
+  concurrency: Number.POSITIVE_INFINITY,
   client: {
     clearContext: false
   },
@@ -67,7 +64,7 @@ const conf = {
     'node_modules/hammer-simulator/index.js',
     {
       pattern: 'js/tests/unit/**/!(jquery).spec.js',
-      watched: !browserStack
+      watched: !BROWSERSTACK
     }
   ],
   preprocessors: {
@@ -76,7 +73,8 @@ const conf = {
   rollupPreprocessor: {
     plugins: [
       replace({
-        'process.env.NODE_ENV': '"dev"'
+        'process.env.NODE_ENV': '"dev"',
+        preventAssignment: true
       }),
       istanbul({
         exclude: [
@@ -96,34 +94,34 @@ const conf = {
     output: {
       format: 'iife',
       name: 'bootstrapTest',
-      sourcemap: 'inline'
+      sourcemap: 'inline',
+      generatedCode: 'es2015'
     }
   }
 }
 
-if (browserStack) {
-  conf.hostname = ip.address()
-  conf.browserStack = {
-    username: env.BROWSER_STACK_USERNAME,
-    accessKey: env.BROWSER_STACK_ACCESS_KEY,
-    build: `bootstrap-${new Date().toISOString()}`,
+if (BROWSERSTACK) {
+  config.hostname = ip.address()
+  config.browserStack = {
+    username: ENV.BROWSER_STACK_USERNAME,
+    accessKey: ENV.BROWSER_STACK_ACCESS_KEY,
+    build: `bootstrap-${ENV.GITHUB_SHA ? `${ENV.GITHUB_SHA.slice(0, 7)}-` : ''}${new Date().toISOString()}`,
     project: 'Bootstrap',
     retryLimit: 2
   }
   plugins.push('karma-browserstack-launcher', 'karma-jasmine-html-reporter')
-  conf.customLaunchers = browsers
-  conf.browsers = browsersKeys
+  config.customLaunchers = browsers
+  config.browsers = Object.keys(browsers)
   reporters.push('BrowserStack', 'kjhtml')
-} else if (jQueryTest) {
+} else if (JQUERY_TEST) {
   frameworks.push('detectBrowsers')
   plugins.push(
     'karma-chrome-launcher',
     'karma-firefox-launcher',
     'karma-detect-browsers'
   )
-  conf.customLaunchers = customLaunchers
-  conf.detectBrowsers = detectBrowsers
-  conf.files = [
+  config.detectBrowsers = detectBrowsers
+  config.files = [
     'node_modules/jquery/dist/jquery.slim.min.js',
     {
       pattern: 'js/tests/unit/jquery.spec.js',
@@ -139,9 +137,8 @@ if (browserStack) {
     'karma-coverage-istanbul-reporter'
   )
   reporters.push('coverage-istanbul')
-  conf.customLaunchers = customLaunchers
-  conf.detectBrowsers = detectBrowsers
-  conf.coverageIstanbulReporter = {
+  config.detectBrowsers = detectBrowsers
+  config.coverageIstanbulReporter = {
     dir: path.resolve(__dirname, '../coverage/'),
     reports: ['lcov', 'text-summary'],
     thresholds: {
@@ -155,21 +152,20 @@ if (browserStack) {
     }
   }
 
-  if (debug) {
-    conf.hostname = ip.address()
+  if (DEBUG) {
+    config.hostname = ip.address()
     plugins.push('karma-jasmine-html-reporter')
     reporters.push('kjhtml')
-    conf.singleRun = false
-    conf.autoWatch = true
+    config.singleRun = false
+    config.autoWatch = true
   }
 }
 
-conf.frameworks = frameworks
-conf.plugins = plugins
-conf.reporters = reporters
+config.frameworks = frameworks
+config.plugins = plugins
+config.reporters = reporters
 
 module.exports = karmaConfig => {
-  // possible values: karmaConfig.LOG_DISABLE || karmaConfig.LOG_ERROR || karmaConfig.LOG_WARN || karmaConfig.LOG_INFO || karmaConfig.LOG_DEBUG
-  conf.logLevel = karmaConfig.LOG_ERROR || karmaConfig.LOG_WARN
-  karmaConfig.set(conf)
+  config.logLevel = karmaConfig.LOG_ERROR
+  karmaConfig.set(config)
 }
