@@ -1,57 +1,57 @@
 {% extends 'base.html' %}
-{% load i18n thumbnail bootstrap4 %}
+    {% load i18n thumbnail django_bootstrap %}
 
-{% block title %}{% trans 'Create Campaign' %} - {{ block.super }}{% endblock %}
+    {% block title %}{% trans 'Create Campaign' %} - {{ block.super }}{% endblock %}
 
-{% block javascript %}
-    <script>
-        $(() => {
-            $('.create-epoch-card').on('click', function () {
-                let id = $(this).data('extension-id')
-                let option = $(`#id_extensions>option[value=${id}]`)
-                let was_selected = $(this).hasClass('selected')
-                if (was_selected) {
-                    option.removeAttr('selected')
-                    $(this).removeClass('selected')
-                } else {
-                    option.attr('selected', 'selected')
-                    $(this).addClass('selected')
-                }
+    {% block javascript %}
+        <script>
+            $(() => {
+                $('.create-epoch-card').on('click', function () {
+                    let id = $(this).data('extension-id')
+                    let option = $(`#id_extensions>option[value=${id}]`)
+                    let was_selected = $(this).hasClass('selected')
+                    if (was_selected) {
+                        option.removeAttr('selected')
+                        $(this).removeClass('selected')
+                    } else {
+                        option.attr('selected', 'selected')
+                        $(this).addClass('selected')
+                    }
+                })
             })
-        })
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center">- {% trans 'New Campaign' %} -</h1>
-            <p class="text-muted text-center">
-                {% blocktrans %}
-                    Choose any number of additional extensions to add to your campaign.
-                {% endblocktrans %}
-            </p>
-        </div>
+    {% block content %}
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">- {% trans 'New Campaign' %} -</h1>
+                <p class="text-muted text-center">
+                    {% blocktrans %}
+                        Choose any number of additional extensions to add to your campaign.
+                    {% endblocktrans %}
+                </p>
+            </div>
 
-        {% for extension in extensions %}
-            {% thumbnail extension.image "1024" as im %}
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card text-center create-epoch-card mb-4 pointer"
-                         data-extension-id="{{ extension.id }}">
-                        <div class="card-body"
-                             style="background-image: url({{ im.url }}); background-size: cover">
-                            <div class="card-text w-100 p-5">
-                                <h5 class="text-center p-0 m-0">{{ extension }}</h5>
-                                <p class="text-center p-0 m-0">{{ extension.year_range }}</p>
+            {% for extension in extensions %}
+                {% thumbnail extension.image "1024" as im %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card text-center create-epoch-card mb-4 pointer"
+                             data-extension-id="{{ extension.id }}">
+                            <div class="card-body"
+                                 style="background-image: url({{ im.url }}); background-size: cover">
+                                <div class="card-text w-100 p-5">
+                                    <h5 class="text-center p-0 m-0">{{ extension }}</h5>
+                                    <p class="text-center p-0 m-0">{{ extension.year_range }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endthumbnail %}
-        {% endfor %}
+                {% endthumbnail %}
+            {% endfor %}
 
-        <form action="{% url 'campaigns:create_data' epoch_pk=epoch_pk world_pk=world_pk %}" method="get">
-            {% bootstrap_field form.extensions show_label=False %}
+            <form action="{% url 'campaigns:create_data' epoch_pk=epoch_pk world_pk=world_pk %}" method="get">
+                {% bootstrap_field form.extensions show_label=False %}
             <button type="submit" class="btn btn-primary btn-block mt-2">{% trans 'Choose Extensions' %}</button>
         </form>
     </div>

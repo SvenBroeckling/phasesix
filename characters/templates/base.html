@@ -1,4 +1,4 @@
-{% load static i18n bootstrap4 compress world_extras %}<!doctype html>
+{% load static i18n django_bootstrap5 compress world_extras %}<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
@@ -196,15 +196,13 @@
         </div>
     </div>
 
-    <urpg-demo></urpg-demo>
     {% block belownav %}
         <div class="default-belownav"></div>
     {% endblock %}
 
-
     <div class="row">
         <div class="col-md-10 offset-md-1">
-            {% bootstrap_messages messages %}
+            {% bootstrap_messages %}
 
             <div id="page-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
                  aria-labelledby="page-modal">
