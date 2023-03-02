@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-16 14:13+0000\n"
-"PO-Revision-Date: 2023-02-16 15:14+0100\n"
+"POT-Creation-Date: 2023-03-02 22:09+0000\n"
+"PO-Revision-Date: 2023-03-02 23:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -378,6 +378,8 @@ msgstr "Schadenspotential"
 #: characters/templates/characters/fragments/combat.html:69
 #: characters/templates/characters/fragments/gear.html:120
 #: characters/templates/characters/modals/add_weapons.html:53
+#: characters/templates/characters/pdf/boxes/combat.html:17
+#: characters/templates/characters/pdf/boxes/combat.html:42
 #: characters/templates/characters/sidebar/characterweapon.html:91
 #: characters/templates/characters/sidebar/weaponless.html:9
 #: gmtools/templates/gmtools/combat_sim_results.html:10
@@ -516,7 +518,7 @@ msgstr "Ist dies die übliche Einheit, mit der Menschen bezahlen?"
 #: armory/templates/armory/riotgear_list.html:4
 #: armory/templates/armory/riotgear_list.html:11
 #: armory/templates/armory/riotgear_list.html:72
-#: characters/templates/base.html:100 characters/templates/base.html:254
+#: characters/templates/base.html:100 characters/templates/base.html:252
 #: homebrew/templates/homebrew/index.html:84
 msgid "Armour"
 msgstr "Rüstung"
@@ -589,7 +591,7 @@ msgstr "Im Admin hinzufügen"
 
 #: armory/templates/armory/weapon_list.html:4
 #: armory/templates/armory/weapon_list.html:11
-#: characters/templates/base.html:96 characters/templates/base.html:252
+#: characters/templates/base.html:96 characters/templates/base.html:250
 #: characters/templates/characters/fragments/gear.html:94
 msgid "Weapons"
 msgstr "Waffen"
@@ -731,10 +733,11 @@ msgstr "Arkana"
 #: bestiary/templates/bestiary/foe_detail.html:47
 #: bestiary/templates/bestiary/foe_detail.html:53
 #: bestiary/templates/bestiary/foe_list.html:29
-#: characters/templates/characters/fragments/combat.html:149
+#: characters/templates/characters/fragments/combat.html:152
 #: characters/templates/characters/fragments/health.html:15
 #: characters/templates/characters/fragments/health.html:17
 #: characters/templates/characters/fragments/magic.html:56
+#: characters/templates/characters/pdf/boxes/combat.html:119
 #: characters/templates/characters/sidebar/characterspell.html:69
 #: homebrew/forms.py:62 magic/templates/magic/_basespell_widget.html:27
 #: magic/templates/magic/basespell_detail.html:49
@@ -750,6 +753,7 @@ msgstr "Schnelligkeit"
 #: bestiary/templates/bestiary/foe_list.html:31
 #: characters/templates/characters/fragments/health.html:113
 #: characters/templates/characters/fragments/health.html:114
+#: characters/templates/characters/pdf/boxes/dice.html:6
 msgid "Minimum Roll"
 msgstr "Mindestwurf"
 
@@ -765,7 +769,7 @@ msgstr "Schwächen"
 
 #: bestiary/templates/bestiary/foe_list.html:4
 #: bestiary/templates/bestiary/foe_list.html:11
-#: characters/templates/base.html:92 characters/templates/base.html:255
+#: characters/templates/base.html:92 characters/templates/base.html:253
 msgid "Foes"
 msgstr "Gegner"
 
@@ -942,9 +946,9 @@ msgstr ""
 #: campaigns/templates/campaigns/create_campaign_extensions.html:30
 msgid ""
 "\n"
-"                    Choose any number of additional extensions to add to "
+"                        Choose any number of additional extensions to add to "
 "your campaign.\n"
-"                "
+"                    "
 msgstr ""
 "\n"
 "                    Wähle eine beliebige Anzahl an zusätzlichen "
@@ -992,11 +996,6 @@ msgstr "Stress"
 
 #: campaigns/templates/campaigns/fragments/npc.html:15
 #: campaigns/templates/campaigns/fragments/status.html:16
-#: characters/templates/characters/character_pdf.html:105
-#: characters/templates/characters/character_pdf.html:124
-#: characters/templates/characters/character_pdf.html:144
-#: characters/templates/characters/character_pdf.html:177
-#: characters/templates/characters/character_pdf.html:197
 #: characters/templates/characters/fragments/character.html:12
 #: characters/templates/characters/fragments/character.html:29
 #: characters/templates/characters/fragments/character.html:47
@@ -1007,6 +1006,7 @@ msgstr "Stress"
 #: characters/templates/characters/fragments/health.html:109
 #: characters/templates/characters/modals/rest.html:20
 #: characters/templates/characters/modals/rest.html:35
+#: characters/templates/characters/pdf/boxes/dice.html:3
 msgid "Dice"
 msgstr "Würfel"
 
@@ -1061,12 +1061,12 @@ msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:34 characters/views.py:588
+#: characters/forms.py:34 characters/views.py:589
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
 #: campaigns/templates/campaigns/fragments/settings.html:23
-#: characters/forms.py:35 characters/views.py:563
+#: characters/forms.py:35 characters/views.py:564
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1198,13 +1198,13 @@ msgid "D6"
 msgstr "W6"
 
 #: campaigns/templates/campaigns/sidebar/roll.html:18
-#: characters/templates/characters/sidebar/character.html:43
+#: characters/templates/characters/sidebar/character.html:49
 #: characters/templates/characters/sidebar/dice.html:59
 msgid "Custom Roll"
 msgstr "Individueller Wurf"
 
 #: campaigns/templates/campaigns/sidebar/settings.html:8
-#: characters/templates/characters/sidebar/character.html:61
+#: characters/templates/characters/sidebar/character.html:67
 #: worlds/templates/worlds/wiki_page_edit.html:47
 msgid "Save"
 msgstr "Speichern"
@@ -1221,7 +1221,7 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:25 characters/views.py:536 forum/forms.py:6
+#: characters/forms.py:25 characters/views.py:537 forum/forms.py:6
 #: homebrew/forms.py:9 homebrew/forms.py:27 homebrew/forms.py:39
 #: homebrew/forms.py:56
 msgid "Name"
@@ -1231,7 +1231,7 @@ msgstr "Name"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:49 characters/views.py:543
+#: characters/forms.py:49 characters/views.py:544
 msgid "Size"
 msgstr "Größe"
 
@@ -1241,11 +1241,11 @@ msgstr "Größe"
 #: characters/templates/characters/modals/add_weapons.html:64
 #: characters/templates/characters/sidebar/characteritem.html:152
 #: characters/templates/characters/sidebar/characterriotgear.html:48
-#: characters/views.py:551
+#: characters/views.py:552
 msgid "Weight"
 msgstr "Gewicht"
 
-#: characters/forms.py:51 characters/views.py:557
+#: characters/forms.py:51 characters/views.py:558
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1257,7 +1257,7 @@ msgstr "Keine"
 msgid "Entity"
 msgstr "Gottheit"
 
-#: characters/forms.py:57 characters/views.py:579
+#: characters/forms.py:57 characters/views.py:580
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -1437,12 +1437,12 @@ msgstr "Lesen"
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/base.html:94 characters/templates/base.html:251
+#: characters/templates/base.html:94 characters/templates/base.html:249
 #: rules/templates/rules/template_list.html:9
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/base.html:98 characters/templates/base.html:253
+#: characters/templates/base.html:98 characters/templates/base.html:251
 #: magic/templates/magic/basespell_list.html:9
 msgid "Spells"
 msgstr "Zauber"
@@ -1497,33 +1497,33 @@ msgstr "Würfelserver nicht verbunden"
 msgid "Dice server connected"
 msgstr "Würfelserver verbunden"
 
-#: characters/templates/base.html:220
+#: characters/templates/base.html:218
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/base.html:224
+#: characters/templates/base.html:222
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/base.html:241
+#: characters/templates/base.html:239
 #: characters/templates/characters/character_list.html:19
 #: characters/templates/index.html:33
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
 
-#: characters/templates/base.html:242
+#: characters/templates/base.html:240
 msgid "My Charactes"
 msgstr "Meine Charaktere"
 
-#: characters/templates/base.html:243
+#: characters/templates/base.html:241
 msgid "Campaigns"
 msgstr "Kampagnen"
 
-#: characters/templates/base.html:244 homebrew/forms.py:57
+#: characters/templates/base.html:242 homebrew/forms.py:57
 msgid "Rules"
 msgstr "Regeln"
 
-#: characters/templates/base.html:245
+#: characters/templates/base.html:243
 msgid "Privacy"
 msgstr "Privatsphäre"
 
@@ -1591,34 +1591,6 @@ msgstr "Anonyme Charaktere"
 msgid "You can see these because you are an admin"
 msgstr "Du kannst diese sehen da du Admin bist"
 
-#: characters/templates/characters/character_pdf.html:4
-#: rulebook/templates/rulebook/book_pdf.html:4
-msgid "Phase Six Core Rulebook"
-msgstr "Phase Six Core Regelbuch"
-
-#: characters/templates/characters/character_pdf.html:104
-#: characters/templates/characters/fragments/character.html:11
-msgid "Persona"
-msgstr "Persona"
-
-#: characters/templates/characters/character_pdf.html:123
-#: characters/templates/characters/fragments/character.html:28
-msgid "Physis"
-msgstr "Physis"
-
-#: characters/templates/characters/character_pdf.html:143
-#: characters/templates/characters/fragments/character.html:46
-#: rules/templates/rules/_template_widget.html:30
-msgid "Knowledge"
-msgstr "Wissen"
-
-#: characters/templates/characters/character_pdf.html:176
-#: characters/templates/characters/character_pdf.html:196
-#: characters/templates/characters/fragments/character.html:77
-#: characters/templates/characters/fragments/character.html:97
-msgid "Skills"
-msgstr "Fertigkeiten"
-
 #: characters/templates/characters/create_character_constructed.html:117
 msgid "Choose your templates"
 msgstr "Wähle deine Schablonen"
@@ -1673,7 +1645,30 @@ msgstr "Reputation"
 msgid "Reputation and advancement"
 msgstr "Reputation und Weiterbildung"
 
+#: characters/templates/characters/fragments/character.html:11
+#: characters/templates/characters/pdf/boxes/persona.html:4
+msgid "Persona"
+msgstr "Persona"
+
+#: characters/templates/characters/fragments/character.html:28
+#: characters/templates/characters/pdf/boxes/physis.html:4
+msgid "Physis"
+msgstr "Physis"
+
+#: characters/templates/characters/fragments/character.html:46
+#: characters/templates/characters/pdf/boxes/knowledge.html:6
+#: rules/templates/rules/_template_widget.html:30
+msgid "Knowledge"
+msgstr "Wissen"
+
+#: characters/templates/characters/fragments/character.html:77
+#: characters/templates/characters/fragments/character.html:97
+msgid "Skills"
+msgstr "Fertigkeiten"
+
 #: characters/templates/characters/fragments/character.html:118
+#: characters/templates/characters/pdf/boxes/shadows.html:6
+#: characters/templates/characters/pdf/boxes/shadows_short.html:6
 msgid "Shadows"
 msgstr "Schatten"
 
@@ -1682,10 +1677,12 @@ msgid "Gear"
 msgstr "Ausrüstung"
 
 #: characters/templates/characters/fragments/character_nav.html:12
-#: characters/templates/characters/fragments/combat.html:166
-#: characters/templates/characters/fragments/combat.html:241
+#: characters/templates/characters/fragments/combat.html:169
+#: characters/templates/characters/fragments/combat.html:244
 #: characters/templates/characters/fragments/health.html:8
 #: characters/templates/characters/fragments/health.html:10
+#: characters/templates/characters/pdf/boxes/combat.html:4
+#: characters/templates/characters/pdf/boxes/combat.html:210
 msgid "Combat"
 msgstr "Kampf"
 
@@ -1709,8 +1706,8 @@ msgid "Take a note"
 msgstr "Notiz anlegen"
 
 #: characters/templates/characters/fragments/combat.html:10
-#: characters/templates/characters/sidebar/character.html:18
-#: characters/templates/characters/sidebar/character.html:23
+#: characters/templates/characters/sidebar/character.html:24
+#: characters/templates/characters/sidebar/character.html:29
 msgid "Initiative"
 msgstr "Initiative"
 
@@ -1719,7 +1716,7 @@ msgid "Initiative (1d6+Quickness)"
 msgstr "Initiative (1W6+Schnelligkeit)"
 
 #: characters/templates/characters/fragments/combat.html:13
-#: characters/templates/characters/sidebar/character.html:26
+#: characters/templates/characters/sidebar/character.html:32
 msgid "1d6"
 msgstr "1W6"
 
@@ -1733,28 +1730,38 @@ msgstr "Kap."
 
 #: characters/templates/characters/fragments/combat.html:33
 #: characters/templates/characters/fragments/combat.html:36
+#: characters/templates/characters/pdf/boxes/combat.html:8
 msgid "Weaponless"
 msgstr "Waffenlos"
 
 #: characters/templates/characters/fragments/combat.html:37
+#: characters/templates/characters/pdf/boxes/combat.html:9
 msgid "Melee"
 msgstr "Nahkampf"
 
 #: characters/templates/characters/fragments/combat.html:40
+#: characters/templates/characters/pdf/boxes/combat.html:12
 #: characters/templates/characters/sidebar/weaponless.html:8
 msgid "Weaponless Attack"
 msgstr "Waffenloser Angriff"
 
 #: characters/templates/characters/fragments/combat.html:50
 #: characters/templates/characters/fragments/combat.html:94
-#: characters/templates/characters/fragments/combat.html:156
-#: characters/templates/characters/fragments/combat.html:185
-#: characters/templates/characters/fragments/combat.html:202
-#: characters/templates/characters/fragments/combat.html:219
+#: characters/templates/characters/fragments/combat.html:159
+#: characters/templates/characters/fragments/combat.html:188
+#: characters/templates/characters/fragments/combat.html:205
+#: characters/templates/characters/fragments/combat.html:222
+#: characters/templates/characters/pdf/boxes/combat.html:22
+#: characters/templates/characters/pdf/boxes/combat.html:66
+#: characters/templates/characters/pdf/boxes/combat.html:125
+#: characters/templates/characters/pdf/boxes/combat.html:154
+#: characters/templates/characters/pdf/boxes/combat.html:171
+#: characters/templates/characters/pdf/boxes/combat.html:188
 msgid "Meter"
 msgstr "Meter"
 
 #: characters/templates/characters/fragments/combat.html:72
+#: characters/templates/characters/pdf/boxes/combat.html:45
 msgid "Crit MR"
 msgstr "Krit MW"
 
@@ -1762,31 +1769,40 @@ msgstr "Krit MW"
 msgid "Mods with rules"
 msgstr "Mods mit Regeln"
 
-#: characters/templates/characters/fragments/combat.html:148
+#: characters/templates/characters/fragments/combat.html:151
 #: characters/templates/characters/fragments/magic.html:53
+#: characters/templates/characters/pdf/boxes/combat.html:118
 #: characters/templates/characters/sidebar/characterspell.html:54
 #: homebrew/forms.py:60 magic/templates/magic/_basespell_widget.html:24
 #: magic/templates/magic/basespell_detail.html:46
 msgid "Power"
 msgstr "Stärke"
 
-#: characters/templates/characters/fragments/combat.html:163
+#: characters/templates/characters/fragments/combat.html:166
+#: characters/templates/characters/pdf/boxes/combat.html:132
 msgid "Evade"
 msgstr "Ausweichen"
 
-#: characters/templates/characters/fragments/combat.html:164
-#: characters/templates/characters/fragments/combat.html:175
-#: characters/templates/characters/fragments/combat.html:192
-#: characters/templates/characters/fragments/combat.html:209
-#: characters/templates/characters/fragments/combat.html:226
+#: characters/templates/characters/fragments/combat.html:167
+#: characters/templates/characters/fragments/combat.html:178
+#: characters/templates/characters/fragments/combat.html:195
+#: characters/templates/characters/fragments/combat.html:212
+#: characters/templates/characters/fragments/combat.html:229
+#: characters/templates/characters/pdf/boxes/combat.html:133
+#: characters/templates/characters/pdf/boxes/combat.html:144
+#: characters/templates/characters/pdf/boxes/combat.html:161
+#: characters/templates/characters/pdf/boxes/combat.html:178
+#: characters/templates/characters/pdf/boxes/combat.html:195
 msgid "Movement"
 msgstr "Bewegung"
 
-#: characters/templates/characters/fragments/combat.html:174
+#: characters/templates/characters/fragments/combat.html:177
+#: characters/templates/characters/pdf/boxes/combat.html:143
 msgid "Walk"
 msgstr "Gehen"
 
-#: characters/templates/characters/fragments/combat.html:179
+#: characters/templates/characters/fragments/combat.html:182
+#: characters/templates/characters/pdf/boxes/combat.html:148
 msgid ""
 "\n"
 "                                    You can perform an action while walking. "
@@ -1798,11 +1814,13 @@ msgstr ""
 "ausführen. Der Mindestwurf für diese Aktion ist um 1 erhöht.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:191
+#: characters/templates/characters/fragments/combat.html:194
+#: characters/templates/characters/pdf/boxes/combat.html:160
 msgid "Run"
 msgstr "Laufen"
 
-#: characters/templates/characters/fragments/combat.html:196
+#: characters/templates/characters/fragments/combat.html:199
+#: characters/templates/characters/pdf/boxes/combat.html:165
 msgid ""
 "\n"
 "                                    You can't perform an action while "
@@ -1814,11 +1832,13 @@ msgstr ""
 "Laufen ausführen.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:208
+#: characters/templates/characters/fragments/combat.html:211
+#: characters/templates/characters/pdf/boxes/combat.html:177
 msgid "Crawl"
 msgstr "Robben"
 
-#: characters/templates/characters/fragments/combat.html:213
+#: characters/templates/characters/fragments/combat.html:216
+#: characters/templates/characters/pdf/boxes/combat.html:182
 msgid ""
 "\n"
 "                                    Crawling is only possible while "
@@ -1829,11 +1849,13 @@ msgstr ""
 "                                    Robben ist nur in der Hocke möglich.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:225
+#: characters/templates/characters/fragments/combat.html:228
+#: characters/templates/characters/pdf/boxes/combat.html:194
 msgid "Hunker"
 msgstr "In die Hocke gehen"
 
-#: characters/templates/characters/fragments/combat.html:230
+#: characters/templates/characters/fragments/combat.html:233
+#: characters/templates/characters/pdf/boxes/combat.html:199
 msgid ""
 "\n"
 "                            Applies the \"Hunkered\" status effect. Hunkered "
@@ -1848,21 +1870,22 @@ msgstr ""
 "Angriffe und Fertigkeiten.\n"
 "       "
 
-#: characters/templates/characters/fragments/combat.html:240
+#: characters/templates/characters/fragments/combat.html:243
+#: characters/templates/characters/pdf/boxes/combat.html:209
 msgid "Aim"
 msgstr "Zielen"
 
-#: characters/templates/characters/fragments/combat.html:245
+#: characters/templates/characters/fragments/combat.html:248
 msgid ""
 "\n"
 "                                    Reduces the minimum roll for critical "
-"hits by 2 per action. This is not possible when using burst mode. The aim "
+"hits by 1 per action. This is not possible when using burst mode. The aim "
 "bonus is lost when the character is hit.\n"
 "                                "
 msgstr ""
 "\n"
 "                                    Reduziert den Mindestwurf für kritische "
-"Treffer um 2 pro Aktion. Dies ist im Burst Modus nicht möglich. Der Zielen "
+"Treffer um 1 pro Aktion. Dies ist im Burst Modus nicht möglich. Der Zielen "
 "Bonus verfällt wenn der Charakter getroffen wird.\n"
 "                                "
 
@@ -1988,6 +2011,7 @@ msgstr ""
 #: characters/templates/characters/fragments/health.html:118
 #: characters/templates/characters/fragments/health.html:119
 #: characters/templates/characters/modals/rest.html:40
+#: characters/templates/characters/pdf/boxes/dice.html:10
 #: characters/templates/characters/sidebar/dice.html:7
 #: characters/templates/characters/sidebar/dice.html:8
 #: characters/templates/characters/sidebar/dice.html:27
@@ -1999,6 +2023,7 @@ msgstr "Bonuswürfel"
 #: characters/templates/characters/fragments/health.html:123
 #: characters/templates/characters/fragments/health.html:124
 #: characters/templates/characters/modals/rest.html:44
+#: characters/templates/characters/pdf/boxes/dice.html:14
 #: characters/templates/characters/sidebar/dice.html:11
 #: characters/templates/characters/sidebar/dice.html:12
 #: characters/templates/characters/sidebar/dice.html:32
@@ -2010,6 +2035,7 @@ msgstr "Schicksalswürfel"
 #: characters/templates/characters/fragments/health.html:128
 #: characters/templates/characters/fragments/health.html:129
 #: characters/templates/characters/modals/rest.html:48
+#: characters/templates/characters/pdf/boxes/dice.html:18
 #: characters/templates/characters/sidebar/dice.html:15
 #: characters/templates/characters/sidebar/dice.html:16
 #: characters/templates/characters/sidebar/dice.html:37
@@ -2161,6 +2187,28 @@ msgstr "Raste und ändere nichts"
 msgid "I prefer to roll my own dice"
 msgstr "Ich würfle lieber selbst"
 
+#: characters/templates/characters/pdf/boxes/combat.html:214
+msgid ""
+"\n"
+"                        Reduces the minimum roll for critical hits by 1 per "
+"action. This is not possible when using burst mode. The aim bonus is lost "
+"when the character is hit.\n"
+"                    "
+msgstr ""
+"\n"
+"                                    Reduziert den Mindestwurf für kritische "
+"Treffer um 1 pro Aktion. Dies ist im Burst Modus nicht möglich. Der Zielen "
+"Bonus verfällt wenn der Charakter getroffen wird.\n"
+"                                "
+
+#: characters/templates/characters/pdf/boxes/practical_skills.html:4
+msgid "Practical Skills"
+msgstr "Praxisfertigkeiten"
+
+#: characters/templates/characters/pdf/boxes/theoretical_skills.html:4
+msgid "Theoretical Skills"
+msgstr "Theoretische Fertigkeiten"
+
 #: characters/templates/characters/random_npc_form.html:10
 msgid "New Random NPC"
 msgstr "Neuer Zufalls-NSC"
@@ -2173,19 +2221,23 @@ msgstr "Wähle einen Namen und zusätzliche Erweiterungen für deinen Charakter"
 msgid "Create NPC"
 msgstr "NSC erstellen"
 
-#: characters/templates/characters/sidebar/character.html:7
+#: characters/templates/characters/sidebar/character.html:5
+msgid "Download PDF"
+msgstr "PDF herunterladen"
+
+#: characters/templates/characters/sidebar/character.html:13
 msgid "Roll Dice"
 msgstr "Würfeln"
 
-#: characters/templates/characters/sidebar/character.html:9
+#: characters/templates/characters/sidebar/character.html:15
 msgid "Edit Character"
 msgstr "Editieren"
 
-#: characters/templates/characters/sidebar/character.html:24
+#: characters/templates/characters/sidebar/character.html:30
 msgid "1d6+Quickness"
 msgstr "1W6+Schnelligkeit"
 
-#: characters/templates/characters/sidebar/character.html:32
+#: characters/templates/characters/sidebar/character.html:38
 msgid ""
 "\n"
 "                    Roll a custom amount of dice here, just klick on the "
@@ -2199,11 +2251,11 @@ msgstr ""
 "der passenden Anzahl.\n"
 "\t"
 
-#: characters/templates/characters/sidebar/character.html:71
+#: characters/templates/characters/sidebar/character.html:77
 msgid "Delete character"
 msgstr "Charackter löschen"
 
-#: characters/templates/characters/sidebar/character.html:74
+#: characters/templates/characters/sidebar/character.html:80
 msgid "Delete Character"
 msgstr "Charakter löschen"
 
@@ -2635,7 +2687,7 @@ msgstr "Heilen"
 
 #: characters/templates/characters/sidebar/wounds.html:25
 #: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:183 characters/views.py:194 characters/views.py:205
+#: characters/views.py:184 characters/views.py:195 characters/views.py:206
 msgid "Rest"
 msgstr "Rast"
 
@@ -2788,41 +2840,41 @@ msgstr ""
 "zu erstellen.\n"
 " "
 
-#: characters/views.py:71
+#: characters/views.py:72
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:184
+#: characters/views.py:185
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:195
+#: characters/views.py:196
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:206
+#: characters/views.py:207
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:537
+#: characters/views.py:538
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:544
+#: characters/views.py:545
 #, python-brace-format
 msgid "Enter the size of your character in {world.info_name_cm}."
 msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
 
-#: characters/views.py:552
+#: characters/views.py:553
 #, python-brace-format
 msgid "Enter the weight of your character in {world.info_name_kg}."
 msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
-#: characters/views.py:558
+#: characters/views.py:559
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:564
+#: characters/views.py:565
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -2835,7 +2887,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:580
+#: characters/views.py:581
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -2852,7 +2904,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:589
+#: characters/views.py:590
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -3390,6 +3442,10 @@ msgstr "Ein optionaler Kurzname für den Standard Linktext."
 #: pantheon/models.py:81
 msgid "entities"
 msgstr "Gottheiten"
+
+#: rulebook/templates/rulebook/book_pdf.html:4
+msgid "Phase Six Core Rulebook"
+msgstr "Phase Six Core Regelbuch"
 
 #: rulebook/templates/rulebook/chapter_detail.html:30
 msgid "Chapters"
@@ -4489,9 +4545,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "Mind Skills"
 #~ msgstr "Geistige Fertigkeiten"
-
-#~ msgid "Practical Skills"
-#~ msgstr "Praxisfertigkeiten"
 
 #~ msgid "Use"
 #~ msgstr "Benutzen"

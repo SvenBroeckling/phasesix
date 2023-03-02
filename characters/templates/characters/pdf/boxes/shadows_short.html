@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load rules_extras %}
+
+{% if object.templates_with_rules.exists %}
+    <div class="box">
+        <h2>{% trans 'Shadows' %}</h2>
+        <table>
+            {% for template in object.templates_with_rules.all %}
+                <tr>
+                    <td>
+                        {{ template.template.name }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        </section>
+    </div>
+{% endif %}

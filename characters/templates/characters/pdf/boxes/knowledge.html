@@ -1,0 +1,32 @@
+{% load characters_extras i18n %}
+
+{% with kd=object.knowledge_dict %}
+    {% if kd %}
+        <div class="box">
+            <h2>{% trans 'Knowledge' %}</h2>
+            <table class="table">
+                {% for knowledge in kd.items %}
+                    <tr class="sidebar-trigger" data-sidebar-title="{{ knowledge.0 }}"
+                        data-sidebar-url="{% url 'characters:xhr_characterknowledge_sidebar' pk=object.id sidebar_template="characterknowledge" knowledge_pk=knowledge.0.id %}">
+                        <td>
+                            {{ knowledge.0 }}
+                            {% if knowledge.0.skill %}
+                                <br>
+                                <small class="text-muted">({{ knowledge.0.skill }})</small>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                        <span class="text-light">
+                            {{ knowledge.1 }} +
+                            {% if knowledge.0.skill %}
+                                {% character_knowledge_skill_value object knowledge.0 as cs %}
+                                {{ cs }}
+                            {% endif %}
+                        </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+{% endwith %}

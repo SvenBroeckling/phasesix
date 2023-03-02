@@ -1,0 +1,22 @@
+{% load i18n %}
+<div class="box">
+    <h2>{% trans 'Dice' %}</h2>
+    <table>
+        <tr>
+            <td>{% trans 'Minimum Roll' %}</td>
+            <td><span class="text-light">{{ object.minimum_roll }}</span></td>
+        </tr>
+        <tr>
+            <td>{% trans 'Bonus Dice' %}</td>
+            <td><span class="text-light">{{ object.bonus_dice }}</span></td>
+        </tr>
+        <tr>
+            <td>{% trans 'Destiny Dice' %}</td>
+            <td><span class="text-light">{{ object.destiny_dice }}</span></td>
+        </tr>
+        <tr>
+            <td>{% trans 'Rerolls' %}</td>
+            <td><span class="text-light">{{ object.rerolls }}</span></td>
+        </tr>
+    </table>
+</div>

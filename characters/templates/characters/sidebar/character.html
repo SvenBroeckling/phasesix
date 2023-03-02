@@ -1,5 +1,11 @@
 {% load i18n django_bootstrap5 %}
 
+<div class="row mb-4">
+    <div class="col-12">
+        <a href="{% url 'characters:pdf' pk=object.id %}" class="btn btn-primary w-100">{% trans 'Download PDF' %}</a>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         <div class="nav nav-tabs justify-content-center mb-2" role="tablist">

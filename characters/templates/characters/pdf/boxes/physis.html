@@ -1,0 +1,13 @@
+{% load characters_extras %}
+{% load i18n %}
+<div class="box">
+    <h2>{% trans 'Physis' %}</h2>
+    <table>
+        {% for attribute in object.characterattribute_set.physis_attributes %}
+            <tr>
+                <td>{{ attribute.attribute.name }}</td>
+                <td class="text-end">{% color_value_span attribute.value 7 %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

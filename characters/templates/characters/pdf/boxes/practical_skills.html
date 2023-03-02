@@ -1,0 +1,18 @@
+{% load characters_extras %}
+{% load i18n %}
+<div class="box">
+    <h2>{% trans 'Practical Skills' %}</h2>
+    <table class="table">
+        {% for skill in object.skills.practical_skills %}
+            <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}"
+                data-sidebar-url="{% url 'characters:xhr_characterskill_sidebar' pk=skill.id sidebar_template="characterskill" %}">
+                <td>
+                    {{ skill.skill }}
+                    <small
+                        class="text-muted">({{ skill.skill.reference_attribute_1.name }}, {{ skill.skill.reference_attribute_2.name }})</small>
+                </td>
+                <td class="text-end text-light">{{ skill.value }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

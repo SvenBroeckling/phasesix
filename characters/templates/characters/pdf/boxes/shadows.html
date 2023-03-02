@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load rules_extras %}
+
+{% if object.templates_with_rules.exists %}
+    <div class="box">
+        <h2>{% trans 'Shadows' %}</h2>
+        <section class="shadows">
+            {% for template in object.templates_with_rules.all %}
+                <div class="card">
+                    <h4>{{ template.template.name }}</h4>
+                    <small>
+                        {{ template.template.rules|urpg_markup }}
+                    </small>
+                </div>
+            {% endfor %}
+        </section>
+    </div>
+{% endif %}

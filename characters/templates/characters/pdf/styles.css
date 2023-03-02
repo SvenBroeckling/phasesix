@@ -1,0 +1,87 @@
+@page {
+    size: A4;
+    margin: 0.3cm;
+}
+
+:root {
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    box-sizing: border-box;
+    padding: 0.3cm;
+    margin: 0;
+}
+
+/* Utilities */
+
+.text-end {
+    text-align: end;
+}
+
+.text-muted {
+    color: #333;
+}
+
+.text-light {
+    color: gray;
+}
+
+small {
+    font-size: 10px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.page-break {
+    page-break-before: always;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.vertical-top {
+    vertical-align: top;
+}
+
+/* Pages */
+
+.page {
+    page-break-inside: avoid;
+}
+
+.page header {
+    margin-bottom: 0.5cm;
+}
+
+/* Boxes */
+
+.page .box {
+    border: 1px solid black;
+    position: relative;
+    margin-bottom: 0.5cm;
+    padding: 2mm;
+}
+
+.page .box h2 {
+    position: absolute;
+    font-size: 12px;
+    background-color: white;
+    padding: 0 2mm;
+    top: -5mm;
+    left: 2mm;
+}
+
+.page .box table {
+    width: 100%;
+}
+
+.page .box table td {
+    border-bottom: 1px solid silver;
+}

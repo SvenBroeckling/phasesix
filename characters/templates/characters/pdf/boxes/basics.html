@@ -1,0 +1,7 @@
+{% load characters_extras %}
+<header>
+    <h3>{{ object.name }}</h3>
+    <small class="text-muted">{{ object.lineage }}</small><br>
+    <small class="text-muted">{% template_category_string object 3 '' %}</small><br>
+    <small class="text-muted">{% template_category_string object 2 '' %}</small>
+</header>

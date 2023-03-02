@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import io
+import os
 
-from channels.layers import get_channel_layer
 from django import forms
 from django.contrib import messages
+from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.template.loader import render_to_string
@@ -1105,13 +1106,13 @@ class CharacterPDFView(View):
         font_config = FontConfiguration()
         html = HTML(
             file_obj=io.BytesIO(bytes(render_to_string(
-                'characters/character_pdf.html',
+                'characters/pdf/character_pdf.html',
                 {
-                    'object': Character.objects.get(id=kwargs['pk'])
+                    'object': Character.objects.get(id=kwargs['pk']),
+                    'data_path': os.path.join(settings.BASE_DIR, 'characters/templates/characters/pdf')
                 }),
                 encoding='utf-8')
             ), base_url='src/', encoding='utf-8')
         response = HttpResponse(content_type='application/pdf')
         html.write_pdf(response, font_config=font_config)
-
         return response

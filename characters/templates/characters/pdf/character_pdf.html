@@ -1,0 +1,42 @@
+{% load characters_extras rules_extras i18n static %}
+<html lang="de">
+<head>
+    <title>{{ object.name }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ data_path }}/styles.css">
+</head>
+
+<body>
+<div class="page">
+    <table class="layout">
+        <tr>
+            <td class="vertical-top" style="width: 4cm; padding-right: 0.4cm">
+                {% include 'characters/pdf/boxes/basics.html' %}
+                {% include 'characters/pdf/boxes/persona.html' %}
+                {% include 'characters/pdf/boxes/physis.html' %}
+                {% include 'characters/pdf/boxes/dice.html' %}
+                {% include 'characters/pdf/boxes/shadows_short.html' %}
+                {% include 'characters/pdf/boxes/knowledge.html' %}
+            </td>
+            <td class="vertical-top">
+                <table class="w-full">
+                    <tr>
+                        <td>
+                            {% include 'characters/pdf/boxes/practical_skills.html' %}
+                        </td>
+                        <td>
+                            {% include 'characters/pdf/boxes/theoretical_skills.html' %}
+                        </td>
+                    </tr>
+                </table>
+                {% include 'characters/pdf/boxes/combat.html' %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="page">
+    {# include 'characters/pdf/boxes/shadows.html' #}
+</div>
+</body>
+</html>

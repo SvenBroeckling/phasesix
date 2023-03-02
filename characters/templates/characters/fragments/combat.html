@@ -95,6 +95,7 @@
                             </td>
                         </tr>
                     {% endfor %}
+
                     {% for i in object.characteritem_set.usable_in_combat %}
                         <tr class="sidebar-trigger" data-sidebar-title="{{ i.item }}"
                             data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=i.id sidebar_template="characteritem" %}">
@@ -104,7 +105,7 @@
                             </td>
                             <td class="text-end">
                                 {% if i.item.skill %}
-                                   {% character_skill_value character i.item.skill as skill_value %}
+                                   {% character_skill_value object i.item.skill as skill_value %}
                                     {{ i.item.skill.name }} {% color_value_span skill_value 5 %} <i
                                         class="fas text-muted fa-dice-five"></i>
                                 {% endif %}
@@ -118,6 +119,7 @@
                             </td>
                         </tr>
                     {% endfor %}
+
                     {% for t in object.templates_with_combat_rules.all %}
                         <tr>
                             <td>
@@ -132,6 +134,7 @@
                             </td>
                         </tr>
                     {% endfor %}
+
                     {% for s in object.characterspell_set.all %}
                         <tr class="sidebar-trigger" data-sidebar-title="{{ s }}"
                             data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}">
@@ -243,7 +246,7 @@
                         <td colspan="4">
                             <span class="text-muted">
                                 {% blocktrans %}
-                                    Reduces the minimum roll for critical hits by 2 per action. This is not possible when using burst mode. The aim bonus is lost when the character is hit.
+                                    Reduces the minimum roll for critical hits by 1 per action. This is not possible when using burst mode. The aim bonus is lost when the character is hit.
                                 {% endblocktrans %}
                             </span>
                         </td>
