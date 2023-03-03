@@ -6,7 +6,6 @@
         <tr>
             <td>
                 <i class="fas fa-hand-rock text-success"></i> {% trans 'Weaponless' %}
-                <small class="text-muted">{% trans 'Melee' %}</small>
             </td>
             <td class="text-end">
                 {% trans 'Weaponless Attack' %} <span class="text-light">{{ object.weaponless_attack_dice }}</span> <i
@@ -28,13 +27,11 @@
             <tr>
                 <td>
                     <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
-                    <small class="text-muted">{{ w.weapon.type }}</small>
                 </td>
                 <td class="text-end">
                     {% for am in w.attack_modes %}
                         {{ am.0 }} <span class="text-light">{{ am.1 }}</span>
-                        <i class="fas text-light fa-dice-five"></i>
-                        <br>
+                        <i class="fas text-light fa-dice-five"></i><br>
                     {% endfor %}
                 </td>
                 <td class="text-end">
@@ -72,7 +69,6 @@
             <tr>
                 <td>
                     <i class="fas fa-bomb text-info"></i> <span class="text-muted"></span>{{ i.item }}
-                    <small class="text-muted">{{ i.item.type }}</small>
                 </td>
                 <td class="text-end">
                     {% if i.item.skill %}
@@ -96,7 +92,6 @@
                 <td>
                     <i class="fas fa-graduation-cap text-primary"></i> <span
                     class="text-muted"></span>{{ t.template.name }}
-                    <small class="text-muted">{{ t.template.category }}</small>
                 </td>
                 <td colspan="4" class="vertical-top">
                     <span class="text-muted small">{{ t.template.rules|urpg_markup }}</span>
@@ -108,7 +103,6 @@
             <tr>
                 <td>
                     <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
-                    <small class="text-muted">{{ s.spell_type }} - {{ s.variant }}</small>
                 </td>
                 <td class="text-end">
                     {% spell_type_attribute_dice_value s.character s.spell_type as dice %}
@@ -130,7 +124,6 @@
         <tr>
             <td>
                 <i class="fas fa-running text-warning"></i> {% trans "Evade" %}
-                <small class="text-muted">{% trans 'Movement' %}</small>
             </td>
             <td class="text-end">
                 <span class="text-light">{{ object.evasion }}</span> <i class="fas fa-dice-five text-light"></i>
@@ -141,14 +134,13 @@
         <tr>
             <td>
                 <i class="fas fa-user-shield text-warning"></i> {% trans "Walk" %}
-                <small class="text-muted">{% trans 'Movement' %}</small>
             </td>
             <td colspan="3">
-                            <span class="text-muted">
-                                {% blocktrans %}
-                                    You can perform an action while walking. The minimum roll for this action is raised by 1.
-                                {% endblocktrans %}
-                            </span>
+                <span class="text-muted">
+                    {% blocktrans %}
+                        You can perform an action while walking. The minimum roll for this action is raised by 1.
+                    {% endblocktrans %}
+                </span>
             </td>
             <td class="text-end">
                 <span class="text-light">{{ object.combat_walking_range }} {% trans 'Meter' %}</span>
@@ -158,14 +150,13 @@
         <tr>
             <td>
                 <i class="fas fa-user-shield text-warning"></i> {% trans "Run" %}
-                <small class="text-muted">{% trans 'Movement' %}</small>
             </td>
             <td colspan="3">
-                            <span class="text-muted">
-                                {% blocktrans %}
-                                    You can't perform an action while running.
-                                {% endblocktrans %}
-                            </span>
+                <span class="text-muted">
+                    {% blocktrans %}
+                        You can't perform an action while running.
+                    {% endblocktrans %}
+                </span>
             </td>
             <td class="text-end">
                 <span class="text-light">{{ object.combat_running_range }} {% trans 'Meter' %}</span>
@@ -175,14 +166,13 @@
         <tr>
             <td>
                 <i class="fas fa-user-shield text-warning"></i> {% trans "Crawl" %}
-                <small class="text-muted">{% trans 'Movement' %}</small>
             </td>
             <td colspan="3">
-                            <span class="text-muted">
-                                {% blocktrans %}
-                                    Crawling is only possible while hunkered.
-                                {% endblocktrans %}
-                            </span>
+                <span class="text-muted">
+                    {% blocktrans %}
+                        Crawling is only possible while hunkered.
+                    {% endblocktrans %}
+                </span>
             </td>
             <td class="text-end">
                 <span class="text-light">{{ object.combat_crawling_range }} {% trans 'Meter' %}</span>
@@ -192,22 +182,20 @@
         <tr>
             <td>
                 <i class="fas fa-user-shield text-warning"></i> {% trans "Hunker" %}
-                <small class="text-muted">{% trans 'Movement' %}</small>
             </td>
             <td colspan="4">
-                        <span class="text-muted">
-                        {% blocktrans %}
-                            Applies the "Hunkered" status effect. Hunkered characters have a 6+ cover and a
-                            +1 minimum roll for physis, attacks and skills.
-                        {% endblocktrans %}
-                        </span>
+                <span class="text-muted">
+                {% blocktrans %}
+                    Applies the "Hunkered" status effect. Hunkered characters have a 6+ cover and a
+                    +1 minimum roll for physis, attacks and skills.
+                {% endblocktrans %}
+                </span>
             </td>
         </tr>
 
         <tr>
             <td>
                 <i class="fas fa-bullseye text-warning"></i> {% trans "Aim" %}
-                <small class="text-muted">{% trans 'Combat' %}</small>
             </td>
             <td colspan="4">
                 <span class="text-muted">

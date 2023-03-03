@@ -1,4 +1,17 @@
-{% load i18n django_bootstrap5 %}
+{% load i18n django_bootstrap5 thumbnail static %}
+
+<div class="row">
+    <div class="col-12 mb-3 mt-2">
+        {% if object.image %}
+            {% thumbnail object.image "600x600" crop="center" as im %}
+                <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
+            {% endthumbnail %}
+        {% else %}
+            <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
+                 alt="{{ object.name }}">
+        {% endif %}
+    </div>
+</div>
 
 <div class="row mb-4">
     <div class="col-12">
@@ -6,6 +19,7 @@
     </div>
 </div>
 
+{% if may_edit %}
 <div class="row">
     <div class="col-12">
         <div class="nav nav-tabs justify-content-center mb-2" role="tablist">
@@ -83,3 +97,4 @@
         {% endif %}
     </div>
 </div>
+{% endif %}
