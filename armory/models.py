@@ -188,6 +188,7 @@ class Weapon(models.Model, metaclass=TransMeta):
 
     piercing = models.IntegerField(_('piercing'), default=0)
     damage_potential = models.IntegerField(_('damage potential'), default=0)
+    recoil_compensation = models.IntegerField(_('recoil compensation'), default=0)
     crit_minimum_roll = models.IntegerField(_('crit minimum roll'), default=11)
 
     encumbrance = models.IntegerField(_('encumbrance'), default=0)
@@ -328,6 +329,7 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 class WeaponModificationAttributeChange(models.Model):
     ATTRIBUTE_CHOICES = (
         ('capacity', _('Capacity')),
+        ('recoil_compensation', _('Recoil compensation')),
         ('actions_to_ready', _('Actions to ready')),
         ('crit_minimum_roll', _('Crit minimum roll')),
         ('encumbrance', _('Encumbrance')),

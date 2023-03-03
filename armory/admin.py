@@ -11,10 +11,10 @@ class WeaponAttackModeInline(admin.TabularInline):
 
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
-        'name_en', 'actions_to_ready', 'damage_potential', 'piercing', 'crit_minimum_roll', 'encumbrance', 'price',
+        'name_en', 'recoil_compensation', 'actions_to_ready', 'damage_potential', 'piercing', 'encumbrance', 'price',
         'range_meter')
     list_editable = (
-        'actions_to_ready', 'damage_potential', 'piercing', 'encumbrance', 'crit_minimum_roll', 'price', 'range_meter')
+        'recoil_compensation', 'actions_to_ready', 'damage_potential', 'piercing', 'encumbrance', 'price', 'range_meter')
     list_filter = ('type', 'extensions', 'is_hand_to_hand_weapon', 'damage_potential', 'piercing', 'crit_minimum_roll')
     search_fields = 'name_en', 'name_de'
     inlines = [WeaponAttackModeInline]
@@ -23,7 +23,7 @@ class WeaponAdmin(admin.ModelAdmin):
             'fields': (
                 ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
                 ('type', 'capacity', 'damage_potential', 'piercing', 'weight'),
-                ('crit_minimum_roll', 'actions_to_ready'),
+                ('recoil_compensation', 'crit_minimum_roll', 'actions_to_ready'),
                 ('created_by', 'is_homebrew', 'homebrew_campaign'),
                 ('range_meter', 'concealment', 'price', 'reload_actions'),
                 ('description_en', 'description_de',),

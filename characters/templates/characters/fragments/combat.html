@@ -66,7 +66,10 @@
                             </td>
                             <td class="text-end">
                                 {% if w.modified_piercing > 0 %}
-                                    {% trans 'Piercing' %} {% color_value_span w.modified_piercing 3 %}
+                                    {% trans 'Piercing' %} {% color_value_span w.modified_piercing 3 %}<br>
+                                {% endif %}
+                                {% if w.modified_recoil_compensation %}
+                                    {% trans 'Recoil Compensation' %} {% color_value_span w.modified_recoil_compensation 3 %}<br>
                                 {% endif %}
                                 {% if w.modified_crit_minium_roll != 11 %}
                                     {% trans 'Crit MR' %} {% color_value_span w.modified_crit_minium_roll 11 invert=True %}<br>

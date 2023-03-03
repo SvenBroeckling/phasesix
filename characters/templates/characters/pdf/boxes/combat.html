@@ -36,7 +36,10 @@
                 </td>
                 <td class="text-end">
                     {% if w.modified_piercing > 0 %}
-                        {% trans 'Piercing' %} <span class="text-light">{{ w.modified_piercing }}</span>
+                        {% trans 'Piercing' %} <span class="text-light">{{ w.modified_piercing }}</span><br>
+                    {% endif %}
+                    {% if w.modified_recoil_compensation %}
+                        {% trans 'Recoil Compensation' %} <span class="text-light">{{ w.modified_recoil_compensation }}</span><br>
                     {% endif %}
                     {% if w.modified_crit_minium_roll != 11 %}
                         {% trans 'Crit MR' %} <span class="text-light">{{ w.modified_crit_minium_roll }}</span><br>

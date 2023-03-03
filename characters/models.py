@@ -560,23 +560,18 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
 
-        damage_potential = self.weapon.damage_potential
-        for wm in self.modifications.all():
-            for wma in wm.weaponmodificationattributechange_set.all():
-                if wma.attribute == 'damage_potential':
-                    damage_potential += wma.attribute_modifier
-
-        modes = []
-        for wm in self.weapon.weaponattackmode_set.all():
-            modes.append((wm.attack_mode.name, skill.value + wm.dice_bonus + damage_potential, wm.id))
-
-        return modes
+        damage_potential = self.weapon.damage_potential + self._get_mods('damage_potential')
+        return [
+            (wm.attack_mode.name, skill.value + wm.dice_bonus + damage_potential, wm.id)
+            for wm in self.weapon.weaponattackmode_set.all()]
 
     @property
     def roll_info_display(self):
         traits = []
         if self.modified_piercing:
             traits.append(f"{_('Pierce')}: {self.modified_piercing}")
+        if self.modified_recoil_compensation:
+            traits.append(f"{_('Recoil Compensation')}: {self.modified_recoil_compensation}")
         for template in self.character.charactertemplate_set.filter(
                 template__show_in_attack_dice_rolls=True):
             traits.append(template.template.name)
@@ -598,6 +593,10 @@ class CharacterWeapon(models.Model):
     @property
     def modified_piercing(self):
         return self.weapon.piercing + self._get_mods('piercing')
+
+    @property
+    def modified_recoil_compensation(self):
+        return self.weapon.recoil_compensation + self._get_mods('recoil_compensation')
 
     @property
     def modified_concealment(self):

@@ -119,6 +119,9 @@
                                     {{ weapon.weapon.description|urpg_markup }}
                                     <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.weapon.piercing 4 %} {% display_modifications weapon 'piercing' %}<br>
                                     <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %} {% display_modifications weapon 'damage_potential' %}<br>
+                                    {% if weapon.modified_recoil_compensation %}
+                                        <i class="fas fa-arrow-down fa-fw text-muted"></i> {% trans 'Recoil Compensation' %}: {% color_value_span weapon.weapon.recoil_compensation 3 %} {% display_modifications weapon 'recoil_compensation' %}<br>
+                                    {% endif %}
                                     <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.weapon.actions_to_ready 4 %} {% display_modifications weapon 'actions_to_ready' %}<br>
                                     {% if weapon.has_capacity %}
                                         <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:

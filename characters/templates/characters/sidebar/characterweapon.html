@@ -91,6 +91,13 @@
                     {% trans 'Piercing' %}
                     <span class="float-end">{% color_value_span object.weapon.piercing 4 %} {% display_modifications object 'piercing' %}</span>
                 </li>
+                {% if object.modified_recoil_compensation %}
+                    <li class="list-group-item">
+                        <i class="fas fa-arrow-down fa-fw"></i>
+                        {% trans 'Recoil Compensation' %}
+                        <span class="float-end">{% color_value_span object.weapon.recoil_compensation 3 %} {% display_modifications object 'recoil_compensation' %}</span>
+                    </li>
+                {% endif %}
                 <li class="list-group-item">
                     <i class="fas fa-clock fa-fw"></i>
                     {% trans 'Actions to ready' %}
