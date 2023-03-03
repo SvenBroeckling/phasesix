@@ -52,6 +52,7 @@
                                                 {{ weapon.description|urpg_markup }}
                                                 <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
                                                 <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %}<br>
+                                                <i class="fas fa-arrow-down fa-fw text-muted"></i> {% trans 'Recoil Compensation' %}: {% color_value_span weapon.recoil_compensation 3 %}<br>
                                                 <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.actions_to_ready 5 invert=True %}<br>
                                                 {% if not weapon.is_hand_to_hand_weapon %}
                                                     <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:
