@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load characters_extras %}
+{% if object.extension_enabled.magic %}
+<div class="box">
+    <h2>{% trans 'Arcana' %}</h2>
+    <div>
+        {% for i in object.max_arcana|to_range %}
+            <i class="fas fa-magic text-light"></i>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

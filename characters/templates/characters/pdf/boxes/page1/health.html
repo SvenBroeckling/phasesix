@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load characters_extras %}
+<div class="box">
+    <h2>{% trans 'Wounds' %}</h2>
+    <div>
+        {% for i in object.max_health|to_range %}
+            <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+        {% endfor %}
+        <table>
+            <tr>
+                <td>{% trans 'Boost' %}</td>
+                <td class="text-end">
+                    {% for i in 4|to_range %}
+                        <i class="far fa-heart text-light" title="{% trans 'Wound' %}"></i>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

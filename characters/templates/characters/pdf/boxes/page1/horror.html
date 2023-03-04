@@ -1,0 +1,21 @@
+{% load i18n characters_extras %}
+
+{% if object.extension_enabled.horror %}
+<div class="box">
+    <h2>{% trans 'Stress and Quirks' %}</h2>
+    <div>
+        {% for i in object.max_stress|to_range %}
+            <i class="fas fa-meh text-light" title="{% trans 'Stress' %}"></i>
+        {% endfor %}
+    <table>
+        <tbody>
+            {% for q in object.quirks.all %}
+                <tr>
+                    <td>{{ q }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endif %}

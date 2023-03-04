@@ -12,32 +12,53 @@
     <table class="layout">
         <tr>
             <td class="vertical-top" style="width: 4cm; padding-right: 0.4cm">
-                {% include 'characters/pdf/boxes/basics.html' %}
-                {% include 'characters/pdf/boxes/persona.html' %}
-                {% include 'characters/pdf/boxes/physis.html' %}
-                {% include 'characters/pdf/boxes/dice.html' %}
-                {% include 'characters/pdf/boxes/shadows_short.html' %}
-                {% include 'characters/pdf/boxes/knowledge.html' %}
+                {% include 'characters/pdf/boxes/page1/basics.html' %}
+                {% include 'characters/pdf/boxes/page1/health.html' %}
+                {% include 'characters/pdf/boxes/page1/arcana.html' %}
+                {% include 'characters/pdf/boxes/page1/horror.html' %}
+                {% include 'characters/pdf/boxes/page1/persona.html' %}
+                {% include 'characters/pdf/boxes/page1/physis.html' %}
+                {% include 'characters/pdf/boxes/page1/dice.html' %}
+                {% include 'characters/pdf/boxes/page1/shadows_short.html' %}
+                {% include 'characters/pdf/boxes/page1/knowledge.html' %}
             </td>
             <td class="vertical-top">
                 <table class="w-full">
                     <tr>
                         <td>
-                            {% include 'characters/pdf/boxes/practical_skills.html' %}
+                            {% include 'characters/pdf/boxes/page1/actions.html' %}
                         </td>
                         <td>
-                            {% include 'characters/pdf/boxes/theoretical_skills.html' %}
+                            {% include 'characters/pdf/boxes/page1/protection.html' %}
+                        </td>
+                        <td>
+                            {% include 'characters/pdf/boxes/page1/evasion.html' %}
+                        </td>
+                        <td>
+                            {% include 'characters/pdf/boxes/page1/concealment.html' %}
                         </td>
                     </tr>
                 </table>
-                {% include 'characters/pdf/boxes/combat.html' %}
+                <table class="w-full">
+                    <tr>
+                        <td>
+                            {% include 'characters/pdf/boxes/page1/practical_skills.html' %}
+                        </td>
+                        <td>
+                            {% include 'characters/pdf/boxes/page1/theoretical_skills.html' %}
+                        </td>
+                    </tr>
+                </table>
+                {% include 'characters/pdf/boxes/page1/combat.html' %}
             </td>
         </tr>
     </table>
 </div>
 
+<div class="page-break"></div>
+
 <div class="page">
-    {# include 'characters/pdf/boxes/shadows.html' #}
+    {% include 'characters/pdf/boxes/page2/armour.html' %}
 </div>
 </body>
 </html>
