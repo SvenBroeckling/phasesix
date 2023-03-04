@@ -1,0 +1,13 @@
+{% load characters_extras i18n %}
+
+<div class="box">
+    <h2>{% trans 'Currency' %}</h2>
+    <table>
+        {% for unit in object.currency_map.currencymapunit_set.all %}
+        <tr>
+            <td>{{ unit }}</td>
+            <td><span class="text-light">{{ object|currency_quantity:unit }}</span></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

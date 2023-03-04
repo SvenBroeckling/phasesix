@@ -1,0 +1,29 @@
+{% load characters_extras i18n %}
+
+<div class="box">
+    <h2>{% trans 'On Body' %}</h2>
+    <table>
+        {% for item in object.characteritem_set.not_in_container.without_containers %}
+        <tr>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.item }}</td>
+            <td>{{ item.item.concealment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="box">
+    {% for container in object.characteritem_set.containers %}
+        <h2>{{ container.item }}</h2>
+        <table>
+            {% for item in container.characteritem_set.without_containers %}
+                <tr>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.item }}</td>
+                    <td>{{ item.item.concealment }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+</div>

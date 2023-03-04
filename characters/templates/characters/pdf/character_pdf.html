@@ -58,7 +58,18 @@
 <div class="page-break"></div>
 
 <div class="page">
-    {% include 'characters/pdf/boxes/page2/armour.html' %}
+    <table>
+        <tr>
+            <td class="vertical-top w-one-third pr-1">
+                {% include 'characters/pdf/boxes/page2/armour.html' %}
+                {% include 'characters/pdf/boxes/page2/weapons.html' %}
+            </td>
+            <td class="vertical-top w-full">
+                {% include 'characters/pdf/boxes/page2/currency.html' %}
+                {% include 'characters/pdf/boxes/page2/items.html' %}
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
