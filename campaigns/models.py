@@ -102,10 +102,10 @@ class Campaign(models.Model):
 
     def get_backdrop_image_url(self):
         image = self.epoch.image
-        if self.backdrop_image:
-            image = self.backdrop_image
         if self.world.image:
             image = self.world.image
+        if self.backdrop_image:
+            image = self.backdrop_image
 
         return get_thumbnail(image, '800', crop='center', quality=99).url
 
