@@ -1,18 +1,15 @@
-{% load i18n %}
-{% load rules_extras %}
+{% load i18n rules_extras characters_extras %}
 
-{% if object.templates_with_rules.exists %}
-    <div class="box">
-        <h2>{% trans 'Shadows' %}</h2>
-        <table>
-            {% for template in object.templates_with_rules.all %}
-                <tr>
-                    <td>
-                        {{ template.template.name }}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-        </section>
-    </div>
-{% endif %}
+<div class="box">
+    <h2>{% trans 'Shadows' %}</h2>
+    <table>
+        {% for template in object.templates_with_rules.all|fill_queryset_to:4 %}
+            <tr>
+                <td>
+                    {{ template.template.name }}&nbsp;
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    </section>
+</div>

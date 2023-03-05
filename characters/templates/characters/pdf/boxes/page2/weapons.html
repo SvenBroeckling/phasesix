@@ -1,6 +1,6 @@
 {% load characters_extras %}
 {% load i18n %}
-{% for weapon in object.characterweapon_set.all %}
+{% for weapon in object.characterweapon_set.all|cap_and_fill_queryset_to:3 %}
     <div class="box">
         <h2>{% trans 'Weapon' %}</h2>
         <table>

@@ -47,15 +47,18 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
 @register.simple_tag
 def display_modifications(character_weapon, attribute):
     res = ''
-    for wm in character_weapon.modifications.all():
-        for wmm in wm.weaponmodificationattributechange_set.all():
-            if wmm.attribute == attribute and wmm.attribute_modifier != 0:
-                if attribute == 'concealment':
-                    css_class = 'text-success' if wmm.attribute_modifier < 0 else 'text-danger'
-                else:
-                    css_class = 'text-danger' if wmm.attribute_modifier < 0 else 'text-success'
-                res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.attribute_modifier)
-    return mark_safe(res)
+    try:
+        for wm in character_weapon.modifications.all():
+            for wmm in wm.weaponmodificationattributechange_set.all():
+                if wmm.attribute == attribute and wmm.attribute_modifier != 0:
+                    if attribute == 'concealment':
+                        css_class = 'text-success' if wmm.attribute_modifier < 0 else 'text-danger'
+                    else:
+                        css_class = 'text-danger' if wmm.attribute_modifier < 0 else 'text-success'
+                    res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.attribute_modifier)
+        return mark_safe(res)
+    except AttributeError:
+        return ''
 
 
 @register.simple_tag(takes_context=True)
@@ -172,3 +175,27 @@ def character_notes(character, user):
 @register.filter
 def has_knowledge(character, knowledge):
     return character.knowledge_dict().get(knowledge, None) is not None
+
+
+class FillProxyModel:
+    def __getitem__(self, item):
+        return "⠀"  # Unicode U+2800 invisible space
+
+    def __getattr__(self, item):
+        return "⠀"  # Unicode U+2800 invisible space
+
+
+@register.filter
+def cap_and_fill_queryset_to(qs, max_length):
+    result = list(qs)[:max_length]
+    while len(result) < max_length:
+        result.append(FillProxyModel())
+    return result
+
+
+@register.filter
+def fill_queryset_to(qs, max_length):
+    result = list(qs)
+    while len(result) < max_length:
+        result.append(FillProxyModel())
+    return result
