@@ -453,6 +453,9 @@ class CharacterSkillQuerySet(models.QuerySet):
     def hand_to_hand_combat_skill(self):
         return self.get(skill__name_en='Hand to Hand Combat')
 
+    def throwing_combat_skill(self):
+        return self.get(skill__name_en='Throwing')
+
     def evasion_skill(self):
         return self.get(skill__name_en='Acrobatics')
 
@@ -559,6 +562,8 @@ class CharacterWeapon(models.Model):
         skill = self.character.characterskill_set.ranged_combat_skill()
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
+        if self.weapon.is_throwing_weapon:
+            skill = self.character.characterskill_set.throwing_combat_skill()
 
         damage_potential = self.weapon.damage_potential + self._get_mods('damage_potential')
         return [

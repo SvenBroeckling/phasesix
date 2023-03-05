@@ -181,6 +181,8 @@ class Weapon(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     is_hand_to_hand_weapon = models.BooleanField(
         _('is hand to hand weapon'), default=False)
+    is_throwing_weapon = models.BooleanField(
+        _('is throwing weapon'), default=False)
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
 

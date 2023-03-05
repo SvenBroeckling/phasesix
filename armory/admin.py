@@ -21,7 +21,7 @@ class WeaponAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {
             'fields': (
-                ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon'),
+                ('name_en', 'name_de', 'extensions', 'is_hand_to_hand_weapon', 'is_throwing_weapon'),
                 ('type', 'capacity', 'damage_potential', 'piercing', 'weight'),
                 ('recoil_compensation', 'crit_minimum_roll', 'actions_to_ready'),
                 ('created_by', 'is_homebrew', 'homebrew_campaign'),

@@ -167,6 +167,7 @@ class CreateWeaponView(View):
                     description_de=form.cleaned_data['description'],
                     type=form.cleaned_data['type'],
                     is_hand_to_hand_weapon=form.cleaned_data['is_hand_to_hand_weapon'],
+                    is_throwing_weapon=form.cleaned_data['is_throwing_weapon'],
                     damage_potential=form.cleaned_data['damage_potential'],
                     capacity=form.cleaned_data['capacity'],
                     actions_to_ready=form.cleaned_data['actions_to_ready'],
@@ -182,8 +183,11 @@ class CreateWeaponView(View):
                 if weapon.is_hand_to_hand_weapon:
                     weapon.weaponattackmode_set.create(
                         attack_mode=AttackMode.objects.get(name_en="Hand to Hand"))
+                elif weapon.is_throwing_weapon:
+                    weapon.weaponattackmode_set.create(
+                        attack_mode=AttackMode.objects.get(name_en="Throwing"))
                 else:
-                    for am in AttackMode.objects.exclude(name_en="Hand to Hand"):
+                    for am in AttackMode.objects.exclude(name_en="Hand to Hand").exclude(name_en="Throwing"):
                         weapon.weaponattackmode_set.create(attack_mode=am)
 
                 for ext in character.extensions.all():

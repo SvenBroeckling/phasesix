@@ -115,7 +115,7 @@
                         {% display_modifications object 'damage_potential' %}
                     </span>
                 </li>
-                {% if not object.weapon.is_hand_to_hand_weapon %}
+                {% if not object.weapon.is_hand_to_hand_weapon and not weapon.is_throwing_weapon %}
                     <li class="list-group-item">
                         <i class="fas fa-clock fa-fw"></i>
                         {% trans 'Reload actions' %}
