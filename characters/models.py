@@ -26,6 +26,12 @@ class Character(models.Model):
     name = models.CharField(_('name'), max_length=80)
     description = models.TextField(_('description'), blank=True, null=True)
 
+    may_appear_on_start_page = models.BooleanField(
+        _('may appear on start page'),
+        help_text=_('This character may appear on the anonymous start page (i.E. if it has only free images'),
+        default=False
+    )
+
     size = models.IntegerField(_('size'), blank=True, null=True)
     weight = models.IntegerField(_('weight'), blank=True, null=True)
     date_of_birth = models.CharField(_('date of birth'), max_length=40, blank=True, null=True)

@@ -16,8 +16,7 @@
                 <div class="text-center">
                     <h1 class="mx-auto my-0 text-uppercase">PhaseSix</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">{% trans 'A free, flexible role playing game.' %}</h2>
-                    {% if user.is_authenticated %}
-                        {% for c in user_characters %}
+                        {% for c in characters %}
                             {% if c.image %}
                                 <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3">
                                     {% thumbnail c.image "300x300" crop="center" as im %}
@@ -26,12 +25,11 @@
                                 </a>{% if forloop.last %}<br>{% endif %}
                             {% endif %}
                         {% endfor %}
-                    {% else %}
-                        <a href="{% url 'rulebook:detail' pk=1 %}"
-                           class="btn btn-primary btn-lg mt-4 me-2">{% trans 'Have a look at the rules' %}</a>
-                        <a href="{% url 'characters:create_character' %}"
-                           class="btn btn-primary btn-lg mt-4">{% trans 'Create a character' %}</a>
-                    {% endif %}
+                    <br>
+                    <a href="{% url 'rulebook:detail' pk=1 %}"
+                       class="btn btn-primary btn-lg mt-4 me-2">{% trans 'Have a look at the rules' %}</a>
+                    <a href="{% url 'characters:create_character' %}"
+                       class="btn btn-primary btn-lg mt-4">{% trans 'Create a character' %}</a>
                 </div>
             </div>
         </div>

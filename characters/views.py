@@ -35,8 +35,11 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['characters'] = Character.objects.filter(
+            image__isnull=False,
+            may_appear_on_start_page=True).order_by('?')[:4]
         if self.request.user.is_authenticated:
-            context['user_characters'] = self.request.user.character_set.all()
+            context['characters'] = self.request.user.character_set.all()
         return context
 
 

@@ -7,7 +7,8 @@ from characters.models import Character
 
 
 class CharacterAdmin(admin.ModelAdmin):
-    list_display = 'name', 'created_by', 'campaign', 'reputation'
+    list_display = 'name', 'may_appear_on_start_page', 'created_by', 'campaign', 'reputation'
+    list_editable = 'may_appear_on_start_page',
     list_filter = 'created_by', 'campaign'
     search_fields = 'name',
 
