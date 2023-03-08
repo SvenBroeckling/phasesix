@@ -1,7 +1,7 @@
 {% load characters_extras %}
 {% load i18n %}
-{% for weapon in object.characterweapon_set.all|cap_and_fill_queryset_to:3 %}
-    <div class="box">
+{% for weapon in object.characterweapon_set.all|cap_and_fill_queryset_to:4 %}
+    <div class="box {% if forloop.last %}last{% endif %}">
         <h2>{% trans 'Weapon' %}</h2>
         <table>
             <tr>
@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td>{% trans 'Capacity' %}</td>
-                <td>{{ weapon.weapon.capacity }} {% display_modifications weapon 'capacity' %}</td>
+                <td>{{ weapon.weapon.capacity|default:"" }} {% display_modifications weapon 'capacity' %}</td>
             </tr>
             <tr>
                 <td>{% trans 'Range' %}</td>

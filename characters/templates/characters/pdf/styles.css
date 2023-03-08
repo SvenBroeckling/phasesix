@@ -11,6 +11,8 @@
 
 body {
     box-sizing: border-box;
+    height: 294mm;
+    width: 207mm;
     padding: 0.3cm;
     margin: 0;
 }
@@ -54,10 +56,6 @@ p {
     width: 50%;
 }
 
-.h-full {
-    height: 100%;
-}
-
 .pr-1 {
     padding-right: 1rem;
 }
@@ -70,6 +68,8 @@ p {
 
 .page {
     page-break-inside: avoid;
+    height: 100%;
+    width: 100%;
 }
 
 .page header {
@@ -85,8 +85,9 @@ p {
 .page .box {
     border: 1px solid black;
     position: relative;
-    margin-bottom: 0.5cm;
+    margin-bottom: 0.4cm;
     padding: 2mm;
+    border-radius: 1mm;
 }
 
 .page .box h2 {
@@ -96,6 +97,9 @@ p {
     padding: 0 2mm;
     top: -5mm;
     left: 2mm;
+}
+
+.page .box.last {
 }
 
 .page .box table {
