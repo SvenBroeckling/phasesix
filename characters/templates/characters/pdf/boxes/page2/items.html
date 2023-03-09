@@ -3,7 +3,7 @@
 <div class="box">
     <h2>{% trans 'Items on body' %}</h2>
     <table>
-        {% for item in object.characteritem_set.not_in_container.without_containers|fill_queryset_to:20 %}
+        {% for item in object.characteritem_set.not_in_container.without_containers %}
             <tr>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.item }}</td>

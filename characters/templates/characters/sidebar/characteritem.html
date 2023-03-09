@@ -120,7 +120,7 @@
 
 {% if object.item.image %}
     {% thumbnail object.item.image "500" as thumb %}
-        <img src="{{ thumb.url }}" class="card-img-top mt-4" alt="{{ object.item }}">
+        <img src="{{ thumb.url }}" class="rounded img-fluid mt-4" alt="{{ object.item }}">
     {% endthumbnail %}
 {% endif %}
 

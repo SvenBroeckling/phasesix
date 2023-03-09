@@ -64,7 +64,7 @@
 
 {% if object.weapon.image %}
     {% thumbnail object.weapon.image "500" as thumb %}
-        <img src="{{ thumb.url }}" class="card-img-top mt-4" alt="{{ object.weapon }}">
+        <img src="{{ thumb.url }}" class="rounded img-fluid mt-4" alt="{{ object.weapon }}">
     {% endthumbnail %}
 {% endif %}
 
