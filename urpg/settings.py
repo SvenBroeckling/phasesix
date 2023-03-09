@@ -16,10 +16,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
 
 DEBUG = True if os.environ['DEBUG'] == 'True' else False
+DEBUG_TOOLBAR = True if os.environ.get('DEBUG_TOOLBAR', 'False') == 'True' else False
 DEBUG_DISCORD = False
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
 CSRF_TRUSTED_ORIGINS = [f'https://{a}' for a in ALLOWED_HOSTS]
+
 
 ASGI_APPLICATION = "urpg.asgi.application"
 CHANNEL_LAYERS = {
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django_registration',
     'django_extensions',
     'django_bootstrap5',
+    'cachalot',
     'reversion',
     'sorl.thumbnail',
     'compressor',
@@ -74,6 +77,28 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    INTERNAL_IPS = ['127.0.0.1']
+    if DEBUG_TOOLBAR:
+        INSTALLED_APPS.append('debug_toolbar')
+        MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+        DEBUG_TOOLBAR_PANELS = [
+            'debug_toolbar.panels.history.HistoryPanel',
+            'debug_toolbar.panels.versions.VersionsPanel',
+            'debug_toolbar.panels.timer.TimerPanel',
+            'debug_toolbar.panels.settings.SettingsPanel',
+            'debug_toolbar.panels.headers.HeadersPanel',
+            'debug_toolbar.panels.request.RequestPanel',
+            'debug_toolbar.panels.sql.SQLPanel',
+            'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+            'debug_toolbar.panels.templates.TemplatesPanel',
+            'debug_toolbar.panels.cache.CachePanel',
+            'debug_toolbar.panels.signals.SignalsPanel',
+            'debug_toolbar.panels.redirects.RedirectsPanel',
+            'debug_toolbar.panels.profiling.ProfilingPanel',
+            'cachalot.panels.CachalotPanel',
+        ]
 
 ROOT_URLCONF = 'urpg.urls'
 
@@ -111,6 +136,13 @@ DATABASES = {
         'PASSWORD': os.environ['DATABASE_PASSWORD'],
         'HOST': os.environ['DATABASE_HOST'],
         'PORT': int(os.environ['DATABASE_PORT']),
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 
