@@ -1,6 +1,6 @@
 @page {
     size: A4;
-    margin: 0.3cm;
+    margin: 3mm 3mm 3mm 2mm;
 }
 
 :root {
@@ -13,7 +13,7 @@ body {
     box-sizing: border-box;
     height: 294mm;
     width: 207mm;
-    padding: 0.3cm;
+    padding: 3mm;
     margin: 0;
 }
 
@@ -73,7 +73,7 @@ p {
 }
 
 .page header {
-    margin-bottom: 0.5cm;
+    margin-bottom: 5mm;
 }
 
 .page header h3 {
@@ -85,7 +85,7 @@ p {
 .page .box {
     border: 1px solid black;
     position: relative;
-    margin-bottom: 0.4cm;
+    margin-bottom: 4mm;
     padding: 2mm;
     border-radius: 1mm;
 }
@@ -99,9 +99,6 @@ p {
     left: 2mm;
 }
 
-.page .box.last {
-}
-
 .page .box table {
     width: 100%;
 }
@@ -112,8 +109,15 @@ p {
 
 /* Specific Boxes */
 
-
 .page .box.combat-box table tr td:first-child {
-    width: 3.5cm;
+    width: 35mm;
     vertical-align: top;
+}
+
+.page .box.weapon-box table tr td:first-child {
+    width: 45mm;
+}
+
+.page .box.armour-box table tr td:first-child {
+    width: 35mm;
 }
