@@ -149,7 +149,7 @@ class Character(models.Model):
     def attributes(self) -> dict:
         return {a.attribute.identifier: a.value for a in self.characterattribute_set.all()}
 
-    def knowledge_dict(self):
+    def knowledge_dict(self):  # TODO: 230 Queries
         kd = {}
         for t in self.charactertemplate_set.all():
             for m in t.template.templatemodifier_set.exclude(knowledge__isnull=True):
@@ -193,7 +193,6 @@ class Character(models.Model):
             currency_map__character__id=self.id,
             is_common=True
         ).latest('id')
-
 
     @property
     def templates_with_rules(self):
