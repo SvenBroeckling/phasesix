@@ -121,3 +121,13 @@ p {
 .page .box.armour-box table tr td:first-child {
     width: 35mm;
 }
+
+/* Spells */
+
+div.spells {
+    columns: 2;
+}
+
+div.spells > * {
+    break-inside: avoid;
+}
