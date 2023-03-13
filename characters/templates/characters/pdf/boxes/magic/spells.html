@@ -1,47 +1,53 @@
-{% load characters_extras %}
-{% load i18n rules_extras %}
+{% load characters_extras i18n rules_extras %}
 
-<div class="spells">
-    {% for s in object.characterspell_set.all %}
-        {% spell_type_attribute_dice_value object s.spell_type as dice %}
-        <div class="box">
-            <h2>{{ s }}</h2>
-            <p>
-                {{ s.spell.rules|urpg_markup }}
-            </p>
-            <br>
-            <table>
-                <tr>
-                    <td>{{ object.characterskill_set.spell_casting_skill.skill.name }}</td>
-                    <td><span class="text-light">{{ dice }} {{ s.spell_type.reference_attribute.name }}</span></td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Arcana' %}</td>
-                    <td>{% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-light"></i>{% endfor %}</td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Power' %}</td>
-                    <td><span class="text-light">{{ s.power }}</span></td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Range' %}</td>
-                    <td><span class="text-light">{{ s.range }}</span></td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Shape' %}</td>
-                    <td><span class="text-light">{{ s.shape|default:"-" }}</span></td>
-                </tr>
-                <tr>
-                    <td>{% trans 'Actions' %}</td>
-                    <td><span class="text-light">{{ s.actions }}</span></td>
-                </tr>
-                {% for st in s.characterspelltemplate_set.all %}
-                    <tr>
-                        <td>{% if forloop.first %}{% trans 'Modifications' %}{% endif %}</td>
-                        <td><span class="text-light">{{ st }}</span></td>
-                    </tr>
-                {% endfor %}
-            </table>
+{% if object.characterspell_set.exists %}
+    <div class="card-columns">
+        <h1>{% trans '// Spells' %}</h1>
+        <div class="cards">
+            {% for s in object.characterspell_set.all %}
+                {% spell_type_attribute_dice_value object s.spell_type as dice %}
+                <div class="box">
+                    <h2>{{ s }}</h2>
+                    <p>
+                        {{ s.spell.rules|urpg_markup }}
+                    </p>
+                    <br>
+                    <table>
+                        <tr>
+                            <td>{{ object.characterskill_set.spell_casting_skill.skill.name }}</td>
+                            <td><span class="text-light">{{ dice }} {{ s.spell_type.reference_attribute.name }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Arcana' %}</td>
+                            <td>{% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-light"></i>{% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Power' %}</td>
+                            <td><span class="text-light">{{ s.power }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Range' %}</td>
+                            <td><span class="text-light">{{ s.range }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Shape' %}</td>
+                            <td><span class="text-light">{{ s.shape|default:"-" }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Actions' %}</td>
+                            <td><span class="text-light">{{ s.actions }}</span></td>
+                        </tr>
+                        {% for st in s.characterspelltemplate_set.all %}
+                            <tr>
+                                <td>{% if forloop.first %}{% trans 'Modifications' %}{% endif %}</td>
+                                <td><span class="text-light">{{ st }}</span></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</div>
+    </div>
+{% endif %}

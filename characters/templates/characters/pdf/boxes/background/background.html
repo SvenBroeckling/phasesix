@@ -1,0 +1,38 @@
+{% load characters_extras %}
+{% load i18n rules_extras %}
+
+<div class="card-columns">
+    <h1>{% trans '// Background' %}</h1>
+    <div class="cards">
+        {% for template in object.charactertemplate_set.all %}
+            <div class="box">
+                <h2>{{ template.template }}</h2>
+                <p>
+                    {{ template.template.rules|urpg_markup }}
+                </p>
+                {% with all_modifiers=template.template.templatemodifier_set.all %}
+                    {% for mod in all_modifiers %}
+                        {% if mod.aspect %}
+                            <i class="fas fa-sun fa-fw" title="{% trans 'Aspect' %}"></i> {{ mod.get_aspect_display|capfirst }} {% color_value_span mod.aspect_modifier 3 algebraic_sign=True %}<br>
+                        {% endif %}
+                    {% endfor %}
+                    {% for mod in all_modifiers %}
+                        {% if mod.attribute %}
+                            <i class="fas fa-asterisk fa-fw" title="{% trans 'Attribute' %}"></i> {{ mod.attribute.name }} {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
+                        {% endif %}
+                    {% endfor %}
+                    {% for mod in all_modifiers %}
+                        {% if mod.skill %}
+                            <i class="fas fa-hand-scissors fa-fw" title="{% trans 'Skill' %}"></i> {{ mod.skill }} {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
+                        {% endif %}
+                    {% endfor %}
+                    {% for mod in all_modifiers %}
+                        {% if mod.knowledge %}
+                            <i class="fas fa-book fa-fw" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }} {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1117,5 +1117,6 @@ class CharacterPDFView(View):
                 encoding='utf-8')
             ), base_url='src/', encoding='utf-8')
         response = HttpResponse(content_type='application/pdf')
+        response.headers['Content-Disposition'] = 'inline'
         html.write_pdf(response, font_config=font_config)
         return response

@@ -122,12 +122,13 @@ p {
     width: 35mm;
 }
 
-/* Spells */
+/* Card Columns */
 
-div.spells {
+div.card-columns .cards {
     columns: 2;
 }
 
-div.spells > * {
+div.card-columns .cards > * {
     break-inside: avoid;
 }
+

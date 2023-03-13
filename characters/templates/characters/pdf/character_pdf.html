@@ -70,11 +70,16 @@
     </table>
 </div>
 
-{% if object.extension_enabled.magic %}
+{% if object.extension_enabled.magic or object.templates_with_rules.exists %}
     <div class="page">
         {% include 'characters/pdf/boxes/magic/spells.html' %}
+        {% include 'characters/pdf/boxes/magic/shadows.html' %}
     </div>
 {% endif %}
+
+<div class="page">
+    {% include 'characters/pdf/boxes/background/background.html' %}
+</div>
 
 </body>
 </html>
