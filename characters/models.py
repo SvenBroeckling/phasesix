@@ -11,7 +11,7 @@ from sorl.thumbnail import get_thumbnail
 
 from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit
 from horror.models import QuirkModifier
-from magic.models import SpellTemplateModifier
+from magic.models import SpellTemplateModifier, SpellOrigin
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
 
 
@@ -265,6 +265,15 @@ class Character(models.Model):
     @property
     def spell_points(self):
         return self.lineage.base_spell_points + self.get_aspect_modifier('base_spell_points')
+
+    @property
+    def unlocked_spell_origins(self):
+        return SpellOrigin.objects.filter(
+            id__in=[t.unlocks_spell_origin.id
+                    for t
+                    in TemplateModifier.objects.filter(
+                        unlocks_spell_origin__isnull=False,
+                        template__charactertemplate__character__id=self.id)])
 
     @property
     def available_stress(self):

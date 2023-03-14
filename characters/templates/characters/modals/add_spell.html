@@ -15,7 +15,7 @@
         }
         checkSpellCosts($('#initial-spell-points').data('initial-spell-points'))
 
-        $('.add-spell-spell-type-card').on('click', function(e){
+        $('.add-spell-category-card').on('click', function(e){
             let type_id = $(this).data('type-id')
             $('.type-selection').css('display', 'none')
             $(`#spell-selection-${type_id}`).css('display', 'block')
@@ -57,19 +57,14 @@
 <div class="d-none" id="initial-spell-points" data-initial-spell-points="{{ character.spell_points_available }}"></div>
 <div class="container type-selection">
     <div class="row">
-        <div class="col-12 text-center">
-            <h3>{% trans 'Choose a school' %}</h3>
-        </div>
-    </div>
-    <div class="row">
-        {% for t in spell_types %}
-            {% thumbnail t.image "1024" as img %}
+        {% for category in categories %}
+            {% thumbnail category.image "1024" as img %}
             <div class="col-12 col-lg-6 col-xl-4">
-                <div class="card text-center rounded add-spell-spell-type-card pointer mb-4" data-type-id="{{ t.id }}">
+                <div class="card text-center rounded add-spell-category-card pointer mb-4" data-type-id="{{ category.id }}">
                     <div class="card-body" style="background-image: url({{ img.url }}); background-size: cover">
                         <div class="card-text w-100 p-5">
-                            <h5 class="text-center p-0 m-i0">{{ t }}</h5>
-                            <small class="text-center">{{ t.reference_attribute.name }}</small>
+                            <h5 class="text-center p-0 m-i0">{{ category }}</h5>
+                            <small class="text-center">{{ category.reference_attribute.name }}</small>
                         </div>
                     </div>
                 </div>
@@ -78,16 +73,15 @@
         {% endfor %}
     </div>
 </div>
-{% for t in spell_types.distinct %}
-    <div class="container spell-selection" id="spell-selection-{{ t.id }}" style="display: none">
+{% for category in categories.distinct %}
+    <div class="container spell-selection" id="spell-selection-{{ category.id }}" style="display: none">
         <div class="row">
             <div class="col-12 text-center">
-                <h4>{% trans 'Choose a spell' %}</h4>
                 <small class="back-to-school pointer"><<< {% trans 'Choose another school' %}</small>
             </div>
         </div>
         <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
-            {% for s in t.basespell_set.all %}
+            {% for s in category.basespell_set.all %}
                 <div class="col-12 col-lg-6 col-xl-4">
                     {% basespell_widget s character=character %}
                 </div>

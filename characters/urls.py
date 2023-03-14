@@ -78,6 +78,10 @@ urlpatterns = [
         views.XhrAddSpellView.as_view(),
         name='xhr_add_spell'),
     path(
+        'xhr_add_spell_by_origin/<int:pk>',
+        views.XhrAddSpellByOriginView.as_view(),
+        name='xhr_add_spell_by_origin'),
+    path(
         'xhr_remove_spell/<int:pk>',
         views.XhrRemoveSpellView.as_view(),
         name='xhr_remove_spell'),

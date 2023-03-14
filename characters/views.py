@@ -24,10 +24,9 @@ from characters.forms import CharacterImageForm, CreateCharacterDataForm, Create
 from characters.models import Character, CharacterWeapon, CharacterRiotGear, CharacterItem, CharacterStatusEffect, \
     CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
 from horror.models import QuirkCategory, Quirk
-from magic.models import SpellType, SpellTemplateCategory, SpellTemplate
+from magic.models import SpellType, SpellTemplateCategory, SpellTemplate, SpellOrigin
 from pantheon.models import Entity
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge, TemplateCategory
-from rules.templatetags.rules_extras import template_widget
 
 
 class IndexView(TemplateView):
@@ -987,7 +986,7 @@ class XhrAddSpellView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         context = super().get_context_data(**kwargs)
         context['character'] = character
-        context['spell_types'] = SpellType.objects.all()
+        context['categories'] = SpellType.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -1002,6 +1001,13 @@ class XhrAddSpellView(TemplateView):
                 return JsonResponse({'status': 'notenoughpoints'})
             character.characterspell_set.create(spell=spell)
         return JsonResponse({'status': 'ok', 'remaining_spell_points': character.spell_points_available})
+
+
+class XhrAddSpellByOriginView(XhrAddSpellView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = context['character'].unlocked_spell_origins
+        return context
 
 
 class XhrRemoveSpellView(View):

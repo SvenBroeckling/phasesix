@@ -47,6 +47,10 @@ class Extension(models.Model, metaclass=TransMeta):
         ('e', _('Epoch')),
         ('w', _('World')),
     )
+    SELECT_SPELLS_BY_COICES = (
+        ('t', _('Type')),
+        ('o', _('Origin')),
+    )
     objects = ExtensionQuerySet.as_manager()
 
     is_mandatory = models.BooleanField(_('is mandatory'), default=False)
@@ -68,6 +72,7 @@ class Extension(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
     ordering = models.IntegerField(_('ordering'), default=100)
 
+    # only world related
     currency_map = models.ForeignKey('armory.CurrencyMap', blank=True, null=True, on_delete=models.SET_NULL)
     fixed_extensions = models.ManyToManyField('self', blank=True, limit_choices_to={'type': 'x'})
     fixed_epoch = models.ForeignKey(
@@ -76,6 +81,12 @@ class Extension(models.Model, metaclass=TransMeta):
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
+    select_spells_by = models.CharField(
+        _('select spells by'),
+        default='t',
+        max_length=1,
+        choices=SELECT_SPELLS_BY_COICES,
+        help_text=_('Select spells by type (terra, nexus) or origin (tirakan)'))
 
     class Meta:
         ordering = ('ordering',)
@@ -356,6 +367,12 @@ class TemplateModifier(models.Model, metaclass=TransMeta):
         verbose_name=_('knowledge modifier'),
         blank=True,
         null=True)
+    unlocks_spell_origin = models.ForeignKey(
+        'magic.SpellOrigin',
+        verbose_name=_('unlocks spell origin'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.template.name

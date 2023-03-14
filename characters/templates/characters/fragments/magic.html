@@ -10,8 +10,12 @@
                             class="btn btn-primary float-end mb-2 modal-trigger"
                             data-bs-toggle="modal"
                             data-bs-target=".page-modal"
-                            data-modal-title="{% trans 'Add a spell' %}"
-                            data-url="{% url 'characters:xhr_add_spell' pk=object.id %}">
+                            {% if object.world.select_spells_by == 't' %}
+                                data-url="{% url 'characters:xhr_add_spell' pk=object.id %}"
+                            {% else %}
+                                data-url="{% url 'characters:xhr_add_spell_by_origin' pk=object.id %}"
+                            {% endif %}
+                            data-modal-title="{% trans 'Add a spell' %}">
                         <i class="fa fa-magic text-warning"></i> Add a spell <small>({{ object.spell_points_available }} {% trans 'Spell Points' %})</small>
                     </button>
                     {% if user.is_authenticated %}

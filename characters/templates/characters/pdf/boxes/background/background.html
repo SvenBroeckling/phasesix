@@ -31,6 +31,11 @@
                             <i class="fas fa-book fa-fw" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }} {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
                         {% endif %}
                     {% endfor %}
+                    {% for mod in all_modifiers %}
+                        {% if mod.unlocks_spell_origin %}
+                            <i class="fas fa-magic fa-fw" title="{% trans 'Magic Origin' %}"></i> {% trans 'Magic Origin' %}: {{ mod.unlocks_spell_origin }}<br>
+                        {% endif %}
+                    {% endfor %}
                 {% endwith %}
             </div>
         {% endfor %}
