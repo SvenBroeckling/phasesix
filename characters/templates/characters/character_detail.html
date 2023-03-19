@@ -46,7 +46,7 @@
 
         <div class="col-12">
             {% detail_fragment 'health' %}
-            {% detail_fragment 'character_nav' %}
+            {% include 'characters/_character_nav.html' %}
 
             {% if not object.created_by %}
                 <div class="alert alert-danger" role="alert">
