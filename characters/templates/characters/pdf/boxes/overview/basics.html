@@ -5,3 +5,7 @@
     <small class="text-muted">{% template_category_string object 3 '' %}</small><br>
     <small class="text-muted">{% template_category_string object 2 '' %}</small>
 </header>
+
+{% if object.image %}
+    <img src="{{ object.image.path }}" alt="{{ object }}" class="w-full mb-1">
+{% endif %}
