@@ -527,7 +527,10 @@ class CreateCharacterInfoView(TemplateView):
             return {}
 
     def entity_info(self, value):
-        entity = Entity.objects.get(id=value)
+        try:
+            entity = Entity.objects.get(id=value)
+        except ValueError:
+            return {}
         return {
             'title': entity.name,
             'description': entity.description,
@@ -703,8 +706,11 @@ class XhrReputationView(TemplateView):
         if not character.may_edit(request.user):
             return JsonResponse({'status': 'forbidden'})
         if operation == 'add':
-            character.reputation += int(request.POST.get('reputation', 0))
-            character.save()
+            try:
+                character.reputation += int(request.POST.get('reputation', 0))
+                character.save()
+            except ValueError:
+                pass
         if operation == 'add-template':
             template = Template.objects.get(id=request.POST.get('template_id'))
             if not template.cost <= character.reputation_available:
