@@ -1,17 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n static rules_extras %}
 
-{% block belownav %}
-    <div
-            style="position: relative; height: 36vh; background-image: url({% static 'img/susan-q-yin-2JIvboGLeho-unsplash.jpg' %})"
-            class="row character-info-row mb-4">
-        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-            <h1>{% trans 'Templates' %}</h1>
-        </div>
-        <span class="background-image-copyright">
-            Photo by <a href="https://unsplash.com/@syinq?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Susan Q Yin</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-        </span>
-    </div>
+{% block background %}{% static 'img/susan-q-yin-2JIvboGLeho-unsplash.jpg' %}{% endblock %}
+
+{% block background_copyright %}
+    Photo by <a href="https://unsplash.com/@syinq?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Susan Q Yin</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 {% endblock %}
 
 {% block javascript %}

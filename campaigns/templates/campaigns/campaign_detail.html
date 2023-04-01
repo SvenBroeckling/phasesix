@@ -9,13 +9,16 @@
     <script src="{% static 'js/clipboard.js' %}"></script>
 {% endblock %}
 
-{% block belownav %}
-    <div
-            class="row campaign-info-row"
-            style="background-image: url({{ object.get_backdrop_image_url }})">
-        <div class="col-md-10 offset-md-1 info mt-4">
+{% block background %}{{ object.get_backdrop_image_url }}{% endblock %}
+
+{% block content %}
+    <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
+    <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
+
+    <div class="row">
+        <div class="">
             {% if may_edit %}
-            <a
+                <a
                     href=""
                     data-sidebar-title="{% trans 'Roll' %}"
                     data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}"
@@ -25,7 +28,7 @@
                    data-msg="{% trans 'Copied' %}">{% trans 'Invite Link' %}</a>
             {% endif %}
             {% if may_join %}
-            <a
+                <a
                     href=""
                     data-sidebar-title="{% trans 'Join campaign' %}"
                     data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"
@@ -33,16 +36,11 @@
                     class="fas fa-dice-five"></i> {% trans 'Join campaign' %}</a>
             {% endif %}
 
-            <h1>{{ object.name }}</h1>
+            <h1 class="h2">{{ object.name }}</h1>
             <small>{% trans 'A campaign by' %} {{ object.created_by }}</small>
             <p>{{ object.abstract|urpg_markup }}</p>
         </div>
     </div>
-{% endblock %}
-
-{% block content %}
-    <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
-    <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
     {% campaign_fragment 'characters' %}
 

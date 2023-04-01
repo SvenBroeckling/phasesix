@@ -1,0 +1,126 @@
+{% load world_extras i18n %}
+<nav id="mainNavigation" role="navigation">
+    <a href="/">
+        <div class="py-3 w-60 m-auto text-center border-bottom">
+            <h1 class="mx-auto my-0 text-uppercase">PhaseSix</h1>
+        </div>
+    </a>
+    <div class="navbar-expand-md">
+        <div class="navbar-dark text-center my-2">
+            <button class="navbar-toggler w-75 px-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span> <span
+                class="align-middle">{% trans 'Menu' %}</span>
+            </button>
+        </div>
+        <div class="text-center mt-3 collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" role="button"
+                       data-bs-toggle="dropdown">{% trans 'Play' %}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                               href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'characters:list' %}">{% trans 'My Characters' %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'campaigns:list' %}">{% trans 'My Campaigns' %}</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" role="button"
+                       data-bs-toggle="dropdown">{% trans 'Read' %}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"
+                               href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rulebook' %}</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'bestiary:list' %}">{% trans 'Foes' %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a></li>
+                        <li><a class="dropdown-item"
+                               href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" role="button"
+                       data-bs-toggle="dropdown">{% trans 'Worlds' %}</a>
+                    <ul class="dropdown-menu">
+                        {% get_active_worlds as worlds %}
+                        {% for w in worlds %}
+                            <li><a class="dropdown-item"
+                                   href="{{ w.get_absolute_url }}">{{ w.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'forum:index' %}">{% trans 'Forum' %}</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                       role="button">
+                        {% if user.is_authenticated %}
+                            {{ request.user|capfirst }}
+                        {% else %}
+                            {% trans 'Account' %}
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if request.LANGUAGE_CODE == 'de' %}
+                            <li><a class="dropdown-item language-link"
+                                   data-language="en"
+                                   href="{% url 'set_language' %}">{% trans 'Switch to english' %}</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item language-link"
+                                   data-language="de"
+                                   href="{% url 'set_language' %}">{% trans 'Switch to german' %}</a></li>
+                        {% endif %}
+
+                        {% if user.is_staff %}
+                            <li><a class="dropdown-item"
+                                   href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{% url 'gmtools:assign_spell_cost' %}">{% trans 'Assign Spell Cost' %}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{% url 'homebrew:index' %}">{% trans 'Review Homebrew' %}</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item"
+                                   href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
+                        {% else %}
+                            <li class="dropdown-item">
+                                <a class="nav-link" href="{% url 'login' %}?next=/">
+                                    {% trans 'Login' %}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

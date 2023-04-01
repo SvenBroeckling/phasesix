@@ -244,7 +244,7 @@
             </div>
 
             {% for container in character.characteritem_set.containers %}
-                <div class="card mt-3 sidebar-trigger"
+                <div class="card mt-4 sidebar-trigger"
                      data-pk="container.id"
                      data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=container.id sidebar_template="characteritem" %}"
                      data-sidebar-title="{{ container.item }}">

@@ -1,41 +1,20 @@
 {% extends 'base.html' %}
 {% load static django_bootstrap5 i18n characters_extras rules_extras thumbnail %}
 
-{% block javascript %}
-    <script src="{% static 'js/worlds_detail.js' %}"></script>
+{% block background %}{% thumbnail object.get_image.image '1900' as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+
+{% block background_copyright %}
+    Image by <a href="{{ object.get_image.copyright_url }}">{{ object.get_image.copyright }}</a>
 {% endblock %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
-{% block belownav %}
-    <div
-            {% with img=object.get_image %}
-                {% if img %}
-                    {% thumbnail img.image '1024' as im %}
-                        style="position: relative; height: 36vh; background-image: url({{ im.url }})"
-                    {% endthumbnail %}
-                {% endif %}
-                        class="row character-info-row mb-3">
-            {% endwith %}
-
-    <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-        <div>
-            <h1>{{ object }}</h1>
-        </div>
-    </div>
-
-    <span class="background-image-copyright">
-            {% with img=object.get_image %}
-                {% if img %}
-                    Image by <a href="{{ img.copyright_url }}">{{ img.copyright }}</a>
-                {% endif %}
-            {% endwith %}
-        </span>
-
-    </div>
+{% block javascript %}
+    <script src="{% static 'js/worlds_detail.js' %}"></script>
 {% endblock %}
 
 {% block content %}
+    <h1 class="h2">{{ object }}</h1>
     <form action="" method="post">
     {% csrf_token %}
         {% if may_edit %}

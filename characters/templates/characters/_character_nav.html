@@ -1,22 +1,22 @@
 {% load characters_extras rules_extras i18n %}
 
-<div class="nav nav-tabs justify-content-center mb-3" id="v-pills-tab" role="tablist">
-    <a class="nav-link active" data-bs-toggle="tab" href="#v-character"
+<div class="nav nav-pills mb-4" id="v-pills-tab" role="tablist">
+    <a class="nav-link active me-2" data-bs-toggle="tab" href="#v-character"
        role="tab" aria-controls="v-character" aria-selected="true"><i
         class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Character' %}</a>
-    <a class="nav-link" data-bs-toggle="tab" href="#v-gear" role="tab" aria-controls="v-gear"
+    <a class="nav-link me-2" data-bs-toggle="tab" href="#v-gear" role="tab" aria-controls="v-gear"
        aria-selected="true"><i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Gear' %}</a>
-    <a class="nav-link" data-bs-toggle="tab" href="#v-combat" role="tab" aria-controls="v-combat"
+    <a class="nav-link me-2" data-bs-toggle="tab" href="#v-combat" role="tab" aria-controls="v-combat"
        aria-selected="true"><i class="fas fa-fw fa-chess-pawn"></i>&nbsp;{% trans 'Combat' %}</a>
     {% if object.extension_enabled.magic %}
-        <a class="nav-link" data-bs-toggle="tab" href="#v-magic" role="tab" aria-controls="v-combat"
+        <a class="nav-link me-2" data-bs-toggle="tab" href="#v-magic" role="tab" aria-controls="v-combat"
            aria-selected="true"><i class="fas fa-fw fa-magic"></i>&nbsp;{% trans 'Magic' %}
             {% if object.spell_points_available %}
                 <span class="badge bg-info ms-2">{{ object.spell_points_available }}</span>
             {% endif %}
         </a>
     {% endif %}
-    <a class="nav-link" data-bs-toggle="tab" href="#v-background" role="tab" aria-controls="v-background"
+    <a class="nav-link me-2" data-bs-toggle="tab" href="#v-background" role="tab" aria-controls="v-background"
        aria-selected="true"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
         <span class="badge bg-primary ms-2">{{ object.reputation_available }}/{{ object.reputation_gained }}</span>
     </a>

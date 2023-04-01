@@ -15,6 +15,12 @@
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
+{% block background %}{{ object.get_image.image.url }}{% endblock %}
+
+{% block background_copyright %}
+    Image by <a href="{{ object.get_image.copyright_url }}">{{ object.get_image.copyright }}</a>
+{% endblock %}
+
 {% block opengraph %}
     <meta property="og:title" content="Phase Six - {{ object }}"/>
     <meta property="og:type" content="website"/>
@@ -35,10 +41,7 @@
                 {% with img=object.get_image %}
                     {% if img %}
                         {% thumbnail img.image '1024' as im %}
-                            <img class="card-img-top" src="{{ im.url }}" alt="{{ object }}"/>
-                            <span class="background-image-copyright">
-                                Image by <a href="{{ img.copyright_url }}">{{ img.copyright }}</a>
-                            </span>
+                            <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
                         {% endthumbnail %}
                     {% endif %}
                 {% endwith %}

@@ -23,16 +23,6 @@
 
 {% block content %}
     <form action="" method="post" class="character-data-form" data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">
-        <div class="row mb-4">
-            <div class="col-12 text-center">
-                <h1>- {% trans 'New Character' %} -</h1>
-                {% if campaign %}
-                    <h4 class="text-muted">{{ campaign }}</h4>
-                {% endif %}
-                    <p class="text-muted">{% trans 'Choose a name and a lineage' %}</p>
-            </div>
-        </div>
-
 
         <div class="row">
             {% csrf_token %}

@@ -8,45 +8,39 @@
     <script src="{% static 'js/campaign_socket.js' %}"></script>
 {% endblock %}
 
-{% block belownav %}
-    <div class="row character-info-row"
-         style="background-image: url({{ object.get_backdrop_image_url }});">
-        <div class="col-md-10 offset-md-1 pb-5 d-flex">
-
-            <div class="card">
-                <div class="card-body d-flex flex-wrap">
-                    <div class="character-image me-4 sidebar-trigger"
-                         data-sidebar-title="{% trans 'Character' %}"
-                         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}">
-                        <img class="rounded img-fluid" src="{{ object.get_image_url }}" alt="{{ object.name }}">
-                        <span class="dice-icon"><i class="fas fa-dice-five text-light shadow fa-2x"></i></span>
-                    </div>
-                    <div class="mt-3 mt-sm-0">
-                        <h3 class="mb-0">{{ object.name }}</h3>
-                        <small><span>{{ object.lineage }}</span></small><br>
-                        {% template_category_string object 3 %}
-                        {% template_category_string object 2 %}
-                        {% if object.pc_or_npc_campaign %}
-                            <small>{% trans 'Campaign' %}: <a href="{% url 'campaigns:detail' pk=object.pc_or_npc_campaign.id %}">{{ object.pc_or_npc_campaign }}</a></small>
-                            <br>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-{% endblock %}
+{% block background %}{{ object.get_backdrop_image_url }}{% endblock %}
 
 {% block content %}
     <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
     <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
+    <div class="row character-info-row">
+        <div class="d-flex flex-wrap">
+            <div class="character-image me-4 sidebar-trigger"
+                 data-sidebar-title="{% trans 'Character' %}"
+                 data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}">
+                <img class="rounded img-fluid" src="{{ object.get_image_url }}" alt="{{ object.name }}">
+                <span class="dice-icon"><i class="fas fa-dice-five text-light shadow fa-2x"></i></span>
+            </div>
+            <div class="mt-3 mt-sm-0">
+                <h3 class="mb-0">{{ object.name }}</h3>
+                <small><span>{{ object.lineage }}</span></small><br>
+                {% template_category_string object 3 %}
+                {% template_category_string object 2 %}
+                {% if object.pc_or_npc_campaign %}
+                    <small>{% trans 'Campaign' %}: <a
+                        href="{% url 'campaigns:detail' pk=object.pc_or_npc_campaign.id %}">{{ object.pc_or_npc_campaign }}</a></small>
+                    <br>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-4">
 
         <div class="col-12">
-            {% detail_fragment 'health' %}
             {% include 'characters/_character_nav.html' %}
+            {% detail_fragment 'health' %}
 
             {% if not object.created_by %}
                 <div class="alert alert-danger" role="alert">

@@ -18,6 +18,7 @@
         <p>
             {{ basespell.rules|urpg_markup }}
         </p>
+        <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ basespell.origin }}<br>
         <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
         <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
         {% for a in basespell.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>

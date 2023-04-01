@@ -1,21 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n static rules_extras thumbnail %}
 
-{% block belownav %}
-    {% thumbnail object.image "1900" as im %}
-    <div
-            style="position: relative; height: 36vh; background-image: url({{ im.url }})"
-            class="row character-info-row mb-3">
-        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-            <h1><i class="{{ object.fa_icon_class|default:"fas fa-book" }}"></i> {{ object.name }}</h1>
-        </div>
-        {% if object.image_copyright %}
-            <span class="background-image-copyright">
-                Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
-            </span>
-        {% endif %}
-    </div>
-    {% endthumbnail %}
+{% block background %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
+
+{% block background_copyright %}
+    Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
 {% endblock %}
 
 {% block title %}{{ object.name }} - {% trans 'Rulebook' %} - {{ block.super }}{% endblock %}

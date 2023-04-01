@@ -1,35 +1,20 @@
 {% extends 'base.html' %}
 {% load i18n static sorl_thumbnail %}
 
-{% block belownav %}
-    <span class="social" style="position: fixed; bottom: 5px; right: 5px">
-        <a class="text-dark me-2" href="https://unsplash.com"><small class="text-dark">Photo by <a class="text-dark" href="https://unsplash.com/@hariprasad000?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Hari Nandakumar</a> on <a class="text-dark" href="https://unsplash.com/collections/96935862/gray?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></small></a>
-        <a href="mailto:info@phasesix.org"><i class="fas fa-2x fa-envelope me-1 text-dark"></i></a>
-        <a href="https://www.reddit.com/r/phasesix/"><i class="fab fa-2x fa-reddit text-dark"></i></a>
-    </span>
-{% endblock %}
-
-{% block container_content %}
+{% block content %}
     <header class="masthead">
         <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
             <div class="d-flex justify-content-center">
                 <div class="text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">PhaseSix</h1>
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">{% trans 'A free, flexible role playing game.' %}</h2>
-                        {% for c in characters %}
-                            {% if c.image %}
-                                <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3">
-                                    {% thumbnail c.image "300x300" crop="center" as im %}
-                                        <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded" alt="">
-                                    {% endthumbnail %}
-                                </a>{% if forloop.last %}<br>{% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    <br>
-                    <a href="{% url 'rulebook:detail' pk=1 %}"
-                       class="btn btn-secondary btn-lg mt-4 me-2">{% trans 'Have a look at the rules' %}</a>
-                    <a href="{% url 'characters:create_character' %}"
-                       class="btn btn-secondary btn-lg mt-4">{% trans 'Create a character' %}</a>
+                    {% for c in characters %}
+                        {% if c.image %}
+                            <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3">
+                                {% thumbnail c.image "300x300" crop="center" as im %}
+                                    <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded" alt="">
+                                {% endthumbnail %}
+                            </a>{% if forloop.last %}<br>{% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>

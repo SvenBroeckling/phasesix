@@ -551,7 +551,6 @@ class CreateCharacterInfoView(TemplateView):
         }
 
     def weight_info(self, value):
-        print(self.kwargs['world_pk'])
         world = Extension.objects.get(id=self.kwargs['world_pk']).world_set.latest('id')
         return {
             'title': gettext('Weight'),

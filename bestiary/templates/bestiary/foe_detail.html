@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n characters_extras %}
+{% load static i18n characters_extras thumbnail %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
@@ -7,40 +7,34 @@
     <a class="nav-link" href="{% url 'admin:bestiary_foe_change' object.id %}">{% trans 'Edit' %}</a>
 {% endblock %}
 
-{% block belownav %}
-    {% if object.image %}
-    <div
-            style="position: relative; height: 36vh; background-image: url({{ object.image.url }})"
-            class="row character-info-row mb-3">
+{% block background %}{% if object.image %}{{ object.image.url }}{% else %}{% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %}{% endif %}{% endblock %}
+
+{% block background_copyright %}
+    {% if object.image_copyright %}
+        <small class="text-dark text-tiny">Photo by <a class="text-dark" href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a></small>
     {% else %}
-        <div
-                style="position: relative; height: 36vh; background-image: url({% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %})"
-                class="row character-info-row mb-3">
+        <small>Photo by <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Jensen</a> on <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></small>
     {% endif %}
-
-        <div class="col-md-10 offset-md-1 d-flex justify-content-between pb-5">
-            <div>
-                <h1>{{ object }}</h1>
-                <small>{{ object.type }}</small>
-            </div>
-        </div>
-        <span class="background-image-copyright">
-            {% if object.image %}
-                {% if object.image_copyright %}
-                    Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
-                {% endif %}
-            {% else %}
-                Photo by <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Jensen</a> on <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-            {% endif %}
-        </span>
-
-    </div>
 {% endblock %}
 
 {% block content %}
-    <div class="row mt-4">
-        <div class="col-12">
-            <h4>{% trans 'Statistics' %}</h4>
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-3">
+            <div class="card">
+                {% if object.image %}
+                    {% thumbnail object.image '1024' as im %}
+                        <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
+                    {% endthumbnail %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-8 col-md-9 wiki-page">
+            <h1 class="h2">{{ object }}</h1>
+            {{ object.type }}
+            <br>
+            <br>
+
             <b>{% trans 'Health' %}</b>: {% color_value_span object.health 10 %}<br>
             <b>{% trans 'Arcana' %}</b>: {% color_value_span object.arcana 6 %}<br>
             <b>{% trans 'Protection' %}</b>: {% color_value_span object.protection 2 %}<br>
@@ -53,7 +47,8 @@
             <h4>{% trans 'Actions' %}</h4>
             <ul>
                 {% for action in object.foeaction_set.all %}
-                    <li>{{ action.name }} {% color_value_span action.skill 8 %} <i class="text-muted">({{ action.effect }})</i></li>
+                    <li>{{ action.name }} {% color_value_span action.skill 8 %} <i
+                        class="text-muted">({{ action.effect }})</i></li>
                 {% endfor %}
             </ul>
         </div>

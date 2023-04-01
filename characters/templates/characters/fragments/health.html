@@ -4,7 +4,7 @@
 {% block fragment %}
     <div class="row">
 
-        <div class="col-12 col-md-4 mb-5">
+        <div class="col-12 col-md-4 mb-4">
             <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Combat' %} " data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="charactercombat" %}">
                 <div class="card-header text-center">
                     {% trans 'Combat' %}
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-4 mb-5">
+        <div class="col-12 col-md-4 mb-4">
             <div class="card h-100 text-center">
                 <div class="card-header">
                     {% trans 'Status' %}
@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-4 mb-5 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="dice" %}">
+        <div class="col-12 col-md-4 mb-4 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="dice" %}">
             <div class="card h-100">
                 <div class="card-header text-center">
                     {% trans 'Dice' %}
