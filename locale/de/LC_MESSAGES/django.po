@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-01 18:15+0000\n"
-"PO-Revision-Date: 2023-04-01 20:16+0200\n"
+"POT-Creation-Date: 2023-04-02 18:02+0000\n"
+"PO-Revision-Date: 2023-04-02 20:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -538,9 +538,9 @@ msgstr "Ist dies die übliche Einheit, mit der Menschen bezahlen?"
 
 #: armory/templates/armory/riotgear_list.html:10
 #: armory/templates/armory/riotgear_list.html:65
-#: characters/templates/_nav.html:50 characters/templates/base.html:110
+#: characters/templates/_nav.html:50 characters/templates/base.html:112
 #: characters/templates/characters/pdf/boxes/gear/armour.html:4
-#: homebrew/templates/homebrew/index.html:84 oldbase.html:100 oldbase.html:252
+#: homebrew/templates/homebrew/index.html:84
 msgid "Armour"
 msgstr "Rüstung"
 
@@ -600,7 +600,7 @@ msgstr "Preis"
 
 #: armory/templates/armory/riotgear_list.html:72
 #: armory/templates/armory/weapon_list.html:76
-#: characters/templates/_nav.html:90 oldbase.html:138
+#: characters/templates/_nav.html:90
 msgid "Admin"
 msgstr "Admin"
 
@@ -613,9 +613,8 @@ msgid "Add in admin"
 msgstr "Im Admin hinzufügen"
 
 #: armory/templates/armory/weapon_list.html:10
-#: characters/templates/_nav.html:46 characters/templates/base.html:108
-#: characters/templates/characters/fragments/gear.html:93 oldbase.html:96
-#: oldbase.html:250
+#: characters/templates/_nav.html:46 characters/templates/base.html:110
+#: characters/templates/characters/fragments/gear.html:93
 msgid "Weapons"
 msgstr "Waffen"
 
@@ -797,8 +796,7 @@ msgstr "Schwächen"
 
 #: bestiary/templates/bestiary/foe_list.html:4
 #: bestiary/templates/bestiary/foe_list.html:13
-#: characters/templates/_nav.html:42 characters/templates/base.html:111
-#: oldbase.html:92 oldbase.html:253
+#: characters/templates/_nav.html:42 characters/templates/base.html:113
 msgid "Foes"
 msgstr "Gegner"
 
@@ -944,13 +942,7 @@ msgstr "SL"
 msgid "Create Campaign"
 msgstr "Kampagne erstellen"
 
-#: campaigns/templates/campaigns/create_campaign.html:9
-#: campaigns/templates/campaigns/create_campaign_epoch.html:9
-#: campaigns/templates/campaigns/create_campaign_extensions.html:28
-msgid "New Campaign"
-msgstr "Neue Kampagne"
-
-#: campaigns/templates/campaigns/create_campaign.html:11
+#: campaigns/templates/campaigns/create_campaign.html:10
 #: characters/templates/characters/create_character.html:10
 msgid ""
 "\n"
@@ -961,7 +953,7 @@ msgstr ""
 "                    Wähle eine Welt, um darin zu spielen\n"
 "                "
 
-#: campaigns/templates/campaigns/create_campaign_epoch.html:11
+#: campaigns/templates/campaigns/create_campaign_epoch.html:10
 #: characters/templates/characters/create_character_epoch.html:10
 msgid ""
 "\n"
@@ -972,7 +964,7 @@ msgstr ""
 "                    Wähle eine Epoche um darin zu spielen\n"
 "                "
 
-#: campaigns/templates/campaigns/create_campaign_extensions.html:30
+#: campaigns/templates/campaigns/create_campaign_extensions.html:29
 msgid ""
 "\n"
 "                        Choose any number of additional extensions to add to "
@@ -984,7 +976,7 @@ msgstr ""
 "Erweiterungen, um sie deiner Kampagne hinzuzufügen..\n"
 "                "
 
-#: campaigns/templates/campaigns/create_campaign_extensions.html:55
+#: campaigns/templates/campaigns/create_campaign_extensions.html:54
 #: characters/templates/characters/create_character_extensions.html:54
 msgid "Choose Extensions"
 msgstr "Wähle Erweiterungen"
@@ -1095,12 +1087,12 @@ msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:34 characters/views.py:593
+#: characters/forms.py:34 characters/views.py:603
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
 #: campaigns/templates/campaigns/fragments/settings.html:23
-#: characters/forms.py:35 characters/views.py:568
+#: characters/forms.py:35 characters/views.py:578
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1258,7 +1250,7 @@ msgstr "Phase Six letzte Aktualisierungen"
 #: characters/forms.py:25
 #: characters/templates/characters/pdf/boxes/gear/armour.html:7
 #: characters/templates/characters/pdf/boxes/gear/weapons.html:8
-#: characters/views.py:542 forum/forms.py:6 homebrew/forms.py:9
+#: characters/views.py:552 forum/forms.py:6 homebrew/forms.py:9
 #: homebrew/forms.py:27 homebrew/forms.py:39 homebrew/forms.py:57
 msgid "Name"
 msgstr "Name"
@@ -1267,7 +1259,7 @@ msgstr "Name"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:49 characters/views.py:549
+#: characters/forms.py:49 characters/views.py:559
 msgid "Size"
 msgstr "Größe"
 
@@ -1277,11 +1269,11 @@ msgstr "Größe"
 #: characters/templates/characters/modals/add_weapons.html:65
 #: characters/templates/characters/sidebar/characteritem.html:152
 #: characters/templates/characters/sidebar/characterriotgear.html:48
-#: characters/views.py:556
+#: characters/views.py:566
 msgid "Weight"
 msgstr "Gewicht"
 
-#: characters/forms.py:51 characters/views.py:562
+#: characters/forms.py:51 characters/views.py:572
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1293,7 +1285,7 @@ msgstr "Keine"
 msgid "Entity"
 msgstr "Gottheit"
 
-#: characters/forms.py:57 characters/views.py:584
+#: characters/forms.py:57 characters/views.py:594
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -1443,7 +1435,7 @@ msgstr "Thema"
 msgid "Menu"
 msgstr "Menü"
 
-#: characters/templates/_nav.html:21 oldbase.html:70
+#: characters/templates/_nav.html:21
 msgid "Play"
 msgstr "Spielen"
 
@@ -1454,43 +1446,41 @@ msgstr "Spielen"
 #: characters/templates/characters/create_character_constructed.html:4
 #: characters/templates/characters/create_character_epoch.html:4
 #: characters/templates/characters/create_character_extensions.html:4
-#: characters/templates/characters/random_npc_form.html:4 oldbase.html:73
+#: characters/templates/characters/random_npc_form.html:4
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/_nav.html:27 oldbase.html:76
+#: characters/templates/_nav.html:27
 msgid "My Characters"
 msgstr "Meine Charaktere"
 
-#: characters/templates/_nav.html:29 oldbase.html:78
+#: characters/templates/_nav.html:29
 msgid "My Campaigns"
 msgstr "Meine Kampagnen"
 
-#: characters/templates/_nav.html:34 oldbase.html:84
+#: characters/templates/_nav.html:34
 msgid "Read"
 msgstr "Lesen"
 
-#: characters/templates/_nav.html:37 oldbase.html:87
+#: characters/templates/_nav.html:37
 #: rulebook/templates/rulebook/chapter_detail.html:10
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/_nav.html:44 characters/templates/base.html:107
-#: oldbase.html:94 oldbase.html:249
+#: characters/templates/_nav.html:44 characters/templates/base.html:109
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/_nav.html:48 characters/templates/base.html:109
-#: oldbase.html:98 oldbase.html:251
+#: characters/templates/_nav.html:48 characters/templates/base.html:111
 msgid "Spells"
 msgstr "Zauber"
 
-#: characters/templates/_nav.html:55 oldbase.html:105
+#: characters/templates/_nav.html:55
 msgid "Worlds"
 msgstr "Welten"
 
 #: characters/templates/_nav.html:65 forum/templates/forum/board_detail.html:45
-#: forum/templates/forum/thread_detail.html:70 oldbase.html:116
+#: forum/templates/forum/thread_detail.html:70
 msgid "Forum"
 msgstr "Forum"
 
@@ -1507,34 +1497,34 @@ msgid "Switch to german"
 msgstr "Wechseln zu Deutsch"
 
 #: characters/templates/_nav.html:95
-#: gmtools/templates/gmtools/extension_grid.html:4 oldbase.html:143
+#: gmtools/templates/gmtools/extension_grid.html:4
 msgid "Extension Grids"
 msgstr "Erweiterungstabellen"
 
 #: characters/templates/_nav.html:98
-#: gmtools/templates/gmtools/template_statistics.html:4 oldbase.html:146
+#: gmtools/templates/gmtools/template_statistics.html:4
 msgid "Template Statistics"
 msgstr "Schablonenstatistiken"
 
 #: characters/templates/_nav.html:101
-#: gmtools/templates/gmtools/assign_spell_cost.html:4 oldbase.html:149
+#: gmtools/templates/gmtools/assign_spell_cost.html:4
 msgid "Assign Spell Cost"
 msgstr "Zauber Kosten zuweisen"
 
-#: characters/templates/_nav.html:104 oldbase.html:152
+#: characters/templates/_nav.html:104
 msgid "Review Homebrew"
 msgstr "Homebrew Review"
 
-#: characters/templates/_nav.html:113 oldbase.html:159
+#: characters/templates/_nav.html:113
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/_nav.html:117 oldbase.html:164
-#: templates/registration/login.html:4 templates/registration/login.html:13
+#: characters/templates/_nav.html:117 templates/registration/login.html:4
+#: templates/registration/login.html:13
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:24 oldbase.html:23
+#: characters/templates/base.html:24
 msgid ""
 "Do you need a simple and fast rulebook to play your stories as a pen'n'paper "
 "roleplaying game? Phase Six is a quick to play roleplaying game rulebook "
@@ -1544,36 +1534,36 @@ msgstr ""
 "Pen'n'Paper Rollenspiel zu spielen? Phase Six ist ein schnell spielbares "
 "Rollenspiel Regelwerk welches in jedem Setting verwendet werden kann."
 
-#: characters/templates/base.html:53 oldbase.html:45
+#: characters/templates/base.html:53
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: characters/templates/base.html:70 oldbase.html:218
+#: characters/templates/base.html:70
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/base.html:75 oldbase.html:222
+#: characters/templates/base.html:75
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/base.html:97
-#: characters/templates/characters/character_list.html:19 oldbase.html:239
+#: characters/templates/base.html:99
+#: characters/templates/characters/character_list.html:19
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
 
-#: characters/templates/base.html:98 oldbase.html:240
+#: characters/templates/base.html:100
 msgid "My Charactes"
 msgstr "Meine Charaktere"
 
-#: characters/templates/base.html:99 oldbase.html:241
+#: characters/templates/base.html:101
 msgid "Campaigns"
 msgstr "Kampagnen"
 
-#: characters/templates/base.html:100 homebrew/forms.py:58 oldbase.html:242
+#: characters/templates/base.html:102 homebrew/forms.py:58
 msgid "Rules"
 msgstr "Regeln"
 
-#: characters/templates/base.html:101 oldbase.html:243
+#: characters/templates/base.html:103
 msgid "Privacy"
 msgstr "Privatsphäre"
 
@@ -2812,7 +2802,7 @@ msgstr "Heilen"
 
 #: characters/templates/characters/sidebar/wounds.html:25
 #: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:186 characters/views.py:197 characters/views.py:208
+#: characters/views.py:196 characters/views.py:207 characters/views.py:218
 msgid "Rest"
 msgstr "Rast"
 
@@ -2854,7 +2844,7 @@ msgstr ""
 msgid "Contact"
 msgstr "Kontakt"
 
-#: characters/templates/contact.html:11 oldbase.html:119
+#: characters/templates/contact.html:11
 msgid "Contact / Privacy"
 msgstr "Kontakt / Datenschutz"
 
@@ -2905,22 +2895,22 @@ msgstr ""
 "\n"
 "            "
 
-#: characters/templates/index.html:27
+#: characters/templates/index.html:14
 msgid "Free online pen and paper rpg"
 msgstr "Freies online Pen'n'Paper Rollenspiel"
 
-#: characters/templates/index.html:29
+#: characters/templates/index.html:41
 msgid ""
 "\n"
-"                            Do you need a simple and fast rulebook to play "
-"your stories as a pen'n'paper roleplaying\n"
-"                            game?\n"
-"                            <em>Phase Six</em> is a quick to play "
+"                                Do you need a simple and fast rulebook to "
+"play your stories as a pen'n'paper roleplaying\n"
+"                                game?\n"
+"                                <em>Phase Six</em> is a quick to play "
 "roleplaying game rulebook that can be used in any\n"
-"                            setting.\n"
-"                            All you need to play is a handfull of regular "
-"six-sided dice and some paper.\n"
-"                        "
+"                                setting.\n"
+"                                All you need to play is a handfull of "
+"regular six-sided dice and some paper.\n"
+"                            "
 msgstr ""
 "\n"
 "Brauchst du ein simples und schnelles Regelwerk um deine Geschichten als "
@@ -2931,16 +2921,16 @@ msgstr ""
 "etwas Papier.\n"
 " "
 
-#: characters/templates/index.html:38
+#: characters/templates/index.html:50
 msgid ""
 "\n"
-"                            This website lets you create and manage your "
+"                                This website lets you create and manage your "
 "characters as well as their equipment\n"
-"                            and possessions.  This makes it really easy to "
-"use a platform like\n"
-"                            <a href=\"https://roll20.net\">Roll20</a> for "
-"your sessions.\n"
-"                        "
+"                                and possessions.  This makes it really easy "
+"to use a platform like\n"
+"                                <a href=\"https://roll20.net\">Roll20</a> "
+"for your sessions.\n"
+"                            "
 msgstr ""
 "\n"
 "Auf dieser Webseite kannst du deine Charaktere erstellen und verwalten, "
@@ -2949,53 +2939,66 @@ msgstr ""
 "<a href=\"https://roll20.net\">Roll20</a> für deine Sitzungen zu benutzen.\n"
 " "
 
-#: characters/templates/index.html:45
+#: characters/templates/index.html:57
 msgid ""
 "\n"
-"                            Start now by taking a look at the rules or "
+"                                Start now by taking a look at the rules or "
 "creating a character.\n"
-"                        "
+"                            "
 msgstr ""
 "\n"
 "Starte jetzt damit einen Blick auf die Regeln zu werfen oder einen Charakter "
 "zu erstellen.\n"
 " "
 
-#: characters/views.py:74
+#: characters/templates/index.html:69
+msgid "Discover worlds"
+msgstr "Entdecke Welten"
+
+#: characters/templates/index.html:70
+msgid "Play in one of these worlds, or use Terra to play on earth."
+msgstr ""
+"Spiele in einer dieser Welten, oder wähle Terra, um auf der Erde zu spielen."
+
+#: characters/templates/index.html:102 characters/templates/index.html:145
+msgid "Read ahead"
+msgstr "Weiterlesen"
+
+#: characters/views.py:84
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:187
+#: characters/views.py:197
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:198
+#: characters/views.py:208
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:209
+#: characters/views.py:219
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:543
+#: characters/views.py:553
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:550
+#: characters/views.py:560
 #, python-brace-format
 msgid "Enter the size of your character in {world.info_name_cm}."
 msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
 
-#: characters/views.py:557
+#: characters/views.py:567
 #, python-brace-format
 msgid "Enter the weight of your character in {world.info_name_kg}."
 msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
-#: characters/views.py:563
+#: characters/views.py:573
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:569
+#: characters/views.py:579
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -3008,7 +3011,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:585
+#: characters/views.py:595
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -3025,7 +3028,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:594
+#: characters/views.py:604
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -3552,14 +3555,6 @@ msgstr "Ursprung"
 msgid "All Spells"
 msgstr "Alle Zauber"
 
-#: oldbase.html:169 oldbase.html:173
-msgid "Dice server disconnected"
-msgstr "Würfelserver nicht verbunden"
-
-#: oldbase.html:172
-msgid "Dice server connected"
-msgstr "Würfelserver verbunden"
-
 #: pantheon/models.py:30
 msgid "entity category"
 msgstr "Götterkategorie"
@@ -3988,7 +3983,7 @@ msgid "wiki page images"
 msgstr "Wikiseitenbilder"
 
 #: worlds/templates/worlds/create_wiki_page.html:32
-#: worlds/templates/worlds/world_detail.html:45
+#: worlds/templates/worlds/world_detail.html:36
 msgid "Create Page"
 msgstr "Seite erstellen"
 
@@ -4043,8 +4038,8 @@ msgstr "Seite editieren"
 
 #: worlds/templates/worlds/wiki_page_detail.html:58
 #: worlds/templates/worlds/wiki_page_detail.html:60
-#: worlds/templates/worlds/world_detail.html:41
-#: worlds/templates/worlds/world_detail.html:43
+#: worlds/templates/worlds/world_detail.html:32
+#: worlds/templates/worlds/world_detail.html:34
 msgid "Create Wiki Page"
 msgstr "Wikiseite erstellen"
 
@@ -4054,8 +4049,8 @@ msgstr "Unterseite erstellen"
 
 #: worlds/templates/worlds/wiki_page_detail.html:65
 #: worlds/templates/worlds/wiki_page_detail.html:67
-#: worlds/templates/worlds/world_detail.html:48
-#: worlds/templates/worlds/world_detail.html:50
+#: worlds/templates/worlds/world_detail.html:39
+#: worlds/templates/worlds/world_detail.html:41
 msgid "Sort Subpages"
 msgstr "Unterseiten sortieren"
 
@@ -4082,6 +4077,15 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:177
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid "New Campaign"
+#~ msgstr "Neue Kampagne"
+
+#~ msgid "Dice server disconnected"
+#~ msgstr "Würfelserver nicht verbunden"
+
+#~ msgid "Dice server connected"
+#~ msgstr "Würfelserver verbunden"
 
 #~ msgid "Statistics"
 #~ msgstr "Statistiken"
@@ -4571,9 +4575,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "You have to select weapons."
 #~ msgstr "Du musst Waffen wählen."
-
-#~ msgid "cover roll"
-#~ msgstr "Deckungswurf"
 
 #~ msgid "armor roll"
 #~ msgstr "Rüstungswurf"
