@@ -6,6 +6,7 @@ from django import forms
 from django.contrib import messages
 from django.conf import settings
 from django.db.models import Q
+from django.db.models.functions import Length
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -27,6 +28,7 @@ from horror.models import QuirkCategory, Quirk
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate, SpellOrigin
 from pantheon.models import Entity
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge, TemplateCategory
+from worlds.models import WikiPage
 
 
 class IndexView(TemplateView):
@@ -36,7 +38,15 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['characters'] = Character.objects.filter(
             image__isnull=False,
-            may_appear_on_start_page=True).order_by('?')[:4]
+            may_appear_on_start_page=True).order_by('?')[:5]
+        context['wiki_pages_tirakan'] = WikiPage.objects.annotate(
+            text_len=Length('text_de')
+        ).filter(
+            world__slug='tirakans-reiche', text_len__gte=30).order_by('?')[:5]
+        context['wiki_pages_nexus'] = WikiPage.objects.annotate(
+            text_len=Length('text_de')
+        ).filter(
+            world__slug='nexus', text_len__gte=30).order_by('?')[:5]
         if self.request.user.is_authenticated:
             context['characters'] = self.request.user.character_set.all()
         return context
@@ -50,7 +60,7 @@ class CharacterListView(TemplateView):
         user = self.request.user
 
         if user.is_authenticated:
-            context['own_characters'] = Character.objects.with_templates().filter(created_by=user)
+            context['own_characters'] = Character.objects.with_templates().filter(created_by=user).order_by('name')
         if user.is_authenticated and user.is_staff:
             context['other_peoples_characters'] = Character.objects.with_templates().exclude(
                 Q(created_by=user) | Q(created_by__isnull=True))
