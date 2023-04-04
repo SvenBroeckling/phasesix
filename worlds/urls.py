@@ -61,4 +61,8 @@ urlpatterns = [
         views.XhrModalImageView.as_view(),
         name='xhr_modal_image'),
 
+    path(
+        r'xhr_auto_tag/<int:pk>/',
+        views.XhrAutoTagView.as_view(),
+        name='xhr_auto_tag'),
 ]

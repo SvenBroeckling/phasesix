@@ -11,19 +11,40 @@
 
 {% block javascript %}
     <script src="{% static 'js/worlds_detail.js' %}"></script>
+    <script>
+        $(function () {
+            $('button.autotag-button').on('click', function (event) {
+                let btn = $(this)
+                let oldtext = btn.text()
+                btn.text(btn.data('message'))
+                btn.prop('disabled', true)
+
+                $.post(
+                    btn.data('url'),
+                    $('.wiki_page_form').serialize(),
+                    function (data) {
+                        $('#id_text_de').text(data.text_de)
+                        $('#id_text_en').text(data.text_en)
+                        btn.text(oldtext)
+                        btn.prop('disabled', false)
+                    }
+                )
+            })
+        })
+    </script>
 {% endblock %}
 
 {% block content %}
     <h1 class="h2">{{ object }}</h1>
-    <form action="" method="post">
-    {% csrf_token %}
+    <form action="" method="post" class="wiki_page_form">
+        {% csrf_token %}
         {% if may_edit %}
             <div class="row mt-2">
                 <div class="col-12">
                     <button
-                            type="submit"
-                            class="btn btn-success float-end"
-                            title="{% trans 'Save' %}"><i class="fa fa-pen"></i> {% trans 'Save' %}</button>
+                        type="submit"
+                        class="btn btn-success float-end"
+                        title="{% trans 'Save' %}"><i class="fa fa-pen"></i> {% trans 'Save' %}</button>
                     <button type="button"
                             data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
                             data-sidebar-title="{% trans 'Insert Link' %}"
@@ -36,6 +57,12 @@
                             class="btn btn-primary float-end me-md-1 sidebar-trigger">
                         <i class="fa fa-image"></i> {% trans 'Images' %}
                     </button>
+                    <button type="button"
+                            data-message="{% trans 'Tagging..' %}"
+                            data-url="{% url 'worlds:xhr_auto_tag' pk=object.id %}"
+                            class="btn btn-primary float-end me-md-1 autotag-button">
+                        <i class="fas fa-tag"></i> {% trans 'Tag' %}
+                    </button>
                 </div>
             </div>
         {% endif %}
@@ -44,10 +71,10 @@
             <div class="col-12">
                 <div class="nav nav-tabs" id="myTab" role="tablist">
                     <a class="nav-link active" id="text-de-tab" data-bs-toggle="tab" data-bs-target="#text-de"
-                            type="button" role="tab" aria-controls="text-de" aria-selected="true">{% trans 'German' %}
+                       type="button" role="tab" aria-controls="text-de" aria-selected="true">{% trans 'German' %}
                     </a>
                     <a class="nav-link" id="text-en-tab" data-bs-toggle="tab" data-bs-target="#text-en"
-                            type="button" role="tab" aria-controls="text-en" aria-selected="false">{% trans 'English' %}
+                       type="button" role="tab" aria-controls="text-en" aria-selected="false">{% trans 'English' %}
                     </a>
                 </div>
 

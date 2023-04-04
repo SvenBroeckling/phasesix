@@ -203,3 +203,35 @@ class XhrModalImageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['object'] = get_object_or_404(WikiPageImage, id=self.kwargs['pk'])
         return context
+
+
+class XhrAutoTagView(View):
+    def post(self, request, *args, **kwargs):
+        wiki_page = WikiPage.objects.get(id=kwargs['pk'])
+
+        def _tag_text(text: str, lang: str):
+            result = []
+            for word in text.split(' '):
+                if word.startswith('[[') or word.startswith('{{'):
+                    result.append(word)
+                    continue
+                try:
+                    if lang == 'de':
+                        wp = WikiPage.objects.exclude(
+                            id=wiki_page.id).get(
+                            short_name_de__iexact=word, world=wiki_page.world)
+                        result.append(f'[[{wp.slug}|{wp.short_name_de}]]')
+                    else:
+                        wp = WikiPage.objects.exclude(
+                            id=wiki_page.id).get(
+                            short_name_en__iexact=word, world=wiki_page.world)
+                        result.append(f'[[{wp.slug}|{wp.short_name_en}]]')
+                except WikiPage.DoesNotExist:
+                    result.append(word)
+            return ' '.join(result)
+
+        return JsonResponse({
+            'status': 'ok',
+            'text_de': _tag_text(request.POST['text_de'], 'de'),
+            'text_en': _tag_text(request.POST['text_en'], 'en')
+        })
