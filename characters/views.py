@@ -48,7 +48,7 @@ class IndexView(TemplateView):
         ).filter(
             world__slug='nexus', text_len__gte=30).order_by('?')[:5]
         if self.request.user.is_authenticated:
-            context['characters'] = self.request.user.character_set.all()
+            context['characters'] = self.request.user.character_set.order_by('-modified_at')[:4]
         return context
 
 

@@ -140,7 +140,7 @@ span.background-image-copyright {
 
   @media (max-width: 576px) {
     img.character-image {
-      width: 45%;
+      max-width: 100px;
     }
     h2 {
       font-size: 2rem;
@@ -152,13 +152,13 @@ span.background-image-copyright {
 
   @media (min-width: 576px) and (max-width: 768px) {
     img.character-image {
-      width: 35%;
+      max-width: 140px;
     }
   }
 
   @media (min-width: 768px) {
     img.character-image {
-      max-width: 200px;
+      max-width: 180px;
     }
   }
 

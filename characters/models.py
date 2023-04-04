@@ -56,6 +56,9 @@ class Character(models.Model):
     backdrop_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
     backdrop_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
 
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
     created_by = models.ForeignKey(
         'auth.User',
         verbose_name=_('created by'),
