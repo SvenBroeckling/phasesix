@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-04 04:10+0000\n"
-"PO-Revision-Date: 2023-04-04 06:10+0200\n"
+"POT-Creation-Date: 2023-04-04 05:35+0000\n"
+"PO-Revision-Date: 2023-04-04 07:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -891,6 +891,8 @@ msgstr "Wurf"
 
 #: campaigns/templates/campaigns/campaign_detail.html:28
 #: campaigns/templates/campaigns/fragments/status.html:90
+#: worlds/templates/worlds/wiki_page_edit.html:91
+#: worlds/templates/worlds/wiki_page_edit.html:96
 msgid "Copied"
 msgstr "Kopiert"
 
@@ -1231,7 +1233,7 @@ msgstr "Individueller Wurf"
 
 #: campaigns/templates/campaigns/sidebar/settings.html:8
 #: characters/templates/characters/sidebar/character.html:81
-#: worlds/templates/worlds/wiki_page_edit.html:47
+#: worlds/templates/worlds/wiki_page_edit.html:65
 msgid "Save"
 msgstr "Speichern"
 
@@ -3043,12 +3045,12 @@ msgid "Text"
 msgstr "Text"
 
 #: forum/models.py:10 urpg/settings.py:170
-#: worlds/templates/worlds/wiki_page_edit.html:74
+#: worlds/templates/worlds/wiki_page_edit.html:109
 msgid "German"
 msgstr "Deutsch"
 
 #: forum/models.py:11 urpg/settings.py:171
-#: worlds/templates/worlds/wiki_page_edit.html:77
+#: worlds/templates/worlds/wiki_page_edit.html:112
 msgid "English"
 msgstr "Englisch"
 
@@ -4054,29 +4056,43 @@ msgstr "Unterseite erstellen"
 msgid "Sort Subpages"
 msgstr "Unterseiten sortieren"
 
-#: worlds/templates/worlds/wiki_page_edit.html:50
-msgid "Insert Link"
-msgstr "Link einfügen"
-
-#: worlds/templates/worlds/wiki_page_edit.html:52
-msgid "Link"
-msgstr "Link"
-
-#: worlds/templates/worlds/wiki_page_edit.html:56
+#: worlds/templates/worlds/wiki_page_edit.html:68
 msgid "Page images"
 msgstr "Seitenbilder"
 
-#: worlds/templates/worlds/wiki_page_edit.html:58
+#: worlds/templates/worlds/wiki_page_edit.html:70
 msgid "Images"
 msgstr "Bilder"
 
-#: worlds/templates/worlds/wiki_page_edit.html:61
-msgid "Tagging.."
-msgstr "Tagge.."
+#: worlds/templates/worlds/wiki_page_edit.html:75
+msgid "Insert Link"
+msgstr "Link einfügen"
 
-#: worlds/templates/worlds/wiki_page_edit.html:64
-msgid "Tag"
-msgstr "Tag"
+#: worlds/templates/worlds/wiki_page_edit.html:76
+msgid "Links"
+msgstr "Links"
+
+#: worlds/templates/worlds/wiki_page_edit.html:85
+msgid ""
+"Automatically create links? This will change the text in both languages."
+msgstr ""
+"Links automatisch erzeugen? Das wird die Texte in beiden Sprachen ändern."
+
+#: worlds/templates/worlds/wiki_page_edit.html:86
+msgid "Creating links.."
+msgstr "Erzeuge Links.."
+
+#: worlds/templates/worlds/wiki_page_edit.html:88
+msgid "Create Links automatically"
+msgstr "Links automatisch erzeugen"
+
+#: worlds/templates/worlds/wiki_page_edit.html:93
+msgid "Copy german text without links"
+msgstr "Kopiere deutschen Text ohne Links"
+
+#: worlds/templates/worlds/wiki_page_edit.html:98
+msgid "Copy english text without links"
+msgstr "Kopiere englischen Text ohne Links"
 
 #: worlds/views.py:81
 msgid "You do not have permission to edit this world."
@@ -4085,6 +4101,12 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:177
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid "Tagging.."
+#~ msgstr "Tagge.."
+
+#~ msgid "Tag"
+#~ msgstr "Tag"
 
 #~ msgid "New Campaign"
 #~ msgstr "Neue Kampagne"

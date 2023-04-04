@@ -11,24 +11,42 @@
 
 {% block javascript %}
     <script src="{% static 'js/worlds_detail.js' %}"></script>
+    <script src="{% static 'js/clipboard.js' %}"></script>
     <script>
         $(function () {
-            $('button.autotag-button').on('click', function (event) {
-                let btn = $(this)
-                let oldtext = btn.text()
-                btn.text(btn.data('message'))
-                btn.prop('disabled', true)
+            $('a.autotag-link').on('click', function (event) {
+                let elem = $(this)
+                let oldtext = elem.text()
+                elem.text(elem.data('status-text'))
+                elem.prop('disabled', true)
 
                 $.post(
-                    btn.data('url'),
+                    elem.data('url'),
                     $('.wiki_page_form').serialize(),
                     function (data) {
                         $('#id_text_de').text(data.text_de)
                         $('#id_text_en').text(data.text_en)
-                        btn.text(oldtext)
-                        btn.prop('disabled', false)
+                        elem.text(oldtext)
+                        elem.prop('disabled', false)
                     }
                 )
+                return false
+            })
+
+            $('a.copy-text-without-links').on('click', function(event){
+                const regex = /\[\[[^\]]+\|(.+?)\]\]/g
+                const elem = $(this)
+                const language = elem.data('language')
+                const field = $(`#id_text_${language}`)
+
+                copyTextToClipboard(field.text().replace(regex, "$1"))
+
+                const orig_text = elem.text()
+                elem.text(elem.data('message'))
+                setTimeout(() => elem.text(orig_text), 1000)
+
+                event.preventDefault()
+                return false
             })
         })
     </script>
@@ -46,23 +64,40 @@
                         class="btn btn-success float-end"
                         title="{% trans 'Save' %}"><i class="fa fa-pen"></i> {% trans 'Save' %}</button>
                     <button type="button"
-                            data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
-                            data-sidebar-title="{% trans 'Insert Link' %}"
-                            class="btn btn-primary float-end me-md-1 sidebar-trigger">
-                        <i class="fa fa-plus"></i> {% trans 'Link' %}
-                    </button>
-                    <button type="button"
                             data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
                             data-sidebar-title="{% trans 'Page images' %}"
                             class="btn btn-primary float-end me-md-1 sidebar-trigger">
                         <i class="fa fa-image"></i> {% trans 'Images' %}
                     </button>
-                    <button type="button"
-                            data-message="{% trans 'Tagging..' %}"
-                            data-url="{% url 'worlds:xhr_auto_tag' pk=object.id %}"
-                            class="btn btn-primary float-end me-md-1 autotag-button">
-                        <i class="fas fa-tag"></i> {% trans 'Tag' %}
-                    </button>
+                    <div class="btn-group me-md-1 float-end">
+                        <button class="btn btn-primary sidebar-trigger"
+                                data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
+                                data-sidebar-title="{% trans 'Insert Link' %}"
+                                role="button"><i class="fas fa-plus"></i> {% trans 'Links' %}</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <a
+                                href=""
+                                data-message="{% trans 'Automatically create links? This will change the text in both languages.' %}"
+                                data-status-text="{% trans 'Creating links..' %}"
+                                data-url="{% url 'worlds:xhr_auto_tag' pk=object.id %}"
+                                class="dropdown-item autotag-link">{% trans 'Create Links automatically' %}</a>
+                            <a
+                                href=""
+                                data-message="{% trans 'Copied' %}"
+                                data-language="de"
+                                class="dropdown-item copy-text-without-links">{% trans 'Copy german text without links' %}</a>
+                            <a
+                                href=""
+                                data-message="{% trans 'Copied' %}"
+                                data-language="en"
+                                class="dropdown-item copy-text-without-links">{% trans 'Copy english text without links' %}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endif %}
