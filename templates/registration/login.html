@@ -8,6 +8,7 @@
         <div class="col-md-6 offset-md-3">
             <h1>Login</h1>
             <form action="{% url 'login' %}" method="post">
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
                 {% bootstrap_form form %}
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary mt-2">{% trans 'Login' %}</button>

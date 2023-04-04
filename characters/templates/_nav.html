@@ -113,7 +113,7 @@
                                    href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
                         {% else %}
                             <li class="dropdown-item">
-                                <a class="nav-link" href="{% url 'login' %}?next=/">
+                                <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">
                                     {% trans 'Login' %}
                                 </a>
                             </li>
