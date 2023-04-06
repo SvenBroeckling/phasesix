@@ -102,26 +102,30 @@ span.background-image-copyright {
 /* Index */
 
 .masthead {
-  h2 {
+  h1,
+  h2,
+  h3 {
     font-family: "Varela Round", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 5rem;
     padding-bottom: 0;
-    letter-spacing: 0.8rem;
     background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
   }
 
+  h1 {
+    font-size: 5rem;
+    letter-spacing: 0.8rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+    letter-spacing: 0.6rem;
+  }
+
   h3 {
-    font-family: "Varela Round", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 2rem;
-    padding-bottom: 0;
     letter-spacing: 0.4rem;
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
   }
 
   h5 {
@@ -142,8 +146,11 @@ span.background-image-copyright {
     img.character-image {
       max-width: 100px;
     }
-    h2 {
+    h1 {
       font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
     }
     h5 {
       font-size: 1rem;
