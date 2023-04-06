@@ -216,16 +216,10 @@ class XhrAutoTagView(View):
                     result.append(word)
                     continue
                 try:
-                    if lang == 'de':
-                        wp = WikiPage.objects.exclude(
-                            id=wiki_page.id).get(
-                            short_name_de__iexact=word, world=wiki_page.world)
-                        result.append(f'[[{wp.slug}|{wp.short_name_de}]]')
-                    else:
-                        wp = WikiPage.objects.exclude(
-                            id=wiki_page.id).get(
-                            short_name_en__iexact=word, world=wiki_page.world)
-                        result.append(f'[[{wp.slug}|{wp.short_name_en}]]')
+                    qs_kwargs = {f'short_name_{lang}__iexact': word, 'world': wiki_page.world}
+                    wp = WikiPage.objects.exclude(id=wiki_page.id).get(**qs_kwargs)
+                    name = getattr(wp, f'short_name_{lang}')
+                    result.append(f'[[{wp.slug}|{name}]]')
                 except WikiPage.DoesNotExist:
                     result.append(word)
             return ' '.join(result)
