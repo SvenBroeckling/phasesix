@@ -3,7 +3,7 @@
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
-{% block background %}{{ object.origin.image.url }}{% endblock %}
+{% block background %}{% thumbnail object.origin.image '1900' as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
 
 {% block background_copyright %}
     Image by <a href="{{ object.origin.image_copyright_url }}">{{ object.origin.image_copyright }}</a>
