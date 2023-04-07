@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+
 import reversion
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
@@ -216,10 +218,14 @@ class XhrAutoTagView(View):
                     result.append(word)
                     continue
                 try:
-                    qs_kwargs = {f'short_name_{lang}__iexact': word, 'world': wiki_page.world}
-                    wp = WikiPage.objects.exclude(id=wiki_page.id).get(**qs_kwargs)
-                    name = getattr(wp, f'short_name_{lang}')
-                    result.append(f'[[{wp.slug}|{name}]]')
+                    q = re.search(r'([^a-zA-ZäöüÄÖÜ\-]*)([a-zA-ZäöüÄÖÜ\-]+)(.*)', word, re.DOTALL)
+                    if q is not None:
+                        kwargs = {f'short_name_{lang}__iexact': q.group(2), 'world': wiki_page.world}
+                        wp = WikiPage.objects.exclude(id=wiki_page.id).get(**kwargs)
+                        name = getattr(wp, f'short_name_{lang}')
+                        result.append(f'{q.group(1)}[[{wp.slug}|{name}]]{q.group(3)}')
+                    else:
+                        result.append(word)
                 except WikiPage.DoesNotExist:
                     result.append(word)
             return ' '.join(result)
