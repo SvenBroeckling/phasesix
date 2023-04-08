@@ -1,0 +1,34 @@
+{% load i18n characters_extras rules_extras %}
+
+<script>
+    $(function () {
+        $('.search-form').on('submit', function (e) {
+            const url = $(this).attr('action')
+            const form = $(this)
+
+            $.get(url, form.serialize(), function(data){
+                $('.search-results').html(data)
+            })
+            e.preventDefault()
+            return false
+        })
+    })
+</script>
+
+<div class="row">
+    <div class="col-12">
+        <form action="{% url 'portal:xhr_search_results' %}" class="search-form">
+            <div class="input-group mb-3">
+                <input class="form-control" type="search" name="q"
+                       placeholder="{% trans 'Characters, Worlds etc..' %}">
+                <button class="btn btn-primary" type="submit">{% trans 'Search' %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 search-results">
+
+    </div>
+</div>

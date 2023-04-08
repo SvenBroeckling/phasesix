@@ -90,10 +90,10 @@
     <div class="col-12 collapse pt-2" id="upload-collapse">
         <div class="card">
             <div class="card-body">
-                <input type="file">
-                <input class="form-control" type="text" name="caption" placeholder="{% trans 'Caption' %}">
-                <input class="form-control" type="text" name="copyright" placeholder="{% trans 'Copyright' %}">
-                <input class="form-control" type="text" name="copyright-url" placeholder="{% trans 'Copyright URL' %}">
+                <input type="file" class="mb-1">
+                <input class="form-control mb-1" type="text" name="caption" placeholder="{% trans 'Caption' %}">
+                <input class="form-control mb-1" type="text" name="copyright" placeholder="{% trans 'Copyright' %}">
+                <input class="form-control mb-1" type="text" name="copyright-url" placeholder="{% trans 'Copyright URL' %}">
                 <button
                         data-msg="{% trans 'Uploading' %}"
                         data-upload-url="{% url 'worlds:xhr_upload_image' slug=object.slug %}"

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'reversion',
     'sorl.thumbnail',
     'compressor',
+    'portal',
     'gmtools',
     'armory',
     'bestiary',

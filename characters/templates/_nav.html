@@ -2,6 +2,11 @@
 <nav id="mainNavigation" role="navigation">
     <a href="/">
         <div class="py-3 w-60 m-auto text-center border-bottom">
+            <i
+                data-sidebar-url="{% url 'portal:search' %}"
+                data-sidebar-title="{% trans 'Search' %}"
+                class="fas fa-search float-end text-muted sidebar-trigger"
+                title="{% trans 'Search' %}"></i>
             <h1 class="mx-auto my-0 text-uppercase">PhaseSix</h1>
         </div>
     </a>

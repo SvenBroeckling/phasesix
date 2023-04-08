@@ -28,6 +28,7 @@ urlpatterns = [
     path('you/', include('django.contrib.auth.urls')),
     path('you/', include('django_registration.backends.activation.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('portal/', include('portal.urls', namespace='portal')),
 ]
 
 if settings.DEBUG:
