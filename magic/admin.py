@@ -46,7 +46,18 @@ class SpellTypeAdmin(VersionAdmin):
     list_editable = 'reference_attribute',
 
 
-admin.site.register(SpellOrigin)
+class BaseSpellInline(admin.TabularInline):
+    model = BaseSpell
+    fields = ('name_de', 'name_en', 'arcana_cost', 'spell_point_cost')
+    show_change_link = True
+
+
+class SpellOriginAdmin(VersionAdmin):
+    list_display = ('name_de', 'name_en')
+    inlines = [BaseSpellInline]
+
+
+admin.site.register(SpellOrigin, SpellOriginAdmin)
 admin.site.register(BaseSpell, BaseSpellAdmin)
 admin.site.register(SpellTemplateCategory, VersionAdmin)
 admin.site.register(SpellTemplate, SpellTemplateAdmin)
