@@ -7,6 +7,15 @@
                 data-sidebar-title="{% trans 'Search' %}"
                 class="fas fa-search float-end text-muted sidebar-trigger"
                 title="{% trans 'Search' %}"></i>
+            {% if request.LANGUAGE_CODE == 'de' %}
+                <a class="language-link float-start me-1 text-muted"
+                    data-language="en"
+                    href="{% url 'set_language' %}">DE</a>
+            {% else %}
+                <a class="language-link float-start me-1 text-muted"
+                    data-language="de"
+                    href="{% url 'set_language' %}">EN</a>
+            {% endif %}
             <h1 class="mx-auto my-0 text-uppercase">PhaseSix</h1>
         </div>
     </a>
@@ -80,16 +89,6 @@
                         {% endif %}
                     </a>
                     <ul class="dropdown-menu">
-                        {% if request.LANGUAGE_CODE == 'de' %}
-                            <li><a class="dropdown-item language-link"
-                                   data-language="en"
-                                   href="{% url 'set_language' %}">{% trans 'Switch to english' %}</a></li>
-                        {% else %}
-                            <li><a class="dropdown-item language-link"
-                                   data-language="de"
-                                   href="{% url 'set_language' %}">{% trans 'Switch to german' %}</a></li>
-                        {% endif %}
-
                         {% if user.is_staff %}
                             <li><a class="dropdown-item"
                                    href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
