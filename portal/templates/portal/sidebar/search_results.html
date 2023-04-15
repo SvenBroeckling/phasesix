@@ -9,7 +9,11 @@
                         <img src="{% thumbnail wiki_page.get_image.image "100" as im %}{{ im.url }}{% endthumbnail %}"
                              alt="{{ wiki_page }}">
                         <div class="card-body">
-                            {{ wiki_page.short_name }}<br>
+                            {% if wiki_page.short_name %}
+                                {{ wiki_page.short_name }}<br>
+                            {% else %}
+                                {{ wiki_page.name }}<br>
+                            {% endif %}
                             <span class="text-muted">{{ wiki_page.world }}</span>
                         </div>
                     </div>
