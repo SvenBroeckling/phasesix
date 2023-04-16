@@ -15,9 +15,10 @@ class CampaignListView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
+            campaigns = Campaign.objects.for_world_configuration(self.request.world_configuration)
             if user.is_staff:
-                return Campaign.objects.all()
-            return Campaign.objects.filter(created_by=user)
+                return campaigns
+            return campaigns.filter(created_by=user)
 
 
 class CreateCampaignView(TemplateView):
@@ -65,7 +66,11 @@ class CreateCampaignDataView(CreateView):
         obj.epoch = Extension.objects.get(pk=self.kwargs['epoch_pk'])
         obj.world = Extension.objects.get(pk=self.kwargs['world_pk'])
         obj.save()
-        obj.extensions.set(Extension.objects.filter(pk__in=self.request.GET.getlist('extensions')))
+
+        extensions = Extension.objects.filter(pk__in=self.request.GET.getlist('extensions'))
+        if obj.world.fixed_extensions.exists():
+            extensions = obj.world.fixed_extensions.all()
+        obj.extensions.set(extensions)
         return super().form_valid(form)
 
     def get_success_url(self):

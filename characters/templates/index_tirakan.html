@@ -70,8 +70,16 @@
                                                     {% endthumbnail %}
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <h4 class="mt-2 mt-md-0">{{ wiki_page }}</h4>
-                                                    <span>{{ wiki_page.world }}</span>
+                                                    <h4 class="mt-2 mt-md-0 mb-0">{{ wiki_page }}</h4>
+                                                    <span>
+                                                        {% if wiki_page.parent %}
+                                                            <a href="{{ wiki_page.parent.get_absolute_url }}">
+                                                        {% endif %}
+                                                            {{ wiki_page.parent|default:"" }}
+                                                        {% if wiki_page.parent %}
+                                                            </a>
+                                                        {% endif %}
+                                                    </span>
                                                     <p>
                                                         {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_tags:wiki_page.world }}
                                                         <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>

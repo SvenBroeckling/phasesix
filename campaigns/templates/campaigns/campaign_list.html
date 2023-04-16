@@ -4,7 +4,21 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <a href="{% url 'campaigns:create' %}" class="btn btn-primary btn-lg float-end mb-2">{% trans 'Create a campaign' %}</a>
+            {% with extension=request.world_configuration.world.extension %}
+                {% if extension %}
+                    {% if extension.fixed_epoch %}
+                        {% if extension.fixed_extensions.exists %}
+                            <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a campaign' %}</a>
+                        {% else %}
+                            <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a campaign' %}</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create_epoch' world_pk=extension.id %}">{% trans 'Create a campaign' %}</a>
+                    {% endif %}
+                {% else %}
+                    <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create' %}">{% trans 'Create a campaign' %}</a>
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
     <div class="row character-list">
@@ -14,12 +28,12 @@
                     <div class="card campaign-list-item" style="
                             background-size: 100%;
                             {% if object.backdrop_image %}
-                                {% thumbnail object.backdrop_image "x800" as im %}
+                                {% thumbnail object.backdrop_image "800" as im %}
                                     background-image: url({{ im.url }})
                                 {% endthumbnail %}
                             {% else %}
                                 {% if object.epoch.image %}
-                                    {% thumbnail object.epoch.image "x800" as im %}
+                                    {% thumbnail object.epoch.image "800" as im %}
                                         background-image: url({{ im.url }})
                                     {% endthumbnail %}
                                 {% else %}
@@ -27,10 +41,11 @@
                                 {% endif %}
                             {% endif %}
                             ">
-                        <div class="card-body text-center">
+                        <div class="card-body text-center p-4">
                             <h3>{{ object.name }}</h3>
-                            <small>{{ object.epoch }}</small><br>
-                            {% trans 'GM' %}: {{ object.created_by|default:"" }}<br>
+                            {% blocktrans with t_gm=object.created_by %}
+                                A campaign by {{ t_gm }}
+                            {% endblocktrans %}
                         </div>
                     </div>
                 </a>

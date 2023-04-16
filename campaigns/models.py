@@ -10,11 +10,21 @@ from sorl.thumbnail import get_thumbnail
 from rules.models import Extension
 
 
+class CampaignQuerySet(models.QuerySet):
+    def for_world_configuration(self, world_configuration):
+        if world_configuration is not None:
+            return self.filter(world=world_configuration.world.extension)
+        return self.all()
+
+
 class Campaign(models.Model):
     CHARACTER_VISIBILITY_CHOICES = (
         ('G', _('GM Only')),
         ('A', _('All')),
     )
+
+    objects = CampaignQuerySet.as_manager()
+
     name = models.CharField(_('name'), max_length=80)
     image = models.ImageField(_('image'), upload_to='campaign_images', max_length=200, blank=True, null=True)
     image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
