@@ -9,7 +9,11 @@ class WorldFromDomainNameMiddleware:
         try:
             request.world_configuration = WorldSiteConfiguration.objects.get(dns_domain_name=request.META['HTTP_HOST'])
         except WorldSiteConfiguration.DoesNotExist:
-            request.world_configuration = None
+            try:
+                request.world_configuration = WorldSiteConfiguration.objects.get(
+                    dns_domain_name=request.META['HTTP_X_FORWARDED_HOST'])
+            except WorldSiteConfiguration.DoesNotExist:
+                request.world_configuration = None
 
         response = self.get_response(request)
         return response

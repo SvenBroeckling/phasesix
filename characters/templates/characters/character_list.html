@@ -13,8 +13,6 @@
 {% endblock %}
 
 {% block content %}
-    {{ request.META.HTTP_HOST }}
-    {{ request.META }}
     <div class="row">
         <div class="col-md-12">
             <a href="{% url 'characters:create_character' %}"
