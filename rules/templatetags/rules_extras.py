@@ -53,7 +53,10 @@ def replace_tags(value, world):
         text = ''
         tag = match_object.group(0).strip('[]')
         if '|' in tag:
-            tag, text = tag.split('|')
+            try:
+                tag, text = tag.split('|')
+            except ValueError:
+                tag = text = tag
 
         try:
             obj = WikiPage.objects.get(world=world, slug=tag)
