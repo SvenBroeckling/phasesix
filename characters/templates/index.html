@@ -63,6 +63,7 @@
             </div>
         {% endif %}
 
+        {% if not user.is_authenticated %}
             <div class="row py-2 py-md-5">
                 <div class="col-12 col-md-8 offset-md-2">
                     <div class="text-center mb-3">
@@ -71,6 +72,7 @@
                     </div>
                 </div>
             </div>
+        {% endif %}
 
             <div class="row">
                 <div class="col-12 col-md-8 offset-md-2">
