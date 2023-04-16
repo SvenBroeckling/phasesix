@@ -7,12 +7,12 @@
         <div class="container pt-5">
 
             <div class="row py-2">
-                <div class="col-12 col-md-8 offset-md-2">
-                    {{ request.world_configuration.world.description|urpg_markup|replace_tags:request.world_configuration.world }}
+                <div class="col-12 col-md-8 offset-md-2 lead text-center">
+                    {{ request.world_configuration.world.description_1|urpg_markup|replace_tags:request.world_configuration.world }}
                 </div>
             </div>
 
-            <div class="row py-2 py-md-5">
+            <div class="row py-2 py-md-3">
                 <div class="d-flex justify-content-center">
                     <div class="text-center">
                         {% for c in characters %}
@@ -28,8 +28,28 @@
                 </div>
             </div>
 
+            <div class="row py-2">
+                <div class="col-12 col-md-8 offset-md-2 lead text-center">
+                    {{ request.world_configuration.world.description_2|urpg_markup|replace_tags:request.world_configuration.world }}
+                </div>
+            </div>
+
+            <div class="row py-2">
+                <div class="col-12 col-md-8 offset-md-2 lead">
+                    {% thumbnail request.world_configuration.world.image "800" as im %}
+                    <img src="{{ im.url }}" class="img-fluid" alt="{% trans 'A map of the world' %}">
+                    {% endthumbnail %}
+                </div>
+            </div>
+
+            <div class="row py-2">
+                <div class="col-12 col-md-8 offset-md-2 lead text-center">
+                    {{ request.world_configuration.world.description_3|urpg_markup|replace_tags:request.world_configuration.world }}
+                </div>
+            </div>
+
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 col-md-8 offset-md-2">
                     <div class="card mb-5">
                         <div class="card-body">
                             <div id="wiki_page_carousel" class="carousel slide" data-bs-ride="true">

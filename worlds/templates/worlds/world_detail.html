@@ -46,7 +46,19 @@
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">
-            {{ object.description|urpg_markup|replace_tags:object }}
+            {{ object.description_1|urpg_markup|replace_tags:object }}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 wiki-page">
+            {{ object.description_2|urpg_markup|replace_tags:object }}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 wiki-page">
+            {{ object.description_3|urpg_markup|replace_tags:object }}
         </div>
     </div>
 

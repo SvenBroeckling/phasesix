@@ -8,7 +8,7 @@ from transmeta import TransMeta
 from worlds.unique_slugify import unique_slugify
 
 
-class WorldSiteConfiguration(models.Model):
+class WorldSiteConfiguration(models.Model, metaclass=TransMeta):
     world = models.ForeignKey('worlds.World', on_delete=models.CASCADE)
     dns_domain_name = models.CharField(
         _('dns domain name'),
@@ -23,6 +23,11 @@ class WorldSiteConfiguration(models.Model):
         null=True)
     brand_name = models.CharField(_('Brand name'), max_length=80)
     template_addon = models.CharField(_('Template Suffix'), max_length=40)
+
+    class Meta:
+        translate = 'brand_name',
+        verbose_name = _('world site configuration')
+        verbose_name_plural = _('world site configurations')
 
 
 @reversion.register
