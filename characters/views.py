@@ -40,12 +40,15 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         characters = Character.objects.filter(
             image__isnull=False,
-            may_appear_on_start_page=True)
+            may_appear_on_start_page=True).order_by('?')
+        if self.request.user.is_authenticated:
+            context['characters'] = self.request.user.character_set.order_by('-created_at')[:5]
         if self.request.world_configuration is not None:
-            characters = characters.filter(extensions=self.request.world_configuration.world.extension)
-        context['characters'] = characters.order_by('?')[:5]
+            context['characters'] = characters.filter(extensions=self.request.world_configuration.world.extension)[:5]
+
         context['wiki_pages_tirakan'] = WikiPage.objects.annotate(
             text_len=Length('text_de')
         ).filter(
@@ -54,8 +57,6 @@ class IndexView(TemplateView):
             text_len=Length('text_de')
         ).filter(
             world__slug='nexus', text_len__gte=30).order_by('?')[:5]
-        if self.request.user.is_authenticated:
-            context['characters'] = self.request.user.character_set.order_by('-modified_at')[:4]
         return context
 
 
