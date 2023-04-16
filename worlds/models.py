@@ -16,6 +16,11 @@ class WorldSiteConfiguration(models.Model):
         blank=True,
         null=True,
         help_text=_('This world is set as default if the given dns domain name is requested'))
+    session_cookie_domain = models.CharField(
+        _('session cookie domain'),
+        max_length=120,
+        blank=True,
+        null=True)
     brand_name = models.CharField(_('Brand name'), max_length=80)
     template_addon = models.CharField(_('Template Suffix'), max_length=40)
 

@@ -1,4 +1,5 @@
 from worlds.models import WorldSiteConfiguration
+from django.conf import settings
 
 
 class WorldFromDomainNameMiddleware:
