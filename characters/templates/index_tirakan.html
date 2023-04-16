@@ -6,6 +6,12 @@
     <header class="masthead">
         <div class="container pt-5">
 
+            <div class="row py-2">
+                <div class="col-12 col-md-8 offset-md-2">
+                    {{ request.world_configuration.world.description|urpg_markup|replace_tags:request.world_configuration.world }}
+                </div>
+            </div>
+
             <div class="row py-2 py-md-5">
                 <div class="d-flex justify-content-center">
                     <div class="text-center">

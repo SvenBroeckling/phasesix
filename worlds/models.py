@@ -40,7 +40,10 @@ class World(models.Model, metaclass=TransMeta):
     name = models.CharField(_('name'), max_length=120)
     slug = models.SlugField(_('slug'), max_length=220, unique=True, null=True)
 
-    description = models.TextField(_('description'), blank=True, null=True)
+    description_1 = models.TextField(_('description 1'), blank=True, null=True)
+    description_2 = models.TextField(_('description 2'), blank=True, null=True)
+    description_3 = models.TextField(_('description 3'), blank=True, null=True)
+
     is_active = models.BooleanField(_('is active'), default=True)
     extension = models.ForeignKey(
         'rules.Extension',
@@ -62,7 +65,7 @@ class World(models.Model, metaclass=TransMeta):
 
     class Meta:
         ordering = ('ordering',)
-        translate = ('name', 'description', 'info_name_cm', 'info_name_kg')
+        translate = ('name', 'description_1', 'description_2', 'description_3', 'info_name_cm', 'info_name_kg')
         verbose_name = _('world')
         verbose_name_plural = _('worlds')
 
