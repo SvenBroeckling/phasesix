@@ -29,16 +29,23 @@ from magic.models import SpellType, SpellTemplateCategory, SpellTemplate, SpellO
 from pantheon.models import Entity
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge, TemplateCategory
 from worlds.models import WikiPage
+from worlds.utils import get_world_configuration_template
 
 
 class IndexView(TemplateView):
     template_name = 'index.html'
 
+    def get_template_names(self):
+        return [get_world_configuration_template(self.request, 'index.html')]
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['characters'] = Character.objects.filter(
+        characters = Character.objects.filter(
             image__isnull=False,
-            may_appear_on_start_page=True).order_by('?')[:5]
+            may_appear_on_start_page=True)
+        if self.request.world_configuration is not None:
+            characters = characters.filter(extensions=self.request.world_configuration.world.extension)
+        context['characters'] = characters.order_by('?')[:5]
         context['wiki_pages_tirakan'] = WikiPage.objects.annotate(
             text_len=Length('text_de')
         ).filter(
