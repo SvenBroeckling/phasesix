@@ -16,6 +16,11 @@ from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Ex
 
 
 class CharacterQuerySet(models.QuerySet):
+    def for_world_configuration(self, world_configuration):
+        if world_configuration is not None:
+            return self.filter(extensions=world_configuration.world.extension)
+        return self.all()
+
     def with_templates(self):
         return self.filter(charactertemplate__id__isnull=False).distinct()
 

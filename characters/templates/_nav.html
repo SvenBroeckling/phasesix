@@ -1,6 +1,5 @@
 {% load world_extras i18n %}
 <nav id="mainNavigation" role="navigation">
-    <a href="/">
         <div class="py-3 w-60 m-auto text-center border-bottom">
             <i
                 data-sidebar-url="{% url 'portal:search' %}"
@@ -16,9 +15,10 @@
                     data-language="de"
                     href="{% url 'set_language' %}">EN</a>
             {% endif %}
-            <h1 class="mx-auto my-0 text-uppercase">{{ brand_name }}</h1>
+            <a href="/">
+                <h1 class="mx-auto my-0 text-uppercase">{{ brand_name }}</h1>
+            </a>
         </div>
-    </a>
     <div class="navbar-expand-md">
         <div class="navbar-dark text-center my-2">
             <button class="navbar-toggler w-75 px-2" type="button" data-bs-toggle="collapse"
@@ -33,15 +33,30 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" role="button"
                        data-bs-toggle="dropdown">{% trans 'Play' %}</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item"
-                               href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a>
-                        </li>
-                        <li><a class="dropdown-item"
-                               href="{% url 'characters:list' %}">{% trans 'My Characters' %}</a></li>
-                        <li><a class="dropdown-item"
-                               href="{% url 'campaigns:list' %}">{% trans 'My Campaigns' %}</a></li>
-                    </ul>
+                    {% with extension=request.world_configuration.world.extension %}
+                        <ul class="dropdown-menu">
+                            <li>
+                                {% if extension %}
+                                    {% if extension.fixed_epoch %}
+                                        {% if extension.fixed_extensions.exists %}
+                                            <a class="dropdown-item" href="{% url 'characters:create_character_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create Character' %}</a>
+                                        {% else %}
+                                            <a class="dropdown-item" href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create Character' %}</a>
+                                        {% endif %}
+                                    {% else %}
+                                        <a class="dropdown-item" href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">{% trans 'Create Character' %}</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a class="dropdown-item" href="{% url 'characters:create_character' %}">{% trans 'Create Character' %}</a>
+                                {% endif %}
+                            </li>
+
+                            <li><a class="dropdown-item"
+                                   href="{% url 'characters:list' %}">{% trans 'My Characters' %}</a></li>
+                            <li><a class="dropdown-item"
+                                   href="{% url 'campaigns:list' %}">{% trans 'My Campaigns' %}</a></li>
+                        </ul>
+                    {% endwith %}
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" role="button"

@@ -5,18 +5,36 @@
 
 {% block javascript %}
     <script>
-    $(function(){
-        $('[data-bs-toggle="tab"].nav-link:first').addClass('active')
-        $('.tab-pane:first').addClass('active')
-    })
+        $(function () {
+            $('[data-bs-toggle="tab"].nav-link:first').addClass('active')
+            $('.tab-pane:first').addClass('active')
+        })
     </script>
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <a href="{% url 'characters:create_character' %}"
-               class="btn btn-primary btn-lg float-end mb-2">{% trans 'Create a character' %}</a>
+            {% with extension=request.world_configuration.world.extension %}
+
+                {% if extension %}
+                    {% if extension.fixed_epoch %}
+                        {% if extension.fixed_extensions.exists %}
+                            <a class="btn btn-primary btn-lg float-end mb-2"
+                               href="{% url 'characters:create_character_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a character' %}</a>
+                        {% else %}
+                            <a class="btn btn-primary btn-lg float-end mb-2"
+                               href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a character' %}</a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-primary btn-lg float-end mb-2"
+                           href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">{% trans 'Create a character' %}</a>
+                    {% endif %}
+                {% else %}
+                    <a class="btn btn-primary btn-lg float-end mb-2"
+                       href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a>
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
 

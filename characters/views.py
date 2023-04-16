@@ -68,12 +68,13 @@ class CharacterListView(TemplateView):
         context = super().get_context_data()
         user = self.request.user
 
+        characters = Character.objects.for_world_configuration(self.request.world_configuration)
         if user.is_authenticated:
-            context['own_characters'] = Character.objects.with_templates().filter(created_by=user).order_by('name')
+            context['own_characters'] = characters.with_templates().filter(created_by=user).order_by('-modified_at')
         if user.is_authenticated and user.is_staff:
-            context['other_peoples_characters'] = Character.objects.with_templates().exclude(
+            context['other_peoples_characters'] = characters.with_templates().exclude(
                 Q(created_by=user) | Q(created_by__isnull=True))
-        context['anonymous_characters'] = Character.objects.with_templates().filter(created_by__isnull=True)
+        context['anonymous_characters'] = characters.with_templates().filter(created_by__isnull=True)
         return context
 
 
