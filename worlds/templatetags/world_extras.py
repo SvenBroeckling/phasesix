@@ -1,6 +1,6 @@
 from django.template import Library
 
-from worlds.models import World
+from worlds.models import World, WikiPage
 
 register = Library()
 
@@ -8,6 +8,11 @@ register = Library()
 @register.simple_tag
 def get_active_worlds():
     return World.objects.filter(is_active=True)
+
+
+@register.simple_tag
+def get_top_level_pages_for_world(world):
+    return WikiPage.objects.filter(world=world, parent__isnull=True)
 
 
 @register.simple_tag

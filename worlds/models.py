@@ -17,7 +17,7 @@ class WorldSiteConfiguration(models.Model):
         null=True,
         help_text=_('This world is set as default if the given dns domain name is requested'))
     brand_name = models.CharField(_('Brand name'), max_length=80)
-    template_suffix = models.CharField(_('Template Suffix'), max_length=40, default='')
+    template_addon = models.CharField(_('Template Suffix'), max_length=40)
 
 
 @reversion.register

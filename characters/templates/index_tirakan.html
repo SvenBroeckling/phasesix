@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load rules_extras %}
+{% load i18n static sorl_thumbnail %}
+
+{% block content %}
+    <header class="masthead">
+        <div class="container pt-5">
+
+            <div class="row py-2 py-md-5">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                        {% for c in characters %}
+                            {% if c.image %}
+                                <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3">
+                                    {% thumbnail c.image "300x300" crop="center" as im %}
+                                        <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded character-image" alt="">
+                                    {% endthumbnail %}
+                                </a>{% if forloop.last %}<br>{% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <div id="wiki_page_carousel" class="carousel slide" data-bs-ride="true">
+                                <div class="carousel-indicators">
+                                    {% for wiki_page in wiki_pages_tirakan %}
+                                        <button type="button" data-bs-target="#wiki_page_carousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                                                class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="carousel-inner">
+                                    {% for wiki_page in wiki_pages_tirakan %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    {% thumbnail wiki_page.image "768" as im %}
+                                                        <img src="{{ im.url }}" class="img-fluid rounded" alt="{{ wiki_page }}">
+                                                    {% endthumbnail %}
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <h4 class="mt-2 mt-md-0">{{ wiki_page }}</h4>
+                                                    <span>{{ wiki_page.world }}</span>
+                                                    <p>
+                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_tags:wiki_page.world }}
+                                                        <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>
+                                                        <br>
+                                                        <br>
+                                                        <br>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
