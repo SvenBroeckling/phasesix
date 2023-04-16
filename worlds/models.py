@@ -8,6 +8,17 @@ from transmeta import TransMeta
 from worlds.unique_slugify import unique_slugify
 
 
+class WorldSiteConfiguration(models.Model):
+    world = models.ForeignKey('worlds.World', on_delete=models.CASCADE)
+    dns_domain_name = models.CharField(
+        _('dns domain name'),
+        max_length=120,
+        blank=True,
+        null=True,
+        help_text=_('This world is set as default if the given dns domain name is requested'))
+    brand_name = models.CharField(_('Brand name'), max_length=80)
+
+
 @reversion.register
 class World(models.Model, metaclass=TransMeta):
     created_by = models.ForeignKey(

@@ -3,13 +3,18 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from worlds.models import World, WikiPage, WikiPageImage
+from worlds.models import World, WikiPage, WikiPageImage, WorldSiteConfiguration
+
+
+class WorldSiteConfigurationInline(admin.StackedInline):
+    model = WorldSiteConfiguration
 
 
 class WorldAdmin(VersionAdmin):
     list_display = ('name_de', 'name_en', 'is_active', 'ordering')
     list_filter = ('is_active',)
     search_fields = ('name_de', 'name_en')
+    inlines = [WorldSiteConfigurationInline]
 
 
 class WikiPageImageInline(admin.TabularInline):
