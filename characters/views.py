@@ -43,11 +43,12 @@ class IndexView(TemplateView):
 
         characters = Character.objects.filter(
             image__isnull=False,
-            may_appear_on_start_page=True).order_by('?')
-        if self.request.user.is_authenticated:
-            context['characters'] = self.request.user.character_set.order_by('-created_at')[:5]
+            may_appear_on_start_page=True)
         if self.request.world_configuration is not None:
-            context['characters'] = characters.filter(extensions=self.request.world_configuration.world.extension)[:5]
+            characters = characters.filter(extensions=self.request.world_configuration.world.extension).order_by('?')
+        if self.request.user.is_authenticated:
+            characters = characters.filter(created_by=self.request.user).order_by('-modified_at')
+        context['characters'] = characters[:5]
 
         context['wiki_pages_tirakan'] = WikiPage.objects.annotate(
             text_len=Length('text_de')

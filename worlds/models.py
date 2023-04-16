@@ -22,10 +22,11 @@ class WorldSiteConfiguration(models.Model, metaclass=TransMeta):
         blank=True,
         null=True)
     brand_name = models.CharField(_('Brand name'), max_length=80)
+    description = models.TextField(_('Description'), blank=True, null=True)
     template_addon = models.CharField(_('Template Suffix'), max_length=40)
 
     class Meta:
-        translate = 'brand_name',
+        translate = 'brand_name', 'description'
         verbose_name = _('world site configuration')
         verbose_name_plural = _('world site configurations')
 

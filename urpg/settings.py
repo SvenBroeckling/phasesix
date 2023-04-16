@@ -117,7 +117,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'worlds.context_processors.brand_name',
+                'worlds.context_processors.brand_information',
             ],
         },
     },

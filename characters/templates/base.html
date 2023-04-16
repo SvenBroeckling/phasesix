@@ -13,15 +13,14 @@
         <link type="text/x-scss" href="{% static 'css/theme.scss' %}" rel="stylesheet"/>
     {% endcompress %}
 
-    <title>{% block title %}Phase Six{% endblock %}</title>
+    <title>{% block title %}{{ brand_name }}{% endblock %}</title>
 
     {% block opengraph %}
-        <meta property="og:title" content="Phase Six"/>
+        <meta property="og:title" content="{{ brand_name }}"/>
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://phasesix.org"/>
-        <meta property="og:image" content="{% static 'img/bg-masthead.jpg' %}"/>
-        <meta property="og:description"
-              content="{% trans "Do you need a simple and fast rulebook to play your stories as a pen'n'paper roleplaying game? Phase Six is a quick to play roleplaying game rulebook that can be used in any setting." %}"/>
+        <meta property="og:url" content="https://{{ brand_domain_name }}"/>
+        <meta property="og:image" content="{% static 'img/default-background.jpg' %}"/>
+        <meta property="og:description" content="{{ brand_description }}"/>
     {% endblock %}
 
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
