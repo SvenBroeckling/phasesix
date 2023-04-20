@@ -22,8 +22,12 @@ class WorldFromDomainNameMiddleware:
             settings.SESSION_COOKIE_DOMAIN = None
             settings.CSRF_COOKIE_DOMAIN = None
         else:
-            settings.SESSION_COOKIE_DOMAIN = value
-            settings.CSRF_COOKIE_DOMAIN = value
+            if value is None:  # this is the default domain, phasesix.org
+                settings.SESSION_COOKIE_DOMAIN = '.phasesix.org'
+                settings.CSRF_COOKIE_DOMAIN = '.phasesix.org'
+            else:
+                settings.SESSION_COOKIE_DOMAIN = value
+                settings.CSRF_COOKIE_DOMAIN = value
 
     def __call__(self, request):
         request.world_configuration = self._get_world_configuration(request)
