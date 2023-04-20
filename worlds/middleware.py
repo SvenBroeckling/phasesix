@@ -6,7 +6,18 @@ class WorldFromDomainNameMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
-    def _set_cookie_domains(self, value):
+    @staticmethod
+    def _get_world_configuration(request):
+        try:
+            return WorldSiteConfiguration.objects.get(dns_domain_name=request.META['HTTP_X_FORWARDED_HOST'])
+        except (WorldSiteConfiguration.DoesNotExist, KeyError):
+            try:
+                return WorldSiteConfiguration.objects.get(dns_domain_name=request.META['HTTP_HOST'])
+            except (WorldSiteConfiguration.DoesNotExist, KeyError):
+                return None
+
+    @staticmethod
+    def _set_cookie_domains(value):
         if settings.DEBUG:
             settings.SESSION_COOKIE_DOMAIN = None
             settings.CSRF_COOKIE_DOMAIN = None
@@ -15,16 +26,7 @@ class WorldFromDomainNameMiddleware:
             settings.CSRF_COOKIE_DOMAIN = value
 
     def __call__(self, request):
-        try:
-            request.world_configuration = WorldSiteConfiguration.objects.get(dns_domain_name=request.META['HTTP_HOST'])
+        request.world_configuration = self._get_world_configuration(request)
+        if request.world_configuration is not None:
             self._set_cookie_domains(request.world_configuration.session_cookie_domain)
-        except WorldSiteConfiguration.DoesNotExist:
-            try:
-                request.world_configuration = WorldSiteConfiguration.objects.get(
-                    dns_domain_name=request.META['HTTP_X_FORWARDED_HOST'])
-                self._set_cookie_domains(request.world_configuration.session_cookie_domain)
-            except (WorldSiteConfiguration.DoesNotExist, KeyError):
-                request.world_configuration = None
-
-        response = self.get_response(request)
-        return response
+        return self.get_response(request)
