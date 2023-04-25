@@ -1,5 +1,4 @@
 from worlds.models import WorldSiteConfiguration
-from django.conf import settings
 
 
 class WorldFromDomainNameMiddleware:
@@ -16,21 +15,6 @@ class WorldFromDomainNameMiddleware:
             except (WorldSiteConfiguration.DoesNotExist, KeyError):
                 return None
 
-    @staticmethod
-    def _set_cookie_domains(value):
-        if settings.DEBUG:
-            settings.SESSION_COOKIE_DOMAIN = None
-            settings.CSRF_COOKIE_DOMAIN = None
-        else:
-            if value is None:  # this is the default domain, phasesix.org
-                settings.SESSION_COOKIE_DOMAIN = '.phasesix.org'
-                settings.CSRF_COOKIE_DOMAIN = '.phasesix.org'
-            else:
-                settings.SESSION_COOKIE_DOMAIN = value
-                settings.CSRF_COOKIE_DOMAIN = value
-
     def __call__(self, request):
         request.world_configuration = self._get_world_configuration(request)
-        if request.world_configuration is not None:
-            self._set_cookie_domains(request.world_configuration.session_cookie_domain)
         return self.get_response(request)
