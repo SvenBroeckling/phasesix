@@ -309,14 +309,6 @@ class WikiPageGameValues(models.Model):
         on_delete=models.CASCADE,
     )
 
-    created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name=_("created by"),
-    )
-
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
@@ -365,14 +357,6 @@ class WikiPageGameAction(models.Model, metaclass=TransMeta):
         verbose_name=_("wiki page"),
         help_text=_("The wiki page the values belong to."),
         on_delete=models.CASCADE,
-    )
-
-    created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name=_("created by"),
     )
 
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
