@@ -11,6 +11,12 @@ $utilities: map-merge(
   cursor: pointer;
 }
 
+.custom-popover {
+  --bs-popover-header-bg: var(--bs-light);
+  --bs-popover-header-color: var(--bs-white);
+}
+
+
 .w-60 {
   width: 60%;
 }
@@ -562,6 +568,14 @@ a.invisible-link {
   .wiki-page .columns {
     column-count: 2;
   }
+}
+
+.wiki-page-game-values {
+  font-size: larger;
+}
+
+.wiki-page-game-values div:hover {
+  background-color: $gray-800;
 }
 
 .wiki-page .columns {
