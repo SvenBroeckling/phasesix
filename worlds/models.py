@@ -176,7 +176,9 @@ class WikiPage(models.Model, metaclass=TransMeta):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
-    actions_heading = models.CharField(_("actions heading"), max_length=40)
+    actions_heading = models.CharField(
+        _("actions heading"), max_length=40, null=True, blank=True
+    )
     is_active = models.BooleanField(_("is active"), default=True)
     ordering = models.IntegerField(_("ordering"), default=100)
 
