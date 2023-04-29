@@ -23,6 +23,9 @@ class WorldSiteConfiguration(models.Model, metaclass=TransMeta):
         _("session cookie domain"), max_length=120, blank=True, null=True
     )
     brand_name = models.CharField(_("Brand name"), max_length=80)
+    brand_logo = models.ImageField(
+        _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
+    )
     description = models.TextField(_("Description"), blank=True, null=True)
     template_addon = models.CharField(_("Template Suffix"), max_length=40)
 
@@ -321,6 +324,8 @@ class WikiPageGameValues(models.Model):
     health = models.IntegerField(_("health"), default=6)
     arcana = models.IntegerField(_("arcana"), default=0)
     protection = models.IntegerField(_("protection"), default=0)
+
+    perception = models.IntegerField(_("perception"), default=2)
 
     actions = models.IntegerField(_("actions"), default=2)
     quickness = models.IntegerField(_("quickness"), default=1)

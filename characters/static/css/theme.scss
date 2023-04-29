@@ -340,6 +340,18 @@ table.table-sortable thead {
 
 /* Nav and Info */
 
+.brand-logo {
+  max-height: 64px;
+}
+
+@media (max-width: 576px) {
+  .brand-logo {
+    max-height: 36px;
+  }
+}
+
+
+
 #mainNavigation {
   position: absolute;
   top: 0;

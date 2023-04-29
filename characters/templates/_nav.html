@@ -16,7 +16,11 @@
                     href="{% url 'set_language' %}">EN</a>
             {% endif %}
             <a href="/">
-                <h1 class="mx-auto my-0 text-uppercase">{{ brand_name }}</h1>
+                {% if request.world_configuration.brand_logo %}
+                    <img class="brand-logo" src="{{ request.world_configuration.brand_logo.url }}" alt="{{ brand_name }}">
+                {% else %}
+                    <h1 class="mx-auto my-0 text-uppercase">{{ brand_name }}</h1>
+                {% endif %}
             </a>
         </div>
     <div class="navbar-expand-md">
