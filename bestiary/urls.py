@@ -1,10 +1,3 @@
-from django.urls import path
+app_name = "bestiary"
 
-from bestiary import views
-
-app_name = 'bestiary'
-
-urlpatterns = [
-    path('list/', views.FoeListView.as_view(), name='list'),
-    path('detail/<int:pk>', views.FoeDetailView.as_view(), name='detail'),
-]
+urlpatterns = []

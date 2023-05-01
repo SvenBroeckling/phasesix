@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static i18n characters_extras %}
+
+{% block title %}{% trans 'Foes' %} - {{ block.super }}{% endblock %}
+
+{% block background %}{% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %}{% endblock %}
+
+{% block background_copyright %}
+    Photo by
+    <a href="https://unsplash.com/@dallehj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel
+        Jensen</a> on
+    <a href="https://unsplash.com/s/photos/undead?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Foes' %}</h1>
+    <div class="table-responsive">
+        <table class="table table-sortable">
+            <thead>
+            <tr>
+                <th>{% trans 'Foe' %}</th>
+                <th>{% trans 'Type' %}</th>
+                <th>{% trans 'Health' %}</th>
+                <th>{% trans 'Arcana' %}</th>
+                <th>{% trans 'Protection' %}</th>
+                <th>{% trans 'Actions' %}</th>
+                <th>{% trans 'Quickness' %}</th>
+                <th>{% trans 'Minimum Roll' %}</th>
+                <th>{% trans 'Resistances' %}</th>
+                <th>{% trans 'Weaknesses' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+                {% for wgv in object.wikipagegamevalues_set.all %}
+                    <tr>
+                        <td><a
+                            href="{% url 'worlds:wiki_page' slug=object.slug world_slug=object.world.slug %}">{{ object }}</a>
+                        </td>
+                        <td>{{ wgv.type }}</td>
+                        <td>{% color_value_span wgv.health 10 %}</td>
+                        <td>{% color_value_span wgv.arcana 6 %}</td>
+                        <td>{% color_value_span wgv.protection 2 %}</td>
+                        <td>{% color_value_span wgv.actions 4 %}</td>
+                        <td>{% color_value_span wgv.quickness 3 %}</td>
+                        <td>{% color_value_span wgv.minimum_roll 5 invert=True %}+</td>
+                        <td>{{ wgv.resistance_string }}</td>
+                        <td>{{ wgv.weakness_string }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
