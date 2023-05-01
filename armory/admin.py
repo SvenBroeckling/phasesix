@@ -64,7 +64,7 @@ class WeaponAdmin(admin.ModelAdmin):
                         "is_throwing_weapon",
                     ),
                     ("type", "capacity", "damage_potential", "piercing"),
-                    ("weight", "actions_to_ready"),
+                    ("weight", "actions_to_ready", "encumbrance"),
                     ("recoil_compensation", "crit_minimum_roll", "reload_actions"),
                     ("range_meter", "concealment", "price"),
                     (
