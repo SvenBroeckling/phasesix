@@ -4,7 +4,10 @@
 {% block background %}{% static 'img/specna-arms-bGJ15W7Zseo-unsplash.jpg' %}{% endblock %}
 
 {% block background_copyright %}
-    Photo by <a href="https://unsplash.com/@specna_arms_4s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Specna Arms</a> on <a href="https://unsplash.com/s/photos/weapon?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+    Photo by
+    <a href="https://unsplash.com/@specna_arms_4s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Specna
+        Arms</a> on
+    <a href="https://unsplash.com/s/photos/weapon?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 {% endblock %}
 
 {% block title %}{% trans 'Weapons' %} - {{ block.super }}{% endblock %}
@@ -14,16 +17,16 @@
         $(function () {
             let timer = null;
 
-            $('#id_q').on('keyup', function(e){
+            $('#id_q').on('keyup', function (e) {
                 let q = $(this).val()
 
-                if(timer) {
+                if (timer) {
                     clearTimeout(timer)
                 }
 
-                timer = setTimeout(function(){
-                    $('tbody tr').each(function(index){
-                        if($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                timer = setTimeout(function () {
+                    $('tbody tr').each(function (index) {
+                        if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
                             $(this).removeClass('d-none')
                         } else {
                             $(this).addClass('d-none')
@@ -39,17 +42,19 @@
     <div class="row">
         <div class="col-12 col-md-6 offset-md-6 mb-4">
             <div class="input-group mb-3">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">{% if selected_extension %}{{ selected_extension }}{% else %}
-                    {% trans 'Select Extension' %}{% endif %}
-                </button>
-                <ul class="dropdown-menu">
-                    {% for extension in extensions %}
-                        <li><a class="dropdown-item"
-                               href="{% url 'armory:weapon_list' %}?extension={{ extension.id }}">{{ extension }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% if request.world_configuration is None %}
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">{% if selected_extension %}{{ selected_extension }}{% else %}
+                        {% trans 'Select Extension' %}{% endif %}
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for extension in extensions %}
+                            <li><a class="dropdown-item"
+                                   href="{% url 'armory:weapon_list' %}?extension={{ extension.id }}">{{ extension }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
                 <input type="text" id="id_q" name="q" class="form-control" aria-label="{% trans 'Search' %}"
                        placeholder="{% trans 'Search' %}">
             </div>
@@ -89,7 +94,8 @@
                             <td>{% color_value_span object.piercing 4 %}</td>
                             <td>
                                 {% for i in object.damage_potential|to_range %}
-                                    <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>
+                                    <i class="fas fa-fw fa-dice-six text-success"
+                                       title="{% trans 'Damage Potential' %}"></i>
                                 {% empty %}
                                     -
                                 {% endfor %}
@@ -118,7 +124,8 @@
                     </tbody>
                 </table>
                 {% if user.is_superuser %}
-                    <a href="{% url 'admin:armory_weapon_add' %}" class="btn btn-warning"><i class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
+                    <a href="{% url 'admin:armory_weapon_add' %}" class="btn btn-warning"><i
+                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
                 {% endif %}
             </div>
         </div>
