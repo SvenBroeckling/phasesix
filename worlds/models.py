@@ -329,7 +329,11 @@ class WikiPageGameValues(models.Model):
 
     actions = models.IntegerField(_("actions"), default=2)
     quickness = models.IntegerField(_("quickness"), default=1)
+    walking_range = models.IntegerField(_("walking range"), default=4)
     minimum_roll = models.IntegerField(_("minimum roll"), default=5)
+
+    stress_test_succeeded_stress = models.IntegerField(_("stress test succeeded stress"), default=0)
+    stress_test_failed_stress = models.IntegerField(_("stress test failed stress"), default=0)
 
     resistances = models.ManyToManyField(
         WikiPageFoeResistanceOrWeakness,

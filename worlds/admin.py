@@ -57,9 +57,16 @@ class WikiPageAdmin(VersionAdmin):
     inlines = (WikiPageImageInline, WikiPageGameValuesInline, WikiPageGameActionInline)
 
 
+class WikiPageGameValuesAdmin(admin.ModelAdmin):
+    list_display = ('wiki_page', 'actions', 'walking_range', 'stress_test_succeeded_stress',
+                    'stress_test_failed_stress')
+    list_editable = 'walking_range', 'stress_test_succeeded_stress', 'stress_test_failed_stress'
+    list_filter = "wiki_page__world", "type"
+
+
 admin.site.register(World, WorldAdmin)
 admin.site.register(WikiPage, WikiPageAdmin)
 admin.site.register(WikiPageFoeType)
 admin.site.register(WikiPageFoeResistanceOrWeakness)
-admin.site.register(WikiPageGameValues)
+admin.site.register(WikiPageGameValues, WikiPageGameValuesAdmin)
 admin.site.register(WikiPageGameAction)

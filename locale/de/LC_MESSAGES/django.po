@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-18 10:16+0000\n"
-"PO-Revision-Date: 2023-05-18 12:22+0200\n"
+"POT-Creation-Date: 2023-05-18 10:44+0000\n"
+"PO-Revision-Date: 2023-05-18 12:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -31,7 +31,7 @@ msgstr ""
 #: rules/models.py:201 rules/models.py:235 rules/models.py:267
 #: rules/models.py:316 rules/models.py:437 worlds/models.py:51
 #: worlds/models.py:140 worlds/models.py:285 worlds/models.py:297
-#: worlds/models.py:371
+#: worlds/models.py:375
 msgid "name"
 msgstr "Name"
 
@@ -53,7 +53,7 @@ msgstr "Beschreibung"
 #: pantheon/models.py:23 pantheon/models.py:42 rules/models.py:89
 #: rules/models.py:144 rules/models.py:237 rules/models.py:318
 #: rules/models.py:439 worlds/models.py:48 worlds/models.py:137
-#: worlds/models.py:245 worlds/models.py:317 worlds/models.py:369
+#: worlds/models.py:245 worlds/models.py:317 worlds/models.py:373
 msgid "created at"
 msgstr "Erzeugt am"
 
@@ -63,7 +63,7 @@ msgstr "Erzeugt am"
 #: pantheon/models.py:49 rules/models.py:90 rules/models.py:145
 #: rules/models.py:238 rules/models.py:319 rules/models.py:440
 #: worlds/models.py:49 worlds/models.py:138 worlds/models.py:246
-#: worlds/models.py:318 worlds/models.py:370
+#: worlds/models.py:318 worlds/models.py:374
 msgid "modified at"
 msgstr "Modifiziert am"
 
@@ -572,7 +572,7 @@ msgstr "Suchen"
 #: homebrew/forms.py:28 homebrew/templates/homebrew/index.html:14
 #: homebrew/templates/homebrew/index.html:50
 #: homebrew/templates/homebrew/index.html:120 rules/models.py:59
-#: worlds/templates/worlds/wiki_page_detail.html:59
+#: worlds/templates/worlds/wiki_page_detail.html:53
 #: worlds/templates/worlds/wiki_page_with_game_values.html:22
 msgid "Type"
 msgstr "Typ"
@@ -586,7 +586,7 @@ msgstr "Typ"
 #: characters/templates/characters/sidebar/characterriotgear.html:38
 #: gmtools/templates/gmtools/combat_sim_results.html:11
 #: gmtools/templates/gmtools/combat_sim_results.html:26 homebrew/forms.py:30
-#: worlds/templates/worlds/wiki_page_detail.html:71
+#: worlds/templates/worlds/wiki_page_detail.html:65
 #: worlds/templates/worlds/wiki_page_with_game_values.html:25
 msgid "Protection"
 msgstr "Schutz"
@@ -604,7 +604,7 @@ msgstr "Preis"
 #: armory/templates/armory/riotgear_list.html:77
 #: armory/templates/armory/weapon_list.html:81
 #: characters/templates/_nav.html:129
-#: worlds/templates/worlds/wiki_page_detail.html:155
+#: worlds/templates/worlds/wiki_page_detail.html:159
 msgid "Admin"
 msgstr "Admin"
 
@@ -855,7 +855,7 @@ msgstr "Letzte Initiative"
 #: characters/templates/characters/pdf/boxes/overview/health.html:4
 #: gmtools/templates/gmtools/combat_sim_results.html:10
 #: gmtools/templates/gmtools/combat_sim_results.html:25
-#: worlds/templates/worlds/wiki_page_detail.html:63
+#: worlds/templates/worlds/wiki_page_detail.html:57
 msgid "Wounds"
 msgstr "Wunden"
 
@@ -875,7 +875,7 @@ msgstr "Status"
 #: characters/templates/characters/sidebar/magic.html:33
 #: magic/templates/magic/_basespell_widget.html:23
 #: magic/templates/magic/basespell_detail.html:33
-#: worlds/templates/worlds/wiki_page_detail.html:67
+#: worlds/templates/worlds/wiki_page_detail.html:61
 #: worlds/templates/worlds/wiki_page_with_game_values.html:24
 msgid "Arcana"
 msgstr "Arkana"
@@ -891,6 +891,7 @@ msgstr "Arkana"
 #: characters/templates/characters/pdf/boxes/overview/horror.html:8
 #: characters/templates/characters/sidebar/horror.html:27
 #: characters/templates/characters/sidebar/horror.html:37
+#: worlds/templates/worlds/wiki_page_detail.html:98
 msgid "Stress"
 msgstr "Stress"
 
@@ -1718,7 +1719,7 @@ msgstr "Stärke"
 #: characters/templates/characters/sidebar/characterspell.html:69
 #: homebrew/forms.py:63 magic/templates/magic/_basespell_widget.html:28
 #: magic/templates/magic/basespell_detail.html:38
-#: worlds/templates/worlds/wiki_page_detail.html:75
+#: worlds/templates/worlds/wiki_page_detail.html:69
 #: worlds/templates/worlds/wiki_page_with_game_values.html:26
 msgid "Actions"
 msgstr "Aktionen"
@@ -1951,7 +1952,7 @@ msgstr ""
 #: characters/templates/characters/fragments/health.html:113
 #: characters/templates/characters/fragments/health.html:114
 #: characters/templates/characters/pdf/boxes/overview/dice.html:6
-#: worlds/templates/worlds/wiki_page_detail.html:87
+#: worlds/templates/worlds/wiki_page_detail.html:85
 #: worlds/templates/worlds/wiki_page_with_game_values.html:28
 msgid "Minimum Roll"
 msgstr "Mindestwurf"
@@ -3354,7 +3355,7 @@ msgid "aspect modifier"
 msgstr "Aspekt Modifikator"
 
 #: horror/models.py:81 rules/models.py:221 rules/models.py:389
-#: worlds/models.py:372
+#: worlds/models.py:376
 msgid "skill"
 msgstr "Fertigkeit"
 
@@ -3544,7 +3545,7 @@ msgstr "Max Arkana"
 msgid "spell points"
 msgstr "Zauberpunkte"
 
-#: rules/models.py:15 worlds/models.py:332
+#: rules/models.py:15 worlds/models.py:333
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
@@ -3976,7 +3977,7 @@ msgid "actions heading"
 msgstr "Aktionen Überschrift"
 
 #: worlds/models.py:191 worlds/models.py:232 worlds/models.py:312
-#: worlds/models.py:364
+#: worlds/models.py:368
 msgid "wiki page"
 msgstr "Wikiseite"
 
@@ -4016,7 +4017,7 @@ msgstr "Wikiseiten Gegner Widerstand oder Schwäche"
 msgid "wiki page foe resistances or weaknesses"
 msgstr "Wikiseiten Gegner Widerstände oder Schwächen"
 
-#: worlds/models.py:313 worlds/models.py:365
+#: worlds/models.py:313 worlds/models.py:369
 msgid "The wiki page the values belong to."
 msgstr "Die Wikiseite, zu der die Spielwerte gehört."
 
@@ -4028,29 +4029,39 @@ msgstr "Wahrnehmung"
 msgid "quickness"
 msgstr "Schnelligkeit"
 
-#: worlds/models.py:338
+#: worlds/models.py:332
+msgid "walking range"
+msgstr "Gehen Reichweite"
+
+#: worlds/models.py:335
+msgid "stress test succeeded stress"
+msgstr "Stresstest erfolgreich Stress"
+
+#: worlds/models.py:336
+msgid "stress test failed stress"
+msgstr "Stresstest fehlgeschlagen Stress"
+
+#: worlds/models.py:342
 msgid "resistances"
 msgstr "Widerstände"
 
-#: worlds/models.py:344
+#: worlds/models.py:348
 msgid "weaknesses"
 msgstr "Schwächen"
 
-#: worlds/models.py:348 worlds/models.py:349
-#, fuzzy
-#| msgid "wiki page images"
+#: worlds/models.py:352 worlds/models.py:353
 msgid "wiki page game values"
-msgstr "Wikiseitenbilder"
+msgstr "Wikiseiten Spielwerte"
 
-#: worlds/models.py:373
+#: worlds/models.py:377
 msgid "effect"
 msgstr "Effekt"
 
-#: worlds/models.py:377
+#: worlds/models.py:381
 msgid "wiki page game action"
 msgstr "Wikiseiten Spielaktion"
 
-#: worlds/models.py:378
+#: worlds/models.py:382
 msgid "wiki page game actions"
 msgstr "Wikiseiten Spieaktionen"
 
@@ -4112,46 +4123,46 @@ msgstr ""
 "Sortiere Unterseiten durch ziehen. Sie werden automatisch gespeichert.\n"
 " "
 
-#: worlds/templates/worlds/wiki_page_detail.html:53
-msgid "Game Values"
-msgstr "Spielwerte"
-
-#: worlds/templates/worlds/wiki_page_detail.html:79
+#: worlds/templates/worlds/wiki_page_detail.html:73
 msgid "Perception"
 msgstr "Wahrnehmung"
 
-#: worlds/templates/worlds/wiki_page_detail.html:83
+#: worlds/templates/worlds/wiki_page_detail.html:77
 #: worlds/templates/worlds/wiki_page_with_game_values.html:27
 msgid "Quickness"
 msgstr "Schnelligkeit"
 
-#: worlds/templates/worlds/wiki_page_detail.html:91
+#: worlds/templates/worlds/wiki_page_detail.html:81
+msgid "Walking Range"
+msgstr "Gehen Reichweite"
+
+#: worlds/templates/worlds/wiki_page_detail.html:89
 #: worlds/templates/worlds/wiki_page_with_game_values.html:29
 msgid "Resistances"
 msgstr "Widerstände"
 
-#: worlds/templates/worlds/wiki_page_detail.html:95
+#: worlds/templates/worlds/wiki_page_detail.html:93
 #: worlds/templates/worlds/wiki_page_with_game_values.html:30
 msgid "Weaknesses"
 msgstr "Schwächen"
 
-#: worlds/templates/worlds/wiki_page_detail.html:132
+#: worlds/templates/worlds/wiki_page_detail.html:136
 msgid "Edit"
 msgstr "Editieren"
 
-#: worlds/templates/worlds/wiki_page_detail.html:142
-#: worlds/templates/worlds/wiki_page_detail.html:144
+#: worlds/templates/worlds/wiki_page_detail.html:146
+#: worlds/templates/worlds/wiki_page_detail.html:148
 #: worlds/templates/worlds/world_detail.html:32
 #: worlds/templates/worlds/world_detail.html:34
 msgid "Create Wiki Page"
 msgstr "Wikiseite erstellen"
 
-#: worlds/templates/worlds/wiki_page_detail.html:146
+#: worlds/templates/worlds/wiki_page_detail.html:150
 msgid "Create Subpage"
 msgstr "Unterseite erstellen"
 
-#: worlds/templates/worlds/wiki_page_detail.html:149
-#: worlds/templates/worlds/wiki_page_detail.html:151
+#: worlds/templates/worlds/wiki_page_detail.html:153
+#: worlds/templates/worlds/wiki_page_detail.html:155
 #: worlds/templates/worlds/world_detail.html:39
 #: worlds/templates/worlds/world_detail.html:41
 msgid "Sort Subpages"
@@ -4206,6 +4217,9 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:179
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid "Game Values"
+#~ msgstr "Spielwerte"
 
 #~ msgid "foe type"
 #~ msgstr "Gegnertyp"
