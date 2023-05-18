@@ -1,9 +1,9 @@
 {% load characters_extras i18n rules_extras %}
 
 {% if may_edit %}
-    <div class="row">
+    <div class="row mb-2">
         <div class="col-12">
-            <div class="btn-group mb-4 w-100">
+            <div class="btn-group mb-1 w-100">
                 <a class="btn btn-warning btn-sm action-link"
                    href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
                         class="fas fa-meh fa-fw"></i> {% trans 'Gain Stress' %}</a>
@@ -11,6 +11,12 @@
                    href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
                         class="far fa-meh fa-fw"></i> {% trans 'Remove Stress' %}</a>
             </div>
+            <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+                    data-dice-roll="{{ object.stress_test_dice }}d6"
+                    data-dice-header="{% trans 'Stress Test' %}"
+                    data-dice-description="{% trans 'Willpower + Logic' %}"
+                    data-dice-character={{ object.id }}>{% trans "Roll Stress Test" %}
+            </button>
         </div>
     </div>
 {% endif %}

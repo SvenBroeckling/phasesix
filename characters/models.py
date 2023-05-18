@@ -346,6 +346,9 @@ class Character(models.Model):
     def rerolls_free(self):
         return self.rerolls - self.rerolls_used
 
+    @property
+    def stress_test_dice(self):
+        return self.get_attribute_value('willpower') + self.get_attribute_value('logic')
     # Combat
 
     @property
