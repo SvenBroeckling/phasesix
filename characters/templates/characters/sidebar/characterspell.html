@@ -6,7 +6,7 @@
             <div class="btn-group w-100">
                 <a href="{% url 'characters:cast_spell' pk=object.id %}"
                    data-dice-roll="{{ dice }}d6"
-                   data-dice-header="{{ object }}"
+                   data-dice-header="{{ object }} ({% trans "power" %} {{ object.power }})"
                    data-dice-description="{{ object.spell.rules }}"
                    data-dice-character="{{ object.character.id }}"
                    class="btn btn-sm btn-primary action-link dice-roll"><i class="fas fa-fw fa-dice-five"
