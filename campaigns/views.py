@@ -1,14 +1,13 @@
-from django.conf import settings
-from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views import View
 from django.views.generic import ListView, CreateView, DetailView, TemplateView, FormView
 
 from campaigns.forms import SettingsForm
-from campaigns.models import Campaign
+from campaigns.models import Campaign, Foe
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
 from rules.models import Extension
+from worlds.models import WikiPage
 
 
 class CampaignListView(ListView):
@@ -130,6 +129,23 @@ class XhrRemoveCharacterView(View):
         return JsonResponse({'status': 'ok'})
 
 
+class XhrAddFoeToCampaignView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = Campaign.objects.get(id=kwargs['pk'])
+        if campaign.may_edit(request.user):
+            wiki_page = WikiPage.objects.get(id=kwargs['wiki_page_pk'])
+            campaign.foe_set.create(wiki_page=wiki_page)
+        return JsonResponse({'status': 'ok'})
+
+
+class XhrRemoveFoeView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = Campaign.objects.get(id=kwargs['pk'])
+        if campaign.may_edit(request.user):
+            campaign.foe_set.filter(id=kwargs["foe_pk"]).delete()
+        return JsonResponse({'status': 'ok'})
+
+
 class BaseSidebarView(DetailView):
 
     def get_template_names(self):
@@ -164,3 +180,7 @@ class XhrCharacterSidebarView(BaseSidebarView):
         context = super().get_context_data(**kwargs)
         context['may_edit'] = self.object.pc_or_npc_campaign.may_edit(self.request.user)
         return context
+
+
+class XhrFoeSidebarView(BaseSidebarView):
+    model = Foe

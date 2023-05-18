@@ -36,7 +36,7 @@
 
     {% if may_edit %}
     <div class="col-12">
-        <a class="btn btn-warning w-100 btn-sm mb-2 remove-character-from-campaign"
+        <a class="btn btn-warning w-100 btn-sm mb-2 confirm-action-link"
            data-message="{% trans 'Switch character NPC status?' %}"
            href="{% url 'campaigns:xhr_switch_npc' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}</a>
     </div>

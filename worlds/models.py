@@ -212,6 +212,13 @@ class WikiPage(models.Model, metaclass=TransMeta):
             return self.short_name
         return self.name
 
+    def may_be_added_to_campaign(self):
+        if self.wikipagegameaction_set.exists():
+            return True
+        if self.wikipagegameaction_set.exists():
+            return True
+        return False
+
     def get_image(self):
         if self.image:
             return {
@@ -351,6 +358,7 @@ class WikiPageGameValues(models.Model):
     class Meta:
         verbose_name = _("wiki page game values")
         verbose_name_plural = _("wiki page game values")
+        get_latest_by = "id"
 
     def __str__(self):
         return f"{self.wiki_page.name} game values"

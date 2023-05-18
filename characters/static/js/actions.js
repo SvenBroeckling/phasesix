@@ -25,6 +25,19 @@ $(function () {
         if ($(this).hasClass('close-sidebar')) {
             $('#sidebar-right').css('width', '');
         }
+        if ($(this).hasClass('close-dropdown')) {
+        }
+        e.preventDefault()
+        return false
+    })
+
+    body.on('click', '.confirm-action-link', function (e) {
+        let elem = $(this)
+        if (confirm(elem.data('message'))) {
+            $.post(elem.attr('href'), function (data) {
+                refresh_fragments()
+            })
+        }
         e.preventDefault()
         return false
     })

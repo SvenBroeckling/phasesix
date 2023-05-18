@@ -1,0 +1,61 @@
+{% load i18n thumbnail static characters_extras %}
+<div class="row">
+    <div class="col-12 mb-3 mt-2">
+        {% if object.wiki_page.image %}
+            {% thumbnail object.wiki_page.image "600x600" crop="center" as im %}
+                <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
+            {% endthumbnail %}
+        {% else %}
+            <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
+                 alt="{{ object.name }}">
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
+    <div class="col-12">
+        <a class="btn btn-primary w-100 btn-sm mb-2"
+           href="{% url "worlds:wiki_page" slug=foe.wiki_page.slug world_slug=foe.wiki_page.world.slug %}"><i class="fas fa-link fa-fw"></i> {% trans 'Go to the wiki page' %}</a>
+    </div>
+    {% endif %}
+
+    {% if may_edit %}
+        <div class="col-12">
+            <a class="btn btn-danger w-100 btn-sm mb-2 confirm-action-link"
+               data-message="{% trans 'Remove foe from campaign?' %}"
+               href="{% url 'campaigns:xhr_remove_foe' pk=object.campaign.id foe_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+        </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    {% for action in object.wiki_page.wikipagegameaction_set.all %}
+        <div class="col-12">
+            <div class="card mb-2">
+                <div class="card-header">{{ action.name }}</div>
+                <div class="card-body">
+                    {{ action.effect }}
+                    <br>
+                    <button
+                        data-dice-roll="{{ action.skill }}d6"
+                        data-dice-header="{{ object.wiki_page }}: {{ action.name }}"
+                        {% if object.campaign.foe_visibility == "A" %}
+                        data-dice-description="{{ action.effect }}"
+                        {% else %}
+                        data-dice-description=""
+                        {% endif %}
+                        data-dice-campaign="{{ object.campaign.id }}"
+                        class="btn btn-sm dice-roll btn-primary mt-2">{% trans "Roll" %} ({{ action.skill }}{% trans "d6" %})
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="row">
+    {% with game_values=object.wiki_page.wikipagegamevalues_set.latest %}
+        {% include 'worlds/_game_values.html' %}
+    {% endwith %}
+</div>

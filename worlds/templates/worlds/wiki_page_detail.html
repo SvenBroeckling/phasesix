@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n characters_extras rules_extras thumbnail world_extras %}
+{% load static i18n characters_extras rules_extras thumbnail world_extras campaign_extras %}
 
 {% block javascript %}
     <script src="{% static 'js/worlds_detail.js' %}"></script>
@@ -9,6 +9,15 @@
             setTimeout(function () {
                 masonry.masonry('layout')
             }, 1000)
+
+            $('.add-foe-link').on('click', function (e) {
+                let elem = $(this)
+                let text = elem.text()
+                elem.text(elem.data('message'))
+                setTimeout(function () {
+                    elem.text(text)
+                }, 1000)
+            })
         })
     </script>
 {% endblock %}
@@ -49,56 +58,7 @@
 
             {% for game_values in object.wikipagegamevalues_set.all %}
                 <div class="row mt-2 wiki-page-game-values">
-                    <div class="col-12 mt-1">
-                        {% trans 'Type' %}
-                        <span class="float-end">{{ game_values.type }}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Wounds' %}
-                        <span class="float-end">{% color_value_span game_values.health 6 %}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Arcana' %}
-                        <span class="float-end">{% color_value_span game_values.arcana 6 %}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Protection' %}
-                        <span class="float-end">{% color_value_span game_values.protection 3 %}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Actions' %}
-                        <span class="float-end">{% color_value_span game_values.actions 3 %}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Perception' %}
-                        <span class="float-end">{% color_value_span game_values.perception 3 %}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Quickness' %}
-                        <span class="float-end">{% color_value_span game_values.quickness 3 %}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Walking Range' %}
-                        <span class="float-end">{% color_value_span game_values.walking_range 5 %}m</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Minimum Roll' %}
-                        <span class="float-end">{% color_value_span game_values.minimum_roll 5 invert=True %}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Resistances' %}
-                        <span class="float-end">{{ game_values.resistance_string }}</span>
-                    </div>
-                    <div class="col-12 mt-1">
-                        {% trans 'Weaknesses' %}
-                        <span class="float-end">{{ game_values.weakness_string }}</span>
-                    </div>
-                    {% if game_values.stress_test_succeeded_stress or game_values.stress_test_failed_stress %}
-                        <div class="col-12 mt-1">
-                            {% trans 'Stress' %}
-                            <span class="float-end">{% color_value_span game_values.stress_test_succeeded_stress 2 invert=True %}/{% color_value_span game_values.stress_test_failed_stress 5 invert=True %}</span>
-                        </div>
-                    {% endif %}
+                    {% include 'worlds/_game_values.html' %}
                 </div>
             {% endfor %}
 
@@ -129,38 +89,60 @@
 
         <div class="col-12 col-sm-8 col-md-9 mt-3 mt-md-0 wiki-page">
 
-            {% if may_edit %}
-                <div class="btn-group dropdown-center float-end">
-                    <a class="btn btn-primary"
-                       href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
-                       role="button"><i class="fas fa-pen"></i> {% trans 'Edit' %}</a>
-                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+            <div class="d-flex justify-content-end">
+                {% if may_edit %}
+                    <div class="btn-group dropdown-center ms-2">
+                        <a class="btn btn-primary"
+                           href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
+                           role="button"><i class="fas fa-pen"></i> {% trans 'Edit' %}</a>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <a
+                                class="dropdown-item modal-trigger"
+                                data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
+                                title="{% trans 'Create Wiki Page' %}"
+                                data-bs-toggle="modal"
+                                data-modal-title="{% trans 'Create Wiki Page' %}"
+                                data-bs-target=".page-modal"
+                                href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
+                            <a
+                                data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+                                data-sidebar-title="{% trans 'Sort Subpages' %}"
+                                class="dropdown-item sidebar-trigger">
+                                <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
+                            </a>
+                            {% if user.is_superuser %}
+                                <a class="dropdown-item" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
+                                    class="fas fa-lock"></i> {% trans 'Admin' %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if request.user.is_authenticated and request.user.campaign_set.exists and object.may_be_added_to_campaign %}
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ms-2"
                             data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="visually-hidden">Toggle Dropdown</span>
+                        {% trans "Add to campaign" %}
                     </button>
-
                     <div class="dropdown-menu">
-                        <a
-                            class="dropdown-item modal-trigger"
-                            data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
-                            title="{% trans 'Create Wiki Page' %}"
-                            data-bs-toggle="modal"
-                            data-modal-title="{% trans 'Create Wiki Page' %}"
-                            data-bs-target=".page-modal"
-                            href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
-                        <a
-                            data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-                            data-sidebar-title="{% trans 'Sort Subpages' %}"
-                            class="dropdown-item sidebar-trigger">
-                            <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
-                        </a>
-                        {% if user.is_superuser %}
-                            <a class="dropdown-item" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
-                                class="fas fa-lock"></i> {% trans 'Admin' %}</a>
-                        {% endif %}
+                        {% user_campaigns request.user as campaigns %}
+                        {% for campaign in campaigns %}
+                            <a
+                                class="dropdown-item action-link add-foe-link"
+                                data-message="{% trans "Added" %}"
+                                href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
+                                {{ campaign }}
+                            </a>
+                        {% endfor %}
                     </div>
-                </div>
-            {% endif %}
+                {% endif %}
+
+            </div>
 
             <h1>{{ object.name }}</h1>
 

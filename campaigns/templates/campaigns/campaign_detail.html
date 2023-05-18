@@ -65,10 +65,12 @@
                        href="#v-npc">
                         <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'NPC' %}
                     </a>
+                {% endif %}
 
-                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-scenes"
-                       href="#v-scenes">
-                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Scenes' %}
+                {% if may_edit or object.foe_visibility == "A" %}
+                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-foes"
+                       href="#v-foes">
+                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Foes' %}
                     </a>
                 {% endif %}
             </div>
@@ -87,8 +89,8 @@
                 {% campaign_fragment 'npc' %}
             </div>
 
-            <div class="tab-pane fade show" id="v-scenes" role="tabpanel">
-                {% campaign_fragment 'scenes' %}
+            <div class="tab-pane fade show" id="v-foes" role="tabpanel">
+                {% campaign_fragment 'foes' %}
             </div>
         </div>
     </div>

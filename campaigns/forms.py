@@ -16,8 +16,9 @@ class CreateCampaignExtensionsForm(forms.Form):
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = Campaign
-        fields = ('name', 'abstract', 'epoch', 'extensions',
-                  'currency_map', 'seed_money', 'starting_template_points', 'character_visibility',
+        fields = ('name', 'abstract',
+                  'currency_map', 'seed_money', 'starting_template_points',
+                  'character_visibility', 'foe_visibility',
                   'discord_webhook_url', 'image', 'backdrop_image')
 
 

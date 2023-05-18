@@ -41,6 +41,15 @@ urlpatterns = [
         name='xhr_switch_npc'),
 
     path(
+        'add_foe/<int:pk>/<int:wiki_page_pk>',
+        views.XhrAddFoeToCampaignView.as_view(),
+        name='xhr_add_foe'),
+    path(
+        'remove_foe/<int:pk>/<int:foe_pk>',
+        views.XhrRemoveFoeView.as_view(),
+        name='xhr_remove_foe'),
+
+    path(
         'sidebar/<int:pk>/<sidebar_template>',
         views.XhrSidebarView.as_view(),
         name='xhr_sidebar'),
@@ -52,4 +61,8 @@ urlpatterns = [
         'sidebar/character/<int:pk>/<sidebar_template>',
         views.XhrCharacterSidebarView.as_view(),
         name='xhr_character_sidebar'),
+    path(
+        'sidebar/foe/<int:pk>/<sidebar_template>',
+        views.XhrFoeSidebarView.as_view(),
+        name='xhr_foe_sidebar'),
 ]

@@ -18,7 +18,7 @@ class CampaignQuerySet(models.QuerySet):
 
 
 class Campaign(models.Model):
-    CHARACTER_VISIBILITY_CHOICES = (
+    VISIBILITY_CHOICES = (
         ('G', _('GM Only')),
         ('A', _('All')),
     )
@@ -78,11 +78,17 @@ class Campaign(models.Model):
     currency_map = models.ForeignKey('armory.CurrencyMap', on_delete=models.CASCADE)
     seed_money = models.IntegerField(_('seed money'), default=2000)
 
+    foe_visibility = models.CharField(
+        _('foe visibility'),
+        max_length=1,
+        default='A',
+        choices=VISIBILITY_CHOICES)
+
     character_visibility = models.CharField(
         _('character visibility'),
         max_length=1,
-        default='G',
-        choices=CHARACTER_VISIBILITY_CHOICES)
+        default='A',
+        choices=VISIBILITY_CHOICES)
 
     def __str__(self):
         return self.name
@@ -123,6 +129,14 @@ class Campaign(models.Model):
     def ws_room_name(self) -> str:
         """Websocket room name"""
         return f'campaign-{self.id}'
+
+
+class Foe(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    wiki_page = models.ForeignKey('worlds.WikiPage', on_delete=models.CASCADE)
+
+    def may_edit(self, user):
+        return self.campaign.may_edit(user)
 
 
 class Scene(models.Model):
