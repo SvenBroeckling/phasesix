@@ -23,7 +23,7 @@
             <i class="fas fa-magic fa-2x text-warning"></i>
         {% endfor %}
         {% for i in object.arcana_used|to_range %}
-            <i class="fas fa-magic fa-2x text-light"></i>
+            <i class="fas fa-magic fa-2x text-dark"></i>
         {% endfor %}
     </div>
 </div>
@@ -36,7 +36,7 @@
         {% trans 'An arcana slot, which can be used to cast spells.' %}
     </div>
     <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-fw fa-magic text-light" title="{% trans 'Used Arcana' %}"></i>
+        <i class="fas fa-2x fa-fw fa-magic text-dark" title="{% trans 'Used Arcana' %}"></i>
     </div>
     <div class="col-10 mb-2">
         {% trans 'An used arcane slot. This can be refreshed taking a rest.' %}

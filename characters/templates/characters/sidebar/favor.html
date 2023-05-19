@@ -30,7 +30,7 @@
 {% endif %}
 
 {% if object.entity %}
-    <div class="row mt-4 mb-4">
+    <div class="row mt-4">
         <div class="col-12 text-center">
             <img class="rounded img-fluid" src="{{ object.entity.image.url }}" alt="{{ object.entity }}">
             <div class="mt-1">
@@ -42,7 +42,7 @@
     </div>
 {% endif %}
 
-<div class="row">
+<div class="row mt-4">
     <div class="col-2 mb-2">
         <i class="fas fa-2x fa-fw fa-ankh text-warning" title="{% trans 'Favor' %}"></i>
     </div>

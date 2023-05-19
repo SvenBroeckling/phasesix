@@ -64,7 +64,7 @@
                                 <i class="fas fa-magic text-warning"></i>
                             {% endfor %}
                             {% for i in object.arcana_used|to_range %}
-                                <i class="fas fa-magic text-light"></i>
+                                <i class="fas fa-magic text-dark"></i>
                             {% endfor %}
                         </div>
                     {% endif %}
@@ -86,7 +86,7 @@
                                 <i class="fas fa-frown text-danger" title="{{ q }}"></i>
                             {% endfor %}
                             {% for q in object.quirks.all %}
-                                <i class="fas fa-frown text-light" title="{{ q }}"></i>
+                                <i class="fas fa-frown text-dark" title="{{ q }}"></i>
                             {% endfor %}
                         </div>
                     {% endif %}

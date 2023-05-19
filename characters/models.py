@@ -46,7 +46,7 @@ class Character(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
-    attitude = models.IntegerField(_('attitude'), blank=True, null=True)
+    attitude = models.IntegerField(_('attitude'), default=50)
     favor = models.IntegerField(_('favor'), default=0)
 
     image = models.ImageField(_('image'), upload_to='character_images', max_length=256, blank=True, null=True)
