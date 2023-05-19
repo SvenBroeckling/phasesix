@@ -453,10 +453,14 @@ class CreateCharacterDataView(FormView):
         world = Extension.objects.get(id=self.kwargs['world_pk'])
         if world.currency_map is not None:
             form.fields['currency_map'].widget = forms.HiddenInput()
-
         if self.campaign_to_join:
             form.fields['currency_map'].widget = forms.HiddenInput()
             form.fields['seed_money'].widget = forms.HiddenInput()
+        qs = Extension.objects.filter(id__in=self.request.GET.getlist('extensions'), identifier="pantheon")
+        if not qs.exists() and not world.fixed_extensions.filter(identifier="pantheon").exists():
+            form.fields['entity'].widget = forms.HiddenInput()
+            form.fields['attitude'].widget = forms.HiddenInput()
+
         return form
 
     def form_valid(self, form):
@@ -1151,3 +1155,31 @@ class CharacterPDFView(View):
         response.headers['Content-Disposition'] = 'inline'
         html.write_pdf(response, font_config=font_config)
         return response
+
+
+# Pantheon
+
+class CharacterModifyFavorView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.may_edit(request.user):
+            if self.kwargs['mode'] == 'restore':
+                character.favor += 1
+            elif self.kwargs['mode'] == 'use':
+                character.favor -= 1
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+
+class CharacterModifyAttitudeView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs['pk'])
+        if character.may_edit(request.user):
+            if self.kwargs['mode'] == 'restore':
+                character.attitude += 5
+            elif self.kwargs['mode'] == 'use':
+                character.attitude -= 5
+            character.save()
+        return JsonResponse({'status': 'ok'})
+
+

@@ -98,6 +98,16 @@ urlpatterns = [
         views.AddSpellTemplateView.as_view(),
         name='add_spell_template'),
 
+    # pantheon
+    path(
+        'favor/<int:pk>/<mode>/',
+        views.CharacterModifyFavorView.as_view(),
+        name='modify_favor'),
+    path(
+        'attitude/<int:pk>/<mode>/',
+        views.CharacterModifyAttitudeView.as_view(),
+        name='modify_attitude'),
+
     # dice
     path(
         'dice/<int:pk>/<mode>/',

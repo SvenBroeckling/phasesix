@@ -1,0 +1,58 @@
+{% load i18n characters_extras %}
+
+{% if may_edit %}
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group w-100">
+                <a href="{% url 'characters:modify_favor' pk=object.id mode="use" %}"
+                   class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-ankh"
+                                                                 title="{% trans 'Lose Favor' %}"></i> {% trans '-Favor' %}
+                </a>
+                <a href="{% url 'characters:modify_favor' pk=object.id mode="restore" %}"
+                   class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-ankh"
+                                                                 title="{% trans 'Gain Favor' %}"></i> {% trans '+Favor' %}
+                </a>
+            </div>
+        </div>
+        <div class="col-12 mt-2">
+            <div class="btn-group w-100">
+                <a href="{% url 'characters:modify_attitude' pk=object.id mode="use" %}"
+                   class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-balance-scale"
+                                                                 title="{% trans 'Reduce Attitude' %}"></i> {% trans '-Attitude' %}
+                </a>
+                <a href="{% url 'characters:modify_attitude' pk=object.id mode="restore" %}"
+                   class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-balance-scale"
+                                                                 title="{% trans 'Increase Attitude' %}"></i> {% trans '+Attitude' %}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if object.entity %}
+    <div class="row mt-4 mb-4">
+        <div class="col-12 text-center">
+            <img class="rounded img-fluid" src="{{ object.entity.image.url }}" alt="{{ object.entity }}">
+            <div class="mt-1">
+                {% if object.entity.wiki_page %}<a href="{{ object.entity.wiki_page.get_absolute_url }}">{% endif %}
+                {{ object.entity }}
+                {% if object.entity.wiki_page %}</a>{% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-fw fa-ankh text-warning" title="{% trans 'Favor' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'You can receive favor by doing things for your deity, or act on their behalf.' %}
+    </div>
+    <div class="col-2 mb-2">
+        <i class="fas fa-2x fa-fw fa-balance-scale text-success" title="{% trans 'Attitude' %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+        {% trans 'Attitude describes the basic orientation of your character. The value ranges from 1 to 100, where 1 stands for abysmally evil, 100 for exceptionally good-natured.' %}
+    </div>
+</div>

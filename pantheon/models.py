@@ -49,6 +49,7 @@ class Entity(models.Model, metaclass=TransMeta):
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
 
     extensions = models.ManyToManyField('rules.Extension')
+    wiki_page = models.ForeignKey('worlds.WikiPage', null=True, blank=True, on_delete=models.SET_NULL)
 
     is_homebrew = models.BooleanField(_('is homebrew'), default=False)
     keep_as_homebrew = models.BooleanField(

@@ -37,12 +37,14 @@
                 {% endfor %}
             {% endwith %}
 
+            {% comment %}
             {% if template.templaterequirement_set.exists %}
                 <br>
                 {% for req in template.templaterequirement_set.all %}
                     <span class="text-danger">{% trans 'Requires' %}</span> {{ req.required_template }}<br>
                 {% endfor %}
             {% endif %}
+            {% endcomment %}
 
             {% if template.quote %}
                 <p class="text-muted pt-3"><i>{{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>

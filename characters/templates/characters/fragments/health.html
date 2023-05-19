@@ -91,6 +91,14 @@
                         </div>
                     {% endif %}
 
+                    {% if object.extension_enabled.pantheon %}
+                        <div class="sidebar-trigger" data-sidebar-title="{% trans 'Favor' %}"
+                             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="favor" %}">
+                            {% trans 'Favor' %}: {% color_value_span object.favor 10 %}<br>
+                            {% trans 'Attitude' %}: {% color_value_span object.attitude 100 %}
+                        </div>
+                    {% endif %}
+
                     <div class="sidebar-trigger mt-2" data-sidebar-title="{% trans 'Wounds' %}"
                          data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">
                         {% for cse in object.characterstatuseffect_set.all %}
