@@ -54,7 +54,7 @@ class CreateCharacterDataForm(forms.Form):
         required=False,
         empty_label=_('None'),
         label=_('Entity'))
-    attitude = forms.IntegerField(label=_('Attitude'), required=False)
+    attitude = forms.IntegerField(label=_('Attitude'), required=True, initial=50)
 
 
 class CreateRandomNPCForm(CreateCharacterDataForm):
