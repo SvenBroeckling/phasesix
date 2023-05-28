@@ -52,6 +52,10 @@ urlpatterns = [
         r'sidebar_characternote/<int:pk>/<str:sidebar_template>/',
         views.XhrCharacterNoteSidebarView.as_view(),
         name='xhr_characternote_sidebar'),
+    path(
+        r'sidebar_priest_action/<int:pk>/<str:sidebar_template>/<int:priest_action_pk>/',
+        views.XhrCharacterPriestActionSidebarView.as_view(),
+        name='xhr_characterpriestaction_sidebar'),
 
     path(
         'xhr_detail_fragment/<int:pk>/<fragment_template>',

@@ -84,3 +84,62 @@ class Entity(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+
+class PriestAction(models.Model, metaclass=TransMeta):
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_('created by'))
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+
+    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
+    keep_as_homebrew = models.BooleanField(
+        _('keep as homebrew'),
+        help_text=_('This was not accepted as general spell and is kept as homebrew.'),
+        default=False)
+    homebrew_campaign = models.ForeignKey(
+        'campaigns.Campaign',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+
+    favor_cost = models.IntegerField(_('favor cost'))
+
+    name = models.CharField(_('name'), max_length=80)
+    rules = models.TextField(_('rules'))
+    quote = models.TextField(_('quote'), blank=True, null=True)
+    quote_author = models.CharField(_('quote author'), max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('id',)
+        translate = ('name', 'rules')
+        verbose_name = _('priest action')
+        verbose_name_plural = _('priest actions')
+
+
+class PriestActionRoll(models.Model, metaclass=TransMeta):
+    priest_action = models.ForeignKey(PriestAction, verbose_name=_('priest action'), on_delete=models.CASCADE)
+    attribute = models.ForeignKey(
+        'rules.Attribute',
+        verbose_name=_('attribute for usage'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+    custom_roll_name = models.CharField(_('custom roll name'), max_length=80, blank=True, null=True)
+    custom_roll_dice = models.CharField(_('custom roll dice'), max_length=20, blank=True, null=True)
+
+    class Meta:
+        translate = 'custom_roll_name',
+        verbose_name = _('priest action roll')
+        verbose_name_plural = _('priest action rolls')
+
+    def __str__(self):
+        if self.custom_roll_name_de is not None or self.custom_roll_name_en is not None:
+            return self.custom_roll_name
+        return self.attribute.name

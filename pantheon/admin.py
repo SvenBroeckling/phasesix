@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from pantheon.models import Entity
+from pantheon.models import Entity, PriestAction, PriestActionRoll
 
 
 class EntityAdmin(admin.ModelAdmin):
@@ -8,4 +8,15 @@ class EntityAdmin(admin.ModelAdmin):
     list_editable = 'wiki_page',
 
 
+class PriestActionRollInline(admin.TabularInline):
+    model = PriestActionRoll
+
+
+class PriestActionAdmin(admin.ModelAdmin):
+    list_display = 'name_de', 'name_en', 'favor_cost'
+    list_editable = 'favor_cost',
+    inlines = [PriestActionRollInline]
+
+
 admin.site.register(Entity, EntityAdmin)
+admin.site.register(PriestAction, PriestActionAdmin)

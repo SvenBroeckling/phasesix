@@ -1,0 +1,30 @@
+{% extends 'characters/fragments/fragment_base.html' %}
+{% load characters_extras rules_extras i18n thumbnail %}
+
+{% block fragment %}
+    {% if object.extension_enabled.pantheon %}
+        <div class="row masonry-container">
+            {% for s in object.priest_actions.all %}
+                <div class="col col-md-6 col-xl-4 mb-2">
+                    <div
+                            data-sidebar-title="{{ s.name }}"
+                            data-sidebar-url="{% url 'characters:xhr_characterpriestaction_sidebar' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
+                            class="card mb-2 sidebar-trigger">
+                        <div class="card-header">
+                            <span class="badge bg-dark float-end ms-2" title="{% trans 'Favor cost' %}">{{ s.favor_cost }}</span>
+                            {{ s }}
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                {{ s.rules|urpg_markup }}
+                            </p>
+                            {% if user.is_superuser %}
+                                <a href="{% url 'admin:pantheon_priestaction_change' s.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

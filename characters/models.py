@@ -12,6 +12,7 @@ from sorl.thumbnail import get_thumbnail
 from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit
 from horror.models import QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
+from pantheon.models import PriestAction
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
 
 
@@ -187,6 +188,10 @@ class Character(models.Model):
         if self.pc_or_npc_campaign is not None:
             return self.pc_or_npc_campaign.ws_room_name
         return f'character-{self.id}'
+
+    @property
+    def priest_actions(self):
+        return PriestAction.objects.all()
 
     @property
     def skills(self):

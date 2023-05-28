@@ -26,7 +26,7 @@ from characters.models import Character, CharacterWeapon, CharacterRiotGear, Cha
     CharacterSpell, CharacterSkill, CharacterAttribute, CharacterNote
 from horror.models import QuirkCategory, Quirk
 from magic.models import SpellType, SpellTemplateCategory, SpellTemplate, SpellOrigin
-from pantheon.models import Entity
+from pantheon.models import Entity, PriestAction
 from rules.models import Extension, Template, Lineage, StatusEffect, Skill, Attribute, Knowledge, TemplateCategory
 from worlds.models import WikiPage
 from worlds.utils import get_world_configuration_template
@@ -158,6 +158,15 @@ class XhrCharacterKnowledgeSidebarView(XhrSidebarView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['knowledge'] = Knowledge.objects.get(id=self.kwargs['knowledge_pk'])
+        return context
+
+
+class XhrCharacterPriestActionSidebarView(XhrSidebarView):
+    model = Character
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['priest_action'] = PriestAction.objects.get(id=self.kwargs['priest_action_pk'])
         return context
 
 
