@@ -9,7 +9,7 @@
                         <button class="btn btn-primary btn-sm dice-roll mb-1"
                                 data-dice-roll="{% character_attribute_value object roll.attribute %}d6"
                                 data-dice-header="{{ priest_action }} - {{ roll.attribute }}"
-                                data-dice-description="{% character_attribute_value object roll.attribute %}{% trans 'd6' %}"
+                                data-dice-description="{{ priest_action.rules }}"
                                 data-dice-character="{{ object.id }}"><i
                             class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ roll.attribute }}</button>
                     </div>
@@ -21,7 +21,7 @@
                         <button class="btn btn-primary btn-sm dice-roll mb-2"
                                 data-dice-roll="{{ roll.custom_roll_dice }}"
                                 data-dice-header="{{ priest_action }} - {{ roll.custom_roll_name }}"
-                                data-dice-description="{{ roll.custom_roll_dice }}{% trans 'd6' %}"
+                                data-dice-description="{{ priest_action.rules }}"
                                 data-dice-character="{{ object.id }}"><i
                             class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ roll.custom_roll_name }}
                         </button>
