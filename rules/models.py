@@ -408,6 +408,10 @@ class TemplateModifier(models.Model, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL,
     )
+    allows_priest_actions = models.BooleanField(
+        _("allows priest actions"),
+        default=False
+    )
 
     def __str__(self):
         return self.template.name

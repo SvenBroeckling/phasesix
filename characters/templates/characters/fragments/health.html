@@ -57,7 +57,7 @@
                         {% endfor %}
                     </div>
 
-                    {% if object.extension_enabled.magic %}
+                    {% if object.extension_enabled.magic and object.is_magical %}
                         <div class="sidebar-trigger" data-sidebar-title="{% trans 'Magic' %}"
                              data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="magic" %}">
                             {% for i in object.arcana|to_range %}
@@ -92,9 +92,11 @@
                     {% endif %}
 
                     {% if object.extension_enabled.pantheon %}
-                        <div class="sidebar-trigger" data-sidebar-title="{% trans 'Favor' %}"
+                        <div class="sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
                              data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="favor" %}">
-                            {% trans 'Favor' %}: {% color_value_span object.favor 10 %}<br>
+                            {% if object.is_priest %}
+                                {% trans 'Favor' %}: {% color_value_span object.favor 10 %}<br>
+                            {% endif %}
                             {% trans 'Attitude' %}: {% color_value_span object.attitude 100 %}
                         </div>
                     {% endif %}

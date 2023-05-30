@@ -107,3 +107,9 @@ def latest_user_image(user):
         return Character.objects.filter(created_by=user, image__isnull=False).exclude(image='').latest('id').image
     except Character.DoesNotExist:
         return None
+
+
+@register.filter
+def has_allows_priest_action(qs):
+    return qs.filter(allows_priest_actions=True).exists()
+

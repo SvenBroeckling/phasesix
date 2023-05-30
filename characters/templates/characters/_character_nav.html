@@ -8,7 +8,8 @@
        aria-selected="false"><i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Gear' %}</a>
     <a class="nav-link me-2" data-bs-toggle="tab" href="#v-combat" role="tab" aria-controls="v-combat"
        aria-selected="false"><i class="fas fa-fw fa-chess-pawn"></i>&nbsp;{% trans 'Combat' %}</a>
-    {% if object.extension_enabled.magic %}
+
+    {% if object.extension_enabled.magic and object.is_magical %}
         <a class="nav-link me-2" data-bs-toggle="tab" href="#v-magic" role="tab" aria-controls="v-combat"
            aria-selected="false"><i class="fas fa-fw fa-magic"></i>&nbsp;{% trans 'Magic' %}
             {% if object.spell_points_available %}
@@ -16,11 +17,13 @@
             {% endif %}
         </a>
     {% endif %}
-    {% if object.extension_enabled.pantheon %}
+
+    {% if object.extension_enabled.pantheon and object.is_priest %}
         <a class="nav-link me-2" data-bs-toggle="tab" href="#v-pantheon" role="tab" aria-controls="v-combat"
            aria-selected="false"><i class="fas fa-fw fa-ankh"></i>&nbsp;{% trans 'Pantheon' %}
         </a>
     {% endif %}
+
     <a class="nav-link me-2" data-bs-toggle="tab" href="#v-background" role="tab" aria-controls="v-background"
        aria-selected="false"><i class="fas fa-fw fa-graduation-cap"></i>&nbsp;{% trans 'Background' %}
         <span class="badge bg-primary ms-2">{{ object.reputation_available }}/{{ object.reputation_gained }}</span>

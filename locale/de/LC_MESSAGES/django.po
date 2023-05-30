@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-30 11:55+0000\n"
-"PO-Revision-Date: 2023-05-30 13:57+0200\n"
+"POT-Creation-Date: 2023-05-30 19:16+0000\n"
+"PO-Revision-Date: 2023-05-30 21:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -29,7 +29,7 @@ msgstr ""
 #: magic/models.py:163 pantheon/models.py:21 pantheon/models.py:65
 #: pantheon/models.py:111 rules/models.py:70 rules/models.py:136
 #: rules/models.py:181 rules/models.py:201 rules/models.py:235
-#: rules/models.py:267 rules/models.py:316 rules/models.py:437
+#: rules/models.py:267 rules/models.py:316 rules/models.py:441
 #: worlds/models.py:51 worlds/models.py:140 worlds/models.py:292
 #: worlds/models.py:304 worlds/models.py:383
 msgid "name"
@@ -47,12 +47,12 @@ msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:52 armory/models.py:135
 #: armory/models.py:180 armory/models.py:392 campaigns/models.py:177
-#: characters/models.py:66 characters/models.py:570 characters/models.py:814
+#: characters/models.py:66 characters/models.py:580 characters/models.py:824
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:88 magic/models.py:88 magic/models.py:168
 #: pantheon/models.py:23 pantheon/models.py:42 pantheon/models.py:95
 #: rules/models.py:89 rules/models.py:144 rules/models.py:237
-#: rules/models.py:318 rules/models.py:439 worlds/models.py:48
+#: rules/models.py:318 rules/models.py:443 worlds/models.py:48
 #: worlds/models.py:137 worlds/models.py:252 worlds/models.py:324
 #: worlds/models.py:381
 msgid "created at"
@@ -63,14 +63,14 @@ msgstr "Erzeugt am"
 #: magic/models.py:89 magic/models.py:169 pantheon/models.py:24
 #: pantheon/models.py:49 pantheon/models.py:96 rules/models.py:90
 #: rules/models.py:145 rules/models.py:238 rules/models.py:319
-#: rules/models.py:440 worlds/models.py:49 worlds/models.py:138
+#: rules/models.py:444 worlds/models.py:49 worlds/models.py:138
 #: worlds/models.py:253 worlds/models.py:325 worlds/models.py:382
 msgid "modified at"
 msgstr "Modifiziert am"
 
 #: armory/models.py:27 armory/models.py:137 armory/models.py:371
-#: armory/models.py:463 characters/models.py:818 pantheon/models.py:25
-#: pantheon/models.py:77 rules/models.py:91 rules/models.py:441
+#: armory/models.py:463 characters/models.py:828 pantheon/models.py:25
+#: pantheon/models.py:77 rules/models.py:91 rules/models.py:445
 #: worlds/models.py:86 worlds/models.py:186
 msgid "ordering"
 msgstr "Sortierung"
@@ -332,7 +332,7 @@ msgstr "Waffenmodifikationstyp"
 
 #: armory/models.py:312 horror/models.py:26 magic/models.py:136
 #: magic/models.py:171 pantheon/models.py:112 rules/models.py:324
-#: rules/models.py:438
+#: rules/models.py:442
 msgid "rules"
 msgstr "Regeln"
 
@@ -445,7 +445,7 @@ msgstr "Attribut"
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: armory/models.py:349 rules/models.py:446
+#: armory/models.py:349 rules/models.py:450
 msgid "status effect"
 msgstr "Statuseffekt"
 
@@ -526,7 +526,7 @@ msgid "Danger"
 msgstr "Gefahr"
 
 #: armory/models.py:455 magic/models.py:43 magic/models.py:65
-#: rules/models.py:76 rules/models.py:435
+#: rules/models.py:76 rules/models.py:439
 msgid "FA Icon Class"
 msgstr "FA Icon Klasse"
 
@@ -724,7 +724,7 @@ msgstr "Spielprotokollsichtbarkeit"
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:157 characters/models.py:817 forum/models.py:91
+#: campaigns/models.py:157 characters/models.py:827 forum/models.py:91
 #: worlds/models.py:166
 msgid "text"
 msgstr "Text"
@@ -876,7 +876,7 @@ msgstr "Gegner"
 #: campaigns/templates/campaigns/fragments/npc.html:11
 #: campaigns/templates/campaigns/fragments/status.html:12
 #: characters/templates/characters/fragments/health.html:47
-#: characters/templates/characters/fragments/health.html:102
+#: characters/templates/characters/fragments/health.html:104
 #: characters/templates/characters/modals/rest.html:18
 #: characters/templates/characters/pdf/boxes/overview/health.html:4
 #: gmtools/templates/gmtools/combat_sim_results.html:10
@@ -928,8 +928,8 @@ msgid "Walking Range"
 msgstr "Bewegungsreichweite"
 
 #: campaigns/templates/campaigns/fragments/foes.html:16
-#: characters/templates/characters/fragments/health.html:121
-#: characters/templates/characters/fragments/health.html:122
+#: characters/templates/characters/fragments/health.html:123
+#: characters/templates/characters/fragments/health.html:124
 #: characters/templates/characters/pdf/boxes/overview/dice.html:6
 #: worlds/templates/worlds/_game_values.html:23
 #: worlds/templates/worlds/wiki_page_with_game_values.html:28
@@ -970,8 +970,8 @@ msgstr "Stress"
 #: characters/templates/characters/fragments/character.html:78
 #: characters/templates/characters/fragments/character.html:98
 #: characters/templates/characters/fragments/combat.html:26
-#: characters/templates/characters/fragments/health.html:114
-#: characters/templates/characters/fragments/health.html:117
+#: characters/templates/characters/fragments/health.html:116
+#: characters/templates/characters/fragments/health.html:119
 #: characters/templates/characters/modals/rest.html:20
 #: characters/templates/characters/modals/rest.html:35
 #: characters/templates/characters/pdf/boxes/overview/dice.html:3
@@ -1278,8 +1278,8 @@ msgid "Entity"
 msgstr "Gottheit"
 
 #: characters/forms.py:57
-#: characters/templates/characters/fragments/health.html:98
-#: characters/templates/characters/sidebar/favor.html:53
+#: characters/templates/characters/fragments/health.html:100
+#: characters/templates/characters/sidebar/favor.html:57
 #: characters/views.py:617
 msgid "Attitude"
 msgstr "Gesinnung"
@@ -1398,43 +1398,43 @@ msgstr "Kurierte Eigenarten"
 msgid "The amount of quirks healed by treatment."
 msgstr "Die Anzahl an Eigenarten, die durch Behandlung geheilt wurden."
 
-#: characters/models.py:554
+#: characters/models.py:564
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:584
+#: characters/models.py:594
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:674
+#: characters/models.py:684
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:701
+#: characters/models.py:711
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:702
+#: characters/models.py:712
 msgid "Charges used"
 msgstr "Ladungen benutzt"
 
-#: characters/models.py:705
+#: characters/models.py:715
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:727
+#: characters/models.py:737
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:807
+#: characters/models.py:817
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:815
+#: characters/models.py:825
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:816
+#: characters/models.py:826
 msgid "subject"
 msgstr "Thema"
 
@@ -1578,25 +1578,25 @@ msgstr "Ausrüstung"
 msgid "Combat"
 msgstr "Kampf"
 
-#: characters/templates/characters/_character_nav.html:13
+#: characters/templates/characters/_character_nav.html:14
 #: characters/templates/characters/fragments/health.html:61
 msgid "Magic"
 msgstr "Magie"
 
-#: characters/templates/characters/_character_nav.html:21
+#: characters/templates/characters/_character_nav.html:23
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: characters/templates/characters/_character_nav.html:25
+#: characters/templates/characters/_character_nav.html:28
 msgid "Background"
 msgstr "Werdegang"
 
-#: characters/templates/characters/_character_nav.html:29
+#: characters/templates/characters/_character_nav.html:32
 #: characters/templates/characters/fragments/combat.html:27
 msgid "Notes"
 msgstr "Notizen"
 
-#: characters/templates/characters/_character_nav.html:32
+#: characters/templates/characters/_character_nav.html:35
 #: characters/templates/characters/fragments/notes.html:10
 msgid "Take a note"
 msgstr "Notiz anlegen"
@@ -1716,7 +1716,7 @@ msgstr "Physis"
 #: characters/templates/characters/fragments/character.html:46
 #: characters/templates/characters/pdf/boxes/background/background.html:31
 #: characters/templates/characters/pdf/boxes/overview/knowledge.html:6
-#: rules/templates/rules/_template_widget.html:30
+#: rules/templates/rules/_template_widget.html:36
 msgid "Knowledge"
 msgstr "Wissen"
 
@@ -2043,13 +2043,16 @@ msgstr ""
 "relevant wenn jemand dich nach dem Equipment durchsucht."
 
 #: characters/templates/characters/fragments/health.html:95
-#: characters/templates/characters/fragments/health.html:97
-#: characters/templates/characters/sidebar/favor.html:47
+msgid "Belief"
+msgstr "Glaube"
+
+#: characters/templates/characters/fragments/health.html:98
+#: characters/templates/characters/sidebar/favor.html:50
 msgid "Favor"
 msgstr "Gunst"
 
-#: characters/templates/characters/fragments/health.html:126
-#: characters/templates/characters/fragments/health.html:127
+#: characters/templates/characters/fragments/health.html:128
+#: characters/templates/characters/fragments/health.html:129
 #: characters/templates/characters/modals/rest.html:40
 #: characters/templates/characters/pdf/boxes/overview/dice.html:10
 #: characters/templates/characters/sidebar/dice.html:7
@@ -2060,8 +2063,8 @@ msgstr "Gunst"
 msgid "Bonus Dice"
 msgstr "Bonuswürfel"
 
-#: characters/templates/characters/fragments/health.html:131
-#: characters/templates/characters/fragments/health.html:132
+#: characters/templates/characters/fragments/health.html:133
+#: characters/templates/characters/fragments/health.html:134
 #: characters/templates/characters/modals/rest.html:44
 #: characters/templates/characters/pdf/boxes/overview/dice.html:14
 #: characters/templates/characters/sidebar/dice.html:11
@@ -2072,8 +2075,8 @@ msgstr "Bonuswürfel"
 msgid "Destiny Dice"
 msgstr "Schicksalswürfel"
 
-#: characters/templates/characters/fragments/health.html:136
-#: characters/templates/characters/fragments/health.html:137
+#: characters/templates/characters/fragments/health.html:138
+#: characters/templates/characters/fragments/health.html:139
 #: characters/templates/characters/modals/rest.html:48
 #: characters/templates/characters/pdf/boxes/overview/dice.html:18
 #: characters/templates/characters/sidebar/dice.html:15
@@ -2176,7 +2179,7 @@ msgstr "Wähle eine andere Schule"
 
 #: characters/templates/characters/modals/add_spell_template.html:43
 #: characters/templates/characters/pdf/boxes/background/background.html:21
-#: rules/templates/rules/_template_widget.html:20
+#: rules/templates/rules/_template_widget.html:26
 msgid "Attribute"
 msgstr "Attribut"
 
@@ -2232,17 +2235,17 @@ msgid "// Background"
 msgstr "// Werdegang"
 
 #: characters/templates/characters/pdf/boxes/background/background.html:16
-#: rules/templates/rules/_template_widget.html:15
+#: rules/templates/rules/_template_widget.html:21
 msgid "Aspect"
 msgstr "Aspekt"
 
 #: characters/templates/characters/pdf/boxes/background/background.html:26
-#: rules/models.py:241 rules/templates/rules/_template_widget.html:25
+#: rules/models.py:241 rules/templates/rules/_template_widget.html:31
 msgid "Skill"
 msgstr "Fertigkeit"
 
 #: characters/templates/characters/pdf/boxes/background/background.html:36
-#: rules/templates/rules/_template_widget.html:35
+#: rules/templates/rules/_template_widget.html:41
 msgid "Magic Origin"
 msgstr "Magieursprung"
 
@@ -2617,46 +2620,46 @@ msgstr ""
 "im Spiel erneut zu würfeln.<br><br>Wiederholungswürfe werden bei der "
 "Verwendung erschöpft und frischen sich bei jeder Rast wieder auf."
 
-#: characters/templates/characters/sidebar/favor.html:9
+#: characters/templates/characters/sidebar/favor.html:10
 msgid "Lose Favor"
 msgstr "Gunst verlieren"
 
-#: characters/templates/characters/sidebar/favor.html:9
+#: characters/templates/characters/sidebar/favor.html:10
 msgid "-Favor"
 msgstr "-Gunst"
 
-#: characters/templates/characters/sidebar/favor.html:13
+#: characters/templates/characters/sidebar/favor.html:14
 msgid "Gain Favor"
 msgstr "Gunst erhalten"
 
-#: characters/templates/characters/sidebar/favor.html:13
+#: characters/templates/characters/sidebar/favor.html:14
 msgid "+Favor"
 msgstr "+Gunst"
 
-#: characters/templates/characters/sidebar/favor.html:21
+#: characters/templates/characters/sidebar/favor.html:23
 msgid "Reduce Attitude"
 msgstr "Gesinnung verringern"
 
-#: characters/templates/characters/sidebar/favor.html:21
+#: characters/templates/characters/sidebar/favor.html:23
 msgid "-Attitude"
 msgstr "-Gesinnung"
 
-#: characters/templates/characters/sidebar/favor.html:25
+#: characters/templates/characters/sidebar/favor.html:27
 msgid "Increase Attitude"
 msgstr "Gesinnung erhöhen"
 
-#: characters/templates/characters/sidebar/favor.html:25
+#: characters/templates/characters/sidebar/favor.html:27
 msgid "+Attitude"
 msgstr "+Gesinnung"
 
-#: characters/templates/characters/sidebar/favor.html:50
+#: characters/templates/characters/sidebar/favor.html:53
 msgid ""
 "You can receive favor by doing things for your deity, or act on their behalf."
 msgstr ""
 "Du kannst Gunst erhalten, wenn du Dinge für deine Gottheit tust, oder in "
 "ihrem Sinne handelst."
 
-#: characters/templates/characters/sidebar/favor.html:56
+#: characters/templates/characters/sidebar/favor.html:60
 msgid ""
 "Attitude describes the basic orientation of your character. The value ranges "
 "from 1 to 100, where 1 stands for abysmally evil, 100 for exceptionally good-"
@@ -3751,7 +3754,7 @@ msgstr "Erweiterung"
 msgid "is mandatory"
 msgstr "Ist Pflicht"
 
-#: rules/models.py:65 rules/models.py:433 worlds/models.py:58
+#: rules/models.py:65 rules/models.py:437 worlds/models.py:58
 #: worlds/models.py:185
 msgid "is active"
 msgstr "Ist aktiv"
@@ -3908,7 +3911,7 @@ msgstr "Charakterschablone"
 msgid "character templates"
 msgstr "Charakterschablonen"
 
-#: rules/models.py:366 rules/models.py:418
+#: rules/models.py:366 rules/models.py:422
 msgid "template"
 msgstr "Vorlage"
 
@@ -3920,9 +3923,17 @@ msgstr "Wissensmodifikator"
 msgid "unlocks spell origin"
 msgstr "Ermöglicht Zauberursprung"
 
-#: rules/models.py:447
+#: rules/models.py:412
+msgid "allows priest actions"
+msgstr "Erlaubt Priesteraktionen"
+
+#: rules/models.py:451
 msgid "status effects"
 msgstr "Statuseffekte"
+
+#: rules/templates/rules/_template_widget.html:14
+msgid "Allows to perform the acts of a priest."
+msgstr "Erlaubt es, die Handlungen eines Priesters auszuführen."
 
 #: rules/templates/rules/template_list.html:56
 msgid "All Templates"

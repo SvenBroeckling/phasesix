@@ -194,6 +194,16 @@ class Character(models.Model):
         return PriestAction.objects.all()
 
     @property
+    def is_priest(self):
+        return TemplateModifier.objects.filter(
+            template__charactertemplate__character=self,
+            allows_priest_actions=True).exists()
+
+    @property
+    def is_magical(self):
+        return self.arcana > 0 or self.spell_points > 0
+
+    @property
     def skills(self):
         return self.characterskill_set.for_extensions(self.extensions)
 

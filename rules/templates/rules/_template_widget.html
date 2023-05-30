@@ -9,6 +9,12 @@
                 <p>{{ template.rules|urpg_markup }}</p>
             {% endif %}
 
+            {% if template.templatemodifier_set.all|has_allows_priest_action %}
+                <p class="text-success">
+                {% trans "Allows to perform the acts of a priest." %}
+                </p>
+            {% endif %}
+
             {% with all_modifiers=template.templatemodifier_set.all %}
                 {% for mod in all_modifiers %}
                     {% if mod.aspect %}
