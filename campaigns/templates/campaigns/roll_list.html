@@ -1,0 +1,33 @@
+{% load i18n thumbnail static characters_extras campaign_extras %}
+
+<div class="row">
+    {% for roll in page_obj %}
+        <div class="col-12 col-md-8 offset-md-2 mb-2">
+            <div class="card">
+                <div class="card-header">
+                    <span class="float-end">{{ roll.created_at }}</span>
+                    {% trans 'GM' as character_default %}
+                    {{ roll.character|default:character_default }} - {{ roll.header }}
+                </div>
+                <div class="card-body">
+                    {{ roll.description }}
+                    <div class="mt-1">
+                        {% include "campaigns/_dice_socket_results.html" with result_list=roll.results_csv|csv_to_int_list minimum_roll=roll.character.minimum_roll|default:5 result_sum=roll.results_csv|csv_to_int_list|list_sum %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-8 offset-md-2">
+        {% if page_obj.has_next %}
+            <button
+                hx-get="{% url "campaigns:xhr_game_log" campaign_pk=campaign.id %}?page={{ page_obj.next_page_number }}"
+                hx-target="closest .row"
+                hx-swap="outerHTML"
+                class="btn btn-primary w-100">{% trans "Show older rolls" %}</button>
+        {% endif %}
+    </div>
+</div>

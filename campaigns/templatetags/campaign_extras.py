@@ -26,3 +26,14 @@ def ws_room_url(room_name):
     if settings.DEBUG:
         return f'ws://localhost:8000/ws/campaign/{room_name}/'
     return f'wss://phasesix.org/ws/campaign/{room_name}/'
+
+
+@register.filter
+def csv_to_int_list(value):
+    return [int(v) for v in value.strip().split(',') if v]
+
+
+@register.filter
+def list_sum(value):
+    return sum(value)
+

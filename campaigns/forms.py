@@ -19,6 +19,7 @@ class SettingsForm(forms.ModelForm):
         fields = ('name', 'abstract',
                   'currency_map', 'seed_money', 'starting_template_points',
                   'character_visibility', 'foe_visibility',
+                  'npc_visibility', 'game_log_visibility',
                   'discord_webhook_url', 'image', 'backdrop_image')
 
 

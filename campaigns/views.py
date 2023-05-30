@@ -3,7 +3,7 @@ from django.views import View
 from django.views.generic import ListView, CreateView, DetailView, TemplateView, FormView
 
 from campaigns.forms import SettingsForm
-from campaigns.models import Campaign, Foe
+from campaigns.models import Campaign, Foe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
 from rules.models import Extension
@@ -147,7 +147,6 @@ class XhrRemoveFoeView(View):
 
 
 class BaseSidebarView(DetailView):
-
     def get_template_names(self):
         return ['campaigns/sidebar/' + self.kwargs['sidebar_template'] + '.html']
 
@@ -184,3 +183,15 @@ class XhrCharacterSidebarView(BaseSidebarView):
 
 class XhrFoeSidebarView(BaseSidebarView):
     model = Foe
+
+
+class XhrCampaignGameLogView(ListView):
+    paginate_by = 20
+
+    def get_queryset(self):
+        return Roll.objects.filter(campaign_id=self.kwargs["campaign_pk"])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["campaign"] = Campaign.objects.get(id=self.kwargs["campaign_pk"])
+        return context

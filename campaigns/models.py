@@ -84,6 +84,18 @@ class Campaign(models.Model):
         default='A',
         choices=VISIBILITY_CHOICES)
 
+    npc_visibility = models.CharField(
+        _('npc visibility'),
+        max_length=1,
+        default='A',
+        choices=VISIBILITY_CHOICES)
+
+    game_log_visibility = models.CharField(
+        _('game log visibility'),
+        max_length=1,
+        default='A',
+        choices=VISIBILITY_CHOICES)
+
     character_visibility = models.CharField(
         _('character visibility'),
         max_length=1,
@@ -167,3 +179,6 @@ class Roll(models.Model):
     description = models.TextField(_('description'), blank=True, null=True)
     roll_string = models.CharField(_('roll string'), max_length=20, blank=True, null=True)
     results_csv = models.CharField(_('results_csv'), max_length=120)
+
+    class Meta:
+        ordering = "-created_at",

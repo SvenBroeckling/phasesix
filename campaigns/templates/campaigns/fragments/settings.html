@@ -32,8 +32,16 @@
             <span class="float-end">{{ object.get_character_visibility_display }}</span>
             <hr>
 
+            {% trans 'NPC Visibility' %}
+            <span class="float-end">{{ object.get_npc_visibility_display }}</span>
+            <hr>
+
             {% trans 'Foe Visibility' %}
             <span class="float-end">{{ object.get_foe_visibility_display }}</span>
+            <hr>
+
+            {% trans 'Game Log Visibility' %}
+            <span class="float-end">{{ object.get_game_log_visibility_display }}</span>
             <hr>
 
             {% trans 'Discord Dice Rolls' %}

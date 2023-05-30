@@ -56,23 +56,31 @@
                 {% if may_edit or object.character_visibility == 'A' %}
                     <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-status"
                        href="#v-status">
-                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Characters' %}
+                        <i class="fas fa-fw fa-user-alt"></i>&nbsp;{% trans 'Characters' %}
                     </a>
                 {% endif %}
 
-                {% if may_edit %}
+                {% if may_edit or object.npc_visibility == "A" %}
                     <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-npc"
                        href="#v-npc">
-                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'NPC' %}
+                        <i class="fas fa-fw fa-user"></i>&nbsp;{% trans 'NPC' %}
                     </a>
                 {% endif %}
 
                 {% if may_edit or object.foe_visibility == "A" %}
                     <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-foes"
                        href="#v-foes">
-                        <i class="fas fa-fw fa-cube"></i>&nbsp;{% trans 'Foes' %}
+                        <i class="fas fa-fw fa-bullseye"></i>&nbsp;{% trans 'Foes' %}
                     </a>
                 {% endif %}
+
+                {% if may_edit or object.game_log_visibility == "A" %}
+                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-game-log"
+                       href="#v-game-log">
+                        <i class="fas fa-fw fa-chart-bar"></i>&nbsp;{% trans 'Game Log' %}
+                    </a>
+                {% endif %}
+
             </div>
         </div>
 
@@ -91,6 +99,15 @@
 
             <div class="tab-pane fade show" id="v-foes" role="tabpanel">
                 {% campaign_fragment 'foes' %}
+            </div>
+
+            <div
+                hx-get="{% url 'campaigns:xhr_game_log' campaign_pk=object.id %}"
+                hx-trigger="click from:a.nav-link"
+                hx-target="this"
+                class="tab-pane fade show"
+                id="v-game-log"
+                role="tabpanel">
             </div>
         </div>
     </div>

@@ -65,4 +65,8 @@ urlpatterns = [
         'sidebar/foe/<int:pk>/<sidebar_template>',
         views.XhrFoeSidebarView.as_view(),
         name='xhr_foe_sidebar'),
+    path(
+        'game_log/<int:campaign_pk>',
+        views.XhrCampaignGameLogView.as_view(),
+        name='xhr_game_log'),
 ]
