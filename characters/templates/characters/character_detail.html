@@ -6,6 +6,11 @@
 {% block javascript %}
     <script src="{% static 'js/character_detail.js' %}"></script>
     <script src="{% static 'js/campaign_socket.js' %}"></script>
+    <script>
+    $(function(){
+        $('.character-main-nav a[href]:first').tab('show')
+    })
+    </script>
 {% endblock %}
 
 {% block background %}{{ object.get_backdrop_image_url }}{% endblock %}
@@ -39,7 +44,7 @@
     <div class="row mt-4">
 
         <div class="col-12">
-            {% include 'characters/_character_nav.html' %}
+            {% detail_fragment 'character_nav' %}
             {% detail_fragment 'health' %}
 
             {% if not object.created_by %}
