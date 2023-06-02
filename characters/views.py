@@ -663,6 +663,7 @@ class CreateCharacterConstructedView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['template_categories'] = TemplateCategory.objects.filter(allow_at_character_creation=True)
+        context['warnings'] = self.object.warnings(self.request.world_configuration)
         context['character_template_ids'] = [
             ct.template.id for ct in self.object.charactertemplate_set.all()]
         return context
@@ -686,7 +687,10 @@ class XhrConstructedAddTemplateView(View):
             if template.cost > remaining_points:
                 return JsonResponse({'status': 'notenoughpoints'})
             character.add_template(template)
-            return JsonResponse({'status': 'ok', 'remaining_points': remaining_points - template.cost})
+            return JsonResponse({
+                'status': 'ok',
+                'warnings': character.warnings(self.request.world_configuration),
+                'remaining_points': remaining_points - template.cost})
 
         return JsonResponse({'status': 'noop'})
 
@@ -698,7 +702,10 @@ class XhrConstructedRemoveTemplateView(View):
         if character.may_edit(request.user):
             template = Template.objects.get(id=request.POST.get('template_id'))
             character.remove_template(template)
-            return JsonResponse({'status': 'ok', 'remaining_points': character.remaining_template_points})
+            return JsonResponse({
+                'status': 'ok',
+                'warnings': character.warnings(self.request.world_configuration),
+                'remaining_points': character.remaining_template_points})
 
         return JsonResponse({'status': 'noop'})
 

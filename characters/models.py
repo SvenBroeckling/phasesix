@@ -143,6 +143,20 @@ class Character(models.Model):
             return get_thumbnail(self.backdrop_image, "1800", crop="center", quality=99).url
         return get_thumbnail(self.get_epoch().image, "1800", crop="center", quality=99).url
 
+    def warnings(self, world_configuration):
+        """Returns game logic warnings for this character"""
+        warnings = []
+        if world_configuration is not None:
+            if world_configuration.world.extension.select_spells_by == "o":
+                if self.is_magical and not self.unlocked_spell_origins.exists():
+                    warnings.append(
+                        _(
+                            "Your character has arcana or spell points, but you don't have any spell origins unlocked. "
+                            "You will not be able to add spells. Choose an occupation with a magic origin."
+                        )
+                    )
+        return warnings
+
     def get_aspect_modifier(self, aspect_name):
         m = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.charactertemplate_set.all(),
@@ -201,7 +215,7 @@ class Character(models.Model):
 
     @property
     def is_magical(self):
-        return self.arcana > 0 or self.spell_points > 0
+        return self.max_arcana > 0 or self.spell_points > 0
 
     @property
     def skills(self):

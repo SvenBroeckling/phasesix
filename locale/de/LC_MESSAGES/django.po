@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-30 19:16+0000\n"
-"PO-Revision-Date: 2023-05-30 21:16+0200\n"
+"POT-Creation-Date: 2023-06-02 16:35+0000\n"
+"PO-Revision-Date: 2023-06-02 18:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -47,7 +47,7 @@ msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:52 armory/models.py:135
 #: armory/models.py:180 armory/models.py:392 campaigns/models.py:177
-#: characters/models.py:66 characters/models.py:580 characters/models.py:824
+#: characters/models.py:66 characters/models.py:594 characters/models.py:838
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:88 magic/models.py:88 magic/models.py:168
 #: pantheon/models.py:23 pantheon/models.py:42 pantheon/models.py:95
@@ -69,7 +69,7 @@ msgid "modified at"
 msgstr "Modifiziert am"
 
 #: armory/models.py:27 armory/models.py:137 armory/models.py:371
-#: armory/models.py:463 characters/models.py:828 pantheon/models.py:25
+#: armory/models.py:463 characters/models.py:842 pantheon/models.py:25
 #: pantheon/models.py:77 rules/models.py:91 rules/models.py:445
 #: worlds/models.py:86 worlds/models.py:186
 msgid "ordering"
@@ -556,7 +556,7 @@ msgstr "Wähle Erweiterung"
 #: armory/templates/armory/weapon_list.html:58
 #: armory/templates/armory/weapon_list.html:59 characters/templates/_nav.html:6
 #: characters/templates/_nav.html:8
-#: characters/templates/characters/create_character_constructed.html:122
+#: characters/templates/characters/create_character_constructed.html:132
 #: characters/templates/characters/modals/add_items.html:8
 #: characters/templates/characters/modals/add_quirk.html:8
 #: characters/templates/characters/modals/add_riot_gear.html:9
@@ -724,7 +724,7 @@ msgstr "Spielprotokollsichtbarkeit"
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:157 characters/models.py:827 forum/models.py:91
+#: campaigns/models.py:157 characters/models.py:841 forum/models.py:91
 #: worlds/models.py:166
 msgid "text"
 msgstr "Text"
@@ -1106,9 +1106,9 @@ msgid "Edit settings"
 msgstr "Einstellungen bearbeiten"
 
 #: campaigns/templates/campaigns/fragments/status.html:9
-#: characters/templates/characters/_character_nav.html:6
-#: characters/templates/characters/character_detail.html:20
+#: characters/templates/characters/character_detail.html:25
 #: characters/templates/characters/character_form.html:30
+#: characters/templates/characters/fragments/character_nav.html:8
 msgid "Character"
 msgstr "Charakter"
 
@@ -1333,7 +1333,7 @@ msgid "currency map"
 msgstr "Währungstabelle"
 
 #: characters/models.py:91
-#: characters/templates/characters/character_detail.html:31
+#: characters/templates/characters/character_detail.html:36
 msgid "Campaign"
 msgstr "Kampagne"
 
@@ -1398,43 +1398,53 @@ msgstr "Kurierte Eigenarten"
 msgid "The amount of quirks healed by treatment."
 msgstr "Die Anzahl an Eigenarten, die durch Behandlung geheilt wurden."
 
-#: characters/models.py:564
+#: characters/models.py:154
+msgid ""
+"Your character has arcana or spell points, but you don't have any spell "
+"origins unlocked. You will not be able to add spells. Choose an occupation "
+"with a magic origin."
+msgstr ""
+"Dein Charakter hat Arkana oder Zauberpunkte, aber du hast keine "
+"Magieursprünge freigeschaltet. Du wirst keine Zauber hinzufügen können. "
+"Wähle einen Beruf mit einem magischen Ursprung."
+
+#: characters/models.py:578
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:594
+#: characters/models.py:608
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:684
+#: characters/models.py:698
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:711
+#: characters/models.py:725
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:712
+#: characters/models.py:726
 msgid "Charges used"
 msgstr "Ladungen benutzt"
 
-#: characters/models.py:715
+#: characters/models.py:729
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:737
+#: characters/models.py:751
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:817
+#: characters/models.py:831
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:825
+#: characters/models.py:839
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:826
+#: characters/models.py:840
 msgid "subject"
 msgstr "Thema"
 
@@ -1565,43 +1575,7 @@ msgstr "Regeln"
 msgid "Privacy"
 msgstr "Privatsphäre"
 
-#: characters/templates/characters/_character_nav.html:8
-msgid "Gear"
-msgstr "Ausrüstung"
-
-#: characters/templates/characters/_character_nav.html:10
-#: characters/templates/characters/fragments/combat.html:157
-#: characters/templates/characters/fragments/combat.html:247
-#: characters/templates/characters/fragments/health.html:8
-#: characters/templates/characters/fragments/health.html:10
-#: characters/templates/characters/pdf/boxes/overview/combat.html:4
-msgid "Combat"
-msgstr "Kampf"
-
-#: characters/templates/characters/_character_nav.html:14
-#: characters/templates/characters/fragments/health.html:61
-msgid "Magic"
-msgstr "Magie"
-
-#: characters/templates/characters/_character_nav.html:23
-msgid "Pantheon"
-msgstr "Pantheon"
-
-#: characters/templates/characters/_character_nav.html:28
-msgid "Background"
-msgstr "Werdegang"
-
-#: characters/templates/characters/_character_nav.html:32
-#: characters/templates/characters/fragments/combat.html:27
-msgid "Notes"
-msgstr "Notizen"
-
-#: characters/templates/characters/_character_nav.html:35
-#: characters/templates/characters/fragments/notes.html:10
-msgid "Take a note"
-msgstr "Notiz anlegen"
-
-#: characters/templates/characters/character_detail.html:47
+#: characters/templates/characters/character_detail.html:52
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -1653,7 +1627,7 @@ msgstr "Anonyme Charaktere"
 msgid "You can see these because you are an admin"
 msgstr "Du kannst diese sehen da du Admin bist"
 
-#: characters/templates/characters/create_character_constructed.html:117
+#: characters/templates/characters/create_character_constructed.html:127
 msgid ""
 "These are the templates your character will start with. They define all "
 "values and abilities of your character."
@@ -1661,20 +1635,20 @@ msgstr ""
 "Dies sind die Schablonen mit denen dein Charakter startet. Sie definieren "
 "alle Werte und Fähigkeiten deines Charakters."
 
-#: characters/templates/characters/create_character_constructed.html:125
+#: characters/templates/characters/create_character_constructed.html:135
 msgid "Character Points "
 msgstr "Charakterpunkte "
 
-#: characters/templates/characters/create_character_constructed.html:127
+#: characters/templates/characters/create_character_constructed.html:137
 msgid "Excess points will become the new characters initial reputation."
 msgstr ""
 "Überschüssige Punkte werden die initiale Reputation des neuen Charakters."
 
-#: characters/templates/characters/create_character_constructed.html:130
+#: characters/templates/characters/create_character_constructed.html:145
 msgid "Finish Character"
 msgstr "Charakter fertigstellen"
 
-#: characters/templates/characters/create_character_constructed.html:133
+#: characters/templates/characters/create_character_constructed.html:148
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -1730,6 +1704,42 @@ msgstr "Fertigkeiten"
 #: characters/templates/characters/pdf/boxes/overview/shadows_short.html:4
 msgid "Shadows"
 msgstr "Schatten"
+
+#: characters/templates/characters/fragments/character_nav.html:10
+msgid "Gear"
+msgstr "Ausrüstung"
+
+#: characters/templates/characters/fragments/character_nav.html:12
+#: characters/templates/characters/fragments/combat.html:157
+#: characters/templates/characters/fragments/combat.html:247
+#: characters/templates/characters/fragments/health.html:8
+#: characters/templates/characters/fragments/health.html:10
+#: characters/templates/characters/pdf/boxes/overview/combat.html:4
+msgid "Combat"
+msgstr "Kampf"
+
+#: characters/templates/characters/fragments/character_nav.html:16
+#: characters/templates/characters/fragments/health.html:61
+msgid "Magic"
+msgstr "Magie"
+
+#: characters/templates/characters/fragments/character_nav.html:25
+msgid "Pantheon"
+msgstr "Pantheon"
+
+#: characters/templates/characters/fragments/character_nav.html:30
+msgid "Background"
+msgstr "Werdegang"
+
+#: characters/templates/characters/fragments/character_nav.html:34
+#: characters/templates/characters/fragments/combat.html:27
+msgid "Notes"
+msgstr "Notizen"
+
+#: characters/templates/characters/fragments/character_nav.html:37
+#: characters/templates/characters/fragments/notes.html:10
+msgid "Take a note"
+msgstr "Notiz anlegen"
 
 #: characters/templates/characters/fragments/combat.html:10
 #: characters/templates/characters/sidebar/character.html:38
@@ -3124,12 +3134,12 @@ msgstr ""
 msgid "Text"
 msgstr "Text"
 
-#: forum/models.py:10 urpg/settings.py:174
+#: forum/models.py:10 urpg/settings.py:175
 #: worlds/templates/worlds/wiki_page_edit.html:109
 msgid "German"
 msgstr "Deutsch"
 
-#: forum/models.py:11 urpg/settings.py:175
+#: forum/models.py:11 urpg/settings.py:176
 #: worlds/templates/worlds/wiki_page_edit.html:112
 msgid "English"
 msgstr "Englisch"

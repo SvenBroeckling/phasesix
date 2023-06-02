@@ -8,6 +8,19 @@
         $(function () {
             let timer = null;
 
+            function displayWarnings(warnings){
+                let element = $('.character-warnings');
+                element.html("");
+                if (!!warnings.length) {
+                    element.removeClass('d-none');
+                    for (let warning of warnings) {
+                        element.append(`<div>${warning}</div>`)
+                    }
+                } else {
+                    element.addClass("d-none");
+                }
+            }
+
             $('#id_q').on('keyup', function (e) {
                 let q = $(this).val();
 
@@ -42,9 +55,9 @@
             });
 
             $('.row').on('click', '.constructed-template', function (e) {
-                var template_div = $(this);
-                var template_id = template_div.data('template-id');
-                var preview_url = template_div.data('preview-url');
+                let template_div = $(this);
+                let template_id = template_div.data('template-id');
+                let preview_url = template_div.data('preview-url');
                 if (template_div.hasClass('selected')) {
                     $.post(
                         template_div.data('remove-url'),
@@ -53,6 +66,7 @@
                             if (data.status === 'ok') {
                                 $('.template-points').text(data.remaining_points);
                                 template_div.removeClass('selected');
+                                displayWarnings(data.warnings);
                                 $('.character-preview').load(preview_url);
                             } else {
                                 // shake
@@ -66,6 +80,7 @@
                             if (data.status === 'ok') {
                                 $('.template-points').text(data.remaining_points);
                                 template_div.addClass('selected');
+                                displayWarnings(data.warnings);
                                 $('.character-preview').load(preview_url);
                             } else {
                                 template_div.addClass('notenoughpoints');
@@ -89,11 +104,6 @@
                     $('.character-preview').addClass('d-none');
                     $('.template-list').removeClass('d-none');
                 }
-            });
-
-            $('.template').tilt({
-                glare: false,
-                perspective: 1800
             });
 
             // masonry + bootstrap tabs
@@ -120,14 +130,19 @@
             <div class="row initial-data">
                 <div class="col-md-12">
                     <input type="text" class="form-control mb-3 w-100" placeholder="{% trans "Search" %}" id="id_q">
-                    <h3>
+                    <h4>
                         <span
-                            class="badge bg-info template-points h2">{{ character.remaining_template_points }}</span> {% trans "Character Points " %}
-                    </h3>
+                            class="badge bg-info template-points h2">{{ character.remaining_template_points }}</span><br>{% trans "Character Points " %}
+                    </h4>
                     <p class="text-muted">{% trans 'Excess points will become the new characters initial reputation.' %}</p>
                     <form action="{% url 'characters:create_character_constructed' pk=character.id %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn mb-2 w-100 btn-success">{% trans 'Finish Character' %}</button><br>
+                        <div class="alert alert-danger character-warnings {% if not warnings %}d-none{% endif %}">
+                            {% for warning in warnings %}
+                                <div>{{ warning }}</div>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn mb-3 w-100 btn-success">{% trans 'Finish Character' %}</button><br>
                         <span class="switch switch-sm">
                             <input type="checkbox" class="mt-3 switch" id="switch-preview">
                             <label for="switch-preview">{% trans "Preview" %}</label>

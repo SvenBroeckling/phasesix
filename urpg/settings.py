@@ -143,6 +143,7 @@ DATABASES = {
     }
 }
 
+SILENCED_SYSTEM_CHECKS = ["cachalot.W001"]
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
