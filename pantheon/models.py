@@ -106,7 +106,7 @@ class PriestAction(models.Model, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL)
 
-    favor_cost = models.IntegerField(_('favor cost'))
+    grace_cost = models.IntegerField(_('grace cost'))
 
     name = models.CharField(_('name'), max_length=80)
     rules = models.TextField(_('rules'))

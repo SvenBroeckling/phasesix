@@ -104,9 +104,9 @@ urlpatterns = [
 
     # pantheon
     path(
-        'favor/<int:pk>/<mode>/',
-        views.CharacterModifyFavorView.as_view(),
-        name='modify_favor'),
+        'grace/<int:pk>/<mode>/',
+        views.CharacterModifyGraceView.as_view(),
+        name='modify_grace'),
     path(
         'attitude/<int:pk>/<mode>/',
         views.CharacterModifyAttitudeView.as_view(),

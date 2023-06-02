@@ -5,13 +5,13 @@
         {% if object.is_priest %}
         <div class="col-12">
             <div class="btn-group w-100">
-                <a href="{% url 'characters:modify_favor' pk=object.id mode="use" %}"
+                <a href="{% url 'characters:modify_grace' pk=object.id mode="use" %}"
                    class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-ankh"
-                                                                 title="{% trans 'Lose Favor' %}"></i> {% trans '-Favor' %}
+                                                                 title="{% trans 'Lose Grace' %}"></i> {% trans '-Grace' %}
                 </a>
-                <a href="{% url 'characters:modify_favor' pk=object.id mode="restore" %}"
+                <a href="{% url 'characters:modify_grace' pk=object.id mode="restore" %}"
                    class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-ankh"
-                                                                 title="{% trans 'Gain Favor' %}"></i> {% trans '+Favor' %}
+                                                                 title="{% trans 'Gain Grace' %}"></i> {% trans '+Grace' %}
                 </a>
             </div>
         </div>
@@ -47,10 +47,10 @@
 <div class="row mt-4">
     {% if object.is_priest %}
         <div class="col-2 mb-2">
-            <i class="fas fa-2x fa-fw fa-ankh text-warning" title="{% trans 'Favor' %}"></i>
+            <i class="fas fa-2x fa-fw fa-ankh text-warning" title="{% trans 'Grace' %}"></i>
         </div>
         <div class="col-10 mb-2">
-            {% trans 'You can receive favor by doing things for your deity, or act on their behalf.' %}
+            {% trans 'You can receive grace by doing things for your deity, or act on their behalf.' %}
         </div>
     {% endif %}
     <div class="col-2 mb-2">

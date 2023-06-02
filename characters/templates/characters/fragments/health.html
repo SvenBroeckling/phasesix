@@ -93,9 +93,9 @@
 
                     {% if object.extension_enabled.pantheon %}
                         <div class="sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
-                             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="favor" %}">
+                             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="grace" %}">
                             {% if object.is_priest %}
-                                {% trans 'Favor' %}: {% color_value_span object.favor 10 %}<br>
+                                {% trans 'Grace' %}: {% color_value_span object.grace 10 %}<br>
                             {% endif %}
                             {% trans 'Attitude' %}: {% color_value_span object.attitude 100 %}
                         </div>

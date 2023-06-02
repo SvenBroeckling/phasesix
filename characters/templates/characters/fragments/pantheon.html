@@ -11,7 +11,7 @@
                             data-sidebar-url="{% url 'characters:xhr_characterpriestaction_sidebar' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
                             class="card mb-2 sidebar-trigger">
                         <div class="card-header">
-                            <span class="badge bg-dark float-end ms-2" title="{% trans 'Favor cost' %}">{{ s.favor_cost }}</span>
+                            <span class="badge bg-dark float-end ms-2" title="{% trans 'Grace cost' %}">{{ s.grace_cost }}</span>
                             {{ s }}
                         </div>
                         <div class="card-body">

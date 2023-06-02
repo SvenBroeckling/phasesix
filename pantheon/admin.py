@@ -13,8 +13,8 @@ class PriestActionRollInline(admin.TabularInline):
 
 
 class PriestActionAdmin(admin.ModelAdmin):
-    list_display = 'name_de', 'name_en', 'favor_cost'
-    list_editable = 'favor_cost',
+    list_display = 'name_de', 'name_en', 'grace_cost'
+    list_editable = 'grace_cost',
     inlines = [PriestActionRollInline]
 
 

@@ -1175,14 +1175,14 @@ class CharacterPDFView(View):
 
 # Pantheon
 
-class CharacterModifyFavorView(View):
+class CharacterModifyGraceView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
         if character.may_edit(request.user):
             if self.kwargs['mode'] == 'restore':
-                character.favor += 1
+                character.grace += 1
             elif self.kwargs['mode'] == 'use':
-                character.favor -= 1
+                character.grace -= 1
             character.save()
         return JsonResponse({'status': 'ok'})
 
