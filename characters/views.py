@@ -41,13 +41,15 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        characters = Character.objects.filter(
-            image__isnull=False,
-            may_appear_on_start_page=True)
+        characters = Character.objects.filter(image__isnull=False)
         if self.request.world_configuration is not None:
-            characters = characters.filter(extensions=self.request.world_configuration.world.extension).order_by('?')
+            characters = characters.filter(extensions=self.request.world_configuration.world.extension)
+
         if self.request.user.is_authenticated:
             characters = characters.filter(created_by=self.request.user).order_by('-modified_at')
+        else:
+            characters = characters.filter(may_appear_on_start_page=True).order_by('?')
+
         context['characters'] = characters[:5]
 
         context['wiki_pages_tirakan'] = WikiPage.objects.annotate(
