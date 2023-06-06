@@ -35,8 +35,9 @@
     {% block extraheader %}{% endblock %}
 </head>
 
-<body style="
-    background: linear-gradient(
+<body
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+    style="background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.2) 0%,
     rgba(0, 0, 0, 0.2) 85%,
