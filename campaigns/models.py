@@ -187,8 +187,39 @@ class Roll(models.Model):
     modifier = models.IntegerField(_('modifier'), default=0)
     minimum_roll = models.IntegerField(_('minimum roll'), default=5)
 
+    # statistics
+    crit_count = models.IntegerField(_('crit count'), default=0)
+    crit_sum = models.IntegerField(_('crit sum'), default=0)
+    exploded_dice_count = models.IntegerField(_('exploded dice count'), default=0)
+    exploded_dice_sum = models.IntegerField(_('exploded dice sum'), default=0)
+    highest_single_roll = models.IntegerField(_('highest single roll'), default=0)
+    successes_count = models.IntegerField(_('successes count'), default=0)
+    successes_sum = models.IntegerField(_('successes sum'), default=0)
+    fails_count = models.IntegerField(_('fails count'), default=0)
+    fails_sum = models.IntegerField(_('fails sum'), default=0)
+    total_sum = models.IntegerField(_('total sum'), default=0)
+
     class Meta:
         ordering = "-created_at",
+
+    def save(self, *args, **kwargs):
+        dice_list = [int(v) for v in self.results_csv.strip().split(',') if v]
+        successes = [v for v in dice_list if v >= self.minimum_roll]
+        fails = [v for v in dice_list if v < self.minimum_roll]
+        exploded = [v for v in dice_list if v >= 6]
+        crits = [v for v in dice_list if v >= 11]
+
+        self.crit_count = len(crits)
+        self.crit_sum = sum(crits)
+        self.exploded_dice_count = len(exploded)
+        self.exploded_dice_sum = sum(exploded)
+        self.highest_single_roll = max(dice_list, default=0)
+        self.successes_count = len(successes)
+        self.successes_sum = sum(successes)
+        self.fails_count = len(fails)
+        self.fails_sum = sum(fails)
+        self.total_sum = sum(dice_list) + self.modifier
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.header

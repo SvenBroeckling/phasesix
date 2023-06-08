@@ -77,9 +77,14 @@
                 {% if may_edit or object.game_log_visibility == "A" %}
                     <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-game-log"
                        href="#v-game-log">
-                        <i class="fas fa-fw fa-chart-bar"></i>&nbsp;{% trans 'Game Log' %}
+                        <i class="fas fa-fw fa-hourglass"></i>&nbsp;{% trans 'Game Log' %}
                     </a>
                 {% endif %}
+
+                <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-statistics"
+                   href="#v-statistics">
+                    <i class="fas fa-fw fa-chart-bar"></i>&nbsp;{% trans 'Statistics' %}
+                </a>
 
             </div>
         </div>
@@ -109,6 +114,11 @@
                 id="v-game-log"
                 role="tabpanel">
             </div>
+
+            <div class="tab-pane fade show" id="v-statistics" role="tabpanel">
+                {% campaign_fragment 'statistics' %}
+            </div>
+
         </div>
     </div>
 {% endblock %}

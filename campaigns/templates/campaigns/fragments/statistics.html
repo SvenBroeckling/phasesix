@@ -1,0 +1,117 @@
+{% extends 'campaigns/fragments/fragment_base.html' %}
+{% load i18n thumbnail static characters_extras campaign_extras %}
+
+{% block fragment %}
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Crit Count" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="crit_count" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Crit Sum" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="crit_sum" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Exploding Dice Count" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="exploded_dice_count" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Exploding Dice Sum" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="exploded_dice_sum" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Successes Count" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="successes_count" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Successes Sum" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="successes_sum" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Fails Count" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="fails_count" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Fails Sum" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="fails_sum" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Highest single dice roll" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="highest_single_roll" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">{% trans "Total Sum" %}</div>
+                <div
+                    hx-get="{% url 'campaigns:xhr_statistics' pk=object.id mode="total_sum" %}"
+                    hx-trigger="click from:a.nav-link"
+                    hx-target="this"
+                    class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

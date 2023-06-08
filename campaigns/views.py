@@ -195,3 +195,14 @@ class XhrCampaignGameLogView(ListView):
         context = super().get_context_data(**kwargs)
         context["campaign"] = Campaign.objects.get(id=self.kwargs["campaign_pk"])
         return context
+
+
+class XhrCampaignStatisticsView(DetailView):
+    template_name = "campaigns/statistics/roll_list.html"
+    model = Campaign
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mode = self.kwargs["mode"]
+        context["object_list"] = self.object.roll_set.order_by(f"-{mode}")[:5]
+        return context

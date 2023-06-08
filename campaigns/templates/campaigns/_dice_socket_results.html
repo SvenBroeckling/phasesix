@@ -4,5 +4,4 @@
 {% endfor %}
 {% if roll.modifier %}<span class="text-muted"> {{ roll.modifier|int_with_sign }}</span>{% endif %}
 <span class="text-muted">= {{ roll.get_sum }}</span>
-<span class="text-muted float-end">({% trans "MR" %}: {{ roll.minimum_roll }}+)</span>
 </div>

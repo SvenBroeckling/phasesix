@@ -1,0 +1,15 @@
+{% load i18n %}
+<ul class="list-group list-group-flush">
+    {% for object in object_list %}
+        <li class="list-group-item d-flex">
+            <span class="h4 p-0 me-4 d-flex align-items-center justify-content-center">{{ forloop.counter }}</span>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <div>
+                    {% trans 'GM' as character_default %}
+                    {{ object.character|default:character_default }} - {{ object.header }}
+                    {% include "campaigns/_dice_socket_results.html" with roll=object %}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

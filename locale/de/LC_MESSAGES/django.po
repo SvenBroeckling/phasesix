@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-08 14:41+0000\n"
-"PO-Revision-Date: 2023-06-08 16:41+0200\n"
+"POT-Creation-Date: 2023-06-08 23:05+0000\n"
+"PO-Revision-Date: 2023-06-09 01:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -749,9 +749,45 @@ msgstr "Modifikator"
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: campaigns/templates/campaigns/_dice_socket_results.html:7
-msgid "MR"
-msgstr "MW"
+#: campaigns/models.py:191
+msgid "crit count"
+msgstr "Anzahl kritischer Erfolge"
+
+#: campaigns/models.py:192
+msgid "crit sum"
+msgstr "Summe kritischer Erfolge"
+
+#: campaigns/models.py:193
+msgid "exploded dice count"
+msgstr "Anzahl Exploding Dice"
+
+#: campaigns/models.py:194
+msgid "exploded dice sum"
+msgstr "Summe Exploding Dice"
+
+#: campaigns/models.py:195
+msgid "highest single roll"
+msgstr "Höchster einzelner Wurf"
+
+#: campaigns/models.py:196
+msgid "successes count"
+msgstr "Anzahl Erfolge"
+
+#: campaigns/models.py:197
+msgid "successes sum"
+msgstr "Summe Erfolge"
+
+#: campaigns/models.py:198
+msgid "fails count"
+msgstr "Anzahl Misserfolge"
+
+#: campaigns/models.py:199
+msgid "fails sum"
+msgstr "Anzahl Misserfolge"
+
+#: campaigns/models.py:200
+msgid "total sum"
+msgstr "Gesamtsumme"
 
 #: campaigns/templates/campaigns/campaign_detail.html:23
 #: campaigns/templates/campaigns/campaign_detail.html:26
@@ -811,6 +847,10 @@ msgstr "Gegner"
 #: campaigns/templates/campaigns/campaign_detail.html:80
 msgid "Game Log"
 msgstr "Spielprotokoll"
+
+#: campaigns/templates/campaigns/campaign_detail.html:86
+msgid "Statistics"
+msgstr "Statistiken"
 
 #: campaigns/templates/campaigns/campaign_form.html:10
 msgid "Create campaign"
@@ -1117,6 +1157,46 @@ msgstr "Nein"
 msgid "Edit settings"
 msgstr "Einstellungen bearbeiten"
 
+#: campaigns/templates/campaigns/fragments/statistics.html:8
+msgid "Crit Count"
+msgstr "Anzahl kritischer Erfolge"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:19
+msgid "Crit Sum"
+msgstr "Summe kritischer Erfolge"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:30
+msgid "Exploding Dice Count"
+msgstr "Anzahl Exploding Dice"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:41
+msgid "Exploding Dice Sum"
+msgstr "Summe Exploding Dice"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:52
+msgid "Successes Count"
+msgstr "Anzahl Erfolge"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:63
+msgid "Successes Sum"
+msgstr "Summe Erfolge"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:74
+msgid "Fails Count"
+msgstr "Anzahl Misserfolge"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:85
+msgid "Fails Sum"
+msgstr "Summe Misserfolge"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:96
+msgid "Highest single dice roll"
+msgstr "Höchster einzelner Erfolg"
+
+#: campaigns/templates/campaigns/fragments/statistics.html:107
+msgid "Total Sum"
+msgstr "Gesamtsumme"
+
 #: campaigns/templates/campaigns/fragments/status.html:9
 #: characters/templates/characters/character_detail.html:25
 #: characters/templates/characters/character_form.html:30
@@ -1133,6 +1213,7 @@ msgid "Copy Invite Link"
 msgstr "Einladungslink kopieren"
 
 #: campaigns/templates/campaigns/roll_list.html:9
+#: campaigns/templates/campaigns/statistics/roll_list.html:8
 msgid "GM"
 msgstr "SL"
 
@@ -4405,6 +4486,9 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
+#~ msgid "MR"
+#~ msgstr "MW"
+
 #~ msgid "favor"
 #~ msgstr "Gunst"
 
@@ -4476,9 +4560,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "Dice server connected"
 #~ msgstr "Würfelserver verbunden"
-
-#~ msgid "Statistics"
-#~ msgstr "Statistiken"
 
 #~ msgid "New Character"
 #~ msgstr "Neuer Charakter"
