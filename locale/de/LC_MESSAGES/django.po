@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-02 17:57+0000\n"
-"PO-Revision-Date: 2023-06-02 19:57+0200\n"
+"POT-Creation-Date: 2023-06-08 14:41+0000\n"
+"PO-Revision-Date: 2023-06-08 16:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -37,7 +37,7 @@ msgstr "Name"
 
 #: armory/models.py:24 armory/models.py:43 armory/models.py:134
 #: armory/models.py:187 armory/models.py:288 armory/models.py:310
-#: armory/models.py:370 armory/models.py:396 campaigns/models.py:179
+#: armory/models.py:370 armory/models.py:396 campaigns/models.py:183
 #: characters/models.py:33 horror/models.py:27 pantheon/models.py:22
 #: pantheon/models.py:72 rules/models.py:72 rules/models.py:137
 #: rules/models.py:183 rules/models.py:202 rules/models.py:239
@@ -46,7 +46,7 @@ msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:25 armory/models.py:52 armory/models.py:135
-#: armory/models.py:180 armory/models.py:392 campaigns/models.py:177
+#: armory/models.py:180 armory/models.py:392 campaigns/models.py:181
 #: characters/models.py:66 characters/models.py:594 characters/models.py:838
 #: forum/models.py:22 forum/models.py:28 forum/models.py:32 forum/models.py:48
 #: forum/models.py:88 magic/models.py:88 magic/models.py:168
@@ -540,7 +540,7 @@ msgstr "Ist dies die übliche Einheit, mit der Menschen bezahlen?"
 
 #: armory/templates/armory/riotgear_list.html:13
 #: armory/templates/armory/riotgear_list.html:70
-#: characters/templates/_nav.html:83 characters/templates/base.html:111
+#: characters/templates/_nav.html:83 characters/templates/base.html:112
 #: characters/templates/characters/pdf/boxes/gear/armour.html:4
 #: homebrew/templates/homebrew/index.html:84
 msgid "Armour"
@@ -619,7 +619,7 @@ msgid "Add in admin"
 msgstr "Im Admin hinzufügen"
 
 #: armory/templates/armory/weapon_list.html:13
-#: characters/templates/_nav.html:79 characters/templates/base.html:109
+#: characters/templates/_nav.html:79 characters/templates/base.html:110
 #: characters/templates/characters/fragments/gear.html:93
 msgid "Weapons"
 msgstr "Waffen"
@@ -729,17 +729,29 @@ msgstr "Charaktersichtbarkeit"
 msgid "text"
 msgstr "Text"
 
-#: campaigns/models.py:178
+#: campaigns/models.py:182
 msgid "header"
 msgstr "Kopfzeile"
 
-#: campaigns/models.py:180
+#: campaigns/models.py:184
 msgid "roll string"
 msgstr "Würfelstring"
 
-#: campaigns/models.py:181
+#: campaigns/models.py:185
 msgid "results_csv"
 msgstr "Ergebniss csv"
+
+#: campaigns/models.py:187
+msgid "modifier"
+msgstr "Modifikator"
+
+#: campaigns/models.py:188 rules/models.py:15 worlds/models.py:340
+msgid "minimum roll"
+msgstr "Mindestwurf"
+
+#: campaigns/templates/campaigns/_dice_socket_results.html:7
+msgid "MR"
+msgstr "MW"
 
 #: campaigns/templates/campaigns/campaign_detail.html:23
 #: campaigns/templates/campaigns/campaign_detail.html:26
@@ -790,7 +802,7 @@ msgid "NPC"
 msgstr "NSC"
 
 #: campaigns/templates/campaigns/campaign_detail.html:73
-#: characters/templates/_nav.html:75 characters/templates/base.html:112
+#: characters/templates/_nav.html:75 characters/templates/base.html:113
 #: worlds/templates/worlds/wiki_page_with_game_values.html:4
 #: worlds/templates/worlds/wiki_page_with_game_values.html:16
 msgid "Foes"
@@ -1043,12 +1055,12 @@ msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:34 characters/views.py:626
+#: characters/forms.py:34 characters/views.py:628
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
 #: campaigns/templates/campaigns/fragments/settings.html:23
-#: characters/forms.py:35 characters/views.py:601
+#: characters/forms.py:35 characters/views.py:603
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1242,7 +1254,7 @@ msgstr "Phase Six letzte Aktualisierungen"
 #: characters/forms.py:25
 #: characters/templates/characters/pdf/boxes/gear/armour.html:7
 #: characters/templates/characters/pdf/boxes/gear/weapons.html:8
-#: characters/views.py:575 forum/forms.py:6 homebrew/forms.py:9
+#: characters/views.py:577 forum/forms.py:6 homebrew/forms.py:9
 #: homebrew/forms.py:27 homebrew/forms.py:39 homebrew/forms.py:57
 msgid "Name"
 msgstr "Name"
@@ -1251,7 +1263,7 @@ msgstr "Name"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:49 characters/views.py:582
+#: characters/forms.py:49 characters/views.py:584
 msgid "Size"
 msgstr "Größe"
 
@@ -1261,11 +1273,11 @@ msgstr "Größe"
 #: characters/templates/characters/modals/add_weapons.html:65
 #: characters/templates/characters/sidebar/characteritem.html:152
 #: characters/templates/characters/sidebar/characterriotgear.html:48
-#: characters/views.py:589
+#: characters/views.py:591
 msgid "Weight"
 msgstr "Gewicht"
 
-#: characters/forms.py:51 characters/views.py:595
+#: characters/forms.py:51 characters/views.py:597
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1280,7 +1292,7 @@ msgstr "Gottheit"
 #: characters/forms.py:57
 #: characters/templates/characters/fragments/health.html:100
 #: characters/templates/characters/sidebar/grace.html:57
-#: characters/views.py:617
+#: characters/views.py:619
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -1485,11 +1497,11 @@ msgstr "Lesen"
 msgid "Rulebook"
 msgstr "Regelbuch"
 
-#: characters/templates/_nav.html:77 characters/templates/base.html:108
+#: characters/templates/_nav.html:77 characters/templates/base.html:109
 msgid "Templates"
 msgstr "Schablonen"
 
-#: characters/templates/_nav.html:81 characters/templates/base.html:110
+#: characters/templates/_nav.html:81 characters/templates/base.html:111
 msgid "Spells"
 msgstr "Zauber"
 
@@ -1539,19 +1551,19 @@ msgstr "Abmelden"
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:52
+#: characters/templates/base.html:53
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: characters/templates/base.html:69
+#: characters/templates/base.html:70
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/base.html:74
+#: characters/templates/base.html:75
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/base.html:98
+#: characters/templates/base.html:99
 #: characters/templates/characters/character_list.html:24
 #: characters/templates/characters/character_list.html:27
 #: characters/templates/characters/character_list.html:31
@@ -1559,19 +1571,19 @@ msgstr "Schließen"
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
 
-#: characters/templates/base.html:99
+#: characters/templates/base.html:100
 msgid "My Charactes"
 msgstr "Meine Charaktere"
 
-#: characters/templates/base.html:100
+#: characters/templates/base.html:101
 msgid "Campaigns"
 msgstr "Kampagnen"
 
-#: characters/templates/base.html:101 homebrew/forms.py:58
+#: characters/templates/base.html:102 homebrew/forms.py:58
 msgid "Rules"
 msgstr "Regeln"
 
-#: characters/templates/base.html:102
+#: characters/templates/base.html:103
 msgid "Privacy"
 msgstr "Privatsphäre"
 
@@ -2889,7 +2901,7 @@ msgstr "Heilen"
 
 #: characters/templates/characters/sidebar/wounds.html:25
 #: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:215 characters/views.py:226 characters/views.py:237
+#: characters/views.py:217 characters/views.py:228 characters/views.py:239
 msgid "Rest"
 msgstr "Rast"
 
@@ -3056,41 +3068,41 @@ msgstr "Weiterlesen"
 msgid "A map of the world"
 msgstr "Eine Karte der Welt"
 
-#: characters/views.py:94
+#: characters/views.py:96
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:216
+#: characters/views.py:218
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:227
+#: characters/views.py:229
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:238
+#: characters/views.py:240
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:576
+#: characters/views.py:578
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:583
+#: characters/views.py:585
 #, python-brace-format
 msgid "Enter the size of your character in {world.info_name_cm}."
 msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
 
-#: characters/views.py:590
+#: characters/views.py:592
 #, python-brace-format
 msgid "Enter the weight of your character in {world.info_name_kg}."
 msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
-#: characters/views.py:596
+#: characters/views.py:598
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:602
+#: characters/views.py:604
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -3103,7 +3115,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:618
+#: characters/views.py:620
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -3120,7 +3132,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:627
+#: characters/views.py:629
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -3727,10 +3739,6 @@ msgstr "Max Arkana"
 #: rules/models.py:13 rules/models.py:150
 msgid "spell points"
 msgstr "Zauberpunkte"
-
-#: rules/models.py:15 worlds/models.py:340
-msgid "minimum roll"
-msgstr "Mindestwurf"
 
 #: rules/models.py:16 worlds/models.py:333
 msgid "protection"
