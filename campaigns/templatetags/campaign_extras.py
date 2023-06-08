@@ -37,3 +37,7 @@ def csv_to_int_list(value):
 def list_sum(value):
     return sum(value)
 
+
+@register.filter
+def int_with_sign(value):
+    return '{0:+}'.format(int(value))

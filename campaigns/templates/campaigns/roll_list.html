@@ -1,4 +1,4 @@
-{% load i18n thumbnail static characters_extras campaign_extras %}
+{% load i18n thumbnail static characters_extras campaign_extras rules_extras %}
 
 <div class="row">
     {% for roll in page_obj %}
@@ -10,9 +10,9 @@
                     {{ roll.character|default:character_default }} - {{ roll.header }}
                 </div>
                 <div class="card-body">
-                    {{ roll.description }}
+                    {{ roll.description|urpg_markup }}
                     <div class="mt-1">
-                        {% include "campaigns/_dice_socket_results.html" with result_list=roll.results_csv|csv_to_int_list minimum_roll=roll.character.minimum_roll|default:5 result_sum=roll.results_csv|csv_to_int_list|list_sum %}
+                        {% include "campaigns/_dice_socket_results.html" with roll=roll %}
                     </div>
                 </div>
             </div>

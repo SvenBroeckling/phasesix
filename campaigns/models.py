@@ -168,17 +168,33 @@ class Handout(models.Model):
 
 
 class Roll(models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(
+        Campaign,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE)
     character = models.ForeignKey(
         'characters.Character',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL)
+        on_delete=models.CASCADE)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     header = models.CharField(_('header'), max_length=120, blank=True, null=True)
     description = models.TextField(_('description'), blank=True, null=True)
     roll_string = models.CharField(_('roll string'), max_length=20, blank=True, null=True)
     results_csv = models.CharField(_('results_csv'), max_length=120)
 
+    modifier = models.IntegerField(_('modifier'), default=0)
+    minimum_roll = models.IntegerField(_('minimum roll'), default=5)
+
     class Meta:
         ordering = "-created_at",
+
+    def __str__(self):
+        return self.header
+
+    def get_sum(self):
+        return sum(self.get_dice_list()) + self.modifier
+
+    def get_dice_list(self):
+        return [int(v) for v in self.results_csv.strip().split(',') if v]

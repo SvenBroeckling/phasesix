@@ -551,11 +551,14 @@ a.invisible-link {
 }
 
 .ws-dice-result span {
-  padding: 2px 5px 0 5px;
-  margin: 0 1px;
-  border: 2px solid $dark;
-  border-radius: 2px;
+  padding: 3px 1px 0 1px;
   height: 25px;
+  margin: 0 1px;
+}
+
+.ws-dice-result span.dice-box {
+  padding: 3px 5px 0 5px;
+  min-width: 25px;
 }
 
 .ws-dice-result span.crit {
@@ -569,6 +572,7 @@ a.invisible-link {
 
 .ws-dice-result span.success {
   background-color: $success;
+  color: black;
 }
 
 .ws-dice-result span.fail {

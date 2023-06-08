@@ -6,7 +6,8 @@ from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 from django.template.loader import render_to_string
 
-from campaigns.models import Campaign
+from campaigns.models import Campaign, Roll
+from campaigns.templatetags.campaign_extras import int_with_sign
 
 
 def roll_and_send(character_id, roll_string, header, description, campaign_id=None, save_to=None):
@@ -31,28 +32,27 @@ def roll_and_send(character_id, roll_string, header, description, campaign_id=No
         minimum_roll = 5
 
     result = roll(roll_string)
-    result_list = result['list']
-    result_sum = result['sum']
+
+    roll = Roll.objects.create(
+        campaign=campaign,
+        character=character,
+        header=header,
+        description=description,
+        roll_string=roll_string,
+        results_csv=",".join(str(i) for i in result["list"]),
+        modifier=result['modifier'],
+        minimum_roll=minimum_roll)
+
     result_html = render_to_string(
         'campaigns/_dice_socket_results.html',
         {
-            'result_list': result_list,
-            'result_sum': result_sum,
-            'minimum_roll': minimum_roll,
+            'roll': roll,
         }
     )
 
-    if campaign is not None:
-        campaign.roll_set.create(
-            character=character,
-            header=header,
-            description=description,
-            roll_string=roll_string,
-            results_csv=",".join(str(i) for i in result_list))
-
     if save_to is not None and character is not None:
         if save_to == 'initiative':
-            character.latest_initiative = result_sum
+            character.latest_initiative = roll.get_sum()
             character.save()
 
     async_to_sync(channel_layer.group_send)(
@@ -60,11 +60,11 @@ def roll_and_send(character_id, roll_string, header, description, campaign_id=No
         {
             'type': 'dice_roll',
             'message': {
-                'roll': roll_string,
-                'result_list': result_list,
+                'roll': roll.roll_string,
+                'result_list': roll.get_dice_list(),
                 'result_html': result_html,
-                'header': header,
-                'description': description,
+                'header': roll.header,
+                'description': roll.description,
                 'character': character_name,
             }
         }
@@ -72,16 +72,20 @@ def roll_and_send(character_id, roll_string, header, description, campaign_id=No
 
     url = campaign.discord_webhook_url if campaign is not None else None
     if url is not None:
-        result = ', '.join(str(r) for r in result_list) + f' = {result_sum}'
+        dice_result = ', '.join(str(r) for r in roll.get_dice_list())
+        if roll.modifier:
+            dice_result += int_with_sign(roll.modifier)
+        dice_result += f' = {roll.get_sum()}'
+
         json_data = {
-            'content': f'**{header}** {result}',
+            'content': f'**{header}** {dice_result}',
             'username': character_name,
         }
-        if description:
-            json_data['embeds'] = [{'description': description}]
+        if roll.description:
+            json_data['embeds'] = [{'description': roll.description}]
         requests.post(url, json=json_data)
 
-    return result_list
+    return roll.get_dice_list()
 
 
 class DiceConsumer(WebsocketConsumer):

@@ -22,7 +22,7 @@ def roll(dice_string):
     result = list(reversed(sorted([roll_single(int(kind)) for r in range(int(amount))])))
     return {
         'list': result,
-        'sum': sum(result) + int(modifier)
+        'modifier': int(modifier),
     }
 
 
