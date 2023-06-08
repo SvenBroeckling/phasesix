@@ -29,15 +29,5 @@ def ws_room_url(room_name):
 
 
 @register.filter
-def csv_to_int_list(value):
-    return [int(v) for v in value.strip().split(',') if v]
-
-
-@register.filter
-def list_sum(value):
-    return sum(value)
-
-
-@register.filter
 def int_with_sign(value):
     return '{0:+}'.format(int(value))
