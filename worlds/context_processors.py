@@ -1,5 +1,6 @@
 from django.utils.translation import gettext as _
 
+
 def brand_information(request):
     obj = request.world_configuration
     if obj is not None:

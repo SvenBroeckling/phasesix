@@ -41,7 +41,7 @@ def to_first_linebreak(value):
 def urpg_markup(value, safe_mode=True):
     if value is None:
         return ''
-    return mark_safe(markdown2.markdown(value, safe_mode=safe_mode, extras=['tables']))
+    return mark_safe(markdown2.markdown(value, safe_mode=safe_mode, extras=['tables', 'header-ids']))
 
 
 @register.filter

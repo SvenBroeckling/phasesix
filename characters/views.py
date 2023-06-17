@@ -50,7 +50,7 @@ class IndexView(TemplateView):
         else:
             characters = characters.filter(may_appear_on_start_page=True).order_by('?')
 
-        context['characters'] = characters[:5]
+        context['characters'] = characters[:4]
 
         context['wiki_pages_tirakan'] = WikiPage.objects.annotate(
             text_len=Length('text_de')
