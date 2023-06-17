@@ -20,6 +20,15 @@ def template_widget(context, template):
     return context
 
 
+@register.inclusion_tag('armory/_item_widget.html', takes_context=True)
+def item_widget(context, item, character=None):
+    context.update({
+        'item': item,
+        'character': character,
+    })
+    return context
+
+
 @register.inclusion_tag('magic/_basespell_widget.html', takes_context=True)
 def basespell_widget(context, basespell, character=None):
     context.update({
