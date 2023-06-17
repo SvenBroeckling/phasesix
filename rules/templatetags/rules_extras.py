@@ -77,17 +77,13 @@ def replace_tags(value, world):
         except WikiPageImage.DoesNotExist:
             return ''
 
-        modal_url = reverse('worlds:xhr_modal_image', kwargs={'pk': obj.pk})
         image = get_thumbnail(obj.image, '800', crop='center', quality=99, format='PNG')
 
         return f'''
         <a
-            data-url="{modal_url}"
-            data-bs-toggle="modal"
-            data-bs-target=".page-modal"
-            data-modal-title="{obj.caption}"
-            class="invisible-link modal-trigger"
-            href="">
+            data-gallery={obj.wiki_page.slug}
+            class="invisible-link toggle-lightbox"
+            href="{obj.image.url}">
             <img class="img-fluid m-2 {css}" src="{image.url}" alt="{obj.caption}" />
         </a>
         '''

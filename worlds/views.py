@@ -200,15 +200,6 @@ class XhrAdditionalImagesView(TemplateView):
         return context
 
 
-class XhrModalImageView(TemplateView):
-    template_name = "worlds/modal_image.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["object"] = get_object_or_404(WikiPageImage, id=self.kwargs["pk"])
-        return context
-
-
 class XhrAutoTagView(View):
     def post(self, request, *args, **kwargs):
         wiki_page = WikiPage.objects.get(id=kwargs["pk"])

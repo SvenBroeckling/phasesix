@@ -18,6 +18,18 @@
                     elem.text(text)
                 }, 1000)
             })
+
+
+            const options = {
+                keyboard: true,
+                size: 'fullscreen'
+            };
+
+            document.querySelectorAll('.toggle-lightbox').forEach((el) => el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lightbox = new Lightbox(el, options);
+                lightbox.show();
+            }));
         })
     </script>
 {% endblock %}
@@ -45,12 +57,13 @@
 {% block content %}
     <div class="row">
         <div class="col-12 col-lg-4 col-xl-3">
-
             <div class="card">
                 {% with img=object.get_image %}
                     {% if img %}
                         {% thumbnail img.image '1024' as im %}
-                            <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
+                            <a class="toggle-lightbox" href="{{ img.image.url }}" data-gallery="{{ object.slug }}">
+                                <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
+                            </a>
                         {% endthumbnail %}
                     {% endif %}
                 {% endwith %}
