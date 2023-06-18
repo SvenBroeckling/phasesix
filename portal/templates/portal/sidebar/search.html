@@ -6,7 +6,7 @@
             const url = $(this).attr('action')
             const form = $(this)
 
-            $.get(url, form.serialize(), function(data){
+            $.get(url, form.serialize(), function (data) {
                 $('.search-results').html(data)
             })
             e.preventDefault()
@@ -16,12 +16,16 @@
 </script>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 mb-3">
         <form action="{% url 'portal:xhr_search_results' %}" class="search-form">
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <input class="form-control" type="search" name="q"
                        placeholder="{% trans 'Characters, Worlds etc..' %}">
                 <button class="btn btn-primary" type="submit">{% trans 'Search' %}</button>
+            </div>
+            <div class="form-check form-switch mt-1">
+                <input class="form-check-input" type="checkbox" role="switch" name="search_descriptions" id="searchDescriptions">
+                <label class="form-check-label" for="searchDescriptions">{% trans 'Search in descriptions' %}</label>
             </div>
         </form>
     </div>

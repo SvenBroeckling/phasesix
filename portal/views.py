@@ -14,8 +14,13 @@ class XhrSearchResultsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get('q', '')
-        print(query)
+        search_descriptions = self.request.GET.get('search_descriptions', 'off')
         if query:
-            context['wiki_pages'] = WikiPage.objects.filter(
-                Q(name_de__icontains=query) | Q(name_en__icontains=query))
+            if search_descriptions == 'on':
+                context['wiki_pages'] = WikiPage.objects.filter(
+                    Q(name_en__icontains=query) | Q(name_de__icontains=query) |
+                    Q(text_en__icontains=query) | Q(text_de__icontains=query))
+            else:
+                context['wiki_pages'] = WikiPage.objects.filter(
+                    Q(name_de__icontains=query) | Q(name_en__icontains=query))
         return context
