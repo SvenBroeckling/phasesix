@@ -141,7 +141,9 @@ class Character(models.Model):
     def get_backdrop_image_url(self):
         if self.backdrop_image:
             return get_thumbnail(self.backdrop_image, "1800", crop="center", quality=99).url
-        return get_thumbnail(self.get_epoch().image, "1800", crop="center", quality=99).url
+        if self.get_epoch().image:
+            return get_thumbnail(self.get_epoch().image, "1800", crop="center", quality=99).url
+        return None
 
     def warnings(self, world_configuration):
         """Returns game logic warnings for this character"""

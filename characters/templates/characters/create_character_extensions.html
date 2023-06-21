@@ -33,12 +33,13 @@
         </div>
 
         {% for extension in extensions %}
-            {% thumbnail extension.image "1024" as im %}
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card text-center create-epoch-card mb-4 pointer"
                          data-extension-id="{{ extension.id }}">
-                        <div class="card-body"
-                             style="background-image: url({{ im.url }}); background-size: cover">
+                        {% thumbnail extension.image "1024" as im %}
+                            <div class="card-body"
+                                style="background-image: url({{ im.url }}); background-size: cover">
+                        {% endthumbnail %}
                             <div class="card-text w-100 p-5">
                                 <h5 class="text-center p-0 m-0">{{ extension }}</h5>
                                 <p class="text-center p-0 m-0">{{ extension.year_range }}</p>
@@ -46,7 +47,6 @@
                         </div>
                     </div>
                 </div>
-            {% endthumbnail %}
         {% endfor %}
 
         <form action="{% url 'characters:create_character_data' epoch_pk=epoch_pk world_pk=world_pk %}" method="get">
