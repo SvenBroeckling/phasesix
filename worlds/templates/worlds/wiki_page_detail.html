@@ -157,7 +157,7 @@
 
             </div>
 
-            <h1>{{ object.name }}</h1>
+            <h1 class="mt-2 mt-xl-0">{{ object.name }}</h1>
 
             <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
                 <ol class="breadcrumb">
@@ -174,7 +174,7 @@
 
     <div class="row masonry-container mt-4">
         {% for page in object.wikipage_set.all %}
-            <div class="col col-md-6 col-xl-4">
+            <div class="col col-sm-6 col-md-4 col-xl-3">
                 <a class="invisible-link"
                    href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
                     <div class="card pointer mb-4">
