@@ -3,8 +3,8 @@
 @import 'bootswatch/phasesix/bootswatch';
 
 $utilities: map-merge(
-  $utilities, ("width": map-merge(
-    map-get($utilities, "width"), (responsive: true),),)
+                $utilities, ("width": map-merge(
+                        map-get($utilities, "width"), (responsive: true),),)
 );
 
 .pointer {
@@ -149,9 +149,6 @@ span.background-image-copyright {
   }
 
   @media (max-width: 576px) {
-    img.character-image {
-      max-width: 100px;
-    }
     h1 {
       font-size: 2rem;
     }
@@ -162,19 +159,6 @@ span.background-image-copyright {
       font-size: 1rem;
     }
   }
-
-  @media (min-width: 576px) and (max-width: 768px) {
-    img.character-image {
-      max-width: 140px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    img.character-image {
-      max-width: 180px;
-    }
-  }
-
 }
 
 /* Touch Menus */
@@ -352,7 +336,6 @@ table.table-sortable thead {
 }
 
 
-
 #mainNavigation {
   position: absolute;
   top: 0;
@@ -486,7 +469,6 @@ table.table-sortable thead {
 }
 
 .campaign-characters img {
-  max-width: 168px;
   filter: drop-shadow(0 0 10px black);
 }
 

@@ -1,6 +1,6 @@
 {% load world_extras i18n %}
 <nav id="mainNavigation" role="navigation">
-        <div class="py-3 w-60 m-auto text-center border-bottom">
+        <div class="pt-3 w-60 m-auto text-center">
             <i
                 data-sidebar-url="{% url 'portal:search' %}"
                 data-sidebar-title="{% trans 'Search' %}"
@@ -24,7 +24,7 @@
             </a>
         </div>
     <div class="navbar-expand-md">
-        <div class="navbar-dark text-center my-2">
+        <div class="navbar-dark text-center my-0">
             <button class="navbar-toggler w-75 px-2" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
                 class="align-middle">{% trans 'Menu' %}</span>
             </button>
         </div>
-        <div class="text-center mt-3 collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="text-center mt-1 collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" role="button"

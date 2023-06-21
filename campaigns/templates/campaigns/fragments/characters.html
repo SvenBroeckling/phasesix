@@ -3,22 +3,21 @@
 
 {% block fragment %}
     <div class="campaign-characters mt-5">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center flex-wrap">
             {% for c in object.character_set.all %}
                 <a
                         href=""
                         data-sidebar-title="{{ c }}"
                         data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
-                        class="sidebar-trigger mb-3">
+                        class="sidebar-trigger mb-3 me-2">
                     {% if c.image %}
-                        {% thumbnail c.image "600x600" crop="center" as im %}
+                        {% thumbnail c.image "300x300" crop="center" as im %}
                             <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded" alt="">
                         {% endthumbnail %}
                     {% else %}
-                        <img
-                                class="img-fluid rounded me-3 mb-3"
-                                src="{% static 'img/silhuette.png' %}"
-                                alt="{{ c.name }}">
+                        <img class="img-fluid rounded me-3 mb-3"
+                             src="{% static 'img/silhuette.png' %}"
+                             alt="{{ c.name }}">
                     {% endif %}
                 </a>
             {% endfor %}

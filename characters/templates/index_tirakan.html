@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-{% load rules_extras %}
-{% load i18n static sorl_thumbnail %}
+{% load i18n static thumbnail rules_extras %}
 
 {% block content %}
     <header class="masthead">
-        <div class="container pt-5">
+        <div class="container pt-0 pt-md-2">
 
             <div class="row py-2">
                 <div class="col-12 col-md-8 offset-md-2 lead text-center">
@@ -12,19 +11,17 @@
                 </div>
             </div>
 
-            <div class="row py-2 py-md-3">
-                <div class="d-flex justify-content-center">
-                    <div class="text-center">
-                        {% for c in characters %}
-                            {% if c.image %}
-                                <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3">
-                                    {% thumbnail c.image "300x300" crop="center" as im %}
-                                        <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded character-image" alt="">
-                                    {% endthumbnail %}
-                                </a>{% if forloop.last %}<br>{% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+            <div class="row py-2 py-md-3 d-flex justify-content-center">
+                <div class="d-flex justify-content-center w-75 flex-wrap">
+                    {% for c in characters %}
+                        {% if c.image %}
+                            <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3 me-2">
+                                {% thumbnail c.image "300x300" crop="center" as im %}
+                                    <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded character-image" alt="">
+                                {% endthumbnail %}
+                            </a>{% if forloop.last %}<br>{% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
 
