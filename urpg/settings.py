@@ -132,16 +132,24 @@ STATICFILE_FINDERS = [
 
 WSGI_APPLICATION = "urpg.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ["DATABASE_NAME"],
-        "USER": os.environ["DATABASE_USER"],
-        "PASSWORD": os.environ["DATABASE_PASSWORD"],
-        "HOST": os.environ["DATABASE_HOST"],
-        "PORT": int(os.environ["DATABASE_PORT"]),
+if os.environ.get('DATABASE_ENGINE', None) is None:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": os.environ["DATABASE_ENGINE"],
+            "NAME": os.environ["DATABASE_NAME"],
+            "USER": os.environ["DATABASE_USER"],
+            "PASSWORD": os.environ["DATABASE_PASSWORD"],
+            "HOST": os.environ["DATABASE_HOST"],
+            "PORT": int(os.environ["DATABASE_PORT"]),
+        }
+    }
 
 SILENCED_SYSTEM_CHECKS = ["cachalot.W001"]
 CACHES = {
