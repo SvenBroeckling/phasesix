@@ -1,11 +1,11 @@
-@import 'bootswatch/phasesix/variables';
 @import '../vendor/bootstrap/scss/bootstrap.scss';
-@import 'bootswatch/phasesix/bootswatch';
 
 $utilities: map-merge(
                 $utilities, ("width": map-merge(
                         map-get($utilities, "width"), (responsive: true),),)
 );
+
+@import 'main_nav';
 
 .pointer {
   cursor: pointer;
@@ -96,13 +96,6 @@ span.background-image-copyright {
     height: auto !important;
     visibility: visible;
   }
-}
-
-.base-container {
-  background-color: rgba($black, 0.75);
-  backdrop-filter: blur(10px);
-  padding: 10rem 1.5rem 2rem;
-  min-height: 100vh;
 }
 
 /* Index */

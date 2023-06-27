@@ -41,9 +41,7 @@
     to bottom,
     rgba(0, 0, 0, 0.2) 0%,
     rgba(0, 0, 0, 0.2) 85%,
-    rgba(0, 0, 0, 0.6) 100%),
-    url('{% block background %}{% static 'img/default-background.jpg' %}{% endblock %}') no-repeat center center fixed;
-    background-size: cover">
+    rgba(0, 0, 0, 0.6) 100%)">
 
 <div id="sidebar-right" class="sidebar sidebar-right position-fixed h-100">
     <header class="sidebar-header p-3 overflow-auto">
@@ -86,37 +84,43 @@
     </small>
 </span>
 
-{% include '_nav.html' %}
-
-<div class="container-xl base-container">
-    {% bootstrap_messages %}
-    {% block content %}{% endblock %}
-
-    <div class="row mt-5 pt-5">
-        <div class="col-12 col-md-3 offset-md-3 text-md-end">
-            <h5>{{ brand_name }}</h5>
-            <ul class="list-unstyled">
-                <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
-                <li><a href="{% url 'characters:list' %}">{% trans 'My Charactes' %}</a></li>
-                <li><a href="{% url 'campaigns:list' %}">{% trans 'Campaigns' %}</a></li>
-                <li><a href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rules' %}</a></li>
-                <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>
-                <li><a href="https://hus.tirakans-reiche.de">{% trans 'Tirakan HuS' %}</a></li>
-            </ul>
+<main class="d-flex flex-nowrap vh-100">
+    {% include '_main_nav.html' %}
+    <div class="container-fluid pt-5 overflow-scroll">
+        {% bootstrap_messages %}
+        <div class="row">
+            <div class="col-12">
+                <div class="container">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-md-3">
-            <h5>Material</h5>
-            <ul class="list-unstyled">
-                <li><a href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
-                <li><a href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a></li>
-                <li><a href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a></li>
-                <li><a href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a></li>
-                <li><a href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a></li>
-                <li><a href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a></li>
-            </ul>
-        </div>
+        <footer class="row mt-5 pt-5">
+            <div class="col-12 col-md-3 offset-md-3 text-md-end">
+                <h5>{{ brand_name }}</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
+                    <li><a href="{% url 'characters:list' %}">{% trans 'My Charactes' %}</a></li>
+                    <li><a href="{% url 'campaigns:list' %}">{% trans 'Campaigns' %}</a></li>
+                    <li><a href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rules' %}</a></li>
+                    <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>
+                    <li><a href="https://hus.tirakans-reiche.de">{% trans 'Tirakan HuS' %}</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-3">
+                <h5>Material</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
+                    <li><a href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a></li>
+                    <li><a href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a></li>
+                    <li><a href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a></li>
+                    <li><a href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a></li>
+                    <li><a href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a></li>
+                </ul>
+            </div>
+        </footer>
     </div>
-</div>
+</main>
 
 {% compress js %}
     <script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
