@@ -1,0 +1,36 @@
+.ws-dice-result {
+  display: flex;
+  margin-top: 3px;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+}
+
+.ws-dice-result span {
+  padding: 3px 1px 0 1px;
+  height: 25px;
+  margin: 0 1px;
+}
+
+.ws-dice-result span.dice-box {
+  padding: 3px 5px 0 5px;
+  min-width: 25px;
+}
+
+.ws-dice-result span.crit {
+  background-color: $warning;
+  color: black;
+}
+
+.ws-dice-result span.exploded {
+  background-color: $primary;
+}
+
+.ws-dice-result span.success {
+  background-color: $success;
+  color: black;
+}
+
+.ws-dice-result span.fail {
+  background-color: $secondary;
+}

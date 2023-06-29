@@ -1,4 +1,4 @@
-{% load static i18n django_bootstrap5 compress world_extras %}<!doctype html>
+{% load static i18n django_bootstrap5 compress world_extras portal_extras %}<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#" data-bs-theme="dark">
 <head>
     <meta charset="utf-8">
@@ -6,11 +6,16 @@
 
     {% compress css %}
         <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'css/switch.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'css/animate.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'css/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'css/bootstrap-toaster.min.css' %}" type="text/css" rel="stylesheet"/>
-        <link type="text/x-scss" href="{% static 'css/theme.scss' %}" rel="stylesheet"/>
+        <link href="{% static 'vendor/switch/switch.css' %}" type="text/css" rel="stylesheet"/>
+        <link href="{% static 'vendor/animate/animate.css' %}" type="text/css" rel="stylesheet"/>
+        <link href="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
+        <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css" rel="stylesheet"/>
+        {% world_identifier as identifier %}
+        {% if identifier == "tirakan" %}
+            <link type="text/x-scss" href="{% static 'theme/tirakan.scss' %}" rel="stylesheet"/>
+        {% else %}
+            <link type="text/x-scss" href="{% static 'theme/phasesix.scss' %}" rel="stylesheet"/>
+        {% endif %}
     {% endcompress %}
 
     <title>{% block title %}{{ brand_name }}{% endblock %}</title>

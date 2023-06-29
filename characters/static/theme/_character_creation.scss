@@ -1,0 +1,47 @@
+.create-epoch-card {
+  height: 30vh;
+  position: relative;
+}
+
+.create-epoch-card:hover {
+  border: 1px solid $primary;
+}
+
+.create-epoch-card.selected {
+  border: 2px solid $success;
+}
+
+.create-epoch-card .card-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  text-decoration: none;
+  background-color: rgba(10, 10, 10, 0.5);
+}
+
+.create-epoch-card .card-text h5 {
+  color: $gray-400;
+}
+
+.create-epoch-card .card-text p {
+  color: $gray-600;
+}
+
+.constructed-template {
+  cursor: pointer;
+}
+
+.constructed-template.disabled div.card {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.constructed-template.selected div.card {
+  border: 2px solid $success;
+}
+
+.constructed-template.notenoughpoints div.card {
+  background-color: $danger;
+}
+

@@ -78,7 +78,7 @@
             {% if object.wikipagegameaction_set.exists %}
                 <div class="row mt-3 mb-0">
                     <div class="col-12">
-                        <h5>{{ object.actions_heading|default:"Actions" }}</h5>
+                        <h4>{{ object.actions_heading|default:"Actions" }}</h4>
                     </div>
                 </div>
                 {% for action in object.wikipagegameaction_set.all %}
@@ -86,7 +86,6 @@
                         tabindex="0"
                         role="button"
                         data-bs-toggle="popover"
-                        data-bs-custom-class="custom-popover"
                         data-bs-trigger="hover"
                         data-bs-title="{{ action.name }}"
                         data-bs-content="{{ action.effect|urpg_markup }}"

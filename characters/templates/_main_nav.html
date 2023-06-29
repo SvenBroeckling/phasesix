@@ -1,7 +1,12 @@
 {% load static i18n portal_extras world_extras %}
 <div class="d-flex flex-column h-100 sticky-top flex-shrink-0 p-3 text-bg-dark overflow-scroll" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
+        {% world_identifier as identifier %}
+        {% if identifier == "tirakan" %}
+            <img src="{% static "img/tirakan_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
+        {% else %}
+            <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
+        {% endif %}
     </a>
     <hr>
     <ul class="list-unstyled ps-0">

@@ -1,0 +1,50 @@
+.character-list a {
+  text-decoration: none;
+}
+
+.character-list-item {
+  color: white;
+  text-shadow: 2px 2px #000;
+  background-position: center;
+  background-size: cover;
+}
+
+.character-list-item:hover {
+  filter: drop-shadow(0 0 10px black);
+}
+
+.character-list-item img {
+  border: 2px solid black;
+  filter: drop-shadow(0 0 10px black);
+}
+
+.character-info-row {
+  img {
+    width: 180px;
+    height: 180px;
+    border: 2px solid black;
+    filter: drop-shadow(0 0 10px black);
+  }
+
+  h1,
+  h3,
+  span {
+    text-shadow: 2px 2px #000;
+  }
+
+  .character-image {
+    position: relative;
+    aspect-ratio: 1;
+  }
+
+  span.dice-icon {
+    position: absolute;
+    bottom: 1px;
+    right: 5px;
+  }
+
+  span.dice-icon svg {
+    filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .7));
+  }
+}
+

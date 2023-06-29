@@ -1,0 +1,35 @@
+@media only screen and (min-width: 600px) {
+  .wiki-page .columns {
+    column-count: 2;
+  }
+}
+
+.wiki-page-game-values {
+  font-size: larger;
+}
+
+.wiki-page-game-values div:hover {
+  background-color: $gray-800;
+}
+
+.wiki-page .columns {
+  column-gap: 2em;
+}
+
+.wiki-page p,
+.wiki-page ul li {
+  font-size: larger;
+  text-align: justify;
+}
+
+.wiki-page p:empty {
+  display: none;
+}
+
+.wiki-page blockquote {
+  margin-left: 2em;
+  padding-left: 1em;
+  color: $gray-600;
+  border-left: 2px solid $gray-500;
+}
+

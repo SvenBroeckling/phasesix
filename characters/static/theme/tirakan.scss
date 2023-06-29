@@ -1,0 +1,46 @@
+/* colors
+
+#000111 - background
+
+*/
+
+@import 'fonts/UnifrakturMaguntia/stylesheet.css';
+
+$font-family-sans-serif: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-serif:      Georgia, "Times New Roman", Times, serif !default;
+$font-family-monospace:  Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-base:       $font-family-sans-serif !default;
+
+$headings-font-family:  'UnifrakturMaguntia', cursive;
+
+
+@import '../vendor/bootstrap/scss/bootstrap.scss';
+
+@import '_main_nav';
+@import '_utilities';
+@import '_value_colors';
+@import '_overrides';
+@import '_base';
+@import '_index';
+@import '_character_creation';
+@import '_rules';
+@import '_sidebar';
+@import '_characters';
+@import '_campaigns';
+@import '_magic';
+@import '_dice_socket';
+@import '_worlds';
+@import '_forum';
+
+nav a.nav-link::first-letter,
+h1::first-letter,
+h2::first-letter,
+h3::first-letter,
+h4::first-letter,
+h1 a::first-letter,
+h2 a::first-letter,
+h3 a::first-letter,
+h4 a::first-letter,
+h5 a::first-letter {
+  color: $danger;
+}

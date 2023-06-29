@@ -1,0 +1,19 @@
+.sidebar-trigger {
+  cursor: pointer;
+}
+
+.sidebar {
+  top: 0;
+  width: 0;
+  z-index: 1110;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: rgba($gray-900, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: -3px 0px 3px 1px rgba(25, 25, 25, 1);
+  transition: width 0.1s;
+}
+
+.sidebar-right {
+  right: 0;
+}
