@@ -7,6 +7,7 @@
 
             <div class="row py-2">
                 <div class="col-12 col-md-8 offset-md-2 lead text-center">
+                    <h1>{{ brand_name }}</h1>
                     {{ request.world_configuration.world.description_1|urpg_markup|replace_tags:request.world_configuration.world }}
                 </div>
             </div>
