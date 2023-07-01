@@ -1,145 +1,168 @@
 {% load static i18n portal_extras world_extras %}
-<div class="d-flex flex-column h-100 sticky-top flex-shrink-0 p-3 text-bg-dark overflow-scroll" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        {% world_identifier as identifier %}
-        {% if identifier == "tirakan" %}
-            <img src="{% static "img/tirakan_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
-        {% else %}
-            <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
-        {% endif %}
-    </a>
-    <hr>
-    <ul class="list-unstyled ps-0">
-        <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
-                    data-bs-target="#play-collapse" aria-expanded="true">
-                {% trans "Play" %}
-            </button>
-            <div class="collapse show" id="play-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li class="{% active_if_url_name_matches "" %}">
-                        {% create_character_url request.world_configuration.world as create_url %}
-                        <a href="{{ create_url }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans "Create character" %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "characters:list" %}">
-                        <a href="{% url 'characters:list' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans 'My Characters' %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "campaigns:list" %}">
-                        <a href="{% url 'campaigns:list' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans 'My Campaigns' %}</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
-                    data-bs-target="#read-collapse" aria-expanded="true">
-                {% trans 'Read' %}
-            </button>
-            <div class="collapse show" id="read-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li class="{% active_if_url_name_matches "rulebook:detail" %}">
-                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'rulebook:detail' pk=1 %}" >{% trans "Rulebook" %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "worlds:wiki_page_with_game_values" %}">
-                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "rules:template_list" %}">
-                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "armory:item_list" %}">
-                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "armory:weapon_list" %}">
-                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "magic:basespell_list" %}">
-                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a>
-                    </li>
-                    <li class="{% active_if_url_name_matches "magic:riot_gear_list" %}">
-                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
-                    data-bs-target="#worlds-collapse" aria-expanded="true">
-                {% if not request.world_configuration %}
-                    {% trans "Worlds" %}
-                {% else %}
-                    {% trans "The World" %}
-                {% endif %}
-            </button>
-            <div class="collapse show" id="worlds-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    {% if not request.world_configuration %}
-                        {% get_active_worlds as worlds %}
-                        {% for world in worlds %}
-                            <li class="{% active_if_url_name_matches "worlds:detail" slug=world.slug %}">
-                                <a href="{{ world.get_absolute_url }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ world.name }}</a>
-                            </li>
-                        {% endfor %}
-                    {% else %}
-                        {% get_top_level_pages_for_world request.world_configuration.world as pages %}
-                        {% for page in pages %}
-                            <li class="{% active_if_url_name_matches "worlds:wiki_page" slug=page.slug world_slug=page.world.slug %}">
-                                <a href="{{ page.get_absolute_url }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ page.name }}</a>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </div>
-        </li>
-
-        <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
-                    data-bs-target="#user-collapse" aria-expanded="true">
-                {% if user.is_authenticated %}
-                    {{ request.user|capfirst }}
-                {% else %}
-                    {% trans 'Account' %}
-                {% endif %}
-            </button>
-            <div class="collapse show" id="user-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    {% if user.is_staff %}
-                        <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                               href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
-                        <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                               href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a>
-                        </li>
-                        <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                               href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a>
-                        </li>
-                        <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                               href="{% url 'gmtools:assign_spell_cost' %}">{% trans 'Assign Spell Cost' %}</a>
-                        </li>
-                        <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                               href="{% url 'homebrew:index' %}">{% trans 'Review Homebrew' %}</a>
-                        </li>
-                    {% endif %}
-
-                    {% if user.is_authenticated %}
-                        <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                               href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
-                    {% else %}
-                        <li class="link-body-emphasis d-inline-flex text-decoration-none rounded">
-                            <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">
-                                {% trans 'Login' %}
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </li>
-
-
-    </ul>
+<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    {% world_identifier as identifier %}
+    {% if identifier == "tirakan" %}
+        <img src="{% static "img/tirakan_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
+    {% else %}
+        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
+    {% endif %}
+</a>
+<div class="text-center">
+    <h3 class="mb-0">{{ brand_name }}</h3>
 </div>
+<hr>
+<div class="d-flex justify-content-evenly my-2">
+    <button
+        data-bs-theme-value="light"
+        class="btn btn-outline-secondary"><i class="fas fa-moon fa-fw"></i></button>
+    {% if request.LANGUAGE_CODE == 'de' %}
+        <a class="language-link btn btn-outline-secondary"
+           data-language="en"
+           href="{% url 'set_language' %}">DE</a>
+    {% else %}
+        <a class="language-link btn btn-outline-secondary"
+           data-language="de"
+           href="{% url 'set_language' %}">EN</a>
+    {% endif %}
+    <button
+        data-sidebar-url="{% url 'portal:search' %}"
+        data-sidebar-title="{% trans 'Search' %}"
+        class="btn btn-outline-secondary sidebar-trigger"><i class="fas fa-search fa-fw"></i></button>
+</div>
+<hr>
+<ul class="list-unstyled ps-0">
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
+                data-bs-target="#play-collapse" aria-expanded="true">
+            {% trans "Play" %}
+        </button>
+        <div class="collapse show" id="play-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li class="{% active_if_url_name_matches "" %}">
+                    {% create_character_url request.world_configuration.world as create_url %}
+                    <a href="{{ create_url }}"
+                       class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans "Create character" %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "characters:list" %}">
+                    <a href="{% url 'characters:list' %}"
+                       class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans 'My Characters' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "campaigns:list" %}">
+                    <a href="{% url 'campaigns:list' %}"
+                       class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans 'My Campaigns' %}</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
+                data-bs-target="#read-collapse" aria-expanded="true">
+            {% trans 'Read' %}
+        </button>
+        <div class="collapse show" id="read-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li class="{% active_if_url_name_matches "rulebook:detail" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'rulebook:detail' pk=1 %}">{% trans "Rulebook" %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "worlds:wiki_page_with_game_values" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "rules:template_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "armory:item_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "armory:weapon_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "magic:basespell_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "magic:riot_gear_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
+                data-bs-target="#worlds-collapse" aria-expanded="true">
+            {% if not request.world_configuration %}
+                {% trans "Worlds" %}
+            {% else %}
+                {% trans "The World" %}
+            {% endif %}
+        </button>
+        <div class="collapse show" id="worlds-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                {% if not request.world_configuration %}
+                    {% get_active_worlds as worlds %}
+                    {% for world in worlds %}
+                        <li class="{% active_if_url_name_matches "worlds:detail" slug=world.slug %}">
+                            <a href="{{ world.get_absolute_url }}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ world.name }}</a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    {% get_top_level_pages_for_world request.world_configuration.world as pages %}
+                    {% for page in pages %}
+                        <li class="{% active_if_url_name_matches "worlds:wiki_page" slug=page.slug world_slug=page.world.slug %}">
+                            <a href="{{ page.get_absolute_url }}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ page.name }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </li>
+
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
+                data-bs-target="#user-collapse" aria-expanded="true">
+            {% if user.is_authenticated %}
+                {{ request.user|capfirst }}
+            {% else %}
+                {% trans 'Account' %}
+            {% endif %}
+        </button>
+        <div class="collapse show" id="user-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                {% if user.is_staff %}
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a>
+                    </li>
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a>
+                    </li>
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'gmtools:assign_spell_cost' %}">{% trans 'Assign Spell Cost' %}</a>
+                    </li>
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'homebrew:index' %}">{% trans 'Review Homebrew' %}</a>
+                    </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
+                {% else %}
+                    <li class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                        <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">
+                            {% trans 'Login' %}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </li>
+</ul>

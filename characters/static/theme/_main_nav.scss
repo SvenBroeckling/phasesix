@@ -1,3 +1,17 @@
+.main-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.main-nav {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  /*
+  background-size: cover;
+  background-position: center;
+  background-image: url(../img/phasesix_menu.png);
+  */
+}
+
 .btn-toggle {
   padding: .25rem .5rem;
   font-weight: 600;

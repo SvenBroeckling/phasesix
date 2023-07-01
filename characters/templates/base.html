@@ -40,13 +40,7 @@
     {% block extraheader %}{% endblock %}
 </head>
 
-<body
-    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-    style="background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.2) 0%,
-    rgba(0, 0, 0, 0.2) 85%,
-    rgba(0, 0, 0, 0.6) 100%)">
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
 <div id="sidebar-right" class="sidebar sidebar-right position-fixed h-100">
     <header class="sidebar-header p-3 overflow-auto">
@@ -57,6 +51,12 @@
     </header>
     <div class="sidebar-content px-3 pt-2 pb-5">
     </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-main-nav" aria-labelledby="offcanvasLabel">
+  <div class="offcanvas-body">
+    {% include '_main_nav.html' %}
+  </div>
 </div>
 
 <div id="page-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
@@ -90,9 +90,20 @@
 </span>
 
 <main class="d-flex flex-nowrap vh-100">
-    {% include '_main_nav.html' %}
-    <div class="container-fluid pt-5 overflow-scroll">
+
+    <div
+        class="main-nav d-none d-xl-flex flex-column h-100 sticky-top flex-shrink-0 p-3 overflow-scroll" style="width: 280px;">
+        {% include '_main_nav.html' %}
+    </div>
+
+    <div class="container-fluid pt-5 overflow-y-auto overflow-x-hidden position-relative">
         {% bootstrap_messages %}
+
+        <span
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvas-main-nav"
+            class="toggle-main-nav d-block d-xl-none pointer"><i class="fas fa-bars fa-2x"></i></span>
+
         <div class="row">
             <div class="col-12">
                 <div class="container">
@@ -144,6 +155,7 @@
     <script src="{% static 'vendor/htmx/htmx.min.js' %}"></script>
     <script src="{% static 'vendor/bs5-lightbox/lightbox.bundle.min.js' %}"></script>
 
+    <script src="{% static 'js/theme_switcher.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/modals.js' %}"></script>
     <script src="{% static 'js/fragments.js' %}"></script>
