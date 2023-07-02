@@ -12,6 +12,21 @@
   */
 }
 
+$color-mode-type: data;
+
+@include color-mode(dark) {
+  .main-nav {
+    box-shadow: 3px 0 3px 1px rgba(25, 25, 25, 1);
+  }
+}
+
+@include color-mode(light) {
+  .main-nav {
+    box-shadow: 3px 0 3px 1px rgba(225, 225, 225, 1);
+  }
+}
+
+
 .btn-toggle {
   padding: .25rem .5rem;
   font-weight: 600;

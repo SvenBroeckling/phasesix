@@ -38,6 +38,7 @@
     <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
     <meta name="theme-color" content="#ffffff">
     {% block extraheader %}{% endblock %}
+    <script src="{% static 'js/theme_switcher.js' %}"></script>
 </head>
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -155,7 +156,6 @@
     <script src="{% static 'vendor/htmx/htmx.min.js' %}"></script>
     <script src="{% static 'vendor/bs5-lightbox/lightbox.bundle.min.js' %}"></script>
 
-    <script src="{% static 'js/theme_switcher.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/modals.js' %}"></script>
     <script src="{% static 'js/fragments.js' %}"></script>
