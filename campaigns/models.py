@@ -45,6 +45,7 @@ class Campaign(models.Model):
         verbose_name=_('created by'),
         on_delete=models.CASCADE
     )
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
 
     epoch = models.ForeignKey(
         'rules.Extension',
@@ -119,8 +120,8 @@ class Campaign(models.Model):
 
     @property
     def campaign_hash(self):
-        return hashlib.md5(
-            "{}{}{}".format(self.id, self.name, self.created_by.id).encode('utf-8')
+        return hashlib.sha256(
+            "{}{}{}{}".format(self.id, self.created_at, self.name, self.created_by.id).encode('utf-8')
         ).hexdigest()
 
     @property
