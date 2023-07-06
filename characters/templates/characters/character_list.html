@@ -13,96 +13,64 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            {% with extension=request.world_configuration.world.extension %}
-
-                {% if extension %}
-                    {% if extension.fixed_epoch %}
-                        {% if extension.fixed_extensions.exists %}
-                            <a class="btn btn-primary btn-lg float-end mb-2"
-                               href="{% url 'characters:create_character_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a character' %}</a>
-                        {% else %}
-                            <a class="btn btn-primary btn-lg float-end mb-2"
-                               href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a character' %}</a>
-                        {% endif %}
+    <div class="d-flex justify-content-between flex-wrap">
+        <h1>{% trans "Your Characters" %}</h1>
+        {% with extension=request.world_configuration.world.extension %}
+            {% if extension %}
+                {% if extension.fixed_epoch %}
+                    {% if extension.fixed_extensions.exists %}
+                        <a class="btn btn-primary btn-lg float-end mb-2"
+                           href="{% url 'characters:create_character_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a character' %}</a>
                     {% else %}
                         <a class="btn btn-primary btn-lg float-end mb-2"
-                           href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">{% trans 'Create a character' %}</a>
+                           href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a character' %}</a>
                     {% endif %}
                 {% else %}
                     <a class="btn btn-primary btn-lg float-end mb-2"
-                       href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a>
+                       href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">{% trans 'Create a character' %}</a>
                 {% endif %}
-            {% endwith %}
+            {% else %}
+                <a class="btn btn-primary btn-lg float-end mb-2"
+                   href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% if own_characters %}
+        <div class="row character-list">
+            {% for object in own_characters %}
+                <div class="col-12 col-sm-6 col-md-6 mb-3">
+                    {% include 'characters/_character_list_widget.html' %}
+                </div>
+            {% endfor %}
         </div>
-    </div>
+    {% endif %}
 
-    <div class="nav nav-tabs justify-content-center mb-3" id="v-pills-tab" role="tablist"
-         aria-orientation="vertical">
-        {% if own_characters %}
-            <a class="nav-link" data-bs-toggle="tab" href="#v-own"
-               role="tab" aria-controls="v-own" aria-selected="true">
-                <i class="fas fa-fw fa-male"></i>&nbsp;{% trans 'Your characters' %}
-                <span class="badge bg-info ms-2">{{ own_characters.count }}</span>
-            </a>
-        {% endif %}
-
-        {% if other_peoples_characters %}
-            <a class="nav-link" data-bs-toggle="tab" href="#v-other" role="tab" aria-controls="v-other"
-               aria-selected="true">
-                <i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Other peoples characters' %}
-                <span class="badge bg-info ms-2">{{ other_peoples_characters.count }}</span>
-            </a>
-        {% endif %}
-
-        {% if anonymous_characters %}
-            <a class="nav-link" data-bs-toggle="tab" href="#v-anon" role="tab" aria-controls="v-anon"
-               aria-selected="true">
-                <i class="fas fa-suitcase fa-fw"></i>&nbsp;{% trans 'Anonymous characters' %}
-                <span class="badge bg-info ms-2">{{ anonymous_characters.count }}</span>
-            </a>
-        {% endif %}
-    </div>
-
-    <div class="tab-content">
-        {% if own_characters %}
-            <div class="tab-pane fade show" id="v-own" role="tabpanel">
-                <div class="row character-list">
-                    {% for object in own_characters %}
-                        <div class="col-12 col-sm-6 col-md-6 mb-3">
-                            {% include 'characters/_character_list_widget.html' %}
-                        </div>
-                    {% endfor %}
-                </div>
+    {% if other_peoples_characters %}
+        <div class="row character-list">
+            <div class="col-12 my-2">
+                <h2>{% trans "Other peoples characters" %}</h2>
+                {% trans 'You can see these because you are an admin' %}
             </div>
-        {% endif %}
-
-        {% if other_peoples_characters %}
-            <div class="tab-pane fade show" id="v-other" role="tabpanel">
-                <div class="row character-list">
-                    <div class="col-12">
-                        <p class="text-center muted">{% trans 'You can see these because you are an admin' %}</p>
-                    </div>
-                    {% for object in other_peoples_characters %}
-                        <div class="col-12 col-sm-6 col-md-6 mb-3">
-                            {% include "characters/_character_list_widget.html" %}
-                        </div>
-                    {% endfor %}
+            {% for object in other_peoples_characters %}
+                <div class="col-12 col-sm-6 col-md-6 mb-3">
+                    {% include "characters/_character_list_widget.html" %}
                 </div>
-            </div>
-        {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        {% if anonymous_characters %}
-            <div class="tab-pane fade show" id="v-anon" role="tabpanel">
-                <div class="row character-list">
-                    {% for object in anonymous_characters %}
-                        <div class="col-12 col-sm-6 col-md-6 mb-3">
-                            {% include "characters/_character_list_widget.html" %}
-                        </div>
-                    {% endfor %}
-                </div>
+    {% if anonymous_characters %}
+        <div class="row character-list">
+            <div class="col-12 my-2">
+                <h2>{% trans "Anonymous characters" %}</h2>
+                {% trans 'You can see these because you are an admin' %}
             </div>
-        {% endif %}
-    </div>
+            {% for object in anonymous_characters %}
+                <div class="col-12 col-sm-6 col-md-6 mb-3">
+                    {% include "characters/_character_list_widget.html" %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
