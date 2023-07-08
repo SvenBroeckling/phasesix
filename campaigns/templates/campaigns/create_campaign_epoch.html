@@ -4,15 +4,13 @@
 {% block title %}{% trans 'Create Campaign' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
+    <h1>{% trans "Choose an epoch" %}</h1>
+    <p class="text-muted">
+        {% blocktrans %}
+            Choose an epoch to play in. The chosen epoch determines which weapons, armour and items are available.
+        {% endblocktrans %}
+    </p>
     <div class="row">
-        <div class="col-12">
-            <p class="text-muted text-center">
-                {% blocktrans %}
-                    Choose an epoch to play in
-                {% endblocktrans %}
-            </p>
-        </div>
-
         {% for extension in extensions %}
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="{% url 'campaigns:create_extensions' world_pk=world_pk epoch_pk=extension.id %}">

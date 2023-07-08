@@ -18,6 +18,7 @@ class CampaignListView(ListView):
             if user.is_staff:
                 return campaigns
             return campaigns.filter(created_by=user)
+        return Campaign.objects.none()
 
 
 class CreateCampaignView(TemplateView):

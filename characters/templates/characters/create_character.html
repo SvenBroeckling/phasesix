@@ -4,14 +4,13 @@
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
+    <h1>{% trans 'Create a character' %}</h1>
+    <p class="text-muted">
+        {% blocktrans %}
+            Choose a world to play in
+        {% endblocktrans %}
+    </p>
     <div class="row">
-        <div class="col-12">
-            <p class="text-muted text-center">
-                {% blocktrans %}
-                    Choose a world to play in
-                {% endblocktrans %}
-            </p>
-        </div>
 
         {% for extension in extensions %}
             <div class="col-12 col-md-6 col-lg-4">

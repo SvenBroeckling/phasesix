@@ -22,12 +22,17 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post" class="character-data-form" data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">
+    <h1>{% trans "Character information" %}</h1>
+    <p class="text-muted">
+        {% blocktrans %}
+            Give your character a name and some more information.
+        {% endblocktrans %}
+    </p>
 
+    <form action="" method="post" class="character-data-form" data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">
         <div class="row">
             {% csrf_token %}
-            <div class="col-12 col-md-5 offset-md-2">
-                <h4>{% trans 'Character' %}</h4>
+            <div class="col-12 col-md-6">
                 <div class="row">
                   <div class="col-12">
                     {% bootstrap_field form.name %}
@@ -59,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-3 description">
+            <div class="col-12 col-md-6 description">
               <h4>{% trans 'Character information' %}</h4>
               <p class="text-justify">
                 {% blocktrans %}
