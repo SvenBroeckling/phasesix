@@ -215,7 +215,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
     def may_be_added_to_campaign(self):
         if self.wikipagegameaction_set.exists():
             return True
-        if self.wikipagegameaction_set.exists():
+        if self.wikipagegamevalues_set.exists():
             return True
         return False
 
