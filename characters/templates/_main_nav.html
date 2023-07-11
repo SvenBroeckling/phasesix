@@ -1,10 +1,10 @@
 {% load static i18n portal_extras world_extras %}
-<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+<a href="/" class="d-flex align-items-center justify-content-center mb-3 mb-md-2 me-md-auto text-white text-decoration-none">
     {% world_identifier as identifier %}
     {% if identifier == "tirakan" %}
-        <img src="{% static "img/tirakan_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
+        <img src="{% static "img/tirakan_logo.png" %}" class="w-75" alt="{{ brand_name }}">
     {% else %}
-        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid" alt="{{ brand_name }}">
+        <img src="{% static "img/phasesix_logo.png" %}" class="w-75" alt="{{ brand_name }}">
     {% endif %}
 </a>
 <div class="text-center">
