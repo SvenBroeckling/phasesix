@@ -5,24 +5,19 @@
 .main-nav {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-  /*
-  background-size: cover;
-  background-position: center;
-  background-image: url(../img/phasesix_menu.png);
-  */
 }
 
 $color-mode-type: data;
 
 @include color-mode(dark) {
   .main-nav {
-    box-shadow: 3px 0 3px 1px rgba(25, 25, 25, 1);
+    box-shadow: 3px 0 3px 1px darken($body-bg-dark, 40%);
   }
 }
 
 @include color-mode(light) {
   .main-nav {
-    box-shadow: 3px 0 3px 1px rgba(225, 225, 225, 1);
+    box-shadow: 3px 0 3px 1px darken($body-bg, 20%);
   }
 }
 

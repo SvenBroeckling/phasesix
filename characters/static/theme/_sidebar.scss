@@ -16,13 +16,13 @@ $color-mode-type: data;
 
 @include color-mode(dark) {
   .sidebar {
-    box-shadow: -3px 0px 3px 1px rgba(25, 25, 25, 1);
+    box-shadow: -3px 0 3px 1px darken($body-bg-dark, 40%);
   }
 }
 
 @include color-mode(light) {
   .sidebar {
-    box-shadow: -3px 0 3px 1px rgba(225, 225, 225, 1);
+    box-shadow: -3px 0 3px 1px darken($body-bg, 20%);
   }
 }
 
