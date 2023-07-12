@@ -1,0 +1,31 @@
+.sidebar-trigger {
+  cursor: pointer;
+}
+
+$color-mode-type: data;
+
+.sidebar {
+  top: 0;
+  width: 0;
+  z-index: 1110;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--bs-body-bg);
+  transition: width 0.1s;
+}
+
+@include color-mode(dark) {
+  .sidebar {
+    box-shadow: -3px 0 3px 1px darken($body-bg-dark, 40%);
+  }
+}
+
+@include color-mode(light) {
+  .sidebar {
+    box-shadow: -3px 0 3px 1px darken($body-bg, 20%);
+  }
+}
+
+.sidebar-right {
+  right: 0;
+}

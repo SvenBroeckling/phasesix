@@ -196,7 +196,7 @@ class WikiPage(models.Model, metaclass=TransMeta):
 
     def get_absolute_url(self):
         return reverse(
-            "world:wiki_page", kwargs={"world_slug": self.world.slug, "slug": self.slug}
+            "worlds:wiki_page", kwargs={"world_slug": self.world.slug, "slug": self.slug}
         )
 
     def save(self, **kwargs):

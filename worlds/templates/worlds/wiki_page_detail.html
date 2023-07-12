@@ -55,6 +55,71 @@
 {% endblock %}
 
 {% block content %}
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>{{ object.name }}</h1>
+            <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
+                <ol class="breadcrumb">
+                    {% breadcrumbs object as crumbs %}
+                    {% for bc in crumbs %}
+                        <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
+                    {% endfor %}
+                </ol>
+            </nav>
+        </div>
+        {% if may_edit %}
+            <div class="btn-group dropdown-center">
+                <a class="btn btn-primary"
+                   href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
+                   role="button"><i class="fas fa-pen"></i> {% trans 'Edit' %}</a>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+
+                <div class="dropdown-menu">
+                    <a
+                        class="dropdown-item modal-trigger"
+                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
+                        title="{% trans 'Create Wiki Page' %}"
+                        data-bs-toggle="modal"
+                        data-modal-title="{% trans 'Create Wiki Page' %}"
+                        data-bs-target=".page-modal"
+                        href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
+                    <a
+                        data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+                        data-sidebar-title="{% trans 'Sort Subpages' %}"
+                        class="dropdown-item sidebar-trigger">
+                        <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
+                    </a>
+                    {% if user.is_superuser %}
+                        <a class="dropdown-item" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
+                            class="fas fa-lock"></i> {% trans 'Admin' %}</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if request.user.is_authenticated and request.user.campaign_set.exists and object.may_be_added_to_campaign %}
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ms-2"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+                {% trans "Add to campaign" %}
+            </button>
+            <div class="dropdown-menu">
+                {% user_campaigns request.user as campaigns %}
+                {% for campaign in campaigns %}
+                    <a
+                        class="dropdown-item action-link add-foe-link"
+                        data-message="{% trans "Added" %}"
+                        href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
+                        {{ campaign }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
     <div class="row">
         <div class="col-12 col-lg-4 col-xl-3">
             <div class="card">
@@ -78,7 +143,7 @@
             {% if object.wikipagegameaction_set.exists %}
                 <div class="row mt-3 mb-0">
                     <div class="col-12">
-                        <h5>{{ object.actions_heading|default:"Actions" }}</h5>
+                        <h4>{{ object.actions_heading|default:"Actions" }}</h4>
                     </div>
                 </div>
                 {% for action in object.wikipagegameaction_set.all %}
@@ -86,7 +151,6 @@
                         tabindex="0"
                         role="button"
                         data-bs-toggle="popover"
-                        data-bs-custom-class="custom-popover"
                         data-bs-trigger="hover"
                         data-bs-title="{{ action.name }}"
                         data-bs-content="{{ action.effect|urpg_markup }}"
@@ -101,80 +165,13 @@
         </div>
 
         <div class="col-12 col-lg-8 col-xl-9 mt-3 mt-md-0 wiki-page">
-
-            <div class="d-flex justify-content-end">
-                {% if may_edit %}
-                    <div class="btn-group dropdown-center ms-2">
-                        <a class="btn btn-primary"
-                           href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
-                           role="button"><i class="fas fa-pen"></i> {% trans 'Edit' %}</a>
-                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
-
-                        <div class="dropdown-menu">
-                            <a
-                                class="dropdown-item modal-trigger"
-                                data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
-                                title="{% trans 'Create Wiki Page' %}"
-                                data-bs-toggle="modal"
-                                data-modal-title="{% trans 'Create Wiki Page' %}"
-                                data-bs-target=".page-modal"
-                                href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
-                            <a
-                                data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-                                data-sidebar-title="{% trans 'Sort Subpages' %}"
-                                class="dropdown-item sidebar-trigger">
-                                <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
-                            </a>
-                            {% if user.is_superuser %}
-                                <a class="dropdown-item" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
-                                    class="fas fa-lock"></i> {% trans 'Admin' %}</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if request.user.is_authenticated and request.user.campaign_set.exists and object.may_be_added_to_campaign %}
-                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ms-2"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="visually-hidden">Toggle Dropdown</span>
-                        {% trans "Add to campaign" %}
-                    </button>
-                    <div class="dropdown-menu">
-                        {% user_campaigns request.user as campaigns %}
-                        {% for campaign in campaigns %}
-                            <a
-                                class="dropdown-item action-link add-foe-link"
-                                data-message="{% trans "Added" %}"
-                                href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
-                                {{ campaign }}
-                            </a>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-            </div>
-
-            <h1 class="mt-2 mt-xl-0">{{ object.name }}</h1>
-
-            <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
-                <ol class="breadcrumb">
-                    {% breadcrumbs object as crumbs %}
-                    {% for bc in crumbs %}
-                        <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
-                    {% endfor %}
-                </ol>
-            </nav>
-
             {{ object.text|urpg_markup|replace_tags:object.world }}
         </div>
     </div>
 
     <div class="row masonry-container mt-4">
         {% for page in object.wikipage_set.all %}
-            <div class="col col-sm-6 col-md-4 col-xl-3">
+            <div class="col col-sm-6 col-md-6 col-xl-4">
                 <a class="invisible-link"
                    href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
                     <div class="card pointer mb-4">

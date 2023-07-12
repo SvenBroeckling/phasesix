@@ -6,7 +6,7 @@ from campaigns import views
 app_name = 'campaigns'
 
 urlpatterns = [
-    path('list/', login_required(views.CampaignListView.as_view()), name='list'),
+    path('list/', views.CampaignListView.as_view(), name='list'),
 
     path('new/', login_required(views.CreateCampaignView.as_view()), name='create'),
     path(

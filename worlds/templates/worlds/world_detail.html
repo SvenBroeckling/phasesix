@@ -22,11 +22,11 @@
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    {% if may_edit %}
-    <div class="row mt-2">
-        <div class="col-12">
-            <h1 class="h2">{{ object }}</h1>
-            <a
+    <div class="d-flex justify-content-between">
+        <h1>{{ object.name }}</h1>
+        {% if may_edit %}
+            <div>
+                <a
                     class="btn btn-warning me-1 float-end modal-trigger"
                     data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.id %}"
                     title="{% trans 'Create Wiki Page' %}"
@@ -34,15 +34,15 @@
                     data-modal-title="{% trans 'Create Wiki Page' %}"
                     data-bs-target=".page-modal"
                     href=""><i class="fa fa-plus"></i> {% trans 'Create Page' %}</a>
-            <button type="button"
-                    data-sidebar-url="{% url 'worlds:xhr_world_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-                    data-sidebar-title="{% trans 'Sort Subpages' %}"
-                    class="btn btn-primary float-end me-md-1 sidebar-trigger">
-                <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
-            </button>
-        </div>
+                <button type="button"
+                        data-sidebar-url="{% url 'worlds:xhr_world_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+                        data-sidebar-title="{% trans 'Sort Subpages' %}"
+                        class="btn btn-primary float-end me-md-1 sidebar-trigger">
+                    <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
+                </button>
+            </div>
+        {% endif %}
     </div>
-    {% endif %}
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">

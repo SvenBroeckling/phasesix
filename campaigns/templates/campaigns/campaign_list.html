@@ -1,27 +1,23 @@
 {% extends 'base.html' %}
-{% load i18n static thumbnail characters_extras %}
+{% load i18n static thumbnail characters_extras campaign_extras %}
+
+
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            {% with extension=request.world_configuration.world.extension %}
-                {% if extension %}
-                    {% if extension.fixed_epoch %}
-                        {% if extension.fixed_extensions.exists %}
-                            <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a campaign' %}</a>
-                        {% else %}
-                            <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">{% trans 'Create a campaign' %}</a>
-                        {% endif %}
-                    {% else %}
-                        <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create_epoch' world_pk=extension.id %}">{% trans 'Create a campaign' %}</a>
-                    {% endif %}
-                {% else %}
-                    <a class="btn btn-primary btn-lg float-end mb-2" href="{% url 'campaigns:create' %}">{% trans 'Create a campaign' %}</a>
-                {% endif %}
-            {% endwith %}
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>{% trans "Your campaigns" %}</h1>
+            <p class="text-muted">
+                {% blocktrans %}
+                    These are the campaigns you either lead or play in.
+                {% endblocktrans %}
+            </p>
         </div>
+        {% create_campaign_url as campaign_url %}
+        <a class="btn btn-primary btn-lg" href="{{ campaign_url }}">{% trans 'Create a campaign' %}</a>
     </div>
-    <div class="row character-list">
+
+    <div class="row campaign-list">
         {% for object in object_list %}
             <div class="col-12 col-md-6 mb-3">
                 <a href="{{ object.get_absolute_url }}">
@@ -49,6 +45,25 @@
                         </div>
                     </div>
                 </a>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center p-5">
+                        <h4 class="mb-3">{% trans "You don't have any campaigns" %}</h4>
+                        {% if user.is_authenticated %}
+                            {% create_campaign_url as campaign_url %}
+                            {% blocktrans with t_campaign_url=campaign_url %}
+                                <a href="{{ t_campaign_url }}">Create a campaign</a> to invite players and add NPC and foes.
+                            {% endblocktrans %}
+                        {% else %}
+                            {% url 'login' as login_url %}
+                            {% blocktrans with t_login_url=login_url %}
+                                <a href="{{ t_login_url }}">Log in</a> to create a campaign.
+                            {% endblocktrans %}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>

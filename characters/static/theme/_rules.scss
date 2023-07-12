@@ -1,0 +1,28 @@
+@media only screen and (min-width: 600px) {
+  .rules .columns {
+    column-count: 2;
+  }
+}
+
+.rules .columns {
+  column-gap: 2em;
+}
+
+.rules p:empty {
+  display: none;
+}
+
+.rules ul li {
+  text-align: justify;
+}
+
+.rules p {
+  text-align: justify;
+}
+
+.rules blockquote {
+  margin-left: 2em;
+  padding-left: 1em;
+  border-left: 2px solid $gray-500;
+}
+

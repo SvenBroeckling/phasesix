@@ -1,0 +1,48 @@
+.pointer {
+  cursor: pointer;
+}
+
+.text-tiny {
+  font-size: 0.6rem;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+.no-link-colors {
+  color: $white;
+}
+
+/* Scroll only modal body */
+
+.modal-dialog {
+  overflow-y: initial !important;
+}
+
+.modal-xl .modal-body {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* Fixed head table */
+
+.tableFixHead {
+  overflow-y: auto;
+  height: 100px;
+}
+
+.tableFixHead thead th {
+  position: sticky;
+  top: 60px;
+}
+
+.table-hover-tr tr:hover td {
+  background-color: $gray-800 !important;
+}
+
+a.invisible-link {
+  text-decoration: none;
+  color: inherit;
+}
+

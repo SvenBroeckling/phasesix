@@ -1,6 +1,7 @@
 from django.template import Library
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 from campaigns.models import Campaign
 
@@ -31,3 +32,27 @@ def ws_room_url(room_name):
 @register.filter
 def int_with_sign(value):
     return '{0:+}'.format(int(value))
+
+
+@register.simple_tag(takes_context=True)
+def create_campaign_url(context):
+    try:
+        extension = context['request'].world_configuration.world.extension
+    except AttributeError:
+        extension = None
+
+    if extension is not None:
+        if extension.fixed_epoch:
+            if extension.fixed_extensions.exists():
+                return reverse('campaigns:create_data', kwargs={
+                    'world_pk': extension.id,
+                    'epoch_pk': extension.fixed_epoch.id
+                })
+            return reverse('campaigns:create_extensions', kwargs={
+                'world_pk': extension.id,
+                'epoch_pk': extension.fixed_epoch.id
+            })
+        return reverse('campaigns:create_epoch', kwargs={
+            'world_pk': extension.id
+        })
+    return reverse('campaigns:create')

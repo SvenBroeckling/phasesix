@@ -4,15 +4,14 @@
 {% block title %}{% trans 'Create Campaign' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12">
-            <p class="text-muted text-center">
-                {% blocktrans %}
-                    Choose a world to play in
-                {% endblocktrans %}
-            </p>
-        </div>
+    <h1>{% trans 'Create a campaign' %}</h1>
+    <p class="text-muted">
+        {% blocktrans %}
+            Choose a world to play in
+        {% endblocktrans %}
+    </p>
 
+    <div class="row">
         {% for extension in extensions %}
             <div class="col-12 col-md-6 col-lg-4">
                 {% if extension.fixed_epoch %}

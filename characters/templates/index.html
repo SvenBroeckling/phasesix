@@ -5,47 +5,45 @@
     <header class="masthead">
         <div class="container pt-0 pt-md-2">
 
-            {% if not user.is_authenticated %}
-                <div class="row">
-                    <div class="col">
-                        <div class="text-center">
-                            <h3 class="mb-4">{% trans "Free online pen and paper rpg" %}</h3>
-                        </div>
+            <div class="row">
+                <div class="col">
+                    <div class="text-center d-flex flex-column justify-content-center align-items-center">
+                        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid d-block d-xl-none w-50" alt="{{ brand_name }}">
+                        <h1>{{ brand_name }}</h1>
+                        <h3 class="mb-4">{% trans "Free online pen and paper rpg" %}</h3>
                     </div>
                 </div>
-            {% endif %}
+            </div>
 
-            {% if not user.is_authenticated %}
-                <div class="row py-2 py-md-5">
-                    <div class="col-lg-8 offset-lg-2">
-                        <div class="text-center">
-                            <p class="text-white-50">
-                                {% blocktrans %}
-                                    Do you need a simple and fast rulebook to play your stories as a pen'n'paper
-                                    roleplaying
-                                    game?
-                                    <em>Phase Six</em> is a quick to play roleplaying game rulebook that can be used in
-                                    any
-                                    setting.
-                                    All you need to play is a handfull of regular six-sided dice and some paper.
-                                {% endblocktrans %}
-                            </p>
-                            <p class="text-white-50">
-                                {% blocktrans %}
-                                    This website lets you create and manage your characters as well as their equipment
-                                    and possessions.  This makes it really easy to use a platform like
-                                    <a href="https://roll20.net">Roll20</a> for your sessions.
-                                {% endblocktrans %}
-                            </p>
-                            <p class="text-white-50">
-                                {% blocktrans %}
-                                    Start now by taking a look at the rules or creating a character.
-                                {% endblocktrans %}
-                            </p>
-                        </div>
+            <div class="row py-2 py-md-5">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="text-center lead">
+                        <p class="text-white-50">
+                            {% blocktrans %}
+                                Do you need a simple and fast rulebook to play your stories as a pen'n'paper
+                                roleplaying
+                                game?
+                                <em>Phase Six</em> is a quick to play roleplaying game rulebook that can be used in
+                                any
+                                setting.
+                                All you need to play is a handfull of regular six-sided dice and some paper.
+                            {% endblocktrans %}
+                        </p>
+                        <p class="text-white-50">
+                            {% blocktrans %}
+                                This website lets you create and manage your characters as well as their equipment
+                                and possessions.  This makes it really easy to use a platform like
+                                <a href="https://roll20.net">Roll20</a> for your sessions.
+                            {% endblocktrans %}
+                        </p>
+                        <p class="text-white-50">
+                            {% blocktrans %}
+                                Start now by taking a look at the rules or creating a character.
+                            {% endblocktrans %}
+                        </p>
                     </div>
                 </div>
-            {% endif %}
+            </div>
 
             <div class="row py-2 py-md-5 d-flex justify-content-center">
                 <div class="d-flex justify-content-center w-75 flex-wrap">
@@ -63,16 +61,14 @@
             </div>
 
 
-            {% if not user.is_authenticated %}
-                <div class="row py-2 py-md-5">
-                    <div class="col-12">
-                        <div class="text-center mb-3">
-                            <h2 class="mx-auto my-0 text-uppercase">{% trans 'Discover worlds' %}</h2>
-                            <h5 class="mb-4">{% trans "Play in one of these worlds, or use Terra to play on earth." %}</h5>
-                        </div>
+            <div class="row py-2 py-md-5">
+                <div class="col-12">
+                    <div class="text-center mb-3">
+                        <h2 class="mx-auto my-0 text-uppercase">{% trans 'Discover worlds' %}</h2>
+                        <h5 class="mb-4">{% trans "Play in one of these worlds, or use Terra to play on earth." %}</h5>
                     </div>
                 </div>
-            {% endif %}
+            </div>
 
             <div class="row">
                 <div class="col-12">

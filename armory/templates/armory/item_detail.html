@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block content %}
+    <h1>{{ object }}</h1>
+    <p class="text-muted">{{ object.type }}</p>
     <div class="row">
         <div class="col-12 col-sm-4 col-md-3">
             <div class="card">
@@ -21,10 +23,6 @@
 
         <div class="col-12 col-sm-8 col-md-9">
             <div class="col-12">
-                <h1>{{ object }}</h1>
-                <small>{{ object.type }}</small>
-                <br>
-                <br>
                 {{ object.description|urpg_markup }}
             </div>
 

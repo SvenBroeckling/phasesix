@@ -6,6 +6,13 @@
         <div class="container pt-0 pt-md-2">
 
             <div class="row py-2">
+                <div class="text-center d-flex flex-column justify-content-center align-items-center">
+                    <img src="{% static "img/tirakan_logo.png" %}" class="img-fluid d-block d-xl-none w-50" alt="{{ brand_name }}">
+                    <h1>{{ brand_name }}</h1>
+                </div>
+            </div>
+
+            <div class="row py-2">
                 <div class="col-12 col-md-8 offset-md-2 lead text-center">
                     {{ request.world_configuration.world.description_1|urpg_markup|replace_tags:request.world_configuration.world }}
                 </div>
