@@ -35,5 +35,13 @@
             {% endfor %}
             </tbody>
         </table>
+        {% if may_edit %}
+            {% if request.world_configuration %}
+                <a href="{% url 'worlds:detail' slug=request.world_configuration.world.slug %}" class="btn btn-primary float-end">{% trans 'Add foes at the world description pages' %}</a>
+            {% else %}
+                <span class="text-muted">{% trans 'Lookup foes in a world description and add them there.' %}</span>
+
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}
