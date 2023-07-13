@@ -22,6 +22,14 @@
 
     {% if may_edit %}
         <div class="col-12">
+            <button class="btn btn-primary btn-sm mb-2 w-100 dice-roll mb-1"
+                    data-dice-roll="1d6+{{ object.wiki_page.wikipagegamevalues_set.latest.quickness }}"
+                    data-dice-header="{% trans 'Initiative' %}"
+                    data-dice-description="{% trans 'Initiative (1d6+Quickness)' %}"
+                    data-dice-campaign="{{ object.campaign.id }}">{% trans "Roll Initiative" %} ({% trans '1d6' %}+{{ object.wiki_page.wikipagegamevalues_set.latest.quickness }})
+            </button>
+        </div>
+        <div class="col-12">
             <a class="btn btn-danger w-100 btn-sm mb-2 confirm-action-link"
                data-message="{% trans 'Remove foe from campaign?' %}"
                href="{% url 'campaigns:xhr_remove_foe' pk=object.campaign.id foe_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>

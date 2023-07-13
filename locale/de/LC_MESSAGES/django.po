@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-13 16:12+0000\n"
+"POT-Creation-Date: 2023-07-13 17:07+0000\n"
 "PO-Revision-Date: 2023-07-13 18:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -851,7 +851,7 @@ msgstr "Gesamtsumme"
 
 #: campaigns/templates/campaigns/campaign_detail.html:23
 #: campaigns/templates/campaigns/campaign_detail.html:26
-#: campaigns/templates/campaigns/sidebar/foe.html:49
+#: campaigns/templates/campaigns/sidebar/foe.html:57
 #: characters/templates/characters/sidebar/characterattribute.html:12
 #: characters/templates/characters/sidebar/characteritem.html:51
 #: characters/templates/characters/sidebar/characteritem.html:65
@@ -1378,7 +1378,7 @@ msgid "Remove character from campaign?"
 msgstr "Charakter aus der Kampagne entfernen?"
 
 #: campaigns/templates/campaigns/sidebar/character.html:49
-#: campaigns/templates/campaigns/sidebar/foe.html:27
+#: campaigns/templates/campaigns/sidebar/foe.html:35
 msgid "Remove from campaign"
 msgstr "Aus der Kampagne entfernen"
 
@@ -1386,11 +1386,34 @@ msgstr "Aus der Kampagne entfernen"
 msgid "Go to the wiki page"
 msgstr "Gehe zur Wikiseite"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:26
+#: campaigns/templates/campaigns/sidebar/foe.html:27
+#: characters/templates/characters/fragments/combat.html:10
+#: characters/templates/characters/sidebar/character.html:38
+#: characters/templates/characters/sidebar/character.html:43
+msgid "Initiative"
+msgstr "Initiative"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:28
+#: characters/templates/characters/fragments/combat.html:11
+msgid "Initiative (1d6+Quickness)"
+msgstr "Initiative (1W6+Schnelligkeit)"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:29
+#: characters/templates/characters/fragments/combat.html:13
+msgid "Roll Initiative"
+msgstr "Initiative würfeln"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:29
+#: characters/templates/characters/fragments/combat.html:13
+#: characters/templates/characters/sidebar/character.html:46
+msgid "1d6"
+msgstr "1W6"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:34
 msgid "Remove foe from campaign?"
 msgstr "Gegner aus der Kampagne entfernen?"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:49
+#: campaigns/templates/campaigns/sidebar/foe.html:57
 #: characters/templates/characters/sidebar/characteritem.html:63
 #: characters/templates/characters/sidebar/characteritem.html:76
 #: characters/templates/characters/sidebar/characteritem.html:89
@@ -1981,25 +2004,6 @@ msgstr "Notizen"
 #: characters/templates/characters/fragments/notes.html:10
 msgid "Take a note"
 msgstr "Notiz anlegen"
-
-#: characters/templates/characters/fragments/combat.html:10
-#: characters/templates/characters/sidebar/character.html:38
-#: characters/templates/characters/sidebar/character.html:43
-msgid "Initiative"
-msgstr "Initiative"
-
-#: characters/templates/characters/fragments/combat.html:11
-msgid "Initiative (1d6+Quickness)"
-msgstr "Initiative (1W6+Schnelligkeit)"
-
-#: characters/templates/characters/fragments/combat.html:13
-msgid "Roll Initiative"
-msgstr "Initiative würfeln"
-
-#: characters/templates/characters/fragments/combat.html:13
-#: characters/templates/characters/sidebar/character.html:46
-msgid "1d6"
-msgstr "1W6"
 
 #: characters/templates/characters/fragments/combat.html:25
 msgid "Action"
