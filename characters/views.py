@@ -5,6 +5,7 @@ import os
 from django import forms
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import mail_admins
 from django.db.models import Q
 from django.db.models.functions import Length
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
@@ -676,6 +677,16 @@ class CreateCharacterConstructedView(DetailView):
         obj.health = obj.max_health
         obj.arcana = obj.max_arcana
         obj.save()
+        mail_admins(
+            "PhaseSix: New Character",
+            render_to_string(
+                'characters/mail/character_created_admin_notification.html',
+                {
+                    'character': obj,
+                    'base_url': settings.BASE_URL
+                }
+            ),
+        )
         return HttpResponseRedirect(obj.get_absolute_url())
 
 
