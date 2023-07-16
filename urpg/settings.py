@@ -155,7 +155,7 @@ SILENCED_SYSTEM_CHECKS = ["cachalot.W001"]
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": f"redis://{os.environ['REDIS_HOST']}:{os.environ['REDIS_PORT']}",
         "KEY_PREFIX": "urpg_cache",
     }
 }

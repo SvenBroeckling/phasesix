@@ -6,7 +6,18 @@ The code is licensed under the [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.
 
 This source code comes with a minimal example set of demo data, which can be inserted into a database to get started.
 
-### Getting Started
+### Getting Started - Docker Compose
+
+To run the project in a docker compose environment, all you need is an installed [Docker engine](https://www.docker.com/) or Docker Desktop, and the docker-compose package.
+
+```shell
+$ docker-compose up
+$ docker-compose exec web venv/bin/python manage.py loaddata demo_data.json
+```
+
+### Getting Started - Native setup
+
+Alternatively, you can install the needed setup locally on your machine without docker.
 
 You need a Linux (WSL2 works too), macOS (untested) or Windows (untested) machine to run this project. There are some prerequisites used by this django project.
 

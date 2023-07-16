@@ -1,0 +1,28 @@
+volumes:
+  postgres-data:
+  media-files:
+  static-files:
+
+services:
+  redis:
+    image: redis
+  db:
+    image: postgres
+    volumes:
+      - postgres-data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    volumes:
+      - media-files:/app/media_files
+      - static-files:/app/static_files
+    ports:
+      - "8000:8080"
+    env_file:
+      - .env.docker
+    depends_on:
+      - db
+      - redis
