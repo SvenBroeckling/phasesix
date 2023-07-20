@@ -51,43 +51,9 @@
                     <a href="{% url 'campaigns:list' %}"
                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans 'My Campaigns' %}</a>
                 </li>
-            </ul>
-        </div>
-    </li>
-    <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
-                data-bs-target="#read-collapse" aria-expanded="true">
-            {% trans 'Read' %}
-        </button>
-        <div class="collapse show" id="read-collapse">
-            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li class="{% active_if_url_name_matches "rulebook:detail" %}">
                     <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                        href="{% url 'rulebook:detail' pk=1 %}">{% trans "Rulebook" %}</a>
-                </li>
-                <li class="{% active_if_url_name_matches "worlds:wiki_page_with_game_values" %}">
-                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                       href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a>
-                </li>
-                <li class="{% active_if_url_name_matches "rules:template_list" %}">
-                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                       href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
-                </li>
-                <li class="{% active_if_url_name_matches "armory:item_list" %}">
-                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                       href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a>
-                </li>
-                <li class="{% active_if_url_name_matches "armory:weapon_list" %}">
-                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                       href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a>
-                </li>
-                <li class="{% active_if_url_name_matches "magic:basespell_list" %}">
-                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                       href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a>
-                </li>
-                <li class="{% active_if_url_name_matches "magic:riot_gear_list" %}">
-                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                       href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a>
                 </li>
             </ul>
         </div>
@@ -120,6 +86,40 @@
                         </li>
                     {% endfor %}
                 {% endif %}
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
+                data-bs-target="#read-collapse" aria-expanded="true">
+            {% trans 'Read' %}
+        </button>
+        <div class="collapse show" id="read-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li class="{% active_if_url_name_matches "worlds:wiki_page_with_game_values" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "rules:template_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "armory:item_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "armory:weapon_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "magic:basespell_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "magic:riot_gear_list" %}">
+                    <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a>
+                </li>
             </ul>
         </div>
     </li>
@@ -166,3 +166,7 @@
         </div>
     </li>
 </ul>
+
+<div class="text-center">
+    <a href="https://hus.tirakans-reiche.de">HuS</a> | <a href="{% url 'contact' %}">{% trans 'Imprint' %}</a> | <a href="{% url 'contact' %}">{% trans 'Privacy' %}</a>
+</div>
