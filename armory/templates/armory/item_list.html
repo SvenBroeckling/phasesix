@@ -1,14 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n static rules_extras %}
 
-{% block background %}{% static 'img/michael-dziedzic-1bjsASjhfkE-unsplash.jpg' %}{% endblock %}
-
-{% block background_copyright %}
-    Photo by <a
-    href="https://unsplash.com/@lazycreekimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Michael Dziedzic</a> on <a
-    href="https://unsplash.com/s/photos/magic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-{% endblock %}
-
 {% block title %}{% trans 'All Items' %} - {{ block.super }}{% endblock %}
 
 {% block javascript %}

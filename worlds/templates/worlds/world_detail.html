@@ -13,7 +13,7 @@
     </script>
 {% endblock %}
 
-{% block background %}{% if object.image %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% static 'img/daniel-jensen-NMk1Vggt2hg-unsplash.jpg' %}{% endif %}{% endblock %}
+{% block background %}{% if object.image %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% static 'img/default-background.jpg' %}{% endif %}{% endblock %}
 
 {% block background_copyright %}
     Image by <a href="{{ object.type.image_copyright_url }}">{{ object.image_copyright }}</a>
