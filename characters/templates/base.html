@@ -12,7 +12,8 @@
         <link href="{% static 'vendor/switch/switch.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'vendor/animate/animate.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css" rel="stylesheet"/>
+        <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css"
+              rel="stylesheet"/>
         {% world_identifier as identifier %}
         {% if identifier == "tirakan" %}
             <link type="text/x-scss" href="{% static 'theme/tirakan.scss' %}" rel="stylesheet"/>
@@ -26,9 +27,19 @@
     {% block opengraph %}
         <meta property="og:title" content="{{ brand_name }}"/>
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://{{ brand_domain_name }}"/>
+        <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
         <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
         <meta property="og:description" content="{{ brand_description }}"/>
+    {% endblock %}
+
+    {% block twitter %}
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:site" content="@phasesix_rpg"/>
+        <meta name="twitter:creator" content="@phasesix_rpg"/>
+        <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
+        <meta property="og:title" content="{{ brand_name }}"/>
+        <meta property="og:description" content="{{ brand_description }}"/>
+        <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
     {% endblock %}
 
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
@@ -58,9 +69,9 @@
 </div>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-main-nav" aria-labelledby="offcanvasLabel">
-  <div class="offcanvas-body">
-    {% include '_main_nav.html' %}
-  </div>
+    <div class="offcanvas-body">
+        {% include '_main_nav.html' %}
+    </div>
 </div>
 
 <div id="page-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
@@ -88,7 +99,8 @@
 <main class="d-flex flex-nowrap vh-100">
 
     <div
-        class="main-nav d-none d-xl-flex flex-column h-100 sticky-top flex-shrink-0 p-3 overflow-scroll" style="width: 280px;">
+        class="main-nav d-none d-xl-flex flex-column h-100 sticky-top flex-shrink-0 p-3 overflow-scroll"
+        style="width: 280px;">
         {% include '_main_nav.html' %}
     </div>
 
@@ -192,11 +204,11 @@
 
         $('table.table-sortable').tablesorter();
 
-        $('.language-link').on('click', function(event) {
+        $('.language-link').on('click', function (event) {
             $.post(
                 $(this).attr('href'),
                 {language: $(this).data('language')},
-                function(data){
+                function (data) {
                     window.location.reload()
                 })
             event.preventDefault()
