@@ -24,22 +24,15 @@
 
     <title>{% block title %}{{ brand_name }}{% endblock %}</title>
 
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@phasesix_rpg"/>
+    <meta name="twitter:creator" content="@phasesix_rpg"/>
     {% block opengraph %}
         <meta property="og:title" content="{{ brand_name }}"/>
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
         <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
         <meta property="og:description" content="{{ brand_description }}"/>
-    {% endblock %}
-
-    {% block twitter %}
-        <meta name="twitter:card" content="summary"/>
-        <meta name="twitter:site" content="@phasesix_rpg"/>
-        <meta name="twitter:creator" content="@phasesix_rpg"/>
-        <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
-        <meta property="og:title" content="{{ brand_name }}"/>
-        <meta property="og:description" content="{{ brand_description }}"/>
-        <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
     {% endblock %}
 
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
