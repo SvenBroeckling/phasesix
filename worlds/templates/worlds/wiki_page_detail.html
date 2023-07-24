@@ -45,10 +45,10 @@
 {% block opengraph %}
     <meta property="og:title" content="{{ brand_name }} - {{ object }}"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://phasesix.org"/>
+    <meta property="og:url" content="https://{{ brand_domain_name }}"/>
     {% if object.image %}
         {% thumbnail object.image '600' as image %}
-            <meta property="og:image" content="https://phasesix.org{{ image.url }}"/>
+            <meta property="og:image" content="https://{{ brand_domain_name }}{{ image.url }}"/>
         {% endthumbnail %}
     {% endif %}
     <meta property="og:description" content="{{ object.text|to_first_linebreak }}"/>
