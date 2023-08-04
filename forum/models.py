@@ -71,7 +71,7 @@ class Thread(models.Model):
     def notify_subscribers(self, post):
         subscribers = [s.user.email for s in self.threadsubscription_set.all()]
         subscribers += [s.user.email for s in self.board.boardsubscription_set.all()]
-        subscribers = set([s for s in subscribers if s])
+        subscribers = {s for s in subscribers if s}
         for s in subscribers:
             send_mail(
                 _('PhaseSix Forum: %(user)s answered to the thread %(thread)s') % {

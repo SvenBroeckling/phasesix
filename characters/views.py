@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import io
 import os
 
@@ -744,7 +743,7 @@ class XhrReputationView(TemplateView):
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        context = super(XhrReputationView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['object'] = character
         context['template_categories'] = TemplateCategory.objects.filter(
             allow_for_reputation=True)
@@ -778,7 +777,7 @@ class XhrAddWeaponsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        context = super(XhrAddWeaponsView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['character'] = character
         context['weapon_types'] = WeaponType.objects.for_extensions(character.extensions)
         return context
@@ -836,7 +835,7 @@ class XhrAddRiotGearView(TemplateView):
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        context = super(XhrAddRiotGearView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['character'] = character
         context['riot_gear_types'] = RiotGearType.objects.for_extensions(character.extensions)
         return context
@@ -883,7 +882,7 @@ class XhrAddItemsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs['pk'])
-        context = super(XhrAddItemsView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['character'] = character
         context['item_types'] = ItemType.objects.for_extensions(character.extensions)
         return context
@@ -982,7 +981,7 @@ class XhrAddWeaponModView(TemplateView):
         character = Character.objects.get(id=kwargs['pk'])
         character_weapon = CharacterWeapon.objects.get(id=self.request.GET.get('character_weapon_id'))
 
-        context = super(XhrAddWeaponModView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['character'] = character
         context['character_weapon'] = character_weapon
         context['weapon_modification_types'] = WeaponModificationType.objects.for_extensions(

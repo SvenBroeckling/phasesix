@@ -34,13 +34,13 @@ class LatestNewAdmin(Feed):
 
     def item_link(self, item):
         url = reverse(
-            "admin:%s_%s_change" % (
+            "admin:{}_{}_change".format(
                 item._meta.app_label,
                 item._meta.model_name), args=(item.id,))
         return 'http://phasesix.org' + url
 
     def item_title(self, item):
-        return "%s: %s" % (item.__class__.__name__, item)
+        return "{}: {}".format(item.__class__.__name__, item)
 
     def item_pubdate(self, item):
         return item.created_at

@@ -61,5 +61,5 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
 
     @property
     def text(self):
-        with open(self.rules_file.path, 'r') as f:
+        with open(self.rules_file.path) as f:
             return f.read()

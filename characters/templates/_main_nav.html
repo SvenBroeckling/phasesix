@@ -39,7 +39,7 @@
         <div class="collapse show" id="play-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li class="{% active_if_url_name_matches "" %}">
-                    {% create_character_url request.world_configuration.world as create_url %}
+                    {% create_character_url as create_url %}
                     <a href="{{ create_url }}"
                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans "Create character" %}</a>
                 </li>

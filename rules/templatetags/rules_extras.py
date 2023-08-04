@@ -72,7 +72,7 @@ def replace_tags(value, world):
         except WikiPage.DoesNotExist:
             return text
 
-        return '<a href="%s">%s</a>' % (obj.get_absolute_url(), text)
+        return '<a href="{}">{}</a>'.format(obj.get_absolute_url(), text)
 
     def _repl_image_tags(match_object):
         formatters = ''

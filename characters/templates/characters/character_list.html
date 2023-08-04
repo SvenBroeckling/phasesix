@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load i18n static thumbnail characters_extras %}
 
 {% block title %}{% trans 'My characters' %} - {{ block.super }}{% endblock %}
@@ -35,6 +36,22 @@
             {% endif %}
         {% endwith %}
     </div>
+
+    {% if not own_characters and not other_peoples_characters and not anonymous_characters %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center p-5">
+                        <h4 class="mb-3">{% trans "You don't have any characters" %}</h4>
+                        {% create_character_url as character_url %}
+                        {% blocktrans with t_character_url=character_url %}
+                            <a href="{{ t_character_url }}">Create a character</a>.
+                        {% endblocktrans %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     {% if own_characters %}
         <div class="row character-list">
