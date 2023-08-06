@@ -56,17 +56,11 @@
                 <div class="col-12 col-md-8 offset-md-2">
                     <div class="card mb-5">
                         <div class="card-body">
-                            <div id="wiki_page_carousel" class="carousel slide" data-bs-ride="true">
-                                <div class="carousel-indicators">
-                                    {% for wiki_page in wiki_pages_tirakan %}
-                                        <button type="button" data-bs-target="#wiki_page_carousel" data-bs-slide-to="{{ forloop.counter0 }}"
-                                                class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
-                                    {% endfor %}
-                                </div>
 
+                            <div id="wiki_page_carousel" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     {% for wiki_page in wiki_pages_tirakan %}
-                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="15000">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     {% thumbnail wiki_page.image "768" as im %}
@@ -87,15 +81,13 @@
                                                     <p>
                                                         {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_tags:wiki_page.world }}
                                                         <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>
-                                                        <br>
-                                                        <br>
-                                                        <br>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     {% endfor %}
                                 </div>
+
                             </div>
                         </div>
                     </div>

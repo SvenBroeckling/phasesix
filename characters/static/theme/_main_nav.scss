@@ -1,11 +1,38 @@
 .main-nav::-webkit-scrollbar {
-  display: none;
+//  display: none;
 }
 
 .main-nav {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+//  -ms-overflow-style: none;  /* IE and Edge */
+//  scrollbar-width: none;  /* Firefox */
 }
+
+
+
+.main-nav::-webkit-scrollbar {
+    width: 14px;
+}
+
+.main-nav::-webkit-scrollbar-corner {
+  background: rgba(0,0,0,0);
+}
+
+.main-nav::-webkit-scrollbar-track {
+    border-radius: 8px;
+}
+
+.main-nav::-webkit-scrollbar-thumb {
+    height: 56px;
+    border-radius: 8px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+    background-color: $card-bg;
+}
+
+.main-nav::-webkit-scrollbar-thumb:hover {
+    background-color: $primary;
+}
+
 
 $color-mode-type: data;
 
