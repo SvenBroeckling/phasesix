@@ -4,7 +4,18 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 
-from armory.models import Item, Weapon, WeaponModification, RiotGear
+from armory.models import (
+    Item,
+    Weapon,
+    WeaponModification,
+    RiotGear,
+    ItemType,
+    WeaponType,
+    AttackMode,
+    WeaponModificationType,
+    RiotGearType,
+)
+from pantheon.models import EntityCategory, Entity, PriestAction, PriestActionRoll
 from rules.models import (
     Extension,
     Template,
@@ -12,9 +23,19 @@ from rules.models import (
     Skill,
     CHARACTER_ASPECT_CHOICES,
     Attribute,
+    Knowledge,
+    TemplateCategory,
+    StatusEffect,
 )
 from magic.models import BaseSpell
-from worlds.models import WikiPage
+from worlds.models import (
+    WikiPage,
+    WorldSiteConfiguration,
+    World,
+    WikiPageFoeType,
+    WikiPageFoeResistanceOrWeakness,
+    WikiPageGameAction,
+)
 
 
 class MissingTranslationsView(TemplateView):
@@ -39,7 +60,34 @@ class MissingTranslationsView(TemplateView):
                     if field not in translatable_fields_blacklist
                 ],
             }
-            for model in [WikiPage, Item]
+            for model in [
+                World,
+                WikiPage,
+                WikiPageFoeType,
+                WikiPageFoeResistanceOrWeakness,
+                WikiPageGameAction,
+                Extension,
+                Lineage,
+                Attribute,
+                Skill,
+                Knowledge,
+                TemplateCategory,
+                Template,
+                StatusEffect,
+                WeaponType,
+                AttackMode,
+                Weapon,
+                WeaponModificationType,
+                WeaponModification,
+                RiotGearType,
+                RiotGear,
+                ItemType,
+                Item,
+                EntityCategory,
+                Entity,
+                PriestAction,
+                PriestActionRoll,
+            ]
         ]
 
         return context

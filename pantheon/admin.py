@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from pantheon.models import Entity, PriestAction, PriestActionRoll
+from pantheon.models import Entity, PriestAction, PriestActionRoll, EntityCategory
 
 
 class EntityAdmin(admin.ModelAdmin):
@@ -18,5 +18,7 @@ class PriestActionAdmin(admin.ModelAdmin):
     inlines = [PriestActionRollInline]
 
 
+admin.site.register(EntityCategory)
 admin.site.register(Entity, EntityAdmin)
 admin.site.register(PriestAction, PriestActionAdmin)
+admin.site.register(PriestActionRoll)

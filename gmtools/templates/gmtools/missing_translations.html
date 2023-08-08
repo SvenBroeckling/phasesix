@@ -55,8 +55,9 @@
                     {% for object in model.qs|objects_with_missing_translations:model.translatable_fields %}
                         <div class="col-12">
                             <a href="{% url model.admin_url_name object_id=object.id %}">{{ object }}</a>
-                            {{ object.text_length_ratio }}
-                        {{ object.text_en_length}}
+                            {% for field in model.translatable_fields %}
+                                {% translation_field_badge object field %}
+                            {% endfor %}
                         </div>
                     {% endfor %}
                 </div>
