@@ -132,7 +132,7 @@ STATICFILE_FINDERS = [
 
 WSGI_APPLICATION = "urpg.wsgi.application"
 
-if os.environ.get('DATABASE_ENGINE', None) is None:
+if os.environ.get("DATABASE_ENGINE", None) is None:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -151,7 +151,10 @@ else:
         }
     }
 
-SILENCED_SYSTEM_CHECKS = ["cachalot.W001"]
+SILENCED_SYSTEM_CHECKS = [
+    "cachalot.W001",
+    "cachalot.W002",
+]  # cachalot complaining about wrong redis cache, but uses it
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",

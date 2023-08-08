@@ -1,34 +1,71 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils.translation import gettext as _
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 
 from armory.models import Item, Weapon, WeaponModification, RiotGear
-from rules.models import Extension, Template, Lineage, Skill, CHARACTER_ASPECT_CHOICES, Attribute
+from rules.models import (
+    Extension,
+    Template,
+    Lineage,
+    Skill,
+    CHARACTER_ASPECT_CHOICES,
+    Attribute,
+)
 from magic.models import BaseSpell
+from worlds.models import WikiPage
+
+
+class MissingTranslationsView(TemplateView):
+    template_name = "gmtools/missing_translations.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        translatable_fields_blacklist = [  # These fields are intended to be null, so that a default can be displayed
+            "actions_heading",
+            "short_name",
+        ]
+
+        context["missing_tranlations"] = [
+            {
+                "name": model._meta.verbose_name,
+                "id": model.__mro__[0].__name__,
+                "admin_url_name": f"admin:{model._meta.app_label}_{model.__mro__[0].__name__.lower()}_change",
+                "qs": model.objects.all(),
+                "translatable_fields": [
+                    field
+                    for field in model._meta.translatable_fields
+                    if field not in translatable_fields_blacklist
+                ],
+            }
+            for model in [WikiPage, Item]
+        ]
+
+        return context
 
 
 class AssignSpellCostView(TemplateView):
-    template_name = 'gmtools/assign_spell_cost.html'
+    template_name = "gmtools/assign_spell_cost.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            context['object'] = BaseSpell.objects.filter(arcana_cost=0).order_by('?')[0]
+            context["object"] = BaseSpell.objects.filter(arcana_cost=0).order_by("?")[0]
         except IndexError:
-            context['object'] = None
+            context["object"] = None
         return context
 
     def post(self, request, *args, **kwargs):
-        base_spell = BaseSpell.objects.get(id=request.POST.get('spell_id'))
-        spell_cost = request.POST.get('spell_cost')
+        base_spell = BaseSpell.objects.get(id=request.POST.get("spell_id"))
+        spell_cost = request.POST.get("spell_cost")
         base_spell.arcana_cost = spell_cost
         base_spell.save()
-        return HttpResponseRedirect(reverse('gmtools:assign_spell_cost'))
+        return HttpResponseRedirect(reverse("gmtools:assign_spell_cost"))
 
 
 class TemplateStatisticsView(TemplateView):
-    template_name = 'gmtools/template_statistics.html'
+    template_name = "gmtools/template_statistics.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -70,7 +107,7 @@ class TemplateStatisticsView(TemplateView):
             attributes_max[a] = [-999, []]
             attributes_min[a] = [999, []]
 
-        extension_id = self.request.GET.get('e', None)
+        extension_id = self.request.GET.get("e", None)
         if extension_id is not None:
             active_extension = Extension.objects.get(id=extension_id)
             templates = Template.objects.filter(extensions=active_extension)
@@ -146,76 +183,126 @@ class TemplateStatisticsView(TemplateView):
                     elif m.attribute_modifier == attributes_min[m.attribute][0]:
                         attributes_min[m.attribute][1].append(t)
 
-        context.update({
-            'aspects_max': dict(reversed(sorted(aspects_max.items(), key=lambda item: item[1][0]))),
-            'aspects_min': dict(sorted(aspects_min.items(), key=lambda item: item[1][0])),
-            'aspects_count': dict(reversed(sorted(aspects_count.items(), key=lambda item: item[1][0]))),
-            'aspects_sum': dict(reversed(sorted(aspects_sum.items(), key=lambda item: item[1][0]))),
-            'aspects_positive_sum': dict(reversed(sorted(aspects_positive_sum.items(), key=lambda item: item[1][0]))),
-            'attributes_max': dict(reversed(sorted(attributes_max.items(), key=lambda item: item[1][0]))),
-            'attributes_min': dict(sorted(attributes_min.items(), key=lambda item: item[1][0])),
-            'attributes_count': dict(reversed(sorted(attributes_count.items(), key=lambda item: item[1][0]))),
-            'attributes_sum': dict(reversed(sorted(attributes_sum.items(), key=lambda item: item[1][0]))),
-            'attributes_positive_sum': dict(reversed(sorted(attributes_positive_sum.items(), key=lambda item: item[1][0]))),
-            'skills_max': dict(reversed(sorted(skills_max.items(), key=lambda item: item[1][0]))),
-            'skills_min': dict(sorted(skills_min.items(), key=lambda item: item[1][0])),
-            'skills_count': dict(reversed(sorted(skills_count.items(), key=lambda item: item[1][0]))),
-            'skills_sum': dict(reversed(sorted(skills_sum.items(), key=lambda item: item[1][0]))),
-            'skills_positive_sum': dict(reversed(sorted(skills_positive_sum.items(), key=lambda item: item[1][0]))),
-            'all_extensions': Extension.objects.filter(is_active=True),
-            'active_extension': active_extension,
-        })
+        context.update(
+            {
+                "aspects_max": dict(
+                    reversed(sorted(aspects_max.items(), key=lambda item: item[1][0]))
+                ),
+                "aspects_min": dict(
+                    sorted(aspects_min.items(), key=lambda item: item[1][0])
+                ),
+                "aspects_count": dict(
+                    reversed(sorted(aspects_count.items(), key=lambda item: item[1][0]))
+                ),
+                "aspects_sum": dict(
+                    reversed(sorted(aspects_sum.items(), key=lambda item: item[1][0]))
+                ),
+                "aspects_positive_sum": dict(
+                    reversed(
+                        sorted(
+                            aspects_positive_sum.items(), key=lambda item: item[1][0]
+                        )
+                    )
+                ),
+                "attributes_max": dict(
+                    reversed(
+                        sorted(attributes_max.items(), key=lambda item: item[1][0])
+                    )
+                ),
+                "attributes_min": dict(
+                    sorted(attributes_min.items(), key=lambda item: item[1][0])
+                ),
+                "attributes_count": dict(
+                    reversed(
+                        sorted(attributes_count.items(), key=lambda item: item[1][0])
+                    )
+                ),
+                "attributes_sum": dict(
+                    reversed(
+                        sorted(attributes_sum.items(), key=lambda item: item[1][0])
+                    )
+                ),
+                "attributes_positive_sum": dict(
+                    reversed(
+                        sorted(
+                            attributes_positive_sum.items(), key=lambda item: item[1][0]
+                        )
+                    )
+                ),
+                "skills_max": dict(
+                    reversed(sorted(skills_max.items(), key=lambda item: item[1][0]))
+                ),
+                "skills_min": dict(
+                    sorted(skills_min.items(), key=lambda item: item[1][0])
+                ),
+                "skills_count": dict(
+                    reversed(sorted(skills_count.items(), key=lambda item: item[1][0]))
+                ),
+                "skills_sum": dict(
+                    reversed(sorted(skills_sum.items(), key=lambda item: item[1][0]))
+                ),
+                "skills_positive_sum": dict(
+                    reversed(
+                        sorted(skills_positive_sum.items(), key=lambda item: item[1][0])
+                    )
+                ),
+                "all_extensions": Extension.objects.filter(is_active=True),
+                "active_extension": active_extension,
+            }
+        )
         return context
 
 
 class ExtensionGrid(TemplateView):
-    template_name = 'gmtools/extension_grid.html'
+    template_name = "gmtools/extension_grid.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['extensions'] = Extension.objects.all()
-        context['type'] = kwargs.get('type')
-        if kwargs.get('type') == 'template':
-            context['object_list'] = Template.objects.all()
-            context['admin_url'] = 'admin:rules_template_change'
-        elif kwargs.get('type') == 'lineage':
-            context['object_list'] = Lineage.objects.all()
-            context['admin_url'] = 'admin:rules_lineage_change'
-        elif kwargs.get('type') == 'skill':
-            context['object_list'] = Skill.objects.all()
-            context['admin_url'] = 'admin:rules_skill_change'
-        elif kwargs.get('type') == 'item':
-            context['object_list'] = Item.objects.all()
-            context['admin_url'] = 'admin:armory_item_change'
-        elif kwargs.get('type') == 'weapon':
-            context['object_list'] = Weapon.objects.all()
-            context['admin_url'] = 'admin:armory_weapon_change'
-        elif kwargs.get('type') == 'weaponmodification':
-            context['object_list'] = WeaponModification.objects.all()
-            context['admin_url'] = 'admin:armory_weaponmodification_change'
-        elif kwargs.get('type') == 'riotgear':
-            context['object_list'] = RiotGear.objects.all()
-            context['admin_url'] = 'admin:armory_riotgear_change'
+        context["extensions"] = Extension.objects.all()
+        context["type"] = kwargs.get("type")
+        if kwargs.get("type") == "template":
+            context["object_list"] = Template.objects.all()
+            context["admin_url"] = "admin:rules_template_change"
+        elif kwargs.get("type") == "lineage":
+            context["object_list"] = Lineage.objects.all()
+            context["admin_url"] = "admin:rules_lineage_change"
+        elif kwargs.get("type") == "skill":
+            context["object_list"] = Skill.objects.all()
+            context["admin_url"] = "admin:rules_skill_change"
+        elif kwargs.get("type") == "item":
+            context["object_list"] = Item.objects.all()
+            context["admin_url"] = "admin:armory_item_change"
+        elif kwargs.get("type") == "weapon":
+            context["object_list"] = Weapon.objects.all()
+            context["admin_url"] = "admin:armory_weapon_change"
+        elif kwargs.get("type") == "weaponmodification":
+            context["object_list"] = WeaponModification.objects.all()
+            context["admin_url"] = "admin:armory_weaponmodification_change"
+        elif kwargs.get("type") == "riotgear":
+            context["object_list"] = RiotGear.objects.all()
+            context["admin_url"] = "admin:armory_riotgear_change"
         return context
 
     def post(self, request, *args, **kwargs):
-        if kwargs.get('type') == 'template':
-            obj = Template.objects.get(id=request.POST.get('object'))
-        elif kwargs.get('type') == 'lineage':
-            obj = Lineage.objects.get(id=request.POST.get('object'))
-        elif kwargs.get('type') == 'skill':
-            obj = Skill.objects.get(id=request.POST.get('object'))
-        elif kwargs.get('type') == 'item':
-            obj = Item.objects.get(id=request.POST.get('object'))
-        elif kwargs.get('type') == 'weapon':
-            obj = Weapon.objects.get(id=request.POST.get('object'))
-        elif kwargs.get('type') == 'weaponmodification':
-            obj = WeaponModification.objects.get(id=request.POST.get('object'))
-        elif kwargs.get('type') == 'riotgear':
-            obj = RiotGear.objects.get(id=request.POST.get('object'))
+        if kwargs.get("type") == "template":
+            obj = Template.objects.get(id=request.POST.get("object"))
+        elif kwargs.get("type") == "lineage":
+            obj = Lineage.objects.get(id=request.POST.get("object"))
+        elif kwargs.get("type") == "skill":
+            obj = Skill.objects.get(id=request.POST.get("object"))
+        elif kwargs.get("type") == "item":
+            obj = Item.objects.get(id=request.POST.get("object"))
+        elif kwargs.get("type") == "weapon":
+            obj = Weapon.objects.get(id=request.POST.get("object"))
+        elif kwargs.get("type") == "weaponmodification":
+            obj = WeaponModification.objects.get(id=request.POST.get("object"))
+        elif kwargs.get("type") == "riotgear":
+            obj = RiotGear.objects.get(id=request.POST.get("object"))
         else:
-            return HttpResponse(mark_safe('<i class="fas fa-question text-warning"></i>'))
-        extension = Extension.objects.get(id=request.POST.get('extension'))
+            return HttpResponse(
+                mark_safe('<i class="fas fa-question text-warning"></i>')
+            )
+        extension = Extension.objects.get(id=request.POST.get("extension"))
 
         if extension in obj.extensions.all():
             obj.extensions.remove(extension)
@@ -223,5 +310,3 @@ class ExtensionGrid(TemplateView):
         else:
             obj.extensions.add(extension)
             return HttpResponse(mark_safe('<i class="fas fa-check text-success"></i>'))
-
-

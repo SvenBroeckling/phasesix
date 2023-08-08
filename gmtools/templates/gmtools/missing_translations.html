@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load i18n rules_extras gmtools_extras %}
+
+{% block title %}{% trans 'Missing Translations' %} - {{ block.super }}{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(function () {
+            $('#info-modal').on('show.bs.modal', function (e) {
+                $(this).find('.modal-body').html($(e.relatedTarget).parent().find('.d-none').html())
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="modal" tabindex="-1" id="info-modal">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Templates</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Loading.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav class="nav nav-pills" role="tablist">
+                {% for model in missing_tranlations %}
+                    <a
+                        data-bs-toggle="tab"
+                        data-bs-target="#{{ model.id }}-tab-pane"
+                        role="tab"
+                        class="nav-link pointer me-2 mb-1 {% if forloop.first %}active{% endif %}">{{ model.name }}</a>
+                {% endfor %}
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="tab-content">
+        {% for model in missing_tranlations %}
+            <div class="tab-pane fade {% if forloop.first %} show active{% endif %}"
+                 id="{{ model.id }}-tab-pane" role="tabpanel"
+                 tabindex="0">
+                <div class="row">
+                    {% for object in model.qs|objects_with_missing_translations:model.translatable_fields %}
+                        <div class="col-12">
+                            <a href="{% url model.admin_url_name object_id=object.id %}">{{ object }}</a>
+                            {{ object.text_length_ratio }}
+                        {{ object.text_en_length}}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
