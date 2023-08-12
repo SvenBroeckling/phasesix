@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
+from homebrew.models import HomebrewModel
 
 SPELL_ATTRIBUTE_CHOICES = (
     ('power', _('power')),
@@ -77,7 +78,7 @@ class SpellOrigin(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class BaseSpell(models.Model, metaclass=TransMeta):
+class BaseSpell(HomebrewModel, metaclass=TransMeta):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -87,17 +88,6 @@ class BaseSpell(models.Model, metaclass=TransMeta):
 
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
-
-    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
-    keep_as_homebrew = models.BooleanField(
-        _('keep as homebrew'),
-        help_text=_('This was not accepted as general spell and is kept as homebrew.'),
-        default=False)
-    homebrew_campaign = models.ForeignKey(
-        'campaigns.Campaign',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL)
 
     is_tirakan_spell = models.BooleanField(_('is tirakan spell'), default=False)
 

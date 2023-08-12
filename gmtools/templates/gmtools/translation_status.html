@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n rules_extras gmtools_extras %}
 
-{% block title %}{% trans 'Missing Translations' %} - {{ block.super }}{% endblock %}
+{% block title %}{% trans 'Translation Status' %} - {{ block.super }}{% endblock %}
 
 {% block javascript %}
     <script>
@@ -34,12 +34,12 @@
     <div class="row mb-4">
         <div class="col-12">
             <nav class="nav nav-pills" role="tablist">
-                {% for model in missing_tranlations %}
+                {% for model in translation_models %}
                     <a
                         data-bs-toggle="tab"
                         data-bs-target="#{{ model.id }}-tab-pane"
                         role="tab"
-                        class="nav-link pointer me-2 mb-1 {% if forloop.first %}active{% endif %}">{{ model.name }}</a>
+                        class="nav-link pointer me-2 mb-1 {% if forloop.first %}active{% endif %}">{{ model.name|capfirst }}</a>
                 {% endfor %}
             </nav>
 
@@ -47,14 +47,19 @@
     </div>
 
     <div class="tab-content">
-        {% for model in missing_tranlations %}
+        {% for model in translation_models %}
             <div class="tab-pane fade {% if forloop.first %} show active{% endif %}"
                  id="{{ model.id }}-tab-pane" role="tabpanel"
                  tabindex="0">
                 <div class="row">
                     {% for object in model.qs|objects_with_missing_translations:model.translatable_fields %}
                         <div class="col-12">
-                            <a href="{% url model.admin_url_name object_id=object.id %}">{{ object }}</a>
+                            {% url model.admin_url_name object_id=object.id as admin_url %}
+                            {% if admin_url %}
+                                <a href="">{{ object }}</a>
+                            {% else %}
+                                {{ object }}
+                            {% endif %}
                             {% for field in model.translatable_fields %}
                                 {% translation_field_badge object field %}
                             {% endfor %}

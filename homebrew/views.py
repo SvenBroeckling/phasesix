@@ -1,11 +1,11 @@
-from django.http import JsonResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.http import JsonResponse
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
-from django.utils.translation import gettext_lazy as _
 
 from armory.models import Item, RiotGear, Weapon, AttackMode
 from characters.models import Character
+from gmtools.utils import get_homebrew_models
 from homebrew.forms import CreateItemForm, CreateRiotGearForm, CreateWeaponForm, CreateBaseSpellForm
 from magic.models import BaseSpell
 
@@ -15,46 +15,11 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['items'] = Item.objects.filter(is_homebrew=True, keep_as_homebrew=False)
-        context['weapons'] = Weapon.objects.filter(is_homebrew=True, keep_as_homebrew=False)
-        context['riot_gear'] = RiotGear.objects.filter(is_homebrew=True, keep_as_homebrew=False)
-        context['base_spells'] = BaseSpell.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+        context['homebrew_querysets'] = [
+            model.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+            for model in get_homebrew_models()
+        ]
         return context
-
-
-class ProcessHomebrewView(View):
-    @staticmethod
-    def process_object(obj, mode='keep'):
-        if mode == 'accept':
-            obj.is_homebrew = False
-            obj.homebrew_campaign = None
-        else:
-            obj.keep_as_homebrew = True
-        obj.save()
-
-
-class ProcessItemView(ProcessHomebrewView):
-    def post(self, request, *args, **kwargs):
-        self.process_object(Item.objects.get(id=kwargs['item_pk']), kwargs.get('mode', 'keep'))
-        return HttpResponseRedirect(reverse('homebrew:index'))
-
-
-class ProcessWeaponView(ProcessHomebrewView):
-    def post(self, request, *args, **kwargs):
-        self.process_object(Weapon.objects.get(id=kwargs['weapon_pk']), kwargs.get('mode', 'keep'))
-        return HttpResponseRedirect(reverse('homebrew:index'))
-
-
-class ProcessRiotGearView(ProcessHomebrewView):
-    def post(self, request, *args, **kwargs):
-        self.process_object(RiotGear.objects.get(id=kwargs['riot_gear_pk']), kwargs.get('mode', 'keep'))
-        return HttpResponseRedirect(reverse('homebrew:index'))
-
-
-class ProcessBaseSpellView(ProcessHomebrewView):
-    def post(self, request, *args, **kwargs):
-        self.process_object(BaseSpell.objects.get(id=kwargs['base_spell_pk']), kwargs.get('mode', 'keep'))
-        return HttpResponseRedirect(reverse('homebrew:index'))
 
 
 class XhrCreateItemView(TemplateView):
@@ -85,9 +50,8 @@ class CreateItemView(View):
                     is_container=form.cleaned_data['is_container'],
                     created_by=request.user,
                     is_homebrew=True,
+                    homebrew_character=character,
                     homebrew_campaign=character.pc_or_npc_campaign)
-                for ext in character.extensions.all():
-                    item.extensions.add(ext)
                 if form['add_to_character']:
                     character.characteritem_set.create(item=item)
 
@@ -127,9 +91,8 @@ class CreateRiotGearView(View):
                     concealment=form.cleaned_data['concealment'],
                     created_by=request.user,
                     is_homebrew=True,
+                    homebrew_character=character,
                     homebrew_campaign=character.pc_or_npc_campaign)
-                for ext in character.extensions.all():
-                    riot_gear.extensions.add(ext)
                 if form['add_to_character']:
                     character.characterriotgear_set.create(riot_gear=riot_gear)
 
@@ -179,6 +142,7 @@ class CreateWeaponView(View):
                     range_meter=form.cleaned_data['range_meter'],
                     created_by=request.user,
                     is_homebrew=True,
+                    homebrew_character=character,
                     homebrew_campaign=character.pc_or_npc_campaign)
                 if weapon.is_hand_to_hand_weapon:
                     weapon.weaponattackmode_set.create(
@@ -190,8 +154,6 @@ class CreateWeaponView(View):
                     for am in AttackMode.objects.exclude(name_en="Hand to Hand").exclude(name_en="Throwing"):
                         weapon.weaponattackmode_set.create(attack_mode=am)
 
-                for ext in character.extensions.all():
-                    weapon.extensions.add(ext)
                 if form['add_to_character']:
                     character.characterweapon_set.create(weapon=weapon)
             else:
@@ -237,6 +199,7 @@ class CreateBaseSpellView(View):
                     is_ritual=form.cleaned_data['is_ritual'],
                     created_by=request.user,
                     is_homebrew=True,
+                    homebrew_character=character,
                     homebrew_campaign=character.pc_or_npc_campaign)
                 if form['add_to_character']:
                     character.characterspell_set.create(spell=base_spell)

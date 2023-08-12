@@ -1,5 +1,4 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.utils.translation import gettext as _
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
@@ -9,13 +8,9 @@ from armory.models import (
     Weapon,
     WeaponModification,
     RiotGear,
-    ItemType,
-    WeaponType,
-    AttackMode,
-    WeaponModificationType,
-    RiotGearType,
 )
-from pantheon.models import EntityCategory, Entity, PriestAction, PriestActionRoll
+from gmtools.utils import get_models_with_translations
+from magic.models import BaseSpell
 from rules.models import (
     Extension,
     Template,
@@ -23,71 +18,23 @@ from rules.models import (
     Skill,
     CHARACTER_ASPECT_CHOICES,
     Attribute,
-    Knowledge,
-    TemplateCategory,
-    StatusEffect,
-)
-from magic.models import BaseSpell
-from worlds.models import (
-    WikiPage,
-    WorldSiteConfiguration,
-    World,
-    WikiPageFoeType,
-    WikiPageFoeResistanceOrWeakness,
-    WikiPageGameAction,
 )
 
 
-class MissingTranslationsView(TemplateView):
-    template_name = "gmtools/missing_translations.html"
+class TranslationStatusView(TemplateView):
+    template_name = "gmtools/translation_status.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        translatable_fields_blacklist = [  # These fields are intended to be null, so that a default can be displayed
-            "actions_heading",
-            "short_name",
-        ]
-
-        context["missing_tranlations"] = [
+        context["translation_models"] = [
             {
                 "name": model._meta.verbose_name,
                 "id": model.__mro__[0].__name__,
                 "admin_url_name": f"admin:{model._meta.app_label}_{model.__mro__[0].__name__.lower()}_change",
                 "qs": model.objects.all(),
-                "translatable_fields": [
-                    field
-                    for field in model._meta.translatable_fields
-                    if field not in translatable_fields_blacklist
-                ],
+                "translatable_fields": [field for field in model._meta.translatable_fields],
             }
-            for model in [
-                World,
-                WikiPage,
-                WikiPageFoeType,
-                WikiPageFoeResistanceOrWeakness,
-                WikiPageGameAction,
-                Extension,
-                Lineage,
-                Attribute,
-                Skill,
-                Knowledge,
-                TemplateCategory,
-                Template,
-                StatusEffect,
-                WeaponType,
-                AttackMode,
-                Weapon,
-                WeaponModificationType,
-                WeaponModification,
-                RiotGearType,
-                RiotGear,
-                ItemType,
-                Item,
-                EntityCategory,
-                Entity,
-                PriestAction,
-                PriestActionRoll,
-            ]
+            for model in get_models_with_translations()
         ]
 
         return context

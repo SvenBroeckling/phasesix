@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from transmeta import TransMeta
 
+from homebrew.models import HomebrewModel
 from rules.models import ExtensionSelectQuerySet, Extension
 
 
@@ -36,7 +37,7 @@ class ItemType(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Item(models.Model, metaclass=TransMeta):
+class Item(HomebrewModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     name = models.CharField(_('name'), max_length=256)
@@ -53,17 +54,6 @@ class Item(models.Model, metaclass=TransMeta):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('created by'),
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL)
-
-    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
-    keep_as_homebrew = models.BooleanField(
-        _('keep as homebrew'),
-        help_text=_('This was not accepted as general item and is kept as homebrew.'),
-        default=False)
-    homebrew_campaign = models.ForeignKey(
-        'campaigns.Campaign',
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
@@ -173,7 +163,7 @@ class AttackMode(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Weapon(models.Model, metaclass=TransMeta):
+class Weapon(HomebrewModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
@@ -205,17 +195,6 @@ class Weapon(models.Model, metaclass=TransMeta):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('created by'),
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL)
-
-    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
-    keep_as_homebrew = models.BooleanField(
-        _('keep as homebrew'),
-        help_text=_('This was not accepted as general weapon and is kept as homebrew.'),
-        default=False)
-    homebrew_campaign = models.ForeignKey(
-        'campaigns.Campaign',
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
@@ -378,7 +357,7 @@ class RiotGearType(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class RiotGear(models.Model, metaclass=TransMeta):
+class RiotGear(HomebrewModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
@@ -402,17 +381,6 @@ class RiotGear(models.Model, metaclass=TransMeta):
     concealment = models.IntegerField(_('concealment'), default=0)
     weight = models.DecimalField(_('weight'), decimal_places=2, max_digits=6)
     price = models.DecimalField(_('price'), decimal_places=2, max_digits=6)
-
-    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
-    keep_as_homebrew = models.BooleanField(
-        _('keep as homebrew'),
-        help_text=_('This was not accepted as general riot gear and is kept as homebrew.'),
-        default=False)
-    homebrew_campaign = models.ForeignKey(
-        'campaigns.Campaign',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL)
 
     class Meta:
         translate = ('name', 'description')

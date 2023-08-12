@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
+from homebrew.models import HomebrewModel
 from rules.models import ExtensionSelectQuerySet, Extension
 
 
@@ -34,7 +35,7 @@ class EntityCategory(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Entity(models.Model, metaclass=TransMeta):
+class Entity(HomebrewModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     category = models.ForeignKey(EntityCategory, on_delete=models.CASCADE)
@@ -50,17 +51,6 @@ class Entity(models.Model, metaclass=TransMeta):
 
     extensions = models.ManyToManyField('rules.Extension')
     wiki_page = models.ForeignKey('worlds.WikiPage', null=True, blank=True, on_delete=models.SET_NULL)
-
-    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
-    keep_as_homebrew = models.BooleanField(
-        _('keep as homebrew'),
-        help_text=_('This was not accepted as general item and is kept as homebrew.'),
-        default=False)
-    homebrew_campaign = models.ForeignKey(
-        'campaigns.Campaign',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL)
 
     name = models.CharField(_('name'), max_length=256)
     short_name = models.CharField(
@@ -85,7 +75,7 @@ class Entity(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class PriestAction(models.Model, metaclass=TransMeta):
+class PriestAction(HomebrewModel, metaclass=TransMeta):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -94,17 +84,6 @@ class PriestAction(models.Model, metaclass=TransMeta):
         verbose_name=_('created by'))
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     modified_at = models.DateTimeField(_('modified at'), auto_now=True)
-
-    is_homebrew = models.BooleanField(_('is homebrew'), default=False)
-    keep_as_homebrew = models.BooleanField(
-        _('keep as homebrew'),
-        help_text=_('This was not accepted as general spell and is kept as homebrew.'),
-        default=False)
-    homebrew_campaign = models.ForeignKey(
-        'campaigns.Campaign',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL)
 
     grace_cost = models.IntegerField(_('grace cost'))
 

@@ -7,9 +7,9 @@ app_name = "gmtools"
 
 urlpatterns = [
     path(
-        "missing_translations/",
-        staff_member_required(views.MissingTranslationsView.as_view()),
-        name="missing_translations",
+        "translation_status/",
+        staff_member_required(views.TranslationStatusView.as_view()),
+        name="translation_status",
     ),
     path(
         "template_statistics/",

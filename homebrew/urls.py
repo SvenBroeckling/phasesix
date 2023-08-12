@@ -9,23 +9,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
 
     path(
-        'process/item/<int:item_pk>/<str:mode>',
-        staff_member_required(views.ProcessItemView.as_view()),
-        name='process_item'),
-    path(
-        'process/weapon/<int:weapon_pk>/<str:mode>',
-        staff_member_required(views.ProcessWeaponView.as_view()),
-        name='process_weapon'),
-    path(
-        'process/riot_gear/<int:riot_gear_pk>/<str:mode>',
-        staff_member_required(views.ProcessRiotGearView.as_view()),
-        name='process_riot_gear'),
-    path(
-        'process/base_spell/<int:base_spell_pk>/<str:mode>',
-        staff_member_required(views.ProcessBaseSpellView.as_view()),
-        name='process_base_spell'),
-
-    path(
         'xhr_create/item/<int:character_pk>',
         staff_member_required(views.XhrCreateItemView.as_view()),
         name='xhr_create_item'),

@@ -1,9 +1,19 @@
 from decimal import Decimal
 
 from django.db.models.functions import Length, Coalesce
-from django.db.models import Q, F, DecimalField, Value, When, Case, ExpressionWrapper
+from django.db.models import (
+    Q,
+    F,
+    DecimalField,
+    Value,
+    When,
+    Case,
+    ExpressionWrapper,
+    QuerySet,
+)
 from django.template import Library
 from django.template.defaultfilters import floatformat
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 register = Library()
@@ -64,3 +74,14 @@ def translation_field_badge(obj, field_name):
     return mark_safe(
         f'<span class="badge {badge_class}">{field_name}: {floatformat(value, 2)}</span>'
     )
+
+
+@register.filter
+def model_name(value: QuerySet):
+    return value.model.__mro__[0].__name__
+
+
+@register.simple_tag
+def admin_url_for_qs_model(value: QuerySet, pk: int):
+    pattern = f"admin:{value.model._meta.app_label}_{value.model.__mro__[0].__name__.lower()}_change"
+    return reverse(pattern, args=[pk])
