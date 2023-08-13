@@ -49,7 +49,13 @@ from characters.models import (
     CharacterNote,
 )
 from horror.models import QuirkCategory, Quirk
-from magic.models import SpellType, SpellTemplateCategory, SpellTemplate, SpellOrigin
+from magic.models import (
+    SpellType,
+    SpellTemplateCategory,
+    SpellTemplate,
+    SpellOrigin,
+    BaseSpell,
+)
 from pantheon.models import Entity, PriestAction
 from rules.models import (
     Extension,
@@ -893,6 +899,9 @@ class XhrAddWeaponsView(TemplateView):
         context["weapon_types"] = WeaponType.objects.for_extensions(
             character.extensions
         )
+        context["homebrew"] = Weapon.objects.homebrew(
+            character=character, campaign=character.campaign
+        )
         return context
 
 
@@ -953,6 +962,9 @@ class XhrAddRiotGearView(TemplateView):
         context["riot_gear_types"] = RiotGearType.objects.for_extensions(
             character.extensions
         )
+        context["homebrew"] = RiotGear.objects.homebrew(
+            character=character, campaign=character.campaign
+        )
         return context
 
 
@@ -1000,6 +1012,9 @@ class XhrAddItemsView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["character"] = character
         context["item_types"] = ItemType.objects.for_extensions(character.extensions)
+        context["homebrew"] = Item.objects.homebrew(
+            character=character, campaign=character.campaign
+        )
         return context
 
 
@@ -1174,6 +1189,9 @@ class XhrAddSpellView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["character"] = character
         context["categories"] = SpellType.objects.all()
+        context["homebrew"] = BaseSpell.objects.homebrew(
+            character=character, campaign=character.campaign
+        )
         return context
 
     def post(self, request, *args, **kwargs):

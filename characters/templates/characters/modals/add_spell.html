@@ -1,4 +1,4 @@
-{% load characters_extras rules_extras i18n thumbnail %}
+{% load characters_extras rules_extras i18n thumbnail static %}
 
 <script>
     $(function(){
@@ -57,6 +57,18 @@
 <div class="d-none" id="initial-spell-points" data-initial-spell-points="{{ character.spell_points_available }}"></div>
 <div class="container type-selection">
     <div class="row">
+        {% if homebrew.exists %}
+            <div class="col-12 col-lg-6 col-xl-4">
+                <div class="card text-center rounded add-spell-category-card pointer mb-4" data-type-id="homebrew">
+                    <div class="card-body" style="background-image: url({% static 'img/custom_spell.png' %}); background-size: cover">
+                        <div class="card-text w-100 p-5">
+                            <h5 class="text-center p-0 m-i0">{% trans "Custom Spells" %}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         {% for category in categories %}
             {% thumbnail category.image "1024" as img %}
             <div class="col-12 col-lg-6 col-xl-4">
@@ -73,6 +85,25 @@
         {% endfor %}
     </div>
 </div>
+
+{% if homebrew.exists %}
+    <div class="container spell-selection" id="spell-selection-homebrew" style="display: none">
+        <div class="row">
+            <div class="col-12 text-center">
+                <small class="back-to-school pointer"><<< {% trans 'Choose another school' %}</small>
+            </div>
+        </div>
+        <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
+            {% for s in homebrew %}
+                <div class="col-12 col-lg-6 col-xl-4">
+                    {% basespell_widget s character=character %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
 {% for category in categories.distinct %}
     <div class="container spell-selection" id="spell-selection-{{ category.id }}" style="display: none">
         <div class="row">

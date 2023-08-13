@@ -2,6 +2,19 @@ from django.db import models
 from django.utils.translation import gettext_lazy as gt
 
 
+class HomebrewQuerySet(models.QuerySet):
+    def homebrew(self, character=None, campaign=None):
+        qs = self.filter(is_homebrew=True)
+        if campaign is not None:
+            return qs.filter(homebrew_campaign=campaign)
+        elif character is not None:
+            return qs.filter(homebrew_character=character)
+        return qs
+
+    def without_homebrew(self):
+        return self.filter(is_homebrew=False)
+
+
 class HomebrewModel(models.Model):
     is_homebrew = models.BooleanField(gt('is homebrew'), default=False)
     keep_as_homebrew = models.BooleanField(

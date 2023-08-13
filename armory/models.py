@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from transmeta import TransMeta
 
-from homebrew.models import HomebrewModel
+from homebrew.models import HomebrewModel, HomebrewQuerySet
 from rules.models import ExtensionSelectQuerySet, Extension
 
 
@@ -37,8 +37,12 @@ class ItemType(models.Model, metaclass=TransMeta):
         return self.name
 
 
+class ItemQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
+    pass
+
+
 class Item(HomebrewModel, metaclass=TransMeta):
-    objects = ExtensionSelectQuerySet.as_manager()
+    objects = ItemQuerySet.as_manager()
 
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
@@ -109,14 +113,6 @@ class WeaponTypeQuerySet(models.QuerySet):
         ).distinct()
 
 
-class RiotGearQuerySet(models.QuerySet):
-    def for_extensions(self, extension_rm):
-        return self.filter(
-            Q(riotgear__extensions__id__in=extension_rm.all()) |
-            Q(riotgear__extensions__id__in=Extension.objects.filter(is_mandatory=True))
-        ).distinct()
-
-
 class WeaponType(models.Model, metaclass=TransMeta):
     objects = WeaponTypeQuerySet.as_manager()
 
@@ -163,8 +159,12 @@ class AttackMode(models.Model, metaclass=TransMeta):
         return self.name
 
 
+class WeaponQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
+    pass
+
+
 class Weapon(HomebrewModel, metaclass=TransMeta):
-    objects = ExtensionSelectQuerySet.as_manager()
+    objects = WeaponQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
@@ -342,8 +342,16 @@ class WeaponModificationAttributeChange(models.Model):
         return "%+d" % self.attribute_modifier
 
 
+class RiotGearTypeQuerySet(HomebrewQuerySet):
+    def for_extensions(self, extension_qs):
+        return self.filter(
+            Q(riotgear__extensions__id__in=extension_qs.all()) |
+            Q(riotgear__extensions__id__in=Extension.objects.filter(is_mandatory=True))
+        ).distinct()
+
+
 class RiotGearType(models.Model, metaclass=TransMeta):
-    objects = RiotGearQuerySet.as_manager()
+    objects = RiotGearTypeQuerySet.as_manager()
 
     name = models.CharField(_('name'), max_length=256)
     description = models.TextField(_('description'), blank=True, null=True)
@@ -357,8 +365,12 @@ class RiotGearType(models.Model, metaclass=TransMeta):
         return self.name
 
 
+class RiotGearQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
+    pass
+
+
 class RiotGear(HomebrewModel, metaclass=TransMeta):
-    objects = ExtensionSelectQuerySet.as_manager()
+    objects = RiotGearQuerySet.as_manager()
 
     extensions = models.ManyToManyField('rules.Extension')
 

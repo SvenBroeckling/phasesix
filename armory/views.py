@@ -6,7 +6,7 @@ from rules.models import Extension
 
 class MaterialListView(ListView):
     def get_queryset(self):
-        qs = self.get_model().objects.all()
+        qs = self.get_model().objects.without_homebrew()
         if self.request.world_configuration is not None:
             qs = qs.for_world(self.request.world_configuration.world)
         if self.request.GET.get("extension", None) is not None:

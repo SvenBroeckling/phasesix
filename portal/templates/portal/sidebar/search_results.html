@@ -1,24 +1,36 @@
 {% load i18n characters_extras rules_extras thumbnail %}
 
 <div class="row">
-    {% if wiki_pages.exists %}
-        <div class="col-12">
-            {% for wiki_page in wiki_pages %}
-                <a href="{{ wiki_page.get_absolute_url }}">
-                    <div class="card flex-row mb-2">
-                        <img src="{% thumbnail wiki_page.get_image.image "100" as im %}{{ im.url }}{% endthumbnail %}"
-                             alt="{{ wiki_page }}">
-                        <div class="card-body">
-                            {% if wiki_page.short_name %}
-                                {{ wiki_page.short_name }}<br>
-                            {% else %}
-                                {{ wiki_page.name }}<br>
-                            {% endif %}
-                            <span class="text-muted">{{ wiki_page.world }}</span>
-                        </div>
+    <div class="col-12">
+        {% for character in characters %}
+            <a href="{% url 'characters:detail' pk=character.id %}">
+                <div class="card flex-row mb-2">
+                    {% if character.image %}
+                        <img src="{% thumbnail character.image "100" as im %}{{ im.url }}{% endthumbnail %}"
+                             alt="{{ character }}">
+                    {% endif %}
+                    <div class="card-body">
+                        {{ character }}
                     </div>
-                </a>
-            {% endfor %}
-        </div>
-    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+
+        {% for wiki_page in wiki_pages %}
+            <a href="{{ wiki_page.get_absolute_url }}">
+                <div class="card flex-row mb-2">
+                    <img src="{% thumbnail wiki_page.get_image.image "100" as im %}{{ im.url }}{% endthumbnail %}"
+                         alt="{{ wiki_page }}">
+                    <div class="card-body">
+                        {% if wiki_page.short_name %}
+                            {{ wiki_page.short_name }}<br>
+                        {% else %}
+                            {{ wiki_page.name }}<br>
+                        {% endif %}
+                        <span class="text-muted">{{ wiki_page.world }}</span>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 </div>

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n static rules_extras %}
+{% load i18n static armory_extras %}
 
 {% block title %}{% trans 'All Items' %} - {{ block.super }}{% endblock %}
 
@@ -22,7 +22,6 @@
                         } else {
                             $(this).parent().addClass('d-none');
                         }
-                        ;
                     });
                     history.replaceState({q: q}, '', '?q=' + q);
                     masonry.masonry({percentPosition: true})
@@ -38,7 +37,6 @@
                     } else {
                         $(this).addClass('d-none');
                     }
-                    ;
                 });
                 masonry.masonry({percentPosition: true})
             }
