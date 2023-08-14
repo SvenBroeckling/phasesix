@@ -21,7 +21,7 @@
                     {% if user.is_authenticated %}
                         <a
                                 class="btn btn-warning float-end mb-2 me-2 modal-trigger"
-                                data-url="{% url 'homebrew:xhr_create_base_spell' character_pk=object.id %}"
+                                data-url="{% url 'homebrew:xhr_create_base_spell' %}?character_pk={{ object.id }}"
                                 title="{% trans 'Create Spell' %}"
                                 data-bs-toggle="modal"
                                 data-modal-title="{% trans 'Create Spell' %}"

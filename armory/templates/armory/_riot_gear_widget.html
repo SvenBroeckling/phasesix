@@ -12,19 +12,21 @@
         <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
         <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ riot_gear.weight }}<br>
 
-        {% with currency_unit=character.common_currency_unit %}
-            <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=riot_gear.id %}" method="post"
-                  class="float-end add-form">
-                {% csrf_token %}
-                <input type="hidden" name="riot_gear_id" value="{{ riot_gear.id }}">
-                <button type="submit" class="btn btn-primary btn-sm float-end"
-                        data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
-                    {% trans 'Add' %}
-                    <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
-                    {% color_value_span riot_gear.price 2000 invert=True %}
-                </button>
-            </form>
-        {% endwith %}
+        {% if character %}
+            {% with currency_unit=character.common_currency_unit %}
+                <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=riot_gear.id %}" method="post"
+                      class="float-end add-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="riot_gear_id" value="{{ riot_gear.id }}">
+                    <button type="submit" class="btn btn-primary btn-sm float-end"
+                            data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                        {% trans 'Add' %}
+                        <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+                        {% color_value_span riot_gear.price 2000 invert=True %}
+                    </button>
+                </form>
+            {% endwith %}
+        {% endif %}
 
         {% if user.is_superuser %}
             <a href="{% url 'admin:armory_riotgear_change' riot_gear.id %}"

@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import ItemType, WeaponType, RiotGearType
-from magic.models import SpellType, SpellVariant, SpellShape
+from magic.models import SpellType, SpellVariant, SpellShape, SpellOrigin
 
 
 class CreateItemForm(forms.Form):
@@ -61,7 +61,8 @@ class CreateBaseSpellForm(forms.Form):
     power = forms.DecimalField(label=_('Power'))
     range = forms.DecimalField(label=_('Range'))
     actions = forms.DecimalField(label=_('Actions'))
-    type = forms.ModelChoiceField(queryset=SpellType.objects.all(), label=_('School'), empty_label=None)
+    origin = forms.ModelChoiceField(queryset=SpellOrigin.objects.all(), label=_('Origin'), empty_label=None)
+    type = forms.ModelChoiceField(queryset=SpellType.objects.all(), label=_('Type'), empty_label=None)
     variant = forms.ModelChoiceField(queryset=SpellVariant.objects.all(), label=_('Variant'), empty_label=None)
     shape = forms.ModelChoiceField(queryset=SpellShape.objects.all(), label=_('Shape'), required=False)
     is_ritual = forms.BooleanField(label=_('Is ritual'), required=False)

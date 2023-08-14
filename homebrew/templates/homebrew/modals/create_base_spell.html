@@ -11,11 +11,12 @@
     })
 </script>
 
-<form action="{% url 'homebrew:create_base_spell' character_pk=character.id %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'homebrew:create_base_spell' %}?character_pk={{ character.id }}&campaign_pk={{ campaign.id }}" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-12 col-md-8 offset-md-2">
             {% csrf_token %}
             {% bootstrap_field form.name %}
+            {% bootstrap_field form.origin %}
             {% bootstrap_field form.type %}
             {% bootstrap_field form.is_ritual %}
             {% bootstrap_field form.rules %}

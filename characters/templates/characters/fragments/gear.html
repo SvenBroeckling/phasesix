@@ -17,7 +17,7 @@
                     {% if user.is_authenticated %}
                         <a
                                 class="btn btn-warning btn-sm float-end me-1 modal-trigger"
-                                data-url="{% url 'homebrew:xhr_create_riot_gear' character_pk=object.id %}"
+                                data-url="{% url 'homebrew:xhr_create_riot_gear' %}?character_pk={{ object.id }}"
                                 data-bs-toggle="modal"
                                 data-bs-target=".page-modal"
                                 data-modal-title="{% trans 'Create Armor' %}"
@@ -83,7 +83,7 @@
                     {% if user.is_authenticated %}
                         <a
                                 class="btn btn-warning btn-sm me-1 float-end modal-trigger"
-                                data-url="{% url 'homebrew:xhr_create_weapon' character_pk=object.id %}"
+                                data-url="{% url 'homebrew:xhr_create_weapon' %}?character_pk={{ object.id }}"
                                 data-bs-toggle="modal"
                                 data-bs-target=".page-modal"
                                 data-modal-title="{% trans 'Create Weapon' %}"
@@ -213,7 +213,7 @@
                     {% if user.is_authenticated %}
                         <a
                                 class="btn btn-warning btn-sm me-1 float-end modal-trigger"
-                                data-url="{% url 'homebrew:xhr_create_item' character_pk=object.id %}"
+                                data-url="{% url 'homebrew:xhr_create_item' %}?character_pk={{ object.id }}"
                                 title="{% trans 'Create Item' %}"
                                 data-bs-toggle="modal"
                                 data-modal-title="{% trans 'Create item' %}"

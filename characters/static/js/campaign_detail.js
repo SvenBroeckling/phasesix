@@ -18,3 +18,7 @@ $('table.campaign-status-sortable').tablesorter({
     }
 })
 
+$('a.nav-link').on('click', function(e){
+    let selector = `${$(this).attr('href')} > div.row.homebrew-container`
+    $(selector).masonry({percentPosition: true})
+})

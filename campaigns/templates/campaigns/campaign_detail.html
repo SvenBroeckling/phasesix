@@ -84,6 +84,11 @@
                     </a>
                 {% endif %}
 
+                <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-homebrew"
+                   href="#v-homebrew">
+                    <i class="fas fa-fw fa-chart-bar"></i>&nbsp;{% trans 'Custom Items' %}
+                </a>
+
                 <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-statistics"
                    href="#v-statistics">
                     <i class="fas fa-fw fa-chart-bar"></i>&nbsp;{% trans 'Statistics' %}
@@ -120,6 +125,10 @@
                 class="tab-pane fade show"
                 id="v-game-log"
                 role="tabpanel">
+            </div>
+
+            <div class="tab-pane fade show" id="v-homebrew" role="tabpanel">
+                {% campaign_fragment 'homebrew' %}
             </div>
 
             <div class="tab-pane fade show" id="v-statistics" role="tabpanel">

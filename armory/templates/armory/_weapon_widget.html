@@ -32,20 +32,22 @@
                     {% endfor %}
                 {% endif %}
 
-                {% with currency_unit=character.common_currency_unit %}
-                    <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}"
-                          class="float-end add-form" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
-                        <button class="btn btn-sm btn-primary float-end"
-                                data-danger="{% trans 'Not possible' %}"
-                                data-success="{% trans 'Added' %}">
-                            {% trans 'Add' %}
-                            <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
-                            {% color_value_span weapon.price 1000 invert=True %}
-                        </button>
-                    </form>
-                {% endwith %}
+                {% if character %}
+                    {% with currency_unit=character.common_currency_unit %}
+                        <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}"
+                              class="float-end add-form" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
+                            <button class="btn btn-sm btn-primary float-end"
+                                    data-danger="{% trans 'Not possible' %}"
+                                    data-success="{% trans 'Added' %}">
+                                {% trans 'Add' %}
+                                <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+                                {% color_value_span weapon.price 1000 invert=True %}
+                            </button>
+                        </form>
+                    {% endwith %}
+                {% endif %}
             </div>
         </div>
         {% if user.is_superuser %}
