@@ -1,0 +1,16 @@
+{% load characters_extras %}
+{% load i18n %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>{% trans 'Physis' %}</th>
+        <th class="text-end">{% trans 'Dice' %}</th>
+    </tr>
+    </thead>
+    {% for attribute in object.characterattribute_set.physis_attributes %}
+        <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_characterattribute_sidebar' pk=attribute.id sidebar_template="characterattribute" %}">
+            <td>{{ attribute.attribute.name }}</td>
+            <td class="text-end">{% color_value_span attribute.value 7 %}</td>
+        </tr>
+    {% endfor %}
+</table>

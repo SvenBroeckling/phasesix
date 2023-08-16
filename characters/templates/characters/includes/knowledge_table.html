@@ -1,0 +1,29 @@
+{% load characters_extras %}
+{% load i18n %}
+{% if object.knowledge_dict %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{% trans 'Knowledge' %}</th>
+            <th class="text-end">{% trans 'Dice' %}</th>
+        </tr>
+        </thead>
+        {% for knowledge in object.knowledge_dict.items %}
+            <tr class="sidebar-trigger" data-sidebar-title="{{ knowledge.0 }}" data-sidebar-url="{% url 'characters:xhr_characterknowledge_sidebar' pk=object.id sidebar_template="characterknowledge" knowledge_pk=knowledge.0.id %}">
+                <td>
+                    {{ knowledge.0 }}
+                    {% if knowledge.0.skill %}
+                        <small class="text-muted">({{ knowledge.0.skill }})</small>
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    {% color_value_span knowledge.1 6 %}
+                    {% if knowledge.0.skill %}
+                        {% character_knowledge_skill_value object knowledge.0 as cs %}
+                        + {% color_value_span cs 6 %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

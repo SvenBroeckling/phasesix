@@ -5,126 +5,29 @@
     <div class="row">
 
         <div class="col-md-4">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>{% trans 'Persona' %}</th>
-                    <th class="text-end">{% trans 'Dice' %}</th>
-                </tr>
-                </thead>
-                {% for attribute in object.characterattribute_set.persona_attributes %}
-                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_characterattribute_sidebar' pk=attribute.id sidebar_template="characterattribute" %}">
-                        <td>{{ attribute.attribute.name }}</td>
-                        <td class="text-end">{% color_value_span attribute.value 7 %}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            {% include 'characters/includes/physis_table.html' %}
         </div>
 
         <div class="col-md-4">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>{% trans 'Physis' %}</th>
-                        <th class="text-end">{% trans 'Dice' %}</th>
-                    </tr>
-                </thead>
-                {% for attribute in object.characterattribute_set.physis_attributes %}
-                    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}" data-sidebar-url="{% url 'characters:xhr_characterattribute_sidebar' pk=attribute.id sidebar_template="characterattribute" %}">
-                        <td>{{ attribute.attribute.name }}</td>
-                        <td class="text-end">{% color_value_span attribute.value 7 %}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            {% include 'characters/includes/persona_table.html' %}
         </div>
 
         <div class="col-md-4">
-            {% if object.knowledge_dict %}
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>{% trans 'Knowledge' %}</th>
-                        <th class="text-end">{% trans 'Dice' %}</th>
-                    </tr>
-                    </thead>
-                    {% for knowledge in object.knowledge_dict.items %}
-                        <tr class="sidebar-trigger" data-sidebar-title="{{ knowledge.0 }}" data-sidebar-url="{% url 'characters:xhr_characterknowledge_sidebar' pk=object.id sidebar_template="characterknowledge" knowledge_pk=knowledge.0.id %}">
-                            <td>
-                                {{ knowledge.0 }}
-                                {% if knowledge.0.skill %}
-                                    <small class="text-muted">({{ knowledge.0.skill }})</small>
-                                {% endif %}
-                            </td>
-                            <td class="text-end">
-                                {% color_value_span knowledge.1 6 %}
-                                {% if knowledge.0.skill %}
-                                    {% character_knowledge_skill_value object knowledge.0 as cs %}
-                                    + {% color_value_span cs 6 %}
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
+            {% include 'characters/includes/knowledge_table.html' %}
         </div>
     </div>
 
 <div class="row mt-2">
     <div class="col-md-4">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>{% trans 'Skills' %}</th>
-                <th class="text-end">{% trans 'Dice' %}</th>
-            </tr>
-            </thead>
-            {% for skill in object.skills.mind_skills %}
-                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_characterskill_sidebar' pk=skill.id sidebar_template="characterskill" %}">
-                    <td>
-                        {{ skill.skill }}
-                        <small class="text-muted">({{ skill.skill.reference_attribute_1.name }}, {{ skill.skill.reference_attribute_2.name }})</small>
-                    </td>
-                    <td class="text-end">{% color_value_span skill.value 7 %}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        {% include 'characters/includes/mind_skill_table.html' %}
     </div>
 
     <div class="col-md-4">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>{% trans 'Skills' %}</th>
-                <th class="text-end">{% trans 'Dice' %}</th>
-            </tr>
-            </thead>
-            {% for skill in object.skills.practical_skills %}
-                <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}" data-sidebar-url="{% url 'characters:xhr_characterskill_sidebar' pk=skill.id sidebar_template="characterskill" %}">
-                    <td>
-                        {{ skill.skill }}
-                        <small class="text-muted">({{ skill.skill.reference_attribute_1.name }}, {{ skill.skill.reference_attribute_2.name }})</small>
-                    </td>
-                    <td class="text-end">{% color_value_span skill.value 7 %}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        {% include 'characters/includes/practical_skill_table.html' %}
     </div>
 
     <div class="col-md-4">
-        {% if object.templates_with_rules.exists %}
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>{% trans 'Shadows' %}</th>
-                </tr>
-                </thead>
-                {% for template in object.templates_with_rules.all %}
-                    <tr class="sidebar-trigger" data-sidebar-title="{{ template.template.name }}" data-sidebar-url="{% url 'characters:xhr_charactertemplateshadow_sidebar' pk=template.template.id sidebar_template="charactertemplateshadow" %}">
-                        <td>{{ template.template.name }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endif %}
+        {% include 'characters/includes/shadows_table.html' %}
     </div>
 </div>
 {% endblock %}

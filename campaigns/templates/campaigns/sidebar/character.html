@@ -1,52 +1,123 @@
 {% load i18n thumbnail static characters_extras %}
-<div class="row">
-    <div class="col-12 mb-3 mt-2">
-        {% if object.image %}
-            {% thumbnail object.image "600x600" crop="center" as im %}
-                <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
-            {% endthumbnail %}
-        {% else %}
-            <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
-                 alt="{{ object.name }}">
-        {% endif %}
-    </div>
-</div>
 
-{% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A'  %}
-    <div class="col-12 text-center mt-1 mb-3">
-        {% for i in object.health|to_range %}
-            <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
-        {% endfor %}
-        {% for i in object.wounds_taken|to_range %}
-            <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
-        {% endfor %}
-        {% for i in object.boost|to_range %}
-            <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
-        {% endfor %}
+{% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
+    <div class="row">
+        <div class="col-12 mb-3 mt-2">
+            <div class="nav nav-pills justify-content-center">
+                <a
+                    href="#cs-edit"
+                    aria-controls="cs-edit"
+                    data-bs-toggle="tab"
+                    role="tab"
+                    class="nav-link active"><i class="fas fa-fw fa-pen"></i></a>
+                <a
+                    href="#cs-attributes"
+                    aria-controls="cs-attributes"
+                    data-bs-toggle="tab"
+                    role="tab"
+                    class="nav-link"><i class="fas fa-fw fa-male"></i></a>
+                <a
+                    href="#cs-gear"
+                    aria-controls="cs-gear"
+                    data-bs-toggle="tab"
+                    role="tab"
+                    class="nav-link"><i class="fas fa-fw fa-suitcase"></i></a>
+
+                {% if object.extension_enabled.magic and object.is_magical %}
+                    <a
+                        href="#cs-magic"
+                        aria-controls="cs-magic"
+                        data-bs-toggle="tab"
+                        role="tab"
+                        class="nav-link"><i class="fas fa-fw fa-magic"></i></a>
+                {% endif %}
+                {% if object.extension_enabled.pantheon and object.is_priest %}
+                    <a
+                        href="#cs-pantheon"
+                        aria-controls="cs-pantheon"
+                        data-bs-toggle="tab"
+                        role="tab"
+                        class="nav-link"><i class="fas fa-fw fa-ankh"></i></a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endif %}
 
-<div class="row">
-    {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
-    <div class="col-12">
-        <a class="btn btn-primary w-100 btn-sm mb-2"
-           href="{{ object.get_absolute_url }}"><i class="fas fa-link fa-fw"></i> {% trans 'Go to character' %}</a>
-    </div>
-    {% endif %}
-
-    {% if may_edit %}
-    <div class="col-12">
-        <a class="btn btn-warning w-100 btn-sm mb-2 confirm-action-link"
-           data-message="{% trans 'Switch character NPC status?' %}"
-           href="{% url 'campaigns:xhr_switch_npc' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}</a>
-    </div>
-    {% endif %}
-
-    {% if may_edit %}
-        <div class="col-12">
-            <a class="btn btn-danger w-100 btn-sm mb-2 remove-character-from-campaign"
-               data-message="{% trans 'Remove character from campaign?' %}"
-               href="{% url 'campaigns:xhr_remove_character' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="cs-edit" role="tabpanel">
+        <div class="row">
+            <div class="col-12 mb-3 mt-2">
+                {% if object.image %}
+                    {% thumbnail object.image "600x600" crop="center" as im %}
+                        <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
+                    {% endthumbnail %}
+                {% else %}
+                    <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
+                         alt="{{ object.name }}">
+                {% endif %}
+            </div>
         </div>
+
+        {% include 'characters/includes/character_status_card.html' %}
+
+        <div class="row">
+            {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
+                <div class="col-12">
+                    <a class="btn btn-primary w-100 btn-sm mb-2"
+                       href="{{ object.get_absolute_url }}"><i
+                        class="fas fa-link fa-fw"></i> {% trans 'Go to character' %}</a>
+                </div>
+            {% endif %}
+
+            {% if may_edit %}
+                <div class="col-12">
+                    <a class="btn btn-warning w-100 btn-sm mb-2 confirm-action-link"
+                       data-message="{% trans 'Switch character NPC status?' %}"
+                       href="{% url 'campaigns:xhr_switch_npc' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i
+                        class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}</a>
+                </div>
+
+                <div class="col-12">
+                    <a class="btn btn-danger w-100 btn-sm mb-2 remove-character-from-campaign"
+                       data-message="{% trans 'Remove character from campaign?' %}"
+                       href="{% url 'campaigns:xhr_remove_character' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i
+                        class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
+        <div class="tab-pane fade" id="cs-attributes">
+            {% include 'characters/includes/physis_table.html' %}
+            {% include 'characters/includes/persona_table.html' %}
+            {% include 'characters/includes/knowledge_table.html' %}
+            {% include 'characters/includes/mind_skill_table.html' %}
+            {% include 'characters/includes/practical_skill_table.html' %}
+            {% include 'characters/includes/shadows_table.html' %}
+        </div>
+
+        <div class="tab-pane fade" id="cs-gear">
+            {% include 'characters/includes/character_riot_gear_cards.html' %}
+            {% include 'characters/includes/character_weapon_cards.html' %}
+            {% include 'characters/includes/character_item_cards.html' %}
+        </div>
+
+        {% if object.extension_enabled.magic and object.is_magical %}
+            <div class="tab-pane fade" id="cs-magic">
+                <div class="row row-cols-1">
+                    {% include 'characters/includes/character_spell_cards.html' %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if object.extension_enabled.pantheon and object.is_priest %}
+            <div class="tab-pane fade" id="cs-pantheon">
+                <div class="row row-cols-1">
+                    {% include 'characters/includes/priest_action_cards.html' %}
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
 </div>
