@@ -18,6 +18,9 @@
     {% endif %}
 
     <div class="{% if item.image %}card-img-overlay d-flex flex-row align-items-end{% else %}card-body{% endif %}">
+        {% if not item.image %}
+            <p>{{ item.description }}</p>
+        {% endif %}
         <div class="w-100">
             {% if character %}
                 {% with currency_unit=character.common_currency_unit %}
