@@ -1,0 +1,62 @@
+{% load thumbnail %}
+{% load i18n %}
+
+<script>
+    $(function () {
+        $('.search-form input').on('keyup', function(e){
+            let q = $(this).val()
+
+            $('.search-results a').each(function(index, element){
+                let text = $(this).find('.card-body').text()
+                if (text.toLowerCase().indexOf(q.toLowerCase()) >= 0) {
+                    $(this).removeClass('d-none')
+                } else {
+                    $(this).addClass('d-none')
+                }
+
+            })
+        })
+
+        $('.add-foe-to-campaign-link').on('click', function(e){
+            $.post($(this).attr('href'))
+            e.preventDefault()
+            refresh_fragments()
+            return false
+        })
+    })
+</script>
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <form action="{% url 'portal:xhr_search_results' %}" class="search-form">
+            <div class="input-group">
+                <input class="form-control" type="search" name="q"
+                       autocomplete="off"
+                       placeholder="{% trans 'Foe names' %}">
+                <button class="btn btn-primary" type="submit">{% trans 'Search' %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 search-results">
+        {% for wiki_page in wiki_pages %}
+            <a
+                class="add-foe-to-campaign-link"
+                href="{% url 'campaigns:xhr_add_foe' pk=object.id wiki_page_pk=wiki_page.id %}">
+                <div class="card flex-row mb-2">
+                    <img src="{% thumbnail wiki_page.get_image.image "100" as im %}{{ im.url }}{% endthumbnail %}"
+                         alt="{{ wiki_page }}">
+                    <div class="card-body">
+                        {% if wiki_page.short_name %}
+                            {{ wiki_page.short_name }}<br>
+                        {% else %}
+                            {{ wiki_page.name }}<br>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>

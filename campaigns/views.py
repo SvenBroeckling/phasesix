@@ -1,6 +1,13 @@
+from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views import View
-from django.views.generic import ListView, CreateView, DetailView, TemplateView, FormView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DetailView,
+    TemplateView,
+    FormView,
+)
 
 from campaigns.forms import SettingsForm
 from campaigns.models import Campaign, Foe, Roll
@@ -14,7 +21,9 @@ class CampaignListView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            campaigns = Campaign.objects.for_world_configuration(self.request.world_configuration)
+            campaigns = Campaign.objects.for_world_configuration(
+                self.request.world_configuration
+            )
             if user.is_staff:
                 return campaigns
             return campaigns.filter(created_by=user)
@@ -22,52 +31,70 @@ class CampaignListView(ListView):
 
 
 class CreateCampaignView(TemplateView):
-    template_name = 'campaigns/create_campaign.html'
+    template_name = "campaigns/create_campaign.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['extensions'] = Extension.objects.exclude(
-            is_mandatory=True).exclude(type__in=['e', 'x']).exclude(is_active=False)
+        context["extensions"] = (
+            Extension.objects.exclude(is_mandatory=True)
+            .exclude(type__in=["e", "x"])
+            .exclude(is_active=False)
+        )
         return context
 
 
 class CreateCampaignEpochView(TemplateView):
-    template_name = 'campaigns/create_campaign_epoch.html'
+    template_name = "campaigns/create_campaign_epoch.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['world_pk'] = self.kwargs['world_pk']
-        context['extensions'] = Extension.objects.exclude(
-            is_mandatory=True).exclude(type__in=['x', 'w']).exclude(is_active=False)
+        context["world_pk"] = self.kwargs["world_pk"]
+        context["extensions"] = (
+            Extension.objects.exclude(is_mandatory=True)
+            .exclude(type__in=["x", "w"])
+            .exclude(is_active=False)
+        )
         return context
 
 
 class CreateCampaignExtensionsView(FormView):
-    template_name = 'campaigns/create_campaign_extensions.html'
+    template_name = "campaigns/create_campaign_extensions.html"
     form_class = CreateCharacterExtensionsForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['world_pk'] = self.kwargs['world_pk']
-        context['epoch_pk'] = self.kwargs['epoch_pk']
-        context['extensions'] = Extension.objects.exclude(
-            is_mandatory=True).exclude(type__in=['e', 'w']).exclude(is_active=False)
+        context["world_pk"] = self.kwargs["world_pk"]
+        context["epoch_pk"] = self.kwargs["epoch_pk"]
+        context["extensions"] = (
+            Extension.objects.exclude(is_mandatory=True)
+            .exclude(type__in=["e", "w"])
+            .exclude(is_active=False)
+        )
         return context
 
 
 class CreateCampaignDataView(CreateView):
     model = Campaign
-    fields = ('name', 'abstract', 'character_visibility', 'foe_visibility',
-              'currency_map', 'seed_money', 'starting_template_points')
+    fields = (
+        "name",
+        "abstract",
+        "character_visibility",
+        "foe_visibility",
+        "currency_map",
+        "seed_money",
+        "starting_template_points",
+    )
 
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.created_by = self.request.user
-        obj.epoch = Extension.objects.get(pk=self.kwargs['epoch_pk'])
-        obj.world = Extension.objects.get(pk=self.kwargs['world_pk'])
+        obj.epoch = Extension.objects.get(pk=self.kwargs["epoch_pk"])
+        obj.world = Extension.objects.get(pk=self.kwargs["world_pk"])
         obj.save()
 
-        extensions = Extension.objects.filter(pk__in=self.request.GET.getlist('extensions'))
+        extensions = Extension.objects.filter(
+            pk__in=self.request.GET.getlist("extensions")
+        )
         if obj.world.fixed_extensions.exists():
             extensions = obj.world.fixed_extensions.all()
         obj.extensions.set(extensions)
@@ -82,8 +109,8 @@ class CampaignDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['may_join'] = self.kwargs.get('hash', '') == self.object.campaign_hash
-        context['may_edit'] = self.object.may_edit(self.request.user)
+        context["may_join"] = self.kwargs.get("hash", "") == self.object.campaign_hash
+        context["may_edit"] = self.object.may_edit(self.request.user)
         return context
 
 
@@ -92,17 +119,17 @@ class XhrCampaignFragmentView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['fragment_template'] = self.kwargs['fragment_template']
-        context['may_edit'] = self.object.may_edit(self.request.user)
+        context["fragment_template"] = self.kwargs["fragment_template"]
+        context["may_edit"] = self.object.may_edit(self.request.user)
         return context
 
     def get_template_names(self):
-        return ['campaigns/fragments/' + self.kwargs['fragment_template'] + '.html']
+        return ["campaigns/fragments/" + self.kwargs["fragment_template"] + ".html"]
 
 
 class SaveSettingsView(View):
     def post(self, request, *args, **kwargs):
-        campaign = Campaign.objects.get(id=kwargs['pk'])
+        campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
             form = SettingsForm(request.POST, instance=campaign, files=request.FILES)
             if form.is_valid():
@@ -112,51 +139,53 @@ class SaveSettingsView(View):
 
 class XhrSwitchCharacterNPCView(View):
     def post(self, request, *args, **kwargs):
-        campaign = Campaign.objects.get(id=kwargs['pk'])
+        campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
-            character = Character.objects.get(id=kwargs['character_pk'])
+            character = Character.objects.get(id=kwargs["character_pk"])
             character.switch_pc_npc_campaign()
-        return JsonResponse({'status': 'ok'})
+        return JsonResponse({"status": "ok"})
 
 
 class XhrRemoveCharacterView(View):
     def post(self, request, *args, **kwargs):
-        campaign = Campaign.objects.get(id=kwargs['pk'])
+        campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
-            character = Character.objects.get(id=kwargs['character_pk'])
+            character = Character.objects.get(id=kwargs["character_pk"])
             character.campaign = None
             character.npc_campaign = None
             character.save()
-        return JsonResponse({'status': 'ok'})
+        return JsonResponse({"status": "ok"})
 
 
 class XhrAddFoeToCampaignView(View):
     def post(self, request, *args, **kwargs):
-        campaign = Campaign.objects.get(id=kwargs['pk'])
+        campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
-            wiki_page = WikiPage.objects.get(id=kwargs['wiki_page_pk'])
+            wiki_page = WikiPage.objects.get(id=kwargs["wiki_page_pk"])
             campaign.foe_set.create(wiki_page=wiki_page)
-        return JsonResponse({'status': 'ok'})
+        return JsonResponse({"status": "ok"})
 
 
 class XhrRemoveFoeView(View):
     def post(self, request, *args, **kwargs):
-        campaign = Campaign.objects.get(id=kwargs['pk'])
+        campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
             campaign.foe_set.filter(id=kwargs["foe_pk"]).delete()
-        return JsonResponse({'status': 'ok'})
+        return JsonResponse({"status": "ok"})
 
 
 class BaseSidebarView(DetailView):
     def get_template_names(self):
-        return ['campaigns/sidebar/' + self.kwargs['sidebar_template'] + '.html']
+        return ["campaigns/sidebar/" + self.kwargs["sidebar_template"] + ".html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            context['may_edit'] = self.object.pc_or_npc_campaign.may_edit(self.request.user)
+            context["may_edit"] = self.object.pc_or_npc_campaign.may_edit(
+                self.request.user
+            )
         except AttributeError:
-            context['may_edit'] = self.object.may_edit(self.request.user)
+            context["may_edit"] = self.object.may_edit(self.request.user)
         return context
 
 
@@ -169,7 +198,7 @@ class XhrSettingsSidebarView(BaseSidebarView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = SettingsForm(instance=self.object)
+        context["form"] = SettingsForm(instance=self.object)
         return context
 
 
@@ -178,12 +207,26 @@ class XhrCharacterSidebarView(BaseSidebarView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['may_edit'] = self.object.pc_or_npc_campaign.may_edit(self.request.user)
+        context["may_edit"] = self.object.pc_or_npc_campaign.may_edit(self.request.user)
         return context
 
 
 class XhrFoeSidebarView(BaseSidebarView):
     model = Foe
+
+
+class XhrSearchFoeSidebarView(DetailView):
+    template_name = "campaigns/sidebar/search_foe.html"
+    model = Campaign
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["may_edit"] = self.object.may_edit(self.request.user)
+        context['wiki_pages'] = WikiPage.objects.filter(
+            Q(wikipagegamevalues__id__isnull=False) |
+            Q(wikipagegameaction__id__isnull=False)
+        ).distinct()
+        return context
 
 
 class XhrCampaignGameLogView(ListView):
