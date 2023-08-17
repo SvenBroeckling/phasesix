@@ -63,7 +63,7 @@
                         {% for item in t.item_set.distinct %}
                             {% has_extensions item character.extensions.all as has_extensions %}
                             {% if has_extensions %}
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-md-4">
                                     {% item_widget item character=character %}
                                 </div>
                             {% endif %}

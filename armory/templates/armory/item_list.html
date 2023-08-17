@@ -53,7 +53,7 @@
 
     <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
         {% for object in object_list %}
-            <div class="col col-md-4">
+            <div class="col col-md-4 col-xl-3">
                 <a class="invisible-link" href="{% url 'armory:item_detail' pk=object.id %}">
                     {% item_widget object %}
                 </a>
