@@ -18,7 +18,7 @@
             </thead>
             <tbody>
             {% for c in object.character_set.all %}
-                <tr class="pointer sidebar-trigger" data-sidebar-title="{{ c }}" data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
+                <tr class="pointer sidebar-trigger sidebar-spinner" data-sidebar-title="{{ c }}" data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
                     <td class="column-dice">
                         {{ c }}
                     </td>
