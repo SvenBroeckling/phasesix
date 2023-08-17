@@ -82,6 +82,13 @@ class World(models.Model, metaclass=TransMeta):
         _("Name for centimeter"), max_length=20, default="cm"
     )
     info_name_kg = models.CharField(_("Name for kilogram"), max_length=20, default="kg")
+    foe_overview_wiki_page = models.ForeignKey(
+        "worlds.WikiPage",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="foe_overview_world_set",
+    )
 
     ordering = models.IntegerField(_("ordering"), default=100)
 
@@ -196,7 +203,8 @@ class WikiPage(models.Model, metaclass=TransMeta):
 
     def get_absolute_url(self):
         return reverse(
-            "worlds:wiki_page", kwargs={"world_slug": self.world.slug, "slug": self.slug}
+            "worlds:wiki_page",
+            kwargs={"world_slug": self.world.slug, "slug": self.slug},
         )
 
     def save(self, **kwargs):
@@ -339,8 +347,12 @@ class WikiPageGameValues(models.Model):
     walking_range = models.IntegerField(_("walking range"), default=4)
     minimum_roll = models.IntegerField(_("minimum roll"), default=5)
 
-    stress_test_succeeded_stress = models.IntegerField(_("stress test succeeded stress"), default=0)
-    stress_test_failed_stress = models.IntegerField(_("stress test failed stress"), default=0)
+    stress_test_succeeded_stress = models.IntegerField(
+        _("stress test succeeded stress"), default=0
+    )
+    stress_test_failed_stress = models.IntegerField(
+        _("stress test failed stress"), default=0
+    )
 
     resistances = models.ManyToManyField(
         WikiPageFoeResistanceOrWeakness,
