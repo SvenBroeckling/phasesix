@@ -9,7 +9,7 @@
                         href=""
                         data-sidebar-title="{{ c }}"
                         data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
-                        class="sidebar-trigger mb-3 me-2">
+                        class="sidebar-trigger sidebar-spinner mb-3 me-2">
                     {% if c.image %}
                         {% thumbnail c.image "300x300" crop="center" as im %}
                             <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded" alt="">
