@@ -12,8 +12,12 @@ To run the project in a docker compose environment, all you need is an installed
 
 ```shell
 $ docker-compose up
+$ docker-compose exec web venv/bin/python manage.py migrate
 $ docker-compose exec web venv/bin/python manage.py loaddata demo_data.json
+$ docker-compose exec web venv/bin/python manage.py createsuperuser
 ```
+
+You can access the admin interface at [http://localhost:8000/admin](http://localhost:8000/admin) after that.
 
 ### Getting Started - Native setup
 
