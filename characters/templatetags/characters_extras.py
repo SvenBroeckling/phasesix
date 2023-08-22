@@ -131,7 +131,11 @@ def status_effect_value(status_effect, character):
 
 @register.simple_tag
 def character_knowledge_skill_value(character, knowledge):
-    return character.characterskill_set.get(skill=knowledge.skill).value
+    from characters.models import CharacterSkill
+    try:
+        return character.characterskill_set.get(skill=knowledge.skill).value
+    except CharacterSkill.DoesNotExist:
+        return 0
 
 
 @register.simple_tag
@@ -154,10 +158,19 @@ def character_skill_value(character, skill):
 
 @register.simple_tag
 def spell_type_attribute_dice_value(character, spell_type):
+    from characters.models import CharacterAttribute, CharacterSkill
     attribute = spell_type.reference_attribute
-    da = character.characterattribute_set.get(attribute=attribute).value
-    sc = character.characterskill_set.spell_casting_skill()
-    return da + sc.value
+    try:
+        da = character.characterattribute_set.get(attribute=attribute).value
+    except CharacterAttribute.DoesNotExist:
+        da = 0
+
+    try:
+        sc = character.characterskill_set.spell_casting_skill().value
+    except CharacterSkill.DoesNotExist:
+        sc = 0
+
+    return da + sc
 
 
 @register.filter
