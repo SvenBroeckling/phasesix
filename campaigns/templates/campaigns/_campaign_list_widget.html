@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load thumbnail %}
+<a href="{{ campaign.get_absolute_url }}">
+    <div class="card campaign-list-item" style="
+        background-size: 100%;
+        {% if campaign.backdrop_image %}
+            {% thumbnail campaign.backdrop_image "800" as im %}
+                background-image: url({{ im.url }})
+            {% endthumbnail %}
+        {% else %}
+            {% if campaign.epoch.image %}
+                {% thumbnail campaign.epoch.image "800" as im %}
+                    background-image: url({{ im.url }})
+                {% endthumbnail %}
+            {% else %}
+                background-color: silver
+            {% endif %}
+        {% endif %}
+        ">
+        <div class="card-body text-center p-4">
+            <h3>{{ campaign.name }}</h3>
+            {% blocktrans with t_gm=campaign.created_by %}
+                A campaign by {{ t_gm }}
+            {% endblocktrans %}
+        </div>
+    </div>
+</a>

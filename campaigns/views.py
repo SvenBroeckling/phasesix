@@ -17,19 +17,6 @@ from rules.models import Extension
 from worlds.models import WikiPage
 
 
-class CampaignListView(ListView):
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_authenticated:
-            campaigns = Campaign.objects.for_world_configuration(
-                self.request.world_configuration
-            )
-            if user.is_staff:
-                return campaigns
-            return campaigns.filter(created_by=user)
-        return Campaign.objects.none()
-
-
 class CreateCampaignView(TemplateView):
     template_name = "campaigns/create_campaign.html"
 

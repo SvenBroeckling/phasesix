@@ -22,11 +22,13 @@
         </div>
 
         <div class="col-12 col-sm-8 col-md-9">
-            <div class="col-12">
+            <div class="col-12 mb-3">
                 {{ object.rules|urpg_markup }}
+                {% trans 'Spell Point Cost' %}: {% color_value_span object.spell_point_cost 8 invert=True %}<br>
             </div>
 
             <div class="col-12">
+                <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ object.origin }}<br>
                 <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ object.type.reference_attribute.name }}<br>
                 <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
                 {% for a in object.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>

@@ -17,11 +17,6 @@ urlpatterns = [
         name="template_statistics",
     ),
     path(
-        "assign_spell_cost/",
-        staff_member_required(views.AssignSpellCostView.as_view()),
-        name="assign_spell_cost",
-    ),
-    path(
         "extension_grid/<type>/",
         staff_member_required(views.ExtensionGrid.as_view()),
         name="extension_grid",

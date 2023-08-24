@@ -119,6 +119,9 @@ class Character(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('-modified_at',)
+
     def may_edit(self, user):
         if self.created_by == user:
             return True

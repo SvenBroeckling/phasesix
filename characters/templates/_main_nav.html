@@ -1,5 +1,6 @@
 {% load static i18n portal_extras world_extras %}
-<a href="/" class="d-flex align-items-center justify-content-center mb-3 mb-md-2 me-md-auto text-white text-decoration-none">
+<a href="/"
+   class="d-flex align-items-center justify-content-center mb-3 mb-md-2 me-md-auto text-white text-decoration-none">
     {% world_identifier as identifier %}
     {% if identifier == "tirakan" %}
         <img src="{% static "img/tirakan_logo.png" %}" class="w-75" alt="{{ brand_name }}">
@@ -34,6 +35,37 @@
 <ul class="list-unstyled ps-0">
     <li class="mb-1">
         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
+                data-bs-target="#user-collapse" aria-expanded="true">
+            {% if user.is_authenticated %}
+                {{ request.user|capfirst }}
+            {% else %}
+                {% trans 'Account' %}
+            {% endif %}
+        </button>
+        <div class="collapse show" id="user-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                {% if user.is_authenticated %}
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'portal:profile' %}">{% trans 'Your Profile' %}</a></li>
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
+                {% else %}
+                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'login' %}?next={{ request.path }}">
+                        {% trans 'Login' %}
+                    </a>
+                    </li>
+                    <li>
+                        <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                           href="{% url 'django_registration_register' %}">{% trans 'Sign up' %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </li>
+
+    <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
                 data-bs-target="#play-collapse" aria-expanded="true">
             {% trans "Play" %}
         </button>
@@ -44,18 +76,12 @@
                     <a href="{{ create_url }}"
                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans "Create character" %}</a>
                 </li>
-                <li class="{% active_if_url_name_matches "characters:list" %}">
-                    <a href="{% url 'characters:list' %}"
-                       class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans 'My Characters' %}</a>
-                </li>
-                <li class="{% active_if_url_name_matches "campaigns:list" %}">
-                    <a href="{% url 'campaigns:list' %}"
-                       class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans 'My Campaigns' %}</a>
-                </li>
                 <li class="{% active_if_url_name_matches "rulebook:detail" %}">
                     <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
                        href="{% url 'rulebook:detail' pk=1 %}">{% trans "Rulebook" %}</a>
                 </li>
+                <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                       href="{% url 'forum:index' %}">{% trans 'Forum' %}</a></li>
             </ul>
         </div>
     </li>
@@ -92,10 +118,10 @@
     </li>
     <li class="mb-1">
         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
-                data-bs-target="#read-collapse" aria-expanded="true">
-            {% trans 'Read' %}
+                data-bs-target="#read-collapse" aria-expanded="false">
+            {% trans 'Resources' %}
         </button>
-        <div class="collapse show" id="read-collapse">
+        <div class="collapse" id="read-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li class="{% active_if_url_name_matches "worlds:wiki_page_with_game_values" %}">
                     <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
@@ -125,52 +151,9 @@
         </div>
     </li>
 
-    <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse"
-                data-bs-target="#user-collapse" aria-expanded="true">
-            {% if user.is_authenticated %}
-                {{ request.user|capfirst }}
-            {% else %}
-                {% trans 'Account' %}
-            {% endif %}
-        </button>
-        <div class="collapse show" id="user-collapse">
-            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                {% if user.is_staff %}
-                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
-                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a>
-                    </li>
-                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a>
-                    </li>
-                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'gmtools:assign_spell_cost' %}">{% trans 'Assign Spell Cost' %}</a>
-                    </li>
-                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'gmtools:translation_status' %}">{% trans 'Translation Status' %}</a>
-                    </li>
-                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'homebrew:index' %}">{% trans 'Review Homebrew' %}</a>
-                    </li>
-                {% endif %}
-
-                {% if user.is_authenticated %}
-                    <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                           href="{% url 'logout' %}?next=/">{% trans 'Logout' %}</a></li>
-                {% else %}
-                    <li class="link-body-emphasis d-inline-flex text-decoration-none rounded">
-                        <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">
-                            {% trans 'Login' %}
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </li>
 </ul>
 
 <div class="text-center">
-    <a href="https://hus.tirakans-reiche.de">HuS</a> | <a href="{% url 'contact' %}">{% trans 'Imprint' %}</a> | <a href="{% url 'contact' %}">{% trans 'Privacy' %}</a>
+    <a href="https://hus.tirakans-reiche.de">HuS</a> | <a href="{% url 'contact' %}">{% trans 'Imprint' %}</a> | <a
+    href="{% url 'contact' %}">{% trans 'Privacy' %}</a>
 </div>

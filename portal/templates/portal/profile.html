@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load campaign_extras %}
+{% load portal_extras %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with t_username=object.username|capfirst %}Profile of {{ t_username }}{% endblocktrans %}
+    - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h1>{% blocktrans with t_username=object.username|capfirst %}Profile of {{ t_username }}{% endblocktrans %}</h1>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav class="nav nav-pills" role="tablist">
+                <a
+                    data-bs-toggle="tab"
+                    data-bs-target="#characters-tab-pane"
+                    role="tab"
+                    class="nav-link pointer me-2 mb-1 active">{% trans 'Characters' %}</a>
+                <a
+                    data-bs-toggle="tab"
+                    data-bs-target="#campaigns-tab-pane"
+                    role="tab"
+                    class="nav-link pointer me-2 mb-1">{% trans 'Campaigns' %}</a>
+                {% if user.is_staff %}
+                    <a
+                        data-bs-toggle="tab"
+                        data-bs-target="#admin-tab-pane"
+                        role="tab"
+                        class="nav-link pointer me-2 mb-1">{% trans 'Admin Tools' %}</a>
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="characters-tab-pane" role="tabpanel" tabindex="0">
+            {% if object.character_set.exists %}
+                <div class="row character-list">
+                    {% for character in object.character_set.all %}
+                        <div class="col-12 col-sm-6 col-md-6 mb-3">
+                            {% include 'characters/_character_list_widget.html' with character=character %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body text-center p-5">
+                                <h4 class="mb-3">{% trans "You don't have any characters" %}</h4>
+                                {% create_character_url as character_url %}
+                                {% blocktrans with t_character_url=character_url %}
+                                    <a href="{{ t_character_url }}">Create a character</a>.
+                                {% endblocktrans %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="campaigns-tab-pane" role="tabpanel" tabindex="0">
+            {% if object.campaign_set.exists %}
+                <div class="row campaign-list">
+                    {% for campaign in object.campaign_set.all %}
+                        <div class="col-12 col-md-6 mb-3">
+                            {% include 'campaigns/_campaign_list_widget.html' with campaign=campaign %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body text-center p-5">
+                                <h4 class="mb-3">{% trans "You don't have any campaigns" %}</h4>
+                                {% create_campaign_url as campaign_url %}
+                                {% blocktrans with t_campaign_url=campaign_url %}
+                                    <a href="{{ t_campaign_url }}">Create a campaign</a> to invite players and add NPC
+                                    and foes.
+                                {% endblocktrans %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if user.is_staff %}
+            <div class="tab-pane fade" id="admin-tab-pane" role="tabpanel" tabindex="0">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                   href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
+                            <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                   href="{% url 'gmtools:extension_grid' type='riotgear' %}">{% trans 'Extension Grids' %}</a>
+                            </li>
+                            <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                   href="{% url 'gmtools:template_statistics' %}">{% trans 'Template Statistics' %}</a>
+                            </li>
+                            <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                   href="{% url 'gmtools:translation_status' %}">{% trans 'Translation Status' %}</a>
+                            </li>
+                            <li><a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
+                                   href="{% url 'homebrew:index' %}">{% trans 'Review Homebrew' %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

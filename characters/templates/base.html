@@ -117,8 +117,7 @@
                 <h5>{{ brand_name }}</h5>
                 <ul class="list-unstyled">
                     <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
-                    <li><a href="{% url 'characters:list' %}">{% trans 'My Charactes' %}</a></li>
-                    <li><a href="{% url 'campaigns:list' %}">{% trans 'Campaigns' %}</a></li>
+                    <li><a href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a></li>
                     <li><a href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rules' %}</a></li>
                     <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>
                     <li><a href="https://hus.tirakans-reiche.de">{% trans 'Tirakan HuS' %}</a></li>
@@ -132,7 +131,6 @@
                     <li><a href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a></li>
                     <li><a href="{% url 'magic:basespell_list' %}">{% trans 'Spells' %}</a></li>
                     <li><a href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a></li>
-                    <li><a href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a></li>
                 </ul>
             </div>
         </footer>
