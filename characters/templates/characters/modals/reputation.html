@@ -14,7 +14,7 @@
                 }
             })
         }
-        checkReputationCosts($('#reputation').data('initial-reputation'));
+        checkReputationCosts($('#initial-reputation').data('initial-reputation'));
 
         $('.constructed-template').on('click', function(e){
             let elem = $(this);
@@ -41,7 +41,7 @@
     })
 </script>
 
-<div class="row">
+<div class="row" id="initial-reputation" data-initial-reputation="{{ object.reputation_available }}">
     <div class="col-12 col-md-4 col-lg-3">
         <div class="input-group input-group-sm mb-3">
             <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">

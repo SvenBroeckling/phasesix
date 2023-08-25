@@ -46,7 +46,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Reputation"
                            aria-label="Reputation" name="reputation">
-                    <button type="submit" name="add_reputation" class="btn btn-primary" type="button"
+                    <button type="submit" name="add_reputation" class="btn btn-primary"
                             data-success="{% trans 'Added' %}" data-danger="{% trans 'Not possible' %}">
                         <i class="fa fa-eye text-warning"></i> Hinzufügen
                     </button>
@@ -60,22 +60,17 @@
                         character and advance in your professions.
                     {% endblocktrans %}
                 </p>
-                {% if may_edit %}
-                    <button
-                            class="btn btn-success w-100 mt-1 modal-trigger"
-                            data-bs-toggle="modal"
-                            data-bs-target=".page-modal"
-                            data-modal-title="{% trans 'Reputation' %}"
-                            data-url="{% url 'characters:xhr_reputation' object.id %}">
+            {% endif %}
+
+            {% if may_edit %}
+                <button
+                    class="btn btn-success w-100 mt-1 modal-trigger"
+                    data-bs-toggle="modal"
+                    data-bs-target=".page-modal"
+                    data-modal-title="{% trans 'Reputation' %}"
+                    data-url="{% url 'characters:xhr_reputation' object.id %}">
                         {% trans 'Add character templates' %}
-                    </button>
-                {% endif %}
-            {% else %}
-                <p>
-                    {% blocktrans %}
-                        You don't have unspent reputation points.
-                    {% endblocktrans %}
-                </p>
+                </button>
             {% endif %}
         {% endif %}
     </div>
