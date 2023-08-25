@@ -125,7 +125,7 @@ class XhrDeleteCharacterView(View):
         return JsonResponse(
             {
                 "status": "ok",
-                "url": reverse("characters:list"),
+                "url": '/',
             }
         )
 
