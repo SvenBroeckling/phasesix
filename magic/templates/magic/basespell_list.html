@@ -56,9 +56,8 @@
     <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
         {% for object in object_list %}
             <div class="col col-md-4">
-                <a class="invisible-link" href="{% url 'magic:basespell_detail' pk=object.id %}">
-                    {% basespell_widget object %}
-                </a>
+                <a class="stretched-link" href="{% url 'magic:basespell_detail' pk=object.id %}"></a>
+                {% basespell_widget object %}
             </div>
         {% endfor %}
     </div>

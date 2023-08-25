@@ -4,7 +4,8 @@ from magic.models import BaseSpell
 
 
 class BaseSpellListView(ListView):
-    model = BaseSpell
+    def get_queryset(self):
+        return BaseSpell.objects.without_homebrew()
 
 
 class BaseSpellDetailView(DetailView):

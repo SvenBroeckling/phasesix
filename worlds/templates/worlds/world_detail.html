@@ -4,16 +4,17 @@
 {% block javascript %}
     <script src="{% static 'js/worlds_detail.js' %}"></script>
     <script>
-        $(function(){
+        $(function () {
             let masonry = $('.masonry-container').masonry()
-            setTimeout(function(){
+            setTimeout(function () {
                 masonry.masonry('layout')
             }, 1000)
         })
     </script>
 {% endblock %}
 
-{% block background %}{% if object.image %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% else %}{% static 'img/default-background.jpg' %}{% endif %}{% endblock %}
+{% block background %}{% if object.image %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}
+{% else %}{% static 'img/default-background.jpg' %}{% endif %}{% endblock %}
 
 {% block background_copyright %}
     Image by <a href="{{ object.type.image_copyright_url }}">{{ object.image_copyright }}</a>
@@ -65,24 +66,24 @@
     <div class="row masonry-container">
         {% for page in object.wikipage_set.get_top_level %}
             <div class="col col-md-6 col-xl-4">
-                <a class="invisible-link" href="{% url 'world:wiki_page' world_slug=object.slug slug=page.slug %}">
-                    <div class="card pointer mt-3">
-                        <div class="card-header">
-                            {{ page }}
-                        </div>
-                        {% if page.image %}
-                            {% thumbnail page.image "1024" as im %}
-                            <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
-                            {% endthumbnail %}
-                        {% endif %}
-                        <div class="card-body">
-                            {{ page.text|to_first_linebreak|urpg_markup|replace_tags:object }}
-                        </div>
-                        {% if user.is_superuser %}
-                            <a href="{% url 'admin:worlds_wikipage_change' page.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                        {% endif %}
+                <a class="stretched-link" href="{% url 'world:wiki_page' world_slug=object.slug slug=page.slug %}"></a>
+                <div class="card pointer mt-3">
+                    <div class="card-header">
+                        {{ page }}
                     </div>
-                </a>
+                    {% if page.image %}
+                        {% thumbnail page.image "1024" as im %}
+                            <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
+                        {% endthumbnail %}
+                    {% endif %}
+                    <div class="card-body">
+                        {{ page.text|to_first_linebreak|urpg_markup|replace_tags:object }}
+                    </div>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
+                           style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>

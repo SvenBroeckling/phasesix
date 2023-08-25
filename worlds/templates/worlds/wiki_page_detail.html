@@ -172,26 +172,25 @@
     <div class="row masonry-container mt-4">
         {% for page in object.wikipage_set.all %}
             <div class="col col-sm-6 col-md-6 col-xl-4">
-                <a class="invisible-link"
-                   href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
-                    <div class="card pointer mb-4">
-                        <div class="card-header">
-                            {{ page }}
-                        </div>
-                        {% if page.image %}
-                            {% thumbnail page.image "1024" as im %}
-                                <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
-                            {% endthumbnail %}
-                        {% endif %}
-                        <div class="card-body">
-                            {{ page.text|to_first_linebreak|urpg_markup|replace_tags:page.world }}
-                        </div>
-                        {% if user.is_superuser %}
-                            <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
-                               style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                        {% endif %}
+                <a class="stretched-link"
+                   href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}"></a>
+                <div class="card pointer mb-4">
+                    <div class="card-header">
+                        {{ page }}
                     </div>
-                </a>
+                    {% if page.image %}
+                        {% thumbnail page.image "1024" as im %}
+                            <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
+                        {% endthumbnail %}
+                    {% endif %}
+                    <div class="card-body">
+                        {{ page.text|to_first_linebreak|urpg_markup|replace_tags:page.world }}
+                    </div>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
+                           style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>
