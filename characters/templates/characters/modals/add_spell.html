@@ -112,7 +112,7 @@
             </div>
         </div>
         <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
-            {% for s in category.basespell_set.all %}
+            {% for s in category.basespell_set.without_homebrew %}
                 <div class="col-12 col-lg-6 col-xl-4">
                     {% basespell_widget s character=character %}
                 </div>

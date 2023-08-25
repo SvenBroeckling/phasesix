@@ -2,8 +2,8 @@ import io
 import os
 
 from django import forms
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
 from django.core.mail import mail_admins
 from django.db.models import Q
 from django.db.models.functions import Length
@@ -53,7 +53,6 @@ from magic.models import (
     SpellType,
     SpellTemplateCategory,
     SpellTemplate,
-    SpellOrigin,
     BaseSpell,
 )
 from pantheon.models import Entity, PriestAction
