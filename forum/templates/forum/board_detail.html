@@ -28,17 +28,17 @@
         <div class="col-12 col-xl-10 offset-xl-1 mb-3">
             {% if user.is_authenticated %}
                 <button
-                        data-bs-toggle="collapse"
-                        data-bs-target="#new-thread-collapse"
-                        class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Create Thread' %}</button>
+                    data-bs-toggle="collapse"
+                    data-bs-target="#new-thread-collapse"
+                    class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Create Thread' %}</button>
                 <div class="form-check form-switch float-end">
                     <input
-                            type="checkbox"
-                            {% if is_subscribed %}checked{% endif %}
-                            class="form-check-input"
-                            id="switch-subscribe"
-                            data-url="{% url 'forum:subscribe' mode="board" %}"
-                            data-object="{{ object.id }}">
+                        type="checkbox"
+                        {% if is_subscribed %}checked{% endif %}
+                        class="form-check-input"
+                        id="switch-subscribe"
+                        data-url="{% url 'forum:subscribe' mode="board" %}"
+                        data-object="{{ object.id }}">
                     <label class="form-check-label" for="switch-subscribe">{% trans "Subscribe" %}</label>
                 </div>
             {% endif %}
@@ -52,7 +52,7 @@
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <small class="float-end"><a
-                                    href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
+                                href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
                             {% bootstrap_form form %}
                             <div class="btn-group" role="group">
                                 <button type="submit"
@@ -64,16 +64,16 @@
             {% endif %}
 
             {% for thread in object.thread_set.all %}
-                <div class="card mb-4">
+                <div class="card mb-4 forum-thread-detail-post-card">
                     <div class="card-header">
                         {% latest_user_image thread.created_by as image %}
                         {% if image %}
                             {% thumbnail image "28x28" as im %}
                                 <img
-                                        class="rounded-circle me-1"
-                                        style="width: 28px; height: 28px"
-                                        src="{{ im.url }}"
-                                        alt="{{ thread.created_by }}">
+                                    class="rounded-circle me-1"
+                                    style="width: 28px; height: 28px"
+                                    src="{{ im.url }}"
+                                    alt="{{ thread.created_by }}">
                             {% endthumbnail %}
                         {% endif %}
                         <a class="no-link-colors" href="{{ thread.get_absolute_url }}">{{ thread.name }}</a>
@@ -82,8 +82,11 @@
                             <b>{{ t_created_by }}</b> <span class="small text-muted">{{ t_timesince }} ago</span>
                         {% endblocktrans %}
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pointer">
+                        <a href="{{ thread.get_absolute_url }}" class="stretched-link"></a>
                         {{ thread.earliest_post.text|urpg_markup }}
+                    </div>
+                    <div class="card-footer">
                         <a href="{{ thread.get_absolute_url }}" class="card-link">{{ thread.post_count }}
                             comment{{ thread.post_count|pluralize }}</a>
                     </div>
