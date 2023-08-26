@@ -3,25 +3,25 @@
     <head>
         <title>{% trans 'Phase Six Core Rulebook' %}</title>
 
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;500;600;700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Oxanium:wght@200;300;400;500;600;700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css" rel="stylesheet"/>
 
         <style>
             @page {
                 size: A4;
-                margin: 1cm;
+                margin: 1.4cm;
             }
 
             body {
                 margin: 0;
-                font-size: 0.9rem;
-                font-family: 'Merriweather';
+                font-size: 10pt;
+                font-family: 'Baskervville';
             }
 
             h1, h2, h3, h4, h5, h6 {
-                font-family: 'Roboto';
+                font-family: 'Oxanium';
             }
 
             h2 {
@@ -56,49 +56,41 @@
             }
 
             .title-page {
-                background-image: url(img/dusan-adamovic-OUCTlrQpspo-unsplash.jpg);
+                background-image: url({{ base_dir }}/rulebook/static/rulebook/title.png);
                 background-size: cover;
-                margin: -2cm -1cm;
+                margin: -2cm -1.4cm;
                 width: 21.0cm;
                 height: 30.7cm;
             }
 
             .title-page h1 {
+                color: white;
+                text-shadow: 8px 8px #0a0a0a;
                 margin-top: 8cm;
-                font-size: 32pt;
+                font-size: 42pt;
                 text-align: center;
-            }
-
-            .title-page .credits {
-                font-size: 4pt;
-                font-family: 'Viga';
-                position: absolute;
-                bottom: 5mm;
-                right: 5mm;
-                color: silver;
-            }
-
-            .title-page .credits a {
-                color: silver;
-                text-decoration: none;
             }
 
             .title-page p.claim {
+                font-family: 'Oxanium';
+                font-size: 18pt;
+                text-shadow: 8px 8px #0a0a0a;
+                color: white;
                 text-align: center;
-                margin-top: 1cm;
             }
 
             .chapter-text {
                 column-count: 2;
                 column-gap: 1cm;
                 text-align: justify;
+                hyphens: auto;
             }
 
             .chapter-image {
                 position: relative;
                 height: 10cm;
                 width: 21cm;
-                margin: -1cm -1cm 1cm -1cm;
+                margin: -1.4cm -1.4cm 1cm -1.4cm;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
