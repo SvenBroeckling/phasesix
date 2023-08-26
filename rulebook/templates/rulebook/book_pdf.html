@@ -3,9 +3,7 @@
     <head>
         <title>{% trans 'Phase Six Core Rulebook' %}</title>
 
-        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;500;600;700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Oxanium:wght@200;300;400;500;600;700;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css" rel="stylesheet"/>
 
         <style>
@@ -17,11 +15,11 @@
             body {
                 margin: 0;
                 font-size: 10pt;
-                font-family: 'Baskervville';
+                font-family: '{{ world_book.book_body_font }}';
             }
 
             h1, h2, h3, h4, h5, h6 {
-                font-family: 'Oxanium';
+                font-family: '{{ world_book.book_heading_font }}';
             }
 
             h2 {
@@ -72,7 +70,7 @@
             }
 
             .title-page p.claim {
-                font-family: 'Oxanium';
+                font-family: '{{ world_book.book_title_font }}';
                 font-size: 18pt;
                 text-shadow: 8px 8px #0a0a0a;
                 color: white;
@@ -113,7 +111,7 @@
     <body>
     {% include 'rulebook/book_title.html' %}
 
-    {% for chapter in book.chapter_set.all %}
+    {% for chapter in world_book.book.chapter_set.all %}
         <div class="chapter">
             <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
                 &nbsp;

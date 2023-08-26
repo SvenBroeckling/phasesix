@@ -6,5 +6,4 @@ app_name = 'rulebook'
 
 urlpatterns = [
     path('chapter/<int:pk>', views.ChapterDetailView.as_view(), name='detail'),
-    path('book/<int:pk>/pdf', views.BookPDFView.as_view(), name='book_pdf'),
 ]
