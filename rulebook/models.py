@@ -92,7 +92,7 @@ class WorldBook(models.Model, metaclass=TransMeta):
                 f"book_pdf_{language_code}.pdf", buf
             )
             if settings.DEBUG:
-                print(getattr(self, f"pdf_{language_code}").path)
+                print(f"{self} {getattr(self, f'pdf_{language_code}').path}")
 
 
 class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):

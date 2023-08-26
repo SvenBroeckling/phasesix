@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n static rules_extras thumbnail %}
+{% load i18n static rules_extras thumbnail rulebook_extras %}
 
 {% block background %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
 
@@ -14,15 +14,16 @@
     <div class="row">
         <div class="d-block d-lg-none col-12">
             <button
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#rules-mobile-nav"
-                    class="btn btn-outline-primary w-100 mb-3">{% trans 'Chapters' %}</button>
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#rules-mobile-nav"
+                class="btn btn-outline-primary w-100 mb-3">{% trans 'Chapters' %}</button>
             <div class="collapse mb-3" id="rules-mobile-nav">
                 <ul class="nav nav-pills flex-column">
                     {% for chapter in chapters %}
                         <li class="nav-item">
-                            <a class="nav-link {% if chapter == object %}active{% endif %}" href="{% url 'rulebook:detail' pk=chapter.id %}">
+                            <a class="nav-link {% if chapter == object %}active{% endif %}"
+                               href="{% url 'rulebook:detail' pk=chapter.id %}">
                                 <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
                                 {{ chapter.name }}
                             </a>
@@ -32,6 +33,7 @@
             </div>
         </div>
 
+
         <div class="col-12 col-lg-9 rules">
             <div class="columns">
                 {{ object.text|urpg_markup:False }}
@@ -39,10 +41,21 @@
         </div>
 
         <div class="col-md-3 d-none d-lg-block">
+            <div class="dropdown w-100 mb-2">
+                <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    {% trans 'Download PDF' %}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% rulebook_pdf request.world_configuration.world object.book 'de' %}">{% trans "German" %}</a></li>
+                    <li><a class="dropdown-item" href="{% rulebook_pdf request.world_configuration.world object.book 'en' %}">{% trans "English" %}</a></li>
+                </ul>
+            </div>
             <ul class="nav nav-pills flex-column">
                 {% for chapter in chapters %}
                     <li class="nav-item">
-                        <a class="nav-link {% if chapter.id == object.id %}active{% endif %}" href="{% url 'rulebook:detail' pk=chapter.id %}">
+                        <a class="nav-link {% if chapter.id == object.id %}active{% endif %}"
+                           href="{% url 'rulebook:detail' pk=chapter.id %}">
                             <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
                             {{ chapter.name }}
                         </a>
