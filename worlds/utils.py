@@ -6,7 +6,7 @@ def get_world_configuration_template(request, template_name):
         return template_name
 
     parts = template_name.split('.')
-    parts[0] = f'{parts[0]}_{request.world_configuration.template_addon}'
+    parts[0] = f'{parts[0]}_{request.world_configuration.world.template_addon}'
     world_template_name = ".".join(parts)
 
     engine = Engine.get_default()

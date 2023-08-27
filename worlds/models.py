@@ -49,6 +49,7 @@ class World(models.Model, metaclass=TransMeta):
     description_3 = models.TextField(_("description 3"), blank=True, null=True)
 
     is_active = models.BooleanField(_("is active"), default=True)
+    is_default = models.BooleanField(_("is default"), default=False)
     extension = models.ForeignKey(
         "rules.Extension",
         verbose_name=_("extension"),
