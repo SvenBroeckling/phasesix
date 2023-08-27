@@ -71,7 +71,6 @@ from worlds.utils import get_world_configuration_template
 
 
 class IndexView(TemplateView):
-    template_name = "index.html"
 
     def get_template_names(self):
         return [get_world_configuration_template(self.request, "index.html")]

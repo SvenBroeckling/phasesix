@@ -88,7 +88,7 @@ class World(models.Model, metaclass=TransMeta):
     brand_logo = models.ImageField(
         _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
     )
-    template_addon = models.CharField(_("Template Suffix"), max_length=40)
+    template_addon = models.CharField(_("Template Addon"), max_length=40)
 
     ordering = models.IntegerField(_("ordering"), default=100)
 
@@ -124,6 +124,10 @@ class World(models.Model, metaclass=TransMeta):
             }
         else:
             return None
+
+    @property
+    def identifier(self):
+        return self.extension.identifier
 
 
 class WikiPageQuerySet(models.QuerySet):
