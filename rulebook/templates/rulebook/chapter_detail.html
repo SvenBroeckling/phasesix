@@ -47,8 +47,8 @@
                     {% trans 'Download PDF' %}
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% rulebook_pdf request.world_configuration.world object.book 'de' %}">{% trans "German" %}</a></li>
-                    <li><a class="dropdown-item" href="{% rulebook_pdf request.world_configuration.world object.book 'en' %}">{% trans "English" %}</a></li>
+                    <li><a class="dropdown-item" href="{% rulebook_pdf_link request.world_configuration.world object.book 'de' %}">{% trans "German" %}</a></li>
+                    <li><a class="dropdown-item" href="{% rulebook_pdf_link request.world_configuration.world object.book 'en' %}">{% trans "English" %}</a></li>
                 </ul>
             </div>
             <ul class="nav nav-pills flex-column">

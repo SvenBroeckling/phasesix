@@ -8,7 +8,7 @@ from transmeta import TransMeta
 from worlds.unique_slugify import unique_slugify
 
 
-class WorldSiteConfiguration(models.Model, metaclass=TransMeta):
+class WorldSiteConfiguration(models.Model):
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     dns_domain_name = models.CharField(
         _("dns domain name"),
@@ -22,15 +22,8 @@ class WorldSiteConfiguration(models.Model, metaclass=TransMeta):
     session_cookie_domain = models.CharField(
         _("session cookie domain"), max_length=120, blank=True, null=True
     )
-    brand_name = models.CharField(_("Brand name"), max_length=80)
-    brand_logo = models.ImageField(
-        _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
-    )
-    description = models.TextField(_("Description"), blank=True, null=True)
-    template_addon = models.CharField(_("Template Suffix"), max_length=40)
 
     class Meta:
-        translate = "brand_name", "description"
         verbose_name = _("world site configuration")
         verbose_name_plural = _("world site configurations")
 
@@ -90,6 +83,12 @@ class World(models.Model, metaclass=TransMeta):
         related_name="foe_overview_world_set",
     )
 
+    brand_name = models.CharField(_("Brand name"), max_length=80)
+    brand_logo = models.ImageField(
+        _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
+    )
+    template_addon = models.CharField(_("Template Suffix"), max_length=40)
+
     ordering = models.IntegerField(_("ordering"), default=100)
 
     class Meta:
@@ -101,6 +100,7 @@ class World(models.Model, metaclass=TransMeta):
             "description_3",
             "info_name_cm",
             "info_name_kg",
+            "brand_name",
         )
         verbose_name = _("world")
         verbose_name_plural = _("worlds")

@@ -13,7 +13,7 @@ from worlds.models import (
 )
 
 
-class WorldSiteConfigurationInline(admin.StackedInline):
+class WorldSiteConfigurationInline(admin.TabularInline):
     model = WorldSiteConfiguration
 
 
