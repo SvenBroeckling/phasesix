@@ -258,6 +258,8 @@ class XhrCharacterRestView(TemplateView):
                     if character.health < character.max_health:
                         character.health += 1
 
+            character.boost = 0
+
             if "magic" in character.extension_enabled:
                 rest_arcana_roll = roll_and_send(
                     character.id,
