@@ -28,99 +28,128 @@ class CharacterQuerySet(models.QuerySet):
 class Character(models.Model):
     objects = CharacterQuerySet.as_manager()
 
-    name = models.CharField(_('name'), max_length=80)
-    description = models.TextField(_('description'), blank=True, null=True)
+    name = models.CharField(_("name"), max_length=80)
+    description = models.TextField(_("description"), blank=True, null=True)
 
     may_appear_on_start_page = models.BooleanField(
-        _('may appear on start page'),
-        help_text=_('This character may appear on the anonymous start page (i.E. if it has only free images'),
-        default=False
+        _("may appear on start page"),
+        help_text=_(
+            "This character may appear on the anonymous start page (i.E. if it has only free images"
+        ),
+        default=False,
     )
 
-    size = models.IntegerField(_('size'), blank=True, null=True)
-    weight = models.IntegerField(_('weight'), blank=True, null=True)
-    date_of_birth = models.CharField(_('date of birth'), max_length=40, blank=True, null=True)
+    size = models.IntegerField(_("size"), blank=True, null=True)
+    weight = models.IntegerField(_("weight"), blank=True, null=True)
+    date_of_birth = models.CharField(
+        _("date of birth"), max_length=40, blank=True, null=True
+    )
     entity = models.ForeignKey(
-        'pantheon.Entity',
-        verbose_name=_('entity'),
+        "pantheon.Entity",
+        verbose_name=_("entity"),
         blank=True,
         null=True,
-        on_delete=models.SET_NULL)
-    attitude = models.IntegerField(_('attitude'), default=50)
-    grace = models.IntegerField(_('grace'), default=0)
+        on_delete=models.SET_NULL,
+    )
+    attitude = models.IntegerField(_("attitude"), default=50)
+    grace = models.IntegerField(_("grace"), default=0)
 
-    image = models.ImageField(_('image'), upload_to='character_images', max_length=256, blank=True, null=True)
-    image_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
-    image_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
+    image = models.ImageField(
+        _("image"), upload_to="character_images", max_length=256, blank=True, null=True
+    )
+    image_copyright = models.CharField(
+        _("image copyright"), max_length=40, blank=True, null=True
+    )
+    image_copyright_url = models.CharField(
+        _("image copyright url"), max_length=150, blank=True, null=True
+    )
 
     backdrop_image = models.ImageField(
-        _('backdrop image'),
-        upload_to='character_backdrop_images',
+        _("backdrop image"),
+        upload_to="character_backdrop_images",
         max_length=256,
         blank=True,
-        null=True)
-    backdrop_copyright = models.CharField(_('image copyright'), max_length=40, blank=True, null=True)
-    backdrop_copyright_url = models.CharField(_('image copyright url'), max_length=150, blank=True, null=True)
+        null=True,
+    )
+    backdrop_copyright = models.CharField(
+        _("image copyright"), max_length=40, blank=True, null=True
+    )
+    backdrop_copyright_url = models.CharField(
+        _("image copyright url"), max_length=150, blank=True, null=True
+    )
 
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
-    modified_at = models.DateTimeField(_('modified at'), auto_now=True)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     created_by = models.ForeignKey(
-        'auth.User',
-        verbose_name=_('created by'),
+        "auth.User",
+        verbose_name=_("created by"),
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        help_text=_('Characters without user will be cleaned daily.')
+        help_text=_("Characters without user will be cleaned daily."),
     )
 
     extensions = models.ManyToManyField(
-        'rules.Extension', limit_choices_to={'is_mandatory': False}
+        "rules.Extension", limit_choices_to={"is_mandatory": False}
     )
 
     lineage = models.ForeignKey(
-        'rules.Lineage', verbose_name=_('lineage'), on_delete=models.CASCADE
+        "rules.Lineage", verbose_name=_("lineage"), on_delete=models.CASCADE
     )
 
     currency_map = models.ForeignKey(
-        'armory.CurrencyMap', verbose_name=_('currency map'), on_delete=models.CASCADE
+        "armory.CurrencyMap", verbose_name=_("currency map"), on_delete=models.CASCADE
     )
 
     campaign = models.ForeignKey(
-        'campaigns.Campaign', verbose_name=_('Campaign'), blank=True, null=True, on_delete=models.SET_NULL
+        "campaigns.Campaign",
+        verbose_name=_("Campaign"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
     npc_campaign = models.ForeignKey(
-        'campaigns.Campaign', verbose_name=_('NPC Campaign'), related_name="npc_set", blank=True, null=True, on_delete=models.SET_NULL
+        "campaigns.Campaign",
+        verbose_name=_("NPC Campaign"),
+        related_name="npc_set",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
-    reputation = models.IntegerField(_('reputation'), default=0)
+    reputation = models.IntegerField(_("reputation"), default=0)
 
-    health = models.IntegerField(_('health'), default=6)
-    boost = models.IntegerField(_('boost'), default=0)
-    arcana = models.IntegerField(_('arcana'), default=3)
-    stress = models.IntegerField(_('stress'), default=0)
+    health = models.IntegerField(_("health"), default=6)
+    boost = models.IntegerField(_("boost"), default=0)
+    arcana = models.IntegerField(_("arcana"), default=3)
+    stress = models.IntegerField(_("stress"), default=0)
 
-    bonus_dice_used = models.IntegerField(_('Bonus dice used'), default=0)
-    destiny_dice_used = models.IntegerField(_('Destiny dice used'), default=0)
-    rerolls_used = models.IntegerField(_('Rerolls used'), default=0)
+    bonus_dice_used = models.IntegerField(_("Bonus dice used"), default=0)
+    destiny_dice_used = models.IntegerField(_("Destiny dice used"), default=0)
+    rerolls_used = models.IntegerField(_("Rerolls used"), default=0)
 
-    latest_initiative = models.IntegerField(_('latest initiative'), default=0)
+    latest_initiative = models.IntegerField(_("latest initiative"), default=0)
 
-    quirks = models.ManyToManyField('horror.Quirk', verbose_name=_('quirks'), blank=True)
+    quirks = models.ManyToManyField(
+        "horror.Quirk", verbose_name=_("quirks"), blank=True
+    )
     quirks_gained = models.IntegerField(
-        _('quirks gained'),
+        _("quirks gained"),
         default=0,
-        help_text=_('The amount of quirks gained by excess stress'))
+        help_text=_("The amount of quirks gained by excess stress"),
+    )
     quirks_healed = models.IntegerField(
-        _('quirks healed'),
+        _("quirks healed"),
         default=0,
-        help_text=_('The amount of quirks healed by treatment.'))
+        help_text=_("The amount of quirks healed by treatment."),
+    )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ('-modified_at',)
+        ordering = ("-modified_at",)
 
     def may_edit(self, user):
         if self.created_by == user:
@@ -132,19 +161,23 @@ class Character(models.Model):
         return False
 
     def get_absolute_url(self):
-        return reverse('characters:detail', kwargs={'pk': self.id})
+        return reverse("characters:detail", kwargs={"pk": self.id})
 
     def get_image_url(self):
         if self.image:
-            return get_thumbnail(self.image, '180', crop='center', quality=99).url
+            return get_thumbnail(self.image, "180", crop="center", quality=99).url
 
-        return f'{settings.STATIC_URL}/img/silhuette.png'
+        return f"{settings.STATIC_URL}/img/silhuette.png"
 
     def get_backdrop_image_url(self):
         if self.backdrop_image:
-            return get_thumbnail(self.backdrop_image, "1800", crop="center", quality=99).url
+            return get_thumbnail(
+                self.backdrop_image, "1800", crop="center", quality=99
+            ).url
         if self.get_epoch().image:
-            return get_thumbnail(self.get_epoch().image, "1800", crop="center", quality=99).url
+            return get_thumbnail(
+                self.get_epoch().image, "1800", crop="center", quality=99
+            ).url
         return None
 
     def warnings(self, world_configuration):
@@ -164,25 +197,32 @@ class Character(models.Model):
     def get_aspect_modifier(self, aspect_name):
         m = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.charactertemplate_set.all(),
-            aspect=aspect_name).aggregate(Sum('aspect_modifier'))
+            aspect=aspect_name,
+        ).aggregate(Sum("aspect_modifier"))
 
         q = QuirkModifier.objects.filter(
-            quirk__in=self.quirks.all(),
-            aspect=aspect_name).aggregate(Sum('aspect_modifier'))
-        return (m['aspect_modifier__sum'] or 0) + (q['aspect_modifier__sum'] or 0)
+            quirk__in=self.quirks.all(), aspect=aspect_name
+        ).aggregate(Sum("aspect_modifier"))
+        return (m["aspect_modifier__sum"] or 0) + (q["aspect_modifier__sum"] or 0)
 
     def get_attribute_value(self, attribute_identifier):
-        return self.characterattribute_set.get(attribute__identifier=attribute_identifier).value
+        return self.characterattribute_set.get(
+            attribute__identifier=attribute_identifier
+        ).value
 
     def attributes(self) -> dict:
-        return {a.attribute.identifier: a.value for a in self.characterattribute_set.all()}
+        return {
+            a.attribute.identifier: a.value for a in self.characterattribute_set.all()
+        }
 
     def knowledge_dict(self):  # TODO: 230 Queries
         kd = {}
         for t in self.charactertemplate_set.all():
             for m in t.template.templatemodifier_set.exclude(knowledge__isnull=True):
                 if m.knowledge in kd.keys():
-                    kd[m.knowledge] += m.knowledge_modifier if m.knowledge_modifier is not None else 0
+                    kd[m.knowledge] += (
+                        m.knowledge_modifier if m.knowledge_modifier is not None else 0
+                    )
                 else:
                     kd[m.knowledge] = m.knowledge_modifier
         return kd
@@ -205,7 +245,7 @@ class Character(models.Model):
         """Websocket room name"""
         if self.pc_or_npc_campaign is not None:
             return self.pc_or_npc_campaign.ws_room_name
-        return f'character-{self.id}'
+        return f"character-{self.id}"
 
     @property
     def priest_actions(self):
@@ -214,8 +254,8 @@ class Character(models.Model):
     @property
     def is_priest(self):
         return TemplateModifier.objects.filter(
-            template__charactertemplate__character=self,
-            allows_priest_actions=True).exists()
+            template__charactertemplate__character=self, allows_priest_actions=True
+        ).exists()
 
     @property
     def is_magical(self):
@@ -227,19 +267,19 @@ class Character(models.Model):
 
     def currency_quantity(self, currency_map_unit):
         qs = self.charactercurrency_set.filter(currency_map_unit=currency_map_unit)
-        return qs.latest('id').quantity if qs.exists() else 0
+        return qs.latest("id").quantity if qs.exists() else 0
 
     @property
     def common_currency_unit(self):
         return CurrencyMapUnit.objects.filter(
-            currency_map__character__id=self.id,
-            is_common=True
-        ).latest('id')
+            currency_map__character__id=self.id, is_common=True
+        ).latest("id")
 
     @property
     def templates_with_rules(self):
         return self.charactertemplate_set.exclude(
-            template__rules_de__isnull=True).exclude(template__rules_de='')
+            template__rules_de__isnull=True
+        ).exclude(template__rules_de="")
 
     @property
     def templates_with_combat_rules(self):
@@ -253,12 +293,12 @@ class Character(models.Model):
         self.charactertemplate_set.filter(template=template).delete()
 
     def get_epoch(self) -> Extension:
-        return self.extensions.filter(is_mandatory=False, type='e').earliest('id')
+        return self.extensions.filter(is_mandatory=False, type="e").earliest("id")
 
     @property
     def world(self):
         try:
-            return self.extensions.filter(is_mandatory=False, type='w').earliest('id')
+            return self.extensions.filter(is_mandatory=False, type="w").earliest("id")
         except Extension.DoesNotExist:
             return None
 
@@ -273,8 +313,8 @@ class Character(models.Model):
 
     @property
     def reputation_spent(self):
-        ts = self.charactertemplate_set.aggregate(Sum('template__cost'))
-        tc = ts['template__cost__sum'] if ts is not None else 0
+        ts = self.charactertemplate_set.aggregate(Sum("template__cost"))
+        tc = ts["template__cost__sum"] if ts is not None else 0
         return tc or 0
 
     @property
@@ -283,7 +323,11 @@ class Character(models.Model):
 
     @property
     def reputation_gained(self):
-        campaign_points = self.pc_or_npc_campaign.starting_template_points if self.pc_or_npc_campaign else 0
+        campaign_points = (
+            self.pc_or_npc_campaign.starting_template_points
+            if self.pc_or_npc_campaign
+            else 0
+        )
         return self.reputation - self.lineage.template_points - campaign_points
 
     def set_initial_reputation(self, initial_reputation=None):
@@ -295,27 +339,37 @@ class Character(models.Model):
     @property
     def remaining_template_points(self):
         spent_points = (
-                self.charactertemplate_set.aggregate(Sum('template__cost'))[
-                    'template__cost__sum'
-                ]
-                or 0)
-        campaign_points = self.pc_or_npc_campaign.starting_template_points if self.pc_or_npc_campaign else 0
+            self.charactertemplate_set.aggregate(Sum("template__cost"))[
+                "template__cost__sum"
+            ]
+            or 0
+        )
+        campaign_points = (
+            self.pc_or_npc_campaign.starting_template_points
+            if self.pc_or_npc_campaign
+            else 0
+        )
         return self.lineage.template_points + campaign_points - spent_points
 
     # Magic and Horror
 
     @property
     def spell_points(self):
-        return self.lineage.base_spell_points + self.get_aspect_modifier('base_spell_points')
+        return self.lineage.base_spell_points + self.get_aspect_modifier(
+            "base_spell_points"
+        )
 
     @property
     def unlocked_spell_origins(self):
         return SpellOrigin.objects.filter(
-            id__in=[t.unlocks_spell_origin.id
-                    for t
-                    in TemplateModifier.objects.filter(
-                        unlocks_spell_origin__isnull=False,
-                        template__charactertemplate__character__id=self.id)])
+            id__in=[
+                t.unlocks_spell_origin.id
+                for t in TemplateModifier.objects.filter(
+                    unlocks_spell_origin__isnull=False,
+                    template__charactertemplate__character__id=self.id,
+                )
+            ]
+        )
 
     @property
     def available_stress(self):
@@ -323,7 +377,9 @@ class Character(models.Model):
 
     @property
     def max_stress(self):
-        return self.lineage.base_max_stress + self.get_aspect_modifier('base_max_stress')
+        return self.lineage.base_max_stress + self.get_aspect_modifier(
+            "base_max_stress"
+        )
 
     @property
     def quirks_active(self):
@@ -336,7 +392,9 @@ class Character(models.Model):
 
     @property
     def max_arcana(self):
-        return self.lineage.base_max_arcana + self.get_aspect_modifier('base_max_arcana')
+        return self.lineage.base_max_arcana + self.get_aspect_modifier(
+            "base_max_arcana"
+        )
 
     @property
     def arcana_used(self):
@@ -354,19 +412,25 @@ class Character(models.Model):
 
     @property
     def minimum_roll(self):
-        return self.lineage.base_minimum_roll + self.get_aspect_modifier('base_minimum_roll')
+        return self.lineage.base_minimum_roll + self.get_aspect_modifier(
+            "base_minimum_roll"
+        )
 
     @property
     def bonus_dice(self):
-        return self.lineage.base_bonus_dice + self.get_aspect_modifier('base_bonus_dice')
+        return self.lineage.base_bonus_dice + self.get_aspect_modifier(
+            "base_bonus_dice"
+        )
 
     @property
     def destiny_dice(self):
-        return self.lineage.base_destiny_dice + self.get_aspect_modifier('base_destiny_dice')
+        return self.lineage.base_destiny_dice + self.get_aspect_modifier(
+            "base_destiny_dice"
+        )
 
     @property
     def rerolls(self):
-        return self.lineage.base_rerolls + self.get_aspect_modifier('base_rerolls')
+        return self.lineage.base_rerolls + self.get_aspect_modifier("base_rerolls")
 
     @property
     def bonus_dice_free(self):
@@ -382,75 +446,109 @@ class Character(models.Model):
 
     @property
     def stress_test_dice(self):
-        return self.get_attribute_value('willpower') + self.get_attribute_value('logic')
+        return self.get_attribute_value("willpower") + self.get_attribute_value("logic")
+
     # Combat
 
     @property
     def actions(self):
-        return self.lineage.base_actions + self.get_aspect_modifier('base_actions')
+        return self.lineage.base_actions + self.get_aspect_modifier("base_actions")
 
     @property
     def combat_walking_range(self):
-        return self.get_attribute_value('quickness') + 1
+        return self.get_attribute_value("quickness") + 1
 
     @property
     def combat_running_range(self):
-        return self.get_attribute_value('quickness') + 5
+        return self.get_attribute_value("quickness") + 5
 
     @property
     def combat_crawling_range(self):
-        return int(math.ceil(self.get_attribute_value('quickness') / 2)) + 1
+        return int(math.ceil(self.get_attribute_value("quickness") / 2)) + 1
 
     @property
     def ballistic_protection(self):
-        bp = self.characterriotgear_set.aggregate(
-            Sum('riot_gear__protection_ballistic')
-        )['riot_gear__protection_ballistic__sum'] or 0
-        return self.lineage.base_protection + self.get_aspect_modifier('base_protection') + bp
+        bp = (
+            self.characterriotgear_set.aggregate(
+                Sum("riot_gear__protection_ballistic")
+            )["riot_gear__protection_ballistic__sum"]
+            or 0
+        )
+        return (
+            self.lineage.base_protection
+            + self.get_aspect_modifier("base_protection")
+            + bp
+        )
 
     @property
     def total_encumbrance(self):
-        riot_gear_encumbrance = self.characterriotgear_set.aggregate(
-            Sum('riot_gear__encumbrance')
-        )['riot_gear__encumbrance__sum'] or 0
-        weapon_encumbrance = self.characterweapon_set.aggregate(
-            Sum('weapon__encumbrance')
-        )['weapon__encumbrance__sum'] or 0
+        riot_gear_encumbrance = (
+            self.characterriotgear_set.aggregate(Sum("riot_gear__encumbrance"))[
+                "riot_gear__encumbrance__sum"
+            ]
+            or 0
+        )
+        weapon_encumbrance = (
+            self.characterweapon_set.aggregate(Sum("weapon__encumbrance"))[
+                "weapon__encumbrance__sum"
+            ]
+            or 0
+        )
         return weapon_encumbrance + riot_gear_encumbrance
 
     @property
     def evasion(self):
         character_evasion = int(
-            math.ceil((self.get_attribute_value('deftness') + self.get_attribute_value('quickness')) / 2))
-        mods = self.get_aspect_modifier('base_evasion')
-        return character_evasion + self.lineage.base_evasion + mods - self.total_encumbrance
+            math.ceil(
+                (
+                    self.get_attribute_value("deftness")
+                    + self.get_attribute_value("quickness")
+                )
+                / 2
+            )
+        )
+        mods = self.get_aspect_modifier("base_evasion")
+        return (
+            character_evasion
+            + self.lineage.base_evasion
+            + mods
+            - self.total_encumbrance
+        )
 
     @property
     def rest_wound_dice(self):
-        return self.get_attribute_value('resistance') + self.get_attribute_value(
-            'endurance') + self.get_attribute_value('willpower')
+        return (
+            self.get_attribute_value("resistance")
+            + self.get_attribute_value("endurance")
+            + self.get_attribute_value("willpower")
+        )
 
     @property
     def rest_arcana_dice(self):
-        return self.get_attribute_value('charm') + self.get_attribute_value(
-            'conscientiousness') + self.get_attribute_value('willpower')
+        return (
+            self.get_attribute_value("charm")
+            + self.get_attribute_value("conscientiousness")
+            + self.get_attribute_value("willpower")
+        )
 
     @property
     def rest_stress_dice(self):
-        return self.get_attribute_value('willpower') + self.get_attribute_value('logic')
+        return self.get_attribute_value("willpower") + self.get_attribute_value("logic")
 
     @property
     def weaponless_attack_dice(self):
-        bonus = 1 if self.get_attribute_value('quickness') > 2 else 0
+        bonus = 1 if self.get_attribute_value("quickness") > 2 else 0
         return self.characterskill_set.hand_to_hand_combat_skill().value + bonus
 
     @property
     def weaponless_piercing(self):
-        return 1 if self.get_attribute_value('strength') > 2 else 0
+        return 1 if self.get_attribute_value("strength") > 2 else 0
 
     @property
     def max_health(self):
-        return self.lineage.base_max_health + self.get_aspect_modifier('base_max_health')
+        return self.lineage.base_max_health + self.get_aspect_modifier(
+            "base_max_health"
+        )
 
     @property
     def wounds_taken(self):
@@ -458,12 +556,18 @@ class Character(models.Model):
 
     @property
     def max_concealment(self):
-        ic = self.characteritem_set.aggregate(
-            Max('item__concealment')
-        )['item__concealment__max'] or 0
-        rc = self.characterriotgear_set.aggregate(
-            Max('riot_gear__concealment')
-        )['riot_gear__concealment__max'] or 0
+        ic = (
+            self.characteritem_set.aggregate(Max("item__concealment"))[
+                "item__concealment__max"
+            ]
+            or 0
+        )
+        rc = (
+            self.characterriotgear_set.aggregate(Max("riot_gear__concealment"))[
+                "riot_gear__concealment__max"
+            ]
+            or 0
+        )
         wc = 0
         for w in self.characterweapon_set.all():
             if w.modified_concealment > wc:
@@ -472,63 +576,78 @@ class Character(models.Model):
 
     def randomize(self, reputation):
         while reputation > 0:
-            template = Template.objects.for_extensions(self.extensions).order_by('?').first()
+            template = (
+                Template.objects.for_extensions(self.extensions).order_by("?").first()
+            )
             self.charactertemplate_set.create(template=template)
             reputation -= template.cost
         for i in range(2):
-            self.characterriotgear_set.create(riot_gear=RiotGear.objects.for_extensions(self.extensions).order_by('?').first())
+            self.characterriotgear_set.create(
+                riot_gear=RiotGear.objects.for_extensions(self.extensions)
+                .order_by("?")
+                .first()
+            )
         for i in range(3):
-            self.characterweapon_set.create(weapon=Weapon.objects.for_extensions(self.extensions).order_by('?').first())
+            self.characterweapon_set.create(
+                weapon=Weapon.objects.for_extensions(self.extensions)
+                .order_by("?")
+                .first()
+            )
         for i in range(12):
             self.characteritem_set.create(
-                item=Item.objects.for_extensions(self.extensions).order_by('?').first(),
-                quantity=random.randint(1, 3))
+                item=Item.objects.for_extensions(self.extensions).order_by("?").first(),
+                quantity=random.randint(1, 3),
+            )
 
 
 class CharacterAttributeQuerySet(models.QuerySet):
     def physis_attributes(self):
-        return self.filter(attribute__kind='phy').order_by(f'attribute__name_{get_language()}')
+        return self.filter(attribute__kind="phy").order_by(
+            f"attribute__name_{get_language()}"
+        )
 
     def persona_attributes(self):
-        return self.filter(attribute__kind='per').order_by(f'attribute__name_{get_language()}')
+        return self.filter(attribute__kind="per").order_by(
+            f"attribute__name_{get_language()}"
+        )
 
 
 class CharacterSkillQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
-            Q(skill__extensions__id__in=extension_rm.all()) |
-            Q(skill__extensions__id__in=Extension.objects.filter(is_mandatory=True))
+            Q(skill__extensions__id__in=extension_rm.all())
+            | Q(skill__extensions__id__in=Extension.objects.filter(is_mandatory=True))
         )
 
     def mind_skills(self):
-        return self.filter(skill__kind='m').order_by(f'skill__name_{get_language()}')
+        return self.filter(skill__kind="m").order_by(f"skill__name_{get_language()}")
 
     def practical_skills(self):
-        return self.filter(skill__kind='p').order_by(f'skill__name_{get_language()}')
+        return self.filter(skill__kind="p").order_by(f"skill__name_{get_language()}")
 
     def ranged_combat_skill(self):
-        return self.get(skill__name_en='Shooting')
+        return self.get(skill__name_en="Shooting")
 
     def hand_to_hand_combat_skill(self):
-        return self.get(skill__name_en='Hand to Hand Combat')
+        return self.get(skill__name_en="Hand to Hand Combat")
 
     def throwing_combat_skill(self):
-        return self.get(skill__name_en='Throwing')
+        return self.get(skill__name_en="Throwing")
 
     def evasion_skill(self):
-        return self.get(skill__name_en='Acrobatics')
+        return self.get(skill__name_en="Acrobatics")
 
     def spell_casting_skill(self):
-        return self.get(skill__name_en='Spell Casting')
+        return self.get(skill__name_en="Spell Casting")
 
 
 class CharacterAttribute(models.Model):
     objects = CharacterAttributeQuerySet.as_manager()
     character = models.ForeignKey(Character, models.CASCADE)
-    attribute = models.ForeignKey('rules.Attribute', on_delete=models.CASCADE)
+    attribute = models.ForeignKey("rules.Attribute", on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ('attribute__name_de',)
+        ordering = ("attribute__name_de",)
 
     def __str__(self):
         return "{} {}".format(self.attribute.name, self.value)
@@ -540,21 +659,26 @@ class CharacterAttribute(models.Model):
     def value(self):
         s = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.character.charactertemplate_set.all(),
-            attribute=self.attribute).aggregate(Sum('attribute_modifier'))
+            attribute=self.attribute,
+        ).aggregate(Sum("attribute_modifier"))
         q = QuirkModifier.objects.filter(
-            quirk__in=self.character.quirks.all(),
-            attribute=self.attribute).aggregate(Sum('attribute_modifier'))
-        return 1 + (s['attribute_modifier__sum'] or 0) + (q['attribute_modifier__sum'] or 0)
+            quirk__in=self.character.quirks.all(), attribute=self.attribute
+        ).aggregate(Sum("attribute_modifier"))
+        return (
+            1
+            + (s["attribute_modifier__sum"] or 0)
+            + (q["attribute_modifier__sum"] or 0)
+        )
 
 
 class CharacterSkill(models.Model):
     objects = CharacterSkillQuerySet.as_manager()
 
     character = models.ForeignKey(Character, models.CASCADE)
-    skill = models.ForeignKey('rules.Skill', models.CASCADE)
+    skill = models.ForeignKey("rules.Skill", models.CASCADE)
 
     class Meta:
-        ordering = ('skill__name_de',)
+        ordering = ("skill__name_de",)
 
     def __str__(self):
         return "{} {}".format(self.skill.name, self.value)
@@ -566,23 +690,30 @@ class CharacterSkill(models.Model):
     def value(self):
         s = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.character.charactertemplate_set.all(),
-            skill=self.skill).aggregate(Sum('skill_modifier'))
+            skill=self.skill,
+        ).aggregate(Sum("skill_modifier"))
         q = QuirkModifier.objects.filter(
-            quirk__in=self.character.quirks.all(),
-            skill=self.skill).aggregate(Sum('skill_modifier'))
-        dom = self.character.characterattribute_set.get(attribute=self.skill.reference_attribute_1).value
-        sup = self.character.characterattribute_set.get(attribute=self.skill.reference_attribute_2).value
+            quirk__in=self.character.quirks.all(), skill=self.skill
+        ).aggregate(Sum("skill_modifier"))
+        dom = self.character.characterattribute_set.get(
+            attribute=self.skill.reference_attribute_1
+        ).value
+        sup = self.character.characterattribute_set.get(
+            attribute=self.skill.reference_attribute_2
+        ).value
         attr_mod = math.ceil((dom + sup) / 2)
-        return attr_mod + (s['skill_modifier__sum'] or 0) + (q['skill_modifier__sum'] or 0)
+        return (
+            attr_mod + (s["skill_modifier__sum"] or 0) + (q["skill_modifier__sum"] or 0)
+        )
 
 
 class CharacterStatusEffect(models.Model):
     character = models.ForeignKey(Character, models.CASCADE)
-    status_effect = models.ForeignKey('rules.StatusEffect', models.CASCADE)
-    base_value = models.IntegerField(_('base value'), default=0)
+    status_effect = models.ForeignKey("rules.StatusEffect", models.CASCADE)
+    base_value = models.IntegerField(_("base value"), default=0)
 
     class Meta:
-        ordering = ('status_effect__ordering',)
+        ordering = ("status_effect__ordering",)
 
     def __str__(self):
         return self.status_effect.name
@@ -594,11 +725,11 @@ class CharacterStatusEffect(models.Model):
 
 class CharacterTemplate(models.Model):
     character = models.ForeignKey(Character, models.CASCADE)
-    template = models.ForeignKey('rules.Template', models.CASCADE)
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    template = models.ForeignKey("rules.Template", models.CASCADE)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
 
     class Meta:
-        ordering = ('template__category__sort_order',)
+        ordering = ("template__category__sort_order",)
 
     def __str__(self):
         return self.template.name
@@ -606,13 +737,13 @@ class CharacterTemplate(models.Model):
 
 class CharacterWeapon(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    weapon = models.ForeignKey('armory.Weapon', on_delete=models.CASCADE)
-    modifications = models.ManyToManyField('armory.WeaponModification')
+    weapon = models.ForeignKey("armory.Weapon", on_delete=models.CASCADE)
+    modifications = models.ManyToManyField("armory.WeaponModification")
     condition = models.IntegerField(default=100)
-    capacity_used = models.IntegerField(_('capacity used'), default=0)
+    capacity_used = models.IntegerField(_("capacity used"), default=0)
 
     class Meta:
-        ordering = ('weapon__id',)
+        ordering = ("weapon__id",)
 
     def may_edit(self, user):
         return self.character.may_edit(user)
@@ -624,10 +755,13 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_throwing_weapon:
             skill = self.character.characterskill_set.throwing_combat_skill()
 
-        damage_potential = self.weapon.damage_potential + self._get_mods('damage_potential')
+        damage_potential = self.weapon.damage_potential + self._get_mods(
+            "damage_potential"
+        )
         return [
             (wm.attack_mode.name, skill.value + wm.dice_bonus + damage_potential, wm.id)
-            for wm in self.weapon.weaponattackmode_set.all()]
+            for wm in self.weapon.weaponattackmode_set.all()
+        ]
 
     @property
     def roll_info_display(self):
@@ -635,57 +769,61 @@ class CharacterWeapon(models.Model):
         if self.modified_piercing:
             traits.append(f"{_('Pierce')}: {self.modified_piercing}")
         if self.modified_recoil_compensation:
-            traits.append(f"{_('Recoil Compensation')}: {self.modified_recoil_compensation}")
+            traits.append(
+                f"{_('Recoil Compensation')}: {self.modified_recoil_compensation}"
+            )
         for template in self.character.charactertemplate_set.filter(
-                template__show_in_attack_dice_rolls=True):
+            template__show_in_attack_dice_rolls=True
+        ):
             traits.append(template.template.name)
         if traits:
             return f"({', '.join(traits)})"
-        return ''
+        return ""
 
     @property
     def has_modifications_with_rules(self):
         return self.modifications.filter(
-            Q(rules_de__isnull=False) | Q(rules_en__isnull=False)).exists()
+            Q(rules_de__isnull=False) | Q(rules_en__isnull=False)
+        ).exists()
 
     def _get_mods(self, attr):
         mods = self.modifications.filter(
-            weaponmodificationattributechange__attribute=attr).aggregate(
-            Sum('weaponmodificationattributechange__attribute_modifier'))
-        return mods['weaponmodificationattributechange__attribute_modifier__sum'] or 0
+            weaponmodificationattributechange__attribute=attr
+        ).aggregate(Sum("weaponmodificationattributechange__attribute_modifier"))
+        return mods["weaponmodificationattributechange__attribute_modifier__sum"] or 0
 
     @property
     def modified_piercing(self):
-        return self.weapon.piercing + self._get_mods('piercing')
+        return self.weapon.piercing + self._get_mods("piercing")
 
     @property
     def modified_recoil_compensation(self):
-        return self.weapon.recoil_compensation + self._get_mods('recoil_compensation')
+        return self.weapon.recoil_compensation + self._get_mods("recoil_compensation")
 
     @property
     def modified_concealment(self):
-        return self.weapon.concealment + self._get_mods('concealment')
+        return self.weapon.concealment + self._get_mods("concealment")
 
     @property
     def modified_actions_to_ready(self):
-        return self.weapon.actions_to_ready + self._get_mods('actions_to_ready')
+        return self.weapon.actions_to_ready + self._get_mods("actions_to_ready")
 
     @property
     def modified_encumbrance(self):
-        return self.weapon.encumbrance + self._get_mods('encumbrance')
+        return self.weapon.encumbrance + self._get_mods("encumbrance")
 
     @property
     def modified_crit_minium_roll(self):
-        return self.weapon.crit_minimum_roll + self._get_mods('crit_minimum_roll')
+        return self.weapon.crit_minimum_roll + self._get_mods("crit_minimum_roll")
 
     @property
     def modified_range_meter(self):
-        return self.weapon.range_meter + self._get_mods('range_meter')
+        return self.weapon.range_meter + self._get_mods("range_meter")
 
     @property
     def modified_capacity(self):
         base_capacity = self.weapon.capacity if self.weapon.capacity else 0
-        return base_capacity + self._get_mods('capacity')
+        return base_capacity + self._get_mods("capacity")
 
     @property
     def has_capacity(self):
@@ -698,14 +836,14 @@ class CharacterWeapon(models.Model):
 
 class CharacterRiotGear(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    riot_gear = models.ForeignKey('armory.RiotGear', on_delete=models.CASCADE)
-    condition = models.IntegerField(_('condition'), default=100)
+    riot_gear = models.ForeignKey("armory.RiotGear", on_delete=models.CASCADE)
+    condition = models.IntegerField(_("condition"), default=100)
 
     def may_edit(self, user):
         return self.character.may_edit(user)
 
     class Meta:
-        ordering = ('riot_gear__id',)
+        ordering = ("riot_gear__id",)
 
 
 class CharacterItemQuerySet(models.QuerySet):
@@ -726,14 +864,16 @@ class CharacterItem(models.Model):
     objects = CharacterItemQuerySet.as_manager()
 
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    quantity = models.IntegerField(_('Quantity'), default=1)
-    charges_used = models.IntegerField(_('Charges used'), default=0)
-    item = models.ForeignKey('armory.Item', on_delete=models.CASCADE)
-    in_container = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
-    ordering = models.IntegerField(_('Ordering'), default=1)
+    quantity = models.IntegerField(_("Quantity"), default=1)
+    charges_used = models.IntegerField(_("Charges used"), default=0)
+    item = models.ForeignKey("armory.Item", on_delete=models.CASCADE)
+    in_container = models.ForeignKey(
+        "self", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    ordering = models.IntegerField(_("Ordering"), default=1)
 
     class Meta:
-        ordering = 'ordering',
+        ordering = ("ordering",)
 
     def may_edit(self, user):
         return self.character.may_edit(user)
@@ -746,16 +886,20 @@ class CharacterItem(models.Model):
 
     @property
     def other_containers(self):
-        return self.character.characteritem_set.containers().exclude(id=self.in_container_id)
+        return self.character.characteritem_set.containers().exclude(
+            id=self.in_container_id
+        )
 
 
 class CharacterSpell(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    spell = models.ForeignKey('magic.BaseSpell', on_delete=models.CASCADE)
-    custom_name = models.CharField(_('custom name'), max_length=30, null=True, blank=True)
+    spell = models.ForeignKey("magic.BaseSpell", on_delete=models.CASCADE)
+    custom_name = models.CharField(
+        _("custom name"), max_length=30, null=True, blank=True
+    )
 
     class Meta:
-        ordering = ('spell__id',)
+        ordering = ("spell__id",)
 
     def __str__(self):
         return self.spell.name
@@ -766,7 +910,9 @@ class CharacterSpell(models.Model):
     def modifier_attribute_modification(self, attribute_name):
         mod = 0
         for t in self.characterspelltemplate_set.all():
-            for m in t.spell_template.spelltemplatemodifier_set.filter(attribute=attribute_name):
+            for m in t.spell_template.spelltemplatemodifier_set.filter(
+                attribute=attribute_name
+            ):
                 mod += m.attribute_modifier
         return mod
 
@@ -777,35 +923,41 @@ class CharacterSpell(models.Model):
     @property
     def spell_type(self):
         for t in self.characterspelltemplate_set.all():
-            for m in t.spell_template.spelltemplatemodifier_set.filter(type_change__isnull=False):
+            for m in t.spell_template.spelltemplatemodifier_set.filter(
+                type_change__isnull=False
+            ):
                 return m.type_change
         return self.spell.type
 
     @property
     def variant(self):
         for t in self.characterspelltemplate_set.all():
-            for m in t.spell_template.spelltemplatemodifier_set.filter(variant_change__isnull=False):
+            for m in t.spell_template.spelltemplatemodifier_set.filter(
+                variant_change__isnull=False
+            ):
                 return m.variant_change
         return self.spell.variant
 
     @property
     def power(self):
-        return self.spell.power + self.modifier_attribute_modification('power')
+        return self.spell.power + self.modifier_attribute_modification("power")
 
     @property
     def range(self):
-        return self.spell.range + self.modifier_attribute_modification('range')
+        return self.spell.range + self.modifier_attribute_modification("range")
 
     @property
     def shape(self):
         for t in self.characterspelltemplate_set.all():
-            for m in t.spell_template.spelltemplatemodifier_set.filter(shape_change__isnull=False):
+            for m in t.spell_template.spelltemplatemodifier_set.filter(
+                shape_change__isnull=False
+            ):
                 return m.shape_change
         return self.spell.shape
 
     @property
     def actions(self):
-        return self.spell.actions + self.modifier_attribute_modification('actions')
+        return self.spell.actions + self.modifier_attribute_modification("actions")
 
     @property
     def is_ritual(self):
@@ -813,17 +965,24 @@ class CharacterSpell(models.Model):
 
     @property
     def arcana_cost(self):
-        return self.spell.arcana_cost + self.modifier_attribute_modification('arcana_cost')
+        return self.spell.arcana_cost + self.modifier_attribute_modification(
+            "arcana_cost"
+        )
 
     @property
     def spell_point_cost(self):
-        template_value = sum([s.spell_template.spell_point_cost for s in self.characterspelltemplate_set.all()])
+        template_value = sum(
+            [
+                s.spell_template.spell_point_cost
+                for s in self.characterspelltemplate_set.all()
+            ]
+        )
         return template_value + self.spell.spell_point_cost
 
 
 class CharacterSpellTemplate(models.Model):
     character_spell = models.ForeignKey(CharacterSpell, on_delete=models.CASCADE)
-    spell_template = models.ForeignKey('magic.SpellTemplate', on_delete=models.CASCADE)
+    spell_template = models.ForeignKey("magic.SpellTemplate", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.spell_template.name
@@ -831,22 +990,24 @@ class CharacterSpellTemplate(models.Model):
 
 class CharacterCurrency(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    currency_map_unit = models.ForeignKey('armory.CurrencyMapUnit', on_delete=models.CASCADE)
-    quantity = models.IntegerField(_('quantity'), default=0)
+    currency_map_unit = models.ForeignKey(
+        "armory.CurrencyMapUnit", on_delete=models.CASCADE
+    )
+    quantity = models.IntegerField(_("quantity"), default=0)
 
 
 class CharacterNote(models.Model):
     objects = CharacterItemQuerySet.as_manager()
 
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
-    is_private = models.BooleanField(_('is private'), default=False)
-    subject = models.CharField(_('subject'), max_length=80, null=True, blank=True)
-    text = models.TextField(_('text'))
-    ordering = models.IntegerField(_('ordering'), default=1)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    is_private = models.BooleanField(_("is private"), default=False)
+    subject = models.CharField(_("subject"), max_length=80, null=True, blank=True)
+    text = models.TextField(_("text"))
+    ordering = models.IntegerField(_("ordering"), default=1)
 
     class Meta:
-        ordering = 'ordering', 'created_at'
+        ordering = "ordering", "created_at"
 
     def may_edit(self, user):
         return self.character.may_edit(user)

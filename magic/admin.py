@@ -1,26 +1,58 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from magic.models import BaseSpell, SpellType, SpellVariant, SpellShape, SpellTemplate, SpellTemplateModifier, \
-    SpellTemplateCategory, SpellOrigin
+from magic.models import (
+    BaseSpell,
+    SpellType,
+    SpellVariant,
+    SpellShape,
+    SpellTemplate,
+    SpellTemplateModifier,
+    SpellTemplateCategory,
+    SpellOrigin,
+)
 
 
 class BaseSpellAdmin(VersionAdmin):
     list_display = (
-        'name_de', 'name_en', 'spell_point_cost', 'origin', 'type', 'variant', 'power', 'range', 'actions',
-        'is_tirakan_spell')
-    list_editable = ('spell_point_cost', 'origin', 'power', 'range', 'actions', 'is_tirakan_spell',)
-    search_fields = ('name_de', 'name_en')
+        "name_de",
+        "name_en",
+        "spell_point_cost",
+        "origin",
+        "type",
+        "variant",
+        "power",
+        "range",
+        "actions",
+        "is_tirakan_spell",
+    )
+    list_editable = (
+        "spell_point_cost",
+        "origin",
+        "power",
+        "range",
+        "actions",
+        "is_tirakan_spell",
+    )
+    search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     list_filter = (
-        'spell_point_cost', 'arcana_cost', 'type', 'variant', 'power', 'range', 'actions', 'is_tirakan_spell')
+        "spell_point_cost",
+        "arcana_cost",
+        "type",
+        "variant",
+        "power",
+        "range",
+        "actions",
+        "is_tirakan_spell",
+    )
     fields = (
-        ('name_de', 'name_en', 'is_tirakan_spell'),
-        ('created_by', 'is_homebrew', 'homebrew_campaign', 'keep_as_homebrew'),
-        ('spell_point_cost', 'arcana_cost', 'power', 'range', 'actions'),
-        ('origin', 'type', 'variant', 'shape'),
-        'is_ritual',
-        ('rules_de', 'rules_en'),
-        ('quote', 'quote_author'),
+        ("name_de", "name_en", "is_tirakan_spell"),
+        ("created_by", "is_homebrew", "homebrew_campaign", "keep_as_homebrew"),
+        ("spell_point_cost", "arcana_cost", "power", "range", "actions"),
+        ("origin", "type", "variant", "shape"),
+        "is_ritual",
+        ("rules_de", "rules_en"),
+        ("quote", "quote_author"),
     )
 
 
@@ -29,31 +61,31 @@ class SpellTemplateModifierInline(admin.TabularInline):
 
 
 class SpellTemplateAdmin(VersionAdmin):
-    list_display = ('name_de', 'name_en', 'category', 'spell_point_cost')
-    list_editable = 'category', 'spell_point_cost'
-    list_filter = 'spell_point_cost', 'category'
+    list_display = ("name_de", "name_en", "category", "spell_point_cost")
+    list_editable = "category", "spell_point_cost"
+    list_filter = "spell_point_cost", "category"
     inlines = [SpellTemplateModifierInline]
     fields = (
-        ('name_de', 'name_en'),
-        ('category', 'spell_point_cost'),
-        ('rules_de', 'rules_en'),
-        ('quote', 'quote_author'),
+        ("name_de", "name_en"),
+        ("category", "spell_point_cost"),
+        ("rules_de", "rules_en"),
+        ("quote", "quote_author"),
     )
 
 
 class SpellTypeAdmin(VersionAdmin):
-    list_display = ('name_de', 'name_en', 'image', 'reference_attribute')
-    list_editable = 'reference_attribute',
+    list_display = ("name_de", "name_en", "image", "reference_attribute")
+    list_editable = ("reference_attribute",)
 
 
 class BaseSpellInline(admin.TabularInline):
     model = BaseSpell
-    fields = ('name_de', 'name_en', 'arcana_cost', 'spell_point_cost')
+    fields = ("name_de", "name_en", "arcana_cost", "spell_point_cost")
     show_change_link = True
 
 
 class SpellOriginAdmin(VersionAdmin):
-    list_display = ('name_de', 'name_en')
+    list_display = ("name_de", "name_en")
     inlines = [BaseSpellInline]
 
 

@@ -1,6 +1,6 @@
 {% load campaign_extras i18n %}<div class="ws-dice-result">
 {% for r in roll.get_dice_list %}
-    <span class="dice-box text-center {% if r > 10 %}crit{% endif %} {% if r > 6 and r <= 10 %}exploded{% endif %} {% if r < 6 and r >= roll.minimum_roll %}success{% endif %} {% if r < roll.minimum_roll %}fail{% endif %}">{{ r }}</span>
+    <span class="dice-box text-center {% if r > 10 %}crit{% endif %} {% if r > 6 and r <= 10 %}success{% endif %} {% if r < 6 and r >= roll.minimum_roll %}success{% endif %} {% if r < roll.minimum_roll %}fail{% endif %}">{{ r }}</span>
 {% endfor %}
 {% if roll.modifier %}<span class="text-muted"> {{ roll.modifier|int_with_sign }}</span>{% endif %}
 <span class="text-muted">= {{ roll.get_sum }}</span>

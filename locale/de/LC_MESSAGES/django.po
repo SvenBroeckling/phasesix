@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-25 07:33+0000\n"
-"PO-Revision-Date: 2023-08-25 09:34+0200\n"
+"POT-Creation-Date: 2023-08-29 10:36+0000\n"
+"PO-Revision-Date: 2023-08-29 12:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -27,11 +27,11 @@ msgstr ""
 #: horror/models.py:24 magic/models.py:17 magic/models.py:30 magic/models.py:43
 #: magic/models.py:74 magic/models.py:148 magic/models.py:166
 #: magic/models.py:178 pantheon/models.py:22 pantheon/models.py:55
-#: pantheon/models.py:90 rules/models.py:69 rules/models.py:135
-#: rules/models.py:180 rules/models.py:200 rules/models.py:234
-#: rules/models.py:266 rules/models.py:315 rules/models.py:440
-#: worlds/models.py:51 worlds/models.py:147 worlds/models.py:300
-#: worlds/models.py:312 worlds/models.py:395
+#: pantheon/models.py:90 rules/models.py:70 rules/models.py:136
+#: rules/models.py:181 rules/models.py:201 rules/models.py:235
+#: rules/models.py:267 rules/models.py:316 rules/models.py:441
+#: worlds/models.py:44 worlds/models.py:152 worlds/models.py:305
+#: worlds/models.py:317 worlds/models.py:400
 msgid "name"
 msgstr "Name"
 
@@ -39,39 +39,39 @@ msgstr "Name"
 #: armory/models.py:177 armory/models.py:267 armory/models.py:289
 #: armory/models.py:357 armory/models.py:387 campaigns/models.py:184
 #: characters/models.py:32 horror/models.py:27 pantheon/models.py:23
-#: pantheon/models.py:62 rules/models.py:71 rules/models.py:136
-#: rules/models.py:182 rules/models.py:201 rules/models.py:238
-#: rules/models.py:281
+#: pantheon/models.py:62 rules/models.py:72 rules/models.py:137
+#: rules/models.py:183 rules/models.py:202 rules/models.py:239
+#: rules/models.py:282
 msgid "description"
 msgstr "Beschreibung"
 
 #: armory/models.py:26 armory/models.py:57 armory/models.py:121
 #: armory/models.py:170 armory/models.py:383 campaigns/models.py:48
-#: campaigns/models.py:182 characters/models.py:65 characters/models.py:598
-#: characters/models.py:842 forum/models.py:21 forum/models.py:27
+#: campaigns/models.py:182 characters/models.py:81 characters/models.py:729
+#: characters/models.py:1003 forum/models.py:21 forum/models.py:27
 #: forum/models.py:31 forum/models.py:47 forum/models.py:87 magic/models.py:113
 #: magic/models.py:185 pantheon/models.py:24 pantheon/models.py:43
-#: pantheon/models.py:85 rules/models.py:88 rules/models.py:143
-#: rules/models.py:236 rules/models.py:317 rules/models.py:442
-#: worlds/models.py:48 worlds/models.py:144 worlds/models.py:260
-#: worlds/models.py:332 worlds/models.py:393
+#: pantheon/models.py:85 rules/models.py:89 rules/models.py:144
+#: rules/models.py:237 rules/models.py:318 rules/models.py:443
+#: worlds/models.py:41 worlds/models.py:149 worlds/models.py:265
+#: worlds/models.py:337 worlds/models.py:398
 msgid "created at"
 msgstr "Erzeugt am"
 
 #: armory/models.py:27 armory/models.py:67 armory/models.py:122
-#: armory/models.py:171 armory/models.py:384 characters/models.py:66
+#: armory/models.py:171 armory/models.py:384 characters/models.py:82
 #: magic/models.py:114 magic/models.py:186 pantheon/models.py:25
-#: pantheon/models.py:50 pantheon/models.py:86 rules/models.py:89
-#: rules/models.py:144 rules/models.py:237 rules/models.py:318
-#: rules/models.py:443 worlds/models.py:49 worlds/models.py:145
-#: worlds/models.py:261 worlds/models.py:333 worlds/models.py:394
+#: pantheon/models.py:50 pantheon/models.py:86 rules/models.py:90
+#: rules/models.py:145 rules/models.py:238 rules/models.py:319
+#: rules/models.py:444 worlds/models.py:42 worlds/models.py:150
+#: worlds/models.py:266 worlds/models.py:338 worlds/models.py:399
 msgid "modified at"
 msgstr "Modifiziert am"
 
 #: armory/models.py:28 armory/models.py:123 armory/models.py:358
-#: armory/models.py:443 characters/models.py:846 pantheon/models.py:26
-#: pantheon/models.py:67 rules/models.py:90 rules/models.py:444
-#: worlds/models.py:93 worlds/models.py:193
+#: armory/models.py:443 characters/models.py:1007 pantheon/models.py:26
+#: pantheon/models.py:67 rules/models.py:91 rules/models.py:445
+#: worlds/models.py:93 worlds/models.py:198
 msgid "ordering"
 msgstr "Sortierung"
 
@@ -84,7 +84,7 @@ msgid "item types"
 msgstr "Gegenstandstypen"
 
 #: armory/models.py:50 armory/models.py:179 armory/models.py:388
-#: magic/models.py:128 rules/models.py:66 worlds/models.py:336
+#: magic/models.py:128 rules/models.py:67 worlds/models.py:341
 msgid "type"
 msgstr "Typ"
 
@@ -93,7 +93,7 @@ msgid "is container"
 msgstr "Ist Container"
 
 #: armory/models.py:53 armory/models.py:192 armory/models.py:394
-#: characters/models.py:41
+#: characters/models.py:43
 msgid "weight"
 msgstr "Gewicht"
 
@@ -107,9 +107,9 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:60 armory/models.py:197 armory/models.py:379
-#: campaigns/models.py:45 characters/models.py:70 magic/models.py:110
-#: pantheon/models.py:46 pantheon/models.py:84 worlds/models.py:45
-#: worlds/models.py:141 worlds/models.py:257
+#: campaigns/models.py:45 characters/models.py:86 magic/models.py:110
+#: pantheon/models.py:46 pantheon/models.py:84 worlds/models.py:38
+#: worlds/models.py:146 worlds/models.py:262
 msgid "created by"
 msgstr "Erzeugt von"
 
@@ -142,25 +142,25 @@ msgid "Shows a roll button at the item if not empty."
 msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:95 armory/models.py:204 campaigns/models.py:29
-#: campaigns/models.py:166 characters/models.py:52 magic/models.py:48
-#: magic/models.py:79 pantheon/models.py:64 rules/models.py:79
-#: worlds/models.py:72 worlds/models.py:180 worlds/models.py:263
+#: campaigns/models.py:166 characters/models.py:58 magic/models.py:48
+#: magic/models.py:79 pantheon/models.py:64 rules/models.py:80
+#: worlds/models.py:66 worlds/models.py:185 worlds/models.py:268
 msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:96 armory/models.py:205 campaigns/models.py:30
-#: campaigns/models.py:39 campaigns/models.py:167 characters/models.py:53
-#: characters/models.py:62 magic/models.py:51 magic/models.py:86
-#: pantheon/models.py:65 rules/models.py:82 worlds/models.py:75
-#: worlds/models.py:183 worlds/models.py:265
+#: campaigns/models.py:39 campaigns/models.py:167 characters/models.py:61
+#: characters/models.py:75 magic/models.py:51 magic/models.py:86
+#: pantheon/models.py:65 rules/models.py:83 worlds/models.py:69
+#: worlds/models.py:188 worlds/models.py:270
 msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:97 armory/models.py:206 campaigns/models.py:31
-#: campaigns/models.py:40 campaigns/models.py:168 characters/models.py:54
-#: characters/models.py:63 magic/models.py:54 magic/models.py:89
-#: pantheon/models.py:66 rules/models.py:85 worlds/models.py:78
-#: worlds/models.py:186 worlds/models.py:268
+#: campaigns/models.py:40 campaigns/models.py:168 characters/models.py:64
+#: characters/models.py:78 magic/models.py:54 magic/models.py:89
+#: pantheon/models.py:66 rules/models.py:86 worlds/models.py:72
+#: worlds/models.py:191 worlds/models.py:273
 msgid "image copyright url"
 msgstr "Bild Copyright URL"
 
@@ -312,8 +312,8 @@ msgid "weapon modification type"
 msgstr "Waffenmodifikationstyp"
 
 #: armory/models.py:291 horror/models.py:26 magic/models.py:149
-#: magic/models.py:188 pantheon/models.py:91 rules/models.py:323
-#: rules/models.py:441
+#: magic/models.py:188 pantheon/models.py:91 rules/models.py:324
+#: rules/models.py:442
 msgid "rules"
 msgstr "Regeln"
 
@@ -418,16 +418,16 @@ msgid "Range (meter)"
 msgstr "Reichweite (Meter)"
 
 #: armory/models.py:324 horror/models.py:71 magic/models.py:207
-#: rules/models.py:187 rules/models.py:380
+#: rules/models.py:188 rules/models.py:381
 msgid "attribute"
 msgstr "Attribut"
 
 #: armory/models.py:325 horror/models.py:75 magic/models.py:214
-#: rules/models.py:385
+#: rules/models.py:386
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
 
-#: armory/models.py:328 rules/models.py:449
+#: armory/models.py:328 rules/models.py:450
 msgid "status effect"
 msgstr "Statuseffekt"
 
@@ -504,7 +504,7 @@ msgid "Danger"
 msgstr "Gefahr"
 
 #: armory/models.py:435 magic/models.py:45 magic/models.py:76
-#: rules/models.py:75 rules/models.py:438
+#: rules/models.py:76 rules/models.py:439
 msgid "FA Icon Class"
 msgstr "FA Icon Klasse"
 
@@ -572,7 +572,7 @@ msgstr "Schutz"
 #: characters/templates/characters/fragments/_gear_item.html:28
 #: characters/templates/characters/sidebar/characteritem.html:152
 #: characters/templates/characters/sidebar/characterriotgear.html:48
-#: characters/views.py:663
+#: characters/views.py:669
 msgid "Weight"
 msgstr "Gewicht"
 
@@ -614,7 +614,7 @@ msgstr "Reichweite"
 #: armory/templates/armory/item_detail.html:30
 #: armory/templates/armory/riotgear_list.html:62
 #: characters/templates/characters/sidebar/characteritem.html:140
-#: homebrew/forms.py:28 homebrew/forms.py:65 rules/models.py:58
+#: homebrew/forms.py:28 homebrew/forms.py:65 rules/models.py:59
 #: worlds/templates/worlds/_game_values.html:3
 #: worlds/templates/worlds/wiki_page_with_game_values.html:15
 msgid "Type"
@@ -714,7 +714,7 @@ msgstr "Nur SL"
 msgid "All"
 msgstr "Alle"
 
-#: campaigns/models.py:34 characters/models.py:57
+#: campaigns/models.py:34 characters/models.py:68
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
@@ -724,12 +724,12 @@ msgstr "Zusammenfassung"
 
 #: campaigns/models.py:55
 #: campaigns/templates/campaigns/fragments/settings.html:11
-#: characters/forms.py:43 characters/forms.py:48 rules/models.py:54
+#: characters/forms.py:43 characters/forms.py:48 rules/models.py:55
 msgid "Epoch"
 msgstr "Epoche"
 
 #: campaigns/models.py:62
-#: campaigns/templates/campaigns/fragments/settings.html:7 rules/models.py:55
+#: campaigns/templates/campaigns/fragments/settings.html:7 rules/models.py:56
 msgid "World"
 msgstr "Welt"
 
@@ -768,8 +768,8 @@ msgstr "Spielprotokollsichtbarkeit"
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:158 characters/models.py:845 forum/models.py:90
-#: worlds/models.py:173
+#: campaigns/models.py:158 characters/models.py:1006 forum/models.py:90
+#: worlds/models.py:178
 msgid "text"
 msgstr "Text"
 
@@ -789,7 +789,7 @@ msgstr "Ergebniss csv"
 msgid "modifier"
 msgstr "Modifikator"
 
-#: campaigns/models.py:189 rules/models.py:14 worlds/models.py:348
+#: campaigns/models.py:189 rules/models.py:14 worlds/models.py:353
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
@@ -1221,12 +1221,12 @@ msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:36 characters/views.py:706
+#: characters/forms.py:36 characters/views.py:712
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
 #: campaigns/templates/campaigns/fragments/settings.html:23
-#: characters/forms.py:39 characters/views.py:677
+#: characters/forms.py:39 characters/views.py:683
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1472,7 +1472,7 @@ msgstr "Phase Six letzte Aktualisierungen"
 #: characters/forms.py:28
 #: characters/templates/characters/pdf/boxes/gear/armour.html:7
 #: characters/templates/characters/pdf/boxes/gear/weapons.html:8
-#: characters/views.py:647 forum/forms.py:6 homebrew/forms.py:9
+#: characters/views.py:653 forum/forms.py:6 homebrew/forms.py:9
 #: homebrew/forms.py:27 homebrew/forms.py:39 homebrew/forms.py:57
 msgid "Name"
 msgstr "Name"
@@ -1481,15 +1481,15 @@ msgstr "Name"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:59 characters/views.py:654
+#: characters/forms.py:59 characters/views.py:660
 msgid "Size"
 msgstr "Größe"
 
-#: characters/forms.py:61 characters/views.py:671
+#: characters/forms.py:61 characters/views.py:677
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: characters/forms.py:65 rules/models.py:254
+#: characters/forms.py:65 rules/models.py:255
 msgid "None"
 msgstr "Keine"
 
@@ -1500,7 +1500,7 @@ msgstr "Gottheit"
 #: characters/forms.py:68 characters/forms.py:74
 #: characters/templates/characters/includes/character_status_card.html:56
 #: characters/templates/characters/sidebar/grace.html:57
-#: characters/views.py:695
+#: characters/views.py:701
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -1512,7 +1512,7 @@ msgstr "Startreputation"
 msgid "may appear on start page"
 msgstr "Darf auf der Startseite erscheinen"
 
-#: characters/models.py:36
+#: characters/models.py:37
 msgid ""
 "This character may appear on the anonymous start page (i.E. if it has only "
 "free images"
@@ -1520,106 +1520,106 @@ msgstr ""
 "Dieser Charakter darf auf der Startseite für anonyme Besucher erscheinen "
 "(hat z.B. nur freie Bilder)"
 
-#: characters/models.py:40
+#: characters/models.py:42
 msgid "size"
 msgstr "Größe"
 
-#: characters/models.py:42
+#: characters/models.py:45
 msgid "date of birth"
 msgstr "Geburtsdatum"
 
-#: characters/models.py:45 pantheon/models.py:71
+#: characters/models.py:49 pantheon/models.py:71
 msgid "entity"
 msgstr "Gottheit"
 
-#: characters/models.py:49
+#: characters/models.py:54
 msgid "attitude"
 msgstr "Gesinnung"
 
-#: characters/models.py:50
+#: characters/models.py:55
 msgid "grace"
 msgstr "Gunst"
 
-#: characters/models.py:74
+#: characters/models.py:90
 msgid "Characters without user will be cleaned daily."
 msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 
-#: characters/models.py:82 rules/models.py:168
+#: characters/models.py:98 rules/models.py:169
 msgid "lineage"
 msgstr "Abstammung"
 
-#: characters/models.py:86
+#: characters/models.py:102
 msgid "currency map"
 msgstr "Währungstabelle"
 
-#: characters/models.py:90
+#: characters/models.py:107
 #: characters/templates/characters/character_detail.html:36
 #: homebrew/templates/homebrew/index.html:15
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: characters/models.py:93
+#: characters/models.py:114
 msgid "NPC Campaign"
 msgstr "Kampagne NPC"
 
-#: characters/models.py:96
+#: characters/models.py:121
 msgid "reputation"
 msgstr "Reputation"
 
-#: characters/models.py:98 worlds/models.py:339
+#: characters/models.py:123 worlds/models.py:344
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: characters/models.py:99
+#: characters/models.py:124
 msgid "boost"
 msgstr "Boost"
 
-#: characters/models.py:100 magic/models.py:12 worlds/models.py:340
+#: characters/models.py:125 magic/models.py:12 worlds/models.py:345
 msgid "arcana"
 msgstr "Arkana"
 
-#: characters/models.py:101
+#: characters/models.py:126
 msgid "stress"
 msgstr "Stress"
 
-#: characters/models.py:103
+#: characters/models.py:128
 msgid "Bonus dice used"
 msgstr "Benutzte Bonuswürfel"
 
-#: characters/models.py:104
+#: characters/models.py:129
 msgid "Destiny dice used"
 msgstr "Benutzte Schicksalswürfel"
 
-#: characters/models.py:105
+#: characters/models.py:130
 msgid "Rerolls used"
 msgstr "Benutzte Wiederholungswürfe"
 
-#: characters/models.py:107
+#: characters/models.py:132
 msgid "latest initiative"
 msgstr "Letzte Initiative"
 
-#: characters/models.py:109 horror/models.py:33
+#: characters/models.py:135 horror/models.py:33
 msgid "quirks"
 msgstr "Eigenarten"
 
-#: characters/models.py:111
+#: characters/models.py:138
 msgid "quirks gained"
 msgstr "Erhaltene Eigenarten"
 
-#: characters/models.py:113
+#: characters/models.py:140
 msgid "The amount of quirks gained by excess stress"
 msgstr ""
 "Die Anzahl an Eigenarten, die durch überschüssigen Stress verursacht wurden"
 
-#: characters/models.py:115
+#: characters/models.py:143
 msgid "quirks healed"
 msgstr "Kurierte Eigenarten"
 
-#: characters/models.py:117
+#: characters/models.py:145
 msgid "The amount of quirks healed by treatment."
 msgstr "Die Anzahl an Eigenarten, die durch Behandlung geheilt wurden."
 
-#: characters/models.py:158
+#: characters/models.py:191
 msgid ""
 "Your character has arcana or spell points, but you don't have any spell "
 "origins unlocked. You will not be able to add spells. Choose an occupation "
@@ -1629,43 +1629,43 @@ msgstr ""
 "Magieursprünge freigeschaltet. Du wirst keine Zauber hinzufügen können. "
 "Wähle einen Beruf mit einem magischen Ursprung."
 
-#: characters/models.py:582
+#: characters/models.py:713
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:612
+#: characters/models.py:743
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:702
+#: characters/models.py:840
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:729
+#: characters/models.py:867
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:730
+#: characters/models.py:868
 msgid "Charges used"
 msgstr "Ladungen benutzt"
 
-#: characters/models.py:733
+#: characters/models.py:873
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:755
+#: characters/models.py:898
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:835
+#: characters/models.py:996
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:843
+#: characters/models.py:1004
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:844
+#: characters/models.py:1005
 msgid "subject"
 msgstr "Thema"
 
@@ -2353,16 +2353,11 @@ msgid "Refresh"
 msgstr "Erneuern"
 
 #: characters/templates/characters/modals/rest.html:53
-msgid "Rest and roll for me"
-msgstr "Raste und würfle für mich"
-
-#: characters/templates/characters/modals/rest.html:54
-msgid "Rest and modify nothing"
-msgstr "Raste und ändere nichts"
-
-#: characters/templates/characters/modals/rest.html:54
-msgid "I prefer to roll my own dice"
-msgstr "Ich würfle lieber selbst"
+#: characters/templates/characters/sidebar/wounds.html:25
+#: characters/templates/characters/sidebar/wounds.html:26
+#: characters/views.py:251 characters/views.py:265 characters/views.py:279
+msgid "Rest"
+msgstr "Rast"
 
 #: characters/templates/characters/pdf/boxes/background/background.html:5
 msgid "// Background"
@@ -2374,7 +2369,7 @@ msgid "Aspect"
 msgstr "Aspekt"
 
 #: characters/templates/characters/pdf/boxes/background/background.html:26
-#: rules/models.py:240 rules/templates/rules/_template_widget.html:31
+#: rules/models.py:241 rules/templates/rules/_template_widget.html:31
 msgid "Skill"
 msgstr "Fertigkeit"
 
@@ -2497,6 +2492,7 @@ msgid "Create NPC"
 msgstr "NSC erstellen"
 
 #: characters/templates/characters/sidebar/character.html:18
+#: rulebook/templates/rulebook/chapter_detail.html:49
 msgid "Download PDF"
 msgstr "PDF herunterladen"
 
@@ -2997,12 +2993,6 @@ msgstr ""
 msgid "Heal"
 msgstr "Heilen"
 
-#: characters/templates/characters/sidebar/wounds.html:25
-#: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:250 characters/views.py:262 characters/views.py:274
-msgid "Rest"
-msgstr "Rast"
-
 #: characters/templates/characters/sidebar/wounds.html:50
 msgid "A full heart. This can compensate a wound."
 msgstr "Ein volles Herz. Dieses kann eine Wunde kompensieren."
@@ -3172,41 +3162,41 @@ msgstr "Weiterlesen"
 msgid "A map of the world"
 msgstr "Eine Karte der Welt"
 
-#: characters/views.py:123
+#: characters/views.py:122
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:251
+#: characters/views.py:252
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:263
+#: characters/views.py:266
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:275
+#: characters/views.py:280
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:648
+#: characters/views.py:654
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:656
+#: characters/views.py:662
 #, python-brace-format
 msgid "Enter the size of your character in {world.info_name_cm}."
 msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
 
-#: characters/views.py:665
+#: characters/views.py:671
 #, python-brace-format
 msgid "Enter the weight of your character in {world.info_name_kg}."
 msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
-#: characters/views.py:672
+#: characters/views.py:678
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:679
+#: characters/views.py:685
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -3219,7 +3209,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:697
+#: characters/views.py:703
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -3236,7 +3226,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:708
+#: characters/views.py:714
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -3250,13 +3240,13 @@ msgstr ""
 msgid "Text"
 msgstr "Text"
 
-#: forum/models.py:9 urpg/settings.py:186
-#: worlds/templates/worlds/wiki_page_edit.html:109
+#: forum/models.py:9 rulebook/templates/rulebook/chapter_detail.html:52
+#: urpg/settings.py:186 worlds/templates/worlds/wiki_page_edit.html:109
 msgid "German"
 msgstr "Deutsch"
 
-#: forum/models.py:10 urpg/settings.py:187
-#: worlds/templates/worlds/wiki_page_edit.html:112
+#: forum/models.py:10 rulebook/templates/rulebook/chapter_detail.html:53
+#: urpg/settings.py:187 worlds/templates/worlds/wiki_page_edit.html:112
 msgid "English"
 msgstr "Englisch"
 
@@ -3510,7 +3500,6 @@ msgid "Translation Status"
 msgstr "Übersetzungsstatus"
 
 #: homebrew/forms.py:10 homebrew/forms.py:29 homebrew/forms.py:40
-#: worlds/models.py:29
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -3556,7 +3545,7 @@ msgid "Arcana Cost"
 msgstr "Arkana Kosten"
 
 #: homebrew/forms.py:64 magic/templates/magic/_basespell_widget.html:21
-#: magic/templates/magic/basespell_detail.html:31 rules/models.py:59
+#: magic/templates/magic/basespell_detail.html:31 rules/models.py:60
 msgid "Origin"
 msgstr "Ursprung"
 
@@ -3588,7 +3577,7 @@ msgstr "Tick Kategorie"
 msgid "quirk categories"
 msgstr "Tick Kategorien"
 
-#: horror/models.py:25 rules/models.py:320
+#: horror/models.py:25 rules/models.py:321
 msgid "category"
 msgstr "Kategorie"
 
@@ -3596,20 +3585,20 @@ msgstr "Kategorie"
 msgid "quirk"
 msgstr "Eigenart"
 
-#: horror/models.py:59 rules/models.py:368
+#: horror/models.py:59 rules/models.py:369
 msgid "aspect"
 msgstr "Aspekt"
 
-#: horror/models.py:65 rules/models.py:375
+#: horror/models.py:65 rules/models.py:376
 msgid "aspect modifier"
 msgstr "Aspekt Modifikator"
 
-#: horror/models.py:81 rules/models.py:220 rules/models.py:388
-#: worlds/models.py:396
+#: horror/models.py:81 rules/models.py:221 rules/models.py:389
+#: worlds/models.py:401
 msgid "skill"
 msgstr "Fertigkeit"
 
-#: horror/models.py:85 rules/models.py:391
+#: horror/models.py:85 rules/models.py:392
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
@@ -3618,7 +3607,7 @@ msgid "range"
 msgstr "Reichweite"
 
 #: magic/models.py:11 magic/models.py:123 rules/models.py:13
-#: worlds/models.py:345
+#: worlds/models.py:350
 msgid "actions"
 msgstr "Aktionen"
 
@@ -3687,12 +3676,12 @@ msgid "shape"
 msgstr "Form"
 
 #: magic/models.py:150 magic/models.py:190 pantheon/models.py:92
-#: rules/models.py:334
+#: rules/models.py:335
 msgid "quote"
 msgstr "Zitat"
 
 #: magic/models.py:152 magic/models.py:192 pantheon/models.py:93
-#: rules/models.py:336
+#: rules/models.py:337
 msgid "quote author"
 msgstr "Zitatautor"
 
@@ -3749,7 +3738,7 @@ msgstr "Götterkategorie"
 msgid "entity categories"
 msgstr "Götterkategorie"
 
-#: pantheon/models.py:57 worlds/models.py:149
+#: pantheon/models.py:57 worlds/models.py:154
 msgid "short name"
 msgstr "Kurzname"
 
@@ -3850,232 +3839,232 @@ msgstr "Charaktere, Welten etc.."
 msgid "Search in descriptions"
 msgstr "In Beschreibungen suchen"
 
-#: rulebook/templates/rulebook/book_pdf.html:4
-msgid "Phase Six Core Rulebook"
-msgstr "Phase Six Core Regelbuch"
-
 #: rulebook/templates/rulebook/chapter_detail.html:20
 msgid "Chapters"
 msgstr "Kapitel"
 
-#: rules/models.py:10 rules/models.py:146
+#: rules/models.py:10 rules/models.py:147
 msgid "max health"
 msgstr "Maximale Lebenspunkte"
 
-#: rules/models.py:11 rules/models.py:148
+#: rules/models.py:11 rules/models.py:149
 msgid "max arcana"
 msgstr "Max Arkana"
 
-#: rules/models.py:12 rules/models.py:149
+#: rules/models.py:12 rules/models.py:150
 msgid "spell points"
 msgstr "Zauberpunkte"
 
-#: rules/models.py:15 worlds/models.py:341
+#: rules/models.py:15
+msgid "rest minimum roll"
+msgstr "Rast Mindestwurf"
+
+#: rules/models.py:16 worlds/models.py:346
 msgid "protection"
 msgstr "Schutz"
 
-#: rules/models.py:16
+#: rules/models.py:17
 msgid "evasion"
 msgstr "Ausweichen"
 
-#: rules/models.py:17
+#: rules/models.py:18
 msgid "bonus dice"
 msgstr "Bonuswürfel"
 
-#: rules/models.py:18
+#: rules/models.py:19
 msgid "destiny dice"
 msgstr "Schicksalswürfel"
 
-#: rules/models.py:19
+#: rules/models.py:20
 msgid "rerolls"
 msgstr "Wiederholungswürfe"
 
-#: rules/models.py:20 rules/models.py:163
+#: rules/models.py:21 rules/models.py:164
 msgid "max stress"
 msgstr "Maximaler Stress"
 
-#: rules/models.py:53
+#: rules/models.py:54
 msgid "Extension"
 msgstr "Erweiterung"
 
-#: rules/models.py:63
+#: rules/models.py:64
 msgid "is mandatory"
 msgstr "Ist Pflicht"
 
-#: rules/models.py:64 rules/models.py:436 worlds/models.py:58
-#: worlds/models.py:192
+#: rules/models.py:65 rules/models.py:437 worlds/models.py:51
+#: worlds/models.py:197
 msgid "is active"
 msgstr "Ist aktiv"
 
-#: rules/models.py:70 rules/models.py:181
+#: rules/models.py:71 rules/models.py:182
 msgid "identifier"
 msgstr "Identifier"
 
-#: rules/models.py:73
+#: rules/models.py:74
 msgid "year range"
 msgstr "Jahr Bereich"
 
-#: rules/models.py:107
+#: rules/models.py:108
 msgid "select spells by"
 msgstr "Wähle Zauber nach"
 
-#: rules/models.py:111
+#: rules/models.py:112
 msgid "Select spells by type (terra, nexus) or origin (tirakan)"
 msgstr "Wähle Zauber nach Typ (Terra, Nexus) order Ursprung (Tirakan)"
 
-#: rules/models.py:117 worlds/models.py:61
+#: rules/models.py:118 worlds/models.py:55
 msgid "extension"
 msgstr "Erweiterung"
 
-#: rules/models.py:118
+#: rules/models.py:119
 msgid "extensions"
 msgstr "Erweiterungen"
 
-#: rules/models.py:151
+#: rules/models.py:152
 msgid "base actions"
 msgstr "Basisaktionen"
 
-#: rules/models.py:152
+#: rules/models.py:153
 msgid "base minimum roll"
 msgstr "Basis Mindestwurf"
 
-#: rules/models.py:154
+#: rules/models.py:155
 msgid "base bonus dice"
 msgstr "Bonuswürfel Basis"
 
-#: rules/models.py:155
+#: rules/models.py:156
 msgid "base destiny dice"
 msgstr "Schicksalswürfel Basis"
 
-#: rules/models.py:156
+#: rules/models.py:157
 msgid "base rerolls"
 msgstr "Wiederholungswürfe Basis"
 
-#: rules/models.py:159
+#: rules/models.py:160
 msgid "base evasion"
 msgstr "Basisausweichen"
 
-#: rules/models.py:160
+#: rules/models.py:161
 msgid "base armor"
 msgstr "Basisschutz"
 
-#: rules/models.py:164
+#: rules/models.py:165
 msgid "template points"
 msgstr "Schablonenpunkte"
 
-#: rules/models.py:169
+#: rules/models.py:170
 msgid "lineages"
 msgstr "Abstammungen"
 
-#: rules/models.py:177
+#: rules/models.py:178
 msgid "persona"
 msgstr "Persona"
 
-#: rules/models.py:178
+#: rules/models.py:179
 msgid "physis"
 msgstr "Physis"
 
-#: rules/models.py:183 rules/models.py:202
+#: rules/models.py:184 rules/models.py:203
 msgid "kind"
 msgstr "Art"
 
-#: rules/models.py:188
+#: rules/models.py:189
 msgid "attributes"
 msgstr "Attribute"
 
-#: rules/models.py:197
+#: rules/models.py:198
 msgid "practical"
 msgstr "praktisch"
 
-#: rules/models.py:198
+#: rules/models.py:199
 msgid "mind"
 msgstr "geistig"
 
-#: rules/models.py:207
+#: rules/models.py:208
 msgid "reference attribute 1"
 msgstr "Referenzattribut 1"
 
-#: rules/models.py:213
+#: rules/models.py:214
 msgid "reference attribute 2"
 msgstr "Referenzattribut 2"
 
-#: rules/models.py:221
+#: rules/models.py:222
 msgid "skills"
 msgstr "Fertigkeiten"
 
-#: rules/models.py:245 rules/models.py:246 rules/models.py:396
+#: rules/models.py:246 rules/models.py:247 rules/models.py:397
 msgid "knowledge"
 msgstr "Wissen"
 
-#: rules/models.py:268 rules/models.py:275
+#: rules/models.py:269 rules/models.py:276
 msgid "bootstrap color class"
 msgstr "Bootstrap Farbklasse"
 
-#: rules/models.py:282
+#: rules/models.py:283
 msgid "sort order"
 msgstr "Sortierreihenfolge"
 
-#: rules/models.py:283
+#: rules/models.py:284
 msgid "Allow for reputation"
 msgstr "Für Reputation erlaubt"
 
-#: rules/models.py:285
+#: rules/models.py:286
 msgid "Allow at character creation"
 msgstr "Bei Charaktererstellung erlaubt"
 
-#: rules/models.py:290
+#: rules/models.py:291
 msgid "template category"
 msgstr "Schablonenkategorie"
 
-#: rules/models.py:291
+#: rules/models.py:292
 msgid "template categories"
 msgstr "Schablonenkategorien"
 
-#: rules/models.py:325
+#: rules/models.py:326
 msgid "Show rules in combat"
 msgstr "Zeige Regeln im Kampf"
 
-#: rules/models.py:327
+#: rules/models.py:328
 msgid "Show the rule as combat action on the combat tab."
 msgstr "Zeige die Regeln als Kampfaktionen im Kampftab."
 
-#: rules/models.py:330
+#: rules/models.py:331
 msgid "Show in attack dice rolls"
 msgstr "In Angriffswürfen anzeigen"
 
-#: rules/models.py:332
+#: rules/models.py:333
 msgid "Show the name in attack dice rolls."
 msgstr "Namen in Angriffswürfen anzeigen."
 
-#: rules/models.py:339
+#: rules/models.py:340
 msgid "cost"
 msgstr "Kosten"
 
-#: rules/models.py:343
+#: rules/models.py:344
 msgid "character template"
 msgstr "Charakterschablone"
 
-#: rules/models.py:344
+#: rules/models.py:345
 msgid "character templates"
 msgstr "Charakterschablonen"
 
-#: rules/models.py:365 rules/models.py:421
+#: rules/models.py:366 rules/models.py:422
 msgid "template"
 msgstr "Vorlage"
 
-#: rules/models.py:401
+#: rules/models.py:402
 msgid "knowledge modifier"
 msgstr "Wissensmodifikator"
 
-#: rules/models.py:405
+#: rules/models.py:406
 msgid "unlocks spell origin"
 msgstr "Ermöglicht Zauberursprung"
 
-#: rules/models.py:411
+#: rules/models.py:412
 msgid "allows priest actions"
 msgstr "Erlaubt Priesteraktionen"
 
-#: rules/models.py:450
+#: rules/models.py:451
 msgid "status effects"
 msgstr "Statuseffekte"
 
@@ -4196,7 +4185,7 @@ msgstr "Registrieren"
 msgid "Create Account"
 msgstr "Konto erstellen"
 
-#: worlds/context_processors.py:15
+#: worlds/context_processors.py:16
 msgid ""
 "Do you need a simple and fast rulebook to play your stories as a pen'n'paper "
 "roleplaying game? Phase Six is a quick to play roleplaying game rulebook "
@@ -4220,173 +4209,177 @@ msgstr ""
 msgid "session cookie domain"
 msgstr "Sessioncookie Domain"
 
-#: worlds/models.py:25
-msgid "Brand name"
-msgstr "Markenname"
-
 #: worlds/models.py:27
-msgid "Brand Logo"
-msgstr "Markenlogo"
-
-#: worlds/models.py:30
-msgid "Template Suffix"
-msgstr "Templatesuffix"
-
-#: worlds/models.py:34
 msgid "world site configuration"
 msgstr "Weltseitenkonfiguration"
 
-#: worlds/models.py:35
+#: worlds/models.py:28
 msgid "world site configurations"
 msgstr "Weltseitenkonfigurationen"
 
-#: worlds/models.py:52 worlds/models.py:155 worlds/models.py:272
+#: worlds/models.py:45 worlds/models.py:160 worlds/models.py:277
 msgid "slug"
 msgstr "Slug"
 
-#: worlds/models.py:54
+#: worlds/models.py:47
 msgid "description 1"
 msgstr "Beschreibung 1"
 
-#: worlds/models.py:55
+#: worlds/models.py:48
 msgid "description 2"
 msgstr "Beschreibung 2"
 
-#: worlds/models.py:56
+#: worlds/models.py:49
 msgid "description 3"
 msgstr "Beschreibung 3"
 
-#: worlds/models.py:63
+#: worlds/models.py:52
+msgid "is default"
+msgstr "Ist Standard"
+
+#: worlds/models.py:57
 msgid "The corresponding world extension, which is added to the characters."
 msgstr ""
 "Die zugehörige Welterweiterung, welche zu den Charakteren hinzugefügt wird."
 
-#: worlds/models.py:82
+#: worlds/models.py:76
 msgid "Name for centimeter"
 msgstr "Name für Zentimeter"
 
-#: worlds/models.py:84
+#: worlds/models.py:78
 msgid "Name for kilogram"
 msgstr "Name für Kilogramm"
 
-#: worlds/models.py:105 worlds/models.py:158
+#: worlds/models.py:87
+msgid "Brand name"
+msgstr "Markenname"
+
+#: worlds/models.py:89
+msgid "Brand Logo"
+msgstr "Markenlogo"
+
+#: worlds/models.py:91
+msgid "Template Addon"
+msgstr "Template Addon"
+
+#: worlds/models.py:106 worlds/models.py:163
 msgid "world"
 msgstr "Welt"
 
-#: worlds/models.py:106
+#: worlds/models.py:107
 msgid "worlds"
 msgstr "Welten"
 
-#: worlds/models.py:150
+#: worlds/models.py:155
 msgid "An optional short name for the default link text."
 msgstr "Ein optionaler Kurzname für den Standard Linktext."
 
-#: worlds/models.py:159
+#: worlds/models.py:164
 msgid "The world this page belongs to."
 msgstr "Die Welt, zu der diese Seite gehört."
 
-#: worlds/models.py:165
+#: worlds/models.py:170
 msgid "parent"
 msgstr "Übergeordnete Seite"
 
-#: worlds/models.py:166
+#: worlds/models.py:171
 msgid "The parent wiki page."
 msgstr "Die übergeordnete Wiki Seite."
 
-#: worlds/models.py:174
+#: worlds/models.py:179
 msgid "The wiki page text. This may contain Wiki links."
 msgstr "Der Wikiseitentext. Dieser darf Wiki Links enthalten."
 
-#: worlds/models.py:190
+#: worlds/models.py:195
 msgid "actions heading"
 msgstr "Aktionen Überschrift"
 
-#: worlds/models.py:198 worlds/models.py:247 worlds/models.py:327
-#: worlds/models.py:388
+#: worlds/models.py:203 worlds/models.py:252 worlds/models.py:332
+#: worlds/models.py:393
 msgid "wiki page"
 msgstr "Wikiseite"
 
-#: worlds/models.py:199
+#: worlds/models.py:204
 msgid "wiki pages"
 msgstr "Wikiseiten"
 
-#: worlds/models.py:248
+#: worlds/models.py:253
 msgid "The wiki page the image belongs to."
 msgstr "Die Wikiseite, zu der das Bild gehört."
 
-#: worlds/models.py:271
+#: worlds/models.py:276
 msgid "caption"
 msgstr "Bezeichnung"
 
-#: worlds/models.py:275
+#: worlds/models.py:280
 msgid "wiki page image"
 msgstr "Wikiseitenbild"
 
-#: worlds/models.py:276
+#: worlds/models.py:281
 msgid "wiki page images"
 msgstr "Wikiseitenbilder"
 
-#: worlds/models.py:304
+#: worlds/models.py:309
 msgid "wiki page foe type"
 msgstr "Wikiseiten Gegnertyp"
 
-#: worlds/models.py:305
+#: worlds/models.py:310
 msgid "wiki page foe types"
 msgstr "Wikiseiten Gegnertypen"
 
-#: worlds/models.py:316
+#: worlds/models.py:321
 msgid "wiki page foe resistance or weakness"
 msgstr "Wikiseiten Gegner Widerstand oder Schwäche"
 
-#: worlds/models.py:317
+#: worlds/models.py:322
 msgid "wiki page foe resistances or weaknesses"
 msgstr "Wikiseiten Gegner Widerstände oder Schwächen"
 
-#: worlds/models.py:328 worlds/models.py:389
+#: worlds/models.py:333 worlds/models.py:394
 msgid "The wiki page the values belong to."
 msgstr "Die Wikiseite, zu der die Spielwerte gehört."
 
-#: worlds/models.py:343
+#: worlds/models.py:348
 msgid "perception"
 msgstr "Wahrnehmung"
 
-#: worlds/models.py:346
+#: worlds/models.py:351
 msgid "quickness"
 msgstr "Schnelligkeit"
 
-#: worlds/models.py:347
+#: worlds/models.py:352
 msgid "walking range"
 msgstr "Bewegungsreichweite"
 
-#: worlds/models.py:351
+#: worlds/models.py:356
 msgid "stress test succeeded stress"
 msgstr "Stresstest erfolgreich Stress"
 
-#: worlds/models.py:354
+#: worlds/models.py:359
 msgid "stress test failed stress"
 msgstr "Stresstest fehlgeschlagen Stress"
 
-#: worlds/models.py:361
+#: worlds/models.py:366
 msgid "resistances"
 msgstr "Widerstände"
 
-#: worlds/models.py:367
+#: worlds/models.py:372
 msgid "weaknesses"
 msgstr "Schwächen"
 
-#: worlds/models.py:371 worlds/models.py:372
+#: worlds/models.py:376 worlds/models.py:377
 msgid "wiki page game values"
 msgstr "Wikiseiten Spielwerte"
 
-#: worlds/models.py:397
+#: worlds/models.py:402
 msgid "effect"
 msgstr "Effekt"
 
-#: worlds/models.py:401
+#: worlds/models.py:406
 msgid "wiki page game action"
 msgstr "Wikiseiten Spielaktion"
 
-#: worlds/models.py:402
+#: worlds/models.py:407
 msgid "wiki page game actions"
 msgstr "Wikiseiten Spieaktionen"
 
@@ -4530,6 +4523,21 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:178
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid "Rest and roll for me"
+#~ msgstr "Raste und würfle für mich"
+
+#~ msgid "Rest and modify nothing"
+#~ msgstr "Raste und ändere nichts"
+
+#~ msgid "I prefer to roll my own dice"
+#~ msgstr "Ich würfle lieber selbst"
+
+#~ msgid "Phase Six Core Rulebook"
+#~ msgstr "Phase Six Core Regelbuch"
+
+#~ msgid "Template Suffix"
+#~ msgstr "Templatesuffix"
 
 #~ msgid "Your campaigns"
 #~ msgstr "Deine Kampagnen"

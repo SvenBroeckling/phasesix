@@ -12,6 +12,7 @@ CHARACTER_ASPECT_CHOICES = (
     ("base_spell_points", _("spell points")),
     ("base_actions", _("actions")),
     ("base_minimum_roll", _("minimum roll")),
+    ("base_rest_minimum_roll", _("rest minimum roll")),
     ("base_protection", _("protection")),
     ("base_evasion", _("evasion")),
     ("base_bonus_dice", _("bonus dice")),

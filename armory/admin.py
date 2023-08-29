@@ -135,7 +135,7 @@ class ItemAdmin(admin.ModelAdmin):
     )
     list_editable = ("concealment", "type", "is_container", "usable_in_combat", "skill")
     list_filter = ("type", "extensions")
-    search_fields = ("name_de", "name_en")
+    search_fields = ("name_de", "name_en", "description_de", "description_en")
 
 
 class WeaponTypeAdmin(admin.ModelAdmin):
