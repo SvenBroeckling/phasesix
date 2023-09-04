@@ -5,8 +5,15 @@ from rulebook.models import Book, Chapter, WorldBook
 
 
 class ChapterAdmin(VersionAdmin):
-    list_display = "name_de", "name_en", "number", "fa_icon_class", "image"
-    list_editable = ("number",)
+    list_display = (
+        "name_de",
+        "name_en",
+        "identifier",
+        "number",
+        "fa_icon_class",
+        "image",
+    )
+    list_editable = ("number", "identifier")
 
 
 admin.site.register(WorldBook)
