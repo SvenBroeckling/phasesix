@@ -86,7 +86,7 @@
                                                     <h3 class="mb-3 mt-2 mt-md-0">{% trans "Realms of Tirakan" %}</h3>
                                                     <h5 class="mt-2 mt-md-0">{{ wiki_page }}</h5>
                                                     <p>
-                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_tags:wiki_page.world }}
+                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:wiki_page.world }}
                                                         <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>
                                                     </p>
                                                 </div>
@@ -119,7 +119,7 @@
                                                     <h3 class="mb-3 mt-2 mt-md-0">NEXUS</h3>
                                                     <h5 class="mt-2 mt-md-0">{{ wiki_page }}</h5>
                                                     <p>
-                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_tags:wiki_page.world }}
+                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:wiki_page.world }}
                                                         <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>
                                                     </p>
                                                 </div>

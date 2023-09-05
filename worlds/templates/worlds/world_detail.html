@@ -47,19 +47,19 @@
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">
-            {{ object.description_1|urpg_markup|replace_tags:object }}
+            {{ object.description_1|urpg_markup|replace_wiki_tags:object }}
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">
-            {{ object.description_2|urpg_markup|replace_tags:object }}
+            {{ object.description_2|urpg_markup|replace_wiki_tags:object }}
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="col-12 wiki-page">
-            {{ object.description_3|urpg_markup|replace_tags:object }}
+            {{ object.description_3|urpg_markup|replace_wiki_tags:object }}
         </div>
     </div>
 
@@ -77,7 +77,7 @@
                         {% endthumbnail %}
                     {% endif %}
                     <div class="card-body">
-                        {{ page.text|to_first_linebreak|urpg_markup|replace_tags:object }}
+                        {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:object }}
                     </div>
                     {% if user.is_superuser %}
                         <a href="{% url 'admin:worlds_wikipage_change' page.id %}"

@@ -165,7 +165,7 @@
         </div>
 
         <div class="col-12 col-lg-8 col-xl-9 mt-3 mt-md-0 wiki-page">
-            {{ object.text|urpg_markup|replace_tags:object.world }}
+            {{ object.text|urpg_markup|replace_wiki_tags:object.world }}
         </div>
     </div>
 
@@ -184,7 +184,7 @@
                         {% endthumbnail %}
                     {% endif %}
                     <div class="card-body">
-                        {{ page.text|to_first_linebreak|urpg_markup|replace_tags:page.world }}
+                        {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:page.world }}
                     </div>
                     {% if user.is_superuser %}
                         <a href="{% url 'admin:worlds_wikipage_change' page.id %}"

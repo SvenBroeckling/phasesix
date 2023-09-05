@@ -7,6 +7,7 @@ from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 
 from characters.models import Character
+from rulebook.models import Chapter
 from worlds.models import WikiPage, WikiPageImage
 
 register = Library()
@@ -70,7 +71,34 @@ def urpg_markup(value, safe_mode=True):
 
 
 @register.filter
-def replace_tags(value, world):
+def resolve_rulebook_chapter_links(value, mode="web"):
+    if value is None or value == "":
+        return ""
+
+    def _repl_links(match_object):
+        text = ""
+        tag = match_object.group(0).strip("[]")
+        if "|" in tag:
+            try:
+                tag, text = tag.split("|")
+            except ValueError:
+                tag = text = tag
+
+        if mode == 'web':
+            try:
+                obj = Chapter.objects.get(identifier=tag)
+            except Chapter.DoesNotExist:
+                return text
+            return '<a href="{}">{}</a>'.format(obj.get_absolute_url(), text)
+        return '<a href="#{}">{}</a>'.format(tag, text)
+
+    tags_re = re.compile(r"\[\[([^\[])+\]\]", flags=re.UNICODE)
+    value = re.sub(tags_re, _repl_links, value)
+    return mark_safe(value)
+
+
+@register.filter
+def replace_wiki_tags(value, world):
     if value is None or value == "":
         return ""
 

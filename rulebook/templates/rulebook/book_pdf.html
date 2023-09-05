@@ -114,13 +114,13 @@
     {% include 'rulebook/book_title.html' %}
 
     {% for chapter in world_book.book.chapter_set.all %}
-        <div class="chapter">
+        <div class="chapter" id="{{ chapter.identifier }}">
             <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
                 &nbsp;
             </div>
             <h2>{{ chapter.name }}</h2>
             <div class="chapter-text">
-                {{ chapter.text|replace_book_variables:world_book.world|urpg_markup:False }}
+                {{ chapter.text|replace_book_variables:world_book.world|urpg_markup:False|resolve_rulebook_chapter_links:"pdf" }}
             </div>
         </div>
     {% endfor %}

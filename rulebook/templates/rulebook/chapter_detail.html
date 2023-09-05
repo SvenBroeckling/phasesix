@@ -37,7 +37,7 @@
         <div class="col-12 col-lg-9 rules">
             <div class="columns">
                 {% with world=request.world_configuration.world %}
-                    {{ object.text|replace_book_variables:world|urpg_markup:False }}
+                    {{ object.text|replace_book_variables:world|urpg_markup:False|resolve_rulebook_chapter_links }}
                 {% endwith %}
             </div>
         </div>

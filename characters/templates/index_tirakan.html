@@ -14,7 +14,7 @@
 
             <div class="row py-2">
                 <div class="col-12 col-md-8 offset-md-2 lead text-center">
-                    {{ request.world_configuration.world.description_1|urpg_markup|replace_tags:request.world_configuration.world }}
+                    {{ request.world_configuration.world.description_1|urpg_markup|replace_wiki_tags:request.world_configuration.world }}
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
 
             <div class="row py-2">
                 <div class="col-12 col-md-8 offset-md-2 lead text-center">
-                    {{ request.world_configuration.world.description_2|urpg_markup|replace_tags:request.world_configuration.world }}
+                    {{ request.world_configuration.world.description_2|urpg_markup|replace_wiki_tags:request.world_configuration.world }}
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
 
             <div class="row py-2">
                 <div class="col-12 col-md-8 offset-md-2 lead text-center">
-                    {{ request.world_configuration.world.description_3|urpg_markup|replace_tags:request.world_configuration.world }}
+                    {{ request.world_configuration.world.description_3|urpg_markup|replace_wiki_tags:request.world_configuration.world }}
                 </div>
             </div>
 
@@ -79,7 +79,7 @@
                                                         {% endif %}
                                                     </span>
                                                     <p>
-                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_tags:wiki_page.world }}
+                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:wiki_page.world }}
                                                         <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>
                                                     </p>
                                                 </div>

@@ -2,6 +2,7 @@ import io
 
 from django.db import models
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as gt, activate
 from django.conf import settings
 from transmeta import TransMeta
@@ -148,6 +149,9 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
         translate = "name", "rules_file"
         verbose_name = gt("chapter")
         verbose_name_plural = gt("chapters")
+
+    def get_absolute_url(self):
+        return reverse('rulebook:detail', kwargs={'pk': self.id})
 
     @property
     def text(self):
