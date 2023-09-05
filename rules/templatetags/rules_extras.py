@@ -88,7 +88,7 @@ def resolve_rulebook_chapter_links(value, mode="web"):
             try:
                 obj = Chapter.objects.get(identifier=tag)
             except Chapter.DoesNotExist:
-                return text
+                return '<a href="#{}">{}</a>'.format(tag, text)
             return '<a href="{}">{}</a>'.format(obj.get_absolute_url(), text)
         return '<a href="#{}">{}</a>'.format(tag, text)
 
