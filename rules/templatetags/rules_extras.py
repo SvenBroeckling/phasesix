@@ -1,8 +1,8 @@
 import re
 
-import markdown2
+import bleach
+import markdown
 from django.template import Library
-from django.urls import reverse
 from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 
@@ -12,20 +12,20 @@ from worlds.models import WikiPage, WikiPageImage
 register = Library()
 
 
-@register.inclusion_tag('rules/_template_widget.html', takes_context=True)
+@register.inclusion_tag("rules/_template_widget.html", takes_context=True)
 def template_widget(context, template):
-    context.update({
-        'template': template
-    })
+    context.update({"template": template})
     return context
 
 
-@register.inclusion_tag('magic/_basespell_widget.html', takes_context=True)
+@register.inclusion_tag("magic/_basespell_widget.html", takes_context=True)
 def basespell_widget(context, basespell, character=None):
-    context.update({
-        'basespell': basespell,
-        'character': character,
-    })
+    context.update(
+        {
+            "basespell": basespell,
+            "character": character,
+        }
+    )
     return context
 
 
@@ -34,27 +34,52 @@ def to_first_linebreak(value):
     try:
         return value.splitlines()[0]
     except IndexError:
-        return ''
+        return ""
 
 
 @register.filter
 def urpg_markup(value, safe_mode=True):
     if value is None:
-        return ''
-    return mark_safe(markdown2.markdown(value, safe_mode=safe_mode, extras=['tables', 'header-ids']))
+        return ""
+    html = markdown.markdown(value, extensions=["tables"])
+    if safe_mode:
+        html = bleach.clean(
+            html,
+            tags={
+                "a",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "abbr",
+                "acronym",
+                "b",
+                "blockquote",
+                "code",
+                "em",
+                "i",
+                "li",
+                "ol",
+                "strong",
+                "ul",
+                "p",
+            },
+        )
+    return mark_safe(html)
 
 
 @register.filter
 def replace_tags(value, world):
-    if value is None or value == '':
-        return ''
+    if value is None or value == "":
+        return ""
 
     def _repl_tags(match_object):
-        text = ''
-        tag = match_object.group(0).strip('[]')
-        if '|' in tag:
+        text = ""
+        tag = match_object.group(0).strip("[]")
+        if "|" in tag:
             try:
-                tag, text = tag.split('|')
+                tag, text = tag.split("|")
             except ValueError:
                 tag = text = tag
 
@@ -66,27 +91,27 @@ def replace_tags(value, world):
         return '<a href="{}">{}</a>'.format(obj.get_absolute_url(), text)
 
     def _repl_image_tags(match_object):
-        formatters = ''
-        tag = match_object.group(0).strip('{}')
-        if '|' in tag:
-            tag, formatters = tag.split('|')
-        css = ' '.join(formatters.split(','))
+        formatters = ""
+        tag = match_object.group(0).strip("{}")
+        if "|" in tag:
+            tag, formatters = tag.split("|")
+        css = " ".join(formatters.split(","))
 
         try:
             obj = WikiPageImage.objects.get(wiki_page__world=world, slug=tag)
         except WikiPageImage.DoesNotExist:
-            return ''
+            return ""
 
-        image = get_thumbnail(obj.image, '800', crop='center', quality=99, format='PNG')
+        image = get_thumbnail(obj.image, "800", crop="center", quality=99, format="PNG")
 
-        return f'''
+        return f"""
         <a
             data-gallery={obj.wiki_page.slug}
             class="invisible-link toggle-lightbox"
             href="{obj.image.url}">
             <img class="img-fluid m-2 {css}" src="{image.url}" alt="{obj.caption}" />
         </a>
-        '''
+        """
 
     tags_re = re.compile(r"\[\[([^\[])+\]\]", flags=re.UNICODE)
     image_tags_re = re.compile(r"\{\{.*\}\}", flags=re.UNICODE)
@@ -100,7 +125,12 @@ def replace_tags(value, world):
 @register.simple_tag
 def latest_user_image(user):
     try:
-        return Character.objects.filter(created_by=user, image__isnull=False).exclude(image='').latest('id').image
+        return (
+            Character.objects.filter(created_by=user, image__isnull=False)
+            .exclude(image="")
+            .latest("id")
+            .image
+        )
     except Character.DoesNotExist:
         return None
 
@@ -108,4 +138,3 @@ def latest_user_image(user):
 @register.filter
 def has_allows_priest_action(qs):
     return qs.filter(allows_priest_actions=True).exists()
-
