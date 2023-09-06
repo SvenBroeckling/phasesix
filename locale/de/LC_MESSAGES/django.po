@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-29 10:36+0000\n"
-"PO-Revision-Date: 2023-08-29 12:37+0200\n"
+"POT-Creation-Date: 2023-09-06 09:48+0000\n"
+"PO-Revision-Date: 2023-09-06 11:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -572,7 +572,7 @@ msgstr "Schutz"
 #: characters/templates/characters/fragments/_gear_item.html:28
 #: characters/templates/characters/sidebar/characteritem.html:152
 #: characters/templates/characters/sidebar/characterriotgear.html:48
-#: characters/views.py:669
+#: characters/views.py:671
 msgid "Weight"
 msgstr "Gewicht"
 
@@ -1221,12 +1221,12 @@ msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:36 characters/views.py:712
+#: characters/forms.py:36 characters/views.py:714
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
 #: campaigns/templates/campaigns/fragments/settings.html:23
-#: characters/forms.py:39 characters/views.py:683
+#: characters/forms.py:39 characters/views.py:685
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1472,7 +1472,7 @@ msgstr "Phase Six letzte Aktualisierungen"
 #: characters/forms.py:28
 #: characters/templates/characters/pdf/boxes/gear/armour.html:7
 #: characters/templates/characters/pdf/boxes/gear/weapons.html:8
-#: characters/views.py:653 forum/forms.py:6 homebrew/forms.py:9
+#: characters/views.py:655 forum/forms.py:6 homebrew/forms.py:9
 #: homebrew/forms.py:27 homebrew/forms.py:39 homebrew/forms.py:57
 msgid "Name"
 msgstr "Name"
@@ -1481,11 +1481,11 @@ msgstr "Name"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:59 characters/views.py:660
+#: characters/forms.py:59 characters/views.py:662
 msgid "Size"
 msgstr "Größe"
 
-#: characters/forms.py:61 characters/views.py:677
+#: characters/forms.py:61 characters/views.py:679
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1500,7 +1500,7 @@ msgstr "Gottheit"
 #: characters/forms.py:68 characters/forms.py:74
 #: characters/templates/characters/includes/character_status_card.html:56
 #: characters/templates/characters/sidebar/grace.html:57
-#: characters/views.py:701
+#: characters/views.py:703
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -2355,7 +2355,7 @@ msgstr "Erneuern"
 #: characters/templates/characters/modals/rest.html:53
 #: characters/templates/characters/sidebar/wounds.html:25
 #: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:251 characters/views.py:265 characters/views.py:279
+#: characters/views.py:251 characters/views.py:267 characters/views.py:281
 msgid "Rest"
 msgstr "Rast"
 
@@ -3170,33 +3170,33 @@ msgstr "Charakter gelöscht."
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:266
+#: characters/views.py:268
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:280
+#: characters/views.py:282
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:654
+#: characters/views.py:656
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:662
+#: characters/views.py:664
 #, python-brace-format
 msgid "Enter the size of your character in {world.info_name_cm}."
 msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
 
-#: characters/views.py:671
+#: characters/views.py:673
 #, python-brace-format
 msgid "Enter the weight of your character in {world.info_name_kg}."
 msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
-#: characters/views.py:678
+#: characters/views.py:680
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:685
+#: characters/views.py:687
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -3209,7 +3209,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:703
+#: characters/views.py:705
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -3226,7 +3226,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:714
+#: characters/views.py:716
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -3838,6 +3838,10 @@ msgstr "Charaktere, Welten etc.."
 #: portal/templates/portal/sidebar/search.html:28
 msgid "Search in descriptions"
 msgstr "In Beschreibungen suchen"
+
+#: rulebook/templates/rulebook/book_toc.html:111
+msgid "Table of contents"
+msgstr "Inhaltsverzeichnis"
 
 #: rulebook/templates/rulebook/chapter_detail.html:20
 msgid "Chapters"

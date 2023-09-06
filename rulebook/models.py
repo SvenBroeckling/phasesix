@@ -67,6 +67,21 @@ class WorldBook(models.Model, metaclass=TransMeta):
         translate = "book_title", "book_claim"
 
     def render_pdf(self):
+        def generate_outline_str(bookmarks, indent=-3):
+            outline_str = ""
+            for i, (label, (page, _, _), children, status) in enumerate(bookmarks, 1):
+                if indent >= 0:  # Skip root node
+                    outline_str += (
+                        '<span style="margin-left: %dmm">%s</span><span style="float: right">%d</span><br>'
+                        % (
+                            indent,
+                            label.lstrip("0123456789. "),
+                            page + 3,  # 2 pages toc + cover
+                        )
+                    )
+                outline_str += generate_outline_str(children, indent + 3)
+            return outline_str
+
         for language_code, language_description in settings.LANGUAGES:
             activate(language_code)
             book_html = render_to_string(
@@ -81,13 +96,25 @@ class WorldBook(models.Model, metaclass=TransMeta):
             with open(f"/tmp/last_book_render_{language_code}.html", "w") as of:
                 of.write(book_html)
 
-            html = HTML(
-                file_obj=io.BytesIO(bytes(book_html, encoding="utf-8")),
-                base_url="src/",
-                encoding="utf-8",
+            document = HTML(string=book_html, base_url="src/").render()
+
+            table_of_contents_string = generate_outline_str(
+                document.make_bookmark_tree()
             )
+            table_of_contents_html = render_to_string(
+                "rulebook/book_toc.html",
+                {
+                    "world_book": self,
+                    "base_dir": settings.BASE_DIR,
+                    "toc": table_of_contents_string,
+                },
+            )
+            table_of_contents_document = HTML(string=table_of_contents_html).render()
+            for page in reversed(table_of_contents_document.pages):
+                document.pages.insert(1, page)
+
             buf = io.BytesIO()
-            html.write_pdf(buf, font_config=font_config)
+            document.write_pdf(buf, font_config=font_config)
             buf.seek(0)
             getattr(self, f"pdf_{language_code}").save(
                 f"book_pdf_{language_code}.pdf", buf
@@ -151,7 +178,7 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
         verbose_name_plural = gt("chapters")
 
     def get_absolute_url(self):
-        return reverse('rulebook:detail', kwargs={'pk': self.id})
+        return reverse("rulebook:detail", kwargs={"pk": self.id})
 
     @property
     def text(self):
