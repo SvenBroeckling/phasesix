@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load thumbnail i18n %}
+
+{% block content %}
+    <h1>{% trans 'Spell Origins' %}</h1>
+    <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
+        {% for object in object_list %}
+            <div class="col col-md-4 col-xl-3">
+                {% thumbnail object.image "1024" as img %}
+                    <div class="card text-center rounded add-spell-category-card pointer mb-4" data-type-id="{{ category.id }}">
+                        <div class="card-body" style="background-image: url({{ img.url }}); background-size: cover">
+                            <div class="card-text w-100 p-5">
+                                <h5 class="text-center p-0 m-i0">{{ object }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endthumbnail %}
+                <a class="stretched-link" href="{% url 'magic:basespell_list' origin_pk=object.id %}"></a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

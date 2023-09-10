@@ -47,12 +47,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-6 offset-md-6 mb-4">
-            <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
-        </div>
-    </div>
-
+    <h1>{{ origin }}</h1>
+    <a href="{% url "magic:spell_origin_list" %}">{% trans "All origins" %}</a>
     <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
         {% for object in object_list %}
             <div class="col col-md-4">
@@ -62,12 +58,12 @@
         {% endfor %}
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            {% if user.is_superuser %}
+    {% if user.is_superuser %}
+        <div class="row mt-4">
+            <div class="col-12">
                 <a href="{% url 'admin:magic_basespell_add' %}" class="btn btn-warning"><i
                         class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
-            {% endif %}
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
