@@ -166,3 +166,10 @@ def latest_user_image(user):
 @register.filter
 def has_allows_priest_action(qs):
     return qs.filter(allows_priest_actions=True).exists()
+
+
+@register.filter
+def templates_for_world_configuration(qs, world_configuration):
+    if world_configuration:
+        qs = qs.for_world(world_configuration.world)
+    return qs

@@ -2,7 +2,7 @@ $(function () {
     let timer = null
 
     function updateMasonry() {
-        $('.modal-body div.tab-pane.active .masonry-container').masonry({percentPosition: true})
+        $('div.tab-pane.active .masonry-container').masonry({percentPosition: true})
     }
 
     function updateTabs() {

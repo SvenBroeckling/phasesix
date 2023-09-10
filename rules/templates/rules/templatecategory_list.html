@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load characters_extras %}
+{% load i18n static rules_extras %}
+
+{% block javascript %}
+    <script src="{% static 'js/add_items_weapons.js' %}?3"></script>
+    <script>
+    $(function(){
+        $('.all-templates a.nav-link').first().addClass('active')
+        $('.all-templates div.tab-pane').first().addClass('active')
+    })
+    </script>
+{% endblock %}
+
+{% block title %}{% trans 'Character Templates' %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Character Templates' %}</h1>
+    <div class="row mt-3 all-templates">
+        <div class="col-12 col-md-4 col-lg-3">
+            <div class="input-group input-group-sm mb-3">
+                <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">
+                {% if user.is_superuser %}
+                    <a href="{% url 'admin:rules_template_add' %}" class="btn btn-warning"><i
+                        class="fas fa-plus"></i> {% trans 'admin' %}</a>
+                {% endif %}
+            </div>
+            <button
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#add-item-mobile-nav"
+                class="btn btn-secondary btn-add-item-mobile-nav-toggle mb-2 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
+
+            <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    {% for t in object_list %}
+                        <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}"
+                            id="nav-item-{{ t.id }}">
+                            <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
+                               data-bs-toggle="tab">{{ t }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-9">
+            <div class="tab-content">
+                {% for t in object_list %}
+                    <div
+                        role="tabpanel"
+                        data-rel="#nav-item-{{ t.id }}"
+                        class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
+                        id="i{{ t.id }}">
+                        <div class="row masonry-container">
+                            {% for i in t.template_set.all|templates_for_world_configuration:request.world_configuration %}
+                                <div class="col col-md-6 constructed-template add-item-card">
+                                    {% template_widget i %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
