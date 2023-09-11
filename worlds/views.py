@@ -14,6 +14,7 @@ from worlds.models import World, WikiPage, WikiPageImage
 
 class WorldDetailView(DetailView):
     model = World
+    context_object_name = "world"
     template_name = "worlds/world_detail.html"
 
     def get_context_data(self, **kwargs):

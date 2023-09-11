@@ -30,6 +30,10 @@ class WorldSiteConfiguration(models.Model):
 
 @reversion.register
 class World(models.Model, metaclass=TransMeta):
+    INDEX_TEMPLATE_CHOICES = (
+        ("index.html", "index.html"),
+        ("worlds/world_detail.html", "worlds/world_detail.html"),
+    )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -88,7 +92,9 @@ class World(models.Model, metaclass=TransMeta):
     brand_logo = models.ImageField(
         _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
     )
-    template_addon = models.CharField(_("Template Addon"), max_length=40)
+    index_template = models.CharField(
+        _("Index Template"), max_length=40, choices=INDEX_TEMPLATE_CHOICES, default="index.html"
+    )
 
     ordering = models.IntegerField(_("ordering"), default=100)
 

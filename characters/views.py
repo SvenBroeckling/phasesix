@@ -68,12 +68,14 @@ from rules.models import (
     TemplateCategory,
 )
 from worlds.models import WikiPage
-from worlds.utils import get_world_configuration_template
 
 
 class IndexView(TemplateView):
     def get_template_names(self):
-        return [get_world_configuration_template(self.request, "index.html")]
+        wc = self.request.world_configuration
+        if wc is not None:
+            return [wc.world.index_template]
+        return ["index.html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -103,6 +105,15 @@ class IndexView(TemplateView):
             .filter(world__slug="nexus", text_len__gte=30)
             .order_by("?")[:5]
         )
+
+        if self.request.world_configuration:
+            world = self.request.world_configuration.world
+            context["world"] = world
+            context["may_edit"] = world.may_edit(self.request.user)
+        else:
+            context["world"] = None
+            context["may_edit"] = False
+
         return context
 
 
