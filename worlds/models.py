@@ -1,6 +1,7 @@
 import reversion
 from django.db import models
 from django.conf import settings
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
@@ -142,6 +143,10 @@ class World(models.Model, metaclass=TransMeta):
     @property
     def identifier(self):
         return self.extension.identifier
+
+    @property
+    def scss_file_static(self):
+        return static(self.scss_file)
 
 
 class WikiPageQuerySet(models.QuerySet):

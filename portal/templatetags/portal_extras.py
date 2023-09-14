@@ -54,10 +54,3 @@ def create_character_url(context):
             "epoch_pk": world.extension.fixed_epoch.id,
         },
     )
-
-
-@register.simple_tag(takes_context=True)
-def world_identifier(context):
-    if not context["request"].world_configuration:
-        return "phasesix"
-    return context["request"].world_configuration.world.extension.identifier

@@ -1,4 +1,4 @@
-{% load static i18n django_bootstrap5 compress world_extras portal_extras %}<!doctype html>
+{% load static i18n django_bootstrap5 compress portal_extras %}<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#" data-bs-theme="dark">
 <head>
     <meta charset="utf-8">
@@ -14,9 +14,8 @@
         <link href="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
         <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css"
               rel="stylesheet"/>
-        {% world_identifier as identifier %}
-        {% if identifier == "tirakan" %}
-            <link type="text/x-scss" href="{% static 'theme/tirakan.scss' %}" rel="stylesheet"/>
+        {% if request.world_configuration %}
+            <link type="text/x-scss" href="{{ request.world_configuration.world.scss_file_static }}" rel="stylesheet"/>
         {% else %}
             <link type="text/x-scss" href="{% static 'theme/phasesix.scss' %}" rel="stylesheet"/>
         {% endif %}
