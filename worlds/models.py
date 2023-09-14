@@ -34,6 +34,11 @@ class World(models.Model, metaclass=TransMeta):
         ("index.html", "index.html"),
         ("worlds/world_detail.html", "worlds/world_detail.html"),
     )
+    SCSS_FILE_CHOICES = (
+        ("theme/phasesix.scss", "theme/phasesix.scss"),
+        ("theme/tirakan.scss", "theme/tirakan.scss"),
+        ("theme/nexus.scss", "theme/nexus.scss"),
+    )
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -94,6 +99,9 @@ class World(models.Model, metaclass=TransMeta):
     )
     index_template = models.CharField(
         _("Index Template"), max_length=40, choices=INDEX_TEMPLATE_CHOICES, default="index.html"
+    )
+    scss_file = models.CharField(
+        _("SCSS File"), max_length=40, choices=SCSS_FILE_CHOICES, default="theme/phasesix.scss"
     )
 
     ordering = models.IntegerField(_("ordering"), default=100)
