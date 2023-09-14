@@ -28,9 +28,10 @@ class XhrSearchResultsView(TemplateView):
                 context["wiki_pages"] = WikiPage.objects.filter(
                     Q(name_de__icontains=query) | Q(name_en__icontains=query)
                 )
-            context["characters"] = Character.objects.filter(
-                Q(created_by=self.request.user) | Q(created_by__isnull=True)
-            ).filter(name__icontains=query)
+            if self.request.user.is_authenticated:
+                context["characters"] = Character.objects.filter(
+                    Q(created_by=self.request.user) | Q(created_by__isnull=True)
+                ).filter(name__icontains=query)
         return context
 
 
