@@ -53,6 +53,11 @@ class World(models.Model, metaclass=TransMeta):
 
     name = models.CharField(_("name"), max_length=120)
     slug = models.SlugField(_("slug"), max_length=220, unique=True, null=True)
+    brand_name = models.CharField(_("Brand name"), max_length=80)
+    brand_claim = models.CharField(_('Brand claim'), max_length=80, null=True, blank=True)
+    brand_logo = models.ImageField(
+        _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
+    )
 
     description_1 = models.TextField(_("description 1"), blank=True, null=True)
     description_2 = models.TextField(_("description 2"), blank=True, null=True)
@@ -94,10 +99,6 @@ class World(models.Model, metaclass=TransMeta):
         related_name="foe_overview_world_set",
     )
 
-    brand_name = models.CharField(_("Brand name"), max_length=80)
-    brand_logo = models.ImageField(
-        _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
-    )
     index_template = models.CharField(
         _("Index Template"), max_length=40, choices=INDEX_TEMPLATE_CHOICES, default="index.html"
     )
@@ -117,6 +118,7 @@ class World(models.Model, metaclass=TransMeta):
             "info_name_cm",
             "info_name_kg",
             "brand_name",
+            "brand_claim",
         )
         verbose_name = _("world")
         verbose_name_plural = _("worlds")
