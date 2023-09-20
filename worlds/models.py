@@ -54,7 +54,9 @@ class World(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=120)
     slug = models.SlugField(_("slug"), max_length=220, unique=True, null=True)
     brand_name = models.CharField(_("Brand name"), max_length=80)
-    brand_claim = models.CharField(_('Brand claim'), max_length=80, null=True, blank=True)
+    brand_claim = models.CharField(
+        _("Brand claim"), max_length=80, null=True, blank=True
+    )
     brand_logo = models.ImageField(
         _("Brand Logo"), max_length=256, null=True, blank=True, upload_to="brand_logos"
     )
@@ -100,10 +102,16 @@ class World(models.Model, metaclass=TransMeta):
     )
 
     index_template = models.CharField(
-        _("Index Template"), max_length=40, choices=INDEX_TEMPLATE_CHOICES, default="index.html"
+        _("Index Template"),
+        max_length=40,
+        choices=INDEX_TEMPLATE_CHOICES,
+        default="index.html",
     )
     scss_file = models.CharField(
-        _("SCSS File"), max_length=40, choices=SCSS_FILE_CHOICES, default="theme/phasesix.scss"
+        _("SCSS File"),
+        max_length=40,
+        choices=SCSS_FILE_CHOICES,
+        default="theme/phasesix.scss",
     )
 
     ordering = models.IntegerField(_("ordering"), default=100)
@@ -184,6 +192,10 @@ class WikiPage(models.Model, metaclass=TransMeta):
         verbose_name=_("world"),
         help_text=_("The world this page belongs to."),
         on_delete=models.CASCADE,
+    )
+
+    exclude_from_foe_search = models.BooleanField(
+        _("excelude from foe search"), default=False
     )
 
     parent = models.ForeignKey(

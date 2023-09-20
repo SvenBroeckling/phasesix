@@ -209,10 +209,19 @@ class XhrSearchFoeSidebarView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["may_edit"] = self.object.may_edit(self.request.user)
-        context['wiki_pages'] = WikiPage.objects.filter(
-            Q(wikipagegamevalues__id__isnull=False) |
-            Q(wikipagegameaction__id__isnull=False)
-        ).distinct()
+        wiki_pages = (
+            WikiPage.objects.filter(
+                Q(wikipagegamevalues__id__isnull=False)
+                | Q(wikipagegameaction__id__isnull=False)
+            )
+            .filter(exclude_from_foe_search=False)
+            .distinct()
+        )
+
+        if self.request.world_configuration is not None:
+            wiki_pages = wiki_pages.filter(world=self.request.world_configuration.world)
+
+        context["wiki_pages"] = wiki_pages
         return context
 
 

@@ -43,22 +43,38 @@ class WikiPageAdmin(VersionAdmin):
     list_display = (
         "name_de",
         "name_en",
+        "exclude_from_foe_search",
         "short_name_de",
         "short_name_en",
         "is_active",
         "parent",
         "ordering",
     )
-    list_editable = ("is_active", "ordering", "short_name_de", "short_name_en")
-    list_filter = ("is_active", "world")
+    list_editable = (
+        "is_active",
+        "ordering",
+        "short_name_de",
+        "short_name_en",
+        "exclude_from_foe_search",
+    )
+    list_filter = ("is_active", "world", "exclude_from_foe_search", "wikipagegamevalues__type")
     search_fields = ("name_de", "world__name_de", "name_en", "world__name_en")
     inlines = (WikiPageImageInline, WikiPageGameValuesInline, WikiPageGameActionInline)
 
 
 class WikiPageGameValuesAdmin(admin.ModelAdmin):
-    list_display = ('wiki_page', 'actions', 'walking_range', 'stress_test_succeeded_stress',
-                    'stress_test_failed_stress')
-    list_editable = 'walking_range', 'stress_test_succeeded_stress', 'stress_test_failed_stress'
+    list_display = (
+        "wiki_page",
+        "actions",
+        "walking_range",
+        "stress_test_succeeded_stress",
+        "stress_test_failed_stress",
+    )
+    list_editable = (
+        "walking_range",
+        "stress_test_succeeded_stress",
+        "stress_test_failed_stress",
+    )
     list_filter = "wiki_page__world", "type"
 
 
