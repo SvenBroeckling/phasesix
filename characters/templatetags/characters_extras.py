@@ -34,38 +34,54 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
             break
     else:
         color_class = 0
-    color_class = "p{}".format(color_class) if p >= 0 else "n{}".format(abs(color_class))
+    color_class = (
+        "p{}".format(color_class) if p >= 0 else "n{}".format(abs(color_class))
+    )
 
     if algebraic_sign and value > 0:
         display_value = "+{}".format(display_value)
 
-    return mark_safe('<span class="color-{}">{}</span>'.format(
-        color_class,
-        display_value))
+    return mark_safe(
+        '<span class="color-{}">{}</span>'.format(color_class, display_value)
+    )
 
 
 @register.simple_tag
 def display_modifications(character_weapon, attribute):
-    res = ''
+    res = ""
     try:
         for wm in character_weapon.modifications.all():
             for wmm in wm.weaponmodificationattributechange_set.all():
                 if wmm.attribute == attribute and wmm.attribute_modifier != 0:
-                    if attribute == 'concealment':
-                        css_class = 'text-success' if wmm.attribute_modifier < 0 else 'text-danger'
+                    if attribute == "concealment":
+                        css_class = (
+                            "text-success"
+                            if wmm.attribute_modifier < 0
+                            else "text-danger"
+                        )
                     else:
-                        css_class = 'text-danger' if wmm.attribute_modifier < 0 else 'text-success'
-                    res += ' <span title="%s" class="%s">%+d</span>' % (wm.name, css_class, wmm.attribute_modifier)
+                        css_class = (
+                            "text-danger"
+                            if wmm.attribute_modifier < 0
+                            else "text-success"
+                        )
+                    res += ' <span title="%s" class="%s">%+d</span>' % (
+                        wm.name,
+                        css_class,
+                        wmm.attribute_modifier,
+                    )
         return mark_safe(res)
     except AttributeError:
-        return ''
+        return ""
 
 
 @register.simple_tag(takes_context=True)
 def detail_fragment(context, fragment_template):
     context = context.flatten()
-    context['fragment_template'] = fragment_template
-    return render_to_string('characters/fragments/' + fragment_template + '.html', context=context)
+    context["fragment_template"] = fragment_template
+    return render_to_string(
+        "characters/fragments/" + fragment_template + ".html", context=context
+    )
 
 
 @register.simple_tag
@@ -79,8 +95,8 @@ def has_extensions(template, extensions):
 @register.filter
 def for_extensions(queryset, extension_queryset):
     return queryset.filter(
-        Q(extensions__id__in=extension_queryset.all()) |
-        Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
+        Q(extensions__id__in=extension_queryset.all())
+        | Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
     )
 
 
@@ -102,14 +118,17 @@ def has_valid_weaponmodifications(weapon, character):
 
 
 @register.simple_tag
-def template_category_string(character, template_category, end='<br>'):
+def template_category_string(character, template_category, end="<br>"):
     tc = character.charactertemplate_set.filter(
-        template__category__id=template_category).order_by('template__cost')[:3]
+        template__category__id=template_category
+    ).order_by("template__cost")[:3]
     if tc.exists():
         return mark_safe(
-            '<small><span>{}</span></small>{}'.format(", ".join([str(t.template) for t in tc]), end)
+            "<small><span>{}</span></small>{}".format(
+                ", ".join([str(t.template) for t in tc]), end
+            )
         )
-    return ''
+    return ""
 
 
 @register.filter
@@ -122,8 +141,11 @@ def to_range(value):
 @register.filter
 def status_effect_value(status_effect, character):
     from characters.models import CharacterStatusEffect
+
     try:
-        obj = CharacterStatusEffect.objects.get(character=character, status_effect=status_effect)
+        obj = CharacterStatusEffect.objects.get(
+            character=character, status_effect=status_effect
+        )
         return obj.value
     except CharacterStatusEffect.DoesNotExist:
         return 0
@@ -132,6 +154,7 @@ def status_effect_value(status_effect, character):
 @register.simple_tag
 def character_knowledge_skill_value(character, knowledge):
     from characters.models import CharacterSkill
+
     try:
         return character.characterskill_set.get(skill=knowledge.skill).value
     except CharacterSkill.DoesNotExist:
@@ -159,6 +182,7 @@ def character_skill_value(character, skill):
 @register.simple_tag
 def spell_type_attribute_dice_value(character, spell_type):
     from characters.models import CharacterAttribute, CharacterSkill
+
     attribute = spell_type.reference_attribute
     try:
         da = character.characterattribute_set.get(attribute=attribute).value
@@ -188,6 +212,14 @@ def character_notes(character, user):
 @register.filter
 def has_knowledge(character, knowledge):
     return character.knowledge_dict().get(knowledge, None) is not None
+
+
+@register.filter
+def for_world_configuration(qs, world_configuration):
+    return qs.for_world_configuration(world_configuration)
+
+
+# Character Sheet PDF
 
 
 class FillProxyModel:
