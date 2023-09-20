@@ -1,4 +1,4 @@
-{% load static i18n portal_extras world_extras %}
+{% load static i18n portal_extras world_extras campaign_extras %}
 <a href="/"
    class="d-flex align-items-center justify-content-center mb-3 mb-md-2 me-md-auto text-white text-decoration-none">
     {% if request.world_configuration %}
@@ -74,6 +74,11 @@
                     {% create_character_url as create_url %}
                     <a href="{{ create_url }}"
                        class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans "Create character" %}</a>
+                </li>
+                <li class="{% active_if_url_name_matches "" %}">
+                    {% create_campaign_url as create_url %}
+                    <a href="{{ create_url }}"
+                       class="link-body-emphasis d-inline-flex text-decoration-none rounded">{% trans "Create campaign" %}</a>
                 </li>
                 <li class="{% active_if_url_name_matches "rulebook:detail" %}">
                     <a class="link-body-emphasis d-inline-flex text-decoration-none rounded"
