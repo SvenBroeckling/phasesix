@@ -35,7 +35,6 @@ $(function () {
                 }
             })
             updateTabs()
-            updateMasonry()
         }, 10)
 
     })
@@ -46,5 +45,4 @@ $(function () {
     })
     $('.modal-body a.nav-link').first().addClass('active')
     $('.modal-body div.tab-pane').first().addClass('active')
-    updateMasonry()
 })

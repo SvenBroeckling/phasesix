@@ -1,6 +1,6 @@
 {% load characters_extras static armory_extras i18n thumbnail %}
 
-<script src="{% static 'js/add_items_weapons.js' %}"></script>
+<script src="{% static 'js/add_items_weapons.js' %}?2"></script>
 
 <div class="row">
     <div class="col-12 col-md-4 col-lg-3">
@@ -8,28 +8,29 @@
             <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">
             {% if user.is_superuser %}
                 <a href="{% url 'admin:armory_item_add' %}" class="btn btn-warning"><i
-                        class="fas fa-plus"></i> {% trans 'admin' %}</a>
+                    class="fas fa-plus"></i> {% trans 'admin' %}</a>
             {% endif %}
         </div>
         <button
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#add-item-mobile-nav"
-                class="btn btn-secondary btn-add-item-mobile-nav-toggle mb-1 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#add-item-mobile-nav"
+            class="btn btn-secondary btn-add-item-mobile-nav-toggle mb-1 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
 
         <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
             <ul class="nav nav-pills flex-column" role="tablist">
                 {% if homebrew.exists %}
-                    <li class="nav-item add-item-nav-item active"
+                    <li class="nav-item add-item-nav-item"
                         id="nav-item-homebrew">
-                        <a class="nav-link" href="#i-homebrew" aria-controls="#i-homebrew" role="tab"
+                        <a class="nav-link active" href="#i-homebrew" aria-controls="#i-homebrew" role="tab"
                            data-bs-toggle="tab">{% trans "Custom Items" %}</a>
                     </li>
                 {% endif %}
                 {% for t in item_types %}
-                    <li class="nav-item add-item-nav-item {% if forloop.first and not homebrew.exists %}active{% endif %}"
+                    <li class="nav-item add-item-nav-item"
                         id="nav-item-{{ t.id }}">
-                        <a class="nav-link" href="#i{{ t.id }}" aria-controls="i{{ t.id }}" role="tab"
+                        <a class="nav-link {% if forloop.first and not homebrew.exists %}active{% endif %}"
+                           href="#i{{ t.id }}" aria-controls="i{{ t.id }}" role="tab"
                            data-bs-toggle="tab">{{ t }}</a>
                     </li>
                 {% endfor %}

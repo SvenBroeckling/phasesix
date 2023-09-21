@@ -1,6 +1,6 @@
 {% load characters_extras static armory_extras i18n %}
 
-<script src="{% static 'js/add_items_weapons.js' %}"></script>
+<script src="{% static 'js/add_items_weapons.js' %}?2"></script>
 
 <div class="row">
     <div class="col-12 col-md-4 col-lg-3">
@@ -20,7 +20,7 @@
         <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
             <ul class="nav nav-pills flex-column" role="tablist">
                 {% if homebrew.exists %}
-                    <li class="nav-item add-item-nav-item active"
+                    <li class="nav-item add-item-nav-item"
                         id="nav-item-homebrew">
                         <a class="nav-link" href="#i-homebrew" aria-controls="#i-homebrew" role="tab"
                            data-bs-toggle="tab">{% trans "Custom Weapons" %}</a>
@@ -28,7 +28,7 @@
                 {% endif %}
 
                 {% for t in weapon_types %}
-                    <li class="nav-item add-item-nav-item {% if forloop.first and not homebrew.exists %}active{% endif %}" id="nav-item-{{ t.id }}">
+                    <li class="nav-item add-item-nav-item" id="nav-item-{{ t.id }}">
                         <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
                            data-bs-toggle="tab">{{ t }}</a>
                     </li>
@@ -42,7 +42,7 @@
             {% if homebrew.exists %}
                 <div role="tabpanel"
                      data-rel="#nav-item-homebrew"
-                     class="tab-pane add-item-tab-pane active"
+                     class="tab-pane add-item-tab-pane"
                      id="i-homebrew">
                     <div class="row masonry-container">
                         {% for weapon in homebrew %}
@@ -57,7 +57,7 @@
             {% for t in weapon_types.distinct %}
                 <div role="tabpanel"
                      data-rel="#nav-item-{{ t.id }}"
-                     class="tab-pane add-item-tab-pane {% if forloop.first and not homebrew.exists %}active{% endif %}"
+                     class="tab-pane add-item-tab-pane"
                      id="i{{ t.id }}">
                     <div class="row masonry-container">
                         {% for weapon in t.weapon_set.all.distinct|for_extensions:character.extensions.all %}
