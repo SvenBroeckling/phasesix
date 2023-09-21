@@ -2,6 +2,7 @@
 
 <script>
     $(function () {
+        $('input[name=q]').focus()
         $('.search-form').on('submit', function (e) {
             const url = $(this).attr('action')
             const form = $(this)
