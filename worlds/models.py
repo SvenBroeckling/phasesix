@@ -421,6 +421,11 @@ class WikiPageGameValues(models.Model):
 
 
 class WikiPageGameAction(models.Model, metaclass=TransMeta):
+    WORK_TYPE_CHOICES = (
+        ("lesser", _("Lesser")),
+        ("higher", _("Higher")),
+    )
+
     wiki_page = models.ForeignKey(
         "worlds.WikiPage",
         verbose_name=_("wiki page"),
@@ -433,6 +438,14 @@ class WikiPageGameAction(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=256)
     skill = models.IntegerField(_("skill"), default=6)
     effect = models.TextField(_("effect"))
+    entity_work_type = models.CharField(
+        _("entity work type"),
+        help_text=_("Leave this empty if the Wikipage doesn't describe an entity."),
+        max_length=6,
+        choices=WORK_TYPE_CHOICES,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         translate = ("name", "effect")

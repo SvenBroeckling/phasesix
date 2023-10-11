@@ -4,8 +4,8 @@ from pantheon.models import Entity, PriestAction, PriestActionRoll, EntityCatego
 
 
 class EntityAdmin(admin.ModelAdmin):
-    list_display = 'name_de', 'name_en', 'wiki_page'
-    list_editable = 'wiki_page',
+    list_display = "name_de", "name_en", "wiki_page"
+    list_editable = ("wiki_page",)
 
 
 class PriestActionRollInline(admin.TabularInline):
@@ -13,8 +13,8 @@ class PriestActionRollInline(admin.TabularInline):
 
 
 class PriestActionAdmin(admin.ModelAdmin):
-    list_display = 'name_de', 'name_en', 'grace_cost'
-    list_editable = 'grace_cost',
+    list_display = "name_de", "name_en", "grace_cost", "work_type"
+    list_editable = "grace_cost", "work_type"
     inlines = [PriestActionRollInline]
 
 

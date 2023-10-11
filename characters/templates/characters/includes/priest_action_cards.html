@@ -1,3 +1,5 @@
+{% load thumbnail %}
+{% load pantheon_extras %}
 {% load rules_extras %}
 {% load i18n %}
 {% for s in object.priest_actions.all %}
@@ -7,7 +9,13 @@
             data-sidebar-url="{% url 'characters:xhr_characterpriestaction_sidebar' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
             class="card mb-2 sidebar-trigger">
             <div class="card-header">
-                <span class="badge bg-dark float-end ms-2" title="{% trans 'Grace cost' %}">{{ s.grace_cost }}</span>
+                <span class="badge bg-dark float-end ms-2" title="{% trans 'Grace cost' %}">
+                    {% if s.grace_cost > 0 %}
+                        {{ s.grace_cost }} {% trans 'Grace' %}
+                    {% else %}
+                        {% trans 'Special' %}
+                    {% endif %}
+                </span>
                 {{ s }}
             </div>
             <div class="card-body">
@@ -18,6 +26,22 @@
                     <a href="{% url 'admin:pantheon_priestaction_change' s.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
                 {% endif %}
             </div>
+            <ul class="list-group list-group-flush">
+                {% entity_work object s as entity_work_list %}
+                {% for ew in entity_work_list %}
+                    <li class="list-group-item p-0 d-flex flex-row">
+                        {% if ew.wiki_page.image %}
+                            <img src="{% thumbnail ew.wiki_page.image "80" as im %}{{ im.url }}{% endthumbnail %}"
+                                 alt="{{ ew.name }}">
+                            {{ ew.name }}
+                        {% endif %}
+                        <div class="p-2">
+                            <strong>{{ ew.name }}</strong><br>
+                            <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endfor %}
