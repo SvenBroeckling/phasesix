@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phasesix-web
+  namespace: phasesix
+  labels:
+    app: phasesix-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phasesix-web
+  template:
+    metadata:
+      labels:
+        app: phasesix-web
+    spec:
+      containers:
+        - name: phasesix-web-container
+          image: sbroeckling/phasesix:latest
+          envFrom:
+          - configMapRef:
+              name: phasesix-config
+          ports:
+            - containerPort: 8080
