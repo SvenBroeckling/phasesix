@@ -1,4 +1,4 @@
-## Phase Six Pen'n"Paper Roleplay Platform
+## Phase Six Pen'n'Paper Roleplay Platform
 
 This repository contains the source code which runs the RPG Sites [Phase Six](https://phasesix.org/) and [Realms of Tirakan](https://tirakans-reiche.de/). This is a [Django](https://www.djangoproject.com/) project.
 
@@ -27,7 +27,7 @@ You need a Linux (WSL2 works too), macOS (untested) or Windows (untested) machin
 
 #### Redis
 
-Phase Six relies on a locally [redis](https://redis.io/) server. The installation depends on your system. For linux, use your package manager (i.e. `apt install redis-server`). On macOS, use Homebrew to `brew install redis`.
+Phase Six relies on a local [redis](https://redis.io/) server. The installation depends on your system. For linux, use your package manager (i.e. `apt install redis-server`). On macOS, use Homebrew to `brew install redis`.
 
 #### Python and virtualenv
 
