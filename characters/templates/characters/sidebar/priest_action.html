@@ -47,20 +47,20 @@
         {% for ew in entity_work_list %}
             <div class="card mb-2">
                 <div class="card-header">
-                    <span class="float-end">{{ ew.skill }}</span>
+                    <span class="badge bg-dark float-end">{{ ew.skill }} {% trans "Grace" %}</span>
                     {{ ew.name }}
                 </div>
                 <div class="card-body">
                     {% if ew.wiki_page.image %}
                         <img src="{% thumbnail ew.wiki_page.image "80" as im %}{{ im.url }}{% endthumbnail %}"
-                             class="float-start p-1"
+                             class="float-start px-2 py-1"
                              alt="{{ ew.name }}">
                     {% endif %}
                     <div class="p-2">
-                        <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
                         <p>
                             {{ ew.effect }}
                         </p>
+                        <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
                     </div>
                 </div>
             </div>

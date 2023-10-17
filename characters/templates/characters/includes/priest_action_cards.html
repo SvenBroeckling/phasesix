@@ -30,11 +30,6 @@
                 {% entity_work object s as entity_work_list %}
                 {% for ew in entity_work_list %}
                     <li class="list-group-item p-0 d-flex flex-row">
-                        {% if ew.wiki_page.image %}
-                            <img src="{% thumbnail ew.wiki_page.image "80" as im %}{{ im.url }}{% endthumbnail %}"
-                                 alt="{{ ew.name }}">
-                            {{ ew.name }}
-                        {% endif %}
                         <div class="p-2">
                             <strong>{{ ew.name }}</strong><br>
                             <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
