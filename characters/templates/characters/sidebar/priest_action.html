@@ -1,4 +1,5 @@
-{% load i18n characters_extras rules_extras %}
+{% load pantheon_extras %}
+{% load i18n characters_extras rules_extras thumbnail %}
 
 {% if may_edit and priest_action.priestactionroll_set.exists %}
     <div class="row">
@@ -39,5 +40,30 @@
             <a href="{% url 'admin:pantheon_priestaction_change' priest_action.id %}"
                style="font-size: xx-small">admin</a>
         {% endif %}
+    </div>
+
+    {% entity_work object priest_action as entity_work_list %}
+    <div class="col-12">
+        {% for ew in entity_work_list %}
+            <div class="card mb-2">
+                <div class="card-header">
+                    <span class="badge bg-dark float-end">{{ ew.skill }} {% trans "Grace" %}</span>
+                    {{ ew.name }}
+                </div>
+                <div class="card-body">
+                    {% if ew.wiki_page.image %}
+                        <img src="{% thumbnail ew.wiki_page.image "80" as im %}{{ im.url }}{% endthumbnail %}"
+                             class="float-start px-2 py-1"
+                             alt="{{ ew.name }}">
+                    {% endif %}
+                    <div class="p-2">
+                        <p>
+                            {{ ew.effect }}
+                        </p>
+                        <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
