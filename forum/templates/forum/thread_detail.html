@@ -92,7 +92,7 @@
                         {% endblocktrans %}
                     </div>
                     <div class="card-body forum-post">
-                        {{ post.text|urpg_markup }}
+                        {{ post.text|urpg_markup|urlize }}
                         <button
                                 data-raw-post-url="{% url 'forum:post_raw' post.id %}"
                                 data-bs-toggle="collapse"
