@@ -8,4 +8,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: docker buildx -t sbroeckling/phasesix:latest .
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags:
+            - sbroeckling/phasesix:latest
