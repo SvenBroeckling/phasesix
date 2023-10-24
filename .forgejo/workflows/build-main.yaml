@@ -1,0 +1,11 @@
+name: Build-Main
+run-name: ${{ github.actor }} is building
+on: [push]
+jobs:
+  Explore-CI:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: docker buildx -t sbroeckling/phasesix:latest .
