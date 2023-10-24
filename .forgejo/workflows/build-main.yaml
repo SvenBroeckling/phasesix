@@ -1,17 +1,21 @@
 name: Build-Main
 run-name: ${{ github.actor }} is building
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   Build-Main:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    runs-on: docker
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: https://code.forgejo.org/actions/checkout@v3
+      - name: Set up QEMU
+        uses: https://code.forgejo.org/docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: https://code.forgejo.org/docker/setup-buildx-action@v3
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: https://code.forgejo.org/docker/build-push-action@v2
         with:
           context: .
           push: false
