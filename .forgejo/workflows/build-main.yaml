@@ -2,7 +2,7 @@ name: Build-Main
 run-name: ${{ github.actor }} is building
 on: [push]
 jobs:
-  Explore-CI:
+  Build-Main:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
