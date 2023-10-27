@@ -3,7 +3,7 @@
 {% load rules_extras %}
 {% load i18n %}
 {% for s in object.priest_actions.all %}
-    <div class="col mb-2">
+    <div class="col col-sm-6 col-xl-4 mb-2">
         <div
             data-sidebar-title="{{ s.name }}"
             data-sidebar-url="{% url 'characters:xhr_characterpriestaction_sidebar' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
