@@ -4,12 +4,12 @@ import reversion
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.views import View
-from django.views.generic import DetailView, CreateView, TemplateView
 from django.utils.translation import gettext_lazy as _
+from django.views import View
+from django.views.generic import DetailView, TemplateView
 
 from worlds.forms import WikiPageForm, WikiPageTextForm
-from worlds.models import World, WikiPage, WikiPageImage
+from worlds.models import World, WikiPage
 
 
 class WorldDetailView(DetailView):
@@ -181,13 +181,19 @@ class XhrUploadImageView(View):
                 }
             )
 
-        wiki_page.wikipageimage_set.create(
-            image=request.FILES.get("file"),
-            created_by=request.user,
-            image_copyright=request.POST.get("copyright"),
-            image_copyright_url=request.POST.get("copyright-url"),
-            caption=request.POST.get("caption"),
-        )
+        if self.kwargs["kind"] == "additional_image":
+            wiki_page.wikipageimage_set.create(
+                image=request.FILES.get("file"),
+                created_by=request.user,
+                image_copyright=request.POST.get("copyright"),
+                image_copyright_url=request.POST.get("copyright-url"),
+                caption=request.POST.get("caption"),
+            )
+        else:
+            wiki_page.image_copyright = request.POST.get("copyright")
+            wiki_page.image_copyright_url = request.POST.get("copyright-url")
+            wiki_page.save()
+            wiki_page.image.save(request.FILES.get('file').name, request.FILES.get('file'))
         return JsonResponse({"status": "ok"})
 
 

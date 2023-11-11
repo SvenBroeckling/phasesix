@@ -58,7 +58,7 @@ urlpatterns = [
         name="xhr_search_links",
     ),
     path(
-        r"upload_image/<str:slug>/",
+        r"upload_image/<str:slug>/<str:kind>",
         views.XhrUploadImageView.as_view(),
         name="xhr_upload_image",
     ),

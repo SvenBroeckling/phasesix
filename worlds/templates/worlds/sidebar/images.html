@@ -2,8 +2,8 @@
 
 <script src="{% static 'js/clipboard.js' %}"></script>
 <script>
-    $(function(){
-        $('.additional-upload-button').on('click', function(){
+    $(function () {
+        $('.upload-button').on('click', function () {
             let btn = $(this);
             let btnText = btn.text();
             let file = btn.parent().find('input[type="file"]');
@@ -12,7 +12,15 @@
             let copyrightUrl = btn.parent().find('input[name="copyright-url"]');
 
             if (!file.val() || !caption.val() || !copyright.val() || !copyrightUrl.val()) {
-                return;
+                btn.text(btn.data("invalid-msg"))
+                btn.removeClass("btn-primary")
+                btn.addClass("btn-warning")
+                setTimeout(() => {
+                    btn.text(btnText)
+                    btn.removeClass("btn-warning")
+                    btn.addClass("btn-primary")
+                }, 2000)
+                return
             }
 
             let fd = new FormData();
@@ -30,19 +38,19 @@
                 data: fd,
                 processData: false,
                 contentType: false,
-                success: function(data) {
+                success: function (data) {
                     btn.prop('disabled', false);
                     btn.text(btnText);
                     $('#upload-collapse-button').click();
 
-                    $.get(btn.data('refresh-url'), function(data) {
-                        $('.additional-images-container').html(data);
+                    $.get(btn.data('refresh-url'), function (data) {
+                        $('.sidebar-content').html(data);
                     });
                 }
             })
         });
 
-        $('.additional-images-container').on('click', '.additional-image', function(e){
+        $('.additional-images-container').on('click', '.additional-image', function (e) {
             const elem = $(this);
 
             let orig_text = elem.find('.card-header').text()
@@ -59,18 +67,49 @@
 
 <div class="row">
     <div class="col-12">
+        <button
+            data-bs-toggle="collapse"
+            data-bs-target="#upload-collapse"
+            class="btn btn-primary w-100">{% trans 'Upload page image' %}</button>
+    </div>
+    <div class="col-12 mb-4 collapse pt-2" id="upload-collapse">
         <div class="card">
-            <div class="card-header">
-                {% trans 'Page Image' %}
-            </div>
-            {% if object.image %}
-                {% thumbnail object.image "300x300" as im %}
-                    <img class="card-img-top" src="{{ im.url }}" alt="{{ object.title }}" />
-                {% endthumbnail %}
-            {% endif %}
             <div class="card-body">
-                <button class="btn btn-primary">{% trans 'Upload' %}</button>
-                <button class="btn btn-danger">{% trans 'Delete' %}</button>
+                <input type="file" class="mb-1">
+                <input class="form-control mb-1" type="text" name="caption" placeholder="{% trans 'Caption' %}">
+                <input class="form-control mb-1" type="text" name="copyright" placeholder="{% trans 'Copyright' %}">
+                <input class="form-control mb-1" type="text" name="copyright-url"
+                       placeholder="{% trans 'Copyright URL' %}">
+                <button
+                    data-msg="{% trans 'Uploading' %}"
+                    data-invalid-msg="{% trans "Missing image or copyright" %}"
+                    data-upload-url="{% url 'worlds:xhr_upload_image' slug=object.slug kind="page_image" %}"
+                    data-refresh-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
+                    class="btn btn-primary w-100 mt-1 upload-button">{% trans 'Upload' %}</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <button
+            data-bs-toggle="collapse"
+            data-bs-target="#additional-upload-collapse"
+            id="upload-collapse-button"
+            class="btn btn-primary mt-1 mb-2 w-100">{% trans 'Upload an additional image' %}</button>
+    </div>
+    <div class="col-12 collapse pt-2" id="additional-upload-collapse">
+        <div class="card">
+            <div class="card-body">
+                <input type="file" class="mb-1">
+                <input class="form-control mb-1" type="text" name="caption" placeholder="{% trans 'Caption' %}">
+                <input class="form-control mb-1" type="text" name="copyright" placeholder="{% trans 'Copyright' %}">
+                <input class="form-control mb-1" type="text" name="copyright-url"
+                       placeholder="{% trans 'Copyright URL' %}">
+                <button
+                    data-msg="{% trans 'Uploading' %}"
+                    data-invalid-msg="{% trans "Missing image or copyright" %}"
+                    data-upload-url="{% url 'worlds:xhr_upload_image' slug=object.slug kind="additional_image" %}"
+                    data-refresh-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
+                    class="btn btn-primary w-100 mt-1 upload-button">{% trans 'Upload' %}</button>
             </div>
         </div>
     </div>
@@ -78,29 +117,18 @@
 
 <div class="row">
     <div class="col-12">
-        <button
-                data-bs-toggle="collapse"
-                data-bs-target="#upload-collapse"
-                id="upload-collapse-button"
-                class="btn btn-primary mt-3 w-100">{% trans 'Upload an additional image' %}</button>
-    </div>
-
-    <div class="col-12 collapse pt-2" id="upload-collapse">
-        <div class="card">
-            <div class="card-body">
-                <input type="file" class="mb-1">
-                <input class="form-control mb-1" type="text" name="caption" placeholder="{% trans 'Caption' %}">
-                <input class="form-control mb-1" type="text" name="copyright" placeholder="{% trans 'Copyright' %}">
-                <input class="form-control mb-1" type="text" name="copyright-url" placeholder="{% trans 'Copyright URL' %}">
-                <button
-                        data-msg="{% trans 'Uploading' %}"
-                        data-upload-url="{% url 'worlds:xhr_upload_image' slug=object.slug %}"
-                        data-refresh-url="{% url 'worlds:xhr_additional_images' slug=object.slug %}"
-                        class="btn btn-primary w-100 mt-1 additional-upload-button">{% trans 'Upload' %}</button>
+        {% if object.image %}
+            <div class="card">
+                <div class="card-header">{% trans "Page image" %}</div>
+                {% thumbnail object.image "300x300" as im %}
+                    <img class="card-img-top" src="{{ im.url }}" alt="{{ object.title }}"/>
+                {% endthumbnail %}
             </div>
-        </div>
+        {% endif %}
     </div>
+</div>
 
+<div class="row">
     <div class="col-12 additional-images-container">
         {% include 'worlds/sidebar/_additional_images.html' with object=object %}
     </div>
