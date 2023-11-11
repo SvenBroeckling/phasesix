@@ -71,7 +71,7 @@
             <div class="btn-group dropdown-center">
                 <a class="btn btn-primary"
                    href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
-                   role="button"><i class="fas fa-pen"></i> {% trans 'Edit' %}</a>
+                   role="button"><i class="fas fa-pen"></i><span class="d-none d-md-inline"> {% trans 'Edit' %}</span></a>
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden">Toggle Dropdown</span>
