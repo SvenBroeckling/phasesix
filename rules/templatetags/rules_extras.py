@@ -65,6 +65,7 @@ def urpg_markup(value, safe_mode=True):
                 "strong",
                 "ul",
                 "p",
+                "pre",
             },
         )
     return mark_safe(html)
