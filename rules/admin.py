@@ -89,7 +89,8 @@ class KnowledgeAdmin(VersionAdmin):
 
 
 class LineageAdmin(VersionAdmin):
-    list_display = ("name_de", "name_en", "template_points", "template")
+    list_display = ("name_de", "name_en", "template_points", "template", "base_max_health")
+    list_editable = ("base_max_health",)
 
 
 class StatusEffectAdmin(VersionAdmin):
