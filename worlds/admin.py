@@ -57,6 +57,7 @@ class WikiPageAdmin(VersionAdmin):
         "short_name_en",
         "exclude_from_foe_search",
     )
+    save_as = True
     list_filter = ("is_active", "world", "exclude_from_foe_search", "wikipagegamevalues__type")
     search_fields = ("name_de", "world__name_de", "name_en", "world__name_en")
     inlines = (WikiPageImageInline, WikiPageGameValuesInline, WikiPageGameActionInline)
