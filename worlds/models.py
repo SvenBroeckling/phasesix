@@ -322,7 +322,7 @@ class WikiPageImage(models.Model):
         super().save(**kwargs)
 
     def get_wiki_tag(self):
-        return "{{%s|w-25,float-end}}" % self.slug
+        return "{{%s|image-end}}" % self.slug
 
     def may_edit(self, user):
         return user.is_superuser or user == self.wiki_page.created_by

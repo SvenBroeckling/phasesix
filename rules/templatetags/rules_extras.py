@@ -138,7 +138,7 @@ def replace_wiki_tags(value, world):
             data-gallery={obj.wiki_page.slug}
             class="invisible-link toggle-lightbox"
             href="{obj.image.url}">
-            <img class="img-fluid m-2 {css}" src="{image.url}" alt="{obj.caption}" />
+            <img class="img-fluid {css}" src="{image.url}" alt="{obj.caption}" />
         </a>
         """
 

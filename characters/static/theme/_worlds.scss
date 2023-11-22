@@ -16,6 +16,31 @@
   column-gap: 2em;
 }
 
+/* wiki page images */
+
+@media only screen and (min-width: 576px) {
+  .wiki-page .image-end {
+    float: right;
+    width: 40%;
+    padding: 0.5rem 0 0 1rem;
+  }
+
+  .wiki-page .image-start {
+    float: left;
+    width: 40%;
+    padding: 0.5rem 1rem 0 0;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .wiki-page .image-end {
+  }
+
+  .wiki-page .image-start {
+  }
+}
+
+
 .wiki-page p,
 .wiki-page ul li {
   hyphens: auto;
