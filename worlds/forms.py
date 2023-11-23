@@ -7,10 +7,10 @@ class WikiPageForm(forms.ModelForm):
     class Meta:
         model = WikiPage
         fields = [
-            'name_de',
-            'name_en',
-            'text_de',
-            'text_en',
+            "name_de",
+            "name_en",
+            "text_de",
+            "text_en",
         ]
 
 
@@ -18,10 +18,10 @@ class WikiPageTextForm(forms.ModelForm):
     class Meta:
         model = WikiPage
         fields = [
-            'text_de',
-            'text_en',
+            "text_de",
+            "text_en",
         ]
         widgets = {
-            'text_de': forms.Textarea(attrs={'rows': 40}),
-            'text_en': forms.Textarea(attrs={'rows': 40})
+            "text_de": forms.Textarea(attrs={"style": "height: 75vh"}),
+            "text_en": forms.Textarea(attrs={"style": "height: 75vh"}),
         }
