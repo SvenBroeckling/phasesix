@@ -1,0 +1,25 @@
+{% load thumbnail static i18n %}
+{% if roll %}
+    <div class="d-flex flex-column align-items-center my-2 mx-1">
+        {% with character=roll.character %}
+            {% if character.image %}
+                {% thumbnail character.image "500x500" crop="center" as im %}
+                    <img
+                            class="img-fluid rounded float-start me-3"
+                            src="{{ im.url }}"
+                            alt="{{ character.name }}">
+                {% endthumbnail %}
+            {% else %}
+                <img
+                        class="img-fluid rounded float-start me-3"
+                        height="500" width="500"
+                        src="{% static 'img/silhuette.png' %}"
+                        alt="{{ character.name }}">
+            {% endif %}
+        {% endwith %}
+        <div class="fs-3">{{ roll_text }}</div>
+        <div class="fs-4 mt-2">{{ roll.header }}</div>
+        <div class="fs-5">{{ roll.created_at|date:"d.m.Y H:m" }}</div>
+        {% include "campaigns/_dice_socket_results.html" with roll=roll %}
+    </div>
+{% endif %}

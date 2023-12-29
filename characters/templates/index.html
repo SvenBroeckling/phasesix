@@ -8,35 +8,47 @@
             <div class="row">
                 <div class="col">
                     <div class="text-center d-flex flex-column justify-content-center align-items-center">
-                        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid d-block d-xl-none w-50" alt="{{ brand_name }}">
+                        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid d-block d-xl-none w-50"
+                             alt="{{ brand_name }}">
                         <h1>{{ brand_name }}</h1>
                         <h3 class="mb-4">{% trans "Free online pen and paper rpg" %}</h3>
                     </div>
                 </div>
             </div>
 
+            {% if user.is_authenticated %}
+                <div class="card">
+                    <img src="{% static "img/yearly_review.png" %}" alt="" class="card-img-top">
+                    <div class="card-body text-center">
+                        <h2>{% trans "Your review of the last year is here" %}</h2>
+                        <a href="{% url "portal:wrapup" pk=user.id %}"
+                           class="btn btn-primary">{% trans "Open review" %}</a>
+                    </div>
+                </div>
+            {% endif %}
+
             <div class="row py-2 py-md-5">
                 <div class="col-lg-8 offset-lg-2">
                     <div class="text-center lead">
-                            {% blocktrans %}
-                                Do you need a simple and fast rulebook to play your stories as a pen'n'paper
-                                roleplaying
-                                game?
-                                <em>Phase Six</em> is a quick to play roleplaying game rulebook that can be used in
-                                any
-                                setting.
-                                All you need to play is a handfull of regular six-sided dice and some paper.
-                            {% endblocktrans %}
-                            <br><br>
-                            {% blocktrans %}
-                                This website lets you create and manage your characters as well as their equipment
-                                and possessions.  This makes it really easy to use a platform like
-                                <a href="https://roll20.net">Roll20</a> for your sessions.
-                            {% endblocktrans %}
-                            <br><br>
-                            {% blocktrans %}
-                                Start now by taking a look at the rules or creating a character.
-                            {% endblocktrans %}
+                        {% blocktrans %}
+                            Do you need a simple and fast rulebook to play your stories as a pen'n'paper
+                            roleplaying
+                            game?
+                            <em>Phase Six</em> is a quick to play roleplaying game rulebook that can be used in
+                            any
+                            setting.
+                            All you need to play is a handfull of regular six-sided dice and some paper.
+                        {% endblocktrans %}
+                        <br><br>
+                        {% blocktrans %}
+                            This website lets you create and manage your characters as well as their equipment
+                            and possessions.  This makes it really easy to use a platform like
+                            <a href="https://roll20.net">Roll20</a> for your sessions.
+                        {% endblocktrans %}
+                        <br><br>
+                        {% blocktrans %}
+                            Start now by taking a look at the rules or creating a character.
+                        {% endblocktrans %}
                     </div>
                 </div>
             </div>
@@ -74,7 +86,8 @@
 
                                 <div class="carousel-inner">
                                     {% for wiki_page in wiki_pages_tirakan %}
-                                        <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="15000">
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}"
+                                             data-bs-interval="15000">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     {% thumbnail wiki_page.image "768" as im %}
@@ -107,7 +120,8 @@
                             <div id="wiki_page_carousel_nexus" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     {% for wiki_page in wiki_pages_nexus %}
-                                        <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="15000">
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}"
+                                             data-bs-interval="15000">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     {% thumbnail wiki_page.image "768" as im %}

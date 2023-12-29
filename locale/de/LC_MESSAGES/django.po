@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-23 12:36+0000\n"
-"PO-Revision-Date: 2023-11-23 13:36+0100\n"
+"POT-Creation-Date: 2023-12-29 18:35+0000\n"
+"PO-Revision-Date: 2023-12-29 19:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -3093,25 +3093,35 @@ msgstr ""
 "\n"
 "            "
 
-#: characters/templates/index.html:13
+#: characters/templates/index.html:14
 #: worlds/templates/worlds/world_detail.html:31
 msgid "Free online pen and paper rpg"
 msgstr "Freies online Pen'n'Paper Rollenspiel"
 
-#: characters/templates/index.html:21
+#: characters/templates/index.html:23
+#: worlds/templates/worlds/world_detail.html:62
+msgid "Your review of the last year is here"
+msgstr "Dein Jahresrückblick ist da!"
+
+#: characters/templates/index.html:25
+#: worlds/templates/worlds/world_detail.html:64
+msgid "Open review"
+msgstr "Rückblick öffnen"
+
+#: characters/templates/index.html:33
 msgid ""
 "\n"
-"                                Do you need a simple and fast rulebook to "
-"play your stories as a pen'n'paper\n"
-"                                roleplaying\n"
-"                                game?\n"
-"                                <em>Phase Six</em> is a quick to play "
+"                            Do you need a simple and fast rulebook to play "
+"your stories as a pen'n'paper\n"
+"                            roleplaying\n"
+"                            game?\n"
+"                            <em>Phase Six</em> is a quick to play "
 "roleplaying game rulebook that can be used in\n"
-"                                any\n"
-"                                setting.\n"
-"                                All you need to play is a handfull of "
-"regular six-sided dice and some paper.\n"
-"                            "
+"                            any\n"
+"                            setting.\n"
+"                            All you need to play is a handfull of regular "
+"six-sided dice and some paper.\n"
+"                        "
 msgstr ""
 "\n"
 "Brauchst du ein simples und schnelles Regelwerk um deine Geschichten als "
@@ -3122,16 +3132,16 @@ msgstr ""
 "etwas Papier.\n"
 " "
 
-#: characters/templates/index.html:31
+#: characters/templates/index.html:43
 msgid ""
 "\n"
-"                                This website lets you create and manage your "
+"                            This website lets you create and manage your "
 "characters as well as their equipment\n"
-"                                and possessions.  This makes it really easy "
-"to use a platform like\n"
-"                                <a href=\"https://roll20.net\">Roll20</a> "
-"for your sessions.\n"
-"                            "
+"                            and possessions.  This makes it really easy to "
+"use a platform like\n"
+"                            <a href=\"https://roll20.net\">Roll20</a> for "
+"your sessions.\n"
+"                        "
 msgstr ""
 "\n"
 "Auf dieser Webseite kannst du deine Charaktere erstellen und verwalten, "
@@ -3140,32 +3150,32 @@ msgstr ""
 "<a href=\"https://roll20.net\">Roll20</a> für deine Sitzungen zu benutzen.\n"
 " "
 
-#: characters/templates/index.html:37
+#: characters/templates/index.html:49
 msgid ""
 "\n"
-"                                Start now by taking a look at the rules or "
+"                            Start now by taking a look at the rules or "
 "creating a character.\n"
-"                            "
+"                        "
 msgstr ""
 "\n"
 "Starte jetzt damit einen Blick auf die Regeln zu werfen oder einen Charakter "
 "zu erstellen.\n"
 " "
 
-#: characters/templates/index.html:63
+#: characters/templates/index.html:75
 msgid "Discover worlds"
 msgstr "Entdecke Welten"
 
-#: characters/templates/index.html:64
+#: characters/templates/index.html:76
 msgid "Play in one of these worlds, or use Terra to play on earth."
 msgstr ""
 "Spiele in einer dieser Welten, oder wähle Terra, um auf der Erde zu spielen."
 
-#: characters/templates/index.html:86
+#: characters/templates/index.html:99
 msgid "Realms of Tirakan"
 msgstr "Tirakans Reiche"
 
-#: characters/templates/index.html:90 characters/templates/index.html:123
+#: characters/templates/index.html:103 characters/templates/index.html:137
 msgid "Read ahead"
 msgstr "Weiterlesen"
 
@@ -3865,6 +3875,65 @@ msgstr "Charaktere, Welten etc.."
 #: portal/templates/portal/sidebar/search.html:29
 msgid "Search in descriptions"
 msgstr "In Beschreibungen suchen"
+
+#: portal/templates/portal/yearly_wrapup.html:5
+#: portal/templates/portal/yearly_wrapup.html:13
+#, python-format
+msgid "%(t_year)s in Review"
+msgstr "Jahresrückblick %(t_year)s"
+
+#: portal/templates/portal/yearly_wrapup.html:17
+msgid "Your most played characters"
+msgstr "Deine meistgespielten Charaktere"
+
+#: portal/templates/portal/yearly_wrapup.html:37
+#, python-format
+msgid ""
+"\n"
+"                            You have made %(t_rolls)s rolls on %(t_days)s "
+"days.\n"
+"                        "
+msgstr ""
+"\n"
+"                            Du hast %(t_rolls)s Würfe an %(t_days)s Tagen "
+"gemacht.\n"
+"                        "
+
+#: portal/templates/portal/yearly_wrapup.html:47
+msgid "You played in the following campaigns"
+msgstr "Du hast in den folgenden Kampagnen gespielt."
+
+#: portal/templates/portal/yearly_wrapup.html:56
+msgid "Your best rolls"
+msgstr "Deine besten Würfe"
+
+#: portal/templates/portal/yearly_wrapup.html:59
+msgid "Most Crits"
+msgstr "Meiste Crits"
+
+#: portal/templates/portal/yearly_wrapup.html:61
+msgid "Most exploded dice"
+msgstr "Die meisten Exploding Dice"
+
+#: portal/templates/portal/yearly_wrapup.html:63
+msgid "Most successes"
+msgstr "Die meisten Erfolge"
+
+#: portal/templates/portal/yearly_wrapup.html:65
+msgid "Highest single roll"
+msgstr "Höchster einzelner Wurf"
+
+#: portal/templates/portal/yearly_wrapup.html:67
+msgid "Total sum"
+msgstr "Gesamtsumme"
+
+#: portal/templates/portal/yearly_wrapup.html:73
+msgid "Your worst roll"
+msgstr "Dein schlechtester Wurf"
+
+#: portal/templates/portal/yearly_wrapup.html:76
+msgid "Most fails"
+msgstr "Meiste Fehlschläge"
 
 #: rulebook/templates/rulebook/book_toc.html:111
 msgid "Table of contents"
@@ -5251,9 +5320,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "Minimal cover"
 #~ msgstr "Minimale Deckung"
-
-#~ msgid "Armor roll"
-#~ msgstr "Rüstungswurf"
 
 #~ msgid "Armor value"
 #~ msgstr "Rüstungswert"
