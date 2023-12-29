@@ -19,7 +19,7 @@
         {% endwith %}
         <div class="fs-3">{{ roll_text }}</div>
         <div class="fs-4 mt-2">{{ roll.header }}</div>
-        <div class="fs-5">{{ roll.created_at|date:"d.m.Y H:m" }}</div>
+        <div class="fs-5">{{ roll.created_at|date:"d.m.Y H:i" }}</div>
         {% include "campaigns/_dice_socket_results.html" with roll=roll %}
     </div>
 {% endif %}
