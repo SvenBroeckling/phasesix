@@ -55,17 +55,6 @@
         {% endif %}
     </div>
 
-    {% if user.is_authenticated %}
-        <div class="card">
-            <img src="{% static "img/yearly_review.png" %}" alt="" class="card-img-top">
-            <div class="card-body text-center">
-                <h2>{% trans "Your review of the last year is here" %}</h2>
-                <a href="{% url "portal:wrapup" pk=user.id %}"
-                   class="btn btn-primary">{% trans "Open review" %}</a>
-            </div>
-        </div>
-    {% endif %}
-
     <div class="row mt-4">
         <div class="col-12 wiki-page">
             {{ world.description_1|urpg_markup|replace_wiki_tags:world }}
