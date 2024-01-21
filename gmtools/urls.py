@@ -8,13 +8,18 @@ app_name = "gmtools"
 urlpatterns = [
     path(
         "translation_status/",
-        staff_member_required(views.TranslationStatusView.as_view()),
+        views.TranslationStatusView.as_view(),
         name="translation_status",
     ),
     path(
         "template_statistics/",
-        staff_member_required(views.TemplateStatisticsView.as_view()),
+        views.TemplateStatisticsView.as_view(),
         name="template_statistics",
+    ),
+    path(
+        "roll_statistics/",
+        views.RollStatisticsView.as_view(),
+        name="roll_statistics",
     ),
     path(
         "extension_grid/<type>/",

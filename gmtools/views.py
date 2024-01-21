@@ -1,5 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 
@@ -21,6 +20,18 @@ from rules.models import (
 )
 
 
+class RollStatisticsView(TemplateView):
+    template_name = "gmtools/roll_statistics.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["attributes"] = Attribute.objects.all()
+        context["skills"] = Skill.objects.all()
+        context["weapons"] = Weapon.objects.all()
+        context["base_spells"] = BaseSpell.objects.all()
+        return context
+
+
 class TranslationStatusView(TemplateView):
     template_name = "gmtools/translation_status.html"
 
@@ -32,7 +43,9 @@ class TranslationStatusView(TemplateView):
                 "id": model.__mro__[0].__name__,
                 "admin_url_name": f"admin:{model._meta.app_label}_{model.__mro__[0].__name__.lower()}_change",
                 "qs": model.objects.all(),
-                "translatable_fields": [field for field in model._meta.translatable_fields],
+                "translatable_fields": [
+                    field for field in model._meta.translatable_fields
+                ],
             }
             for model in get_models_with_translations()
         ]

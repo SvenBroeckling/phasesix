@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n rules_extras gmtools_extras %}
+
+{% block title %}{% trans 'Roll Statistics' %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h3>{% trans "Attributes" %}</h3>
+            {% for attribute in attributes %}
+                {{ attribute }} {% roll_amount_for_object attribute %}<br>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3>{% trans "Skills" %}</h3>
+            {% for skill in skills %}
+                {{ skill }} {% roll_amount_for_object skill %}<br>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3>{% trans "Weapons" %}</h3>
+            {% for weapon in weapons %}
+                {{ weapon }} {% roll_amount_for_object weapon %}<br>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3>{% trans "Spells" %}</h3>
+            {% for base_spell in base_spells %}
+                {{ base_spell }} {% roll_amount_for_object base_spell %}<br>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

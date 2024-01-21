@@ -1,8 +1,6 @@
 from decimal import Decimal
 
-from django.db.models.functions import Length, Coalesce
 from django.db.models import (
-    Q,
     F,
     DecimalField,
     Value,
@@ -10,11 +8,15 @@ from django.db.models import (
     Case,
     ExpressionWrapper,
     QuerySet,
+    Q,
 )
+from django.db.models.functions import Length
 from django.template import Library
 from django.template.defaultfilters import floatformat
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+
+from campaigns.models import Roll
 
 register = Library()
 
@@ -85,3 +87,8 @@ def model_name(value: QuerySet):
 def admin_url_for_qs_model(value: QuerySet, pk: int):
     pattern = f"admin:{value.model._meta.app_label}_{value.model.__mro__[0].__name__.lower()}_change"
     return reverse(pattern, args=[pk])
+
+
+@register.simple_tag
+def roll_amount_for_object(obj):
+    return Roll.objects.filter(Q(header=obj.name_de) | Q(header=obj.name_en)).count()
