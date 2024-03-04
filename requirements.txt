@@ -1,30 +1,29 @@
 # urpg web
 -e git+https://codeberg.org/Nimbostratus/django-transmeta.git#egg=django-transmeta
-Django==4.2.7
-Pillow==10.1.0
+Django==5.0.2
+Markdown==3.5.2
+Pillow==10.2.0
+bleach==6.1.0
+django-bootstrap5==23.4
+django-cachalot==2.6.2
 django-compressor==4.4
+django_debug_toolbar==4.3.0
 django-extensions==3.2.3
-django-reversion==5.0.6
+django-htmx==1.17.3
 django-libsass==0.9
 django-registration==3.4
+django-reversion==5.0.12
 psycopg2-binary==2.9.9
 sorl-thumbnail==12.10.0
-django-bootstrap5==23.3
+weasyprint==61.1
 
 channels==4.0.0
-channels-redis==4.1.0
-#asgiref==3.4.1
+channels-redis==4.2.0
 requests==2.31.0
 
 # deployment
-uvicorn==0.23.2
+uvicorn==0.27.1
 gunicorn==21.2.0
-python-dotenv==1.0.0
-weasyprint==60.1
-daphne==4.0.0
-django_debug_toolbar==4.2.0
+python-dotenv==1.0.1
+daphne==4.1.0
 pymemcache==4.0.0
-django-cachalot==2.6.1
-django-htmx==1.17.0
-Markdown==3.5.1
-bleach==6.1.0
