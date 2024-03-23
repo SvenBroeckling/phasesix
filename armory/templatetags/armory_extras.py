@@ -15,13 +15,8 @@ def item_widget(context, item, character=None):
 
 
 @register.inclusion_tag("armory/_weapon_widget.html", takes_context=True)
-def weapon_widget(context, weapon, character=None):
-    context.update(
-        {
-            "weapon": weapon,
-            "character": character,
-        }
-    )
+def weapon_widget(context, weapon, character=None, add_button=False):
+    context.update({"weapon": weapon, "character": character, "add_button": add_button})
     return context
 
 
@@ -34,3 +29,8 @@ def riot_gear_widget(context, riot_gear, character=None):
         }
     )
     return context
+
+
+@register.filter
+def replace_keyword_value(description, value):
+    return description.replace("{X}", str(value))

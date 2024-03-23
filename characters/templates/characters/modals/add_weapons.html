@@ -47,7 +47,7 @@
                     <div class="row masonry-container">
                         {% for weapon in homebrew %}
                             <div class="col-12 col-sm-6">
-                                {% weapon_widget weapon character=character %}
+                                {% weapon_widget weapon character=character add_button=True %}
                             </div>
                         {% endfor %}
                     </div>
@@ -62,7 +62,7 @@
                     <div class="row masonry-container">
                         {% for weapon in t.weapon_set.all.distinct|for_extensions:character.extensions.all %}
                             <div class="col-12 col-md-6">
-                                {% weapon_widget weapon character=character %}
+                                {% weapon_widget weapon character=character add_button=True %}
                             </div>
                         {% endfor %}
                     </div>

@@ -55,8 +55,8 @@ class XhrCreateItemView(XhrCreateBaseView):
 
 class CreateBaseView(View):
     def get_character(self):
-        if self.request.GET.get('character_pk', '') != '':
-            return Character.objects.get(id=self.request.GET.get('character_pk'))
+        if self.request.GET.get("character_pk", "") != "":
+            return Character.objects.get(id=self.request.GET.get("character_pk"))
         return None
 
     def get_campaign(self):
@@ -95,7 +95,7 @@ class CreateItemView(CreateBaseView):
                     created_by=request.user,
                     is_homebrew=True,
                     homebrew_character=character,
-                    homebrew_campaign=campaign
+                    homebrew_campaign=campaign,
                 )
                 if character is not None and form["add_to_character"]:
                     character.characteritem_set.create(item=item)
@@ -157,7 +157,6 @@ class XhrCreateWeaponView(XhrCreateBaseView):
             initial={
                 "damage_potential": 0,
                 "actions_to_ready": 1,
-                "encumbrance": 1,
                 "piercing": 1,
                 "range_meter": 20,
                 "capacity": 1,
@@ -185,7 +184,6 @@ class CreateWeaponView(CreateBaseView):
                     damage_potential=form.cleaned_data["damage_potential"],
                     capacity=form.cleaned_data["capacity"],
                     actions_to_ready=form.cleaned_data["actions_to_ready"],
-                    encumbrance=form.cleaned_data["encumbrance"],
                     piercing=form.cleaned_data["piercing"],
                     concealment=form.cleaned_data["concealment"],
                     weight=form.cleaned_data["weight"],

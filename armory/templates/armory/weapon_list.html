@@ -65,7 +65,6 @@
                         <th>{% trans 'Actions to ready' %}</th>
                         <th>{% trans 'Range' %}</th>
                         <th>{% trans 'Capacity' %}</th>
-                        <th>{% trans 'Encumbrance' %}</th>
                         <th>{% trans 'Concealment' %}</th>
                         <th>{% trans 'Price' %}</th>
                         {% if user.is_superuser %}
@@ -101,9 +100,6 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% color_value_span object.encumbrance 2 invert=True %}
-                            </td>
-                            <td>
                                 {% color_value_span object.concealment 5 invert=True %}
                             </td>
                             <td>{% color_value_span object.price 10000 invert=True %}</td>
@@ -116,7 +112,7 @@
                 </table>
                 {% if user.is_superuser %}
                     <a href="{% url 'admin:armory_weapon_add' %}" class="btn btn-warning"><i
-                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
+                            class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
                 {% endif %}
             </div>
         </div>

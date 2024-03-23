@@ -1,4 +1,4 @@
-{% load characters_extras %}
+% load characters_extras %}
 {% load i18n %}
 {% for weapon in object.characterweapon_set.all|cap_and_fill_queryset_to:4 %}
     <div class="box weapon-box">
@@ -15,7 +15,9 @@
             <tr>
                 <td>{% trans 'Damage Potential' %}</td>
                 <td>
-                   {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-light" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %} {% display_modifications weapon 'damage_potential' %}
+                    {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-light"
+                                                                             title="{% trans 'Damage Potential' %}"></i>{% empty %}
+                        -{% endfor %} {% display_modifications weapon 'damage_potential' %}
                 </td>
             </tr>
             <tr>
@@ -25,10 +27,6 @@
             <tr>
                 <td>{% trans 'Actions to ready' %}</td>
                 <td>{{ weapon.weapon.actions_to_ready }} {% display_modifications weapon 'actions_to_ready' %}</td>
-            </tr>
-            <tr>
-                <td>{% trans 'Encumbrance' %}</td>
-                <td>{{ weapon.weapon.encumbrance }}</td>
             </tr>
             <tr>
                 <td>{% trans 'Reload Actions' %}</td>

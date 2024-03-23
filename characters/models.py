@@ -1,10 +1,10 @@
 import math
 import random
 
+from django.conf import settings
 from django.db import models
 from django.db.models import Sum, Max, Q
 from django.urls import reverse
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _, get_language
 from sorl.thumbnail import get_thumbnail
 
@@ -482,19 +482,12 @@ class Character(models.Model):
 
     @property
     def total_encumbrance(self):
-        riot_gear_encumbrance = (
+        return (
             self.characterriotgear_set.aggregate(Sum("riot_gear__encumbrance"))[
                 "riot_gear__encumbrance__sum"
             ]
             or 0
         )
-        weapon_encumbrance = (
-            self.characterweapon_set.aggregate(Sum("weapon__encumbrance"))[
-                "weapon__encumbrance__sum"
-            ]
-            or 0
-        )
-        return weapon_encumbrance + riot_gear_encumbrance
 
     @property
     def evasion(self):
@@ -807,10 +800,6 @@ class CharacterWeapon(models.Model):
     @property
     def modified_actions_to_ready(self):
         return self.weapon.actions_to_ready + self._get_mods("actions_to_ready")
-
-    @property
-    def modified_encumbrance(self):
-        return self.weapon.encumbrance + self._get_mods("encumbrance")
 
     @property
     def modified_crit_minium_roll(self):

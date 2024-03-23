@@ -14,11 +14,17 @@ from armory.models import (
     CurrencyMap,
     CurrencyMapUnit,
     RiotGearType,
+    Keyword,
+    WeaponKeyword,
 )
 
 
 class WeaponAttackModeInline(admin.TabularInline):
     model = WeaponAttackMode
+
+
+class WeaponKeywordInline(admin.TabularInline):
+    model = WeaponKeyword
 
 
 class WeaponAdmin(admin.ModelAdmin):
@@ -28,7 +34,6 @@ class WeaponAdmin(admin.ModelAdmin):
         "actions_to_ready",
         "damage_potential",
         "piercing",
-        "encumbrance",
         "price",
         "range_meter",
     )
@@ -37,7 +42,6 @@ class WeaponAdmin(admin.ModelAdmin):
         "actions_to_ready",
         "damage_potential",
         "piercing",
-        "encumbrance",
         "price",
         "range_meter",
     )
@@ -50,7 +54,7 @@ class WeaponAdmin(admin.ModelAdmin):
         "crit_minimum_roll",
     )
     search_fields = "name_en", "name_de"
-    inlines = [WeaponAttackModeInline]
+    inlines = [WeaponAttackModeInline, WeaponKeywordInline]
     fieldsets = [
         (
             None,
@@ -64,7 +68,7 @@ class WeaponAdmin(admin.ModelAdmin):
                         "is_throwing_weapon",
                     ),
                     ("type", "capacity", "damage_potential", "piercing"),
-                    ("weight", "actions_to_ready", "encumbrance"),
+                    ("weight", "actions_to_ready"),
                     ("recoil_compensation", "crit_minimum_roll", "reload_actions"),
                     ("range_meter", "concealment", "price"),
                     (
@@ -179,6 +183,7 @@ class CurrencyMapAdmin(admin.ModelAdmin):
 
 admin.site.register(AttackMode, AttackModeAdmin)
 admin.site.register(WeaponType, WeaponTypeAdmin)
+admin.site.register(Keyword)
 admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(WeaponModificationType, WeaponModificationTypeAdmin)
 admin.site.register(WeaponModification, WeaponModificationAdmin)

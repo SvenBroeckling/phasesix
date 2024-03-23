@@ -1,41 +1,31 @@
-{% load i18n characters_extras rules_extras thumbnail %}
+{% load i18n characters_extras rules_extras thumbnail armory_extras %}
 
 <div class="card mb-3 add-item-card">
-    <div class="card-header">
-        {{ weapon }}
-        {% if weapon.concealment %}
-            <span class="float-end"><i class="fas fa-eye-slash fa-fw"></i> {% color_value_span weapon.concealment 6 invert=True %}</span>
-        {% endif %}
-    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-12">
+                <h4>{{ weapon }}</h4>
+
                 {{ weapon.description|urpg_markup }}
-                <i class="fas fa-angle-double-right fa-fw text-muted"></i> {% trans 'Piercing' %}: {% color_value_span weapon.piercing 4 %}<br>
-                <i class="fas fa-dice-five fa-fw text-muted"></i> {% trans 'Damage Potential' %}: {% for i in weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Damage Potential' %}"></i>{% empty %}-{% endfor %}<br>
-                <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Actions to ready' %}: {% color_value_span weapon.actions_to_ready 5 invert=True %}<br>
-                {% if not weapon.is_hand_to_hand_weapon and not weapon.is_throwing_weapon %}
-                    <i class="fas fa-arrow-down fa-fw text-muted"></i> {% trans 'Recoil Compensation' %}: {% color_value_span weapon.recoil_compensation 3 %}<br>
-                    <i class="fas fa-clock fa-fw text-muted"></i> {% trans 'Reload actions' %}:
-                    {% color_value_span weapon.reload_actions 6 invert=True %}<br>
-                    <i class="fas fa-list-ol fa-fw text-muted"></i> {% trans 'Capacity' %}:
-                    {% color_value_span weapon.capacity 30 %}<br>
-                {% endif %}
-                <i class="fas fa-arrows-alt-h fa-fw text-muted"></i> {% trans 'Range' %}: {{ weapon.range_meter }}m<br>
-                <i class="fas fa-weight fa-fw text-muted"></i> {% trans 'Encumbrance' %}: {% color_value_span weapon.encumbrance 2 invert=True %}<br>
-                <i class="fas fa-balance-scale fa-fw text-muted"></i> {% trans 'Weight' %}: {{ weapon.weight }}<br>
+
+                {% for kw in weapon.weaponkeyword_set.all %}
+                    <b>{{ kw.keyword.name }}</b> {% color_value_span kw.value 6 %}
+                    <i>({{ kw.keyword.description|replace_keyword_value:kw.value }})</i><br>
+                {% endfor %}
 
                 {% if weapon.weaponattackmode_set.exists %}
                     <br>
                     {% for fm in weapon.weaponattackmode_set.all %}
-                        {{ fm.attack_mode.name }}<br>
+                        <button disabled class="btn btn-outline-primary mb-2 w-100">
+                            {{ fm.attack_mode.name }} - {{ weapon.range_meter }}m<br>
+                        </button>
                     {% endfor %}
                 {% endif %}
 
-                {% if character %}
+                {% if character and add_button %}
                     {% with currency_unit=character.common_currency_unit %}
                         <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}"
-                              class="float-end add-form" method="post">
+                              class="float-end add-form pt-3" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
                             <button class="btn btn-sm btn-primary float-end"
