@@ -23,10 +23,10 @@
     {% if may_edit %}
         <div class="col-12">
             <button class="btn btn-primary btn-sm mb-2 w-100 dice-roll mb-1"
-                    data-dice-roll="1d6+{{ object.wiki_page.wikipagegamevalues_set.latest.quickness }}"
+                    data-dice-roll="{{ object.wiki_page.wikipagegamevalues_set.latest.quickness }}d6"
                     data-dice-header="{% trans 'Initiative' %}"
-                    data-dice-description="{% trans 'Initiative (1d6+Quickness)' %}"
-                    data-dice-campaign="{{ object.campaign.id }}">{% trans "Roll Initiative" %} ({% trans '1d6' %}+{{ object.wiki_page.wikipagegamevalues_set.latest.quickness }})
+                    data-dice-description="{% trans 'Initiative (*Quickness*d6)' %}"
+                    data-dice-campaign="{{ object.campaign.id }}">{% trans "Roll Initiative" %} ({{ object.wiki_page.wikipagegamevalues_set.latest.quickness }}{% trans 'd6' %})
             </button>
         </div>
         <div class="col-12">
