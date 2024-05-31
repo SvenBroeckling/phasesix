@@ -21,20 +21,11 @@
 {% endblock %}
 
 {% block title %}{{ world }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ world }}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
 
 {% block content %}
-    <div class="row d-block d-xl-none">
-        <div class="col">
-            <div class="text-center d-flex flex-column justify-content-center align-items-center">
-                <img src="{{ world.brand_logo.url }}" class="img-fluid w-50" alt="{{ brand_name }}">
-                <h1 class="mt-2">{{ brand_name }}</h1>
-                <h3 class="mb-4">{% trans "Free online pen and paper rpg" %}</h3>
-            </div>
-        </div>
-    </div>
-
     <div class="d-none d-xl-flex justify-content-between">
-        <h1>{{ world.name }}</h1>
         {% if may_edit %}
             <div>
                 <a

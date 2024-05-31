@@ -1,4 +1,23 @@
 {% load static i18n portal_extras world_extras campaign_extras %}
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">{{ brand_name }}</a>
+        {% if user.is_authenticated %}
+            <a href="{% url "portal:profile" %}" class="btn btn-outline-light">
+                <i class="fas fa-user"></i>
+                {{ request.user|capfirst }}
+            </a>
+        {% else %}
+            <a href="{% url "login" %}" class="btn btn-outline-light">
+                <i class="fas fa-user"></i>
+                {% trans 'Login' %}
+            </a>
+        {% endif %}
+    </div>
+</nav>
+
+<!--
 <a href="/"
    class="d-flex align-items-center justify-content-center mb-3 mb-md-2 me-md-auto text-white text-decoration-none">
     {% if request.world_configuration %}
@@ -111,7 +130,8 @@
                 {% else %}
                     {% get_top_level_pages_for_world request.world_configuration.world as pages %}
                     {% for page in pages %}
-                        <li class="{% active_if_url_name_matches "worlds:wiki_page" slug=page.slug world_slug=page.world.slug %}">
+                        <li class="
+    {% active_if_url_name_matches "worlds:wiki_page" slug=page.slug world_slug=page.world.slug %}">
                             <a href="{{ page.get_absolute_url }}"
                                class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ page.name }}</a>
                         </li>
@@ -160,3 +180,5 @@
 <div class="text-center">
     <a rel="me" href="https://rollenspiel.social/@Sven">Mastodon</a> | <a href="{% url 'contact' %}">{% trans 'Imprint' %}</a> | <a href="{% url 'contact' %}">{% trans 'Privacy' %}</a>
 </div>
+
+-->

@@ -4,11 +4,11 @@ import random
 from django.db import models
 from django.db.models import Sum, Max, Q
 from django.urls import reverse
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _, get_language
 from sorl.thumbnail import get_thumbnail
 
 from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit
+from characters.utils import static_thumbnail
 from horror.models import QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
 from pantheon.models import PriestAction
@@ -163,20 +163,24 @@ class Character(models.Model):
     def get_absolute_url(self):
         return reverse("characters:detail", kwargs={"pk": self.id})
 
-    def get_image_url(self):
+    def get_image_url(self, geometry="180", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, "180", crop="center", quality=99).url
+            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
 
-        return f"{settings.STATIC_URL}/img/silhuette.png"
+        return static_thumbnail(
+            f"img/silhouette.png",
+            geometry_string=geometry,
+            crop=crop,
+        )
 
-    def get_backdrop_image_url(self):
+    def get_backdrop_image_url(self, geometry="1800", crop="center"):
         if self.backdrop_image:
             return get_thumbnail(
-                self.backdrop_image, "1800", crop="center", quality=99
+                self.backdrop_image, geometry, crop=crop, quality=99
             ).url
         if self.get_epoch().image:
             return get_thumbnail(
-                self.get_epoch().image, "1800", crop="center", quality=99
+                self.get_epoch().image, geometry, crop=crop, quality=99
             ).url
         return None
 

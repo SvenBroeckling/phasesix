@@ -2,19 +2,8 @@
 {% load rules_extras thumbnail i18n static %}
 
 {% block content %}
-    <header class="masthead">
+    <section class="masthead">
         <div class="container pt-0 pt-md-2">
-
-            <div class="row">
-                <div class="col">
-                    <div class="text-center d-flex flex-column justify-content-center align-items-center">
-                        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid d-block d-xl-none w-50"
-                             alt="{{ brand_name }}">
-                        <h1>{{ brand_name }}</h1>
-                        <h3 class="mb-4">{% trans "Free online pen and paper rpg" %}</h3>
-                    </div>
-                </div>
-            </div>
 
             <div class="row py-2 py-md-5">
                 <div class="col-lg-8 offset-lg-2">
@@ -137,5 +126,5 @@
             </div>
         </div>
 
-    </header>
+    </section>
 {% endblock %}

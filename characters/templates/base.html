@@ -1,162 +1,152 @@
 {% load static i18n django_bootstrap5 compress portal_extras %}<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#" data-bs-theme="dark">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {% compress css %}
-        <link href="{% static 'theme/fonts/Oxanium/stylesheet.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'theme/fonts/UnifrakturMaguntia/stylesheet.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'theme/fonts/NotoSans/stylesheet.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'vendor/switch/switch.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'vendor/animate/animate.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
-        <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css"
-              rel="stylesheet"/>
-        {% if request.world_configuration %}
-            <link type="text/x-scss" href="{{ request.world_configuration.world.scss_file_static }}" rel="stylesheet"/>
-        {% else %}
-            <link type="text/x-scss" href="{% static 'theme/phasesix.scss' %}" rel="stylesheet"/>
-        {% endif %}
-    {% endcompress %}
+  {% compress css %}
+    {#        <link href="{% static 'fonts/Oxanium/stylesheet.css' %}" type="text/css" rel="stylesheet"/>#}
+    {#        <link href="{% static 'fonts/UnifrakturMaguntia/stylesheet.css' %}" type="text/css" rel="stylesheet"/>#}
+    {#        <link href="{% static 'fonts/NotoSans/stylesheet.css' %}" type="text/css" rel="stylesheet"/>#}
 
-    <title>{% block title %}{{ brand_name }}{% endblock %}</title>
+    <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'vendor/switch/switch.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'vendor/animate/animate.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css"
+          rel="stylesheet"/>
 
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:site" content="@phasesix_rpg"/>
-    <meta name="twitter:creator" content="@phasesix_rpg"/>
-    {% block opengraph %}
-        <meta property="og:title" content="{{ brand_name }}"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
-        <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
-        <meta property="og:description" content="{{ brand_description }}"/>
-    {% endblock %}
+    {% if request.world_configuration %}
+      <link type="text/x-scss" href="{{ request.world_configuration.world.scss_file_static }}" rel="stylesheet"/>
+    {% else %}
+      <link type="text/x-scss" href="{% static 'theme/phasesix.scss' %}" rel="stylesheet"/>
+    {% endif %}
+  {% endcompress %}
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
-    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
-    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
-    <meta name="theme-color" content="#ffffff">
-    {% block extraheader %}{% endblock %}
-    <script src="{% static 'js/theme_switcher.js' %}"></script>
+  <title>{% block title %}{{ brand_name }}{% endblock %}</title>
+
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="@phasesix_rpg"/>
+  <meta name="twitter:creator" content="@phasesix_rpg"/>
+  {% block opengraph %}
+    <meta property="og:title" content="{{ brand_name }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
+    <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
+    <meta property="og:description" content="{{ brand_description }}"/>
+  {% endblock %}
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+  <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
+  <meta name="theme-color" content="#ffffff">
+  {% block extraheader %}{% endblock %}
+  <script src="{% static 'js/theme_switcher.js' %}"></script>
 </head>
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
-<div id="sidebar-right" class="sidebar sidebar-right position-fixed h-100">
-    <header class="sidebar-header p-3 overflow-auto">
-        <button type="button" class="sidebar-close float-end btn btn-danger btn-sm close" aria-label="Close"><span
-            aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="d-inline-block mb-0">{% trans 'Properties' %}</h4>
-    </header>
-    <div class="sidebar-content px-3 pt-2 pb-5">
-    </div>
-</div>
+{% include '_main_nav.html' %}
 
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-main-nav" aria-labelledby="offcanvasLabel">
-    <div class="offcanvas-body">
-        {% include '_main_nav.html' %}
-    </div>
+<div id="sidebar-right" class="sidebar sidebar-right position-fixed h-100">
+  <header class="sidebar-header p-3 overflow-auto">
+    <button type="button" class="sidebar-close float-end btn btn-danger btn-sm close" aria-label="Close"><span
+            aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="d-inline-block mb-0">{% trans 'Properties' %}</h4>
+  </header>
+  <div class="sidebar-content px-3 pt-2 pb-5">
+  </div>
 </div>
 
 <div id="page-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
      aria-labelledby="page-modal">
-    <div class="modal-dialog modal-xl modal-fullscreen-lg-down" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body page-modal-container">
-                <div class="text-center">
-                    <i class="fa fa-cog fa-spin fa-5x fa-fw"></i>
-                    <span class="sr-only">{% trans 'Loading' %}...</span>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-bs-dismiss="modal">{% trans 'Close' %}</button>
-            </div>
+  <div class="modal-dialog modal-xl modal-fullscreen-lg-down" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body page-modal-container">
+        <div class="text-center">
+          <i class="fa fa-cog fa-spin fa-5x fa-fw"></i>
+          <span class="sr-only">{% trans 'Loading' %}...</span>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default"
+                data-bs-dismiss="modal">{% trans 'Close' %}</button>
+      </div>
     </div>
+  </div>
 </div>
 
-<main class="d-flex flex-nowrap vh-100">
-
-    <div
-        class="main-nav d-none d-xl-flex flex-column h-100 sticky-top flex-shrink-0 p-3 overflow-scroll"
-        style="width: 280px;">
-        {% include '_main_nav.html' %}
+<header class="bg-black py-3"
+        style="background: url({% static "img/header-background.png" %}) no-repeat; background-size: cover">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">{% block in_page_title %}{{ brand_name }}{% endblock %}</h1>
+      <p class="lead fw-normal text-white-50 mb-0">
+        {% block in_page_subtitle %}{% trans "Free online pen and paper rpg" %}{% endblock %}</p>
     </div>
+  </div>
+</header>
 
-    <div class="container-fluid pt-5 overflow-y-auto overflow-x-hidden position-relative">
-        {% bootstrap_messages %}
-
-        <span
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvas-main-nav"
-            class="toggle-main-nav d-block d-xl-none pointer"><i class="fas fa-bars fa-2x"></i></span>
-
-        <div class="row">
-            <div class="col-12">
-                <div class="container">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
-        </div>
-        <footer class="row mt-5 pt-5">
-            <div class="col-12 col-md-3 offset-md-3 text-md-end">
-                <h5>{{ brand_name }}</h5>
-                <ul class="list-unstyled">
-                    <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
-                    <li><a href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a></li>
-                    <li><a href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rules' %}</a></li>
-                    <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>
-                    <li><a href="https://hus.tirakans-reiche.de">{% trans 'Tirakan HuS' %}</a></li>
-                </ul>
-            </div>
-            <div class="col-12 col-md-3">
-                <h5>Material</h5>
-                <ul class="list-unstyled">
-                    <li><a href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
-                    <li><a href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a></li>
-                    <li><a href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a></li>
-                    <li><a href="{% url 'magic:spell_origin_list' %}">{% trans 'Spells' %}</a></li>
-                    <li><a href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a></li>
-                </ul>
-            </div>
-        </footer>
-    </div>
+<main class="pt-5">
+  {% bootstrap_messages %}
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
 </main>
 
-{% compress js %}
-    <script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'vendor/fontawesome/js/all.min.js' %}"></script>
-    <script src="{% static 'vendor/jquery/popper.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'vendor/masonry/masonry.pkgd.min.js' %}"></script>
-    <script src="{% static 'vendor/jquery/jquery.matchHeight.js' %}"></script>
-    <script src="{% static 'vendor/dropzone/dropzone.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.js' %}"></script>
-    <script src="{% static 'vendor/tilt/tilt.jquery.min.js' %}"></script>
-    <script src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"></script>
-    <script src="{% static 'vendor/sortable/js/html.sortable.min.js' %}"></script>
-    <script src="{% static 'vendor/reconnecting-websocket/reconnecting-websocket.js' %}"></script>
-    <script src="{% static 'vendor/htmx/htmx.min.js' %}"></script>
-    <script src="{% static 'vendor/bs5-lightbox/lightbox.bundle.min.js' %}"></script>
+{% block bottom_nav %}
+{% endblock %}
 
-    <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/modals.js' %}"></script>
-    <script src="{% static 'js/fragments.js' %}"></script>
-    <script src="{% static 'js/actions.js' %}"></script>
+<footer class="py-5">
+  <h5>{{ brand_name }}</h5>
+  <ul class="list-unstyled">
+    <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
+    <li><a href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a></li>
+    <li><a href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rules' %}</a></li>
+    <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>
+    <li><a href="https://hus.tirakans-reiche.de">{% trans 'Tirakan HuS' %}</a></li>
+  </ul>
+  <h5>{% trans "Material" %}</h5>
+  <ul class="list-unstyled">
+    <li><a href="{% url 'rules:template_list' %}">{% trans 'Templates' %}</a></li>
+    <li><a href="{% url 'armory:weapon_list' %}">{% trans 'Weapons' %}</a></li>
+    <li><a href="{% url 'armory:item_list' %}">{% trans 'Items' %}</a></li>
+    <li><a href="{% url 'magic:spell_origin_list' %}">{% trans 'Spells' %}</a></li>
+    <li><a href="{% url 'armory:riot_gear_list' %}">{% trans 'Armour' %}</a></li>
+  </ul>
+</footer>
+
+{% compress js %}
+  <script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'vendor/jquery/popper.min.js' %}"></script>
+  <script src="{% static 'vendor/fontawesome/js/all.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'vendor/masonry/masonry.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/jquery/jquery.matchHeight.js' %}"></script>
+  <script src="{% static 'vendor/dropzone/dropzone.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.js' %}"></script>
+  <script src="{% static 'vendor/tilt/tilt.jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"></script>
+  <script src="{% static 'vendor/sortable/js/html.sortable.min.js' %}"></script>
+  <script src="{% static 'vendor/reconnecting-websocket/reconnecting-websocket.js' %}"></script>
+  <script src="{% static 'vendor/htmx/htmx.min.js' %}"></script>
+  <script src="{% static 'vendor/bs5-lightbox/lightbox.bundle.min.js' %}"></script>
+
+  <script src="{% static 'js/sidebar.js' %}"></script>
+  <script src="{% static 'js/modals.js' %}"></script>
+  <script src="{% static 'js/fragments.js' %}"></script>
+  <script src="{% static 'js/actions.js' %}"></script>
 {% endcompress %}
 
 <script>
@@ -193,6 +183,12 @@
         });
 
         $('table.table-sortable').tablesorter();
+
+        $(".navigation-link").on("click", function (e) {
+            const myModal = bootstrap.Modal.getInstance(document.getElementById('bottom-nav-modal'));
+            console.log(myModal)
+            myModal.hide();
+        })
 
         $('.language-link').on('click', function (event) {
             $.post(

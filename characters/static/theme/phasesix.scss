@@ -1,7 +1,7 @@
 @import 'fonts/Oxanium/stylesheet.css';
 @import 'fonts/NotoSans/stylesheet.css';
 
-$font-size-base: 1.15rem;
+$font-size-base: 1.05rem;
 $font-family-sans-serif: "Noto Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $headings-font-family: 'Oxanium', cursive;
 
@@ -12,23 +12,7 @@ $red: #af5fb6;
 $orange: #f3cd94;
 $cyan: #3db7e8;
 $green: #6eb35a;
-$body-bg-dark: #150921;
+$body-bg-dark: #1A151F;
 
 @import '../vendor/bootstrap/scss/bootstrap.scss';
-
-@import '_main_nav';
-@import '_utilities';
-@import '_value_colors';
-@import '_overrides';
-@import '_base';
-@import '_index';
-@import '_profile';
-@import '_character_creation';
-@import '_rules';
-@import '_sidebar';
-@import '_characters';
-@import '_campaigns';
-@import '_magic';
-@import '_dice_socket';
-@import '_worlds';
-@import '_forum';
+@import 'generic';

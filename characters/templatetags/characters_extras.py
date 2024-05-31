@@ -10,6 +10,16 @@ register = Library()
 
 
 @register.simple_tag
+def character_image_url(character, geometry="100x100", crop="center"):
+    return character.get_image_url(geometry, crop)
+
+
+@register.simple_tag
+def character_backdrop_image_url(character, geometry="100x100", crop="center"):
+    return character.get_backdrop_image_url(geometry, crop)
+
+
+@register.simple_tag
 def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     try:
         value = int(value)

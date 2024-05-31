@@ -35,6 +35,8 @@
 {% endblock %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ object }}{% endblock %}
+{% block in_page_subtitle %}{{ object.text|to_first_linebreak|replace_wiki_tags:object.world }}{% endblock %}
 
 {% block background %}{% thumbnail object.get_image.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
 
@@ -56,22 +58,12 @@
 
 {% block content %}
     <div class="d-flex justify-content-between align-items-start">
-        <div>
-            <h1>{{ object.name }}</h1>
-            <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
-                <ol class="breadcrumb">
-                    {% breadcrumbs object as crumbs %}
-                    {% for bc in crumbs %}
-                        <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
-                    {% endfor %}
-                </ol>
-            </nav>
-        </div>
         {% if may_edit %}
             <div class="btn-group dropdown-center">
                 <a class="btn btn-primary"
                    href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
-                   role="button"><i class="fas fa-pen"></i><span class="d-none d-md-inline"> {% trans 'Edit' %}</span></a>
+                   role="button"><i class="fas fa-pen"></i><span
+                        class="d-none d-md-inline"> {% trans 'Edit' %}</span></a>
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden">Toggle Dropdown</span>
@@ -79,22 +71,22 @@
 
                 <div class="dropdown-menu">
                     <a
-                        class="dropdown-item modal-trigger"
-                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
-                        title="{% trans 'Create Wiki Page' %}"
-                        data-bs-toggle="modal"
-                        data-modal-title="{% trans 'Create Wiki Page' %}"
-                        data-bs-target=".page-modal"
-                        href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
+                            class="dropdown-item modal-trigger"
+                            data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
+                            title="{% trans 'Create Wiki Page' %}"
+                            data-bs-toggle="modal"
+                            data-modal-title="{% trans 'Create Wiki Page' %}"
+                            data-bs-target=".page-modal"
+                            href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
                     <a
-                        data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-                        data-sidebar-title="{% trans 'Sort Subpages' %}"
-                        class="dropdown-item sidebar-trigger">
+                            data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+                            data-sidebar-title="{% trans 'Sort Subpages' %}"
+                            class="dropdown-item sidebar-trigger">
                         <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
                     </a>
                     {% if user.is_superuser %}
                         <a class="dropdown-item" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
-                            class="fas fa-lock"></i> {% trans 'Admin' %}</a>
+                                class="fas fa-lock"></i> {% trans 'Admin' %}</a>
                     {% endif %}
                 </div>
             </div>
@@ -110,9 +102,9 @@
                 {% user_campaigns request.user as campaigns %}
                 {% for campaign in campaigns %}
                     <a
-                        class="dropdown-item action-link add-foe-link"
-                        data-message="{% trans "Added" %}"
-                        href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
+                            class="dropdown-item action-link add-foe-link"
+                            data-message="{% trans "Added" %}"
+                            href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
                         {{ campaign }}
                     </a>
                 {% endfor %}
@@ -148,13 +140,13 @@
                 </div>
                 {% for action in object.wikipagegameaction_set.all %}
                     <div
-                        tabindex="0"
-                        role="button"
-                        data-bs-toggle="popover"
-                        data-bs-trigger="hover"
-                        data-bs-title="{{ action.name }}"
-                        data-bs-content="{{ action.effect|urpg_markup }}"
-                        class="row wiki-page-game-values">
+                            tabindex="0"
+                            role="button"
+                            data-bs-toggle="popover"
+                            data-bs-trigger="hover"
+                            data-bs-title="{{ action.name }}"
+                            data-bs-content="{{ action.effect|urpg_markup }}"
+                            class="row wiki-page-game-values">
                         <div class="col-12">
                             {{ action.name }}
                             <span class="float-end">{% color_value_span action.skill 5 %}</span>
@@ -165,6 +157,14 @@
         </div>
 
         <div class="col-12 col-lg-8 col-xl-9 mt-3 mt-md-0 wiki-page">
+            <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
+                <ol class="breadcrumb">
+                    {% breadcrumbs object as crumbs %}
+                    {% for bc in crumbs %}
+                        <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
+                    {% endfor %}
+                </ol>
+            </nav>
             {{ object.text|urpg_markup|replace_wiki_tags:object.world }}
         </div>
     </div>
