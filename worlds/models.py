@@ -140,6 +140,19 @@ class World(models.Model, metaclass=TransMeta):
     def get_absolute_url(self):
         return reverse("worlds:detail", args=[self.slug])
 
+    @property
+    def world(self):
+        """Used to unify the navigation"""
+        return self
+
+    def is_subpage_of(self, parent):
+        """Used to unify the navigation"""
+        return False
+
+    def is_world(self):
+        """Used to unify the navigation"""
+        return True
+
     def get_image(self):
         if self.image:
             return {
