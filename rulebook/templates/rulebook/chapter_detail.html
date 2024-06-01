@@ -1,69 +1,34 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load i18n static rules_extras thumbnail rulebook_extras %}
+
+{% block title %}{{ object.name }} - {% trans 'Rulebook' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ object.name }}{% endblock %}
+{% block in_page_subtitle %}{{ object.book.name }}{% endblock %}
 
 {% block background %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
 
 {% block background_copyright %}
-    Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
+  Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
 {% endblock %}
 
-{% block title %}{{ object.name }} - {% trans 'Rulebook' %} - {{ block.super }}{% endblock %}
+{% block bottom_nav %}
+  {% bottom_navigation_button "rulebook/_navigation.html" %}
+{% endblock %}
 
 {% block content %}
-    <h1>{{ object.name }}</h1>
-    <div class="row">
-        <div class="d-block d-lg-none col-12">
-            <button
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#rules-mobile-nav"
-                class="btn btn-outline-primary w-100 mb-3">{% trans 'Chapters' %}</button>
-            <div class="collapse mb-3" id="rules-mobile-nav">
-                <ul class="nav nav-pills flex-column">
-                    {% for chapter in chapters %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if chapter == object %}active{% endif %}"
-                               href="{% url 'rulebook:detail' pk=chapter.id %}">
-                                <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
-                                {{ chapter.name }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+  <div class="row">
 
-
-        <div class="col-12 col-lg-9 rules">
-            <div class="columns">
-                {% with world=request.world_configuration.world %}
-                    {{ object.text|replace_book_variables:world|urpg_markup:False|resolve_rulebook_chapter_links }}
-                {% endwith %}
-            </div>
-        </div>
-
-        <div class="col-md-3 d-none d-lg-block">
-            <div class="dropdown w-100 mb-2">
-                <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    {% trans 'Download PDF' %}
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% rulebook_pdf_link request.world_configuration.world object.book 'de' %}">{% trans "German" %}</a></li>
-                    <li><a class="dropdown-item" href="{% rulebook_pdf_link request.world_configuration.world object.book 'en' %}">{% trans "English" %}</a></li>
-                </ul>
-            </div>
-            <ul class="nav nav-pills flex-column">
-                {% for chapter in chapters %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if chapter.id == object.id %}active{% endif %}"
-                           href="{% url 'rulebook:detail' pk=chapter.id %}">
-                            <i class="{{ chapter.fa_icon_class|default:"fas fa-book" }} fa-fw {% if chapter == object %}text-light{% else %}text-primary{% endif %}"></i>
-                            {{ chapter.name }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'rulebook/_navigation.html' with object=object may_edit=may_edit %}
     </div>
+
+    <div class="col-12 col-xl-9">
+      <div class="rules">
+        {% with world=request.world_configuration.world %}
+          {{ object.text|replace_book_variables:world|urpg_markup:False|resolve_rulebook_chapter_links }}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

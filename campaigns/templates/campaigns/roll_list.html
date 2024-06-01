@@ -2,7 +2,7 @@
 
 <div class="row">
     {% for roll in page_obj %}
-        <div class="col-12 col-md-8 offset-md-2 mb-2">
+        <div class="col-12 col-md-8 mb-2">
             <div class="card">
                 <div class="card-header">
                     <span class="float-end">{{ roll.created_at }}</span>
@@ -21,7 +21,7 @@
 </div>
 
 <div class="row">
-    <div class="col-12 col-md-8 offset-md-2">
+    <div class="col-12 col-md-8">
         {% if page_obj.has_next %}
             <button
                 hx-get="{% url "campaigns:xhr_game_log" campaign_pk=campaign.id %}?page={{ page_obj.next_page_number }}"
