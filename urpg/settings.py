@@ -188,10 +188,12 @@ LANGUAGES = (
 )
 LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
-DEFAULT_FROM_EMAIL = "game@phasesix.org"
+DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
 EMAIL_HOST = os.environ["EMAIL_HOST"]
 EMAIL_HOST_PASSWORD = os.environ["EMAIL_PASSWORD"]
 EMAIL_HOST_USER = os.environ["EMAIL_USER"]
+EMAIL_PORT = int(os.environ["EMAIL_PORT"])
+EMAIL_USE_TLS = os.environ["EMAIL_USE_TLS"] == "True"
 
 TIME_ZONE = "UTC"
 USE_I18N = True
