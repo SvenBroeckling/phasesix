@@ -7,9 +7,9 @@
 {% block in_page_subtitle %}{% trans 'A campaign by' %} {{ object.created_by }}{% endblock %}
 
 {% block javascript %}
-    <script src="{% static 'js/campaign_detail.js' %}"></script>
-    <script src="{% static 'js/campaign_socket.js' %}"></script>
-    <script src="{% static 'js/clipboard.js' %}"></script>
+  <script src="{% static 'js/campaign_detail.js' %}"></script>
+  <script src="{% static 'js/campaign_socket.js' %}"></script>
+  <script src="{% static 'js/clipboard.js' %}"></script>
 {% endblock %}
 
 {% block background %}{{ object.get_backdrop_image_url }}{% endblock %}
@@ -19,129 +19,54 @@
 {% endblock %}
 
 {% block content %}
-    <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
-    <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
+  <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
+  <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
-    <div class="row">
-        <div class="">
-            {% if may_edit %}
-                <a
-                    href=""
-                    data-sidebar-title="{% trans 'Roll' %}"
-                    data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}"
-                    class="sidebar-trigger btn btn-primary float-end"><i
-                    class="fas fa-dice-five"></i> {% trans 'Roll' %}</a>
-                <a href="{{ object.invite_link }}" class="btn campaign-link btn-primary float-end me-2"
-                   data-msg="{% trans 'Copied' %}">{% trans 'Invite Link' %}</a>
-            {% endif %}
-            {% if may_join %}
-                <a
-                    href=""
-                    data-sidebar-title="{% trans 'Join campaign' %}"
-                    data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"
-                    class="sidebar-trigger btn btn-success me-2 float-end"><i
-                    class="fas fa-dice-five"></i> {% trans 'Join campaign' %}</a>
-            {% endif %}
-
-            <h1 class="h2">{{ object.name }}</h1>
-            <small>{% trans 'A campaign by' %} {{ object.created_by }}</small>
-            <p>{{ object.abstract|urpg_markup }}</p>
-        </div>
+  <div class="row mt-4">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'campaigns/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="nav nav-tabs justify-content-center mb-2" aria-orientation="horizontal">
-
-                <a class="nav-link active" data-bs-toggle="tab" role="tab" aria-controls="v-characters"
-                   href="#v-characters">
-                    <i class="fas fa-fw fa-image"></i>&nbsp;{% trans 'Characters' %}
-                </a>
-
-                <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-settings"
-                   href="#v-settings">
-                    <i class="fas fa-fw fa-edit"></i>&nbsp;{% trans 'Settings' %}
-                </a>
-
-                {% if may_edit or object.character_visibility == 'A' %}
-                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-status"
-                       href="#v-status">
-                        <i class="fas fa-fw fa-user-alt"></i>&nbsp;{% trans 'Status' %}
-                    </a>
-                {% endif %}
-
-                {% if may_edit or object.npc_visibility == "A" %}
-                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-npc"
-                       href="#v-npc">
-                        <i class="fas fa-fw fa-user"></i>&nbsp;{% trans 'NPC' %}
-                    </a>
-                {% endif %}
-
-                {% if may_edit or object.foe_visibility == "A" %}
-                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-foes"
-                       href="#v-foes">
-                        <i class="fas fa-fw fa-bullseye"></i>&nbsp;{% trans 'Foes' %}
-                    </a>
-                {% endif %}
-
-                {% if may_edit or object.game_log_visibility == "A" %}
-                    <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-game-log"
-                       href="#v-game-log">
-                        <i class="fas fa-fw fa-hourglass"></i>&nbsp;{% trans 'Game Log' %}
-                    </a>
-                {% endif %}
-
-                <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-homebrew"
-                   href="#v-homebrew">
-                    <i class="fas fa-fw fa-chart-bar"></i>&nbsp;{% trans 'Custom Items' %}
-                </a>
-
-                <a class="nav-link" data-bs-toggle="tab" role="tab" aria-controls="v-statistics"
-                   href="#v-statistics">
-                    <i class="fas fa-fw fa-chart-bar"></i>&nbsp;{% trans 'Statistics' %}
-                </a>
-
-            </div>
+    <div class="col-12 col-xl-9">
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="v-characters" role="tabpanel">
+          {% campaign_fragment 'campaign' %}
         </div>
 
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="v-characters" role="tabpanel">
-                {% campaign_fragment 'characters' %}
-            </div>
+        <div class="tab-pane fade" id="v-settings" role="tabpanel">
+          {% campaign_fragment 'settings' %}
+        </div>
 
-            <div class="tab-pane fade" id="v-settings" role="tabpanel">
-                {% campaign_fragment 'settings' %}
-            </div>
+        <div class="tab-pane fade show" id="v-status" role="tabpanel">
+          {% campaign_fragment 'status' %}
+        </div>
 
-            <div class="tab-pane fade show" id="v-status" role="tabpanel">
-                {% campaign_fragment 'status' %}
-            </div>
+        <div class="tab-pane fade show" id="v-npc" role="tabpanel">
+          {% campaign_fragment 'npc' %}
+        </div>
 
-            <div class="tab-pane fade show" id="v-npc" role="tabpanel">
-                {% campaign_fragment 'npc' %}
-            </div>
+        <div class="tab-pane fade show" id="v-foes" role="tabpanel">
+          {% campaign_fragment 'foes' %}
+        </div>
 
-            <div class="tab-pane fade show" id="v-foes" role="tabpanel">
-                {% campaign_fragment 'foes' %}
-            </div>
-
-            <div
+        <div
                 hx-get="{% url 'campaigns:xhr_game_log' campaign_pk=object.id %}"
                 hx-trigger="click from:a.nav-link"
                 hx-target="this"
                 class="tab-pane fade show"
                 id="v-game-log"
                 role="tabpanel">
-            </div>
-
-            <div class="tab-pane fade show" id="v-homebrew" role="tabpanel">
-                {% campaign_fragment 'homebrew' %}
-            </div>
-
-            <div class="tab-pane fade show" id="v-statistics" role="tabpanel">
-                {% campaign_fragment 'statistics' %}
-            </div>
-
         </div>
+
+        <div class="tab-pane fade show" id="v-homebrew" role="tabpanel">
+          {% campaign_fragment 'homebrew' %}
+        </div>
+
+        <div class="tab-pane fade show" id="v-statistics" role="tabpanel">
+          {% campaign_fragment 'statistics' %}
+        </div>
+      </div>
+
     </div>
+  </div>
 {% endblock %}

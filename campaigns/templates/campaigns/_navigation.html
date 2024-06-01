@@ -1,10 +1,11 @@
+{% load campaign_extras %}
 {% load i18n %}
 {% load portal_extras %}
 <div class="list-group mb-3">
 
   <a href="{% url 'portal:profile' %}"
      class="list-group-item p-0 overflow-hidden border-bottom-0"
-     style="background-image: url('{% profile_backdrop_image_url object.profile geometry='600x160' %}');
+     style="background-image: url('{% campaign_backdrop_image_url object geometry='600x160' %}');
              background-repeat: no-repeat;
              background-position: center;
              height: 80px;
@@ -12,57 +13,122 @@
              background-size: cover;">
   </a>
 
-  <a href="{% url 'portal:profile' %}"
-     class="py-3 list-group-item list-group-item-action d-flex flex-column text-center justify-content-center align-items-center"
-     aria-current="true">
+  {% if may_edit %}
+    <a href=""
+       data-sidebar-title="{% trans 'Roll' %}"
+       data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}"
+       class="sidebar-trigger py-3 list-group-item list-group-item-action d-flex flex-column text-center justify-content-center align-items-center">
+  {% else %}
+    <a href="{% url 'campaigns:detail' pk=object.id %}"
+       class="py-3 list-group-item list-group-item-action d-flex flex-column text-center justify-content-center align-items-center"
+       aria-current="true">
+  {% endif %}
 
-    <div class="d-flex align-items-center navigation-link hover-pointer"
-         style="position:absolute; left:calc(50% -40px); top:-60px">
-      <img width="84" height="84" class=" rounded-circle border border-2 border-black"
-           src="{% profile_image_url object.profile geometry="160x160" %}"
-           alt="{% trans "Profile image" %}">
-    </div>
+  <div class="d-flex align-items-center navigation-link hover-pointer"
+       style="position:absolute; left:calc(50% -40px); top:-60px">
+    <img width="84" height="84" class=" border border-2 border-black"
+         src="{% campaign_image_url object geometry="160x160" %}"
+         alt="{% trans "Profile image" %}">
+  </div>
 
-    <div class="mt-3 d-flex align-items-center flex-column justify-content-center">
-      {% if object.first_name or object.last_name %}
-        <span class="fw-bold">{{ object.first_name }} {{ object.last_name }}</span>
-      {% else %}
-        <span class="fw-bold">{{ object|capfirst }}</span>
-      {% endif %}
-      <span class="small opacity-75 lh-sm">{{ object.profile.bio|default:"" }}</span>
-    </div>
+  <div class="mt-3 d-flex align-items-center flex-column justify-content-center">
+    <span class="fw-bold">{{ object|capfirst }}</span>
+  </div>
   </a>
 
   <a class="active navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
      data-bs-toggle="tab"
-     data-bs-target="#characters-tab-pane"
+     data-bs-target="#v-characters"
      role="tab"
      aria-current="true">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-home"></i>
-      <span class="ms-3 d-block d-lg-block">{% trans "Characters" %}</span>
+      <i class="fas fa-image"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Campaign" %}</span>
     </div>
   </a>
 
   <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
      data-bs-toggle="tab"
-     data-bs-target="#gm-campaigns-tab-pane"
+     data-bs-target="#v-settings"
+     role="tab"
+     aria-current="true">
+    <div class="d-flex justify-content-center align-items-center">
+      <i class="fas fa-edit"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Settings" %}</span>
+    </div>
+  </a>
+
+  {% if may_edit or object.character_visibility == 'A' %}
+    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+       data-bs-toggle="tab"
+       data-bs-target="#v-status"
+       role="tab"
+       aria-current="false">
+      <div class="d-flex justify-content-center align-items-center">
+        <i class="fas fa-user-alt"></i>
+        <span class="ms-3 d-block d-lg-block">{% trans "Status" %}</span>
+      </div>
+    </a>
+  {% endif %}
+
+  {% if may_edit or object.npc_visibility == 'A' %}
+    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+       data-bs-toggle="tab"
+       data-bs-target="#v-npc"
+       role="tab"
+       aria-current="false">
+      <div class="d-flex justify-content-center align-items-center">
+        <i class="fas fa-user"></i>
+        <span class="ms-3 d-block d-lg-block">{% trans "NPC" %}</span>
+      </div>
+    </a>
+  {% endif %}
+
+  {% if may_edit or object.foe_visibility == 'A' %}
+    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+       data-bs-toggle="tab"
+       data-bs-target="#v-foes"
+       role="tab"
+       aria-current="false">
+      <div class="d-flex justify-content-center align-items-center">
+        <i class="fas fa-bullseye"></i>
+        <span class="ms-3 d-block d-lg-block">{% trans "Foes" %}</span>
+      </div>
+    </a>
+  {% endif %}
+
+  {% if may_edit or object.game_log_visibility == 'A' %}
+    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+       data-bs-toggle="tab"
+       data-bs-target="#v-game-log"
+       role="tab"
+       aria-current="false">
+      <div class="d-flex justify-content-center align-items-center">
+        <i class="fas fa-hourglass"></i>
+        <span class="ms-3 d-block d-lg-block">{% trans "Game Log" %}</span>
+      </div>
+    </a>
+  {% endif %}
+
+  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+     data-bs-toggle="tab"
+     data-bs-target="#v-homebrew"
      role="tab"
      aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-home"></i>
-      <span class="ms-3 d-block d-lg-block">{% trans "GM Campaigns" %}</span>
+      <i class="fas fa-box"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Custom Items" %}</span>
     </div>
   </a>
 
   <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
      data-bs-toggle="tab"
-     data-bs-target="#more-tab-pane"
+     data-bs-target="#v-statistics"
      role="tab"
      aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-home"></i>
-      <span class="ms-3 d-block d-lg-block">{% trans "More" %}</span>
+      <i class="fas fa-chart-bar"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Statistics" %}</span>
     </div>
   </a>
 </div>
