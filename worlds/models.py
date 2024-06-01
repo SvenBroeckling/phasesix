@@ -1,6 +1,6 @@
 import reversion
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -276,6 +276,15 @@ class WikiPage(models.Model, metaclass=TransMeta):
             return self.parent.get_image()
 
         return self.world.get_image()
+
+    def is_subpage_of(self, parent):
+        if self == parent:
+            return True
+        if self.parent == parent:
+            return True
+        if self.parent:
+            return self.parent.is_subpage_of(parent)
+        return False
 
 
 @reversion.register

@@ -5,6 +5,11 @@ from worlds.models import World, WikiPage
 register = Library()
 
 
+@register.filter
+def is_subpage_of(page, parent):
+    return page.is_subpage_of(parent)
+
+
 @register.simple_tag
 def get_active_worlds():
     return World.objects.filter(is_active=True)

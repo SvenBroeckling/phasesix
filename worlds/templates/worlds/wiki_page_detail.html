@@ -1,197 +1,147 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load static i18n characters_extras rules_extras thumbnail world_extras campaign_extras %}
 
 {% block javascript %}
-    <script src="{% static 'js/worlds_detail.js' %}"></script>
-    <script>
-        $(function () {
-            let masonry = $('.masonry-container').masonry()
-            setTimeout(function () {
-                masonry.masonry('layout')
-            }, 1000)
+  <script src="{% static 'js/worlds_detail.js' %}"></script>
+  <script>
+      $(function () {
+          let masonry = $('.masonry-container').masonry()
+          setTimeout(function () {
+              masonry.masonry('layout')
+          }, 1000)
 
-            $('.add-foe-link').on('click', function (e) {
-                let elem = $(this)
-                let text = elem.text()
-                elem.text(elem.data('message'))
-                setTimeout(function () {
-                    elem.text(text)
-                }, 1000)
-            })
+          $('.add-foe-link').on('click', function (e) {
+              let elem = $(this)
+              let text = elem.text()
+              elem.text(elem.data('message'))
+              setTimeout(function () {
+                  elem.text(text)
+              }, 1000)
+          })
 
 
-            const options = {
-                keyboard: true,
-                size: 'fullscreen'
-            };
+          const options = {
+              keyboard: true,
+              size: 'fullscreen'
+          };
 
-            document.querySelectorAll('.toggle-lightbox').forEach((el) => el.addEventListener('click', (e) => {
-                e.preventDefault();
-                const lightbox = new Lightbox(el, options);
-                lightbox.show();
-            }));
-        })
-    </script>
+          document.querySelectorAll('.toggle-lightbox').forEach((el) => el.addEventListener('click', (e) => {
+              e.preventDefault();
+              const lightbox = new Lightbox(el, options);
+              lightbox.show();
+          }));
+      })
+  </script>
 {% endblock %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{{ object }}{% endblock %}
 {% block in_page_subtitle %}{{ object.text|to_first_linebreak|replace_wiki_tags:object.world }}{% endblock %}
 
+{% block bottom_nav %}
+  {% bottom_navigation_button "worlds/_navigation.html" %}
+{% endblock %}
+
 {% block background %}{% thumbnail object.get_image.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
 
 {% block background_copyright %}
-    Image by <a href="{{ object.get_image.copyright_url }}">{{ object.get_image.copyright }}</a>
+  Image by <a href="{{ object.get_image.copyright_url }}">{{ object.get_image.copyright }}</a>
 {% endblock %}
 
 {% block opengraph %}
-    <meta property="og:title" content="{{ brand_name }} - {{ object }}"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://{{ brand_domain_name }}"/>
-    {% if object.image %}
-        {% thumbnail object.image '600' as image %}
-            <meta property="og:image" content="https://{{ brand_domain_name }}{{ image.url }}"/>
-        {% endthumbnail %}
-    {% endif %}
-    <meta property="og:description" content="{{ object.text|to_first_linebreak }}"/>
+  <meta property="og:title" content="{{ brand_name }} - {{ object }}"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://{{ brand_domain_name }}"/>
+  {% if object.image %}
+    {% thumbnail object.image '600' as image %}
+      <meta property="og:image" content="https://{{ brand_domain_name }}{{ image.url }}"/>
+    {% endthumbnail %}
+  {% endif %}
+  <meta property="og:description" content="{{ object.text|to_first_linebreak }}"/>
 {% endblock %}
 
 {% block content %}
-    <div class="d-flex justify-content-between align-items-start">
-        {% if may_edit %}
-            <div class="btn-group dropdown-center">
-                <a class="btn btn-primary"
-                   href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
-                   role="button"><i class="fas fa-pen"></i><span
-                        class="d-none d-md-inline"> {% trans 'Edit' %}</span></a>
-                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
 
-                <div class="dropdown-menu">
-                    <a
-                            class="dropdown-item modal-trigger"
-                            data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
-                            title="{% trans 'Create Wiki Page' %}"
-                            data-bs-toggle="modal"
-                            data-modal-title="{% trans 'Create Wiki Page' %}"
-                            data-bs-target=".page-modal"
-                            href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
-                    <a
-                            data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-                            data-sidebar-title="{% trans 'Sort Subpages' %}"
-                            class="dropdown-item sidebar-trigger">
-                        <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
-                    </a>
-                    {% if user.is_superuser %}
-                        <a class="dropdown-item" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
-                                class="fas fa-lock"></i> {% trans 'Admin' %}</a>
-                    {% endif %}
-                </div>
-            </div>
-        {% endif %}
-
-        {% if request.user.is_authenticated and request.user.campaign_set.exists and object.may_be_added_to_campaign %}
-            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ms-2"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
-                {% trans "Add to campaign" %}
-            </button>
-            <div class="dropdown-menu">
-                {% user_campaigns request.user as campaigns %}
-                {% for campaign in campaigns %}
-                    <a
-                            class="dropdown-item action-link add-foe-link"
-                            data-message="{% trans "Added" %}"
-                            href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
-                        {{ campaign }}
-                    </a>
-                {% endfor %}
-            </div>
-        {% endif %}
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'worlds/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    <div class="row">
-        <div class="col-12 col-lg-4 col-xl-3">
+    <div class="col-12 col-xl-9 wiki-page">
+      <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
+        <ol class="breadcrumb">
+          {% breadcrumbs object as crumbs %}
+          {% for bc in crumbs %}
+            <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
+          {% endfor %}
+        </ol>
+      </nav>
+      {% with img=object.get_image %}
+        {% if img %}
+          {% thumbnail img.image '1024' as im %}
+            <a class="d-none d-lg-block toggle-lightbox" href="{{ img.image.url }}" data-gallery="{{ object.slug }}">
+              <img class="rounded img-fluid w-25 float-start me-3 mb-2" src="{{ im.url }}"
+                   alt="{{ object }}"/>
+            </a>
+            <img class="d-lg-none rounded img-fluid me-3 mb-2" src="{{ im.url }}"
+                 alt="{{ object }}"/>
+          {% endthumbnail %}
+        {% endif %}
+      {% endwith %}
+
+      <div class="clearfix">
+        {% for game_values in object.wikipagegamevalues_set.all %}
+          <div class="d-lg-none">
+            <button data-bs-toggle="collapse"
+                    data-bs-target="#game-values-collapse"
+                    class="btn btn-outline-primary w-100 my-2">{% trans "Game Values" %}</button>
+            <div class="collapse" id="game-values-collapse">
+              <div class="card">
+                <div class="card-body">
+                  {% include 'worlds/_game_values.html' %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-none d-lg-block float-end ms-3 mb-2 w-25">
             <div class="card">
-                {% with img=object.get_image %}
-                    {% if img %}
-                        {% thumbnail img.image '1024' as im %}
-                            <a class="toggle-lightbox" href="{{ img.image.url }}" data-gallery="{{ object.slug }}">
-                                <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
-                            </a>
-                        {% endthumbnail %}
-                    {% endif %}
-                {% endwith %}
+              <div class="card-body">
+                {% include 'worlds/_game_values.html' %}
+              </div>
             </div>
-
-            {% for game_values in object.wikipagegamevalues_set.all %}
-                <div class="row mt-2 wiki-page-game-values">
-                    {% include 'worlds/_game_values.html' %}
-                </div>
-            {% endfor %}
-
-            {% if object.wikipagegameaction_set.exists %}
-                <div class="row mt-3 mb-0">
-                    <div class="col-12">
-                        <h4>{{ object.actions_heading|default:"Actions" }}</h4>
-                    </div>
-                </div>
-                {% for action in object.wikipagegameaction_set.all %}
-                    <div
-                            tabindex="0"
-                            role="button"
-                            data-bs-toggle="popover"
-                            data-bs-trigger="hover"
-                            data-bs-title="{{ action.name }}"
-                            data-bs-content="{{ action.effect|urpg_markup }}"
-                            class="row wiki-page-game-values">
-                        <div class="col-12">
-                            {{ action.name }}
-                            <span class="float-end">{% color_value_span action.skill 5 %}</span>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-        <div class="col-12 col-lg-8 col-xl-9 mt-3 mt-md-0 wiki-page">
-            <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
-                <ol class="breadcrumb">
-                    {% breadcrumbs object as crumbs %}
-                    {% for bc in crumbs %}
-                        <li class="breadcrumb-item"><a href="{{ bc.1 }}">{{ bc.0 }}</a></li>
-                    {% endfor %}
-                </ol>
-            </nav>
-            {{ object.text|urpg_markup|replace_wiki_tags:object.world }}
-        </div>
-    </div>
-
-    <div class="row masonry-container mt-4">
-        {% for page in object.wikipage_set.all %}
-            <div class="col col-sm-6 col-md-6 col-xl-4">
-                <a class="stretched-link"
-                   href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}"></a>
-                <div class="card pointer mb-4">
-                    <div class="card-header">
-                        {{ page }}
-                    </div>
-                    {% if page.image %}
-                        {% thumbnail page.image "1024" as im %}
-                            <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
-                        {% endthumbnail %}
-                    {% endif %}
-                    <div class="card-body">
-                        {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:page.world }}
-                    </div>
-                    {% if user.is_superuser %}
-                        <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
-                           style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                    {% endif %}
-                </div>
-            </div>
+          </div>
         {% endfor %}
+
+        {{ object.text|urpg_markup|replace_wiki_tags:object.world }}
+      </div>
+
+      <div class="row masonry-container mt-4">
+        {% for page in object.wikipage_set.all %}
+          <div class="col col-md-6">
+            <a class="stretched-link"
+               href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}"></a>
+            <div class="card pointer mb-4">
+              <div class="card-header">
+                {{ page }}
+              </div>
+              {% if page.image %}
+                {% thumbnail page.image "1024" as im %}
+                  <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
+                {% endthumbnail %}
+              {% endif %}
+              <div class="card-body">
+                {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:page.world }}
+              </div>
+              {% if user.is_superuser %}
+                <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
+                   style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
+  </div>
+
 {% endblock %}
