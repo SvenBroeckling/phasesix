@@ -56,6 +56,7 @@ def urpg_markup(value, safe_mode=True):
                 "abbr",
                 "acronym",
                 "b",
+                "br",
                 "blockquote",
                 "code",
                 "em",
@@ -85,7 +86,7 @@ def resolve_rulebook_chapter_links(value, mode="web"):
             except ValueError:
                 tag = text = tag
 
-        if mode == 'web':
+        if mode == "web":
             try:
                 obj = Chapter.objects.get(identifier=tag)
             except Chapter.DoesNotExist:
