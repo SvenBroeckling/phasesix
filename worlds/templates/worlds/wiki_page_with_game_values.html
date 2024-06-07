@@ -1,48 +1,63 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load static i18n characters_extras %}
 
 {% block title %}{% trans 'Foes' %} - {{ block.super }}{% endblock %}
 
+{% block in_page_title %}{% trans "Foes" %}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
+
 {% block background %}{% static 'img/default-background.jpg' %}{% endblock %}
 
+{% block bottom_nav %}
+  {% bottom_navigation_button "armory/_navigation.html" %}
+{% endblock %}
+
 {% block content %}
-    <h1>{% trans 'Foes' %}</h1>
-    <div class="table-responsive">
-        <table class="table table-sortable">
-            <thead>
-            <tr>
-                <th>{% trans 'Foe' %}</th>
-                <th>{% trans 'Type' %}</th>
-                <th>{% trans 'Health' %}</th>
-                <th>{% trans 'Arcana' %}</th>
-                <th>{% trans 'Protection' %}</th>
-                <th>{% trans 'Actions' %}</th>
-                <th>{% trans 'Quickness' %}</th>
-                <th>{% trans 'Minimum Roll' %}</th>
-                <th>{% trans 'Resistances' %}</th>
-                <th>{% trans 'Weaknesses' %}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for object in object_list %}
-                {% for wgv in object.wikipagegamevalues_set.all %}
-                    <tr>
-                        <td><a
-                            href="{% url 'worlds:wiki_page' slug=object.slug world_slug=object.world.slug %}">{{ object }}</a>
-                        </td>
-                        <td>{{ wgv.type }}</td>
-                        <td>{% color_value_span wgv.health 10 %}</td>
-                        <td>{% color_value_span wgv.arcana 6 %}</td>
-                        <td>{% color_value_span wgv.protection 2 %}</td>
-                        <td>{% color_value_span wgv.actions 4 %}</td>
-                        <td>{% color_value_span wgv.quickness 3 %}</td>
-                        <td>{% color_value_span wgv.minimum_roll 5 invert=True %}+</td>
-                        <td>{{ wgv.resistance_string }}</td>
-                        <td>{{ wgv.weakness_string }}</td>
-                    </tr>
-                {% endfor %}
-            {% endfor %}
-            </tbody>
-        </table>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
     </div>
+
+    <div class="col-12 col-xl-9">
+      <div class="table-responsive">
+        <table class="table table-sortable">
+          <thead>
+          <tr>
+            <th>{% trans 'Foe' %}</th>
+            <th>{% trans 'Type' %}</th>
+            <th>{% trans 'Health' %}</th>
+            <th>{% trans 'Arcana' %}</th>
+            <th>{% trans 'Protection' %}</th>
+            <th>{% trans 'Actions' %}</th>
+            <th>{% trans 'Quickness' %}</th>
+            <th title="{% trans "Minimum Roll" %}">{% trans 'MR' %}</th>
+            <th>{% trans 'Resistances' %}</th>
+            <th>{% trans 'Weaknesses' %}</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for object in object_list %}
+            {% for wgv in object.wikipagegamevalues_set.all %}
+              <tr>
+                <td><a
+                        href="{% url 'worlds:wiki_page' slug=object.slug world_slug=object.world.slug %}">{{ object }}</a>
+                </td>
+                <td>{{ wgv.type }}</td>
+                <td>{% color_value_span wgv.health 10 %}</td>
+                <td>{% color_value_span wgv.arcana 6 %}</td>
+                <td>{% color_value_span wgv.protection 2 %}</td>
+                <td>{% color_value_span wgv.actions 4 %}</td>
+                <td>{% color_value_span wgv.quickness 3 %}</td>
+                <td>{% color_value_span wgv.minimum_roll 5 invert=True %}+</td>
+                <td>{{ wgv.resistance_string }}</td>
+                <td>{{ wgv.weakness_string }}</td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 {% endblock %}

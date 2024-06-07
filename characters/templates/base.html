@@ -190,8 +190,8 @@
 
         $(".navigation-link").on("click", function (e) {
             const myModal = bootstrap.Modal.getInstance(document.getElementById('bottom-nav-modal'));
-            console.log(myModal)
-            myModal.hide();
+            if (myModal)
+                myModal.hide();
         })
 
         $('.language-link').on('click', function (event) {

@@ -193,7 +193,9 @@ class XhrUploadImageView(View):
             wiki_page.image_copyright = request.POST.get("copyright")
             wiki_page.image_copyright_url = request.POST.get("copyright-url")
             wiki_page.save()
-            wiki_page.image.save(request.FILES.get('file').name, request.FILES.get('file'))
+            wiki_page.image.save(
+                request.FILES.get("file").name, request.FILES.get("file")
+            )
         return JsonResponse({"status": "ok"})
 
 
@@ -254,4 +256,5 @@ class WikiPageWithGameValuesView(TemplateView):
                 world=self.request.world_configuration.world
             )
         context["object_list"] = object_list
+        context["navigation"] = "wiki_page_with_game_values"
         return context

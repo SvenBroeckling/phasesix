@@ -1,124 +1,130 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load i18n static rules_extras characters_extras %}
 
 {% block title %}{% trans 'Weapons' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Weapons" %}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
+
+{% block bottom_nav %}
+  {% bottom_navigation_button "armory/_navigation.html" %}
+{% endblock %}
 
 {% block javascript %}
-    <script>
-        $(function () {
-            let timer = null;
+  <script>
+      $(function () {
+          let timer = null;
 
-            $('#id_q').on('keyup', function (e) {
-                let q = $(this).val()
+          $('#id_q').on('keyup', function (e) {
+              let q = $(this).val()
 
-                if (timer) {
-                    clearTimeout(timer)
-                }
+              if (timer) {
+                  clearTimeout(timer)
+              }
 
-                timer = setTimeout(function () {
-                    $('tbody tr').each(function (index) {
-                        if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                            $(this).removeClass('d-none')
-                        } else {
-                            $(this).addClass('d-none')
-                        }
-                    })
-                }, 10)
-            })
-        })
-    </script>
+              timer = setTimeout(function () {
+                  $('tbody tr').each(function (index) {
+                      if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                          $(this).removeClass('d-none')
+                      } else {
+                          $(this).addClass('d-none')
+                      }
+                  })
+              }, 10)
+          })
+      })
+  </script>
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12 col-md-6 offset-md-6 mb-4">
-            <div class="input-group mb-3">
-                {% if request.world_configuration is None %}
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">{% if selected_extension %}{{ selected_extension }}{% else %}
-                        {% trans 'Select Extension' %}{% endif %}
-                    </button>
-                    <ul class="dropdown-menu">
-                        {% for extension in extensions %}
-                            <li><a class="dropdown-item"
-                                   href="{% url 'armory:weapon_list' %}?extension={{ extension.id }}">{{ extension }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                <input type="text" id="id_q" name="q" class="form-control" aria-label="{% trans 'Search' %}"
-                       placeholder="{% trans 'Search' %}">
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-sortable">
-                    <thead>
-                    <tr>
-                        <th>{% trans 'Weapon' %}</th>
-                        <th>{% trans 'Attack Modes' %}</th>
-                        <th>{% trans 'Piercing' %}</th>
-                        <th>{% trans 'Damage Potential' %}</th>
-                        <th>{% trans 'Actions to ready' %}</th>
-                        <th>{% trans 'Range' %}</th>
-                        <th>{% trans 'Capacity' %}</th>
-                        <th>{% trans 'Encumbrance' %}</th>
-                        <th>{% trans 'Concealment' %}</th>
-                        <th>{% trans 'Price' %}</th>
-                        {% if user.is_superuser %}
-                            <th>{% trans 'Admin' %}</th>
-                        {% endif %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for object in object_list %}
-                        <tr>
-                            <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
-                            <td>
-                                {% for am in object.weaponattackmode_set.all %}
-                                    {{ am.attack_mode.name }}<br>
-                                {% endfor %}
-                            </td>
-                            <td>{% color_value_span object.piercing 4 %}</td>
-                            <td>
-                                {% for i in object.damage_potential|to_range %}
-                                    <i class="fas fa-fw fa-dice-six text-success"
-                                       title="{% trans 'Damage Potential' %}"></i>
-                                {% empty %}
-                                    -
-                                {% endfor %}
-                            </td>
-                            <td>{% color_value_span object.actions_to_ready 1 invert=True %}</td>
-                            <td>{% color_value_span object.range_meter 30 %}m</td>
-                            <td>
-                                {% if object.capacity %}
-                                    {% color_value_span object.capacity 10 %}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% color_value_span object.encumbrance 2 invert=True %}
-                            </td>
-                            <td>
-                                {% color_value_span object.concealment 5 invert=True %}
-                            </td>
-                            <td>{% color_value_span object.price 10000 invert=True %}</td>
-                            {% if user.is_superuser %}
-                                <td><a href="{% url 'admin:armory_weapon_change' object.id %}">admin</a></td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                {% if user.is_superuser %}
-                    <a href="{% url 'admin:armory_weapon_add' %}" class="btn btn-warning"><i
-                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
+    <div class="col-12 col-xl-9">
+      <div class="input-group mb-3">
+        {% if request.world_configuration is None %}
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">{% if selected_extension %}{{ selected_extension }}{% else %}
+            {% trans 'Select Extension' %}{% endif %}
+          </button>
+          <ul class="dropdown-menu">
+            {% for extension in extensions %}
+              <li><a class="dropdown-item"
+                     href="{% url 'armory:weapon_list' %}?extension={{ extension.id }}">{{ extension }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        <input type="text" id="id_q" name="q" class="form-control" aria-label="{% trans 'Search' %}"
+               placeholder="{% trans 'Search' %}">
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sortable">
+          <thead>
+          <tr>
+            <th>{% trans 'Weapon' %}</th>
+            <th>{% trans 'Attack Modes' %}</th>
+            <th>{% trans 'Piercing' %}</th>
+            <th>{% trans 'Damage Potential' %}</th>
+            <th>{% trans 'Actions to ready' %}</th>
+            <th>{% trans 'Range' %}</th>
+            <th>{% trans 'Capacity' %}</th>
+            <th>{% trans 'Encumbrance' %}</th>
+            <th>{% trans 'Concealment' %}</th>
+            <th>{% trans 'Price' %}</th>
+            {% if user.is_superuser %}
+              <th>{% trans 'Admin' %}</th>
+            {% endif %}
+          </tr>
+          </thead>
+          <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
+              <td>
+                {% for am in object.weaponattackmode_set.all %}
+                  {{ am.attack_mode.name }}<br>
+                {% endfor %}
+              </td>
+              <td>{% color_value_span object.piercing 4 %}</td>
+              <td>
+                {% for i in object.damage_potential|to_range %}
+                  <i class="fas fa-fw fa-dice-six text-success"
+                     title="{% trans 'Damage Potential' %}"></i>
+                {% empty %}
+                  -
+                {% endfor %}
+              </td>
+              <td>{% color_value_span object.actions_to_ready 1 invert=True %}</td>
+              <td>{% color_value_span object.range_meter 30 %}m</td>
+              <td>
+                {% if object.capacity %}
+                  {% color_value_span object.capacity 10 %}
+                {% else %}
+                  -
                 {% endif %}
-            </div>
-        </div>
+              </td>
+              <td>
+                {% color_value_span object.encumbrance 2 invert=True %}
+              </td>
+              <td>
+                {% color_value_span object.concealment 5 invert=True %}
+              </td>
+              <td>{% color_value_span object.price 10000 invert=True %}</td>
+              {% if user.is_superuser %}
+                <td><a href="{% url 'admin:armory_weapon_change' object.id %}">admin</a></td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% if user.is_superuser %}
+          <a href="{% url 'admin:armory_weapon_add' %}" class="btn btn-warning"><i
+                  class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
+        {% endif %}
+      </div>
     </div>
+  </div>
 {% endblock %}

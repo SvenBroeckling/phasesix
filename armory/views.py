@@ -29,15 +29,30 @@ class WeaponListView(MaterialListView):
     def get_model(self):
         return Weapon
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["navigation"] = "weapon_list"
+        return context
+
 
 class RiotGearListView(MaterialListView):
     def get_model(self):
         return RiotGear
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["navigation"] = "riot_gear_list"
+        return context
+
 
 class ItemListView(MaterialListView):
     def get_model(self):
         return Item
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["navigation"] = "item_list"
+        return context
 
 
 class ItemDetailView(DetailView):

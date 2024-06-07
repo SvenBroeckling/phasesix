@@ -1,10 +1,12 @@
 from django.views.generic import ListView
 
-from rules.models import Template, TemplateCategory
+from rules.models import TemplateCategory
 
 
 class TemplateListView(ListView):
     model = TemplateCategory
-    # def get_queryset(self):
-        # if self.request.world_configuration is not None:
-        #     qs = qs.for_world(self.request.world_configuration.world)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["navigation"] = "template_list"
+        return context
