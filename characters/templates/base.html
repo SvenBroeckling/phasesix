@@ -86,16 +86,20 @@
   </div>
 </div>
 
-<header class="bg-black py-3"
-        style="background: url({% static "img/header-background.png" %}) no-repeat; background-size: cover">
-  <div class="container px-4 px-lg-5 my-5">
-    <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">{% block in_page_title %}{{ brand_name }}{% endblock %}</h1>
-      <p class="lead fw-normal text-white-50 mb-0">
-        {% block in_page_subtitle %}{% trans "Free online pen and paper rpg" %}{% endblock %}</p>
+{% block header %}
+  <header class="bg-black py-3"
+          style="background: url({% static "img/header-background.png" %}) no-repeat; background-size: cover">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">{% block in_page_title %}{{ brand_name }}{% endblock %}</h1>
+        <p class="lead fw-normal text-white-50 mb-0">
+          {% block in_page_subtitle %}{% trans "Free online pen and paper rpg" %}{% endblock %}</p>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+{% endblock %}
+
+{% block raw_content %}{% endblock %}
 
 <main class="pt-5">
   {% bootstrap_messages %}

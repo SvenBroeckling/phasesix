@@ -4,122 +4,94 @@
 {% block title %}{{ thread }} - {{ thread.board }} - Forum - {{ block.super }}{% endblock %}
 
 {% block javascript %}
-    <script>
-        $(function () {
-            $('#new-thread-collapse').on('shown.bs.collapse', function (e) {
-                let elem = document.getElementById('id_text')
-                elem.scrollIntoView(true);
-                elem.focus()
-            });
+  <script>
+      $(function () {
+          $('#new-thread-collapse').on('shown.bs.collapse', function (e) {
+              let elem = document.getElementById('id_text')
+              elem.scrollIntoView(true);
+              elem.focus()
+          });
 
-            $('#switch-subscribe').on('change', function (e) {
-                $.post(
-                    $(this).data('url'),
-                    {
-                        value: $(this).prop('checked'),
-                        object: $(this).data('object')
-                    },
-                    function (data) {
-                    }
-                )
-            })
+          $('#switch-subscribe').on('change', function (e) {
+              $.post(
+                  $(this).data('url'),
+                  {
+                      value: $(this).prop('checked'),
+                      object: $(this).data('object')
+                  },
+                  function (data) {
+                  }
+              )
+          })
 
-            $('.quote-button').on('click', function (e) {
-                let elem = document.getElementById('id_text')
-                $.get(
-                    $(this).data('raw-post-url'),
-                    function (data) {
-                        elem.value = data.text
-                        elem.scrollIntoView(true);
-                        elem.focus()
-                    }
-                )
-            })
-        });
-    </script>
+          $('.quote-button').on('click', function (e) {
+              let elem = document.getElementById('id_text')
+              $.get(
+                  $(this).data('raw-post-url'),
+                  function (data) {
+                      elem.value = data.text
+                      elem.scrollIntoView(true);
+                      elem.focus()
+                  }
+              )
+          })
+      });
+  </script>
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12 col-xl-10 offset-xl-1 mb-3">
-            {% if user.is_authenticated %}
-                <button
-                        data-bs-toggle="collapse"
-                        data-bs-target="#new-thread-collapse"
-                        class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Answer Thread' %}</button>
-                <div class="form-check form-switch float-end">
-                    <input
-                            type="checkbox"
-                            class="form-check-input"
-                            {% if is_subscribed %}checked{% endif %}
-                            {% if is_subscribed_to_board %}
-                            disabled="disabled"
-                            {% endif %}
-                            id="switch-subscribe"
-                            data-url="{% url 'forum:subscribe' mode="thread" %}"
-                            data-object="{{ object.id }}">
-                    <label class="form-check-label" for="switch-subscribe">
-                        {% if is_subscribed_to_board %}
-                            {% trans 'You are subscribed to the board' %}
-                        {% else %}
-                            {% trans "Subscribe" %}
-                        {% endif %}
-                    </label>
-                </div>
-            {% endif %}
-            <a href="{% url 'forum:index' %}">{% trans 'Forum' %}</a> /
-            <a href="{{ object.board.get_absolute_url }}">{{ object.board.name }}</a>
-            /
-            {{ object.name }}
-        </div>
-
-        <div class="col-12 col-xl-10 offset-xl-1 mb-3">
-            {% for post in object.post_set.all %}
-                <div class="card mb-4">
-                    <div class="card-header">
-                        {% latest_user_image post.created_by as image %}
-                        {% if image %}
-                            {% thumbnail image "28x28" as im %}
-                                <img
-                                        class="rounded-circle me-1"
-                                        style="width: 28px; height: 28px"
-                                        src="{{ im.url }}"
-                                        alt="{{ post.created_by }}">
-                            {% endthumbnail %}
-                        {% endif %}
-                        {% blocktrans with t_created_by=post.created_by t_timesince=post.created_at|timesince %}
-                            <b>{{ t_created_by }}</b> <span class="text-muted small">{{ t_timesince }} ago</span>
-                        {% endblocktrans %}
-                    </div>
-                    <div class="card-body forum-post">
-                        {{ post.text|urpg_markup|urlize }}
-                        <button
-                                data-raw-post-url="{% url 'forum:post_raw' post.id %}"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#new-thread-collapse"
-                                class="btn btn-primary btn-sm ms-2 float-end quote-button">{% trans 'Quote' %}</button>
-                        <button
-                                data-bs-toggle="collapse"
-                                data-bs-target="#new-thread-collapse"
-                                class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Answer' %}</button>
-                    </div>
-                </div>
-            {% endfor %}
-
-            {% if user.is_authenticated %}
-                <div class="collapse card" id="new-thread-collapse">
-                    <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {% bootstrap_form form %}
-                            <div class="btn-group" role="group">
-                                <button type="submit"
-                                        class="btn btn-primary mb-2 mt-2">{% trans 'Answer Thread' %}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'forum/_thread_navigation.html' %}
     </div>
+
+    <div class="col-12 col-xl-9">
+      {% for post in object.post_set.all %}
+        <div class="card mb-4">
+          <div class="card-header">
+            {% latest_user_image post.created_by as image %}
+            {% if image %}
+              {% thumbnail image "28x28" as im %}
+                <img
+                        class="rounded-circle me-1"
+                        style="width: 28px; height: 28px"
+                        src="{{ im.url }}"
+                        alt="{{ post.created_by }}">
+              {% endthumbnail %}
+            {% endif %}
+            {% blocktrans with t_created_by=post.created_by t_timesince=post.created_at|timesince %}
+              <b>{{ t_created_by }}</b> <span class="text-muted small">{{ t_timesince }} ago</span>
+            {% endblocktrans %}
+          </div>
+          <div class="card-body forum-post">
+            {{ post.text|urpg_markup|urlize }}
+            <button
+                    data-raw-post-url="{% url 'forum:post_raw' post.id %}"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#new-thread-collapse"
+                    class="btn btn-primary btn-sm ms-2 float-end quote-button">{% trans 'Quote' %}</button>
+            <button
+                    data-bs-toggle="collapse"
+                    data-bs-target="#new-thread-collapse"
+                    class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Answer' %}</button>
+          </div>
+        </div>
+      {% endfor %}
+
+      {% if user.is_authenticated %}
+        <div class="collapse card" id="new-thread-collapse">
+          <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              <div class="btn-group" role="group">
+                <button type="submit"
+                        class="btn btn-primary mb-2 mt-2">{% trans 'Answer Thread' %}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
