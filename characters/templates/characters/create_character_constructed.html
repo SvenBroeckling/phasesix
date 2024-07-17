@@ -2,200 +2,202 @@
 {% load i18n rules_extras characters_extras %}
 
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Select templates" %}{% endblock %}
+{% block in_page_subtitle %}
+  {% trans 'These are the templates your character will start with. They define all values and abilities of your character.' %}{% endblock %}
 
 {% block javascript %}
-    <script>
-        $(function () {
-            let timer = null;
+  <script>
+      $(function () {
+          let timer = null;
 
-            function displayWarnings(warnings){
-                let element = $('.character-warnings');
-                element.html("");
-                if (!!warnings.length) {
-                    element.removeClass('d-none');
-                    for (let warning of warnings) {
-                        element.append(`<div>${warning}</div>`)
-                    }
-                } else {
-                    element.addClass("d-none");
-                }
-            }
+          function displayWarnings(warnings) {
+              let element = $('.character-warnings');
+              element.html("");
+              if (!!warnings.length) {
+                  element.removeClass('d-none');
+                  for (let warning of warnings) {
+                      element.append(`<div>${warning}</div>`)
+                  }
+              } else {
+                  element.addClass("d-none");
+              }
+          }
 
-            $('#id_q').on('keyup', function (e) {
-                let q = $(this).val();
+          $('#id_q').on('keyup', function (e) {
+              let q = $(this).val();
 
-                function updateTabs() {
-                    $('.tab-pane').each(function (index) {
-                        let elem = $(this);
-                        let ct = elem.find('.constructed-template:not(.d-none)');
-                        if (ct.length === 0) {
-                            elem.addClass('d-none');
-                            $(elem.data('rel')).addClass('disabled');
-                        } else {
-                            elem.removeClass('d-none');
-                            $(elem.data('rel')).removeClass('disabled');
-                        }
-                        $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
-                    })
-                }
+              function updateTabs() {
+                  $('.tab-pane').each(function (index) {
+                      let elem = $(this);
+                      let ct = elem.find('.constructed-template:not(.d-none)');
+                      if (ct.length === 0) {
+                          elem.addClass('d-none');
+                          $(elem.data('rel')).addClass('disabled');
+                      } else {
+                          elem.removeClass('d-none');
+                          $(elem.data('rel')).removeClass('disabled');
+                      }
+                      $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
+                  })
+              }
 
-                if (timer) {
-                    clearTimeout(timer);
-                }
-                timer = setTimeout(function () {
-                    $('.constructed-template').each(function (index) {
-                        if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                            $(this).removeClass('d-none');
-                        } else {
-                            $(this).addClass('d-none');
-                        }
-                    });
-                    updateTabs();
-                    $('.masonry-container').masonry('layout', {percentPosition: true});
-                }, 100);
-            });
+              if (timer) {
+                  clearTimeout(timer);
+              }
+              timer = setTimeout(function () {
+                  $('.constructed-template').each(function (index) {
+                      if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                          $(this).removeClass('d-none');
+                      } else {
+                          $(this).addClass('d-none');
+                      }
+                  });
+                  updateTabs();
+                  $('.masonry-container').masonry('layout', {percentPosition: true});
+              }, 100);
+          });
 
-            $('.row').on('click', '.constructed-template', function (e) {
-                let template_div = $(this);
-                let template_id = template_div.data('template-id');
-                let preview_url = template_div.data('preview-url');
-                if (template_div.hasClass('selected')) {
-                    $.post(
-                        template_div.data('remove-url'),
-                        {template_id: template_id},
-                        function (data) {
-                            if (data.status === 'ok') {
-                                $('.template-points').text(data.remaining_points);
-                                template_div.removeClass('selected');
-                                displayWarnings(data.warnings);
-                                $('.character-preview').load(preview_url);
-                            } else {
-                                // shake
-                            }
-                        });
-                } else {
-                    $.post(
-                        template_div.data('add-url'),
-                        {template_id: template_id},
-                        function (data) {
-                            if (data.status === 'ok') {
-                                $('.template-points').text(data.remaining_points);
-                                template_div.addClass('selected');
-                                displayWarnings(data.warnings);
-                                $('.character-preview').load(preview_url);
-                            } else {
-                                template_div.addClass('notenoughpoints');
-                                $('.template-points').addClass('animated wobble');
-                                setTimeout(function () {
-                                    template_div.removeClass('notenoughpoints');
-                                    $('.template-points').removeClass('animated wobble');
-                                }, 500);
-                            }
-                        });
-                }
-                e.preventDefault();
-                return false;
-            });
+          $('.row').on('click', '.constructed-template', function (e) {
+              let template_div = $(this);
+              let template_id = template_div.data('template-id');
+              let preview_url = template_div.data('preview-url');
+              if (template_div.hasClass('selected')) {
+                  $.post(
+                      template_div.data('remove-url'),
+                      {template_id: template_id},
+                      function (data) {
+                          if (data.status === 'ok') {
+                              $('.template-points').text(data.remaining_points);
+                              template_div.removeClass('selected');
+                              displayWarnings(data.warnings);
+                              $('.character-preview').load(preview_url);
+                          } else {
+                              // shake
+                          }
+                      });
+              } else {
+                  $.post(
+                      template_div.data('add-url'),
+                      {template_id: template_id},
+                      function (data) {
+                          if (data.status === 'ok') {
+                              $('.template-points').text(data.remaining_points);
+                              template_div.addClass('selected');
+                              displayWarnings(data.warnings);
+                              $('.character-preview').load(preview_url);
+                          } else {
+                              template_div.addClass('notenoughpoints');
+                              $('.template-points').addClass('animated wobble');
+                              setTimeout(function () {
+                                  template_div.removeClass('notenoughpoints');
+                                  $('.template-points').removeClass('animated wobble');
+                              }, 500);
+                          }
+                      });
+              }
+              e.preventDefault();
+              return false;
+          });
 
-            $('#switch-preview').on('change', function () {
-                if ($(this).prop('checked')) {
-                    $('.template-list').addClass('d-none');
-                    $('.character-preview').removeClass('d-none');
-                } else {
-                    $('.character-preview').addClass('d-none');
-                    $('.template-list').removeClass('d-none');
-                }
-            });
+          $('#switch-preview').on('change', function () {
+              if ($(this).prop('checked')) {
+                  $('.template-list').addClass('d-none');
+                  $('.character-preview').removeClass('d-none');
+              } else {
+                  $('.character-preview').addClass('d-none');
+                  $('.template-list').removeClass('d-none');
+              }
+          });
 
-            // masonry + bootstrap tabs
-            $('a[data-bs-toggle="tab"]').each(function () {
-                let self = $(this);
-                $(this).on('shown.bs.tab', function () {
-                    let elem = $(`${self.attr('href')}`);
-                    let container = elem.find('.masonry-container');
-                    container.masonry({
-                        percentPosition: true,
-                    })
-                })
-            })
-        })
-    </script>
+          // masonry + bootstrap tabs
+          $('a[data-bs-toggle="tab"]').each(function () {
+              let self = $(this);
+              $(this).on('shown.bs.tab', function () {
+                  let elem = $(`${self.attr('href')}`);
+                  let container = elem.find('.masonry-container');
+                  container.masonry({
+                      percentPosition: true,
+                  })
+              })
+          })
+      })
+  </script>
 {% endblock %}
 
 {% block content %}
-    <h1>{% trans "Select templates" %}</h1>
-    <p class="text-muted">{% trans 'These are the templates your character will start with. They define all values and abilities of your character.' %}</p>
 
-    <div class="row">
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <div class="row initial-data">
+        <div class="col-md-12">
+          <input type="text" class="form-control mb-3 w-100" placeholder="{% trans "Search" %}" id="id_q">
+          <div class="h2">
+            <span class="badge bg-info template-points">{{ character.remaining_template_points }}</span>
+          </div>
+          <h4>{% trans "Character Points" %}</h4>
 
-        <div class="col-12 col-md-3">
-            <div class="row initial-data">
-                <div class="col-md-12">
-                    <input type="text" class="form-control mb-3 w-100" placeholder="{% trans "Search" %}" id="id_q">
-                    <h4>
-                        <span
-                            class="badge bg-info template-points h2">{{ character.remaining_template_points }}</span><br>{% trans "Character Points " %}
-                    </h4>
-                    <p class="text-muted">{% trans 'Excess points will become the new characters initial reputation.' %}</p>
-                    <form action="{% url 'characters:create_character_constructed' pk=character.id %}" method="post">
-                        {% csrf_token %}
-                        <div class="alert alert-danger character-warnings {% if not warnings %}d-none{% endif %}">
-                            {% for warning in warnings %}
-                                <div>{{ warning }}</div>
-                            {% endfor %}
-                        </div>
-                        <button type="submit" class="btn mb-3 w-100 btn-success">{% trans 'Finish Character' %}</button><br>
-                        <span class="switch switch-sm">
+          <p class="text-muted">{% trans 'Excess points will become the new characters initial reputation.' %}</p>
+          <form action="{% url 'characters:create_character_constructed' pk=character.id %}" method="post">
+            {% csrf_token %}
+            <div class="alert alert-danger character-warnings {% if not warnings %}d-none{% endif %}">
+              {% for warning in warnings %}
+                <div>{{ warning }}</div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn mb-3 w-100 btn-success">{% trans 'Finish Character' %}</button>
+            <br>
+            <span class="switch switch-sm">
                             <input type="checkbox" class="mt-3 switch" id="switch-preview">
                             <label for="switch-preview">{% trans "Preview" %}</label>
                         </span>
-                    </form>
-                </div>
-            </div>
+          </form>
         </div>
-
-        <div class="col-12 col-md-8 template-list">
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
-                        {% for tc in template_categories %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab"
-                                   href="#tc{{ tc.id }}" id="tab{{ tc.id }}">
-                                    {{ tc }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="col-md-12 tab-content">
-                    {% for tc in template_categories %}
-                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tc{{ tc.id }}"
-                             data-rel="#tab{{ tc.id }}">
-                            <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
-                                {% for i in tc.template_set.all %}
-                                    {% has_extensions i object.extensions.all as has_extension %}
-                                    {% if has_extension %}
-                                        <div class="col col-md-6 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
-                                             data-template-id="{{ i.id }}"
-                                             data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
-                                             data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
-                                             data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
-                                            {% template_widget i %}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-8 character-preview d-none">
-            {% detail_fragment 'character' %}
-        </div>
+      </div>
     </div>
+
+    <div class="col-12 col-md-8 template-list">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs nav-fill mb-2" role="tablist">
+            {% for tc in template_categories %}
+              <li class="nav-item">
+                <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab"
+                   href="#tc{{ tc.id }}" id="tab{{ tc.id }}">
+                  {{ tc }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="col-md-12 tab-content">
+          {% for tc in template_categories %}
+            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tc{{ tc.id }}"
+                 data-rel="#tab{{ tc.id }}">
+              <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
+                {% for i in tc.template_set.all %}
+                  {% has_extensions i object.extensions.all as has_extension %}
+                  {% if has_extension %}
+                    <div class="col col-md-6 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                         data-template-id="{{ i.id }}"
+                         data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
+                         data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
+                         data-preview-url="{% url 'characters:xhr_create_character_preview' pk=object.id %}">
+                      {% template_widget i %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-8 character-preview d-none">
+      {% detail_fragment 'character' %}
+    </div>
+  </div>
 
 {% endblock %}

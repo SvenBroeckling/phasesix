@@ -2,6 +2,8 @@
 {% load i18n thumbnail django_bootstrap5 %}
 
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Choose extensions" %}{% endblock %}
+{% block in_page_subtitle %}{% trans "Choose any number of additional extensions to add to your character." %}{% endblock %}
 
 {% block javascript %}
     <script>
@@ -23,12 +25,6 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{% trans "Choose extensions" %}</h1>
-    <p class="text-muted">
-        {% blocktrans %}
-            Choose any number of additional extensions to add to your character.
-        {% endblocktrans %}
-    </p>
     <div class="row">
         {% for extension in extensions %}
                 <div class="col-12 col-md-6 col-lg-4">

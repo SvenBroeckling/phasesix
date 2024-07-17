@@ -25,21 +25,22 @@ def genitive_ending(value):
 
 
 @register.simple_tag(takes_context=True)
-def active_if_url_name_matches(context, url_name, **kwargs):
+def active_if_url_name_matches(context, url_name_list, **kwargs):
     resolver_match = context["request"].resolver_match
 
-    try:
-        app_name, name = url_name.split(":")
-    except ValueError:
-        if resolver_match.url_name == url_name:
-            if kwargs is not None and resolver_match.kwargs != kwargs:
-                return ""
-            return "active"
-    else:
-        if app_name in resolver_match.app_name and resolver_match.url_name == name:
-            if kwargs is not None and resolver_match.kwargs != kwargs:
-                return ""
-            return "active"
+    for url_name in url_name_list.split(","):
+        try:
+            app_name, name = url_name.split(":")
+        except ValueError:
+            if resolver_match.url_name == url_name:
+                if kwargs is not None and resolver_match.kwargs != kwargs:
+                    return ""
+                return "active"
+        else:
+            if app_name in resolver_match.app_name and resolver_match.url_name == name:
+                if kwargs and resolver_match.kwargs != kwargs:
+                    return ""
+                return "active"
     return ""
 
 

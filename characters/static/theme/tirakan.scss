@@ -12,7 +12,9 @@ $red: #c4453c;
 $orange: #f3cd94;
 $cyan: #2d8e9c;
 $green: #6eb35a;
-$body-bg-dark: #101017;
+
+$body-bg-dark: #0E1113;
+$body-tertiary-bg-dark: #0E1217;
 
 @import '../vendor/bootstrap/scss/bootstrap.scss';
 @import 'generic';
@@ -21,8 +23,10 @@ $body-bg-dark: #101017;
 h1::first-letter,
 h2::first-letter,
 h3::first-letter,
+h4::first-letter,
 h1 a::first-letter,
 h2 a::first-letter,
-h3 a::first-letter {
+h3 a::first-letter,
+h4 a::first-letter {
   color: $danger;
 }

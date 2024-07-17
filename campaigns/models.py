@@ -36,6 +36,14 @@ class Campaign(models.Model):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
+    may_appear_on_start_page = models.BooleanField(
+        _("may appear on start page"),
+        help_text=_(
+            "This campaign may appear on the anonymous start page (i.E. if it has only free images"
+        ),
+        default=False,
+    )
+
     backdrop_image = models.ImageField(
         _("backdrop image"),
         upload_to="campaign_backdrop_images",

@@ -101,12 +101,6 @@ class World(models.Model, metaclass=TransMeta):
         related_name="foe_overview_world_set",
     )
 
-    index_template = models.CharField(
-        _("Index Template"),
-        max_length=40,
-        choices=INDEX_TEMPLATE_CHOICES,
-        default="index.html",
-    )
     scss_file = models.CharField(
         _("SCSS File"),
         max_length=40,

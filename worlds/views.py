@@ -6,10 +6,18 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, ListView
 
 from worlds.forms import WikiPageForm, WikiPageTextForm
 from worlds.models import World, WikiPage
+
+
+class WorldListView(ListView):
+    model = World
+    template_name = "worlds/world_list.html"
+
+    def get_queryset(self):
+        return World.objects.filter(is_active=True)
 
 
 class WorldDetailView(DetailView):

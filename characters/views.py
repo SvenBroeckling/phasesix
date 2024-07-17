@@ -67,44 +67,66 @@ from rules.models import (
     Knowledge,
     TemplateCategory,
 )
-from worlds.models import WikiPage
+from worlds.models import WikiPage, World
 
 
 class IndexView(TemplateView):
-    def get_template_names(self):
-        wc = self.request.world_configuration
-        if wc is not None:
-            return [wc.world.index_template]
-        return ["index.html"]
+    template_name = "index.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
+    def get_context_characters(self):
+        context = {}
         characters = Character.objects.filter(image__isnull=False)
         if self.request.world_configuration is not None:
             characters = characters.filter(
                 extensions=self.request.world_configuration.world.extension
             )
-
         if self.request.user.is_authenticated:
             characters = characters.filter(created_by=self.request.user).order_by(
                 "-modified_at"
             )
         else:
             characters = characters.filter(may_appear_on_start_page=True).order_by("?")
+        context["characters"] = characters[:3]
+        return context
 
-        context["characters"] = characters[:4]
+    def get_context_campaigns(self):
+        context = {}
+        campaigns = Campaign.objects.filter(image__isnull=False)
+        if self.request.world_configuration is not None:
+            campaigns = campaigns.filter(world=self.request.world_configuration.world)
 
-        context["wiki_pages_tirakan"] = (
-            WikiPage.objects.annotate(text_len=Length("text_de"))
-            .filter(world__slug="tirakans-reiche", text_len__gte=30)
-            .order_by("?")[:5]
-        )
-        context["wiki_pages_nexus"] = (
-            WikiPage.objects.annotate(text_len=Length("text_de"))
-            .filter(world__slug="nexus", text_len__gte=30)
-            .order_by("?")[:5]
-        )
+        if self.request.user.is_authenticated:
+            campaigns = campaigns.filter(created_by=self.request.user).order_by(
+                "-created_at"
+            )
+        else:
+            campaigns = campaigns.filter(may_appear_on_start_page=True).order_by("?")
+        context["campaigns"] = campaigns[:3]
+        return context
+
+    def get_context_worlds(self):
+        context = {}
+        if not self.request.world_configuration:
+            context["worlds"] = World.objects.filter(is_active=True)
+        return context
+
+    def get_context_wiki_pages(self):
+        context = {}
+        if self.request.world_configuration is not None:
+            world = self.request.world_configuration.world
+            context["wiki_pages"] = (
+                WikiPage.objects.annotate(text_len=Length("text_de"))
+                .filter(world=world, text_len__gte=30)
+                .order_by("?")[:3]
+            )
+        return context
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.get_context_characters())
+        context.update(self.get_context_worlds())
+        context.update(self.get_context_campaigns())
+        context.update(self.get_context_wiki_pages())
 
         if self.request.world_configuration:
             world = self.request.world_configuration.world
