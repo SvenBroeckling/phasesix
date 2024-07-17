@@ -93,7 +93,7 @@ class IndexView(TemplateView):
         context = {}
         campaigns = Campaign.objects.filter(image__isnull=False)
         if self.request.world_configuration is not None:
-            campaigns = campaigns.filter(world=self.request.world_configuration.world)
+            campaigns = campaigns.filter(world=self.request.world_configuration.world.extension)
 
         if self.request.user.is_authenticated:
             campaigns = campaigns.filter(created_by=self.request.user).order_by(
