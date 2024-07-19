@@ -1,41 +1,70 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load static i18n characters_extras rules_extras thumbnail %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ object }}{% endblock %}
+{% block in_page_subtitle %}{{ object.type }}{% endblock %}
 
 {% block background %}{% thumbnail object.image '1900' as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
 
 {% block background_copyright %}
-    Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
+  Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+      const options = {
+          keyboard: true,
+          size: 'fullscreen'
+      };
+      document.querySelectorAll('.toggle-lightbox').forEach((el) => el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const lightbox = new Lightbox(el, options);
+          lightbox.show();
+      }));
+  </script>
+{% endblock %}
+
+{% block bottom_nav %}
+  {% bottom_navigation_button "armory/_navigation.html" %}
 {% endblock %}
 
 {% block content %}
-    <h1>{{ object }}</h1>
-    <p class="text-muted">{{ object.type }}</p>
-    <div class="row">
-        <div class="col-12 col-sm-4 col-md-3">
-            <div class="card">
-                {% thumbnail object.image '1024' as im %}
-                    <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
-                {% endthumbnail %}
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-8 col-md-9">
-            <div class="col-12">
-                {{ object.description|urpg_markup }}
-            </div>
-
-            <div class="col-12">
-                <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Type' %} {{ object.type }}<br>
-                {% if object.charges is not None %}
-                    <i class="fas fa-bolt fa-fw"></i> {% trans 'Charges' %} {% color_value_span object.charges 10 invert=True %}<br>
-                {% endif %}
-                <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %} {% color_value_span object.weight 100 invert=True %}<br>
-                <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %} {% color_value_span object.concealment 5 invert=True %}<br>
-                <i class="{{ cmu.fa_icon_class }} fas fa-coins fa-fw"></i> {% trans 'Price' %} {% color_value_span object.price 100 invert=True %}<br>
-
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
     </div>
+
+    <div class="col-12 col-xl-9">
+      <div class="row">
+        <div class="col-12">
+          {% if object.image %}
+            {% thumbnail object.image '1024' as im %}
+              <a class="d-none d-lg-block toggle-lightbox" href="{{ object.image.url }}"
+                 data-gallery="{{ object.slug }}">
+                <img class="rounded img-fluid w-25 float-start me-3 mb-2" src="{{ im.url }}"
+                     alt="{{ object }}"/>
+              </a>
+              <img class="d-lg-none rounded img-fluid me-3 mb-2" src="{{ im.url }}"
+                   alt="{{ object }}"/>
+            {% endthumbnail %}
+          {% endif %}
+
+          {{ object.description|urpg_markup }}
+        </div>
+
+        <div class="col-12">
+          <i class="fas fa-angle-double-right fa-fw"></i> {% trans 'Type' %} {{ object.type }}<br>
+          {% if object.charges is not None %}
+            <i class="fas fa-bolt fa-fw"></i> {% trans 'Charges' %} {% color_value_span object.charges 10 invert=True %}
+            <br>
+          {% endif %}
+          <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %} {% color_value_span object.weight 100 invert=True %}<br>
+          <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %} {% color_value_span object.concealment 5 invert=True %}<br>
+          <i class="{{ cmu.fa_icon_class }} fas fa-coins fa-fw"></i> {% trans 'Price' %} {% color_value_span object.price 100 invert=True %}<br>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

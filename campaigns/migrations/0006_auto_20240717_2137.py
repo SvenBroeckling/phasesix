@@ -5,7 +5,9 @@ from django.db import migrations
 
 def forwards_func(apps, schema_editor):
     Campaign = apps.get_model("campaigns", "Campaign")
-    Campaign.objects.filter(id__in=[15, 13, 5, 4]).update(may_appear_on_start_page=True)
+    Campaign.objects.filter(id__in=[15, 13, 5, 4, 2]).update(
+        may_appear_on_start_page=True
+    )
 
 
 class Migration(migrations.Migration):

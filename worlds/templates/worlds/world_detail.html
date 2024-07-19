@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load static i18n characters_extras rules_extras thumbnail %}
 
 {% block javascript %}
@@ -11,6 +12,10 @@
           }, 1000)
       })
   </script>
+{% endblock %}
+
+{% block bottom_nav %}
+  {% bottom_navigation_button "worlds/_navigation.html" %}
 {% endblock %}
 
 {% block background %}{% if world.image %}{% thumbnail world.image "1900" as im %}{{ im.url }}{% endthumbnail %}

@@ -95,6 +95,9 @@
           <div class="text-center fs-5 mt-5 mt-md-0">
             <h2>{% trans "Manage Campaigns" %}</h2>
             {% blocktrans %}
+              Create and manage your campaigns. Invite your friends to join and play with you.
+              You can also add enemies and foes to your campaign to keep track of them. Dice rolls
+              may be sent to discord.
             {% endblocktrans %}
           </div>
         </div>
@@ -141,8 +144,8 @@
           </div>
 
           {% for wiki_page in wiki_pages %}
-            <div class="col">
-              <div class="card mb-2 mb-md-0">
+            <div class="col-12 col-md-6 col-xl-4 {% if forloop.last %}d-none d-xl-block{% endif %}">
+              <div class="card mb-2 mb-xl-0">
                 {% if wiki_page.image %}
                   {% thumbnail wiki_page.image "1024" as im %}
                     <img src="{{ im.url }}" alt="{{ world }}" class="card-img-top">
@@ -174,7 +177,7 @@
           </div>
 
           {% for world in worlds %}
-            <div class="col">
+            <div class="col-12 col-md-6 col-xl-4 {% if forloop.last %}d-none d-xl-block{% endif %}">
               <div class="card mb-2 mb-md-0">
                 <img src="{{ world.get_image.image.url }}" alt="{{ world }}" class="card-img-top">
                 <div class="card-body">
