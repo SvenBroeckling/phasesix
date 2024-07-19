@@ -1,87 +1,79 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load i18n rules_extras characters_extras campaign_extras thumbnail static %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ object }}{% endblock %}
+{% block in_page_subtitle %}
+  {{ object.lineage }} - {% template_category_string object 3 %}
+  {% if object.pc_or_npc_campaign %}
+    <a href="{% url 'campaigns:detail' pk=object.pc_or_npc_campaign.id %}">{{ object.pc_or_npc_campaign }}</a>
+  {% endif %}
+{% endblock %}
 
 {% block javascript %}
-    <script src="{% static 'js/character_detail.js' %}"></script>
-    <script src="{% static 'js/campaign_socket.js' %}"></script>
-    <script>
-    $(function(){
-        $('.character-main-nav a[href]:first').tab('show')
-    })
-    </script>
+  <script src="{% static 'js/character_detail.js' %}"></script>
+  <script src="{% static 'js/campaign_socket.js' %}"></script>
+  <script>
+      $(function () {
+          $('.character-main-nav a[href]:first').tab('show')
+      })
+  </script>
 {% endblock %}
 
 {% block background %}{{ object.get_backdrop_image_url }}{% endblock %}
 
+{% block bottom_nav %}
+  {% bottom_navigation_button "characters/_navigation.html" %}
+{% endblock %}
+
 {% block content %}
-    <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
-    <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
+  <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
+  <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
-    <div class="row character-info-row">
-        <div class="d-flex flex-wrap">
-            <div class="character-image me-4 sidebar-trigger"
-                 data-sidebar-title="{% trans 'Character' %}"
-                 data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}">
-                <img class="rounded img-fluid" src="{{ object.get_image_url }}" alt="{{ object.name }}">
-                <span class="dice-icon"><i class="fas fa-dice-five text-light shadow fa-2x"></i></span>
-            </div>
-            <div class="mt-3 mt-sm-0">
-                <h2 class="mb-0">{{ object.name }}</h2>
-                <small><span>{{ object.lineage }}</span></small><br>
-                {% template_category_string object 3 %}
-                {% template_category_string object 2 %}
-                {% if object.pc_or_npc_campaign %}
-                    <small>{% trans 'Campaign' %}: <a
-                        href="{% url 'campaigns:detail' pk=object.pc_or_npc_campaign.id %}">{{ object.pc_or_npc_campaign }}</a></small>
-                    <br>
-                {% endif %}
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'characters/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    <div class="row mt-4">
+    <div class="col-12 col-xl-9">
+      {% detail_fragment 'health' %}
 
-        <div class="col-12">
-            {% detail_fragment 'character_nav' %}
-            {% detail_fragment 'health' %}
-
-            {% if not object.created_by %}
-                <div class="alert alert-danger" role="alert">
-                    {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
-                </div>
-            {% endif %}
-
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="v-character" role="tabpanel">
-                    {% detail_fragment 'character' %}
-                </div>
-
-                <div class="tab-pane fade" id="v-gear" role="tabpanel">
-                    {% detail_fragment 'gear' %}
-                </div>
-
-                <div class="tab-pane fade" id="v-combat" role="tabpanel">
-                    {% detail_fragment 'combat' %}
-                </div>
-
-                <div class="tab-pane fade" id="v-magic" role="tabpanel">
-                    {% detail_fragment 'magic' %}
-                </div>
-
-                <div class="tab-pane fade" id="v-pantheon" role="tabpanel">
-                    {% detail_fragment 'pantheon' %}
-                </div>
-
-                <div class="tab-pane fade" id="v-background" role="tabpanel">
-                    {% detail_fragment 'advancement' %}
-                </div>
-
-                <div class="tab-pane fade" id="v-notes" role="tabpanel">
-                    {% detail_fragment 'notes' %}
-                </div>
-            </div>
+      {% if not object.created_by %}
+        <div class="alert alert-danger" role="alert">
+          {% trans 'This character was created while not being logged in. It will be deleted by tomorrow.' %}
         </div>
+      {% endif %}
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="v-character" role="tabpanel">
+          {% detail_fragment 'character' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-gear" role="tabpanel">
+          {% detail_fragment 'gear' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-combat" role="tabpanel">
+          {% detail_fragment 'combat' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-magic" role="tabpanel">
+          {% detail_fragment 'magic' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-pantheon" role="tabpanel">
+          {% detail_fragment 'pantheon' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-background" role="tabpanel">
+          {% detail_fragment 'advancement' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-notes" role="tabpanel">
+          {% detail_fragment 'notes' %}
+        </div>
+      </div>
     </div>
+  </div>
 {% endblock %}

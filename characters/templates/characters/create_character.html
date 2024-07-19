@@ -2,39 +2,34 @@
 {% load i18n thumbnail %}
 
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Create Character" %}{% endblock %}
+{% block in_page_subtitle %}{% trans "Choose a world to play in" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans 'Create a character' %}</h1>
-    <p class="text-muted">
-        {% blocktrans %}
-            Choose a world to play in
-        {% endblocktrans %}
-    </p>
-    <div class="row">
-
-        {% for extension in extensions %}
-            <div class="col-12 col-md-6 col-lg-4">
-            {% if extension.fixed_epoch %}
-                {% if extension.fixed_extensions.exists %}
-                  <a href="{% url 'characters:create_character_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
-                {% else %}
-                  <a href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
-                {% endif %}
-            {% else %}
-                <a href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">
-            {% endif %}
-                    <div class="card text-center create-epoch-card mb-4">
-                        {% thumbnail extension.image "1024" as im %}
-                        <div class="card-body" style="background-image: url({{ im.url }}); background-size: cover">
-                        {% endthumbnail %}
-                            <div class="card-text w-100 p-5">
-                                <h5 class="text-center p-0 m-0">{{ extension }}</h5>
-                                <p class="text-center text-gray p-0 m-0">{{ extension.year_range }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
+  <div class="row">
+    {% for extension in extensions %}
+      <div class="col-12 col-md-6 col-lg-4">
+        {% if extension.fixed_epoch %}
+          {% if extension.fixed_extensions.exists %}
+            <a href="{% url 'characters:create_character_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
+          {% else %}
+            <a href="{% url 'characters:create_character_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
+          {% endif %}
+        {% else %}
+          <a href="{% url 'characters:create_character_epoch' world_pk=extension.id %}">
+        {% endif %}
+        <div class="card text-center create-epoch-card mb-4">
+          {% thumbnail extension.image "1024" as im %}
+            <div class="card-body" style="background-image: url({{ im.url }}); background-size: cover">
+          {% endthumbnail %}
+          <div class="card-text w-100 p-5">
+            <h5 class="text-center p-0 m-0">{{ extension }}</h5>
+            <p class="text-center text-gray p-0 m-0">{{ extension.year_range }}</p>
+          </div>
+          </div>
+        </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

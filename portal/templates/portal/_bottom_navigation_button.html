@@ -1,0 +1,16 @@
+<div id="bottom-nav-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
+     aria-labelledby="page-modal">
+  <div class="modal-dialog modal-fullscreen" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        {% include template_include with object=object may_edit=may_edit %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<button data-bs-toggle="modal"
+        data-bs-target="#bottom-nav-modal"
+        class="btn btn-primary hover btn-circle d-block d-xl-none position-fixed bottom-0 end-0 z-3 me-2 me-md-4 mb-2 mb-md-4">
+  <i class="fas fa-bars"></i>
+</button>

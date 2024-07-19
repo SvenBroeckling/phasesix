@@ -1,69 +1,31 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load i18n static rules_extras %}
 
 {% block title %}{% trans 'All Spells' %} - {{ block.super }}{% endblock %}
 
-{% block javascript %}
-    <script>
-        $(function () {
-            let timer = null;
-            let masonry = $('.masonry-container').masonry()
+{% block in_page_title %}{{ origin }}{% endblock %}
+{% block in_page_subtitle %}{% trans "Spell Origins" %}{% endblock %}
 
-            $('#id_q').on('keyup', function (e) {
-                var q = $(this).val();
-
-                if (timer) {
-                    clearTimeout(timer);
-                }
-                timer = setTimeout(function () {
-                    $('.spell-selection-card').each(function (index) {
-                        if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                            $(this).parent().removeClass('d-none');
-                        } else {
-                            $(this).parent().addClass('d-none');
-                        }
-                        ;
-                    });
-                    history.replaceState({q: q}, '', '?q=' + q);
-                    masonry.masonry({percentPosition: true})
-                }, 10);
-            });
-
-            var matches = /q=([^&#=]*)/.exec(window.location.search);
-            if (matches && matches[1]) {
-                $('#id_q').val(matches[1]);
-                $('.spell-selection-card').each(function (index) {
-                    if ($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
-                        $(this).removeClass('d-none');
-                    } else {
-                        $(this).addClass('d-none');
-                    }
-                    ;
-                });
-                masonry.masonry({percentPosition: true})
-            }
-        })
-    </script>
+{% block bottom_nav %}
+  {% bottom_navigation_button "armory/_navigation.html" %}
 {% endblock %}
 
 {% block content %}
-    <h1>{{ origin }}</h1>
-    <a href="{% url "magic:spell_origin_list" %}">{% trans "All origins" %}</a>
-    <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
-        {% for object in object_list %}
-            <div class="col col-md-4">
-                <a class="stretched-link" href="{% url 'magic:basespell_detail' pk=object.id %}"></a>
-                {% basespell_widget object %}
-            </div>
-        {% endfor %}
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    {% if user.is_superuser %}
-        <div class="row mt-4">
-            <div class="col-12">
-                <a href="{% url 'admin:magic_basespell_add' %}" class="btn btn-warning"><i
-                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
-            </div>
-        </div>
-    {% endif %}
+    <div class="col-12 col-xl-9">
+      <div class="row">
+        {% for object in object_list %}
+          <div class="col-12 col-md-6">
+            <a class="stretched-link" href="{% url 'magic:basespell_detail' pk=object.id %}"></a>
+            {% basespell_widget object %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

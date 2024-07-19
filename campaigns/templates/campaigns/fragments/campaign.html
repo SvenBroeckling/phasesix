@@ -1,0 +1,49 @@
+{% extends 'campaigns/fragments/fragment_base.html' %}
+{% load characters_extras %}
+{% load i18n thumbnail static %}
+
+{% block fragment %}
+  {% if object.abstract %}
+    <p>{{ object.abstract }}</p>
+  {% endif %}
+
+  {% if may_join %}
+    <div class="card mb-4">
+      <div class="card-body p-3">
+        {% trans "You have been invited to join this campaign. Create a new character to join the campaign." %}
+        <br>
+        <a href=""
+           data-sidebar-title="{% trans 'Join campaign' %}"
+           data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"
+           class="sidebar-trigger btn btn-success mt-2"><i
+                class="fas fa-dice-five"></i> {% trans 'Join campaign' %}</a>
+      </div>
+    </div>
+  {% endif %}
+
+
+  <h2>{% trans "Players" %}</h2>
+  <div class="campaign-characters">
+    <div class="d-flex justify-content-start flex-wrap">
+      {% for c in object.character_set.all %}
+        <a href=""
+           data-sidebar-title="{{ c }}"
+           data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
+           class="sidebar-trigger sidebar-spinner mb-2 me-2">
+          <img src="{% character_image_url c geometry="200x200" crop="center" %}" alt="{{ c }}">
+        </a>
+      {% endfor %}
+
+    {% if may_edit %}
+      <a href="{{ object.invite_link }}" class="campaign-link" data-msg="{% trans "Invite link copied" %}">
+        <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+             style="width: 200px; height: 200px">
+          <i class="fas fa-plus fa-2x"></i>
+          <span class="invite-text">{% trans "Invite Player" %}</span>
+        </div>
+      </a>
+    {% endif %}
+
+    </div>
+  </div>
+{% endblock %}

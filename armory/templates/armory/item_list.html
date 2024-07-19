@@ -1,71 +1,70 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load i18n static armory_extras %}
 
 {% block title %}{% trans 'All Items' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Items" %}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
+
+{% block bottom_nav %}
+  {% bottom_navigation_button "armory/_navigation.html" %}
+{% endblock %}
 
 {% block javascript %}
-    <script>
-        $(function () {
-            let timer = null;
-            let masonry = $('.masonry-container').masonry()
+  <script>
+      $(function () {
+          let timer = null;
+          let masonry = $('.masonry-container').masonry()
 
-            $('#id_q').on('keyup', function (e) {
-                var q = $(this).val();
+          $('#id_q').on('keyup', function (e) {
+              var q = $(this).val();
 
-                if (timer) {
-                    clearTimeout(timer);
-                }
-                timer = setTimeout(function () {
-                    $('.spell-selection-card').each(function (index) {
-                        if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                            $(this).parent().removeClass('d-none');
-                        } else {
-                            $(this).parent().addClass('d-none');
-                        }
-                    });
-                    history.replaceState({q: q}, '', '?q=' + q);
-                    masonry.masonry({percentPosition: true})
-                }, 10);
-            });
+              if (timer) {
+                  clearTimeout(timer);
+              }
+              timer = setTimeout(function () {
+                  $('.spell-selection-card').each(function (index) {
+                      if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+                          $(this).parent().removeClass('d-none');
+                      } else {
+                          $(this).parent().addClass('d-none');
+                      }
+                  });
+                  history.replaceState({q: q}, '', '?q=' + q);
+                  masonry.masonry({percentPosition: true})
+              }, 10);
+          });
 
-            var matches = /q=([^&#=]*)/.exec(window.location.search);
-            if (matches && matches[1]) {
-                $('#id_q').val(matches[1]);
-                $('.spell-selection-card').each(function (index) {
-                    if ($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
-                        $(this).removeClass('d-none');
-                    } else {
-                        $(this).addClass('d-none');
-                    }
-                });
-                masonry.masonry({percentPosition: true})
-            }
-        })
-    </script>
+          var matches = /q=([^&#=]*)/.exec(window.location.search);
+          if (matches && matches[1]) {
+              $('#id_q').val(matches[1]);
+              $('.spell-selection-card').each(function (index) {
+                  if ($(this).text().toLowerCase().search(matches[1].toLowerCase()) > -1) {
+                      $(this).removeClass('d-none');
+                  } else {
+                      $(this).addClass('d-none');
+                  }
+              });
+              masonry.masonry({percentPosition: true})
+          }
+      })
+  </script>
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-6 offset-md-6 mb-4">
-            <input type="text" class="form-control" placeholder="{% trans "Search" %}" id="id_q">
-        </div>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
     </div>
-
-    <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
+    <div class="col-12 col-xl-9">
+      <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
         {% for object in object_list %}
-            <div class="col col-md-4 col-xl-3">
-                <a class="stretched-link" href="{% url 'armory:item_detail' pk=object.id %}"></a>
-                {% item_widget object %}
-            </div>
+          <div class="col col-md-4 col-xl-3">
+            <a class="stretched-link" href="{% url 'armory:item_detail' pk=object.id %}"></a>
+            {% item_widget object %}
+          </div>
         {% endfor %}
+      </div>
     </div>
-
-    <div class="row">
-        <div class="col-12">
-            {% if user.is_superuser %}
-                <a href="{% url 'admin:magic_basespell_add' %}" class="btn btn-warning"><i
-                        class="fas fa-plus"></i> {% trans 'Add in admin' %}</a>
-            {% endif %}
-        </div>
-    </div>
+  </div>
 {% endblock %}

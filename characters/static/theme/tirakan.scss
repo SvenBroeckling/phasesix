@@ -1,7 +1,7 @@
 @import 'fonts/UnifrakturMaguntia/stylesheet.css';
 @import 'fonts/NotoSans/stylesheet.css';
 
-$font-size-base: 1.15rem;
+$font-size-base: 1.05rem;
 $font-family-sans-serif: "Noto Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $headings-font-family: 'UnifrakturMaguntia', cursive;
 
@@ -12,30 +12,21 @@ $red: #c4453c;
 $orange: #f3cd94;
 $cyan: #2d8e9c;
 $green: #6eb35a;
-$body-bg-dark: #101017;
+
+$body-bg-dark: #0E1113;
+$body-tertiary-bg-dark: #0E1217;
 
 @import '../vendor/bootstrap/scss/bootstrap.scss';
+@import 'generic';
 
-@import '_main_nav';
-@import '_utilities';
-@import '_value_colors';
-@import '_overrides';
-@import '_base';
-@import '_index';
-@import '_profile';
-@import '_character_creation';
-@import '_rules';
-@import '_sidebar';
-@import '_characters';
-@import '_campaigns';
-@import '_magic';
-@import '_dice_socket';
-@import '_worlds';
-@import '_forum';
 
 h1::first-letter,
 h2::first-letter,
+h3::first-letter,
+h4::first-letter,
 h1 a::first-letter,
-h2 a::first-letter {
+h2 a::first-letter,
+h3 a::first-letter,
+h4 a::first-letter {
   color: $danger;
 }

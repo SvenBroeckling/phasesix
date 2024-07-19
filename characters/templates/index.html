@@ -1,141 +1,200 @@
 {% extends 'base.html' %}
+{% load campaign_extras %}
+{% load portal_extras %}
 {% load rules_extras thumbnail i18n static %}
 
-{% block content %}
-    <header class="masthead">
-        <div class="container pt-0 pt-md-2">
+{% block header %}{% endblock %}
 
-            <div class="row">
-                <div class="col">
-                    <div class="text-center d-flex flex-column justify-content-center align-items-center">
-                        <img src="{% static "img/phasesix_logo.png" %}" class="img-fluid d-block d-xl-none w-50"
-                             alt="{{ brand_name }}">
-                        <h1>{{ brand_name }}</h1>
-                        <h3 class="mb-4">{% trans "Free online pen and paper rpg" %}</h3>
-                    </div>
-                </div>
-            </div>
+{% block raw_content %}
+  <div class="container-fluid pt-0 pt-md-5">
+    <div class="container pt-0 pt-md-5">
+      <div class="row">
 
-            <div class="row py-2 py-md-5">
-                <div class="col-lg-8 offset-lg-2">
-                    <div class="text-center lead">
-                        {% blocktrans %}
-                            Do you need a simple and fast rulebook to play your stories as a pen'n'paper
-                            roleplaying
-                            game?
-                            <em>Phase Six</em> is a quick to play roleplaying game rulebook that can be used in
-                            any
-                            setting.
-                            All you need to play is a handfull of regular six-sided dice and some paper.
-                        {% endblocktrans %}
-                        <br><br>
-                        {% blocktrans %}
-                            This website lets you create and manage your characters as well as their equipment
-                            and possessions.  This makes it really easy to use a platform like
-                            <a href="https://roll20.net">Roll20</a> for your sessions.
-                        {% endblocktrans %}
-                        <br><br>
-                        {% blocktrans %}
-                            Start now by taking a look at the rules or creating a character.
-                        {% endblocktrans %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="row py-2 py-md-5 d-flex justify-content-center">
-                <div class="d-flex justify-content-center w-75 flex-wrap">
-                    {% for c in characters %}
-                        {% if c.image %}
-                            <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3 me-2">
-                                {% thumbnail c.image "300x300" crop="center" as im %}
-                                    <img src="{{ im.url }}" class="img-fluid me-3 mb-3 rounded character-image"
-                                         alt="">
-                                {% endthumbnail %}
-                            </a>{% if forloop.last %}<br>{% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-
-
-            <div class="row py-2 py-md-5">
-                <div class="col-12">
-                    <div class="text-center mb-3">
-                        <h2 class="mx-auto my-0 text-uppercase">{% trans 'Discover worlds' %}</h2>
-                        <h5 class="mb-4">{% trans "Play in one of these worlds, or use Terra to play on earth." %}</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-5">
-                        <div class="card-body">
-                            <div id="wiki_page_carousel" class="carousel slide" data-bs-ride="carousel">
-
-                                <div class="carousel-inner">
-                                    {% for wiki_page in wiki_pages_tirakan %}
-                                        <div class="carousel-item {% if forloop.first %}active{% endif %}"
-                                             data-bs-interval="15000">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    {% thumbnail wiki_page.image "768" as im %}
-                                                        <img src="{{ im.url }}" class="img-fluid rounded"
-                                                             alt="{{ wiki_page }}">
-                                                    {% endthumbnail %}
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <h3 class="mb-3 mt-2 mt-md-0">{% trans "Realms of Tirakan" %}</h3>
-                                                    <h5 class="mt-2 mt-md-0">{{ wiki_page }}</h5>
-                                                    <p>
-                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:wiki_page.world }}
-                                                        <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-5">
-                        <div class="card-body">
-                            <div id="wiki_page_carousel_nexus" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    {% for wiki_page in wiki_pages_nexus %}
-                                        <div class="carousel-item {% if forloop.first %}active{% endif %}"
-                                             data-bs-interval="15000">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    {% thumbnail wiki_page.image "768" as im %}
-                                                        <img src="{{ im.url }}" class="img-fluid rounded"
-                                                             alt="{{ wiki_page }}">
-                                                    {% endthumbnail %}
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <h3 class="mb-3 mt-2 mt-md-0">NEXUS</h3>
-                                                    <h5 class="mt-2 mt-md-0">{{ wiki_page }}</h5>
-                                                    <p>
-                                                        {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:wiki_page.world }}
-                                                        <a href="{{ wiki_page.get_absolute_url }}">{% trans 'Read ahead' %}</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex align-items-center justify-content-center col-12 col-md-6 pt-4 pb-0 pt-md-5">
+          <div class="text-center fs-5 px-md-5">
+            <h2>{{ brand_name }}</h2>
+            {% blocktrans with t_brand_name=brand_name %}
+              <em>{{ t_brand_name }}</em> is a quick to play roleplaying game rulebook that can be used in
+              any setting.
+              All you need to play is a handful of regular six-sided dice and some paper.
+            {% endblocktrans %}
+            <br><br>
+            {% blocktrans %}
+              Start now by taking a look at the rules or creating a character.
+            {% endblocktrans %}
+          </div>
         </div>
 
-    </header>
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+          <img class="img-fluid" src="{% static "img/index-thyria.png" %}" alt="Thyria Blutdorn">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid pt-0 bg-body-tertiary">
+    <div class="container py-0 py-md-5">
+      <div class="row">
+
+        {# mobile - display above #}
+        <div class="d-flex d-md-none col-md-6 align-items-center justify-content-center">
+          <div class="text-center fs-5 mt-5 mt-md-0">
+            <h2>{% trans "Create Characters" %}</h2>
+            {% blocktrans %}
+              This website lets you create and manage your characters as well as their equipment
+              and possessions. This makes it really easy to use a platform like
+              <a href="https://roll20.net">Roll20</a> for your sessions.
+            {% endblocktrans %}
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 pt-4 pb-0 pt-md-5 h-100">
+          <div class="d-flex justify-content-center flex-wrap">
+            {% for c in characters %}
+              {% if c.image %}
+                <a href="{% url 'characters:detail' pk=c.id %}" class="mb-3 me-2">
+                  {% thumbnail c.image "250x250" crop="center" as im %}
+                    <img src="{{ im.url }}" class="img-fluid rounded character-image"
+                         alt="">
+                  {% endthumbnail %}
+                </a>{% if forloop.last %}<br>{% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {% create_character_url as create_url %}
+            <a href="{{ create_url }}">
+              <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+                   style="width: 250px; height: 250px">
+                <i class="fas fa-plus fa-2x"></i>
+                <span class="invite-text">{% trans "Create Character" %}</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        {# desktop - display right #}
+        <div class="d-none d-md-flex col-md-6 align-items-center justify-content-center">
+          <div class="text-center fs-5">
+            <h2>{% trans "Create Characters" %}</h2>
+            {% blocktrans %}
+              This website lets you create and manage your characters as well as their equipment
+              and possessions. This makes it really easy to use a platform like
+              <a href="https://roll20.net">Roll20</a> for your sessions.
+            {% endblocktrans %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid pt-0">
+    <div class="container py-0 py-md-5">
+      <div class="row">
+
+        <div class="d-flex col-md-6 align-items-center justify-content-center">
+          <div class="text-center fs-5 mt-5 mt-md-0">
+            <h2>{% trans "Manage Campaigns" %}</h2>
+            {% blocktrans %}
+              Create and manage your campaigns. Invite your friends to join and play with you.
+              You can also add enemies and foes to your campaign to keep track of them. Dice rolls
+              may be sent to discord.
+            {% endblocktrans %}
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 pt-4 pb-0 pt-md-5 h-100">
+          <div class="d-flex justify-content-center flex-wrap">
+            {% for c in campaigns %}
+              {% if c.image %}
+                <a href="{% url 'campaigns:detail' pk=c.id %}" class="mb-3 me-2">
+                  {% thumbnail c.image "250x250" crop="center" as im %}
+                    <img src="{{ im.url }}" class="img-fluid rounded character-image"
+                         alt="">
+                  {% endthumbnail %}
+                </a>{% if forloop.last %}<br>{% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {% create_campaign_url as create_url %}
+            <a href="{{ create_url }}">
+              <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+                   style="width: 250px; height: 250px">
+                <i class="fas fa-plus fa-2x"></i>
+                <span class="invite-text">{% trans "Create Campaign" %}</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid pt-0 pt-md-5 bg-body-tertiary">
+    <div class="container pt-0 pt-md-2">
+
+      {% if wiki_pages.exists %}  {# world configuration domain #}
+        <div class="row py-2 py-md-5">
+          <div class="col-12">
+            <div class="text-center mb-3">
+              <h2 class="mx-auto my-0">{% trans 'Discover the world' %}</h2>
+              <h5 class="mb-4">{% trans "" %}</h5>
+            </div>
+          </div>
+
+          {% for wiki_page in wiki_pages %}
+            <div class="col-12 col-md-6 col-xl-4 {% if forloop.last %}d-none d-xl-block{% endif %}">
+              <div class="card mb-2 mb-xl-0">
+                {% if wiki_page.image %}
+                  {% thumbnail wiki_page.image "1024" as im %}
+                    <img src="{{ im.url }}" alt="{{ world }}" class="card-img-top">
+                  {% endthumbnail %}
+                {% endif %}
+                <div class="card-body">
+                  <h4>{{ wiki_page }}</h4>
+                  <span class="text-muted">{{ wiki_page.parent }}</span>
+                  <p>
+                    {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:world }}
+                    <br>
+                    <a href="{% url "worlds:wiki_page" world_slug=wiki_page.world.slug slug=wiki_page.slug %}"
+                       class="btn btn-outline-primary stretched-link">{% trans "Discover" %}</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if worlds.exists %} {# generic phase six page #}
+        <div class="row py-2 py-md-5">
+          <div class="col-12">
+            <div class="text-center mb-3">
+              <h2 class="mx-auto my-0">{% trans 'Discover worlds' %}</h2>
+              <h5 class="mb-4">{% trans "Play in one of these worlds, or use Terra to play on earth." %}</h5>
+            </div>
+          </div>
+
+          {% for world in worlds %}
+            <div class="col-12 col-md-6 col-xl-4 {% if forloop.last %}d-none d-xl-block{% endif %}">
+              <div class="card mb-2 mb-md-0">
+                <img src="{{ world.get_image.image.url }}" alt="{{ world }}" class="card-img-top">
+                <div class="card-body">
+                  <h4>{{ world }}</h4>
+                  <p>
+                    {{ world.description_1 }}
+                    <br>
+                    <a href="{% url "worlds:detail" slug=world.slug %}"
+                       class="btn btn-outline-primary mt-2 stretched-link">{% trans "Discover" %}</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
 {% endblock %}

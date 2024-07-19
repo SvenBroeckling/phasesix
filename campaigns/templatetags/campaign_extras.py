@@ -1,11 +1,21 @@
-from django.template import Library
 from django.conf import settings
+from django.template import Library
 from django.template.loader import render_to_string
 from django.urls import reverse
 
 from campaigns.models import Campaign
 
 register = Library()
+
+
+@register.simple_tag
+def campaign_image_url(campaign, geometry="100x100", crop="center"):
+    return campaign.get_image_url(geometry, crop)
+
+
+@register.simple_tag
+def campaign_backdrop_image_url(campaign, geometry="100x100", crop="center"):
+    return campaign.get_backdrop_image_url(geometry, crop)
 
 
 @register.simple_tag(takes_context=True)

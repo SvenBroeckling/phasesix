@@ -1,33 +1,33 @@
 {% load i18n characters_extras rules_extras %}
-<div
-        class="card spell-selection-card pointer mt-3"
-        data-select-message="{% blocktrans with t_spell=basespell.name t_cost=basespell.spell_point_cost %}Add spell {{ t_spell }} for {{ t_cost }} spell points?{% endblocktrans %}"
-        data-spell-id="{{ basespell.id }}"
+<div class="card spell-selection-card pointer"
+     data-select-message="{% blocktrans with t_spell=basespell.name t_cost=basespell.spell_point_cost %}Add spell {{ t_spell }} for {{ t_cost }} spell points?{% endblocktrans %}"
+     data-spell-id="{{ basespell.id }}"
         {% if character %}
-        data-add-url="{% url 'characters:xhr_add_spell' pk=character.id %}"
+     data-add-url="{% url 'characters:xhr_add_spell' pk=character.id %}"
         {% endif %}
-        data-spell-point-cost="{{ basespell.spell_point_cost }}">
-    <div class="card-header">
-        <span class="badge bg-dark float-end">{{ basespell.spell_point_cost }}</span>
-        {{ basespell }} <small class="text-muted">{{ basespell.variant }}</small>
-    </div>
-    <div class="card-body">
-        {% if basespell.is_ritual %}
-            <span class="text-muted text-center">{% trans 'Ritual' %}</span>
-        {% endif %}
-        <p>
-            {{ basespell.rules|urpg_markup }}
-        </p>
-        <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ basespell.origin }}<br>
-        <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
-        <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
-        {% for a in basespell.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
-        <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span basespell.power 4 %}<br>
-        <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span basespell.range 4 %}<br>
-        <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ basespell.shape|default:"-" }}<br>
-        <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span basespell.actions 3 invert=True %}<br>
-        {% if user.is_superuser %}
-            <a href="{% url 'admin:magic_basespell_change' basespell.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-        {% endif %}
-    </div>
+     data-spell-point-cost="{{ basespell.spell_point_cost }}">
+  <div class="card-header">
+    <span class="badge bg-dark float-end">{{ basespell.spell_point_cost }}</span>
+    {{ basespell }} <small class="text-muted">{{ basespell.variant }}</small>
+  </div>
+  <div class="card-body">
+    {% if basespell.is_ritual %}
+      <span class="text-muted text-center">{% trans 'Ritual' %}</span>
+    {% endif %}
+    <p>
+      {{ basespell.rules|urpg_markup }}
+    </p>
+    <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ basespell.origin }}<br>
+    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
+    <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
+    {% for a in basespell.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
+    <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span basespell.power 4 %}<br>
+    <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span basespell.range 4 %}<br>
+    <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ basespell.shape|default:"-" }}<br>
+    <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span basespell.actions 3 invert=True %}<br>
+    {% if user.is_superuser %}
+      <a href="{% url 'admin:magic_basespell_change' basespell.id %}"
+         style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+    {% endif %}
+  </div>
 </div>

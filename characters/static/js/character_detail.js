@@ -13,7 +13,7 @@ $(function () {
     })
 
     // Sortable Items
-    function saveSortOrder(selector, url){
+    function saveSortOrder(selector, url) {
         let order = {}
         $(selector).each((idx, e) => {
             order[$(e).data('pk')] = idx
@@ -47,7 +47,7 @@ $(function () {
     $('.template').tilt({glare: false, perspective: 1800})
 
     setTimeout(() => $('.masonry-container').masonry({percentPosition: true}), 500)
-    body.on('shown.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
-        $($(e.target).attr('href')).find('.masonry-container').masonry({percentPosition: true})
+    body.on('click', 'a[data-bs-toggle="tab"]', function (e) {
+        $($(e.target).attr('data-bs-target')).find('.masonry-container').masonry({percentPosition: true})
     })
 })

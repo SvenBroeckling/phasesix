@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Worlds" %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Worlds" %}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
+
+
+{% block content %}
+  <div class="row">
+    {% for world in object_list %}
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card mb-2">
+          <img src="{{ world.get_image.image.url }}" alt="{{ world }}" class="card-img-top">
+          <div class="card-body">
+            <h5>{{ world }}</h5>
+            <p>
+              {{ world.description_1 }}
+              <br>
+              <a href="{% url "worlds:detail" slug=world.slug %}"
+                 class="btn btn-outline-primary mt-2 stretched-link">{% trans "Discover" %}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

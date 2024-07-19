@@ -2,78 +2,76 @@
 {% load i18n django_bootstrap5 thumbnail %}
 
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Create Character" %}{% endblock %}
+{% block in_page_subtitle %}{% trans "Give your character a name and some more information." %}{% endblock %}
 
 {% block javascript %}
   <script>
-  $(function(){
-      const form = $('form.character-data-form')
-      const url = form.data('info-url')
+      $(function () {
+          const form = $('form.character-data-form')
+          const url = form.data('info-url')
 
-      function getInfo(event) {
-        $.get(url, {field: event.target.name, value: event.target.value}, function(data){
-            $('div.description').html(data)
-        })
-      }
+          function getInfo(event) {
+              $.get(url, {field: event.target.name, value: event.target.value}, function (data) {
+                  $('div.description').html(data)
+              })
+          }
 
-      form.find('input, select').on('focus', getInfo)
-      form.find('select').on('change', getInfo)
-  })
+          form.find('input, select').on('focus', getInfo)
+          form.find('select').on('change', getInfo)
+      })
   </script>
 {% endblock %}
 
 {% block content %}
-    <h1>{% trans "Character information" %}</h1>
-    <p class="text-muted">
-        {% blocktrans %}
-            Give your character a name and some more information.
-        {% endblocktrans %}
-    </p>
-
-    <form action="" method="post" class="character-data-form" data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">
+  <form action="" method="post" class="character-data-form"
+        data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">
+    <div class="row">
+      {% csrf_token %}
+      <div class="col-12 col-md-6">
         <div class="row">
-            {% csrf_token %}
-            <div class="col-12 col-md-6">
-                <div class="row">
-                  <div class="col-12">
-                    {% bootstrap_field form.name %}
-                    {% bootstrap_field form.currency_map %}
-                    {% bootstrap_field form.seed_money %}
-                    {% bootstrap_field form.lineage %}
-                    {% bootstrap_field form.epoch show_label=False %}
-                    {% bootstrap_field form.world show_label=False %}
-                    {% bootstrap_field form.extensions show_label=False %}
-                  </div>
-                  <div class="col-12 col-md-6">
-                    {% bootstrap_field form.size %}
-                  </div>
-                  <div class="col-12 col-md-6">
-                    {% bootstrap_field form.weight %}
-                  </div>
-                  <div class="col-12">
-                    {% bootstrap_field form.date_of_birth %}
-                  </div>
-                  <div class="col-8">
-                    {% bootstrap_field form.entity %}
-                  </div>
-                  <div class="col-4">
-                    {% bootstrap_field form.attitude %}
-                  </div>
-                  <div class="col-12">
-                    <button type="submit" class="btn btn-primary w-100 mt-3">{% trans 'Create Character' %}</button>
-                  </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 description">
-              <h4>{% trans 'Character information' %}</h4>
-              <p class="text-justify">
-                {% blocktrans %}
-                  Enter some background information about your character here, which will make him more vivid and give him a background.
-                  <br><br>
-                  In addition to the name, height and weight, you can choose the character's lineage. This gives him an initial character template, which can assign some bonus stats and skills.
-                {% endblocktrans %}
-              </p>
-            </div>
+          <div class="col-12">
+            {% bootstrap_field form.name %}
+            {% bootstrap_field form.currency_map %}
+            {% bootstrap_field form.seed_money %}
+            {% bootstrap_field form.lineage %}
+            {% bootstrap_field form.epoch show_label=False %}
+            {% bootstrap_field form.world show_label=False %}
+            {% bootstrap_field form.extensions show_label=False %}
+          </div>
+          <div class="col-12 col-md-6">
+            {% bootstrap_field form.size %}
+          </div>
+          <div class="col-12 col-md-6">
+            {% bootstrap_field form.weight %}
+          </div>
+          <div class="col-12">
+            {% bootstrap_field form.date_of_birth %}
+          </div>
+          <div class="col-8">
+            {% bootstrap_field form.entity %}
+          </div>
+          <div class="col-4">
+            {% bootstrap_field form.attitude %}
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary w-100 mt-3">{% trans 'Create Character' %}</button>
+          </div>
         </div>
-    </form>
+      </div>
+
+      <div class="col-12 col-md-6 description">
+        <h4>{% trans 'Character information' %}</h4>
+        <p class="text-justify">
+          {% blocktrans %}
+            Enter some background information about your character here, which will make him more vivid and give him a
+            background.
+            <br><br>
+            In addition to the name, height and weight, you can choose the character's lineage. This gives him an
+            initial character template, which can assign some bonus stats and skills.
+          {% endblocktrans %}
+        </p>
+      </div>
+    </div>
+  </form>
 {% endblock %}
