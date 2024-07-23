@@ -65,4 +65,18 @@
       <span class="ms-3 d-block d-lg-block">{% trans "More" %}</span>
     </div>
   </a>
+
+  {% comment %}
+  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+     hx-post="{% url 'logout' %}"
+     hx-swap="none"
+     hx-on:htmx:after-request="window.location='/'"
+     href="">
+    <div class="d-flex justify-content-center align-items-center">
+      <i class="fas fa-lock"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Logout" %}</span>
+    </div>
+  </a>
+  {% endcomment %}
+
 </div>

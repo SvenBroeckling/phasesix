@@ -5,8 +5,10 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 from django.views.static import serve
+from django_registration.backends.activation.views import RegistrationView
 
 from characters.feeds import LatestModifiedAdmin, LatestNewAdmin
+from portal.forms import CustomRegistrationForm
 
 urlpatterns = [
     path("feeds/new_admin/", LatestNewAdmin()),
@@ -26,6 +28,11 @@ urlpatterns = [
     path("world/", include("worlds.urls", namespace="world")),
     path("gmtools/", include("gmtools.urls", namespace="gmtools")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path(
+        "accounts/register/",
+        RegistrationView.as_view(form_class=CustomRegistrationForm),
+        name="django_registration_register",
+    ),
     path("accounts/", include("django_registration.backends.activation.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("portal/", include("portal.urls", namespace="portal")),
