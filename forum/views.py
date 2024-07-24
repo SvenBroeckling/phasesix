@@ -28,7 +28,7 @@ class BoardDetailView(FormMixin, DetailView):
         if obj.is_staff_only:
             if not request.user.is_authenticated or not request.user.is_staff:
                 messages.error(request, _("You have no access to this forum"))
-                return HttpResponseRedirect(reverse("forum:index"))
+                return HttpResponseRedirect(reverse("characters:index"))
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -76,7 +76,7 @@ class ThreadDetailView(FormMixin, DetailView):
         if obj.board.is_staff_only:
             if not request.user.is_authenticated or not request.user.is_staff:
                 messages.error(request, _("You have no access to this forum"))
-                return HttpResponseRedirect(reverse("forum:index"))
+                return HttpResponseRedirect(reverse("characters:index"))
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -106,7 +106,7 @@ class RawPostTextView(DetailView):
         if obj.thread.board.is_staff_only:
             if not request.user.is_authenticated or not request.user.is_staff:
                 messages.error(request, _("You have no access to this forum"))
-                return HttpResponseRedirect(reverse("forum:index"))
+                return HttpResponseRedirect(reverse("characters:index"))
         return JsonResponse(
             {"text": "\n".join([f"> {line}" for line in obj.text.splitlines()])}
         )
