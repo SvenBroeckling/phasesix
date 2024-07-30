@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: characters/templates/index.html:142
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 19:04+0000\n"
-"PO-Revision-Date: 2024-07-19 21:13+0200\n"
+"POT-Creation-Date: 2024-07-30 10:40+0000\n"
+"PO-Revision-Date: 2024-07-30 12:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -951,26 +950,7 @@ msgstr "Statistiken"
 msgid "A campaign by"
 msgstr "Eine Kampagne von"
 
-#: campaigns/templates/campaigns/campaign_form.html:5
-msgid "Campaign settings"
-msgstr "Kampagneneinstellungen"
-
-#: campaigns/templates/campaigns/campaign_form.html:7
-msgid ""
-"\n"
-"            Choose settings for your campaign. These settings apply to every "
-"character created for this campaign.\n"
-"        "
-msgstr ""
-"\n"
-"         Wähle Einstellungen für deine Kampagne. Diese Vorgaben gelten für "
-"jeden Charakter, der für diese Kampagne erstellt wird.\n"
-"      "
-
-#: campaigns/templates/campaigns/campaign_form.html:17
-msgid "Create campaign"
-msgstr "Kampagne erstellen"
-
+#: campaigns/templates/campaigns/campaign_form.html:4
 #: campaigns/templates/campaigns/create_campaign.html:4
 #: campaigns/templates/campaigns/create_campaign_epoch.html:4
 #: campaigns/templates/campaigns/create_campaign_extensions.html:4
@@ -978,55 +958,64 @@ msgstr "Kampagne erstellen"
 msgid "Create Campaign"
 msgstr "Kampagne erstellen"
 
-#: campaigns/templates/campaigns/create_campaign.html:7
+#: campaigns/templates/campaigns/campaign_form.html:5
+msgid "Campaign settings"
+msgstr "Kampagneneinstellungen"
+
+#: campaigns/templates/campaigns/campaign_form.html:7
+msgid ""
+"Choose settings for your campaign. These settings apply to every character "
+"created for this campaign."
+msgstr ""
+"Wähle Einstellungen für deine Kampagne. Diese Vorgaben gelten für jeden "
+"Charakter, der für diese Kampagne erstellt wird."
+
+#: campaigns/templates/campaigns/campaign_form.html:12
+msgid ""
+"\n"
+"\n"
+"    "
+msgstr ""
+
+#: campaigns/templates/campaigns/campaign_form.html:22
+msgid "Create campaign"
+msgstr "Kampagne erstellen"
+
+#: campaigns/templates/campaigns/create_campaign.html:5
 msgid "Create a campaign"
 msgstr "Erstelle eine Kampagne"
 
-#: campaigns/templates/campaigns/create_campaign.html:9
-msgid ""
-"\n"
-"            Choose a world to play in\n"
-"        "
-msgstr ""
-"\n"
-"                    Wähle eine Welt, um darin zu spielen\n"
-"                "
+#: campaigns/templates/campaigns/create_campaign.html:6
+#: characters/templates/characters/create_character.html:6
+msgid "Choose a world to play in"
+msgstr "Wähle eine Welt, um darin zu spielen"
 
-#: campaigns/templates/campaigns/create_campaign_epoch.html:7
+#: campaigns/templates/campaigns/create_campaign_epoch.html:5
 #: characters/templates/characters/create_character_epoch.html:5
 msgid "Choose an epoch"
 msgstr "Wähle eine Epoche"
 
-#: campaigns/templates/campaigns/create_campaign_epoch.html:9
+#: campaigns/templates/campaigns/create_campaign_epoch.html:7
+#: characters/templates/characters/create_character_epoch.html:7
 msgid ""
-"\n"
-"            Choose an epoch to play in. The chosen epoch determines which "
-"weapons, armour and items are available.\n"
-"        "
+"Choose an epoch to play in. The chosen epoch determines which weapons, "
+"armour and items are available."
 msgstr ""
-"\n"
-"           Wähle eine Epoche, um darin zu spielen. Die gewählte Epoche gibt "
-"vor, welche Waffen, Rüstung und Gegenstände es gibt.\n"
-"     "
+"Wähle eine Epoche, um darin zu spielen. Die gewählte Epoche gibt vor, welche "
+"Waffen, Rüstung und Gegenstände es gibt."
 
-#: campaigns/templates/campaigns/create_campaign_extensions.html:26
+#: campaigns/templates/campaigns/create_campaign_extensions.html:5
 #: characters/templates/characters/create_character_extensions.html:5
 msgid "Choose extensions"
 msgstr "Wähle Erweiterungen"
 
-#: campaigns/templates/campaigns/create_campaign_extensions.html:28
-msgid ""
-"\n"
-"                Choose any number of additional extensions to add to your "
-"campaign.\n"
-"            "
+#: campaigns/templates/campaigns/create_campaign_extensions.html:6
+msgid "Choose any number of additional extensions to add to your campaign."
 msgstr ""
-"\n"
-"                    Wähle eine beliebige Anzahl an zusätzlichen "
-"Erweiterungen, um sie deiner Kampagne hinzuzufügen..\n"
-"                "
+"Wähle eine beliebige Anzahl weiterer Erweiterungen, um sie Deinem Charakter "
+"hinzuzufügen."
 
-#: campaigns/templates/campaigns/create_campaign_extensions.html:53
+#: campaigns/templates/campaigns/create_campaign_extensions.html:47
 #: characters/templates/characters/create_character_extensions.html:48
 msgid "Choose Extensions"
 msgstr "Wähle Erweiterungen"
@@ -1734,14 +1723,6 @@ msgstr "Forum"
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/_main_nav.html:130
-msgid "Imprint"
-msgstr "Impressum"
-
-#: characters/templates/_main_nav.html:130 characters/templates/base.html:124
-msgid "Privacy"
-msgstr "Privatsphäre"
-
 #: characters/templates/base.html:61
 msgid "Properties"
 msgstr "Eigenschaften"
@@ -1761,6 +1742,10 @@ msgstr "Freies online Pen'n'Paper Rollenspiel"
 #: characters/templates/base.html:121
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
+
+#: characters/templates/base.html:124
+msgid "Privacy"
+msgstr "Privatsphäre"
 
 #: characters/templates/base.html:125
 msgid "Tirakan HuS"
@@ -1853,10 +1838,6 @@ msgstr ""
 "welche einige Bonuswerte und -fertigkeiten vergeben kann.\n"
 "     "
 
-#: characters/templates/characters/create_character.html:6
-msgid "Choose a world to play in"
-msgstr "Wähle eine Welt, um darin zu spielen"
-
 #: characters/templates/characters/create_character_constructed.html:5
 msgid "Select templates"
 msgstr "Wähle Schablonen"
@@ -1885,14 +1866,6 @@ msgstr "Charakter fertigstellen"
 #: characters/templates/characters/create_character_constructed.html:152
 msgid "Preview"
 msgstr "Vorschau"
-
-#: characters/templates/characters/create_character_epoch.html:7
-msgid ""
-"Choose an epoch to play in. The chosen epoch determines which weapons, "
-"armour and items are available."
-msgstr ""
-"Wähle eine Epoche, um darin zu spielen. Die gewählte Epoche gibt vor, welche "
-"Waffen, Rüstung und Gegenstände es gibt."
 
 #: characters/templates/characters/create_character_extensions.html:6
 msgid "Choose any number of additional extensions to add to your character."
@@ -3291,12 +3264,12 @@ msgstr "Nur Mitarbeiter"
 msgid "PhaseSix Forum: %(user)s answered to the thread %(thread)s"
 msgstr "PhaseSix Forum: %(user)s hat auf das Thema %(thread)s geantwortet"
 
-#: forum/templates/forum/_navigation.html:42
+#: forum/templates/forum/_navigation.html:44
 #: forum/templates/forum/board_detail.html:51
 msgid "Create Thread"
 msgstr "Thema erstellen"
 
-#: forum/templates/forum/_navigation.html:44
+#: forum/templates/forum/_navigation.html:46
 #: forum/templates/forum/_thread_navigation.html:47
 msgid "Subscribe"
 msgstr "Abonnieren"
@@ -3817,6 +3790,10 @@ msgstr "Priesteraktion Wurf"
 msgid "priest action rolls"
 msgstr "Priesteraktion Würfe"
 
+#: portal/forms.py:7
+msgid "E-Mail"
+msgstr "E-Mail"
+
 #: portal/models.py:11
 msgid "updated at"
 msgstr "Aktualisiert am"
@@ -4280,29 +4257,30 @@ msgstr ""
 "\t\t\t\tAktivierungsmail und benutze den Link darin um dein Konto zu "
 "aktivieren.\\ "
 
+#: templates/django_registration/registration_form.html:4
 #: templates/django_registration/registration_form.html:5
 msgid "Create an account"
 msgstr "Konto erstellen"
 
-#: templates/django_registration/registration_form.html:7
+#: templates/django_registration/registration_form.html:12
 msgid ""
 "\n"
-"        You have to create an account to create persistent characters and "
+"          You have to create an account to create persistent characters and "
 "(some day) manage adventures, write in the\n"
-"        forums or do many more things. Choose an username and a password, "
+"          forums or do many more things. Choose an username and a password, "
 "and enter your mail address to\n"
-"        create an account.\n"
-"    "
+"          create an account.\n"
+"        "
 msgstr ""
 "\n"
-"\tDu musst ein Konto anlegen um beständige Charaktere zu erschaffen und "
+"       Du musst ein Konto anlegen um beständige Charaktere zu erschaffen und "
 "(eines Tages) Abenteuer zu verwalten,\n"
-"\tim Forum zu schreiben und viele weitere Dinge zu tun. Wähle einen "
+"       im Forum zu schreiben und viele weitere Dinge zu tun. Wähle einen "
 "Benutzernamen und ein Passwort, und gib\n"
-"\tdeine EMail Adresse an um ein Konto anzulegen.\n"
-" "
+"      deine EMail Adresse an um ein Konto anzulegen.\n"
+"     "
 
-#: templates/django_registration/registration_form.html:16
+#: templates/django_registration/registration_form.html:36
 msgid "Register"
 msgstr "Registrieren"
 
@@ -4690,6 +4668,40 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:187
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid ""
+#~ "\n"
+#~ "            Choose a world to play in\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "                    Wähle eine Welt, um darin zu spielen\n"
+#~ "                "
+
+#~ msgid ""
+#~ "\n"
+#~ "            Choose an epoch to play in. The chosen epoch determines which "
+#~ "weapons, armour and items are available.\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "           Wähle eine Epoche, um darin zu spielen. Die gewählte Epoche "
+#~ "gibt vor, welche Waffen, Rüstung und Gegenstände es gibt.\n"
+#~ "     "
+
+#~ msgid ""
+#~ "\n"
+#~ "                Choose any number of additional extensions to add to your "
+#~ "campaign.\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "                    Wähle eine beliebige Anzahl an zusätzlichen "
+#~ "Erweiterungen, um sie deiner Kampagne hinzuzufügen..\n"
+#~ "                "
+
+#~ msgid "Imprint"
+#~ msgstr "Impressum"
 
 #~ msgid "Copy Invite Link"
 #~ msgstr "Einladungslink kopieren"
