@@ -36,14 +36,15 @@ class BaseSpellAdmin(VersionAdmin):
     )
     search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     list_filter = (
-        "spell_point_cost",
-        "arcana_cost",
+        "origin",
         "type",
         "variant",
-        "power",
         "range",
+        "spell_point_cost",
         "actions",
+        "arcana_cost",
         "is_tirakan_spell",
+        "power",
     )
     fields = (
         ("name_de", "name_en", "is_tirakan_spell"),
