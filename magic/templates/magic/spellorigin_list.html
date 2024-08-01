@@ -19,7 +19,7 @@
     <div class="col-12 col-xl-9">
       <div class="row">
         {% for object in object_list %}
-          <div class="col col-md-4">
+          <div class="col-12 col-md-4">
             {% thumbnail object.image "1024" as img %}
               <div class="card text-center rounded add-spell-category-card pointer mb-4"
                    data-type-id="{{ category.id }}">

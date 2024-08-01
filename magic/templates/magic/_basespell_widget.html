@@ -6,6 +6,9 @@
      data-add-url="{% url 'characters:xhr_add_spell' pk=character.id %}"
         {% endif %}
      data-spell-point-cost="{{ basespell.spell_point_cost }}">
+  {% if not character %}
+    <a class="stretched-link" href="{% url 'magic:basespell_detail' pk=basespell.id %}"></a>
+  {% endif %}
   <div class="card-header">
     <span class="badge bg-dark float-end">{{ basespell.spell_point_cost }}</span>
     {{ basespell }} <small class="text-muted">{{ basespell.variant }}</small>
