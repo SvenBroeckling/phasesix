@@ -48,6 +48,9 @@ $(function () {
 
     setTimeout(() => $('.masonry-container').masonry({percentPosition: true}), 500)
     body.on('click', 'a[data-bs-toggle="tab"]', function (e) {
-        $($(e.target).attr('data-bs-target')).find('.masonry-container').masonry({percentPosition: true})
+        let target = $(e.target).closest('a[data-bs-toggle="tab"]').attr('data-bs-target')
+        if (target) {
+            $(target).find('.masonry-container').masonry({percentPosition: true})
+        }
     })
 })

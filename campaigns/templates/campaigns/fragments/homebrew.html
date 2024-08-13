@@ -1,7 +1,7 @@
 {% load i18n thumbnail static armory_extras rules_extras %}
 
 {% block fragment %}
-  <div class="row homebrew-container">
+  <div class="row masonry-container">
 
     {% if may_edit %}
       <div class="col-12 col-md-4 pb-3">
@@ -15,41 +15,36 @@
               </button>
               <ul class="dropdown-menu">
                 <li>
-                  <a
-                          class="dropdown-item modal-trigger"
-                          data-url="{% url 'homebrew:xhr_create_item' %}?campaign_pk={{ object.id }}"
-                          data-bs-toggle="modal"
-                          data-bs-target=".page-modal"
-                          data-modal-title="{% trans 'Create Item' %}"
-                          href="">{% trans "Create custom item" %}</a>
+                  <a class="dropdown-item modal-trigger"
+                     data-url="{% url 'homebrew:xhr_create_item' %}?campaign_pk={{ object.id }}"
+                     data-bs-toggle="modal"
+                     data-bs-target=".page-modal"
+                     data-modal-title="{% trans 'Create Item' %}"
+                     href="">{% trans "Create custom item" %}</a>
                 </li>
                 <li>
-                  <a
-                          data-url="{% url 'homebrew:xhr_create_weapon' %}?campaign_pk={{ object.id }}"
-                          data-bs-toggle="modal"
-                          data-bs-target=".page-modal"
-                          data-modal-title="{% trans 'Create Weapon' %}"
-                          class="dropdown-item modal-trigger" href="#">{% trans "Create custom weapon" %}</a>
+                  <a data-url="{% url 'homebrew:xhr_create_weapon' %}?campaign_pk={{ object.id }}"
+                     data-bs-toggle="modal"
+                     data-bs-target=".page-modal"
+                     data-modal-title="{% trans 'Create Weapon' %}"
+                     class="dropdown-item modal-trigger" href="#">{% trans "Create custom weapon" %}</a>
                 </li>
                 <li>
-                  <a
-                          data-url="{% url 'homebrew:xhr_create_riot_gear' %}?campaign_pk={{ object.id }}"
-                          data-bs-toggle="modal"
-                          data-bs-target=".page-modal"
-                          data-modal-title="{% trans 'Create Armour' %}"
-                          class="dropdown-item modal-trigger" href="#">{% trans "Create custom armour" %}</a>
+                  <a data-url="{% url 'homebrew:xhr_create_riot_gear' %}?campaign_pk={{ object.id }}"
+                     data-bs-toggle="modal"
+                     data-bs-target=".page-modal"
+                     data-modal-title="{% trans 'Create Armour' %}"
+                     class="dropdown-item modal-trigger" href="#">{% trans "Create custom armour" %}</a>
                 </li>
                 <li>
-                  <a
-                          data-url="{% url 'homebrew:xhr_create_base_spell' %}?campaign_pk={{ object.id }}"
-                          data-bs-toggle="modal"
-                          data-bs-target=".page-modal"
-                          data-modal-title="{% trans 'Create Spell' %}"
-                          class="dropdown-item modal-trigger" href="#">{% trans "Create custom spell" %}</a>
+                  <a data-url="{% url 'homebrew:xhr_create_base_spell' %}?campaign_pk={{ object.id }}"
+                     data-bs-toggle="modal"
+                     data-bs-target=".page-modal"
+                     data-modal-title="{% trans 'Create Spell' %}"
+                     class="dropdown-item modal-trigger" href="#">{% trans "Create custom spell" %}</a>
                 </li>
               </ul>
             </div>
-
           </div>
         </div>
       </div>
