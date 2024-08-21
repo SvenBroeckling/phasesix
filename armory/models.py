@@ -455,6 +455,7 @@ class CurrencyMapUnit(models.Model, metaclass=TransMeta):
         ("fas fa-shekel-sign", _("Shekel")),
         ("fas fa-yen-sign", _("Yen")),
         ("fas fa-won-sign", _("Won")),
+        ("fas fa-cubes", _("Cubes")),
     )
     COLOR_CLASS_CHOICES = (
         ("text-white", _("White")),
