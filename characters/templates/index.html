@@ -25,9 +25,11 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
-          <img class="img-fluid" src="{% static "img/index-thyria.png" %}" alt="Thyria Blutdorn">
-        </div>
+        {% if lead_image %}
+          <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+            <img class="img-fluid" src="{{ lead_image.image.url }}" alt="{% trans "Lead Image" %}">
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>

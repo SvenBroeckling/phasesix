@@ -67,7 +67,7 @@ from rules.models import (
     Knowledge,
     TemplateCategory,
 )
-from worlds.models import WikiPage, World
+from worlds.models import WikiPage, World, WorldLeadImage
 
 
 class IndexView(TemplateView):
@@ -76,9 +76,15 @@ class IndexView(TemplateView):
     def get_context_characters(self):
         context = {}
         characters = Character.objects.filter(image__isnull=False)
+
+        lead_images = WorldLeadImage.objects.all()
+
         if self.request.world_configuration is not None:
             characters = characters.filter(
                 extensions=self.request.world_configuration.world.extension
+            )
+            lead_images = lead_images.filter(
+                world=self.request.world_configuration.world.extension
             )
         if self.request.user.is_authenticated:
             characters = characters.filter(created_by=self.request.user).order_by(
@@ -86,14 +92,21 @@ class IndexView(TemplateView):
             )
         else:
             characters = characters.filter(may_appear_on_start_page=True).order_by("?")
+
         context["characters"] = characters[:3]
+        try:
+            context["lead_image"] = lead_images.order_by("?").first()
+        except WorldLeadImage.DoesNotExist:
+            context["lead_image"] = None
         return context
 
     def get_context_campaigns(self):
         context = {}
         campaigns = Campaign.objects.filter(image__isnull=False)
         if self.request.world_configuration is not None:
-            campaigns = campaigns.filter(world=self.request.world_configuration.world.extension)
+            campaigns = campaigns.filter(
+                world=self.request.world_configuration.world.extension
+            )
 
         if self.request.user.is_authenticated:
             campaigns = campaigns.filter(created_by=self.request.user).order_by(

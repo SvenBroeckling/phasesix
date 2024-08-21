@@ -166,6 +166,15 @@ class World(models.Model, metaclass=TransMeta):
         return static(self.scss_file)
 
 
+class WorldLeadImage(models.Model):
+    world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
+    image = models.ImageField(_("image"), upload_to="world_lead_images", max_length=256)
+
+    class Meta:
+        verbose_name = _("world lead image")
+        verbose_name_plural = _("world lead images")
+
+
 class WikiPageQuerySet(models.QuerySet):
     def get_top_level(self):
         return self.filter(parent=None)
