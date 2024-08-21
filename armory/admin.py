@@ -177,6 +177,19 @@ class CurrencyMapAdmin(admin.ModelAdmin):
     inlines = [CurrencyMapUnitInline]
 
 
+class CurrencyMapUnitAdmin(admin.ModelAdmin):
+    list_display = (
+        "name_de",
+        "name_en",
+        "currency_map",
+        "ordering",
+        "is_common",
+        "value",
+    )
+    list_editable = ("name_en", "ordering", "is_common", "value")
+    list_filter = ("currency_map", "is_common")
+
+
 admin.site.register(AttackMode, AttackModeAdmin)
 admin.site.register(WeaponType, WeaponTypeAdmin)
 admin.site.register(Weapon, WeaponAdmin)
@@ -187,4 +200,4 @@ admin.site.register(RiotGear, RiotGearAdmin)
 admin.site.register(ItemType, ItemTypeAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(CurrencyMap, CurrencyMapAdmin)
-admin.site.register(CurrencyMapUnit)
+admin.site.register(CurrencyMapUnit, CurrencyMapUnitAdmin)

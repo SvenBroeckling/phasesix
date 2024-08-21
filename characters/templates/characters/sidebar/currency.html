@@ -1,23 +1,23 @@
 {% load i18n characters_extras django_bootstrap5 %}
 
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <form class="add-form" action="{% url 'characters:xhr_modify_currency' pk=object.id %}" method="post">
-                <ul class="list-group list-group-flush">
-                    {% for unit in object.currency_map.currencymapunit_set.all %}
-                        <li class="list-group-item">
-                            <i class="{{ unit.fa_icon_class }} fa-fw {{ unit.color_class }} me-1"></i> {{ unit.name }}
-                            <input class="form-control float-end form-control-sm w-25 currency-unit-input"
-                                   name="currency-unit-{{ unit.id }}"
-                                   type="number"
-                                   value="{{ object|currency_quantity:unit }}">
-                        </li>
-                    {% endfor %}
-                </ul>
-                <button data-refresh-fragments="yes" data-success="{% trans 'Currency changed' %}" data-danger="Not possible"
-                        class="btn btn-primary w-100">{% trans 'Set Currency' %}</button>
-            </form>
-        </div>
+  <div class="col-12">
+    <div class="card">
+      <form class="add-form" action="{% url 'characters:xhr_modify_currency' pk=object.id %}" method="post">
+        <ul class="list-group list-group-flush">
+          {% for unit in object.currency_map.currencymapunit_set.all %}
+            <li class="list-group-item">
+              <i class="{{ unit.fa_icon_class }} fa-fw {{ unit.color_class }} me-1"></i> {{ unit.name }}
+              <input class="form-control float-end form-control-sm w-25 currency-unit-input"
+                     name="currency-unit-{{ unit.id }}"
+                     type="number"
+                     value="{{ object|currency_quantity:unit }}">
+            </li>
+          {% endfor %}
+        </ul>
+        <button data-refresh-fragments="yes" data-success="{% trans 'Currency changed' %}" data-danger="Not possible"
+                class="btn btn-primary mt-2 w-100">{% trans 'Set Currency' %}</button>
+      </form>
     </div>
+  </div>
 </div>
