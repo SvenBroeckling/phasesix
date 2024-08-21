@@ -67,6 +67,12 @@ def urpg_markup(value, safe_mode=True):
                 "ul",
                 "p",
                 "pre",
+                "table",
+                "thead",
+                "tbody",
+                "th",
+                "td",
+                "tr",
             },
         )
     return mark_safe(html)
