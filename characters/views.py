@@ -84,7 +84,7 @@ class IndexView(TemplateView):
                 extensions=self.request.world_configuration.world.extension
             )
             lead_images = lead_images.filter(
-                world=self.request.world_configuration.world.extension
+                world=self.request.world_configuration.world
             )
         if self.request.user.is_authenticated:
             characters = characters.filter(created_by=self.request.user).order_by(
