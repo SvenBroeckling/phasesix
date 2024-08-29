@@ -17,7 +17,7 @@ class CharacterAdmin(admin.ModelAdmin):
         "reputation",
     )
     list_editable = "may_appear_on_start_page", "campaign", "npc_campaign"
-    list_filter = "created_by", "campaign", "extensions"
+    list_filter = "campaign", "extensions", "npc_campaign", "created_by"
     search_fields = ("name",)
     inlines = [CharacterTemplateInline]
 
