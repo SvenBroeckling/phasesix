@@ -2,7 +2,7 @@
 
 This repository contains the source code which runs the RPG Sites [Phase Six](https://phasesix.org/) and [Realms of Tirakan](https://tirakans-reiche.de/). This is a [Django](https://www.djangoproject.com/) project.
 
-The code is licensed under the [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) as stated in the LICENSE.txt file. However, the contents of both phasesix.org and tirakans-reiche.de (game elements, rules, images, etc.) are licensed under the [CC-BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+The code is licensed under the [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html) as stated in the LICENSE.txt file. However, the text content of both phasesix.org and tirakans-reiche.de (game elements, rules etc.) is licensed under the [CC-BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 This source code comes with a minimal example set of demo data, which can be inserted into a database to get started.
 
