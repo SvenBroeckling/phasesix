@@ -103,9 +103,11 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
     objects = HomebrewQuerySet.as_manager()
     DURATION_UNITS = (
         ("rounds", _("rounds")),
+        ("seconds", _("seconds")),
         ("minutes", _("minutes")),
         ("hours", _("hours")),
         ("days", _("days")),
+        ("nights", _("nights")),
         ("weeks", _("weeks")),
         ("months", _("months")),
         ("years", _("years")),
