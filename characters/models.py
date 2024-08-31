@@ -473,9 +473,11 @@ class Character(models.Model):
     @property
     def ballistic_protection(self):
         bp = (
-            self.characterriotgear_set.aggregate(
-                Sum("riot_gear__protection_ballistic")
-            )["riot_gear__protection_ballistic__sum"]
+            self.characterriotgear_set.exclude(
+                riot_gear__type__is_shield=True
+            ).aggregate(Sum("riot_gear__protection_ballistic"))[
+                "riot_gear__protection_ballistic__sum"
+            ]
             or 0
         )
         return (
@@ -838,7 +840,13 @@ class CharacterWeapon(models.Model):
         return self.modified_capacity - self.capacity_used
 
 
+class CharacterRiotGearQuerySet(models.QuerySet):
+    def shields(self):
+        return self.filter(riot_gear__type__is_shield=True)
+
+
 class CharacterRiotGear(models.Model):
+    objects = CharacterRiotGearQuerySet.as_manager()
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     riot_gear = models.ForeignKey("armory.RiotGear", on_delete=models.CASCADE)
     condition = models.IntegerField(_("condition"), default=100)

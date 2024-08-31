@@ -1,45 +1,51 @@
 {% load characters_extras %}
 {% load i18n %}
 {% for r in character.characterriotgear_set.all %}
-    <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
-         data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
-        <div class="card-header">
-            {{ r.riot_gear }} <span class="small text-muted">{{ r.riot_gear.type }}</span>
-            {% if r.riot_gear.concealment > 0 %}
-                <span class="float-end">
+  <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
+       data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
+    <div class="card-header">
+      {{ r.riot_gear }} <span class="small text-muted">{{ r.riot_gear.type }}</span>
+      {% if r.riot_gear.concealment > 0 %}
+        <span class="float-end">
                                 <i class="fas fa-eye-slash fa-fw"
                                    title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
                             </span>
-            {% endif %}
-            {% if r.condition < 100 %}
-                <span class="float-end me-1">
+      {% endif %}
+      {% if r.condition < 100 %}
+        <span class="float-end me-1">
                                 <span title="{% trans 'Condition' %}">{% color_value_span r.condition 100 %}%</span>
                             </span>
-            {% endif %}
-        </div>
-        <div class="card-body">
-            <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}: {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
-            <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 6 invert=True %}<br>
-            {% if user.is_superuser %}
-                <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}"
-                   style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-            {% endif %}
-        </div>
+      {% endif %}
     </div>
+    <div class="card-body">
+      {% if r.riot_gear.type.is_shield %}
+        <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Cover' %}:
+        {% color_value_span r.riot_gear.shield_cover 6 invert=True %}+<br>
+      {% else %}
+        <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}:
+        {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
+      {% endif %}
+      <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 6 invert=True %}<br>
+      {% if user.is_superuser %}
+        <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}"
+           style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+      {% endif %}
+    </div>
+  </div>
 {% empty %}
-    {% if may_edit %}
-        <div class="card mb-4">
-            <div class="card-body">
-                <a
-                    class="modal-trigger"
-                    data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
-                    {% if may_edit %}
-                    data-bs-toggle="modal"
-                    {% endif %}
-                    data-bs-target=".page-modal"
-                    data-modal-title="{% trans 'Add Armor' %}"
-                    href="">{% trans 'No armor yet.' %}</a>
-            </div>
-        </div>
-    {% endif %}
+  {% if may_edit %}
+    <div class="card mb-4">
+      <div class="card-body">
+        <a
+                class="modal-trigger"
+                data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
+                {% if may_edit %}
+                data-bs-toggle="modal"
+                {% endif %}
+                data-bs-target=".page-modal"
+                data-modal-title="{% trans 'Add Armor' %}"
+                href="">{% trans 'No armor yet.' %}</a>
+      </div>
+    </div>
+  {% endif %}
 {% endfor %}

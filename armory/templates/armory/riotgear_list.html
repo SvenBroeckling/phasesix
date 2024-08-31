@@ -80,7 +80,11 @@
             <tr>
               <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
               <td>{{ object.type }}</td>
-              <td>{% color_value_span object.protection_ballistic 4 %}</td>
+              {% if object.type.is_shield %}
+                <td>{% color_value_span object.shield_cover 6 invert=True %}+</td>
+              {% else %}
+                <td>{% color_value_span object.protection_ballistic 4 %}</td>
+              {% endif %}
               <td>{% color_value_span object.encumbrance 5 invert=True %}</td>
               <td>{% color_value_span object.concealment 4 invert=True %}</td>
               <td>{% color_value_span object.price 8000 invert=True %}</td>

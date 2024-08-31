@@ -1,77 +1,86 @@
 {% load i18n characters_extras characters_extras rules_extras %}
 
 {% if may_edit %}
-    <div class="row">
-        <div class="col-12">
-            <div class="btn-group w-100">
-                <a class="btn btn-warning btn-sm action-link"
-                   href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="damage" %}"><i
-                        class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
-                <a class="btn btn-success btn-sm action-link"
-                   href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="repair" %}"><i
-                        class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="btn-group w-100">
-                <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
-                   href="{% url 'characters:xhr_remove_riot_gear' pk=object.character.id riot_gear_pk=object.id %}"><i
-                        class="fas fa-trash"></i> {% trans 'Remove' %}</a>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a class="btn btn-warning btn-sm action-link"
+           href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="damage" %}"><i
+                class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
+        <a class="btn btn-success btn-sm action-link"
+           href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="repair" %}"><i
+                class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
+      </div>
     </div>
+
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
+           href="{% url 'characters:xhr_remove_riot_gear' pk=object.character.id riot_gear_pk=object.id %}"><i
+                class="fas fa-trash"></i> {% trans 'Remove' %}</a>
+      </div>
+    </div>
+  </div>
 {% endif %}
 
 <div class="row mt-4">
-    <div class="col-12">
-        {{ object.riot_gear.description|urpg_markup }}
-    </div>
+  <div class="col-12">
+    {{ object.riot_gear.description|urpg_markup }}
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <div class="card mb-2 mt-2">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <i class="fas fa-shield-alt fa-fw"></i>
-                    {% trans 'Protection' %}
-                    <span class="float-end">{% color_value_span object.riot_gear.protection_ballistic 3 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-running fa-fw"></i>
-                    {% trans 'Evasion' %}
-                    <span class="float-end">{% color_value_span object.riot_gear.evasion 3 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-balance-scale fa-fw"></i>
-                    {% trans 'Weight' %}
-                    <span class="float-end">{% color_value_span object.riot_gear.weight 100 invert=True %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-eye-slash fa-fw"></i>
-                    {% trans 'Concealment' %}
-                    <span class="float-end">{% color_value_span object.riot_gear.concealment 5 invert=True %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
-                    {% trans 'Condition' %}
-                    <span class="float-end">{% color_value_span object.condition 100 %}%</span>
-                </li>
-                {% if object.character.currency_map %}
-                    {% with cmu=object.character.currency_map.currencymapunit_set.earliest %}
-                        <li class="list-group-item">
-                            <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
-                            {% trans 'Price' %}
-                            <span class="float-end">{% color_value_span object.riot_gear.price 1000 invert=True %}</span>
-                        </li>
-                    {% endwith %}
-                {% endif %}
-            </ul>
-        </div>
-        {% if user.is_superuser %}
-            <a href="{% url 'admin:armory_riotgear_change' object.riot_gear.id %}"
-               style="font-size: xx-small">admin</a>
+  <div class="col-12">
+    <div class="card mb-2 mt-2">
+      <ul class="list-group list-group-flush">
+        {% if object.riot_gear.type.is_shield %}
+          <li class="list-group-item">
+            <i class="fas fa-shield-alt fa-fw"></i>
+            {% trans 'Cover' %}
+            <span class="float-end">{% color_value_span object.riot_gear.shield_cover 6 invert=True %}+</span>
+          </li>
+        {% else %}
+          <li class="list-group-item">
+            <i class="fas fa-shield-alt fa-fw"></i>
+            {% trans 'Protection' %}
+            <span class="float-end">{% color_value_span object.riot_gear.protection_ballistic 3 %}</span>
+          </li>
         {% endif %}
+
+        <li class="list-group-item">
+          <i class="fas fa-running fa-fw"></i>
+          {% trans 'Evasion' %}
+          <span class="float-end">{% color_value_span object.riot_gear.evasion 3 %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-balance-scale fa-fw"></i>
+          {% trans 'Weight' %}
+          <span class="float-end">{% color_value_span object.riot_gear.weight 100 invert=True %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-eye-slash fa-fw"></i>
+          {% trans 'Concealment' %}
+          <span class="float-end">{% color_value_span object.riot_gear.concealment 5 invert=True %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-angle-double-right fa-fw"></i>
+          {% trans 'Condition' %}
+          <span class="float-end">{% color_value_span object.condition 100 %}%</span>
+        </li>
+        {% if object.character.currency_map %}
+          {% with cmu=object.character.currency_map.currencymapunit_set.earliest %}
+            <li class="list-group-item">
+              <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+              {% trans 'Price' %}
+              <span class="float-end">{% color_value_span object.riot_gear.price 1000 invert=True %}</span>
+            </li>
+          {% endwith %}
+        {% endif %}
+      </ul>
     </div>
+    {% if user.is_superuser %}
+      <a href="{% url 'admin:armory_riotgear_change' object.riot_gear.id %}"
+         style="font-size: xx-small">admin</a>
+    {% endif %}
+  </div>
 </div>

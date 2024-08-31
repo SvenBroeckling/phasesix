@@ -385,6 +385,7 @@ class RiotGearType(models.Model, metaclass=TransMeta):
     objects = RiotGearTypeQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=256)
+    is_shield = models.BooleanField(_("is shield"), default=False)
     description = models.TextField(_("description"), blank=True, null=True)
     ordering = models.IntegerField(_("ordering"), default=10)
 
@@ -435,6 +436,10 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    @property
+    def shield_cover(self):
+        return 7 - self.protection_ballistic
 
 
 class CurrencyMap(models.Model):

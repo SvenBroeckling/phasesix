@@ -101,6 +101,27 @@
             </tr>
           {% endfor %}
 
+          {% for r in object.characterriotgear_set.shields %}
+            <tr class="sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
+                data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
+              <td>
+                <i class="fas fa-shield-alt text-info"></i> <span class="text-muted"></span>{{ r.riot_gear }}
+                <small class="text-muted">{{ r.riot_gear.type }}</small>
+              </td>
+              <td class="text-end">
+              </td>
+              <td class="text-end">
+                {% trans "Shield Block - Cover" %} {% color_value_span r.riot_gear.shield_cover 6 invert=True %}+<br>
+                {% trans "Shield Parry - Cover" %} {% color_value_span r.riot_gear.shield_cover 6 invert=True %}+
+              </td>
+              <td class="text-end">
+              </td>
+              <td class="text-end">
+                {% color_value_span 1 5 %} {% trans "Meter" %}
+              </td>
+            </tr>
+          {% endfor %}
+
           {% for i in object.characteritem_set.usable_in_combat %}
             <tr class="sidebar-trigger" data-sidebar-title="{{ i.item }}"
                 data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=i.id sidebar_template="characteritem" %}">
