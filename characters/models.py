@@ -959,6 +959,10 @@ class CharacterSpell(models.Model):
         return self.spell.duration_unit
 
     @property
+    def get_duration_unit_display(self):
+        return self.spell.get_duration_unit_display()
+
+    @property
     def range(self):
         return self.spell.range + self.modifier_attribute_modification("range")
 

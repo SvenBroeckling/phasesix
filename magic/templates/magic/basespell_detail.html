@@ -49,8 +49,9 @@
             <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span object.actions 3 invert=True %}<br>
             {% trans "Instant" as t_duration %}
             <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ object.duration|default:t_duration }}
-            {% if object.duration %}{{ object.duration_unit }}{% endif %}{% if basespell.needs_concentration %}
-              <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+            {% if object.duration %}{{ object.get_duration_unit_display }}{% endif %}
+                    {% if basespell.needs_concentration %}
+                      <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
           </div>
         </div>
       </div>

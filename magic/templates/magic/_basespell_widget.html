@@ -30,8 +30,9 @@
 
     {% trans "Instant" as t_duration %}
     <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ basespell.duration|default:t_duration }}
-    {% if basespell.duration %}{{ basespell.duration_unit }}{% endif %} {% if basespell.needs_concentration %}
-    <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+    {% if basespell.duration %}{{ basespell.get_duration_unit_display }}{% endif %}
+    {% if basespell.needs_concentration %}
+      <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
 
     {% if user.is_superuser %}
       <a href="{% url 'admin:magic_basespell_change' basespell.id %}"

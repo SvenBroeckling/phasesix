@@ -32,9 +32,9 @@
 
         {% trans "Instant" as t_duration %}
         <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}:
-        {{ s.duration|default:t_duration }}{% if s.duration %}{{ s.duration_unit }}{% endif %}
-                {% if s.needs_concentration %}
-                  <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+        {{ s.duration|default:t_duration }} {% if s.duration %}{{ s.get_duration_unit_display }}{% endif %}
+        {% if s.needs_concentration %}
+          <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
 
         {% if user.is_superuser %}
           <a href="{% url 'admin:magic_basespell_change' s.spell.id %}"

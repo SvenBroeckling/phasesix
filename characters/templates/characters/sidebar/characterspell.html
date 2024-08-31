@@ -74,7 +74,7 @@
           {% trans 'Duration' %}
           {% trans "Instant" as t_duration %}
           <span class="float-end">{{ object.duration|default:t_duration }}
-            {% if object.duration %}{{ object.duration_unit }}{% endif %}{% if object.needs_concentration %}
+            {% if object.duration %}{{ object.get_duration_unit_display }}{% endif %}{% if object.needs_concentration %}
               <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}</span>
         </li>
       </ul>
