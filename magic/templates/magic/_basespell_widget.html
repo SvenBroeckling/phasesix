@@ -24,10 +24,15 @@
     <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
     <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
     {% for a in basespell.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
-    <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span basespell.power 4 %}<br>
     <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span basespell.range 4 %}<br>
     <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ basespell.shape|default:"-" }}<br>
     <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span basespell.actions 3 invert=True %}<br>
+
+    {% trans "Instant" as t_duration %}
+    <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ basespell.duration|default:t_duration }}
+    {% if basespell.duration %}{{ basespell.duration_unit }}{% endif %} {% if basespell.needs_concentration %}
+    <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+
     {% if user.is_superuser %}
       <a href="{% url 'admin:magic_basespell_change' basespell.id %}"
          style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>

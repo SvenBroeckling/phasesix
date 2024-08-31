@@ -1,88 +1,96 @@
 {% load i18n characters_extras rules_extras %}
 {% spell_type_attribute_dice_value object.character object.spell_type as dice %}
 {% if may_edit %}
-    <div class="row">
-        <div class="col-12">
-            <div class="btn-group w-100">
-                <a href="{% url 'characters:cast_spell' pk=object.id %}"
-                   data-dice-roll="{{ dice }}d6"
-                   data-dice-header="{{ object }} ({% trans "power" %} {{ object.power }})"
-                   data-dice-description="{{ object.spell.rules }}"
-                   data-dice-character="{{ object.character.id }}"
-                   class="btn btn-sm btn-primary action-link dice-roll"><i class="fas fa-fw fa-dice-five"
-                                                                           title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}
-                </a>
-            </div>
-            <div class="btn-group w-100">
-                <a class="btn btn-sm btn-primary modal-trigger mt-1"
-                   data-url="{% url 'characters:xhr_add_spell_template' pk=object.id %}"
-                   data-bs-toggle="modal"
-                   data-bs-target=".page-modal"
-                   data-modal-title="{% trans 'Add Modification' %}"
-                   href=""><i class="fas fa-fw fa-plus"
-                              title="{% trans 'Add Modification' %}"></i>{% trans 'Add Modification' %}</a>
-            </div>
-            <div class="btn-group w-100">
-                <a href="{% url 'characters:xhr_remove_spell' pk=object.id %}"
-                   class="btn btn-sm btn-danger action-link close-sidebar mt-1"><i class="fas fa-fw fa-trash"
-                                                                                   title="{% trans 'Forget' %}"></i>{% trans 'Forget' %}
-                </a>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a href="{% url 'characters:cast_spell' pk=object.id %}"
+           data-dice-roll="{{ dice }}d6"
+           data-dice-header="{{ object }} ({% trans "power" %} {{ object.power }})"
+           data-dice-description="{{ object.spell.rules }}"
+           data-dice-character="{{ object.character.id }}"
+           class="btn btn-sm btn-primary action-link dice-roll"><i class="fas fa-fw fa-dice-five"
+                                                                   title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}
+        </a>
+      </div>
+      <div class="btn-group w-100">
+        <a class="btn btn-sm btn-primary modal-trigger mt-1"
+           data-url="{% url 'characters:xhr_add_spell_template' pk=object.id %}"
+           data-bs-toggle="modal"
+           data-bs-target=".page-modal"
+           data-modal-title="{% trans 'Add Modification' %}"
+           href=""><i class="fas fa-fw fa-plus"
+                      title="{% trans 'Add Modification' %}"></i>{% trans 'Add Modification' %}</a>
+      </div>
+      <div class="btn-group w-100">
+        <a href="{% url 'characters:xhr_remove_spell' pk=object.id %}"
+           class="btn btn-sm btn-danger action-link close-sidebar mt-1"><i class="fas fa-fw fa-trash"
+                                                                           title="{% trans 'Forget' %}"></i>{% trans 'Forget' %}
+        </a>
+      </div>
     </div>
+  </div>
 {% endif %}
 <div class="row mt-4 mb-4">
-    <div class="col-12">
-        <p class="mb-4">{{ object.spell.rules|urpg_markup }}</p>
-        <div class="card mb-2 mt-2">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <i class="fas fa-dice-five fa-fw"></i>
-                    {% trans 'Spell Casting' %}
-                    <span class="float-end"><small
-                            class="text-muted">{{ object.spell_type.reference_attribute.name }}</small> {% color_value_span dice 5 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-magic fa-fw"></i>
-                    {% trans 'Arcana' %}
-                    <span class="float-end">
+  <div class="col-12">
+    <p class="mb-4">{{ object.spell.rules|urpg_markup }}</p>
+    <div class="card mb-2 mt-2">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <i class="fas fa-dice-five fa-fw"></i>
+          {% trans 'Spell Casting' %}
+          <span class="float-end"><small
+                  class="text-muted">{{ object.spell_type.reference_attribute.name }}</small> {% color_value_span dice 5 %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-magic fa-fw"></i>
+          {% trans 'Arcana' %}
+          <span class="float-end">
             {% for a in object.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}
           </span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-bolt fa-fw"></i>
-                    {% trans 'Power' %}
-                    <span class="float-end">{% color_value_span object.power 4 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-arrows-alt-h fa-fw"></i>
-                    {% trans 'Range' %}
-                    <span class="float-end">{% color_value_span object.range 4 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-circle fa-fw"></i>
-                    {% trans 'Shape' %}
-                    <span class="float-end">{{ object.shape|default:"-" }}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-hourglass fa-fw"></i>
-                    {% trans 'Actions' %}
-                    <span class="float-end">{% color_value_span object.actions 3 invert=True %}</span>
-                </li>
-            </ul>
-        </div>
-        {% if object.characterspelltemplate_set.exists %}
-            <ul class="list-group list-group-flush">
-                {% for st in object.characterspelltemplate_set.all %}
-                    <li class="list-group-item">
-                        <i class="fas fa-puzzle-piece fa-fw"></i> {{ st }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        {% if user.is_superuser %}
-            <a href="{% url 'admin:magic_basespell_change' object.spell.id %}"
-               style="font-size: xx-small">admin</a>
-        {% endif %}
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-bolt fa-fw"></i>
+          {% trans 'Power' %}
+          <span class="float-end">{% color_value_span object.power 4 %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-arrows-alt-h fa-fw"></i>
+          {% trans 'Range' %}
+          <span class="float-end">{% color_value_span object.range 4 %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-circle fa-fw"></i>
+          {% trans 'Shape' %}
+          <span class="float-end">{{ object.shape|default:"-" }}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-hourglass fa-fw"></i>
+          {% trans 'Actions' %}
+          <span class="float-end">{% color_value_span object.actions 3 invert=True %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-hourglass fa-fw"></i>
+          {% trans 'Duration' %}
+          {% trans "Instant" as t_duration %}
+          <span class="float-end">{{ object.duration|default:t_duration }}
+            {% if object.duration %}{{ object.duration_unit }}{% endif %}{% if object.needs_concentration %}
+              <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}</span>
+        </li>
+      </ul>
     </div>
+    {% if object.characterspelltemplate_set.exists %}
+      <ul class="list-group list-group-flush">
+        {% for st in object.characterspelltemplate_set.all %}
+          <li class="list-group-item">
+            <i class="fas fa-puzzle-piece fa-fw"></i> {{ st }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if user.is_superuser %}
+      <a href="{% url 'admin:magic_basespell_change' object.spell.id %}"
+         style="font-size: xx-small">admin</a>
+    {% endif %}
+  </div>
 </div>

@@ -3,13 +3,13 @@ from reversion.admin import VersionAdmin
 
 from magic.models import (
     BaseSpell,
-    SpellType,
-    SpellVariant,
+    SpellOrigin,
     SpellShape,
     SpellTemplate,
-    SpellTemplateModifier,
     SpellTemplateCategory,
-    SpellOrigin,
+    SpellTemplateModifier,
+    SpellType,
+    SpellVariant,
 )
 
 
@@ -17,22 +17,22 @@ class BaseSpellAdmin(VersionAdmin):
     list_display = (
         "name_de",
         "name_en",
+        "actions",
+        "duration_de",
+        "duration_en",
+        "needs_concentration",
         "spell_point_cost",
         "origin",
         "type",
         "variant",
-        "power",
-        "range",
-        "actions",
-        "is_tirakan_spell",
     )
     list_editable = (
         "spell_point_cost",
         "origin",
-        "power",
-        "range",
         "actions",
-        "is_tirakan_spell",
+        "duration_de",
+        "duration_en",
+        "needs_concentration",
     )
     search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     list_filter = (
@@ -43,15 +43,20 @@ class BaseSpellAdmin(VersionAdmin):
         "spell_point_cost",
         "actions",
         "arcana_cost",
-        "is_tirakan_spell",
-        "power",
     )
     fields = (
-        ("name_de", "name_en", "is_tirakan_spell"),
+        ("name_de", "name_en"),
         ("created_by", "is_homebrew", "homebrew_campaign", "keep_as_homebrew"),
-        ("spell_point_cost", "arcana_cost", "power", "range", "actions"),
         ("origin", "type", "variant", "shape"),
+        ("spell_point_cost", "arcana_cost", "range"),
         "is_ritual",
+        (
+            "actions",
+            "duration_de",
+            "duration_en",
+            "duration_unit",
+            "needs_concentration",
+        ),
         ("rules_de", "rules_en"),
         ("quote", "quote_author"),
     )

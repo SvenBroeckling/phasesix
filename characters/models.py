@@ -944,7 +944,19 @@ class CharacterSpell(models.Model):
 
     @property
     def power(self):
-        return self.spell.power + self.modifier_attribute_modification("power")
+        return 1 + self.modifier_attribute_modification("power")
+
+    @property
+    def needs_concentration(self):
+        return self.spell.needs_concentration
+
+    @property
+    def duration(self):
+        return self.spell.duration
+
+    @property
+    def duration_unit(self):
+        return self.spell.duration_unit
 
     @property
     def range(self):

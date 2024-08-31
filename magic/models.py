@@ -101,6 +101,15 @@ class SpellOrigin(models.Model, metaclass=TransMeta):
 
 class BaseSpell(HomebrewModel, metaclass=TransMeta):
     objects = HomebrewQuerySet.as_manager()
+    DURATION_UNITS = (
+        ("rounds", _("rounds")),
+        ("minutes", _("minutes")),
+        ("hours", _("hours")),
+        ("days", _("days")),
+        ("weeks", _("weeks")),
+        ("months", _("months")),
+        ("years", _("years")),
+    )
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -113,15 +122,22 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
-    is_tirakan_spell = models.BooleanField(_("is tirakan spell"), default=False)
-
     spell_point_cost = models.IntegerField(_("spell point cost"))
     arcana_cost = models.IntegerField(_("arcana cost"), default=1)
 
-    power = models.IntegerField(_("power"), default=1)
     range = models.IntegerField(_("range"), default=0)
     actions = models.IntegerField(_("actions"), default=1)
-
+    duration = models.CharField(
+        _("duration"),
+        max_length=40,
+        blank=True,
+        null=True,
+        help_text=_("Leave empty for instantaneous spells"),
+    )
+    duration_unit = models.CharField(
+        _("duration unit"), max_length=10, choices=DURATION_UNITS, blank=True, null=True
+    )
+    needs_concentration = models.BooleanField(_("needs concentration"), default=False)
     is_ritual = models.BooleanField(_("is ritual"), default=False)
 
     type = models.ForeignKey(
@@ -157,7 +173,7 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
 
     class Meta:
         ordering = ("id",)
-        translate = ("name", "rules")
+        translate = ("name", "rules", "duration")
         verbose_name = _("base spell")
         verbose_name_plural = _("base spells")
 
