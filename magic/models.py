@@ -102,6 +102,7 @@ class SpellOrigin(models.Model, metaclass=TransMeta):
 class BaseSpell(HomebrewModel, metaclass=TransMeta):
     objects = HomebrewQuerySet.as_manager()
     DURATION_UNITS = (
+        ("actions", _("actions")),
         ("rounds", _("rounds")),
         ("seconds", _("seconds")),
         ("minutes", _("minutes")),

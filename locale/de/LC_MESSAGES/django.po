@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 14:58+0000\n"
+"POT-Creation-Date: 2024-08-31 15:26+0000\n"
 "PO-Revision-Date: 2024-08-31 16:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -25,8 +25,8 @@ msgstr ""
 #: campaigns/models.py:184 campaigns/models.py:192 characters/models.py:31
 #: forum/models.py:32 forum/models.py:54 horror/models.py:11
 #: horror/models.py:24 magic/models.py:17 magic/models.py:30 magic/models.py:43
-#: magic/models.py:74 magic/models.py:166 magic/models.py:184
-#: magic/models.py:196 pantheon/models.py:22 pantheon/models.py:58
+#: magic/models.py:74 magic/models.py:167 magic/models.py:185
+#: magic/models.py:197 pantheon/models.py:22 pantheon/models.py:58
 #: pantheon/models.py:109 rules/models.py:70 rules/models.py:136
 #: rules/models.py:181 rules/models.py:201 rules/models.py:235
 #: rules/models.py:267 rules/models.py:316 rules/models.py:441
@@ -49,8 +49,8 @@ msgstr "Beschreibung"
 #: armory/models.py:180 armory/models.py:415 campaigns/models.py:65
 #: campaigns/models.py:211 characters/models.py:81 characters/models.py:733
 #: characters/models.py:1019 forum/models.py:21 forum/models.py:27
-#: forum/models.py:31 forum/models.py:49 forum/models.py:93 magic/models.py:124
-#: magic/models.py:203 pantheon/models.py:24 pantheon/models.py:43
+#: forum/models.py:31 forum/models.py:49 forum/models.py:93 magic/models.py:125
+#: magic/models.py:204 pantheon/models.py:24 pantheon/models.py:43
 #: pantheon/models.py:101 portal/models.py:10 rules/models.py:89
 #: rules/models.py:144 rules/models.py:237 rules/models.py:318
 #: rules/models.py:443 worlds/models.py:51 worlds/models.py:194
@@ -60,7 +60,7 @@ msgstr "Erzeugt am"
 
 #: armory/models.py:26 armory/models.py:67 armory/models.py:132
 #: armory/models.py:181 armory/models.py:416 characters/models.py:82
-#: magic/models.py:125 magic/models.py:204 pantheon/models.py:25
+#: magic/models.py:126 magic/models.py:205 pantheon/models.py:25
 #: pantheon/models.py:51 pantheon/models.py:102 rules/models.py:90
 #: rules/models.py:145 rules/models.py:238 rules/models.py:319
 #: rules/models.py:444 worlds/models.py:52 worlds/models.py:195
@@ -84,7 +84,7 @@ msgid "item types"
 msgstr "Gegenstandstypen"
 
 #: armory/models.py:49 armory/models.py:190 armory/models.py:421
-#: magic/models.py:146 rules/models.py:67 worlds/models.py:399
+#: magic/models.py:147 rules/models.py:67 worlds/models.py:399
 msgid "type"
 msgstr "Typ"
 
@@ -107,7 +107,7 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:59 armory/models.py:209 armory/models.py:410
-#: campaigns/models.py:63 characters/models.py:86 magic/models.py:121
+#: campaigns/models.py:63 characters/models.py:86 magic/models.py:122
 #: pantheon/models.py:46 pantheon/models.py:99 worlds/models.py:48
 #: worlds/models.py:191 worlds/models.py:320
 msgid "created by"
@@ -314,8 +314,8 @@ msgstr ""
 msgid "weapon modification type"
 msgstr "Waffenmodifikationstyp"
 
-#: armory/models.py:312 horror/models.py:26 magic/models.py:167
-#: magic/models.py:206 pantheon/models.py:110 rules/models.py:324
+#: armory/models.py:312 horror/models.py:26 magic/models.py:168
+#: magic/models.py:207 pantheon/models.py:110 rules/models.py:324
 #: rules/models.py:442
 msgid "rules"
 msgstr "Regeln"
@@ -420,12 +420,12 @@ msgstr "Nachladeaktionen"
 msgid "Range (meter)"
 msgstr "Reichweite (Meter)"
 
-#: armory/models.py:351 horror/models.py:71 magic/models.py:225
+#: armory/models.py:351 horror/models.py:71 magic/models.py:226
 #: rules/models.py:188 rules/models.py:381
 msgid "attribute"
 msgstr "Attribut"
 
-#: armory/models.py:353 horror/models.py:75 magic/models.py:232
+#: armory/models.py:353 horror/models.py:75 magic/models.py:233
 #: rules/models.py:386
 msgid "attribute modifier"
 msgstr "Attributsmodifikator"
@@ -3647,12 +3647,12 @@ msgstr "Fertigkeit"
 msgid "skill modifier"
 msgstr "Fertigkeitsmodifikator"
 
-#: magic/models.py:10 magic/models.py:130
+#: magic/models.py:10 magic/models.py:131
 msgid "range"
 msgstr "Reichweite"
 
-#: magic/models.py:11 magic/models.py:131 rules/models.py:13
-#: worlds/models.py:408
+#: magic/models.py:11 magic/models.py:105 magic/models.py:132
+#: rules/models.py:13 worlds/models.py:408
 msgid "actions"
 msgstr "Aktionen"
 
@@ -3692,125 +3692,125 @@ msgstr "Zauberursprung"
 msgid "spell origins"
 msgstr "Zauberursprünge"
 
-#: magic/models.py:105
+#: magic/models.py:106
 msgid "rounds"
 msgstr "Runden"
 
-#: magic/models.py:106
+#: magic/models.py:107
 msgid "seconds"
 msgstr "Sekunden"
 
-#: magic/models.py:107
+#: magic/models.py:108
 msgid "minutes"
 msgstr "Minuten"
 
-#: magic/models.py:108
+#: magic/models.py:109
 msgid "hours"
 msgstr "Stunden"
 
-#: magic/models.py:109
+#: magic/models.py:110
 msgid "days"
 msgstr "Tage"
 
-#: magic/models.py:110
+#: magic/models.py:111
 msgid "nights"
 msgstr "Nächte"
 
-#: magic/models.py:111
+#: magic/models.py:112
 msgid "weeks"
 msgstr "Wochen"
 
-#: magic/models.py:112
+#: magic/models.py:113
 msgid "months"
 msgstr "Monate"
 
-#: magic/models.py:113
+#: magic/models.py:114
 msgid "years"
 msgstr "Jahre"
 
-#: magic/models.py:127 magic/models.py:200
+#: magic/models.py:128 magic/models.py:201
 msgid "spell point cost"
 msgstr "Zauberpunkte Kosten"
 
-#: magic/models.py:128
+#: magic/models.py:129
 msgid "arcana cost"
 msgstr "Arkana Kosten"
 
-#: magic/models.py:133
+#: magic/models.py:134
 msgid "duration"
 msgstr "Dauer"
 
-#: magic/models.py:137
+#: magic/models.py:138
 msgid "Leave empty for instantaneous spells"
 msgstr "Leer lassen für sofortige Zauber"
 
-#: magic/models.py:140
+#: magic/models.py:141
 msgid "duration unit"
 msgstr "Dauereinheit"
 
-#: magic/models.py:142
+#: magic/models.py:143
 msgid "needs concentration"
 msgstr "Benötigt Konzentration"
 
-#: magic/models.py:143
+#: magic/models.py:144
 msgid "is ritual"
 msgstr "Ist Ritual"
 
-#: magic/models.py:153
+#: magic/models.py:154
 msgid "origin"
 msgstr "Ursprung"
 
-#: magic/models.py:156
+#: magic/models.py:157
 msgid "variant"
 msgstr "Variante"
 
-#: magic/models.py:161
+#: magic/models.py:162
 msgid "shape"
 msgstr "Form"
 
-#: magic/models.py:168 magic/models.py:208 pantheon/models.py:111
+#: magic/models.py:169 magic/models.py:209 pantheon/models.py:111
 #: rules/models.py:335
 msgid "quote"
 msgstr "Zitat"
 
-#: magic/models.py:170 magic/models.py:210 pantheon/models.py:113
+#: magic/models.py:171 magic/models.py:211 pantheon/models.py:113
 #: rules/models.py:337
 msgid "quote author"
 msgstr "Zitatautor"
 
-#: magic/models.py:179
+#: magic/models.py:180
 msgid "base spell"
 msgstr "Basiszauber"
 
-#: magic/models.py:180
+#: magic/models.py:181
 msgid "base spells"
 msgstr "Basiszauber"
 
-#: magic/models.py:188
+#: magic/models.py:189
 msgid "spell template category"
 msgstr "Zauberschablonenkategorie"
 
-#: magic/models.py:189
+#: magic/models.py:190
 msgid "spell template categories"
 msgstr "Zauberschablonenkategorien"
 
-#: magic/models.py:215
+#: magic/models.py:216
 msgid "spell template"
 msgstr "Zauberschablone"
 
-#: magic/models.py:216
+#: magic/models.py:217
 msgid "spell templates"
 msgstr "Zauberschablonen"
 
-#: magic/models.py:237
+#: magic/models.py:238
 msgid "variant change"
 msgstr "Variantenänderung"
 
-#: magic/models.py:244
+#: magic/models.py:245
 msgid "type change"
 msgstr "Typänderung"
 
-#: magic/models.py:251
+#: magic/models.py:252
 msgid "shape change"
 msgstr "Formänderung"
 
