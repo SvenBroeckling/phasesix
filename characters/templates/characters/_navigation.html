@@ -126,5 +126,25 @@
       </button>
     {% endif %}
   </a>
-
 </div>
+
+<div class="list-group mb-3">
+  <span class="list-group-item py-3 sidebar-trigger"
+        data-sidebar-title="{% trans 'Character' %}"
+        data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}"
+        role="button">
+
+    {% if may_edit %}
+      <div class="d-flex align-items-center">
+      <i class="fas fa-fw fa-pen"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Edit / Download" %}</span>
+    </div>
+    {% else %}
+      <div class="d-flex align-items-center">
+      <i class="fas fa-fw fa-pen"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Download" %}</span>
+    </div>
+    {% endif %}
+    </span>
+</div>
+
