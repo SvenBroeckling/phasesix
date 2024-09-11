@@ -29,6 +29,7 @@ class WeaponAdmin(admin.ModelAdmin):
         "damage_potential",
         "piercing",
         "encumbrance",
+        "concealment",
         "price",
         "range_meter",
     )
@@ -38,6 +39,7 @@ class WeaponAdmin(admin.ModelAdmin):
         "damage_potential",
         "piercing",
         "encumbrance",
+        "concealment",
         "price",
         "range_meter",
     )
