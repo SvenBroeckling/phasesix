@@ -767,7 +767,7 @@ class CharacterWeapon(models.Model):
     @property
     def roll_info_display(self):
         traits = [
-            f"{k["name"]}: {k['value']}"
+            "{%s}: {%s}" % (k["name"], k["value"])
             for k in self.modified_keywords.values()
             if k["show_in_dice_rolls"]
         ]
