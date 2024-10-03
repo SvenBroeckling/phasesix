@@ -227,6 +227,11 @@ class Keyword(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
     is_rare = models.BooleanField(_("is rare"), default=False)
+    is_evergreen = models.BooleanField(
+        _("is evergreen"),
+        default=False,
+        help_text=_("Evergreen keywords are the base of the combat mechanics."),
+    )
     show_in_dice_rolls = models.BooleanField(_("show in dice rolls"), default=False)
     ordering = models.IntegerField(_("ordering"), default=10)
 

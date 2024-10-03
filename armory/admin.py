@@ -145,6 +145,21 @@ class WeaponModificationAdmin(admin.ModelAdmin):
     search_fields = "name_de", "name_en"
     filter_horizontal = ("extensions", "available_for_weapon_types")
     inlines = [WeapomModificationKeywordInline]
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": (
+                    ("name_de", "name_en"),
+                    ("type", "price"),
+                    ("extensions",),
+                    ("available_for_weapon_types"),
+                    ("description_de", "description_en"),
+                    ("rules_de", "rules_en"),
+                )
+            },
+        ),
+    ]
 
 
 class AttackModeAdmin(admin.ModelAdmin):
@@ -174,8 +189,8 @@ class CurrencyMapUnitAdmin(admin.ModelAdmin):
 
 
 class KeywordAdmin(admin.ModelAdmin):
-    list_display = ("name_de", "name_en", "is_rare", "ordering")
-    list_editable = ("ordering", "is_rare")
+    list_display = ("name_de", "name_en", "is_rare", "ordering", "is_evergreen")
+    list_editable = ("ordering", "is_rare", "is_evergreen")
 
 
 admin.site.register(AttackMode, AttackModeAdmin)
