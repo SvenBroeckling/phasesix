@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
@@ -179,27 +178,19 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
     extensions = models.ManyToManyField("rules.Extension", blank=True)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+
     is_hand_to_hand_weapon = models.BooleanField(
         _("is hand to hand weapon"), default=False
     )
     is_throwing_weapon = models.BooleanField(_("is throwing weapon"), default=False)
+
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
+    attack_modes = models.ManyToManyField(AttackMode, verbose_name=_("attack modes"))
 
     type = models.ForeignKey(
         WeaponType, verbose_name=_("type"), on_delete=models.CASCADE
     )
-
-    # Replaced by Keyword
-    piercing = models.IntegerField(_("piercing"), default=0)
-    damage_potential = models.IntegerField(_("damage potential"), default=0)
-    recoil_compensation = models.IntegerField(_("recoil compensation"), default=0)
-    crit_minimum_roll = models.IntegerField(_("crit minimum roll"), default=11)
-    range_meter = models.IntegerField(_("range (meter)"), default=0)
-    concealment = models.IntegerField(_("concealment"), default=0)
-    reload_actions = models.IntegerField(_("reload actions"), default=1)
-    actions_to_ready = models.IntegerField(_("actions to ready"), default=1)
-    capacity = models.IntegerField(_("capacity"), null=True, blank=True)
 
     weight = models.DecimalField(_("weight"), decimal_places=2, max_digits=6)
     price = models.DecimalField(_("price"), decimal_places=2, max_digits=8)
@@ -260,38 +251,6 @@ class WeaponKeyword(models.Model):
 
     def __str__(self):
         return self.keyword.name
-
-
-class WeaponAttackMode(models.Model):
-    weapon = models.ForeignKey(
-        Weapon, on_delete=models.CASCADE, verbose_name=_("Weapon")
-    )
-    attack_mode = models.ForeignKey(
-        AttackMode, on_delete=models.CASCADE, verbose_name=_("Attack Mode")
-    )
-    dice_bonus_override = models.IntegerField(
-        _("dice bonus override"), blank=True, null=True
-    )
-    capacity_consumed_override = models.IntegerField(
-        _("capacity consumed override"), blank=True, null=True
-    )
-
-    class Meta:
-        verbose_name = _("weapon attack mode")
-        verbose_name_plural = _("weapon attack modes")
-
-    def __str__(self):
-        return f"{self.weapon} - {self.attack_mode}"
-
-    @property
-    def dice_bonus(self):
-        return self.attack_mode.dice_bonus
-
-    @property
-    def capacity_consumed(self):
-        if self.capacity_consumed_override:
-            return self.capacity_consumed_override
-        return self.attack_mode.capacity_consumed
 
 
 class WeaponModificationTypeQuerySet(models.QuerySet):
@@ -364,45 +323,6 @@ class WeaponModificationKeyword(models.Model):
     )
     keyword = models.ForeignKey("armory.Keyword", on_delete=models.CASCADE)
     value = models.IntegerField(_("value"), default=0)
-
-
-class WeaponModificationAttributeChange(models.Model):
-    ATTRIBUTE_CHOICES = (
-        ("capacity", _("Capacity")),
-        ("recoil_compensation", _("Recoil compensation")),
-        ("actions_to_ready", _("Actions to ready")),
-        ("crit_minimum_roll", _("Crit minimum roll")),
-        ("damage_potential", _("Damage potential")),
-        ("piercing", _("Piercing")),
-        ("concealment", _("Concealment")),
-        ("reload_actions", _("Reload actions")),
-        ("range_meter", _("Range (meter)")),
-    )
-    weapon_modification = models.ForeignKey(
-        WeaponModification, on_delete=models.CASCADE
-    )
-    attribute = models.CharField(
-        _("attribute"), max_length=40, choices=ATTRIBUTE_CHOICES
-    )
-    attribute_modifier = models.IntegerField(_("attribute modifier"), default=0)
-    status_effect = models.ForeignKey(
-        "rules.StatusEffect",
-        verbose_name=_("status effect"),
-        limit_choices_to={"is_active": True},
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-    )
-    status_effect_value = models.IntegerField(_("status effect value"), default=0)
-
-    def get_attribute_display(self):
-        try:
-            return _(Weapon._meta.get_field(self.attribute).verbose_name)
-        except FieldDoesNotExist:
-            return "UNKNOWN"
-
-    def get_modifier_display(self):
-        return "%+d" % self.attribute_modifier
 
 
 class RiotGearTypeQuerySet(HomebrewQuerySet):

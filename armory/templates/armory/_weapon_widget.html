@@ -14,11 +14,11 @@
           <i>({{ kw.keyword.description|replace_keyword_value:kw.value }})</i><br>
         {% endfor %}
 
-        {% if weapon.weaponattackmode_set.exists %}
+        {% if weapon.attack_modes.exists %}
           <br>
-          {% for fm in weapon.weaponattackmode_set.all %}
+          {% for fm in weapon.attack_modes.all %}
             <button disabled class="btn btn-outline-primary mb-2 w-100">
-              {{ fm.attack_mode.name }} - {{ weapon.range_meter }}m<br>
+              {{ fm.name }} - {{ weapon.range_meter }}m<br>
             </button>
           {% endfor %}
         {% endif %}

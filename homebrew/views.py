@@ -195,18 +195,18 @@ class CreateWeaponView(CreateBaseView):
                     homebrew_campaign=campaign,
                 )
                 if weapon.is_hand_to_hand_weapon:
-                    weapon.weaponattackmode_set.create(
-                        attack_mode=AttackMode.objects.get(name_en="Hand to Hand")
+                    weapon.attack_modes.add(
+                        AttackMode.objects.get(name_en="Hand to Hand")
                     )
                 elif weapon.is_throwing_weapon:
-                    weapon.weaponattackmode_set.create(
-                        attack_mode=AttackMode.objects.get(name_en="Throwing")
-                    )
+                    weapon.attack_modes.add(AttackMode.objects.get(name_en="Throwing"))
                 else:
-                    for am in AttackMode.objects.exclude(
-                        name_en="Hand to Hand"
-                    ).exclude(name_en="Throwing"):
-                        weapon.weaponattackmode_set.create(attack_mode=am)
+                    weapon.attack_modes.add(
+                        AttackMode.objects.get(name_en="Burst mode")
+                    )
+                    weapon.attack_modes.add(
+                        AttackMode.objects.get(name_en="Single shot")
+                    )
 
                 if character is not None and form["add_to_character"]:
                     character.characterweapon_set.create(weapon=weapon)

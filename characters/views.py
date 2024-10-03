@@ -25,9 +25,9 @@ from armory.models import (
     WeaponModificationType,
     WeaponModification,
     WeaponType,
-    WeaponAttackMode,
     CurrencyMapUnit,
     RiotGearType,
+    AttackMode,
 )
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign
@@ -419,14 +419,12 @@ class XhrRemoveQuirkView(View):
 class CharacterAttackView(View):
     def post(self, request, *args, **kwargs):
         character_weapon = CharacterWeapon.objects.get(id=kwargs["characterweapon_pk"])
-        weapon_attack_mode = WeaponAttackMode.objects.get(
-            id=kwargs["weapon_attackmode_pk"]
-        )
+        attack_mode = AttackMode.objects.get(id=kwargs["attack_mode_pk"])
 
         if not character_weapon.character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
 
-        character_weapon.capacity_used += weapon_attack_mode.capacity_consumed
+        character_weapon.capacity_used += attack_mode.capacity_consumed
         character_weapon.save()
 
         return JsonResponse({"status": "ok"})

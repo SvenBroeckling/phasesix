@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from armory.models import (
-    WeaponModificationAttributeChange,
     WeaponType,
     Weapon,
     WeaponModificationType,
@@ -10,7 +9,6 @@ from armory.models import (
     ItemType,
     Item,
     AttackMode,
-    WeaponAttackMode,
     CurrencyMap,
     CurrencyMapUnit,
     RiotGearType,
@@ -20,42 +18,24 @@ from armory.models import (
 )
 
 
-class WeaponAttackModeInline(admin.TabularInline):
-    model = WeaponAttackMode
-
-
 class WeaponKeywordInline(admin.TabularInline):
     model = WeaponKeyword
 
 
 class WeaponAdmin(admin.ModelAdmin):
     list_display = (
+        "name_de",
         "name_en",
-        "recoil_compensation",
-        "actions_to_ready",
-        "damage_potential",
-        "piercing",
         "price",
-        "range_meter",
-    )
-    list_editable = (
-        "recoil_compensation",
-        "actions_to_ready",
-        "damage_potential",
-        "piercing",
-        "price",
-        "range_meter",
     )
     list_filter = (
         "type",
         "extensions",
         "is_hand_to_hand_weapon",
-        "damage_potential",
-        "piercing",
-        "crit_minimum_roll",
     )
     search_fields = "name_en", "name_de"
-    inlines = [WeaponAttackModeInline, WeaponKeywordInline]
+    inlines = [WeaponKeywordInline]
+    filter_horizontal = ("extensions", "attack_modes")
     fieldsets = [
         (
             None,
@@ -64,14 +44,12 @@ class WeaponAdmin(admin.ModelAdmin):
                     (
                         "name_de",
                         "name_en",
-                        "extensions",
                         "is_hand_to_hand_weapon",
                         "is_throwing_weapon",
                     ),
-                    ("type", "capacity", "damage_potential", "piercing"),
-                    ("weight", "actions_to_ready"),
-                    ("recoil_compensation", "crit_minimum_roll", "reload_actions"),
-                    ("range_meter", "concealment", "price"),
+                    ("extensions",),
+                    ("attack_modes",),
+                    ("type", "weight", "price"),
                     (
                         "description_de",
                         "description_en",
@@ -161,16 +139,12 @@ class WeapomModificationKeywordInline(admin.TabularInline):
     model = WeaponModificationKeyword
 
 
-class WeaponModificationAttributeChangeInline(admin.TabularInline):
-    model = WeaponModificationAttributeChange
-
-
 class WeaponModificationAdmin(admin.ModelAdmin):
     list_display = ("name_de", "name_en", "type", "extension_string", "price")
     list_filter = ("type",)
     search_fields = "name_de", "name_en"
     filter_horizontal = ("extensions", "available_for_weapon_types")
-    inlines = [WeaponModificationAttributeChangeInline, WeapomModificationKeywordInline]
+    inlines = [WeapomModificationKeywordInline]
 
 
 class AttackModeAdmin(admin.ModelAdmin):

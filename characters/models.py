@@ -747,22 +747,21 @@ class CharacterWeapon(models.Model):
     def may_edit(self, user):
         return self.character.may_edit(user)
 
-    def attack_modes(self):
+    def attack_modes_with_values(self):
         skill = self.character.characterskill_set.ranged_combat_skill()
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
         if self.weapon.is_throwing_weapon:
             skill = self.character.characterskill_set.throwing_combat_skill()
 
-        keyword_damage_potential = (
+        damage_potential = (
             self.modified_keywords["damage_potential"]["value"]
             if "damage_potential" in self.modified_keywords
             else 0
         )
-        damage_potential = self.weapon.damage_potential + keyword_damage_potential
         return [
-            (wm.attack_mode.name, skill.value + wm.dice_bonus + damage_potential, wm.id)
-            for wm in self.weapon.weaponattackmode_set.all()
+            (am.name, skill.value + am.dice_bonus + damage_potential, am.id)
+            for am in self.weapon.attack_modes.all()
         ]
 
     @property

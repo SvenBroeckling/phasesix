@@ -3,8 +3,8 @@
 
 {% if may_edit %}
   <div class="row">
-    {% if object.weapon.weaponattackmode_set.exists %}
-      {% for fm in object.attack_modes %}
+    {% if object.weapon.attack_modes.exists %}
+      {% for fm in object.attack_modes_with_values %}
         <div class="col-12">
           <div class="btn-group w-100">
             <a class="btn btn-primary btn-sm action-link dice-roll mb-1"
@@ -12,7 +12,7 @@
                data-dice-header="{{ object.weapon }}"
                data-dice-description="{{ fm.0 }} {{ object.roll_info_display }}"
                data-dice-character="{{ object.character.id }}"
-               href="{% url 'characters:attack' characterweapon_pk=object.id weapon_attackmode_pk=fm.2 %}">
+               href="{% url 'characters:attack' characterweapon_pk=object.id attack_mode_pk=fm.2 %}">
               {% trans 'Attack:' %} {{ fm.0 }}
               {% color_value_span fm.1 8 %} <i class="fas fa-dice-five"></i></a>
           </div>

@@ -48,10 +48,10 @@
         <td>{% trans 'Concealment' %}</td>
         <td>{{ weapon.modified_concealment }}</td>
       </tr>
-      {% for fm in weapon.weapon.weaponattackmode_set.all %}
+      {% for fm in weapon.weapon.attack_modes.all %}
         <tr>
           <td>{% if forloop.first %}{% trans 'Attack Modes' %}{% endif %}</td>
-          <td>{{ fm.attack_mode.name }}</td>
+          <td>{{ fm.name }}</td>
         </tr>
       {% endfor %}
       {% for wm in weapon.modifications.all %}

@@ -34,12 +34,14 @@
               {% endfor %}
             {% endfor %}
 
-            {% if character_weapon.weapon.weaponattackmode_set.exists %}
+            {% if character_weapon.weapon.attack_modes.exists %}
               <br>
-              {% for fm in character_weapon.weapon.weaponattackmode_set.all %}
-                <button disabled class="btn btn-outline-primary mb-2 w-100">
-                  {{ fm.attack_mode.name }} - {{ character_weapon.weapon.range_meter }}m<br>
-                </button>
+              {% for fm in character_weapon.weapon.attack_modes.all %}
+                {% with meter=character_weapon.modified_keywords.range_meter.value %}
+                  <button disabled class="btn btn-outline-primary mb-2 w-100">
+                    {{ fm.name }} - {{ meter|default:1 }}m<br>
+                  </button>
+                {% endwith %}
               {% endfor %}
             {% endif %}
           </div>
