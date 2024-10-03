@@ -12,6 +12,7 @@ from homebrew.forms import (
     CreateRiotGearForm,
     CreateWeaponForm,
     CreateBaseSpellForm,
+    CreateWeaponKeywordFormSet,
 )
 from magic.models import BaseSpell
 
@@ -153,16 +154,11 @@ class XhrCreateWeaponView(XhrCreateBaseView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["formset"] = CreateWeaponKeywordFormSet()
         context["form"] = CreateWeaponForm(
             initial={
-                "damage_potential": 0,
-                "actions_to_ready": 1,
-                "piercing": 1,
-                "range_meter": 20,
-                "capacity": 1,
                 "weight": 1,
                 "price": 10,
-                "concealment": 0,
             }
         )
         return context
@@ -181,14 +177,8 @@ class CreateWeaponView(CreateBaseView):
                     type=form.cleaned_data["type"],
                     is_hand_to_hand_weapon=form.cleaned_data["is_hand_to_hand_weapon"],
                     is_throwing_weapon=form.cleaned_data["is_throwing_weapon"],
-                    damage_potential=form.cleaned_data["damage_potential"],
-                    capacity=form.cleaned_data["capacity"],
-                    actions_to_ready=form.cleaned_data["actions_to_ready"],
-                    piercing=form.cleaned_data["piercing"],
-                    concealment=form.cleaned_data["concealment"],
                     weight=form.cleaned_data["weight"],
                     price=form.cleaned_data["price"],
-                    range_meter=form.cleaned_data["range_meter"],
                     created_by=request.user,
                     is_homebrew=True,
                     homebrew_character=character,
@@ -207,6 +197,18 @@ class CreateWeaponView(CreateBaseView):
                     weapon.attack_modes.add(
                         AttackMode.objects.get(name_en="Single shot")
                     )
+
+                formset = CreateWeaponKeywordFormSet(request.POST, instance=weapon)
+                for formset_form in formset:
+                    if formset_form.is_valid():
+                        try:
+                            keyword = formset_form.cleaned_data["keyword"]
+                            value = formset_form.cleaned_data["value"]
+                            weapon.weaponkeyword_set.create(
+                                keyword=keyword, value=value
+                            )
+                        except KeyError:  # Empty form
+                            pass
 
                 if character is not None and form["add_to_character"]:
                     character.characterweapon_set.create(weapon=weapon)

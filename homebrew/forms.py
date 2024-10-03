@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from armory.models import ItemType, WeaponType, RiotGearType
+from armory.models import ItemType, WeaponType, RiotGearType, WeaponKeyword, Weapon
 from magic.models import SpellType, SpellVariant, SpellShape, SpellOrigin
 
 
@@ -63,17 +63,21 @@ class CreateWeaponForm(forms.Form):
     is_throwing_weapon = forms.BooleanField(
         label=_("Is throwing weapon"), required=False
     )
-    damage_potential = forms.DecimalField(label=_("Damage Potential"))
-    capacity = forms.DecimalField(label=_("Capacity"))
-    actions_to_ready = forms.DecimalField(label=_("Actions to ready"))
-    piercing = forms.DecimalField(label=_("Piercing"))
-    concealment = forms.DecimalField(label=_("Concealment"))
     weight = forms.DecimalField(label=_("Weight (kg)"))
     price = forms.DecimalField(label=_("Price"))
-    range_meter = forms.DecimalField(label=_("Range (meter)"))
     add_to_character = forms.BooleanField(
         label=_("Add to character"), initial=True, required=False
     )
+
+
+CreateWeaponKeywordFormSet = forms.inlineformset_factory(
+    parent_model=Weapon,
+    model=WeaponKeyword,
+    fields=["keyword", "value"],
+    extra=3,
+    can_delete=False,
+    labels={"keyword": _("Keyword")},
+)
 
 
 class CreateBaseSpellForm(forms.Form):
