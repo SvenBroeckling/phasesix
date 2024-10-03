@@ -53,52 +53,39 @@
           </tr>
 
           {% for w in object.characterweapon_set.all %}
-            <tr class="sidebar-trigger" data-sidebar-title="{{ w.weapon }}"
-                data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=w.id sidebar_template="characterweapon" %}">
-              <td>
-                <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
-                <small class="text-muted">{{ w.weapon.type }}</small>
-              </td>
-              <td class="text-end">
-                {% for am in w.attack_modes %}
-                  {{ am.0 }} {% color_value_span am.1 7 %} <i class="fas text-muted fa-dice-five"></i>
-                  <br>
-                {% endfor %}
-              </td>
-              <td class="text-end">
-                {% if w.modified_piercing > 0 %}
-                  {% trans 'Piercing' %} {% color_value_span w.modified_piercing 3 %}<br>
-                {% endif %}
-                {% if w.modified_recoil_compensation %}
-                  {% trans 'Recoil Compensation' %} {% color_value_span w.modified_recoil_compensation 3 %}<br>
-                {% endif %}
-                {% if w.modified_crit_minium_roll != 11 %}
-                  {% trans 'Crit MR' %} {% color_value_span w.modified_crit_minium_roll 11 invert=True %}<br>
-                {% endif %}
-                {% for wm in w.modifications.all %}
-                  {% for wma in wm.weaponmodificationattributechange_set.all %}
-                    {% if wma.status_effect %}
-                      {{ wma.status_effect|capfirst }}
-                      {% color_value_span wma.status_effect_value 4 %}
-                      <i class="{{ wma.status_effect.fa_icon_class }} fa-fw"></i><br>
-                    {% endif %}
+            {% with modified_keywords=w.modified_keywords %}
+              <tr class="sidebar-trigger" data-sidebar-title="{{ w.weapon }}"
+                  data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=w.id sidebar_template="characterweapon" %}">
+                <td>
+                  <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
+                  <small class="text-muted">{{ w.weapon.type }}</small>
+                </td>
+                <td class="text-end">
+                  {% for am in w.attack_modes %}
+                    {{ am.0 }} {% color_value_span am.1 7 %} <i class="fas text-muted fa-dice-five"></i>
+                    <br>
                   {% endfor %}
-                {% endfor %}
-                {% if w.has_modifications_with_rules %}{% trans 'Mods with rules' %}
-                  <i class="fas fa-gavel fa-fw text-muted"></i>{% endif %}
-              </td>
-              <td class="text-end">
-                {% if w.has_capacity %}
-                  {% color_value_span w.capacity_available w.modified_capacity %} /
-                  {% color_value_span w.modified_capacity w.modified_capacity %}
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td class="text-end">
-                {% color_value_span w.modified_range_meter 20 %} {% trans "Meter" %}
-              </td>
-            </tr>
+                </td>
+                <td class="text-end">
+                  {% for modified_keyword in modified_keywords.values %}
+                    {{ modified_keyword.name }} {% color_value_span modified_keyword.value 3 %}<br>
+                  {% endfor %}
+                  {% if w.has_modifications_with_rules %}{% trans 'Mods with rules' %}
+                    <i class="fas fa-gavel fa-fw text-muted"></i>{% endif %}
+                </td>
+                <td class="text-end">
+                  {% if modified_keywords.capacity %}
+                    {% color_value_span w.capacity_available modified_keywords.capacity.value %} /
+                    {% color_value_span modified_keywords.capacity.value modified_keywords.capacity.value %}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td class="text-end">
+                  {% color_value_span modified_keywords.range_meter.value 20 %} {% trans "Meter" %}
+                </td>
+              </tr>
+            {% endwith %}
           {% endfor %}
 
           {% for r in object.characterriotgear_set.shields %}

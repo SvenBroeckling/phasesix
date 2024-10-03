@@ -190,11 +190,12 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
         WeaponType, verbose_name=_("type"), on_delete=models.CASCADE
     )
 
+    # Replaced by Keyword
     piercing = models.IntegerField(_("piercing"), default=0)
     damage_potential = models.IntegerField(_("damage potential"), default=0)
     recoil_compensation = models.IntegerField(_("recoil compensation"), default=0)
     crit_minimum_roll = models.IntegerField(_("crit minimum roll"), default=11)
-
+    range_meter = models.IntegerField(_("range (meter)"), default=0)
     concealment = models.IntegerField(_("concealment"), default=0)
     reload_actions = models.IntegerField(_("reload actions"), default=1)
     actions_to_ready = models.IntegerField(_("actions to ready"), default=1)
@@ -210,8 +211,6 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL,
     )
-
-    range_meter = models.IntegerField(_("range (meter)"), default=0)
 
     image = models.ImageField(
         _("image"), max_length=256, upload_to="weapon_images/", null=True, blank=True
@@ -233,13 +232,18 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
 
 
 class Keyword(models.Model, metaclass=TransMeta):
+    identifier = models.CharField(_("identifier"), max_length=40, unique=True)
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
+    is_rare = models.BooleanField(_("is rare"), default=False)
+    show_in_dice_rolls = models.BooleanField(_("show in dice rolls"), default=False)
+    ordering = models.IntegerField(_("ordering"), default=10)
 
     class Meta:
         translate = ("name", "description")
         verbose_name = _("keyword")
         verbose_name_plural = _("keywords")
+        ordering = ("-ordering",)
 
     def __str__(self):
         return self.name

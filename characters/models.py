@@ -1,7 +1,6 @@
 import math
 import random
 
-from django.conf import settings
 from django.db import models
 from django.db.models import Sum, Max, Q
 from django.urls import reverse
@@ -570,8 +569,8 @@ class Character(models.Model):
         )
         wc = 0
         for w in self.characterweapon_set.all():
-            if w.modified_concealment > wc:
-                wc = w.modified_concealment
+            if "concealment" in w.modified_keywords:
+                wc = max(wc, w.modified_keywords["concealment"]["value"])
         return max(ic, rc, wc)
 
     def randomize(self, reputation):
@@ -755,9 +754,12 @@ class CharacterWeapon(models.Model):
         if self.weapon.is_throwing_weapon:
             skill = self.character.characterskill_set.throwing_combat_skill()
 
-        damage_potential = self.weapon.damage_potential + self._get_mods(
-            "damage_potential"
+        keyword_damage_potential = (
+            self.modified_keywords["damage_potential"]["value"]
+            if "damage_potential" in self.modified_keywords
+            else 0
         )
+        damage_potential = self.weapon.damage_potential + keyword_damage_potential
         return [
             (wm.attack_mode.name, skill.value + wm.dice_bonus + damage_potential, wm.id)
             for wm in self.weapon.weaponattackmode_set.all()
@@ -765,13 +767,12 @@ class CharacterWeapon(models.Model):
 
     @property
     def roll_info_display(self):
-        traits = []
-        if self.modified_piercing:
-            traits.append(f"{_('Pierce')}: {self.modified_piercing}")
-        if self.modified_recoil_compensation:
-            traits.append(
-                f"{_('Recoil Compensation')}: {self.modified_recoil_compensation}"
-            )
+        traits = [
+            f"{k["name"]}: {k['value']}"
+            for k in self.modified_keywords.values()
+            if k["show_in_dice_rolls"]
+        ]
+
         for template in self.character.charactertemplate_set.filter(
             template__show_in_attack_dice_rolls=True
         ):
@@ -786,48 +787,50 @@ class CharacterWeapon(models.Model):
             Q(rules_de__isnull=False) | Q(rules_en__isnull=False)
         ).exists()
 
-    def _get_mods(self, attr):
-        mods = self.modifications.filter(
-            weaponmodificationattributechange__attribute=attr
-        ).aggregate(Sum("weaponmodificationattributechange__attribute_modifier"))
-        return mods["weaponmodificationattributechange__attribute_modifier__sum"] or 0
-
     @property
-    def modified_piercing(self):
-        return self.weapon.piercing + self._get_mods("piercing")
-
-    @property
-    def modified_recoil_compensation(self):
-        return self.weapon.recoil_compensation + self._get_mods("recoil_compensation")
-
-    @property
-    def modified_concealment(self):
-        return self.weapon.concealment + self._get_mods("concealment")
-
-    @property
-    def modified_actions_to_ready(self):
-        return self.weapon.actions_to_ready + self._get_mods("actions_to_ready")
-
-    @property
-    def modified_crit_minium_roll(self):
-        return self.weapon.crit_minimum_roll + self._get_mods("crit_minimum_roll")
-
-    @property
-    def modified_range_meter(self):
-        return self.weapon.range_meter + self._get_mods("range_meter")
-
-    @property
-    def modified_capacity(self):
-        base_capacity = self.weapon.capacity if self.weapon.capacity else 0
-        return base_capacity + self._get_mods("capacity")
-
-    @property
-    def has_capacity(self):
-        return self.modified_capacity > 0
+    def modified_keywords(self):
+        """
+        Returns a dict with all keywords, their description and their values for this weapon
+        - All keywords from the weapon
+        - All keywords from the modifications WeaponModificationKeyword.value
+        - If a keyword is modified by a modification, the value is the sum of the base value and the modification value
+        - If a keyword is present in the modification, but not in the weapon, it is added to the dict
+        """
+        weapon_keywords = {
+            k.keyword.identifier: {
+                "name": k.keyword.name,
+                "description": k.keyword.description,
+                "value": k.value,
+                "is_rare": k.keyword.is_rare,
+                "show_in_dice_rolls": k.keyword.show_in_dice_rolls,
+            }
+            for k in self.weapon.weaponkeyword_set.order_by("-keyword__ordering")
+        }
+        for mod in self.modifications.all():
+            for k in mod.weaponmodificationkeyword_set.all():
+                if k.keyword.identifier in weapon_keywords:
+                    weapon_keywords[k.keyword.identifier]["value"] += k.value
+                else:
+                    weapon_keywords[k.keyword.identifier] = {
+                        "name": k.keyword.name,
+                        "description": k.keyword.description,
+                        "value": k.value,
+                        "is_rare": k.keyword.is_rare,
+                        "show_in_dice_rolls": k.keyword.show_in_dice_rolls,
+                    }
+            weapon_keywords[k.keyword.identifier]["value"] = max(
+                0, weapon_keywords[k.keyword.identifier]["value"]
+            )
+        return weapon_keywords
 
     @property
     def capacity_available(self):
-        return self.modified_capacity - self.capacity_used
+        capacity = (
+            self.modified_keywords["capacity"]["value"]
+            if "capacity" in self.modified_keywords
+            else 0
+        )
+        return capacity - self.capacity_used
 
 
 class CharacterRiotGearQuerySet(models.QuerySet):

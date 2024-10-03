@@ -16,6 +16,7 @@ from armory.models import (
     RiotGearType,
     Keyword,
     WeaponKeyword,
+    WeaponModificationKeyword,
 )
 
 
@@ -156,6 +157,10 @@ class WeaponModificationTypeAdmin(admin.ModelAdmin):
     list_display = ("name_de", "name_en", "unique_equip")
 
 
+class WeapomModificationKeywordInline(admin.TabularInline):
+    model = WeaponModificationKeyword
+
+
 class WeaponModificationAttributeChangeInline(admin.TabularInline):
     model = WeaponModificationAttributeChange
 
@@ -165,7 +170,7 @@ class WeaponModificationAdmin(admin.ModelAdmin):
     list_filter = ("type",)
     search_fields = "name_de", "name_en"
     filter_horizontal = ("extensions", "available_for_weapon_types")
-    inlines = [WeaponModificationAttributeChangeInline]
+    inlines = [WeaponModificationAttributeChangeInline, WeapomModificationKeywordInline]
 
 
 class AttackModeAdmin(admin.ModelAdmin):
@@ -194,9 +199,14 @@ class CurrencyMapUnitAdmin(admin.ModelAdmin):
     list_filter = ("currency_map", "is_common")
 
 
+class KeywordAdmin(admin.ModelAdmin):
+    list_display = ("name_de", "name_en", "is_rare", "ordering")
+    list_editable = ("ordering", "is_rare")
+
+
 admin.site.register(AttackMode, AttackModeAdmin)
 admin.site.register(WeaponType, WeaponTypeAdmin)
-admin.site.register(Keyword)
+admin.site.register(Keyword, KeywordAdmin)
 admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(WeaponModificationType, WeaponModificationTypeAdmin)
 admin.site.register(WeaponModification, WeaponModificationAdmin)

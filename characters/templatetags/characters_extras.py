@@ -57,32 +57,19 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
 
 
 @register.simple_tag
-def display_modifications(character_weapon, attribute):
+def display_modifications(character_weapon, identifier):
+    if isinstance(character_weapon, FillProxyModel):
+        return ""
     res = ""
     try:
-        for wm in character_weapon.modifications.all():
-            for wmm in wm.weaponmodificationattributechange_set.all():
-                if wmm.attribute == attribute and wmm.attribute_modifier != 0:
-                    if attribute == "concealment":
-                        css_class = (
-                            "text-success"
-                            if wmm.attribute_modifier < 0
-                            else "text-danger"
-                        )
-                    else:
-                        css_class = (
-                            "text-danger"
-                            if wmm.attribute_modifier < 0
-                            else "text-success"
-                        )
-                    res += ' <span title="%s" class="%s">%+d</span>' % (
-                        wm.name,
-                        css_class,
-                        wmm.attribute_modifier,
-                    )
+        keyword = character_weapon.modified_keywords[identifier]
+        res += "<span title='%s' class='text-success'>%s</span>" % (
+            keyword["name"],
+            keyword["value"],
+        )
+    except KeyError:
         return mark_safe(res)
-    except AttributeError:
-        return ""
+    return mark_safe(res)
 
 
 @register.simple_tag(takes_context=True)

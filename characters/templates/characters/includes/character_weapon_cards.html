@@ -2,89 +2,68 @@
 {% load rules_extras %}
 {% load characters_extras %}
 {% load i18n %}
-{% for weapon in object.characterweapon_set.all %}
-    <div class="weapon-sortable"
-         data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
-        <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ weapon.weapon }}"
-             data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=weapon.id sidebar_template="characterweapon" %}">
 
-            <div class="card-body">
-                <h4>{{ weapon.weapon }}</h4>
+{% for character_weapon in object.characterweapon_set.all %}
+  <div class="weapon-sortable"
+       data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
+    <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ character_weapon.weapon }}"
+         data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=character_weapon.id sidebar_template="characterweapon" %}">
 
-                <div class="row">
-                    <div class="col-12">
-                        {{ weapon.weapon.description|urpg_markup }}
+      <div class="card-body">
+        <h4>{{ character_weapon.weapon }}</h4>
 
-                        {% for kw in weapon.weapon.weaponkeyword_set.all %}
-                            <b>{{ kw.keyword.name }}</b> {% color_value_span kw.value 6 %}
-                            <i class="text-muted">({{ kw.keyword.description|replace_keyword_value:kw.value }})</i><br>
-                        {% endfor %}
+        <div class="row">
+          <div class="col-12">
+            {{ character_weapon.weapon.description|urpg_markup }}
 
-                        {% if weapon.modifications.exists %}
-                            <div class="row mt-3">
-                                {% for wm in weapon.modifications.all %}
-                                    <div class="col-12 col-md-6">
-                                        <div class="card mb-2">
-                                            <div class="card-header">
-                                                <i class="fas fa-puzzle-piece"></i>
-                                                {{ wm }}
-                                            </div>
-                                            <div class="card-body">
-                                                {% if wm.rules %}
-                                                    <p>
-                                                        {{ wm.rules|urpg_markup }}
-                                                    </p>
-                                                {% endif %}
-                                                {% for wma in wm.weaponmodificationattributechange_set.all %}
-                                                    {{ wma.get_attribute_display|capfirst }} +
-                                                    {% color_value_span wma.attribute_modifier 4 %}<br>
-                                                {% endfor %}
-                                                {% for wma in wm.weaponmodificationattributechange_set.all %}
-                                                    {% if wma.status_effect %}
-                                                        {{ wma.status_effect|capfirst }}
-                                                        <i class="{{ wma.status_effect.fa_icon_class }}"></i>
-                                                        {% color_value_span wma.status_effect_value 4 %}<br>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+            {% for identifier, kw in character_weapon.modified_keywords.items %}
+              <span class="fw-bold {% if kw.is_rare %}text-primary{% endif %}">{{ kw.name }}</span>
+              {% color_value_span kw.value 6 %}
+              <i class="text-muted">({{ kw.description|replace_keyword_value:kw.value }})</i><br>
+            {% endfor %}
 
-                        {% if weapon.weapon.weaponattackmode_set.exists %}
-                            <br>
-                            {% for fm in weapon.weapon.weaponattackmode_set.all %}
-                                <button disabled class="btn btn-outline-primary mb-2 w-100">
-                                    {{ fm.attack_mode.name }} - {{ weapon.weapon.range_meter }}m<br>
-                                </button>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-                {% if user.is_superuser %}
-                    <a href="{% url 'admin:armory_weapon_change' weapon.weapon.id %}"
-                       style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                {% endif %}
-            </div>
+            {% for wm in character_weapon.modifications.all %}
+              <hr>
+              <h5 class="mt-4">{{ wm }}</h5>
+              <p>
+                {{ wm.rules|urpg_markup }}
+              </p>
+              {% for keyword in wm.weaponmodificationkeyword_set.all %}
+                <span class="fw-bold {% if keyword.keyword.is_rare %}text-primary{% endif %}">{{ keyword.keyword.name }}</span>
+                {% color_value_span keyword.value 6 %}<br>
+              {% endfor %}
+            {% endfor %}
+
+            {% if character_weapon.weapon.weaponattackmode_set.exists %}
+              <br>
+              {% for fm in character_weapon.weapon.weaponattackmode_set.all %}
+                <button disabled class="btn btn-outline-primary mb-2 w-100">
+                  {{ fm.attack_mode.name }} - {{ character_weapon.weapon.range_meter }}m<br>
+                </button>
+              {% endfor %}
+            {% endif %}
+          </div>
         </div>
+        {% if user.is_superuser %}
+          <a href="{% url 'admin:armory_weapon_change' character_weapon.weapon.id %}"
+             style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+        {% endif %}
+      </div>
     </div>
+  </div>
 {% empty %}
-    {% if may_edit %}
-        <div class="card mb-4">
-            <div class="card-body">
-                <a
-                        class="modal-trigger"
-                        data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
-                        {% if may_edit %}
-                        data-bs-toggle="modal"
-                        {% endif %}
-                        data-bs-target=".page-modal"
-                        data-modal-title="{% trans 'Add Weapon' %}"
-                        href="">{% trans 'No weapon yet.' %}</a>
-
-            </div>
-        </div>
-    {% endif %}
+  {% if may_edit %}
+    <div class="card mb-4">
+      <div class="card-body">
+        <a class="modal-trigger"
+           data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+                {% if may_edit %}
+           data-bs-toggle="modal"
+                {% endif %}
+           data-bs-target=".page-modal"
+           data-modal-title="{% trans 'Add Weapon' %}"
+           href="">{% trans 'No weapon yet.' %}</a>
+      </div>
+    </div>
+  {% endif %}
 {% endfor %}
