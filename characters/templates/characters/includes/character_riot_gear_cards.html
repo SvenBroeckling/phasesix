@@ -26,10 +26,6 @@
         {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
       {% endif %}
       <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 6 invert=True %}<br>
-      {% if user.is_superuser %}
-        <a href="{% url 'admin:armory_riotgear_change' r.riot_gear.id %}"
-           style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-      {% endif %}
     </div>
   </div>
 {% empty %}
