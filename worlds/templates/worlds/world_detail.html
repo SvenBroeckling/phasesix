@@ -1,100 +1,76 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load static i18n characters_extras rules_extras thumbnail %}
 
 {% block javascript %}
-    <script src="{% static 'js/worlds_detail.js' %}"></script>
-    <script>
-        $(function () {
-            let masonry = $('.masonry-container').masonry()
-            setTimeout(function () {
-                masonry.masonry('layout')
-            }, 1000)
-        })
-    </script>
+  <script src="{% static 'js/worlds_detail.js' %}"></script>
+  <script>
+      $(function () {
+          let masonry = $('.masonry-container').masonry()
+          setTimeout(function () {
+              masonry.masonry('layout')
+          }, 1000)
+      })
+  </script>
+{% endblock %}
+
+{% block bottom_nav %}
+  {% bottom_navigation_button "worlds/_navigation.html" %}
 {% endblock %}
 
 {% block background %}{% if world.image %}{% thumbnail world.image "1900" as im %}{{ im.url }}{% endthumbnail %}
 {% else %}{% static 'img/default-background.jpg' %}{% endif %}{% endblock %}
 
 {% block background_copyright %}
-    Image by <a href="{{ world.type.image_copyright_url }}">{{ world.image_copyright }}</a>
+  Image by <a href="{{ world.type.image_copyright_url }}">{{ world.image_copyright }}</a>
 {% endblock %}
 
 {% block title %}{{ world }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ world }}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
 
 {% block content %}
-    <div class="row d-block d-xl-none">
-        <div class="col">
-            <div class="text-center d-flex flex-column justify-content-center align-items-center">
-                <img src="{{ world.brand_logo.url }}" class="img-fluid w-50" alt="{{ brand_name }}">
-                <h1 class="mt-2">{{ brand_name }}</h1>
-                <h3 class="mb-4">{% trans "Free online pen and paper rpg" %}</h3>
-            </div>
-        </div>
-    </div>
+  <div class="d-none d-xl-flex justify-content-between">
+    {% if may_edit %}
+      <div>
+      </div>
+    {% endif %}
+  </div>
 
-    <div class="d-none d-xl-flex justify-content-between">
-        <h1>{{ world.name }}</h1>
-        {% if may_edit %}
-            <div>
-                <a
-                        class="btn btn-warning me-1 float-end modal-trigger"
-                        data-url="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}"
-                        title="{% trans 'Create Wiki Page' %}"
-                        data-bs-toggle="modal"
-                        data-modal-title="{% trans 'Create Wiki Page' %}"
-                        data-bs-target=".page-modal"
-                        href=""><i class="fa fa-plus"></i> {% trans 'Create Page' %}</a>
-                <button type="button"
-                        data-sidebar-url="{% url 'worlds:xhr_world_sort_sidebar' slug=world.slug sidebar_template="sort_sub_pages" %}"
-                        data-sidebar-title="{% trans 'Sort Subpages' %}"
-                        class="btn btn-primary float-end me-md-1 sidebar-trigger">
-                    <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
-                </button>
-            </div>
-        {% endif %}
-    </div>
+  <div class="row">
+  <div class="col-12 col-xl-3 d-none d-xl-block">
+    {% include 'worlds/_navigation.html' with object=object may_edit=may_edit %}
+  </div>
 
-    <div class="row mt-4">
-        <div class="col-12 wiki-page">
-            {{ world.description_1|urpg_markup|replace_wiki_tags:world }}
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-12 wiki-page">
-            {{ world.description_2|urpg_markup|replace_wiki_tags:world }}
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-12 wiki-page">
-            {{ world.description_3|urpg_markup|replace_wiki_tags:world }}
-        </div>
-    </div>
+  <div class="col-12 col-xl-9 wiki-page">
+    {{ world.description_1|urpg_markup|replace_wiki_tags:world }}
+    {{ world.description_2|urpg_markup|replace_wiki_tags:world }}
+    {{ world.description_3|urpg_markup|replace_wiki_tags:world }}
 
     <div class="row masonry-container">
-        {% for page in world.wikipage_set.get_top_level %}
-            <div class="col col-md-6 col-xl-4">
-                <a class="stretched-link" href="{% url 'world:wiki_page' world_slug=world.slug slug=page.slug %}"></a>
-                <div class="card pointer mt-3">
-                    <div class="card-header">
-                        {{ page }}
-                    </div>
-                    {% if page.image %}
-                        {% thumbnail page.image "1024" as im %}
-                            <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
-                        {% endthumbnail %}
-                    {% endif %}
-                    <div class="card-body">
-                        {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:world }}
-                    </div>
-                    {% if user.is_superuser %}
-                        <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
-                           style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                    {% endif %}
-                </div>
+      {% for page in world.wikipage_set.get_top_level %}
+        <div class="col col-md-6">
+          <a class="stretched-link" href="{% url 'world:wiki_page' world_slug=world.slug slug=page.slug %}"></a>
+          <div class="card pointer mt-3">
+            <div class="card-header">
+              {{ page }}
             </div>
-        {% endfor %}
+            {% if page.image %}
+              {% thumbnail page.image "1024" as im %}
+                <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
+              {% endthumbnail %}
+            {% endif %}
+            <div class="card-body">
+              {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:world }}
+            </div>
+            {% if user.is_superuser %}
+              <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
+                 style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
     </div>
+  </div>
+
 {% endblock %}

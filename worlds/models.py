@@ -1,6 +1,6 @@
 import reversion
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -101,12 +101,6 @@ class World(models.Model, metaclass=TransMeta):
         related_name="foe_overview_world_set",
     )
 
-    index_template = models.CharField(
-        _("Index Template"),
-        max_length=40,
-        choices=INDEX_TEMPLATE_CHOICES,
-        default="index.html",
-    )
     scss_file = models.CharField(
         _("SCSS File"),
         max_length=40,
@@ -140,6 +134,19 @@ class World(models.Model, metaclass=TransMeta):
     def get_absolute_url(self):
         return reverse("worlds:detail", args=[self.slug])
 
+    @property
+    def world(self):
+        """Used to unify the navigation"""
+        return self
+
+    def is_subpage_of(self, parent):
+        """Used to unify the navigation"""
+        return False
+
+    def is_world(self):
+        """Used to unify the navigation"""
+        return True
+
     def get_image(self):
         if self.image:
             return {
@@ -157,6 +164,15 @@ class World(models.Model, metaclass=TransMeta):
     @property
     def scss_file_static(self):
         return static(self.scss_file)
+
+
+class WorldLeadImage(models.Model):
+    world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
+    image = models.ImageField(_("image"), upload_to="world_lead_images", max_length=256)
+
+    class Meta:
+        verbose_name = _("world lead image")
+        verbose_name_plural = _("world lead images")
 
 
 class WikiPageQuerySet(models.QuerySet):
@@ -276,6 +292,15 @@ class WikiPage(models.Model, metaclass=TransMeta):
             return self.parent.get_image()
 
         return self.world.get_image()
+
+    def is_subpage_of(self, parent):
+        if self == parent:
+            return True
+        if self.parent == parent:
+            return True
+        if self.parent:
+            return self.parent.is_subpage_of(parent)
+        return False
 
 
 @reversion.register

@@ -1,25 +1,46 @@
 from django.template import Library
+from django.template.loader import render_to_string
 from django.urls import reverse
 
 register = Library()
 
 
+@register.simple_tag
+def profile_image_url(profile, geometry="100x100", crop="center"):
+    return profile.get_image_url(geometry, crop)
+
+
+@register.simple_tag
+def profile_backdrop_image_url(profile, geometry="100x100", crop="center"):
+    return profile.get_backdrop_image_url(geometry, crop)
+
+
+@register.filter
+def genitive_ending(value):
+    if not isinstance(value, str):
+        return value
+    if value.endswith("s") or value.endswith("x"):
+        return f"{value}’"
+    return f"{value}s"
+
+
 @register.simple_tag(takes_context=True)
-def active_if_url_name_matches(context, url_name, **kwargs):
+def active_if_url_name_matches(context, url_name_list, **kwargs):
     resolver_match = context["request"].resolver_match
 
-    try:
-        app_name, name = url_name.split(":")
-    except ValueError:
-        if resolver_match.url_name == url_name:
-            if kwargs is not None and resolver_match.kwargs != kwargs:
-                return ""
-            return "active"
-    else:
-        if app_name in resolver_match.app_name and resolver_match.url_name == name:
-            if kwargs is not None and resolver_match.kwargs != kwargs:
-                return ""
-            return "active"
+    for url_name in url_name_list.split(","):
+        try:
+            app_name, name = url_name.split(":")
+        except ValueError:
+            if resolver_match.url_name == url_name:
+                if kwargs is not None and resolver_match.kwargs != kwargs:
+                    return ""
+                return "active"
+        else:
+            if app_name in resolver_match.app_name and resolver_match.url_name == name:
+                if kwargs and resolver_match.kwargs != kwargs:
+                    return ""
+                return "active"
     return ""
 
 
@@ -54,3 +75,9 @@ def create_character_url(context):
             "epoch_pk": world.extension.fixed_epoch.id,
         },
     )
+
+
+@register.simple_tag(takes_context=True)
+def bottom_navigation_button(context, template_include):
+    context.update({"template_include": template_include})
+    return render_to_string("portal/_bottom_navigation_button.html", context.flatten())

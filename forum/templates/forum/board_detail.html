@@ -1,99 +1,89 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load rules_extras %}
 {% load i18n django_bootstrap5 static thumbnail %}
 
 {% block title %}{{ board }} - Forum - {{ block.super }}{% endblock %}
 
-{% block javascript %}
-    <script>
-        $(function () {
-            $('#switch-subscribe').on('change', function (e) {
-                $.post(
-                    $(this).data('url'),
-                    {
-                        value: $(this).prop('checked'),
-                        object: $(this).data('object')
-                    },
-                    function (data) {
+{% block in_page_title %}{{ board }}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
 
-                    }
-                )
-            })
-        });
-    </script>
+{% block bottom_nav %}
+  {% bottom_navigation_button "forum/_navigation.html" %}
+{% endblock %}
+
+{% block javascript %}
+  <script>
+      $(function () {
+          $('#switch-subscribe').on('change', function (e) {
+              $.post(
+                  $(this).data('url'),
+                  {
+                      value: $(this).prop('checked'),
+                      object: $(this).data('object')
+                  },
+                  function (data) {
+
+                  }
+              )
+          })
+      });
+  </script>
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12 col-xl-10 offset-xl-1 mb-3">
-            {% if user.is_authenticated %}
-                <button
-                    data-bs-toggle="collapse"
-                    data-bs-target="#new-thread-collapse"
-                    class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Create Thread' %}</button>
-                <div class="form-check form-switch float-end">
-                    <input
-                        type="checkbox"
-                        {% if is_subscribed %}checked{% endif %}
-                        class="form-check-input"
-                        id="switch-subscribe"
-                        data-url="{% url 'forum:subscribe' mode="board" %}"
-                        data-object="{{ object.id }}">
-                    <label class="form-check-label" for="switch-subscribe">{% trans "Subscribe" %}</label>
-                </div>
-            {% endif %}
-            <a href="{% url 'forum:index' %}">{% trans 'Forum' %}</a> / {{ object.name }}
-        </div>
-
-        <div class="col-12 col-xl-10 offset-xl-1 mb-3">
-            {% if user.is_authenticated %}
-                <div class="collapse card mb-4" id="new-thread-collapse">
-                    <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <small class="float-end"><a
-                                href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
-                            {% bootstrap_form form %}
-                            <div class="btn-group" role="group">
-                                <button type="submit"
-                                        class="btn btn-primary mb-2 mt-2">{% trans 'Create Thread' %}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            {% endif %}
-
-            {% for thread in object.thread_set.all %}
-                <div class="card mb-4 forum-thread-detail-post-card">
-                    <div class="card-header">
-                        {% latest_user_image thread.created_by as image %}
-                        {% if image %}
-                            {% thumbnail image "28x28" as im %}
-                                <img
-                                    class="rounded-circle me-1"
-                                    style="width: 28px; height: 28px"
-                                    src="{{ im.url }}"
-                                    alt="{{ thread.created_by }}">
-                            {% endthumbnail %}
-                        {% endif %}
-                        <a class="no-link-colors" href="{{ thread.get_absolute_url }}">{{ thread.name }}</a>
-                        |
-                        {% blocktrans with t_created_by=thread.created_by t_timesince=thread.created_at|timesince %}
-                            <b>{{ t_created_by }}</b> <span class="small text-muted">{{ t_timesince }} ago</span>
-                        {% endblocktrans %}
-                    </div>
-                    <div class="card-body pointer">
-                        <a href="{{ thread.get_absolute_url }}" class="stretched-link"></a>
-                        {{ thread.earliest_post.text|urpg_markup }}
-                    </div>
-                    <div class="card-footer">
-                        <a href="{{ thread.get_absolute_url }}" class="card-link">{{ thread.post_count }}
-                            comment{{ thread.post_count|pluralize }}</a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'forum/_navigation.html' %}
     </div>
 
+    <div class="col-12 col-xl-9">
+      {% if user.is_authenticated %}
+        <div class="collapse card mb-4" id="new-thread-collapse">
+          <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <small class="float-end"><a
+                      href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
+              {% bootstrap_form form %}
+              <div class="btn-group" role="group">
+                <button type="submit"
+                        class="btn btn-primary mb-2 mt-2">{% trans 'Create Thread' %}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      {% endif %}
 
+      {% for thread in object.thread_set.all %}
+        <div class="card mb-4 forum-thread-detail-post-card">
+          <div class="card-header">
+            {% latest_user_image thread.created_by as image %}
+            {% if image %}
+              {% thumbnail image "28x28" as im %}
+                <img
+                        class="rounded-circle me-1"
+                        style="width: 28px; height: 28px"
+                        src="{{ im.url }}"
+                        alt="{{ thread.created_by }}">
+              {% endthumbnail %}
+            {% endif %}
+            <a class="no-link-colors" href="{{ thread.get_absolute_url }}">{{ thread.name }}</a>
+            |
+            {% blocktrans with t_created_by=thread.created_by t_timesince=thread.created_at|timesince %}
+              <b>{{ t_created_by }}</b> <span class="small text-muted">{{ t_timesince }} ago</span>
+            {% endblocktrans %}
+          </div>
+          <div class="card-body pointer">
+            <a href="{{ thread.get_absolute_url }}" class="stretched-link"></a>
+            {{ thread.earliest_post.text|urpg_markup }}
+          </div>
+          <div class="card-footer">
+            <a href="{{ thread.get_absolute_url }}" class="card-link">{{ thread.post_count }}
+              comment{{ thread.post_count|pluralize }}</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

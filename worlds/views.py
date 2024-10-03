@@ -6,10 +6,18 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, ListView
 
 from worlds.forms import WikiPageForm, WikiPageTextForm
 from worlds.models import World, WikiPage
+
+
+class WorldListView(ListView):
+    model = World
+    template_name = "worlds/world_list.html"
+
+    def get_queryset(self):
+        return World.objects.filter(is_active=True)
 
 
 class WorldDetailView(DetailView):
@@ -193,7 +201,9 @@ class XhrUploadImageView(View):
             wiki_page.image_copyright = request.POST.get("copyright")
             wiki_page.image_copyright_url = request.POST.get("copyright-url")
             wiki_page.save()
-            wiki_page.image.save(request.FILES.get('file').name, request.FILES.get('file'))
+            wiki_page.image.save(
+                request.FILES.get("file").name, request.FILES.get("file")
+            )
         return JsonResponse({"status": "ok"})
 
 
@@ -254,4 +264,5 @@ class WikiPageWithGameValuesView(TemplateView):
                 world=self.request.world_configuration.world
             )
         context["object_list"] = object_list
+        context["navigation"] = "wiki_page_with_game_values"
         return context

@@ -1,42 +1,60 @@
 {% extends 'base.html' %}
+{% load portal_extras %}
 {% load static i18n characters_extras rules_extras thumbnail %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ object }}{% endblock %}
+{% block in_page_subtitle %}{{ object.type }} ({{ object.variant }}) - {{ object.origin }}{% endblock %}
+
+{% block bottom_nav %}
+  {% bottom_navigation_button "armory/_navigation.html" %}
+{% endblock %}
+
 
 {% block background %}{% thumbnail object.origin.image '1900' as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
 
 {% block background_copyright %}
-    Image by <a href="{{ object.origin.image_copyright_url }}">{{ object.origin.image_copyright }}</a>
+  Image by <a href="{{ object.origin.image_copyright_url }}">{{ object.origin.image_copyright }}</a>
 {% endblock %}
 
 {% block content %}
-    <h1>{{ object }}</h1>
-    <p class="text-muted">{{ object.type }} ({{ object.variant }}) - {{ object.origin }}</p>
-    <div class="row">
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
+    </div>
+
+    <div class="col-12 col-xl-9">
+      <div class="row">
         <div class="col-12 col-sm-4 col-md-3">
-            <div class="card">
-                {% thumbnail object.origin.image '1024' as im %}
-                    <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
-                {% endthumbnail %}
-            </div>
+          <div class="card">
+            {% thumbnail object.origin.image '1024' as im %}
+              <img class="card-img-top rounded" src="{{ im.url }}" alt="{{ object }}"/>
+            {% endthumbnail %}
+          </div>
         </div>
 
         <div class="col-12 col-sm-8 col-md-9">
-            <div class="col-12 mb-3">
-                {{ object.rules|urpg_markup }}
-                {% trans 'Spell Point Cost' %}: {% color_value_span object.spell_point_cost 8 invert=True %}<br>
-            </div>
+          <div class="col-12 mb-3">
+            {{ object.rules|urpg_markup }}
+            {% trans 'Spell Point Cost' %}: {% color_value_span object.spell_point_cost 8 invert=True %}<br>
+          </div>
 
-            <div class="col-12">
-                <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ object.origin }}<br>
-                <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ object.type.reference_attribute.name }}<br>
-                <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
-                {% for a in object.arcana_cost|to_range %}<i class="fas fa-magic text-warning" ></i>{% endfor %}<br>
-                <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span object.power 4 %}<br>
-                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span object.range 4 %}<br>
-                <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ object.shape|default:"-" }}<br>
-                <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span object.actions 3 invert=True %}<br>
-            </div>
+          <div class="col-12">
+            <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ object.origin }}<br>
+            <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ object.type.reference_attribute.name }}<br>
+            <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
+            {% for a in object.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
+            <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span object.range 4 %}<br>
+            <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ object.shape|default:"-" }}<br>
+            <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span object.actions 3 invert=True %}<br>
+            {% trans "Instant" as t_duration %}
+            <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ object.duration|default:t_duration }}
+            {% if object.duration %}{{ object.get_duration_unit_display }}{% endif %}
+                    {% if basespell.needs_concentration %}
+                      <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 {% endblock %}

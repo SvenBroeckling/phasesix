@@ -8,10 +8,17 @@ class CharacterTemplateInline(admin.TabularInline):
 
 
 class CharacterAdmin(admin.ModelAdmin):
-    list_display = 'name', 'may_appear_on_start_page', 'created_by', 'campaign', 'reputation'
-    list_editable = 'may_appear_on_start_page',
-    list_filter = 'created_by', 'campaign', 'extensions'
-    search_fields = 'name',
+    list_display = (
+        "name",
+        "may_appear_on_start_page",
+        "created_by",
+        "campaign",
+        "npc_campaign",
+        "reputation",
+    )
+    list_editable = "may_appear_on_start_page", "campaign", "npc_campaign"
+    list_filter = "campaign", "extensions", "npc_campaign", "created_by"
+    search_fields = ("name",)
     inlines = [CharacterTemplateInline]
 
 

@@ -2,42 +2,52 @@
 {% load rules_extras %}
 {% load i18n %}
 {% for s in object.characterspell_set.all %}
-    <div class="col mb-2">
-        <div
+  <div class="col mb-2">
+    <div
             data-sidebar-title="{{ s.name }}"
             data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}"
             class="card mb-2 sidebar-trigger">
-            <div class="card-header">
-                <span class="badge bg-dark float-end ms-2" title="{% trans 'Spell point cost' %}">{{ s.spell_point_cost }}</span>
-                <span class="text-muted float-end">{{ s.spell_type }} / {{ s.variant }}</span>
-                {{ s }}
-            </div>
-            <div class="card-body">
-                {% if s.is_ritual %}
-                    <span class="text-muted text-center">{% trans 'Ritual' %}</span>
-                {% endif %}
-                <p>
-                    {{ s.spell.rules|urpg_markup }}
-                </p>
-                {% spell_type_attribute_dice_value object s.spell_type as dice %}
-                <i class="fas fa-dice-five fa-fw"></i> {{ object.characterskill_set.spell_casting_skill.skill.name }}: {% color_value_span dice 5 %} <small class="text-muted">{{ s.spell_type.reference_attribute.name }}</small><br>
-                <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
-                {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
-                <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
-                <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
-                <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ s.shape|default:"-" }}<br>
-                <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
-                {% if user.is_superuser %}
-                    <a href="{% url 'admin:magic_basespell_change' s.spell.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                {% endif %}
-            </div>
-            {% if s.characterspelltemplate_set.exists %}
-                <ul class="list-group list-group-flush">
-                    {% for st in s.characterspelltemplate_set.all %}
-                        <li class="list-group-item"><i class="fas fa-puzzle-piece fa-fw"></i> {{ st }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
+      <div class="card-header">
+        <span class="badge bg-dark float-end ms-2"
+              title="{% trans 'Spell point cost' %}">{{ s.spell_point_cost }}</span>
+        <span class="text-muted float-end">{{ s.spell_type }} / {{ s.variant }}</span>
+        {{ s }}
+      </div>
+      <div class="card-body">
+        {% if s.is_ritual %}
+          <span class="text-muted text-center">{% trans 'Ritual' %}</span>
+        {% endif %}
+        <p>
+          {{ s.spell.rules|urpg_markup }}
+        </p>
+        {% spell_type_attribute_dice_value object s.spell_type as dice %}
+        <i class="fas fa-dice-five fa-fw"></i> {{ object.characterskill_set.spell_casting_skill.skill.name }}: {% color_value_span dice 5 %}
+        <small class="text-muted">{{ s.spell_type.reference_attribute.name }}</small><br>
+        <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
+        {% for a in s.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
+        <i class="fas fa-bolt fa-fw"></i> {% trans 'Power' %}: {% color_value_span s.power 4 %}<br>
+        <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span s.range 4 %}<br>
+        <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ s.shape|default:"-" }}<br>
+        <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span s.actions 3 invert=True %}<br>
+
+        {% trans "Instant" as t_duration %}
+        <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}:
+        {{ s.duration|default:t_duration }} {% if s.duration %}{{ s.get_duration_unit_display }}{% endif %}
+        {% if s.needs_concentration %}
+          <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+
+        {% if user.is_superuser %}
+          <a href="{% url 'admin:magic_basespell_change' s.spell.id %}"
+             style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+        {% endif %}
+      </div>
+      {% if s.characterspelltemplate_set.exists %}
+        <ul class="list-group list-group-flush">
+          {% for st in s.characterspelltemplate_set.all %}
+            <li class="list-group-item"><i class="fas fa-puzzle-piece fa-fw"></i> {{ st }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     </div>
+  </div>
 {% endfor %}

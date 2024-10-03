@@ -415,6 +415,7 @@ class RiotGearType(models.Model, metaclass=TransMeta):
     objects = RiotGearTypeQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=256)
+    is_shield = models.BooleanField(_("is shield"), default=False)
     description = models.TextField(_("description"), blank=True, null=True)
     ordering = models.IntegerField(_("ordering"), default=10)
 
@@ -466,6 +467,10 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    @property
+    def shield_cover(self):
+        return 7 - self.protection_ballistic
+
 
 class CurrencyMap(models.Model):
     name = models.CharField(_("name"), max_length=20)
@@ -474,7 +479,7 @@ class CurrencyMap(models.Model):
         return self.name
 
 
-class CurrencyMapUnit(models.Model):
+class CurrencyMapUnit(models.Model, metaclass=TransMeta):
     FA_ICON_CLASS_CHOICES = (
         ("fas fa-coins", _("Coins")),
         ("fas fa-euro-sign", _("Euro")),
@@ -485,6 +490,7 @@ class CurrencyMapUnit(models.Model):
         ("fas fa-shekel-sign", _("Shekel")),
         ("fas fa-yen-sign", _("Yen")),
         ("fas fa-won-sign", _("Won")),
+        ("fas fa-cubes", _("Cubes")),
     )
     COLOR_CLASS_CHOICES = (
         ("text-white", _("White")),
@@ -496,6 +502,15 @@ class CurrencyMapUnit(models.Model):
     )
     currency_map = models.ForeignKey(CurrencyMap, on_delete=models.CASCADE)
     name = models.CharField(_("name"), max_length=20)
+
+    value = models.DecimalField(
+        _("value"),
+        max_digits=6,
+        decimal_places=2,
+        default=1,
+        help_text=_("Value in relation to the common unit."),
+    )
+
     color_class = models.CharField(
         max_length=30, default="text-warning", choices=COLOR_CLASS_CHOICES
     )
@@ -513,6 +528,7 @@ class CurrencyMapUnit(models.Model):
     ordering = models.IntegerField(_("ordering"), default=10)
 
     class Meta:
+        translate = ("name",)
         get_latest_by = ("id",)
         ordering = ("-ordering",)
 

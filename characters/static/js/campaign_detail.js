@@ -1,10 +1,11 @@
 $('.campaign-link').on('click', function (e) {
     let elem = $(this)
-    let orig_text = elem.text()
+    let text = $(this).find(".invite-text")
+    let orig_text = text.text()
     copyTextToClipboard(elem.attr('href'))
 
-    elem.text(elem.data('msg'))
-    setTimeout(() => elem.text(orig_text), 1000)
+    text.text(elem.data('msg'))
+    setTimeout(() => text.text(orig_text), 2000)
 
     e.preventDefault()
     return false
@@ -18,7 +19,10 @@ $('table.campaign-status-sortable').tablesorter({
     }
 })
 
-$('a.nav-link').on('click', function(e){
-    let selector = `${$(this).attr('href')} > div.row.homebrew-container`
-    $(selector).masonry({percentPosition: true})
+let body = $('body')
+body.on('click', 'a[data-bs-toggle="tab"]', function (e) {
+    let target = $(e.target).closest('a[data-bs-toggle="tab"]').attr('data-bs-target')
+    if (target) {
+        $(target).find('.masonry-container').masonry({percentPosition: true})
+    }
 })

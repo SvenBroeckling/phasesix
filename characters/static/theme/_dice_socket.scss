@@ -7,18 +7,15 @@
 }
 
 .ws-dice-result span {
-  padding: 3px 1px 0 1px;
   height: 25px;
-  margin: 0 1px;
 }
 
 .ws-dice-result span.dice-box {
-  padding: 3px 5px 0 5px;
   min-width: 25px;
 }
 
 .ws-dice-result span.crit {
-  background-color: $warning;
+  animation: glowing 5000ms infinite;
   color: black;
 }
 
@@ -33,4 +30,19 @@
 
 .ws-dice-result span.fail {
   background-color: $secondary;
+}
+
+@keyframes glowing {
+  0% {
+    background-color: #aaaa00;
+    box-shadow: 0 0 1px #aaaa00;
+  }
+  50% {
+    background-color: #FFFF00;
+    box-shadow: 0 0 15px #FFFF00;
+  }
+  100% {
+    background-color: #aaaa00;
+    box-shadow: 0 0 1px #aaaa00;
+  }
 }

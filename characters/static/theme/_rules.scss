@@ -1,14 +1,5 @@
-@media only screen and (min-width: 768px) {
-  .rules .columns {
-    column-count: 2;
-    hyphens: auto;
-  }
-}
-
-.rules .columns {
-  column-gap: 2em;
-  line-height: 1.5;
-  hyphens: auto;
+.rules {
+  font-size: large;
 }
 
 .rules p:empty {
@@ -21,6 +12,7 @@
 
 .rules p {
   text-align: justify;
+  hyphens: auto;
 }
 
 .rules blockquote {

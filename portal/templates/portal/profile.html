@@ -5,165 +5,161 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% blocktrans with t_username=object.username|capfirst %}Profile of {{ t_username }}{% endblocktrans %}
-    - {{ block.super }}{% endblock %}
+{% block title %}{{ object.username|capfirst }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ object.username|capfirst }}{% endblock %}
+{% block in_page_subtitle %}{% trans "Member since" %} {{ object.date_joined|date:"Y" }}{% endblock %}
+
+{% block bottom_nav %}
+  {% bottom_navigation_button "portal/_navigation.html" %}
+{% endblock %}
 
 {% block content %}
-    <h1>{% blocktrans with t_username=object.username|capfirst %}Profile of {{ t_username }}{% endblocktrans %}</h1>
-
-    <div class="row mb-3 mt-3">
-        <div class="col-12">
-            <nav class="nav nav-pills" role="tablist">
-                <a data-bs-toggle="tab"
-                   data-bs-target="#characters-tab-pane"
-                   role="tab"
-                   class="nav-link pointer me-2 mb-1 active">{% trans 'Characters' %}</a>
-                <a data-bs-toggle="tab"
-                   data-bs-target="#gm-campaigns-tab-pane"
-                   role="tab"
-                   class="nav-link pointer me-2 mb-1">{% trans 'GM Campaigns' %}</a>
-                <a data-bs-toggle="tab"
-                   data-bs-target="#more-tab-pane"
-                   role="tab"
-                   class="nav-link pointer me-2 mb-1">{% trans 'More' %}</a>
-            </nav>
-        </div>
+  <div class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include "portal/_navigation.html" with object=object %}
     </div>
-
-    <div class="tab-content">
+    <div class="col-12 col-xl-9">
+      <div class="tab-content">
         <div class="tab-pane fade show active" id="characters-tab-pane" role="tabpanel" tabindex="0">
-            {% if object.character_set.exists %}
-                <div class="row character-list">
-                    {% for character in object.character_set.all|for_world_configuration:request.world_configuration %}
-                        <div class="col-12 col-sm-6 col-md-6 mb-3">
-                            {% include 'characters/_character_list_widget.html' with character=character %}
-                        </div>
-                    {% endfor %}
+          {% if object.character_set.exists %}
+            <div class="row character-list">
+              {% for character in object.character_set.all|for_world_configuration:request.world_configuration %}
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
+                  {% include 'characters/_character_list_widget.html' with character=character %}
                 </div>
-            {% else %}
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center p-5">
-                                <h4 class="mb-3">{% trans "You don't have any characters" %}</h4>
-                                {% create_character_url as character_url %}
-                                {% blocktrans with t_character_url=character_url %}
-                                    <a href="{{ t_character_url }}">Create a character</a>.
-                                {% endblocktrans %}
-                            </div>
-                        </div>
-                    </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body text-center p-5">
+                    <h4 class="mb-3">{% trans "You don't have any characters" %}</h4>
+                    {% create_character_url as character_url %}
+                    {% blocktrans with t_character_url=character_url %}
+                      <a href="{{ t_character_url }}">Create a character</a>.
+                    {% endblocktrans %}
+                  </div>
                 </div>
-            {% endif %}
+              </div>
+            </div>
+          {% endif %}
         </div>
 
         <div class="tab-pane fade" id="gm-campaigns-tab-pane" role="tabpanel" tabindex="0">
-            {% if object.campaign_set.exists %}
-                <div class="row campaign-list">
-                    {% for campaign in object.campaign_set.all|for_world_configuration:request.world_configuration %}
-                        <div class="col-12 col-md-6 mb-3">
-                            {% include 'campaigns/_campaign_list_widget.html' with campaign=campaign %}
-                        </div>
-                    {% endfor %}
+          {% if object.campaign_set.exists %}
+            <div class="row campaign-list">
+              {% for campaign in object.campaign_set.all|for_world_configuration:request.world_configuration %}
+                <div class="col-12 col-md-6 mb-3">
+                  {% include 'campaigns/_campaign_list_widget.html' with campaign=campaign %}
                 </div>
-            {% else %}
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center p-5">
-                                <h4 class="mb-3">{% trans "You don't have any campaigns" %}</h4>
-                                {% create_campaign_url as campaign_url %}
-                                {% blocktrans with t_campaign_url=campaign_url %}
-                                    <a href="{{ t_campaign_url }}">Create a campaign</a> to invite players and add NPC
-                                    and foes.
-                                {% endblocktrans %}
-                            </div>
-                        </div>
-                    </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body text-center p-5">
+                    <h4 class="mb-3">{% trans "You don't have any campaigns" %}</h4>
+                    {% create_campaign_url as campaign_url %}
+                    {% blocktrans with t_campaign_url=campaign_url %}
+                      <a href="{{ t_campaign_url }}">Create a campaign</a> to invite players and
+                      add NPC
+                      and foes.
+                    {% endblocktrans %}
+                  </div>
                 </div>
-            {% endif %}
+              </div>
+            </div>
+          {% endif %}
         </div>
 
         <div class="tab-pane fade" id="more-tab-pane" role="tabpanel" tabindex="0">
-            <div class="row">
+          <div class="row">
 
-                {% if request.user.is_superuser %}
-                    <div class="col-12 col-md-6 mb-3">
-                        <a href="{% url 'admin:index' %}" class="no-decoration">
-                            <div class="position-relative profile-cta">
-                                <img src="{% static "img/profile_cta_images/profile_admin.png" %}" alt="admin"
-                                     class="img img-fluid rounded">
-                                <div class="profile-cta-text w-100 p-2">{% trans "Admin" %}</div>
-                            </div>
-                        </a>
-                    </div>
-                {% endif %}
+            {% if request.user.is_superuser %}
+              <div class="col-12 col-md-6 mb-3">
+                <a href="{% url 'admin:index' %}" class="no-decoration">
+                  <div class="position-relative profile-cta">
+                    <img src="{% static "img/profile_cta_images/profile_admin.png" %}" alt="admin"
+                         class="img img-fluid rounded">
+                    <div class="profile-cta-text w-100 p-2">{% trans "Admin" %}</div>
+                  </div>
+                </a>
+              </div>
+            {% endif %}
 
-                <div class="col-12 col-md-6 mb-3">
-                    <a href="{% url "portal:wrapup" pk=user.id %}" class="no-decoration">
-                        <div class="position-relative profile-cta">
-                            <img src="{% static "img/profile_cta_images/profile_wrapup.png" %}" alt="wrapup"
-                                 class="img img-fluid rounded">
-                            <div class="profile-cta-text w-100 p-2">{% trans "2023 WrapUp" %}</div>
-                        </div>
-                    </a>
+            <div class="col-12 col-md-6 mb-3">
+              <a href="{% url "portal:wrapup" pk=user.id %}" class="no-decoration">
+                <div class="position-relative profile-cta">
+                  <img src="{% static "img/profile_cta_images/profile_wrapup.png" %}" alt="wrapup"
+                       class="img img-fluid rounded">
+                  <div class="profile-cta-text w-100 p-2">{% trans "2023 WrapUp" %}</div>
                 </div>
-
-                {% if request.user.is_superuser %}
-                    <div class="col-12 col-md-6 mb-3">
-                        <a href="{% url 'gmtools:extension_grid' type='riotgear' %}" class="no-decoration">
-                            <div class="position-relative profile-cta">
-                                <img src="{% static "img/profile_cta_images/profile_extension_grid.png" %}" alt="admin"
-                                     class="img img-fluid rounded">
-                                <div class="profile-cta-text w-100 p-2">{% trans "Extension Grids" %}</div>
-                            </div>
-                        </a>
-                    </div>
-                {% endif %}
-
-                <div class="col-12 col-md-6 mb-3">
-                    <a href="{% url 'gmtools:template_statistics' %}" class="no-decoration">
-                        <div class="position-relative profile-cta">
-                            <img src="{% static "img/profile_cta_images/profile_template_statistics.png" %}" alt="admin"
-                                 class="img img-fluid rounded">
-                            <div class="profile-cta-text w-100 p-2">{% trans "Template Statistics" %}</div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-12 col-md-6 mb-3">
-                    <a href="{% url 'gmtools:translation_status' %}" class="no-decoration">
-                        <div class="position-relative profile-cta">
-                            <img src="{% static "img/profile_cta_images/profile_translation_status.png" %}" alt="admin"
-                                 class="img img-fluid rounded">
-                            <div class="profile-cta-text w-100 p-2">{% trans "Translation Status" %}</div>
-                        </div>
-                    </a>
-                </div>
-
-                {% if request.user.is_superuser %}
-                    <div class="col-12 col-md-6 mb-3">
-                        <a href="{% url 'homebrew:index' %}" class="no-decoration">
-                            <div class="position-relative profile-cta">
-                                <img src="{% static "img/profile_cta_images/profile_homebrew_review.png" %}" alt="admin"
-                                     class="img img-fluid rounded">
-                                <div class="profile-cta-text w-100 p-2">{% trans "Review Homebrew" %}</div>
-                            </div>
-                        </a>
-                    </div>
-                {% endif %}
-
-                <div class="col-12 col-md-6 mb-3">
-                    <a href="{% url "gmtools:roll_statistics" %}" class="no-decoration">
-                        <div class="position-relative profile-cta">
-                            <img src="{% static "img/profile_cta_images/profile_roll_statistics.png" %}" alt="admin"
-                                 class="img img-fluid rounded">
-                            <div class="profile-cta-text w-100 p-2">{% trans "Roll Statistics" %}</div>
-                        </div>
-                    </a>
-                </div>
+              </a>
             </div>
-        </div>
-    </div>
 
+            {% if request.user.is_superuser %}
+              <div class="col-12 col-md-6 mb-3">
+                <a href="{% url 'gmtools:extension_grid' type='riotgear' %}" class="no-decoration">
+                  <div class="position-relative profile-cta">
+                    <img src="{% static "img/profile_cta_images/profile_extension_grid.png" %}"
+                         alt="admin"
+                         class="img img-fluid rounded">
+                    <div class="profile-cta-text w-100 p-2">{% trans "Extension Grids" %}</div>
+                  </div>
+                </a>
+              </div>
+            {% endif %}
+
+            <div class="col-12 col-md-6 mb-3">
+              <a href="{% url 'gmtools:template_statistics' %}" class="no-decoration">
+                <div class="position-relative profile-cta">
+                  <img src="{% static "img/profile_cta_images/profile_template_statistics.png" %}"
+                       alt="admin"
+                       class="img img-fluid rounded">
+                  <div class="profile-cta-text w-100 p-2">{% trans "Template Statistics" %}</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <a href="{% url 'gmtools:translation_status' %}" class="no-decoration">
+                <div class="position-relative profile-cta">
+                  <img src="{% static "img/profile_cta_images/profile_translation_status.png" %}"
+                       alt="admin"
+                       class="img img-fluid rounded">
+                  <div class="profile-cta-text w-100 p-2">{% trans "Translation Status" %}</div>
+                </div>
+              </a>
+            </div>
+
+            {% if request.user.is_superuser %}
+              <div class="col-12 col-md-6 mb-3">
+                <a href="{% url 'homebrew:index' %}" class="no-decoration">
+                  <div class="position-relative profile-cta">
+                    <img src="{% static "img/profile_cta_images/profile_homebrew_review.png" %}"
+                         alt="admin"
+                         class="img img-fluid rounded">
+                    <div class="profile-cta-text w-100 p-2">{% trans "Review Homebrew" %}</div>
+                  </div>
+                </a>
+              </div>
+            {% endif %}
+
+            <div class="col-12 col-md-6 mb-3">
+              <a href="{% url "gmtools:roll_statistics" %}" class="no-decoration">
+                <div class="position-relative profile-cta">
+                  <img src="{% static "img/profile_cta_images/profile_roll_statistics.png" %}"
+                       alt="admin"
+                       class="img img-fluid rounded">
+                  <div class="profile-cta-text w-100 p-2">{% trans "Roll Statistics" %}</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

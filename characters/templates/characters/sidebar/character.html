@@ -1,100 +1,100 @@
 {% load i18n django_bootstrap5 thumbnail static %}
 
 <div class="row">
-    <div class="col-12 mb-3 mt-2">
-        {% if object.image %}
-            {% thumbnail object.image "600x600" crop="center" as im %}
-                <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
-            {% endthumbnail %}
-        {% else %}
-            <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
-                 alt="{{ object.name }}">
-        {% endif %}
-    </div>
+  <div class="col-12 mb-3 mt-2">
+    {% if object.image %}
+      {% thumbnail object.image "600x600" crop="center" as im %}
+        <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
+      {% endthumbnail %}
+    {% else %}
+      <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
+           alt="{{ object.name }}">
+    {% endif %}
+  </div>
 </div>
 
 <div class="row mb-4">
-    <div class="col-12">
-        <a href="{% url 'characters:pdf' pk=object.id %}" class="btn btn-primary w-100">{% trans 'Download PDF' %}</a>
-    </div>
+  <div class="col-12">
+    <a href="{% url 'characters:pdf' pk=object.id %}" class="btn btn-primary w-100">{% trans 'Download PDF' %}</a>
+  </div>
 </div>
 
 {% if may_edit %}
-<div class="row">
+  <div class="row">
     <div class="col-12">
-        <div class="nav nav-tabs justify-content-center mb-2" role="tablist">
-            <a href="#character-sidebar-roll" role="tab" class="nav-link active"
-               data-bs-toggle="tab">{% trans 'Roll Dice' %}</a>
-            <a href="#character-sidebar-edit" role="tab" class="nav-link"
-               data-bs-toggle="tab">{% trans 'Edit Character' %}</a>
-        </div>
+      <div class="nav nav-tabs justify-content-center mb-2" role="tablist">
+        <a href="#character-sidebar-roll" role="tab" class="nav-link active"
+           data-bs-toggle="tab">{% trans 'Roll Dice' %}</a>
+        <a href="#character-sidebar-edit" role="tab" class="nav-link"
+           data-bs-toggle="tab">{% trans 'Edit Character' %}</a>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="tab-content">
+  <div class="tab-content">
     <div class="tab-pane active" id="character-sidebar-roll" role="tabpanel">
-        <div class="row">
-            <div class="col-6 mb-3 mt-3">
-                {% trans 'Initiative' %}
-            </div>
-            <div class="col-6 mb-3 mt-3">
-                <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
-                        data-dice-roll="1d6+{{ object.attributes.quickness }}"
-                        data-dice-header="{% trans 'Initiative' %}"
-                        data-dice-description="{% trans '1d6+Quickness' %}"
-                        data-dice-save-to="initiative"
-                        data-dice-character={{ object.id }}>{% trans '1d6' %}+{{ object.attributes.quickness }}
-                </button>
-            </div>
+      <div class="row">
+        <div class="col-6 mb-3 mt-3">
+          {% trans 'Initiative' %}
         </div>
-        <div class="row">
-            <div class="col-12 mb-3 mt-2">
-                {% blocktrans %}
-                    Roll a custom amount of dice here, just klick on the button with
-                    the amount you'd like to roll.
-                {% endblocktrans %}
-            </div>
-            {% with ""|center:12 as range %}
-                {% for _ in range %}
-                    <div class="col-2 mb-2">
-                        <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
-                                data-dice-roll="{{ forloop.counter }}d6"
-                                data-dice-header="{{ forloop.counter }}d6"
-                                data-dice-description="{% trans 'Custom Roll' %}"
-                                data-dice-character="{{ object.id }}">{{ forloop.counter }}
-                        </button>
-                    </div>
-                {% endfor %}
-            {% endwith %}
+        <div class="col-6 mb-3 mt-3">
+          <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+                  data-dice-roll="{{ object.attributes.quickness }}d6"
+                  data-dice-header="{% trans 'Initiative' %}"
+                  data-dice-description="{% trans '*Quickness*d6' %}"
+                  data-dice-save-to="initiative"
+                  data-dice-character={{ object.id }}>{{ object.attributes.quickness }}{% trans 'd6' %}
+          </button>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mb-3 mt-2">
+          {% blocktrans %}
+            Roll a custom amount of dice here, just klick on the button with
+            the amount you'd like to roll.
+          {% endblocktrans %}
+        </div>
+        {% with ""|center:12 as range %}
+          {% for _ in range %}
+            <div class="col-2 mb-2">
+              <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+                      data-dice-roll="{{ forloop.counter }}d6"
+                      data-dice-header="{{ forloop.counter }}d6"
+                      data-dice-description="{% trans 'Custom Roll' %}"
+                      data-dice-character="{{ object.id }}">{{ forloop.counter }}
+              </button>
+            </div>
+          {% endfor %}
+        {% endwith %}
+      </div>
     </div>
 
     <div class="tab-pane" id="character-sidebar-edit" role="tabpanel">
-        <div class="row">
-            <div class="col-12">
-                <form action="{% url 'characters:change_image' pk=character.id %}" method="post"
-                      enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% bootstrap_form character_form %}
-                    {% if may_edit and request.user.is_authenticated %}
-                        <button class="btn btn-primary btn-sm w-100 mb-1 mt-3 float-end"
-                                type="submit">{% trans 'Save' %}</button>
-                    {% endif %}
-                </form>
-            </div>
+      <div class="row">
+        <div class="col-12">
+          <form action="{% url 'characters:change_image' pk=character.id %}" method="post"
+                enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form character_form %}
+            {% if may_edit and request.user.is_authenticated %}
+              <button class="btn btn-primary btn-sm w-100 mb-1 mt-3 float-end"
+                      type="submit">{% trans 'Save' %}</button>
+            {% endif %}
+          </form>
         </div>
+      </div>
 
-        {% if may_edit and request.user.is_authenticated %}
-            <div class="row">
-                <div class="col-12">
-                    <a
-                            data-message="{% trans 'Delete character' %}: {{ object }}?"
-                            class="btn btn-danger btn-sm w-100 delete-character"
-                            href="{% url 'characters:xhr_delete' pk=object.id %}"><i
-                            class="far fa-times fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
-                </div>
-            </div>
-        {% endif %}
+      {% if may_edit and request.user.is_authenticated %}
+        <div class="row">
+          <div class="col-12">
+            <a
+                    data-message="{% trans 'Delete character' %}: {{ object }}?"
+                    class="btn btn-danger btn-sm w-100 delete-character"
+                    href="{% url 'characters:xhr_delete' pk=object.id %}"><i
+                    class="far fa-times fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
+          </div>
+        </div>
+      {% endif %}
     </div>
-</div>
+  </div>
 {% endif %}

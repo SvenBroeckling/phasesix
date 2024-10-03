@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 i18n %}
 
-{% block content %}
-    <h1>{% trans "Campaign settings" %}</h1>
-    <p class="text-muted">
-        {% blocktrans %}
-            Choose settings for your campaign. These settings apply to every character created for this campaign.
-        {% endblocktrans %}
-    </p>
+{% block title %}{% trans 'Create Campaign' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Campaign settings" %}{% endblock %}
+{% block in_page_subtitle %}
+  {% trans "Choose settings for your campaign. These settings apply to every character created for this campaign." %}{% endblock %}
 
-    <div class="row">
-        <div class="col-12 col-md-8">
-            <form action="" method="post">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <button class="btn btn-primary mt-2">{% trans 'Create campaign' %}</button>
-            </form>
-        </div>
+{% block content %}
+  <h1></h1>
+  <p class="text-muted">
+    {% blocktrans %}
+
+    {% endblocktrans %}
+  </p>
+
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-primary mt-2">{% trans 'Create campaign' %}</button>
+      </form>
     </div>
+  </div>
 {% endblock %}

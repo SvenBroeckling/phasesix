@@ -4,6 +4,7 @@ import requests
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
+from django.conf import settings
 from django.template.loader import render_to_string
 
 from campaigns.models import Campaign, Roll
@@ -93,6 +94,12 @@ def roll_and_send(
         }
         if roll.description:
             json_data["embeds"] = [{"description": roll.description}]
+
+        if character:
+            json_data["avatar_url"] = f"{settings.BASE_URL}{character.get_image_url()}"
+        elif campaign:
+            json_data["avatar_url"] = f"{settings.BASE_URL}{campaign.get_image_url()}"
+
         requests.post(url, json=json_data)
 
     return roll.get_dice_list()

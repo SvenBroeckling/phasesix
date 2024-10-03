@@ -1,18 +1,41 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 i18n %}
 
+{% block title %}{% trans "Create an account" %}{% endblock %}
+{% block in_page_title %}{% trans "Create an account" %}{% endblock %}
+{% block in_page_subtitle %}{% endblock %}
+
 {% block content %}
-    <h1>{% trans 'Create an account' %}</h1>
-    <p>
-    {% blocktrans %}
-        You have to create an account to create persistent characters and (some day) manage adventures, write in the
-        forums or do many more things. Choose an username and a password, and enter your mail address to
-        create an account.
-    {% endblocktrans %}
-    </p>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
-    </form>
+  <div class="row">
+    <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
+      <p>
+        {% blocktrans %}
+          You have to create an account to create persistent characters and (some day) manage adventures, write in the
+          forums or do many more things. Choose an username and a password, and enter your mail address to
+          create an account.
+        {% endblocktrans %}
+      </p>
+      <form action="" method="POST">
+        <div class="row">
+          <div class="col-12">
+            {% bootstrap_field form.username %}
+          </div>
+          <div class="col-12">
+            {% bootstrap_field form.email %}
+          </div>
+          <div class="col-12">
+            {% bootstrap_field form.password1 %}
+          </div>
+          <div class="col-12">
+            {% bootstrap_field form.password2 %}
+          </div>
+          <div class="col-12 d-none">
+            {% bootstrap_field form.email2 %}
+          </div>
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

@@ -10,6 +10,7 @@ from worlds.models import (
     WikiPageFoeResistanceOrWeakness,
     WikiPageGameValues,
     WikiPageGameAction,
+    WorldLeadImage,
 )
 
 
@@ -17,11 +18,15 @@ class WorldSiteConfigurationInline(admin.TabularInline):
     model = WorldSiteConfiguration
 
 
+class WorldLeadImageInline(admin.TabularInline):
+    model = WorldLeadImage
+
+
 class WorldAdmin(VersionAdmin):
     list_display = ("name_de", "name_en", "is_active", "ordering")
     list_filter = ("is_active",)
     search_fields = ("name_de", "name_en")
-    inlines = [WorldSiteConfigurationInline]
+    inlines = [WorldLeadImageInline, WorldSiteConfigurationInline]
 
 
 class WikiPageImageInline(admin.TabularInline):
@@ -58,7 +63,12 @@ class WikiPageAdmin(VersionAdmin):
         "exclude_from_foe_search",
     )
     save_as = True
-    list_filter = ("is_active", "world", "exclude_from_foe_search", "wikipagegamevalues__type")
+    list_filter = (
+        "is_active",
+        "world",
+        "exclude_from_foe_search",
+        "wikipagegamevalues__type",
+    )
     search_fields = ("name_de", "world__name_de", "name_en", "world__name_en")
     inlines = (WikiPageImageInline, WikiPageGameValuesInline, WikiPageGameActionInline)
 
