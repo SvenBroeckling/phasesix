@@ -817,9 +817,6 @@ class CharacterWeapon(models.Model):
                         "is_rare": k.keyword.is_rare,
                         "show_in_dice_rolls": k.keyword.show_in_dice_rolls,
                     }
-            weapon_keywords[k.keyword.identifier]["value"] = max(
-                0, weapon_keywords[k.keyword.identifier]["value"]
-            )
         return weapon_keywords
 
     @property
