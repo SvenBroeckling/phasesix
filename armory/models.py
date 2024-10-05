@@ -233,6 +233,7 @@ class Keyword(models.Model, metaclass=TransMeta):
         help_text=_("Evergreen keywords are the base of the combat mechanics."),
     )
     show_in_dice_rolls = models.BooleanField(_("show in dice rolls"), default=False)
+    show_in_summary = models.BooleanField(_("show in summary"), default=False)
     ordering = models.IntegerField(_("ordering"), default=10)
 
     class Meta:

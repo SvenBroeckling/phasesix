@@ -30,7 +30,7 @@
             <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
           </td>
           <td class="text-end">
-            {% for am in w.attack_modes %}
+            {% for am in w.attack_modes_with_values %}
               {{ am.0 }} <span class="text-light">{{ am.1 }}</span>
               <i class="fas text-light fa-dice-five"></i><br>
             {% endfor %}

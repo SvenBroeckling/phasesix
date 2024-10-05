@@ -2,6 +2,7 @@ import re
 
 import bleach
 import markdown
+from django.contrib.staticfiles import finders
 from django.template import Library
 from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
@@ -181,3 +182,16 @@ def templates_for_world_configuration(qs, world_configuration):
     if world_configuration:
         qs = qs.for_world(world_configuration.world)
     return qs
+
+
+@register.simple_tag
+def local_static(path):
+    """
+    A template tag to return the local path to a static file,
+    with behavior similar to Django's built-in {% static %} tag.
+    """
+    file_path = finders.find(path)
+    if file_path:
+        return file_path
+    else:
+        raise ValueError(f"Static file '{path}' could not be found.")

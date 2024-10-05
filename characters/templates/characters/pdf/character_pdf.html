@@ -1,84 +1,88 @@
 {% load characters_extras rules_extras i18n static %}
 <html lang="de">
 <head>
-    <title>{{ object.name }}</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ data_path }}/styles.css">
-    {% include 'characters/pdf/fonts/Roboto.html' %}
+  <title>{{ object.name }}</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% local_static "pdf/character_pdf.css" %}">
+  {% include 'characters/pdf/fonts/Roboto.html' %}
 </head>
 
 <body>
 <div class="page">
-    <table class="layout">
-        <tr>
-            <td class="vertical-top" style="width: 4cm; padding-right: 0.4cm">
-                {% include 'characters/pdf/boxes/overview/basics.html' %}
-                {% include 'characters/pdf/boxes/overview/health.html' %}
-                {% include 'characters/pdf/boxes/overview/arcana.html' %}
-                {% include 'characters/pdf/boxes/overview/horror.html' %}
-                {% include 'characters/pdf/boxes/overview/persona.html' %}
-                {% include 'characters/pdf/boxes/overview/physis.html' %}
-                {% include 'characters/pdf/boxes/overview/dice.html' %}
-                {% include 'characters/pdf/boxes/overview/shadows_short.html' %}
-                {% include 'characters/pdf/boxes/overview/knowledge.html' %}
+  <div class="page-header">
+    <h1>{{ object.name }}</h1>
+    <h2>{{ object.player }}</h2>
+  </div>
+  <table class="layout">
+    <tr>
+      <td class="vertical-top" style="width: 4cm; padding-right: 0.4cm">
+        {% include 'characters/pdf/boxes/overview/basics.html' %}
+        {% include 'characters/pdf/boxes/overview/health.html' %}
+        {% include 'characters/pdf/boxes/overview/arcana.html' %}
+        {% include 'characters/pdf/boxes/overview/horror.html' %}
+        {% include 'characters/pdf/boxes/overview/persona.html' %}
+        {% include 'characters/pdf/boxes/overview/physis.html' %}
+        {% include 'characters/pdf/boxes/overview/dice.html' %}
+        {% include 'characters/pdf/boxes/overview/shadows_short.html' %}
+        {% include 'characters/pdf/boxes/overview/knowledge.html' %}
+      </td>
+      <td class="vertical-top">
+        <table class="w-full">
+          <tr>
+            <td>
+              {% include 'characters/pdf/boxes/overview/actions.html' %}
             </td>
-            <td class="vertical-top">
-                <table class="w-full">
-                    <tr>
-                        <td>
-                            {% include 'characters/pdf/boxes/overview/actions.html' %}
-                        </td>
-                        <td>
-                            {% include 'characters/pdf/boxes/overview/protection.html' %}
-                        </td>
-                        <td>
-                            {% include 'characters/pdf/boxes/overview/evasion.html' %}
-                        </td>
-                        <td>
-                            {% include 'characters/pdf/boxes/overview/concealment.html' %}
-                        </td>
-                    </tr>
-                </table>
-                <table class="w-full">
-                    <tr>
-                        <td style="width: 48%">
-                            {% include 'characters/pdf/boxes/overview/practical_skills.html' %}
-                        </td>
-                        <td>
-                            {% include 'characters/pdf/boxes/overview/theoretical_skills.html' %}
-                        </td>
-                    </tr>
-                </table>
-                {% include 'characters/pdf/boxes/overview/combat.html' %}
+            <td>
+              {% include 'characters/pdf/boxes/overview/protection.html' %}
             </td>
-        </tr>
-    </table>
+            <td>
+              {% include 'characters/pdf/boxes/overview/evasion.html' %}
+            </td>
+            <td>
+              {% include 'characters/pdf/boxes/overview/concealment.html' %}
+            </td>
+          </tr>
+        </table>
+        <table class="w-full">
+          <tr>
+            <td style="width: 48%">
+              {% include 'characters/pdf/boxes/overview/practical_skills.html' %}
+            </td>
+            <td>
+              {% include 'characters/pdf/boxes/overview/theoretical_skills.html' %}
+            </td>
+          </tr>
+        </table>
+        {% include 'characters/pdf/boxes/overview/combat.html' %}
+      </td>
+    </tr>
+  </table>
 </div>
 
 <div class="page">
-    <table class="w-full">
-        <tr>
-            <td class="vertical-top w-half pr-1">
-                {% include 'characters/pdf/boxes/gear/weapons.html' %}
-            </td>
-            <td class="vertical-top w-full">
-                {% include 'characters/pdf/boxes/gear/armour.html' %}
-                {% include 'characters/pdf/boxes/gear/currency.html' %}
-                {% include 'characters/pdf/boxes/gear/items.html' %}
-            </td>
-        </tr>
-    </table>
+  <table class="w-full">
+    <tr>
+      <td class="vertical-top w-half pr-1">
+        {% include 'characters/pdf/boxes/gear/weapons.html' %}
+      </td>
+      <td class="vertical-top w-full">
+        {% include 'characters/pdf/boxes/gear/armour.html' %}
+        {% include 'characters/pdf/boxes/gear/currency.html' %}
+        {% include 'characters/pdf/boxes/gear/items.html' %}
+      </td>
+    </tr>
+  </table>
 </div>
 
 {% if object.extension_enabled.magic or object.templates_with_rules.exists %}
-    <div class="page">
-        {% include 'characters/pdf/boxes/magic/spells.html' %}
-        {% include 'characters/pdf/boxes/magic/shadows.html' %}
-    </div>
+  <div class="page">
+    {% include 'characters/pdf/boxes/magic/spells.html' %}
+    {% include 'characters/pdf/boxes/magic/shadows.html' %}
+  </div>
 {% endif %}
 
 <div class="page">
-    {% include 'characters/pdf/boxes/background/background.html' %}
+  {% include 'characters/pdf/boxes/background/background.html' %}
 </div>
 
 </body>

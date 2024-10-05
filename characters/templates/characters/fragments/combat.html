@@ -61,7 +61,7 @@
                   <small class="text-muted">{{ w.weapon.type }}</small>
                 </td>
                 <td class="text-end">
-                  {% for am in w.attack_modes %}
+                  {% for am in w.attack_modes_with_values %}
                     {{ am.0 }} {% color_value_span am.1 7 %} <i class="fas text-muted fa-dice-five"></i>
                     <br>
                   {% endfor %}

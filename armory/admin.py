@@ -189,8 +189,15 @@ class CurrencyMapUnitAdmin(admin.ModelAdmin):
 
 
 class KeywordAdmin(admin.ModelAdmin):
-    list_display = ("name_de", "name_en", "is_rare", "ordering", "is_evergreen")
-    list_editable = ("ordering", "is_rare", "is_evergreen")
+    list_display = (
+        "name_de",
+        "name_en",
+        "is_rare",
+        "ordering",
+        "is_evergreen",
+        "show_in_summary",
+    )
+    list_editable = ("ordering", "is_rare", "is_evergreen", "show_in_summary")
 
 
 admin.site.register(AttackMode, AttackModeAdmin)

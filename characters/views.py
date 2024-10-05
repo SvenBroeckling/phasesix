@@ -1,5 +1,4 @@
 import io
-import os
 
 from django import forms
 from django.conf import settings
@@ -1351,9 +1350,6 @@ class CharacterPDFView(View):
                         "characters/pdf/character_pdf.html",
                         {
                             "object": Character.objects.get(id=kwargs["pk"]),
-                            "data_path": os.path.join(
-                                settings.BASE_DIR, "characters/templates/characters/pdf"
-                            ),
                         },
                     ),
                     encoding="utf-8",

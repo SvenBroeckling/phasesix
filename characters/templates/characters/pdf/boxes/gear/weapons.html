@@ -1,65 +1,34 @@
+{% load rules_extras %}
+{% load armory_extras %}
 {% load characters_extras %}
 {% load i18n %}
-{% for weapon in object.characterweapon_set.all|cap_and_fill_queryset_to:4 %}
+{% for character_weapon in object.characterweapon_set.all|cap_and_fill_queryset_to:4 %}
   <div class="box weapon-box">
     <h2>{% trans 'Weapon' %}</h2>
-    <table>
-      <tr>
-        <td>{% trans 'Name' %}</td>
-        <td>{{ weapon.weapon }}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Piercing' %}</td>
-        <td>{{ weapon.weapon.piercing }} {% display_modifications weapon 'piercing' %}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Damage Potential' %}</td>
-        <td>
-          {% for i in weapon.weapon.damage_potential|to_range %}<i class="fas fa-fw fa-dice-six text-light"
-                                                                   title="{% trans 'Damage Potential' %}"></i>{% empty %}
-            -{% endfor %} {% display_modifications weapon 'damage_potential' %}
-        </td>
-      </tr>
-      <tr>
-        <td>{% trans 'Recoil Compensation' %}</td>
-        <td>{{ weapon.weapon.recoil_compensation }} {% display_modifications weapon 'recoil_compensation' %}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Actions to ready' %}</td>
-        <td>{{ weapon.weapon.actions_to_ready }} {% display_modifications weapon 'actions_to_ready' %}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Reload Actions' %}</td>
-        <td>{{ weapon.weapon.reload_actions }} {% display_modifications weapon 'reload_actions' %}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Capacity' %}</td>
-        <td>{{ weapon.weapon.capacity|default:"" }} {% display_modifications weapon 'capacity' %}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Range' %}</td>
-        <td>{{ weapon.weapon.range_meter }} {% display_modifications weapon 'range_meter' %}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Condition' %}</td>
-        <td>{{ weapon.condition }}</td>
-      </tr>
-      <tr>
-        <td>{% trans 'Concealment' %}</td>
-        <td>{{ weapon.modified_concealment }}</td>
-      </tr>
-      {% for fm in weapon.weapon.attack_modes.all %}
-        <tr>
-          <td>{% if forloop.first %}{% trans 'Attack Modes' %}{% endif %}</td>
-          <td>{{ fm.name }}</td>
-        </tr>
+    <h3>{{ character_weapon.weapon }}</h3>
+
+    {% for identifier, kw in character_weapon.modified_keywords.items %}
+      <b>{{ kw.name }}</b>: <span>{% color_value_span kw.value 6 %}</span>
+      <i class="text-light">({{ kw.description|replace_keyword_value:kw.value }})</i><br>
+    {% endfor %}
+
+    {% for wm in character_weapon.modifications.all %}
+      <h5 class="mt-4">{{ wm }}</h5>
+      <p>
+        {{ wm.rules|urpg_markup }}
+      </p>
+      {% for keyword in wm.weaponmodificationkeyword_set.all %}
+        <span class="fw-bold {% if keyword.keyword.is_rare %}text-primary{% endif %}">{{ keyword.keyword.name }}</span>
+        {% color_value_span keyword.value 6 %}<br>
       {% endfor %}
-      {% for wm in weapon.modifications.all %}
-        <tr>
-          <td>{% if forloop.first %}{% trans 'Modifications' %}{% endif %}</td>
-          <td>{{ wm }}</td>
-        </tr>
-      {% endfor %}
-    </table>
+    {% endfor %}
+
+    {% for fm in character_weapon.weapon.attack_modes.all %}
+      {% with meter=character_weapon.modified_keywords.range_meter.value %}
+        <div class="bordered-box">
+          {{ fm.name }} - {{ meter|default:1 }}m
+        </div>
+      {% endwith %}
+    {% endfor %}
   </div>
 {% endfor %}
