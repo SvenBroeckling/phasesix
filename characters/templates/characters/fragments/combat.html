@@ -68,7 +68,9 @@
                 </td>
                 <td class="text-end">
                   {% for modified_keyword in modified_keywords.values %}
-                    {{ modified_keyword.name }} {% color_value_span modified_keyword.value 3 %}<br>
+                    {% if modified_keyword.show_in_summary %}
+                      {{ modified_keyword.name }} {% color_value_span modified_keyword.value 3 %}<br>
+                    {% endif %}
                   {% endfor %}
                   {% if w.has_modifications_with_rules %}{% trans 'Mods with rules' %}
                     <i class="fas fa-gavel fa-fw text-muted"></i>{% endif %}

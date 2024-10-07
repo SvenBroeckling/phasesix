@@ -37,7 +37,9 @@
           </td>
           <td class="text-end">
             {% for modified_keyword in modified_keywords.values %}
-              {{ modified_keyword.name }} <span class="text-light">{{ modified_keyword.value }}</span><br>
+              {% if modified_keyword.show_in_summary %}
+                {{ modified_keyword.name }} <span class="text-light">{{ modified_keyword.value }}</span><br>
+              {% endif %}
             {% endfor %}
           </td>
           <td class="text-end">

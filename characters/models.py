@@ -802,6 +802,7 @@ class CharacterWeapon(models.Model):
                 "value": k.value,
                 "is_rare": k.keyword.is_rare,
                 "show_in_dice_rolls": k.keyword.show_in_dice_rolls,
+                "show_in_summary": k.keyword.show_in_summary,
             }
             for k in self.weapon.weaponkeyword_set.order_by("-keyword__ordering")
         }
@@ -816,6 +817,7 @@ class CharacterWeapon(models.Model):
                         "value": k.value,
                         "is_rare": k.keyword.is_rare,
                         "show_in_dice_rolls": k.keyword.show_in_dice_rolls,
+                        "show_in_summary": k.keyword.show_in_summary,
                     }
         return weapon_keywords
 
