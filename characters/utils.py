@@ -28,6 +28,9 @@ def static_thumbnail(image_file, geometry_string, crop="center", quality=99):
     - Image object: The created thumbnail image.
     """
 
+    if "x" not in geometry_string:
+        geometry_string = f"{geometry_string}x{geometry_string}"
+
     path = os.path.join(settings.MEDIA_ROOT, "static_thumbnails")
     os.makedirs(path, exist_ok=True)
     target_file_parts = os.path.basename(image_file).split(".")
