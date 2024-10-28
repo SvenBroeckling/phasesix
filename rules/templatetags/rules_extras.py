@@ -43,6 +43,11 @@ def to_first_linebreak(value):
 def urpg_markup(value, safe_mode=True):
     if value is None:
         return ""
+
+    # Insert two line breaks after a line that starts with a > and is followed by a line that doesn't start with a >
+    # Markdown doesn't handle this case well, so we need to add the line breaks manually
+    value = re.sub(r"(^>.*)(\n)([^>\n])", r"\1\n\n\3", value, flags=re.MULTILINE)
+
     html = markdown.markdown(value, extensions=["tables"])
     if safe_mode:
         html = bleach.clean(
