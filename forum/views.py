@@ -106,7 +106,8 @@ class XhrImageUploadView(View):
         image = request.FILES.get("image")
         if image:
             image = request.user.forumimage_set.create(image=image)
-            markdown_url = f"![{_("Image")}]({image.image.url})"
+            title = _("Image")
+            markdown_url = f"![{title}]({image.image.url})"
             return JsonResponse({"status": "ok", "markdown_link": markdown_url})
         else:
             return JsonResponse({"status": "error"})
