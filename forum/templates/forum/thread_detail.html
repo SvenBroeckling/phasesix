@@ -42,13 +42,15 @@
             <div class="forum-post-text">
               {{ post.text|urpg_markup|urlize }}
             </div>
-            <button data-raw-post-url="{% url 'forum:post_raw' post.id %}"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#new-thread-collapse"
-                    class="btn btn-primary btn-sm ms-2 float-end quote-button">{% trans 'Quote' %}</button>
-            <button data-bs-toggle="collapse"
-                    data-bs-target="#new-thread-collapse"
-                    class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Answer' %}</button>
+            {% if user.is_authenticated %}
+              <button data-raw-post-url="{% url 'forum:post_raw' post.id %}"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#new-thread-collapse"
+                      class="btn btn-primary btn-sm ms-2 float-end quote-button">{% trans 'Quote' %}</button>
+              <button data-bs-toggle="collapse"
+                      data-bs-target="#new-thread-collapse"
+                      class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Answer' %}</button>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
