@@ -98,6 +98,20 @@ class ThreadDetailView(FormMixin, DetailView):
             return self.form_invalid(form)
 
 
+class XhrImageUploadView(View):
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
+        image = request.FILES.get("image")
+        if image:
+            image = request.user.forumimage_set.create(image=image)
+            markdown_url = f"![{_("Image")}]({image.image.url})"
+            return JsonResponse({"status": "ok", "markdown_link": markdown_url})
+        else:
+            return JsonResponse({"status": "error"})
+
+
 class RawPostTextView(DetailView):
     model = Post
 
@@ -107,8 +121,9 @@ class RawPostTextView(DetailView):
             if not request.user.is_authenticated or not request.user.is_staff:
                 messages.error(request, _("You have no access to this forum"))
                 return HttpResponseRedirect(reverse("characters:index"))
+        text = "\n".join([f"> {line}" for line in obj.text.splitlines()])
         return JsonResponse(
-            {"text": "\n".join([f"> {line}" for line in obj.text.splitlines()])}
+            {"text": f"{text}\n\n"},
         )
 
 

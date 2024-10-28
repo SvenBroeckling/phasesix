@@ -12,39 +12,7 @@
 {% endblock %}
 
 {% block javascript %}
-  <script>
-      $(function () {
-          $('#new-thread-collapse').on('shown.bs.collapse', function (e) {
-              let elem = document.getElementById('id_text')
-              elem.scrollIntoView(true);
-              elem.focus()
-          });
-
-          $('#switch-subscribe').on('change', function (e) {
-              $.post(
-                  $(this).data('url'),
-                  {
-                      value: $(this).prop('checked'),
-                      object: $(this).data('object')
-                  },
-                  function (data) {
-                  }
-              )
-          })
-
-          $('.quote-button').on('click', function (e) {
-              let elem = document.getElementById('id_text')
-              $.get(
-                  $(this).data('raw-post-url'),
-                  function (data) {
-                      elem.value = data.text
-                      elem.scrollIntoView(true);
-                      elem.focus()
-                  }
-              )
-          })
-      });
-  </script>
+  <script src="{% static 'forum/js/forum.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -60,11 +28,10 @@
             {% latest_user_image post.created_by as image %}
             {% if image %}
               {% thumbnail image "28x28" as im %}
-                <img
-                        class="rounded-circle me-1"
-                        style="width: 28px; height: 28px"
-                        src="{{ im.url }}"
-                        alt="{{ post.created_by }}">
+                <img class="rounded-circle me-1"
+                     style="width: 28px; height: 28px"
+                     src="{{ im.url }}"
+                     alt="{{ post.created_by }}">
               {% endthumbnail %}
             {% endif %}
             {% blocktrans with t_created_by=post.created_by t_timesince=post.created_at|timesince %}
@@ -72,14 +39,14 @@
             {% endblocktrans %}
           </div>
           <div class="card-body forum-post">
-            {{ post.text|urpg_markup|urlize }}
-            <button
-                    data-raw-post-url="{% url 'forum:post_raw' post.id %}"
+            <div class="forum-post-text">
+              {{ post.text|urpg_markup|urlize }}
+            </div>
+            <button data-raw-post-url="{% url 'forum:post_raw' post.id %}"
                     data-bs-toggle="collapse"
                     data-bs-target="#new-thread-collapse"
                     class="btn btn-primary btn-sm ms-2 float-end quote-button">{% trans 'Quote' %}</button>
-            <button
-                    data-bs-toggle="collapse"
+            <button data-bs-toggle="collapse"
                     data-bs-target="#new-thread-collapse"
                     class="btn btn-primary btn-sm ms-2 float-end">{% trans 'Answer' %}</button>
           </div>
@@ -89,13 +56,16 @@
       {% if user.is_authenticated %}
         <div class="collapse card" id="new-thread-collapse">
           <div class="card-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" class="forum-form" data-image-upload-url="{% url "forum:xhr_upload_image" %}" method="post"
+                  enctype="multipart/form-data">
               {% csrf_token %}
               {% bootstrap_form form %}
+              <input type="file" id="forumUploadFileInput" accept="image/*" style="display: none;"/>
               <div class="btn-group" role="group">
                 <button type="submit"
                         class="btn btn-primary mb-2 mt-2">{% trans 'Answer Thread' %}</button>
-              </div>
+                <button type="button" class="btn btn-secondary mb-2 mt-2"
+                        id="forum-upload-image">{% trans "Upload Image" %}</button>
             </form>
           </div>
         </div>

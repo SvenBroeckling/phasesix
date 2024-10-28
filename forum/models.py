@@ -27,6 +27,12 @@ class ThreadSubscription(models.Model):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
 
 
+class ForumImage(models.Model):
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(_("image"), upload_to="forum_images/")
+
+
 class Board(models.Model):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     name = models.CharField(_("name"), max_length=60)

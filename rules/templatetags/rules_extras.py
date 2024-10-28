@@ -62,6 +62,7 @@ def urpg_markup(value, safe_mode=True):
                 "code",
                 "em",
                 "i",
+                "img",
                 "li",
                 "ol",
                 "strong",
@@ -74,6 +75,10 @@ def urpg_markup(value, safe_mode=True):
                 "th",
                 "td",
                 "tr",
+            },
+            attributes={
+                "a": ["href", "title"],
+                "img": ["src", "alt"],
             },
         )
     return mark_safe(html)
