@@ -27,6 +27,7 @@ from armory.models import (
     CurrencyMapUnit,
     RiotGearType,
     AttackMode,
+    ProtectionType,
 )
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign
@@ -46,6 +47,7 @@ from characters.models import (
     CharacterSkill,
     CharacterAttribute,
     CharacterNote,
+    CharacterRiotGearProtectionUsed,
 )
 from characters.utils import crit_successes
 from horror.models import QuirkCategory, Quirk
@@ -198,6 +200,7 @@ class XhrCharacterSidebarView(XhrSidebarView):
             is_active=True
         ).order_by("ordering")
         context["character_form"] = CharacterImageForm(instance=self.object)
+        context["protection_types"] = ProtectionType.objects.all()
         return context
 
 
@@ -459,6 +462,44 @@ class CharacterModifyDiceView(View):
             elif self.kwargs["mode"] == "remove_reroll":
                 character.rerolls_used += 1
             character.save()
+        return JsonResponse({"status": "ok"})
+
+
+class CharacterSpendProtectionView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs["pk"])
+        if character.may_edit(request.user):
+            protection_type = ProtectionType.objects.get(
+                id=kwargs["protection_type_pk"]
+            )
+            qs = CharacterRiotGearProtectionUsed.objects.filter(
+                character_riot_gear__riot_gear=kwargs["riot_gear_pk"],
+                character_riot_gear__character=character,
+                protection_type=protection_type,
+            )
+            if qs.exists():
+                obj = qs.first()
+                obj.value += 1
+                obj.save()
+            else:
+                character_riot_gear = character.characterriotgear_set.filter(
+                    riot_gear=kwargs["riot_gear_pk"]
+                ).first()
+                CharacterRiotGearProtectionUsed.objects.create(
+                    character_riot_gear=character_riot_gear,
+                    protection_type=protection_type,
+                    value=1,
+                )
+        return JsonResponse({"status": "ok"})
+
+
+class CharacterRestoreAllProtectionView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs["pk"])
+        if character.may_edit(request.user):
+            CharacterRiotGearProtectionUsed.objects.filter(
+                character_riot_gear__character=character
+            ).delete()
         return JsonResponse({"status": "ok"})
 
 

@@ -340,17 +340,13 @@ class ProtectionType(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
     ordering = models.IntegerField(_("ordering"), default=10)
-    rules = models.TextField(
-        _("rules"),
-        help_text=_("Rules for this protection type."),
-    )
     color_class = models.CharField(
-        max_length=30, default="text-warning", choices=COLOR_CLASS_CHOICES
+        max_length=30, default="text-primary", choices=COLOR_CLASS_CHOICES
     )
-    fa_icon_class = models.CharField(
+    icon_class = models.CharField(
         _("FA Icon Class"),
         choices=PROTECTION_FA_ICON_CLASS_CHOICES,
-        max_length=30,
+        max_length=50,
         default="fas fa-shield-alt",
     )
 
@@ -413,7 +409,7 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
         RiotGearType, verbose_name=_("type"), on_delete=models.CASCADE
     )
 
-    protection_ballistic = models.IntegerField(_("protection ballistic"), default=0)
+    shield_cover = models.IntegerField(_("shield cover"), default=0)
     encumbrance = models.IntegerField(_("encumbrance"), default=1)
 
     concealment = models.IntegerField(_("concealment"), default=0)
@@ -428,9 +424,21 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    @property
-    def shield_cover(self):
-        return 7 - self.protection_ballistic
+    def get_protection(self):
+        return self.riotgearprotection_set.order_by("protection_type__ordering")
+
+
+class RiotGearProtection(models.Model):
+    riot_gear = models.ForeignKey(RiotGear, on_delete=models.CASCADE)
+    protection_type = models.ForeignKey(ProtectionType, on_delete=models.CASCADE)
+    value = models.IntegerField(_("value"), default=1)
+
+    class Meta:
+        verbose_name = _("riot gear protection")
+        verbose_name_plural = _("riot gear protections")
+
+    def __str__(self):
+        return self.protection_type.name
 
 
 class CurrencyMap(models.Model):

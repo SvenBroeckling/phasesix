@@ -1,28 +1,31 @@
+{% load armory_extras %}
 {% load i18n characters_extras %}
 {% for r in object.characterriotgear_set.all|cap_and_fill_queryset_to:3 %}
-    <div class="box armour-box">
-        <h2>{% trans 'Armour' %}</h2>
-        <table>
-            <tr>
-                <td>{% trans 'Name' %}</td>
-                <td>{{ r.riot_gear }}</td>
-            </tr>
-            <tr>
-                <td>{% trans 'Protection' %}</td>
-                <td>{{ r.riot_gear.protection_ballistic }}</td>
-            </tr>
-            <tr>
-                <td>{% trans 'Encumbrance' %}</td>
-                <td>{{ r.riot_gear.encumbrance }}</td>
-            </tr>
-            <tr>
-                <td>{% trans 'Condition' %}</td>
-                <td>{{ r.condition }}</td>
-            </tr>
-            <tr>
-                <td>{% trans 'Concealment' %}</td>
-                <td>{{ r.riot_gear.concealment }}</td>
-            </tr>
-        </table>
-    </div>
+  <div class="box armour-box">
+    <h2>{% trans 'Armour' %}</h2>
+    <table>
+      <tr>
+        <td>{% trans 'Name' %}</td>
+        <td>{{ r.riot_gear }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Protection' %}</td>
+        <td>
+          {% riot_gear_protection_display r.riot_gear %}
+        </td>
+      </tr>
+      <tr>
+        <td>{% trans 'Encumbrance' %}</td>
+        <td>{{ r.riot_gear.encumbrance }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Condition' %}</td>
+        <td>{{ r.condition }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Concealment' %}</td>
+        <td>{{ r.riot_gear.concealment }}</td>
+      </tr>
+    </table>
+  </div>
 {% endfor %}

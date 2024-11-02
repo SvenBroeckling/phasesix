@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _, get_language
 from sorl.thumbnail import get_thumbnail
 
-from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit
+from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit, RiotGearProtection
 from characters.utils import static_thumbnail
 from horror.models import QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
@@ -471,20 +471,37 @@ class Character(models.Model):
         return int(math.ceil(self.get_attribute_value("quickness") / 2)) + 1
 
     @property
-    def ballistic_protection(self):
-        bp = (
-            self.characterriotgear_set.exclude(
-                riot_gear__type__is_shield=True
-            ).aggregate(Sum("riot_gear__protection_ballistic"))[
-                "riot_gear__protection_ballistic__sum"
-            ]
-            or 0
-        )
-        return (
-            self.lineage.base_protection
-            + self.get_aspect_modifier("base_protection")
-            + bp
-        )
+    def total_protection_available(self):
+        """
+        Returns the following structure:
+        [{
+          "riot_gear_protection": riot_gear_protection_object,
+          "available_protection": available_protection,
+        },]
+        """
+        rgp = RiotGearProtection.objects.filter(
+            riot_gear__characterriotgear__character=self
+        ).order_by("protection_type__ordering")
+        res = []
+        for r in rgp:
+            character_riot_gear = CharacterRiotGear.objects.filter(
+                character=self, riot_gear=r.riot_gear
+            ).first()
+
+            available_protection = (
+                r.value
+                - CharacterRiotGearProtectionUsed.objects.filter(
+                    character_riot_gear=character_riot_gear,
+                    protection_type=r.protection_type,
+                ).aggregate(Sum("value", default=0))["value__sum"]
+            )
+            res.append(
+                {
+                    "riot_gear_protection": r,
+                    "available_protection": available_protection,
+                }
+            )
+        return res
 
     @property
     def total_encumbrance(self):
@@ -847,6 +864,17 @@ class CharacterRiotGear(models.Model):
 
     class Meta:
         ordering = ("riot_gear__id",)
+
+
+class CharacterRiotGearProtectionUsed(models.Model):
+    character_riot_gear = models.ForeignKey(CharacterRiotGear, on_delete=models.CASCADE)
+    protection_type = models.ForeignKey(
+        "armory.ProtectionType", on_delete=models.CASCADE
+    )
+    value = models.IntegerField(_("value"), default=0)
+
+    class Meta:
+        ordering = ("character_riot_gear__id",)
 
 
 class CharacterItemQuerySet(models.QuerySet):

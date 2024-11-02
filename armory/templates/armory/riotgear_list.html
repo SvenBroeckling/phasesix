@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load armory_extras %}
 {% load portal_extras %}
 {% load i18n static rules_extras characters_extras %}
 
@@ -81,9 +82,11 @@
               <td>{{ object.name }}<br><small class="text-muted">{{ object.type }}</small></td>
               <td>{{ object.type }}</td>
               {% if object.type.is_shield %}
-                <td>{% color_value_span object.shield_cover 6 invert=True %}+</td>
+                <td>{% color_value_span object.shield_cover 6 invert=True %}+ {% trans "Cover" %}</td>
               {% else %}
-                <td>{% color_value_span object.protection_ballistic 4 %}</td>
+                <td>
+                  {% riot_gear_protection_display object %}
+                </td>
               {% endif %}
               <td>{% color_value_span object.encumbrance 5 invert=True %}</td>
               <td>{% color_value_span object.concealment 4 invert=True %}</td>

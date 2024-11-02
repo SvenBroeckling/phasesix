@@ -9,6 +9,11 @@ from rules.models import Extension
 register = Library()
 
 
+@register.inclusion_tag("characters/_protection_display.html")
+def protection_display(character):
+    return {"character": character}
+
+
 @register.simple_tag
 def character_image_url(character, geometry="100x100", crop="center"):
     return character.get_image_url(geometry, crop)

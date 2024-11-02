@@ -1,5 +1,6 @@
+{% load characters_extras %}
 {% load i18n %}
 <div class="box text-center">
-    <h2>{% trans 'Protection' %}</h2>
-    {{ object.ballistic_protection }}
+  <h2>{% trans 'Protection' %}</h2>
+  {% protection_display object %}
 </div>

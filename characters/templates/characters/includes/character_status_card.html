@@ -2,66 +2,71 @@
 {% load i18n %}
 <div class="sidebar-trigger" data-sidebar-title="{% trans 'Wounds' %}"
      data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">
-    {% for i in object.health|to_range %}
-        <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
-    {% endfor %}
-    {% for i in object.wounds_taken|to_range %}
-        <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
-    {% endfor %}
-    {% for i in object.boost|to_range %}
-        <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
-    {% endfor %}
+  {% for i in object.health|to_range %}
+    <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
+  {% endfor %}
+  {% for i in object.wounds_taken|to_range %}
+    <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+  {% endfor %}
+  {% for i in object.boost|to_range %}
+    <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
+  {% endfor %}
+</div>
+
+<div class="sidebar-trigger" data-sidebar-title="{% trans 'Protection' %}"
+     data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="protection" %}">
+  {% protection_display object %}
 </div>
 
 {% if object.extension_enabled.magic and object.is_magical %}
-    <div class="sidebar-trigger" data-sidebar-title="{% trans 'Magic' %}"
-         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="magic" %}">
-        {% for i in object.arcana|to_range %}
-            <i class="fas fa-magic text-warning"></i>
-        {% endfor %}
-        {% for i in object.arcana_used|to_range %}
-            <i class="fas fa-magic text-dark"></i>
-        {% endfor %}
-    </div>
+  <div class="sidebar-trigger" data-sidebar-title="{% trans 'Magic' %}"
+       data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="magic" %}">
+    {% for i in object.arcana|to_range %}
+      <i class="fas fa-magic text-warning"></i>
+    {% endfor %}
+    {% for i in object.arcana_used|to_range %}
+      <i class="fas fa-magic text-dark"></i>
+    {% endfor %}
+  </div>
 {% endif %}
 
 {% if object.extension_enabled.horror %}
-    <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
-         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
-        {% for i in object.stress|to_range %}
-            <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
-        {% endfor %}
-        {% for i in object.available_stress|to_range %}
-            <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
-        {% endfor %}
-    </div>
+  <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
+       data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
+    {% for i in object.stress|to_range %}
+      <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
+    {% endfor %}
+    {% for i in object.available_stress|to_range %}
+      <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
+    {% endfor %}
+  </div>
 
-    <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
-         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
-        {% for q in object.quirks_need_to_be_chosen|to_range %}
-            <i class="fas fa-frown text-danger" title="{{ q }}"></i>
-        {% endfor %}
-        {% for q in object.quirks.all %}
-            <i class="fas fa-frown text-dark" title="{{ q }}"></i>
-        {% endfor %}
-    </div>
+  <div class="sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
+       data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
+    {% for q in object.quirks_need_to_be_chosen|to_range %}
+      <i class="fas fa-frown text-danger" title="{{ q }}"></i>
+    {% endfor %}
+    {% for q in object.quirks.all %}
+      <i class="fas fa-frown text-dark" title="{{ q }}"></i>
+    {% endfor %}
+  </div>
 {% endif %}
 
 {% if object.extension_enabled.pantheon %}
-    <div class="sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
-         data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="grace" %}">
-        {% if object.is_priest %}
-            {% trans 'Grace' %}: {% color_value_span object.grace 10 %}<br>
-        {% endif %}
-        {% trans 'Attitude' %}: {% color_value_span object.attitude 100 %}
-    </div>
+  <div class="sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
+       data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="grace" %}">
+    {% if object.is_priest %}
+      {% trans 'Grace' %}: {% color_value_span object.grace 10 %}<br>
+    {% endif %}
+    {% trans 'Attitude' %}: {% color_value_span object.attitude 100 %}
+  </div>
 {% endif %}
 
 <div class="sidebar-trigger mt-2" data-sidebar-title="{% trans 'Wounds' %}"
      data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">
-    {% for cse in object.characterstatuseffect_set.all %}
-        {% for v in cse.value|to_range %}
-            <i title="{{ cse }}: {{ cse.value }}" class="fas fa-fw {{ cse.status_effect.fa_icon_class }}"></i>
-        {% endfor %}
+  {% for cse in object.characterstatuseffect_set.all %}
+    {% for v in cse.value|to_range %}
+      <i title="{{ cse }}: {{ cse.value }}" class="fas fa-fw {{ cse.status_effect.fa_icon_class }}"></i>
     {% endfor %}
+  {% endfor %}
 </div>

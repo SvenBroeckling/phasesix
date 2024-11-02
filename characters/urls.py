@@ -72,11 +72,21 @@ urlpatterns = [
         views.XhrDetailFragmentView.as_view(),
         name="xhr_detail_fragment",
     ),
-    # health
+    # health and protection
     path(
         "health/<int:pk>/<mode>/",
         views.CharacterModifyHealthView.as_view(),
         name="modify_health",
+    ),
+    path(
+        "protection/<int:pk>/<protection_type_pk>/<riot_gear_pk>/spend",
+        views.CharacterSpendProtectionView.as_view(),
+        name="spend_protection",
+    ),
+    path(
+        "protection/<int:pk>/restore",
+        views.CharacterRestoreAllProtectionView.as_view(),
+        name="restore_protection",
     ),
     path("rest/<int:pk>/", views.XhrCharacterRestView.as_view(), name="xhr_rest"),
     # magic

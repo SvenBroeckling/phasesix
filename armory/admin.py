@@ -15,6 +15,8 @@ from armory.models import (
     Keyword,
     WeaponKeyword,
     WeaponModificationKeyword,
+    RiotGearProtection,
+    ProtectionType,
 )
 
 
@@ -62,24 +64,34 @@ class WeaponAdmin(admin.ModelAdmin):
     ]
 
 
+class ProtectionTypeAdmin(admin.ModelAdmin):
+    list_display = ("name_en", "name_de", "ordering", "color_class", "icon_class")
+    list_editable = ("ordering", "color_class", "icon_class")
+
+
+class RiotGearProtectionInline(admin.TabularInline):
+    model = RiotGearProtection
+
+
 class RiotGearAdmin(admin.ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
         "type",
         "price",
-        "protection_ballistic",
         "encumbrance",
         "concealment",
+        "shield_cover",
         "weight",
     )
     list_editable = (
         "weight",
         "price",
-        "protection_ballistic",
         "encumbrance",
+        "shield_cover",
         "concealment",
     )
+    inlines = [RiotGearProtectionInline]
     list_filter = ("extensions", "type")
     search_fields = "name_de", "name_en"
     fieldsets = [
@@ -90,7 +102,7 @@ class RiotGearAdmin(admin.ModelAdmin):
                     ("name_en", "name_de", "extensions"),
                     ("type", "price", "weight"),
                     ("created_by", "is_homebrew", "homebrew_campaign"),
-                    ("protection_ballistic",),
+                    ("shield_cover",),
                     ("concealment", "encumbrance"),
                     ("description_en", "description_de"),
                 )
@@ -206,6 +218,7 @@ admin.site.register(Keyword, KeywordAdmin)
 admin.site.register(Weapon, WeaponAdmin)
 admin.site.register(WeaponModificationType, WeaponModificationTypeAdmin)
 admin.site.register(WeaponModification, WeaponModificationAdmin)
+admin.site.register(ProtectionType, ProtectionTypeAdmin)
 admin.site.register(RiotGearType, RiotGearTypeAdmin)
 admin.site.register(RiotGear, RiotGearAdmin)
 admin.site.register(ItemType, ItemTypeAdmin)

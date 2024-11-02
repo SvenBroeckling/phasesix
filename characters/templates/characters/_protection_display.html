@@ -1,0 +1,6 @@
+{% load characters_extras %}
+{% for rgp in character.total_protection_available %}
+  {% for i in rgp.available_protection|to_range %}
+    <i class="{{ rgp.riot_gear_protection.protection_type.icon_class }} {{ rgp.riot_gear_protection.protection_type.color_class }}"></i>
+  {% endfor %}
+{% endfor %}

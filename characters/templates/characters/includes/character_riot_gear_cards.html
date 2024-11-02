@@ -1,3 +1,4 @@
+{% load armory_extras %}
 {% load characters_extras %}
 {% load i18n %}
 {% for r in character.characterriotgear_set.all %}
@@ -7,14 +8,14 @@
       {{ r.riot_gear }} <span class="small text-muted">{{ r.riot_gear.type }}</span>
       {% if r.riot_gear.concealment > 0 %}
         <span class="float-end">
-                                <i class="fas fa-eye-slash fa-fw"
-                                   title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
-                            </span>
+          <i class="fas fa-eye-slash fa-fw"
+             title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
+        </span>
       {% endif %}
       {% if r.condition < 100 %}
         <span class="float-end me-1">
-                                <span title="{% trans 'Condition' %}">{% color_value_span r.condition 100 %}%</span>
-                            </span>
+          <span title="{% trans 'Condition' %}">{% color_value_span r.condition 100 %}%</span>
+        </span>
       {% endif %}
     </div>
     <div class="card-body">
@@ -23,7 +24,8 @@
         {% color_value_span r.riot_gear.shield_cover 6 invert=True %}+<br>
       {% else %}
         <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}:
-        {% color_value_span r.riot_gear.protection_ballistic 3 %}<br>
+        {% riot_gear_protection_display r.riot_gear %}
+        <br>
       {% endif %}
       <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 6 invert=True %}<br>
     </div>

@@ -1,3 +1,4 @@
+{% load armory_extras %}
 {% load i18n characters_extras rules_extras thumbnail %}
 
 <div class="card mb-3">
@@ -14,7 +15,8 @@
       {% color_value_span riot_gear.shield_cover 6 invert=True %}+<br>
     {% else %}
       <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}:
-      {% color_value_span riot_gear.protection_ballistic 3 %}<br>
+      {% riot_gear_protection_display riot_gear %}
+      <br>
     {% endif %}
     <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
     <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ riot_gear.weight }}<br>

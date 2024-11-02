@@ -1,0 +1,8 @@
+{% load characters_extras %}
+{% for riot_gear_protection in riot_gear.get_protection %}
+  {% with protection_type=riot_gear_protection.protection_type %}
+    {% for i in riot_gear_protection.value|to_range %}
+      <i class="{{ protection_type.icon_class }} {{ protection_type.color_class }}"></i>
+    {% endfor %}
+  {% endwith %}
+{% endfor %}

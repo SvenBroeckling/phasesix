@@ -1,3 +1,4 @@
+{% load armory_extras %}
 {% load i18n characters_extras characters_extras rules_extras %}
 
 {% if may_edit %}
@@ -43,7 +44,9 @@
           <li class="list-group-item">
             <i class="fas fa-shield-alt fa-fw"></i>
             {% trans 'Protection' %}
-            <span class="float-end">{% color_value_span object.riot_gear.protection_ballistic 3 %}</span>
+            <span class="float-end">
+               {% riot_gear_protection_display object.riot_gear %}
+            </span>
           </li>
         {% endif %}
 

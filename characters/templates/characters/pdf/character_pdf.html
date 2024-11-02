@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
   <title>{{ object.name }}</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static "vendor/fontawesome/css/all.css" %}">
+  <link rel="stylesheet" href="{% local_static "vendor/game-icons/gameicons.css" %}">
   <link rel="stylesheet" href="{% local_static "pdf/character_pdf.css" %}">
   {% include 'characters/pdf/fonts/Roboto.html' %}
 </head>
@@ -37,9 +38,6 @@
             </td>
             <td>
               {% include 'characters/pdf/boxes/overview/evasion.html' %}
-            </td>
-            <td>
-              {% include 'characters/pdf/boxes/overview/concealment.html' %}
             </td>
           </tr>
         </table>
