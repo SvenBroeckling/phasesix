@@ -1,6 +1,17 @@
+{% load i18n %}
 {% load characters_extras %}
+
+{% if character.base_protection %}
+  {% for i in character.base_protection|to_range %}
+    <i class="gi-delapouite-roman-shield text-info" title="{% trans "Base protection" %}"></i>
+  {% endfor %}
+{% endif %}
+
 {% for rgp in character.total_protection_available %}
   {% for i in rgp.available_protection|to_range %}
     <i class="{{ rgp.riot_gear_protection.protection_type.icon_class }} {{ rgp.riot_gear_protection.protection_type.color_class }}"></i>
   {% endfor %}
+{% empty %}
+  <i class="gi-delapouite-temporary-shield text-danger"></i>
+  {% trans "No available protection" %}
 {% endfor %}

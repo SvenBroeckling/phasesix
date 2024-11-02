@@ -1,7 +1,15 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from armory.models import ItemType, WeaponType, RiotGearType, WeaponKeyword, Weapon
+from armory.models import (
+    ItemType,
+    WeaponType,
+    RiotGearType,
+    WeaponKeyword,
+    Weapon,
+    RiotGearProtection,
+    RiotGear,
+)
 from magic.models import SpellType, SpellVariant, SpellShape, SpellOrigin
 
 
@@ -39,7 +47,6 @@ class CreateRiotGearForm(forms.Form):
     description = forms.CharField(
         widget=forms.Textarea, label=_("Description"), required=False
     )
-    protection = forms.DecimalField(label=_("Protection"))
     encumbrance = forms.DecimalField(label=_("Encumbrance"))
     weight = forms.DecimalField(label=_("Weight (kg)"))
     price = forms.DecimalField(label=_("Price"))
@@ -47,6 +54,16 @@ class CreateRiotGearForm(forms.Form):
     add_to_character = forms.BooleanField(
         label=_("Add to character"), initial=True, required=False
     )
+
+
+CreateRiotGearProtectionFormSet = forms.inlineformset_factory(
+    parent_model=RiotGear,
+    model=RiotGearProtection,
+    fields=["protection_type", "value"],
+    extra=3,
+    can_delete=False,
+    labels={"protection_type": _("Protection Type")},
+)
 
 
 class CreateWeaponForm(forms.Form):

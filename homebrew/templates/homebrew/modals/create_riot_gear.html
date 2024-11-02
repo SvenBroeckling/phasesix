@@ -4,27 +4,32 @@
     $(function () {
         $('.create-item-button').on('click', function (e) {
             let form = $(this).closest('form')
-            $.post(form.attr('action'), form.serialize(), function (data) {})
+            $.post(form.attr('action'), form.serialize(), function (data) {
+            })
             e.preventDefault()
             return false
         })
     })
 </script>
 
-<form action="{% url 'homebrew:create_riot_gear' %}?character_pk={{ character.id }}&campaign_pk={{ campaign.id }}" method="post" enctype="multipart/form-data">
-    <div class="row">
-        <div class="col-12 col-md-8 offset-md-2">
-            {% csrf_token %}
-            {% bootstrap_field form.type %}
-            {% bootstrap_field form.name %}
-            {% bootstrap_field form.description %}
-            {% bootstrap_field form.protection %}
-            {% bootstrap_field form.encumbrance %}
-            {% bootstrap_field form.weight %}
-            {% bootstrap_field form.price %}
-            {% bootstrap_field form.concealment %}
-            {% bootstrap_field form.add_to_character %}
-            <button class="btn btn-primary mt-1 create-item-button w-100" data-bs-dismiss="modal">{% trans 'Create Item' %}</button>
-        </div>
+<form action="{% url 'homebrew:create_riot_gear' %}?character_pk={{ character.id }}&campaign_pk={{ campaign.id }}"
+      method="post" enctype="multipart/form-data">
+  <div class="row">
+    <div class="col-12 col-md-8 offset-md-2">
+      {% csrf_token %}
+      {% bootstrap_field form.type %}
+      {% bootstrap_field form.name %}
+      {% bootstrap_field form.description %}
+      {% bootstrap_field form.encumbrance %}
+      {% bootstrap_field form.weight %}
+      {% bootstrap_field form.price %}
+      {% bootstrap_field form.concealment %}
+      {% bootstrap_field form.add_to_character %}
+      <h4>{% trans "Protection" %}</h4>
+      {% bootstrap_formset formset layout="horizontal" %}
+      {% bootstrap_formset_errors formset %}
+      <button class="btn btn-primary mt-1 create-item-button w-100"
+              data-bs-dismiss="modal">{% trans 'Create Item' %}</button>
     </div>
+  </div>
 </form>

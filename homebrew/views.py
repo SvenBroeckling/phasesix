@@ -13,6 +13,7 @@ from homebrew.forms import (
     CreateWeaponForm,
     CreateBaseSpellForm,
     CreateWeaponKeywordFormSet,
+    CreateRiotGearProtectionFormSet,
 )
 from magic.models import BaseSpell
 
@@ -109,11 +110,11 @@ class XhrCreateRiotGearView(XhrCreateBaseView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["formset"] = CreateRiotGearProtectionFormSet()
         context["form"] = CreateRiotGearForm(
             initial={
                 "weight": 1,
                 "type": 1,
-                "protection": 1,
                 "encumbrance": 1,
                 "price": 10,
                 "concealment": 0,
@@ -133,7 +134,6 @@ class CreateRiotGearView(CreateBaseView):
                     type=form.cleaned_data["type"],
                     name_de=form.cleaned_data["name"],
                     description_de=form.cleaned_data["description"],
-                    protection_ballistic=form.cleaned_data["protection"],
                     encumbrance=form.cleaned_data["encumbrance"],
                     weight=form.cleaned_data["weight"],
                     price=form.cleaned_data["price"],
@@ -143,6 +143,21 @@ class CreateRiotGearView(CreateBaseView):
                     homebrew_character=character,
                     homebrew_campaign=campaign,
                 )
+                formset = CreateRiotGearProtectionFormSet(
+                    request.POST, instance=riot_gear
+                )
+                for formset_form in formset:
+                    if formset_form.is_valid():
+                        try:
+                            protection_type = formset_form.cleaned_data[
+                                "protection_type"
+                            ]
+                            value = formset_form.cleaned_data["value"]
+                            riot_gear.riotgearprotection_set.create(
+                                protection_type=protection_type, value=value
+                            )
+                        except KeyError:  # Empty form
+                            pass
                 if character is not None and form["add_to_character"]:
                     character.characterriotgear_set.create(riot_gear=riot_gear)
 

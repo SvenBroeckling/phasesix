@@ -471,6 +471,12 @@ class Character(models.Model):
         return int(math.ceil(self.get_attribute_value("quickness") / 2)) + 1
 
     @property
+    def base_protection(self):
+        return self.lineage.base_protection + self.get_aspect_modifier(
+            "base_protection"
+        )
+
+    @property
     def total_protection_available(self):
         """
         Returns the following structure:

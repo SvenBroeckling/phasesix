@@ -3,6 +3,12 @@
 
 <div class="row">
   <div class="col-12 text-center mt-1 mb-3">
+    {% if object.base_protection %}
+      {% for i in object.base_protection|to_range %}
+        <i class="fs-2 gi-delapouite-roman-shield text-info" title="{% trans "Base protection" %}"></i>
+      {% endfor %}
+    {% endif %}
+
     {% for total in object.total_protection_available %}
       {% with rgp=total.riot_gear_protection %}
         {% for i in total.available_protection|to_range %}
@@ -35,6 +41,18 @@
 </div>
 
 <div class="row">
+  {% if object.base_protection %}
+    <div class="col-2 mb-2">
+      <i class="fs-2 gi-delapouite-roman-shield text-info" title="{% trans "Base protection" %}"></i>
+    </div>
+    <div class="col-10 mb-2">
+      {% blocktrans %}
+        An innate protection that comes from your character's lineage. You can use this protection at any time, it does
+        not deplete.
+      {% endblocktrans %}
+    </div>
+  {% endif %}
+
   {% for protection_type in protection_types %}
     <div class="col-2 mb-2">
       <i class="fs-1 {{ protection_type.icon_class }} {{ protection_type.color_class }}"

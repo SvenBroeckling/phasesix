@@ -2,9 +2,66 @@
 {% load characters_extras rules_extras i18n thumbnail %}
 
 {% block fragment %}
-    {% if object.extension_enabled.pantheon %}
-        <div class="row masonry-container">
-            {% include 'characters/includes/priest_action_cards.html' %}
+  <div class="row">
+
+    <div class="col-12 col-md-6">
+
+      <div class="card sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
+           data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="grace" %}">
+        <div class="card-body">
+          <h5 class="card-title">{% trans "Attitude" %}</h5>
+          <p>
+            {% blocktrans %}
+              Your attitude describes the basic orientation of your character. The value ranges from 1 to 100, where 1
+              stands for abysmally evil, 100 for exceptionally good-natured.
+            {% endblocktrans %}
+          </p>
+          <p>
+            {% trans "Your attitude is" %}
+            <span class="h3">{% color_value_span object.attitude 100 %}</span>
+          </p>
         </div>
+      </div>
+
+      {% if object.is_priest %}
+        <div class="card sidebar-trigger mt-2" data-sidebar-title="{% trans 'Belief' %}"
+             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="grace" %}">
+          <div class="card-body">
+            <h5 class="card-title">{% trans "Grace" %}</h5>
+            <p>
+              {% blocktrans %}
+                Grace is a measure of your character's standing with their deity. You can receive grace by doing things
+                for your deity, or act on their behalf. Grace can be used to perform divine acts.
+              {% endblocktrans %}
+            </p>
+            <p>
+              {% trans "Your grace is" %}
+              <span class="h3">{% color_value_span object.grace 50 %}</span>
+            </p>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+    {% if object.entity %}
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <img class="card-img-top" src="{{ object.entity.image.url }}" alt="{{ object.entity }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ object.entity }}</h5>
+            {% if object.entity.wiki_page %}
+              <a href="{{ object.entity.wiki_page.get_absolute_url }}">{% trans "Read description" %}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
     {% endif %}
+  </div>
+
+  {% if object.extension_enabled.pantheon and object.is_priest %}
+    <div class="row masonry-container mt-3">
+      {% include 'characters/includes/priest_action_cards.html' %}
+    </div>
+  {% endif %}
 {% endblock %}
