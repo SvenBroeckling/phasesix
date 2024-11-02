@@ -299,7 +299,10 @@
     <div class="tab-pane fade" id="v-licenses" role="tabpanel">
       <div class="row mb-5 mt-5">
         <div class="col-md-8 offset-md-2">
-          {% blocktrans %}
+          {% static "vendor/game-icons/index.html" as game_icons_page_url %}
+          {% static "vendor/game-icons/license.txt" as game_icons_license_url %}
+          {% blocktrans with t_game_icons_page_url=game_icons_page_url t_game_icons_license_url=game_icons_license_url %}
+
             <h2>Game Content</h2>
             Text content on this platform is licensed under the
             <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA</a> License. This affects
@@ -307,16 +310,23 @@
             of this game for own purposes,
             but you have to state the origin of the material, and you have no permission to use this material
             commercially.
+
             <h2 class="mt-3">Images</h2>
             Images on this platform are licensed under the
             <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a> licence. You are free to use the images
             from this game for your own purposes.
+
             <h2 class="mt-3">Source Code</h2>
             This source code of this plattform is available in a
             <a href="https://codeberg.org/Nimbostratus/phasesix">git repository</a>.
             The code is licensed under the GPL3 Licence, which allows free use. The Django Project can be used freely
             and commercially too. This permission does not include the permission to use game content commercially (see
             above).
+
+            <h2 class="mt-3">Icons</h2>
+            This platform uses icons from the <a href="https://game-icons.net">Game Icons</a> project. The icons
+            are licensed under the <a href="{{ t_game_icons_license_url }}">CC BY 3.0</a> license. The authors
+            of the icons can be found on the <a href="{{ t_game_icons_page_url }}">Game Icons</a> page.
           {% endblocktrans %}
         </div>
       </div>

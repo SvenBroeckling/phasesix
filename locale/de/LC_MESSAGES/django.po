@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 17:19+0000\n"
-"PO-Revision-Date: 2024-08-31 19:19+0200\n"
+"POT-Creation-Date: 2024-11-02 17:21+0000\n"
+"PO-Revision-Date: 2024-11-02 18:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,48 +18,118 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: armory/models.py:23 armory/models.py:46 armory/models.py:129
-#: armory/models.py:159 armory/models.py:186 armory/models.py:285
-#: armory/models.py:309 armory/models.py:387 armory/models.py:419
-#: armory/models.py:446 armory/models.py:474 campaigns/models.py:28
-#: campaigns/models.py:184 campaigns/models.py:192 characters/models.py:31
-#: forum/models.py:32 forum/models.py:54 horror/models.py:11
-#: horror/models.py:24 magic/models.py:17 magic/models.py:30 magic/models.py:43
-#: magic/models.py:74 magic/models.py:167 magic/models.py:185
-#: magic/models.py:197 pantheon/models.py:22 pantheon/models.py:58
-#: pantheon/models.py:109 rules/models.py:70 rules/models.py:136
-#: rules/models.py:181 rules/models.py:201 rules/models.py:235
-#: rules/models.py:267 rules/models.py:316 rules/models.py:441
-#: worlds/models.py:54 worlds/models.py:197 worlds/models.py:363
-#: worlds/models.py:375 worlds/models.py:463
+#: armory/choices.py:3
+msgid "Shield"
+msgstr "Schild"
+
+#: armory/choices.py:5
+msgid "Coins"
+msgstr "Münzen"
+
+#: armory/choices.py:6
+msgid "Euro"
+msgstr "Euro"
+
+#: armory/choices.py:7
+msgid "Dollar"
+msgstr "Dollar"
+
+#: armory/choices.py:8
+msgid "Rupee"
+msgstr "Rupee"
+
+#: armory/choices.py:9
+msgid "Pound"
+msgstr "Pfund"
+
+#: armory/choices.py:10
+msgid "Lira"
+msgstr "Lira"
+
+#: armory/choices.py:11
+msgid "Shekel"
+msgstr "Shekel"
+
+#: armory/choices.py:12
+msgid "Yen"
+msgstr "Yen"
+
+#: armory/choices.py:13
+msgid "Won"
+msgstr "Won"
+
+#: armory/choices.py:14
+msgid "Cubes"
+msgstr "Kästen"
+
+#: armory/choices.py:17
+msgid "White"
+msgstr "Weiss"
+
+#: armory/choices.py:18
+msgid "Success"
+msgstr "Erfolg"
+
+#: armory/choices.py:19
+msgid "Primary"
+msgstr "Primär"
+
+#: armory/choices.py:20
+msgid "Secondary"
+msgstr "Sekundär"
+
+#: armory/choices.py:21
+msgid "Warning"
+msgstr "Warnung"
+
+#: armory/choices.py:22
+msgid "Danger"
+msgstr "Gefahr"
+
+#: armory/models.py:27 armory/models.py:50 armory/models.py:133
+#: armory/models.py:163 armory/models.py:192 armory/models.py:232
+#: armory/models.py:282 armory/models.py:306 armory/models.py:340
+#: armory/models.py:378 armory/models.py:410 armory/models.py:437
+#: armory/models.py:445 campaigns/models.py:28 campaigns/models.py:184
+#: campaigns/models.py:192 characters/models.py:31 forum/models.py:38
+#: forum/models.py:60 horror/models.py:11 horror/models.py:24
+#: magic/models.py:17 magic/models.py:30 magic/models.py:43 magic/models.py:74
+#: magic/models.py:167 magic/models.py:185 magic/models.py:197
+#: pantheon/models.py:22 pantheon/models.py:58 pantheon/models.py:109
+#: rules/models.py:70 rules/models.py:136 rules/models.py:181
+#: rules/models.py:201 rules/models.py:235 rules/models.py:267
+#: rules/models.py:316 rules/models.py:441 worlds/models.py:54
+#: worlds/models.py:197 worlds/models.py:363 worlds/models.py:375
+#: worlds/models.py:463
 msgid "name"
 msgstr "Name"
 
-#: armory/models.py:24 armory/models.py:47 armory/models.py:130
-#: armory/models.py:187 armory/models.py:286 armory/models.py:310
-#: armory/models.py:389 armory/models.py:420 campaigns/models.py:213
-#: characters/models.py:32 horror/models.py:27 pantheon/models.py:23
-#: pantheon/models.py:66 rules/models.py:72 rules/models.py:137
-#: rules/models.py:183 rules/models.py:202 rules/models.py:239
-#: rules/models.py:282
+#: armory/models.py:28 armory/models.py:51 armory/models.py:134
+#: armory/models.py:193 armory/models.py:233 armory/models.py:283
+#: armory/models.py:307 armory/models.py:341 armory/models.py:380
+#: armory/models.py:411 campaigns/models.py:213 characters/models.py:32
+#: horror/models.py:27 pantheon/models.py:23 pantheon/models.py:66
+#: rules/models.py:72 rules/models.py:137 rules/models.py:183
+#: rules/models.py:202 rules/models.py:239 rules/models.py:282
 msgid "description"
 msgstr "Beschreibung"
 
-#: armory/models.py:25 armory/models.py:56 armory/models.py:131
-#: armory/models.py:180 armory/models.py:416 campaigns/models.py:65
-#: campaigns/models.py:211 characters/models.py:81 characters/models.py:735
-#: characters/models.py:1031 forum/models.py:21 forum/models.py:27
-#: forum/models.py:31 forum/models.py:49 forum/models.py:93 magic/models.py:125
-#: magic/models.py:204 pantheon/models.py:24 pantheon/models.py:43
-#: pantheon/models.py:101 portal/models.py:10 rules/models.py:89
-#: rules/models.py:144 rules/models.py:237 rules/models.py:318
-#: rules/models.py:443 worlds/models.py:51 worlds/models.py:194
-#: worlds/models.py:323 worlds/models.py:395 worlds/models.py:461
+#: armory/models.py:29 armory/models.py:60 armory/models.py:135
+#: armory/models.py:184 armory/models.py:407 campaigns/models.py:65
+#: campaigns/models.py:211 characters/models.py:81 characters/models.py:728
+#: characters/models.py:1022 forum/models.py:21 forum/models.py:27
+#: forum/models.py:31 forum/models.py:37 forum/models.py:55 forum/models.py:99
+#: magic/models.py:125 magic/models.py:204 pantheon/models.py:24
+#: pantheon/models.py:43 pantheon/models.py:101 portal/models.py:10
+#: rules/models.py:89 rules/models.py:144 rules/models.py:237
+#: rules/models.py:318 rules/models.py:443 worlds/models.py:51
+#: worlds/models.py:194 worlds/models.py:323 worlds/models.py:395
+#: worlds/models.py:461
 msgid "created at"
 msgstr "Erzeugt am"
 
-#: armory/models.py:26 armory/models.py:67 armory/models.py:132
-#: armory/models.py:181 armory/models.py:417 characters/models.py:82
+#: armory/models.py:30 armory/models.py:71 armory/models.py:136
+#: armory/models.py:185 armory/models.py:408 characters/models.py:82
 #: magic/models.py:126 magic/models.py:205 pantheon/models.py:25
 #: pantheon/models.py:51 pantheon/models.py:102 rules/models.py:90
 #: rules/models.py:145 rules/models.py:238 rules/models.py:319
@@ -68,88 +138,89 @@ msgstr "Erzeugt am"
 msgid "modified at"
 msgstr "Modifiziert am"
 
-#: armory/models.py:27 armory/models.py:133 armory/models.py:390
-#: armory/models.py:498 characters/models.py:1035 pantheon/models.py:26
-#: pantheon/models.py:77 rules/models.py:91 rules/models.py:445
-#: worlds/models.py:111 worlds/models.py:247
+#: armory/models.py:31 armory/models.py:137 armory/models.py:242
+#: armory/models.py:342 armory/models.py:381 armory/models.py:469
+#: characters/models.py:1026 pantheon/models.py:26 pantheon/models.py:77
+#: rules/models.py:91 rules/models.py:445 worlds/models.py:111
+#: worlds/models.py:247
 msgid "ordering"
 msgstr "Sortierung"
 
-#: armory/models.py:32
+#: armory/models.py:36
 msgid "item type"
 msgstr "Gegenstandstyp"
 
-#: armory/models.py:33
+#: armory/models.py:37
 msgid "item types"
 msgstr "Gegenstandstypen"
 
-#: armory/models.py:49 armory/models.py:190 armory/models.py:422
+#: armory/models.py:53 armory/models.py:197 armory/models.py:413
 #: magic/models.py:147 rules/models.py:67 worlds/models.py:399
 msgid "type"
 msgstr "Typ"
 
-#: armory/models.py:50
+#: armory/models.py:54
 msgid "is container"
 msgstr "Ist Container"
 
-#: armory/models.py:52 armory/models.py:204 armory/models.py:429
+#: armory/models.py:56 armory/models.py:200 armory/models.py:420
 #: characters/models.py:43
 msgid "weight"
 msgstr "Gewicht"
 
-#: armory/models.py:53 armory/models.py:205 armory/models.py:320
-#: armory/models.py:430
+#: armory/models.py:57 armory/models.py:201 armory/models.py:317
+#: armory/models.py:421
 msgid "price"
 msgstr "Preis"
 
-#: armory/models.py:54 armory/models.py:199 armory/models.py:428
+#: armory/models.py:58 armory/models.py:419
 msgid "concealment"
 msgstr "Verborgenheit"
 
-#: armory/models.py:59 armory/models.py:209 armory/models.py:411
+#: armory/models.py:63 armory/models.py:205 armory/models.py:402
 #: campaigns/models.py:63 characters/models.py:86 magic/models.py:122
 #: pantheon/models.py:46 pantheon/models.py:99 worlds/models.py:48
 #: worlds/models.py:191 worlds/models.py:320
 msgid "created by"
 msgstr "Erzeugt von"
 
-#: armory/models.py:65
+#: armory/models.py:69
 msgid "charges"
 msgstr "Ladungen"
 
-#: armory/models.py:68
+#: armory/models.py:72
 msgid "usable in combat"
 msgstr "Benutzbar im Kampf"
 
-#: armory/models.py:71 pantheon/models.py:132
+#: armory/models.py:75 pantheon/models.py:132
 msgid "attribute for usage"
 msgstr "Attribut"
 
-#: armory/models.py:78
+#: armory/models.py:82
 msgid "skill for usage"
 msgstr "Fertigkeit zur Benutzung"
 
-#: armory/models.py:85
+#: armory/models.py:89
 msgid "knowledge for usage"
 msgstr "Wissen"
 
-#: armory/models.py:92
+#: armory/models.py:96
 msgid "dice role string"
 msgstr "Würfelstring"
 
-#: armory/models.py:96
+#: armory/models.py:100
 msgid "Shows a roll button at the item if not empty."
 msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
-#: armory/models.py:100 armory/models.py:218 campaigns/models.py:30
-#: campaigns/models.py:194 characters/models.py:58 magic/models.py:48
-#: magic/models.py:79 pantheon/models.py:69 portal/models.py:14
-#: rules/models.py:80 worlds/models.py:83 worlds/models.py:171
-#: worlds/models.py:234 worlds/models.py:326
+#: armory/models.py:104 armory/models.py:212 campaigns/models.py:30
+#: campaigns/models.py:194 characters/models.py:58 forum/models.py:33
+#: magic/models.py:48 magic/models.py:79 pantheon/models.py:69
+#: portal/models.py:14 rules/models.py:80 worlds/models.py:83
+#: worlds/models.py:171 worlds/models.py:234 worlds/models.py:326
 msgid "image"
 msgstr "Bild"
 
-#: armory/models.py:103 armory/models.py:221 campaigns/models.py:33
+#: armory/models.py:107 armory/models.py:215 campaigns/models.py:33
 #: campaigns/models.py:55 campaigns/models.py:197 characters/models.py:61
 #: characters/models.py:75 magic/models.py:51 magic/models.py:86
 #: pantheon/models.py:72 portal/models.py:17 portal/models.py:31
@@ -158,7 +229,7 @@ msgstr "Bild"
 msgid "image copyright"
 msgstr "Bild Copyright"
 
-#: armory/models.py:106 armory/models.py:224 campaigns/models.py:36
+#: armory/models.py:110 armory/models.py:218 campaigns/models.py:36
 #: campaigns/models.py:58 campaigns/models.py:200 characters/models.py:64
 #: characters/models.py:78 magic/models.py:54 magic/models.py:89
 #: pantheon/models.py:75 portal/models.py:20 portal/models.py:34
@@ -167,160 +238,142 @@ msgstr "Bild Copyright"
 msgid "image copyright url"
 msgstr "Bild Copyright URL"
 
-#: armory/models.py:111
+#: armory/models.py:115
 msgid "item"
 msgstr "Gegenstand"
 
-#: armory/models.py:112
+#: armory/models.py:116
 msgid "items"
 msgstr "Gegenstände"
 
-#: armory/models.py:138
+#: armory/models.py:142
 msgid "weapon type"
 msgstr "Waffentyp"
 
-#: armory/models.py:139
+#: armory/models.py:143
 msgid "weapon types"
 msgstr "Waffentypen"
 
-#: armory/models.py:149
+#: armory/models.py:153
 msgid "hand to hand 1m"
 msgstr "Nahkampf 1m"
 
-#: armory/models.py:150
+#: armory/models.py:154
 msgid "hand to hand 2m"
 msgstr "Nahkampf 2m"
 
-#: armory/models.py:151
+#: armory/models.py:155
 msgid "short"
 msgstr "kurz"
 
-#: armory/models.py:152
+#: armory/models.py:156
 msgid "mid"
 msgstr "mittel"
 
-#: armory/models.py:153
+#: armory/models.py:157
 msgid "long"
 msgstr "lang"
 
-#: armory/models.py:154
+#: armory/models.py:158
 msgid "extreme"
 msgstr "extrem"
 
-#: armory/models.py:160
+#: armory/models.py:164
 msgid "dice bonus"
 msgstr "Würfelbonus"
 
-#: armory/models.py:161
+#: armory/models.py:165
 msgid "capacity consumed"
 msgstr "Benutzte Kapazität"
 
-#: armory/models.py:165
+#: armory/models.py:169
 msgid "attack mode"
 msgstr "Angriffsmodus"
 
-#: armory/models.py:166
+#: armory/models.py:170 armory/models.py:194
 msgid "attack modes"
 msgstr "Angriffsmodi"
 
-#: armory/models.py:183
+#: armory/models.py:188
 msgid "is hand to hand weapon"
 msgstr "Ist Nahkampfwaffe"
 
-#: armory/models.py:185
+#: armory/models.py:190
 msgid "is throwing weapon"
 msgstr "Ist Wurfwaffe"
 
-#: armory/models.py:193
-msgid "piercing"
-msgstr "Durchschlag"
-
-#: armory/models.py:194
-msgid "damage potential"
-msgstr "Schadenspotential"
-
-#: armory/models.py:195
-msgid "recoil compensation"
-msgstr "Rückstoßkompensation"
-
-#: armory/models.py:196
-msgid "crit minimum roll"
-msgstr "Kritische Treffer Mindestwurf"
-
-#: armory/models.py:198 armory/models.py:426
-msgid "encumbrance"
-msgstr "Belastung"
-
-#: armory/models.py:200
-msgid "reload actions"
-msgstr "Nachladeaktionen"
-
-#: armory/models.py:201
-msgid "actions to ready"
-msgstr "Aktionen zum Bereitmachen"
-
-#: armory/models.py:202
-msgid "capacity"
-msgstr "Kapazität"
-
-#: armory/models.py:215
-msgid "range (meter)"
-msgstr "Reichweite (Meter)"
-
-#: armory/models.py:229
+#: armory/models.py:223
 msgid "weapon"
 msgstr "Waffe"
 
-#: armory/models.py:230
+#: armory/models.py:224
 msgid "weapons"
 msgstr "Waffen"
 
-#: armory/models.py:238 armory/templates/armory/weapon_list.html:67
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:5
-#: gmtools/forms.py:15
-msgid "Weapon"
-msgstr "Waffe"
+#: armory/models.py:231 rules/models.py:71 rules/models.py:182
+msgid "identifier"
+msgstr "Identifier"
+
+#: armory/models.py:234
+msgid "is rare"
+msgstr "Ist selten"
+
+#: armory/models.py:236
+msgid "is evergreen"
+msgstr "Ist Evergreen"
+
+#: armory/models.py:238
+msgid "Evergreen keywords are the base of the combat mechanics."
+msgstr "Evergreen Schlüsselworte stellen die Basis der Kampfmechanik dar."
+
+#: armory/models.py:240
+msgid "show in dice rolls"
+msgstr "In Angriffswürfen anzeigen"
 
 #: armory/models.py:241
-msgid "Attack Mode"
-msgstr "Angriffsmodus"
+msgid "show in summary"
+msgstr "In Zusammenfassung anzeigen"
 
-#: armory/models.py:244
-msgid "dice bonus override"
-msgstr "Würfelbonusüberschreibung"
+#: armory/models.py:246
+msgid "keyword"
+msgstr "Schlüsselwort"
 
 #: armory/models.py:247
-msgid "capacity consumed override"
-msgstr "Würfelbonusüberschreibung"
+msgid "keywords"
+msgstr "Schlüsselworte"
 
-#: armory/models.py:251
-msgid "weapon attack mode"
-msgstr "Waffen-Angriffsmodus"
+#: armory/models.py:257 armory/models.py:336 armory/models.py:448
+msgid "value"
+msgstr "Wert"
 
-#: armory/models.py:252
-msgid "weapon attack modes"
-msgstr "Waffen-Angriffsmodi"
+#: armory/models.py:260
+msgid "weapon keyword"
+msgstr "Waffenschlüsselwort"
 
-#: armory/models.py:288
+#: armory/models.py:261
+msgid "weapon keywords"
+msgstr "Waffenschlüsselworte"
+
+#: armory/models.py:285
 msgid "unique equip"
 msgstr "Einmalig ausrüsten"
 
-#: armory/models.py:291
+#: armory/models.py:288
 msgid "A weapon may only have one modification of this type (i.E. sights)"
 msgstr ""
 "Eine Waffe darf nur eine Modifikation von diesem Typ haben (z.B. Visiere)"
 
-#: armory/models.py:297 armory/models.py:298
+#: armory/models.py:294 armory/models.py:295
 msgid "weapon modification type"
 msgstr "Waffenmodifikationstyp"
 
-#: armory/models.py:312 horror/models.py:26 magic/models.py:168
-#: magic/models.py:207 pantheon/models.py:110 rules/models.py:324
-#: rules/models.py:442
+#: armory/models.py:309 armory/models.py:344 horror/models.py:26
+#: magic/models.py:168 magic/models.py:207 pantheon/models.py:110
+#: rules/models.py:324 rules/models.py:442
 msgid "rules"
 msgstr "Regeln"
 
-#: armory/models.py:314
+#: armory/models.py:311
 msgid ""
 "Rules for this weapon modification. May be blank if only attribute changes "
 "apply."
@@ -328,210 +381,44 @@ msgstr ""
 "Regeln für diese Waffenmodifikation. Kann leer bleiben wenn nur "
 "Attributänderungen zutreffen sollen."
 
-#: armory/models.py:324 armory/models.py:325
+#: armory/models.py:321 armory/models.py:322
 msgid "weapon modification"
 msgstr "Waffenmodifikation"
 
-#: armory/models.py:336 armory/templates/armory/_weapon_widget.html:21
-#: armory/templates/armory/weapon_list.html:73
-#: characters/templates/characters/fragments/combat.html:29
-#: characters/templates/characters/includes/character_weapon_cards.html:37
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:38
-#: characters/templates/characters/sidebar/characterweapon.html:85
-#: homebrew/forms.py:45
-msgid "Capacity"
-msgstr "Kapazität"
+#: armory/models.py:345
+msgid "Rules for this protection type."
+msgstr "Regeln für diesen Schutztypen."
 
-#: armory/models.py:337
-msgid "Recoil compensation"
-msgstr "Rückstoßkompensation"
-
-#: armory/models.py:338 armory/templates/armory/_weapon_widget.html:16
-#: armory/templates/armory/weapon_list.html:71
-#: characters/templates/characters/includes/character_weapon_cards.html:32
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:26
-#: characters/templates/characters/sidebar/characterweapon.html:103
-#: homebrew/forms.py:46
-msgid "Actions to ready"
-msgstr "Aktionen zum Bereitmachen"
-
-#: armory/models.py:339
-msgid "Crit minimum roll"
-msgstr "Kritische Treffer Mindestwurf"
-
-#: armory/models.py:340 armory/templates/armory/_riot_gear_widget.html:19
-#: armory/templates/armory/_weapon_widget.html:25
-#: armory/templates/armory/riotgear_list.html:70
-#: armory/templates/armory/weapon_list.html:74
-#: characters/templates/characters/includes/character_riot_gear_cards.html:28
-#: characters/templates/characters/includes/character_weapon_cards.html:42
-#: characters/templates/characters/pdf/boxes/gear/armour.html:15
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:30
-#: characters/templates/characters/sidebar/characterweapon.html:132
-#: homebrew/forms.py:31 homebrew/forms.py:47
-msgid "Encumbrance"
-msgstr "Belastung"
-
-#: armory/models.py:341
-msgid "Damage potential"
-msgstr "Schadenspotential"
-
-#: armory/models.py:342 armory/templates/armory/_weapon_widget.html:14
-#: armory/templates/armory/weapon_list.html:69
-#: characters/templates/characters/fragments/combat.html:46
-#: characters/templates/characters/fragments/combat.html:70
-#: characters/templates/characters/includes/character_weapon_cards.html:27
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:12
-#: characters/templates/characters/pdf/boxes/overview/combat.html:16
-#: characters/templates/characters/pdf/boxes/overview/combat.html:39
-#: characters/templates/characters/sidebar/characterweapon.html:91
-#: characters/templates/characters/sidebar/weaponless.html:9
-#: gmtools/templates/gmtools/combat_sim_results.html:10
-#: gmtools/templates/gmtools/combat_sim_results.html:25 homebrew/forms.py:48
-msgid "Piercing"
-msgstr "Durchschlag"
-
-#: armory/models.py:343 armory/templates/armory/item_detail.html:64
-#: armory/templates/armory/riotgear_list.html:71
-#: armory/templates/armory/weapon_list.html:75
-#: characters/templates/characters/fragments/_gear_item.html:15
-#: characters/templates/characters/fragments/_gear_item.html:26
-#: characters/templates/characters/fragments/health.html:33
-#: characters/templates/characters/fragments/health.html:35
-#: characters/templates/characters/includes/character_riot_gear_cards.html:11
-#: characters/templates/characters/includes/character_weapon_cards.html:14
-#: characters/templates/characters/pdf/boxes/gear/armour.html:23
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:50
-#: characters/templates/characters/pdf/boxes/overview/concealment.html:3
-#: characters/templates/characters/sidebar/characteritem.html:157
-#: characters/templates/characters/sidebar/characterriotgear.html:62
-#: characters/templates/characters/sidebar/characterweapon.html:137
-#: homebrew/forms.py:14 homebrew/forms.py:34 homebrew/forms.py:49
-msgid "Concealment"
-msgstr "Verborgenheit"
-
-#: armory/models.py:344 armory/templates/armory/_weapon_widget.html:19
-#: characters/templates/characters/includes/character_weapon_cards.html:34
-#: characters/templates/characters/sidebar/characterweapon.html:121
-msgid "Reload actions"
-msgstr "Nachladeaktionen"
-
-#: armory/models.py:345 homebrew/forms.py:52
-msgid "Range (meter)"
-msgstr "Reichweite (Meter)"
-
-#: armory/models.py:351 horror/models.py:71 magic/models.py:226
-#: rules/models.py:188 rules/models.py:381
-msgid "attribute"
-msgstr "Attribut"
-
-#: armory/models.py:353 horror/models.py:75 magic/models.py:233
-#: rules/models.py:386
-msgid "attribute modifier"
-msgstr "Attributsmodifikator"
-
-#: armory/models.py:356 rules/models.py:450
-msgid "status effect"
-msgstr "Statuseffekt"
-
-#: armory/models.py:362
-msgid "status effect value"
-msgstr "Statuseffektwert"
-
-#: armory/models.py:388
-msgid "is shield"
-msgstr "Ist Schild"
-
-#: armory/models.py:425
-msgid "protection ballistic"
-msgstr "Ballistischer Schutz"
-
-#: armory/models.py:434 armory/models.py:435
-msgid "riot gear"
-msgstr "Rüstung"
-
-#: armory/models.py:454
-msgid "Coins"
-msgstr "Münzen"
-
-#: armory/models.py:455
-msgid "Euro"
-msgstr "Euro"
-
-#: armory/models.py:456
-msgid "Dollar"
-msgstr "Dollar"
-
-#: armory/models.py:457
-msgid "Rupee"
-msgstr "Rupee"
-
-#: armory/models.py:458
-msgid "Pound"
-msgstr "Pfund"
-
-#: armory/models.py:459
-msgid "Lira"
-msgstr "Lira"
-
-#: armory/models.py:460
-msgid "Shekel"
-msgstr "Shekel"
-
-#: armory/models.py:461
-msgid "Yen"
-msgstr "Yen"
-
-#: armory/models.py:462
-msgid "Won"
-msgstr "Won"
-
-#: armory/models.py:463
-msgid "Cubes"
-msgstr "Kästen"
-
-#: armory/models.py:466
-msgid "White"
-msgstr "Weiss"
-
-#: armory/models.py:467
-msgid "Success"
-msgstr "Erfolg"
-
-#: armory/models.py:468
-msgid "Primary"
-msgstr "Primär"
-
-#: armory/models.py:469
-msgid "Secondary"
-msgstr "Sekundär"
-
-#: armory/models.py:470
-msgid "Warning"
-msgstr "Warnung"
-
-#: armory/models.py:471
-msgid "Danger"
-msgstr "Gefahr"
-
-#: armory/models.py:477
-msgid "value"
-msgstr "Wert"
-
-#: armory/models.py:481
-msgid "Value in relation to the common unit."
-msgstr "Wert in Relation zur üblichen Einheit."
-
-#: armory/models.py:488 magic/models.py:45 magic/models.py:76
-#: rules/models.py:76 rules/models.py:439
+#: armory/models.py:351 armory/models.py:459 magic/models.py:45
+#: magic/models.py:76 rules/models.py:76 rules/models.py:439
 msgid "FA Icon Class"
 msgstr "FA Icon Klasse"
 
-#: armory/models.py:494
+#: armory/models.py:379
+msgid "is shield"
+msgstr "Ist Schild"
+
+#: armory/models.py:416
+msgid "protection ballistic"
+msgstr "Ballistischer Schutz"
+
+#: armory/models.py:417
+msgid "encumbrance"
+msgstr "Belastung"
+
+#: armory/models.py:425 armory/models.py:426
+msgid "riot gear"
+msgstr "Rüstung"
+
+#: armory/models.py:452
+msgid "Value in relation to the common unit."
+msgstr "Wert in Relation zur üblichen Einheit."
+
+#: armory/models.py:465
 msgid "is common"
 msgstr "Ist die übliche Einheit"
 
-#: armory/models.py:495
+#: armory/models.py:466
 msgid "Is this the common unit people pay with?"
 msgstr "Ist dies die übliche Einheit, mit der Menschen bezahlen?"
 
@@ -541,7 +428,7 @@ msgstr "Ist Container"
 
 #: armory/templates/armory/_item_widget.html:32
 #: armory/templates/armory/_riot_gear_widget.html:29
-#: armory/templates/armory/_weapon_widget.html:42
+#: armory/templates/armory/_weapon_widget.html:33
 #: characters/templates/characters/modals/add_quirk.html:58
 #: characters/templates/characters/modals/add_spell_template.html:75
 #: characters/templates/characters/modals/add_weapon_mod.html:68
@@ -551,7 +438,7 @@ msgstr "Nicht möglich"
 
 #: armory/templates/armory/_item_widget.html:33
 #: armory/templates/armory/_riot_gear_widget.html:29
-#: armory/templates/armory/_weapon_widget.html:43
+#: armory/templates/armory/_weapon_widget.html:34
 #: characters/templates/characters/modals/add_quirk.html:59
 #: characters/templates/characters/modals/add_spell_template.html:76
 #: characters/templates/characters/modals/add_weapon_mod.html:69
@@ -562,44 +449,44 @@ msgstr "Hinzugefügt"
 
 #: armory/templates/armory/_item_widget.html:34
 #: armory/templates/armory/_riot_gear_widget.html:30
-#: armory/templates/armory/_weapon_widget.html:44
-#: characters/templates/characters/fragments/gear.html:16
-#: characters/templates/characters/fragments/gear.html:40
-#: characters/templates/characters/fragments/gear.html:67
+#: armory/templates/armory/_weapon_widget.html:35
+#: characters/templates/characters/fragments/gear.html:15
+#: characters/templates/characters/fragments/gear.html:37
+#: characters/templates/characters/fragments/gear.html:62
 #: characters/templates/characters/sidebar/characteritem.html:14
 msgid "Add"
 msgstr "Hinzufügen"
 
 #: armory/templates/armory/_navigation.html:24
-#: characters/templates/_main_nav.html:50 characters/templates/base.html:129
+#: characters/templates/_main_nav.html:50 characters/templates/base.html:130
 msgid "Material"
 msgstr "Material"
 
 #: armory/templates/armory/_navigation.html:33
 #: campaigns/templates/campaigns/_navigation.html:95
-#: characters/templates/base.html:122
+#: characters/templates/base.html:123
 #: worlds/templates/worlds/wiki_page_with_game_values.html:5
 #: worlds/templates/worlds/wiki_page_with_game_values.html:7
 msgid "Foes"
 msgstr "Gegner"
 
 #: armory/templates/armory/_navigation.html:42
-#: characters/templates/base.html:131
+#: characters/templates/base.html:132
 #: rules/templates/rules/templatecategory_list.html:17
 msgid "Templates"
 msgstr "Schablonen"
 
 #: armory/templates/armory/_navigation.html:51
-#: armory/templates/armory/item_list.html:6 characters/templates/base.html:133
-#: characters/templates/characters/fragments/gear.html:79
+#: armory/templates/armory/item_list.html:6 characters/templates/base.html:134
+#: characters/templates/characters/fragments/gear.html:73
 msgid "Items"
 msgstr "Gegenstände"
 
 #: armory/templates/armory/_navigation.html:60
 #: armory/templates/armory/weapon_list.html:5
 #: armory/templates/armory/weapon_list.html:6
-#: characters/templates/base.html:132
-#: characters/templates/characters/fragments/gear.html:51
+#: characters/templates/base.html:133
+#: characters/templates/characters/fragments/gear.html:47
 #: gmtools/templates/gmtools/roll_statistics.html:21
 msgid "Weapons"
 msgstr "Waffen"
@@ -608,13 +495,13 @@ msgstr "Waffen"
 #: armory/templates/armory/riotgear_list.html:5
 #: armory/templates/armory/riotgear_list.html:7
 #: armory/templates/armory/riotgear_list.html:67
-#: characters/templates/base.html:135
+#: characters/templates/base.html:136
 #: characters/templates/characters/pdf/boxes/gear/armour.html:4
 msgid "Armour"
 msgstr "Rüstung"
 
 #: armory/templates/armory/_navigation.html:78
-#: characters/templates/base.html:134
+#: characters/templates/base.html:135
 #: gmtools/templates/gmtools/roll_statistics.html:27
 msgid "Spells"
 msgstr "Zauber"
@@ -635,61 +522,34 @@ msgstr "Deckung"
 #: characters/templates/characters/pdf/boxes/overview/protection.html:3
 #: characters/templates/characters/sidebar/characterriotgear.html:45
 #: gmtools/templates/gmtools/combat_sim_results.html:11
-#: gmtools/templates/gmtools/combat_sim_results.html:26 homebrew/forms.py:30
+#: gmtools/templates/gmtools/combat_sim_results.html:26 homebrew/forms.py:42
 #: worlds/templates/worlds/_game_values.html:14
 #: worlds/templates/worlds/wiki_page_with_game_values.html:31
 msgid "Protection"
 msgstr "Schutz"
 
+#: armory/templates/armory/_riot_gear_widget.html:19
+#: armory/templates/armory/riotgear_list.html:70
+#: characters/templates/characters/includes/character_riot_gear_cards.html:28
+#: characters/templates/characters/pdf/boxes/gear/armour.html:15
+#: characters/templates/characters/sidebar/characterriotgear.html:52
+#: homebrew/forms.py:43
+msgid "Encumbrance"
+msgstr "Belastung"
+
 #: armory/templates/armory/_riot_gear_widget.html:20
-#: armory/templates/armory/_weapon_widget.html:26
 #: armory/templates/armory/item_detail.html:63 characters/forms.py:60
 #: characters/templates/characters/fragments/_gear_item.html:28
 #: characters/templates/characters/sidebar/characteritem.html:152
 #: characters/templates/characters/sidebar/characterriotgear.html:57
-#: characters/views.py:717
+#: characters/views.py:714
 msgid "Weight"
 msgstr "Gewicht"
-
-#: armory/templates/armory/_weapon_widget.html:15
-#: armory/templates/armory/weapon_list.html:70
-#: armory/templates/armory/weapon_list.html:95
-#: characters/templates/characters/includes/character_weapon_cards.html:28
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:16
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:18
-#: characters/templates/characters/sidebar/characterweapon.html:108
-#: characters/templates/characters/sidebar/characterweapon.html:111
-#: homebrew/forms.py:44
-msgid "Damage Potential"
-msgstr "Schadenspotential"
-
-#: armory/templates/armory/_weapon_widget.html:18
-#: characters/templates/characters/fragments/combat.html:73
-#: characters/templates/characters/includes/character_weapon_cards.html:30
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:22
-#: characters/templates/characters/pdf/boxes/overview/combat.html:42
-#: characters/templates/characters/sidebar/characterweapon.html:97
-msgid "Recoil Compensation"
-msgstr "Rückstoßkompensation"
-
-#: armory/templates/armory/_weapon_widget.html:24
-#: armory/templates/armory/weapon_list.html:72
-#: characters/templates/characters/fragments/combat.html:30
-#: characters/templates/characters/includes/character_spell_cards.html:29
-#: characters/templates/characters/includes/character_weapon_cards.html:41
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:42
-#: characters/templates/characters/pdf/boxes/magic/spells.html:31
-#: characters/templates/characters/sidebar/characterspell.html:59
-#: characters/templates/characters/sidebar/characterweapon.html:127
-#: homebrew/forms.py:62 magic/templates/magic/_basespell_widget.html:27
-#: magic/templates/magic/basespell_detail.html:47
-msgid "Range"
-msgstr "Reichweite"
 
 #: armory/templates/armory/item_detail.html:58
 #: armory/templates/armory/riotgear_list.html:68
 #: characters/templates/characters/sidebar/characteritem.html:140
-#: homebrew/forms.py:28 homebrew/forms.py:65 rules/models.py:59
+#: homebrew/forms.py:37 homebrew/forms.py:95 rules/models.py:59
 #: worlds/templates/worlds/_game_values.html:6
 #: worlds/templates/worlds/wiki_page_with_game_values.html:28
 msgid "Type"
@@ -697,18 +557,34 @@ msgstr "Typ"
 
 #: armory/templates/armory/item_detail.html:60
 #: characters/templates/characters/sidebar/characteritem.html:146
-#: homebrew/forms.py:16
+#: homebrew/forms.py:20
 msgid "Charges"
 msgstr "Ladungen"
 
+#: armory/templates/armory/item_detail.html:64
+#: armory/templates/armory/riotgear_list.html:71
+#: armory/templates/armory/weapon_list.html:74
+#: characters/templates/characters/fragments/_gear_item.html:15
+#: characters/templates/characters/fragments/_gear_item.html:26
+#: characters/templates/characters/fragments/health.html:33
+#: characters/templates/characters/fragments/health.html:35
+#: characters/templates/characters/includes/character_riot_gear_cards.html:11
+#: characters/templates/characters/pdf/boxes/gear/armour.html:23
+#: characters/templates/characters/pdf/boxes/overview/concealment.html:3
+#: characters/templates/characters/sidebar/characteritem.html:157
+#: characters/templates/characters/sidebar/characterriotgear.html:62
+#: homebrew/forms.py:18 homebrew/forms.py:46
+msgid "Concealment"
+msgstr "Verborgenheit"
+
 #: armory/templates/armory/item_detail.html:65
 #: armory/templates/armory/riotgear_list.html:72
-#: armory/templates/armory/weapon_list.html:76
+#: armory/templates/armory/weapon_list.html:75
 #: characters/templates/characters/modals/add_weapon_mod.html:59
 #: characters/templates/characters/sidebar/characteritem.html:164
 #: characters/templates/characters/sidebar/characterriotgear.html:74
-#: characters/templates/characters/sidebar/characterweapon.html:149
-#: homebrew/forms.py:13 homebrew/forms.py:33 homebrew/forms.py:51
+#: characters/templates/characters/sidebar/characterweapon.html:92
+#: homebrew/forms.py:17 homebrew/forms.py:45 homebrew/forms.py:67
 msgid "Price"
 msgstr "Preis"
 
@@ -741,22 +617,59 @@ msgid "Search"
 msgstr "Suchen"
 
 #: armory/templates/armory/riotgear_list.html:74
-#: armory/templates/armory/weapon_list.html:78
+#: armory/templates/armory/weapon_list.html:77
 #: portal/templates/portal/profile.html:86
 #: worlds/templates/worlds/_navigation.html:81
 msgid "Admin"
 msgstr "Admin"
 
 #: armory/templates/armory/riotgear_list.html:100
-#: armory/templates/armory/weapon_list.html:125
+#: armory/templates/armory/weapon_list.html:121
 msgid "Add in admin"
 msgstr "Im Admin hinzufügen"
 
+#: armory/templates/armory/weapon_list.html:67
+#: characters/templates/characters/pdf/boxes/gear/weapons.html:7
+#: gmtools/forms.py:15
+msgid "Weapon"
+msgstr "Waffe"
+
 #: armory/templates/armory/weapon_list.html:68
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:55
-#: characters/templates/characters/sidebar/characterweapon.html:166
 msgid "Attack Modes"
 msgstr "Angriffsmodi"
+
+#: armory/templates/armory/weapon_list.html:69
+#: characters/templates/characters/fragments/combat.html:46
+#: characters/templates/characters/pdf/boxes/overview/combat.html:16
+#: characters/templates/characters/sidebar/weaponless.html:9
+#: gmtools/templates/gmtools/combat_sim_results.html:10
+#: gmtools/templates/gmtools/combat_sim_results.html:25
+msgid "Piercing"
+msgstr "Durchschlag"
+
+#: armory/templates/armory/weapon_list.html:70
+#: armory/templates/armory/weapon_list.html:94
+msgid "Damage Potential"
+msgstr "Schadenspotential"
+
+#: armory/templates/armory/weapon_list.html:71
+msgid "Actions to ready"
+msgstr "Aktionen zum Bereitmachen"
+
+#: armory/templates/armory/weapon_list.html:72
+#: characters/templates/characters/fragments/combat.html:30
+#: characters/templates/characters/includes/character_spell_cards.html:29
+#: characters/templates/characters/pdf/boxes/magic/spells.html:31
+#: characters/templates/characters/sidebar/characterspell.html:59
+#: homebrew/forms.py:89 magic/templates/magic/_basespell_widget.html:27
+#: magic/templates/magic/basespell_detail.html:47
+msgid "Range"
+msgstr "Reichweite"
+
+#: armory/templates/armory/weapon_list.html:73
+#: characters/templates/characters/fragments/combat.html:29
+msgid "Capacity"
+msgstr "Kapazität"
 
 #: campaigns/forms.py:11
 #: campaigns/templates/campaigns/fragments/settings.html:15
@@ -839,7 +752,7 @@ msgstr "Spielprotokollsichtbarkeit"
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:185 characters/models.py:1034 forum/models.py:98
+#: campaigns/models.py:185 characters/models.py:1025 forum/models.py:104
 #: worlds/models.py:227
 msgid "text"
 msgstr "Text"
@@ -916,6 +829,7 @@ msgstr ""
 "                            "
 
 #: campaigns/templates/campaigns/_navigation.html:18
+#: campaigns/templates/campaigns/_navigation.html:145
 #: campaigns/templates/campaigns/sidebar/foe.html:57
 #: characters/templates/characters/sidebar/characterattribute.html:12
 #: characters/templates/characters/sidebar/characteritem.html:51
@@ -1107,15 +1021,15 @@ msgid "Arcana"
 msgstr "Arkana"
 
 #: campaigns/templates/campaigns/fragments/foes.html:13
-#: characters/templates/characters/fragments/combat.html:163
+#: characters/templates/characters/fragments/combat.html:152
 #: characters/templates/characters/fragments/health.html:15
 #: characters/templates/characters/fragments/health.html:17
 #: characters/templates/characters/includes/character_spell_cards.html:31
 #: characters/templates/characters/pdf/boxes/magic/spells.html:39
 #: characters/templates/characters/pdf/boxes/overview/actions.html:3
-#: characters/templates/characters/pdf/boxes/overview/combat.html:104
+#: characters/templates/characters/pdf/boxes/overview/combat.html:94
 #: characters/templates/characters/sidebar/characterspell.html:69
-#: homebrew/forms.py:63 magic/templates/magic/_basespell_widget.html:29
+#: homebrew/forms.py:90 magic/templates/magic/_basespell_widget.html:29
 #: magic/templates/magic/basespell_detail.html:49
 #: worlds/templates/worlds/_game_values.html:22
 #: worlds/templates/worlds/wiki_page_with_game_values.html:32
@@ -1154,11 +1068,11 @@ msgid "Create custom"
 msgstr "Individuell erstellen"
 
 #: campaigns/templates/campaigns/fragments/homebrew.html:22
-#: characters/templates/characters/fragments/gear.html:72
+#: characters/templates/characters/fragments/gear.html:66
 #: homebrew/templates/homebrew/modals/create_base_spell.html:31
 #: homebrew/templates/homebrew/modals/create_item.html:26
 #: homebrew/templates/homebrew/modals/create_riot_gear.html:27
-#: homebrew/templates/homebrew/modals/create_weapon.html:33
+#: homebrew/templates/homebrew/modals/create_weapon.html:54
 msgid "Create Item"
 msgstr "Gegenstand erstellen"
 
@@ -1167,7 +1081,7 @@ msgid "Create custom item"
 msgstr "Individuellen Gegenstand erstellen"
 
 #: campaigns/templates/campaigns/fragments/homebrew.html:29
-#: characters/templates/characters/fragments/gear.html:47
+#: characters/templates/characters/fragments/gear.html:43
 msgid "Create Weapon"
 msgstr "Waffe erstellen"
 
@@ -1292,12 +1206,12 @@ msgid "Create npc"
 msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:36 characters/views.py:760
+#: characters/forms.py:36 characters/views.py:757
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
 #: campaigns/templates/campaigns/fragments/settings.html:23
-#: characters/forms.py:39 characters/views.py:731
+#: characters/forms.py:39 characters/views.py:728
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1382,6 +1296,7 @@ msgstr "Gesamtsumme"
 #: characters/templates/characters/_navigation.html:6
 #: characters/templates/characters/_navigation.html:17
 #: characters/templates/characters/_navigation.html:46
+#: characters/templates/characters/_navigation.html:133
 #: homebrew/templates/homebrew/index.html:14
 msgid "Character"
 msgstr "Charakter"
@@ -1536,9 +1451,8 @@ msgstr "Phase Six letzte Aktualisierungen"
 
 #: characters/forms.py:28
 #: characters/templates/characters/pdf/boxes/gear/armour.html:7
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:8
-#: characters/views.py:701 forum/forms.py:6 homebrew/forms.py:9
-#: homebrew/forms.py:27 homebrew/forms.py:39 homebrew/forms.py:57
+#: characters/views.py:698 forum/forms.py:6 homebrew/forms.py:9
+#: homebrew/forms.py:35 homebrew/forms.py:53 homebrew/forms.py:84
 msgid "Name"
 msgstr "Name"
 
@@ -1546,11 +1460,11 @@ msgstr "Name"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:59 characters/views.py:708
+#: characters/forms.py:59 characters/views.py:705
 msgid "Size"
 msgstr "Größe"
 
-#: characters/forms.py:61 characters/views.py:725
+#: characters/forms.py:61 characters/views.py:722
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1565,7 +1479,7 @@ msgstr "Gottheit"
 #: characters/forms.py:68 characters/forms.py:74
 #: characters/templates/characters/includes/character_status_card.html:56
 #: characters/templates/characters/sidebar/grace.html:57
-#: characters/views.py:749
+#: characters/views.py:746
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -1684,43 +1598,43 @@ msgstr ""
 "Magieursprünge freigeschaltet. Du wirst keine Zauber hinzufügen können. "
 "Wähle einen Beruf mit einem magischen Ursprung."
 
-#: characters/models.py:719
+#: characters/models.py:712
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:749
+#: characters/models.py:742
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:852
+#: characters/models.py:843
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:879
+#: characters/models.py:870
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:880
+#: characters/models.py:871
 msgid "Charges used"
 msgstr "Ladungen benutzt"
 
-#: characters/models.py:885
+#: characters/models.py:876
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:910
+#: characters/models.py:901
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:1024
+#: characters/models.py:1015
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:1032
+#: characters/models.py:1023
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:1033
+#: characters/models.py:1024
 msgid "subject"
 msgstr "Thema"
 
@@ -1734,8 +1648,8 @@ msgstr "Home"
 msgid "Worlds"
 msgstr "Welten"
 
-#: characters/templates/_main_nav.html:41 characters/templates/base.html:123
-#: homebrew/forms.py:58
+#: characters/templates/_main_nav.html:41 characters/templates/base.html:124
+#: homebrew/forms.py:85
 msgid "Rules"
 msgstr "Regeln"
 
@@ -1749,31 +1663,31 @@ msgstr "Forum"
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:61
+#: characters/templates/base.html:62
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: characters/templates/base.html:78
+#: characters/templates/base.html:79
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/base.html:83
+#: characters/templates/base.html:84
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/base.html:96
+#: characters/templates/base.html:97
 msgid "Free online pen and paper rpg"
 msgstr "Freies online Pen'n'Paper Rollenspiel"
 
-#: characters/templates/base.html:121
+#: characters/templates/base.html:122
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
 
-#: characters/templates/base.html:124
+#: characters/templates/base.html:125
 msgid "Privacy"
 msgstr "Privatsphäre"
 
-#: characters/templates/base.html:125
+#: characters/templates/base.html:126
 msgid "Tirakan HuS"
 msgstr "Tirakan HuS"
 
@@ -1782,8 +1696,8 @@ msgid "Gear"
 msgstr "Ausrüstung"
 
 #: characters/templates/characters/_navigation.html:68
-#: characters/templates/characters/fragments/combat.html:180
-#: characters/templates/characters/fragments/combat.html:272
+#: characters/templates/characters/fragments/combat.html:169
+#: characters/templates/characters/fragments/combat.html:261
 #: characters/templates/characters/fragments/health.html:8
 #: characters/templates/characters/fragments/health.html:10
 #: characters/templates/characters/pdf/boxes/overview/combat.html:4
@@ -1812,6 +1726,14 @@ msgstr "Notizen"
 #: characters/templates/characters/fragments/notes.html:10
 msgid "Take a note"
 msgstr "Notiz anlegen"
+
+#: characters/templates/characters/_navigation.html:140
+msgid "Edit / Download"
+msgstr "Editieren / Herunterladen"
+
+#: characters/templates/characters/_navigation.html:145
+msgid "Download"
+msgstr "Herunterladen"
 
 #: characters/templates/characters/character_detail.html:44
 msgid ""
@@ -1937,66 +1859,61 @@ msgid "Weaponless Attack"
 msgstr "Waffenloser Angriff"
 
 #: characters/templates/characters/fragments/combat.html:51
-#: characters/templates/characters/fragments/combat.html:99
-#: characters/templates/characters/fragments/combat.html:120
-#: characters/templates/characters/fragments/combat.html:170
-#: characters/templates/characters/fragments/combat.html:216
-#: characters/templates/characters/fragments/combat.html:233
-#: characters/templates/characters/fragments/combat.html:250
+#: characters/templates/characters/fragments/combat.html:87
+#: characters/templates/characters/fragments/combat.html:109
+#: characters/templates/characters/fragments/combat.html:159
+#: characters/templates/characters/fragments/combat.html:205
+#: characters/templates/characters/fragments/combat.html:222
+#: characters/templates/characters/fragments/combat.html:239
 #: characters/templates/characters/pdf/boxes/overview/combat.html:21
-#: characters/templates/characters/pdf/boxes/overview/combat.html:66
-#: characters/templates/characters/pdf/boxes/overview/combat.html:110
-#: characters/templates/characters/pdf/boxes/overview/combat.html:149
-#: characters/templates/characters/pdf/boxes/overview/combat.html:165
-#: characters/templates/characters/pdf/boxes/overview/combat.html:181
+#: characters/templates/characters/pdf/boxes/overview/combat.html:54
+#: characters/templates/characters/pdf/boxes/overview/combat.html:100
+#: characters/templates/characters/pdf/boxes/overview/combat.html:139
+#: characters/templates/characters/pdf/boxes/overview/combat.html:155
+#: characters/templates/characters/pdf/boxes/overview/combat.html:171
 msgid "Meter"
 msgstr "Meter"
 
-#: characters/templates/characters/fragments/combat.html:76
-#: characters/templates/characters/pdf/boxes/overview/combat.html:45
-msgid "Crit MR"
-msgstr "Krit MW"
-
-#: characters/templates/characters/fragments/combat.html:87
+#: characters/templates/characters/fragments/combat.html:75
 msgid "Mods with rules"
 msgstr "Mods mit Regeln"
 
-#: characters/templates/characters/fragments/combat.html:114
+#: characters/templates/characters/fragments/combat.html:103
 msgid "Shield Block - Cover"
 msgstr "Schildblock - Deckung"
 
-#: characters/templates/characters/fragments/combat.html:115
+#: characters/templates/characters/fragments/combat.html:104
 msgid "Shield Parry - Cover"
 msgstr "Schildparade - Deckung"
 
-#: characters/templates/characters/fragments/combat.html:162
+#: characters/templates/characters/fragments/combat.html:151
 #: characters/templates/characters/includes/character_spell_cards.html:28
 #: characters/templates/characters/pdf/boxes/magic/spells.html:27
-#: characters/templates/characters/pdf/boxes/overview/combat.html:103
+#: characters/templates/characters/pdf/boxes/overview/combat.html:93
 #: characters/templates/characters/sidebar/characterspell.html:54
-#: homebrew/forms.py:61
+#: homebrew/forms.py:88
 msgid "Power"
 msgstr "Stärke"
 
-#: characters/templates/characters/fragments/combat.html:177
-#: characters/templates/characters/pdf/boxes/overview/combat.html:117
+#: characters/templates/characters/fragments/combat.html:166
+#: characters/templates/characters/pdf/boxes/overview/combat.html:107
 msgid "Evade"
 msgstr "Ausweichen"
 
-#: characters/templates/characters/fragments/combat.html:178
-#: characters/templates/characters/fragments/combat.html:205
-#: characters/templates/characters/fragments/combat.html:223
-#: characters/templates/characters/fragments/combat.html:240
-#: characters/templates/characters/fragments/combat.html:257
+#: characters/templates/characters/fragments/combat.html:167
+#: characters/templates/characters/fragments/combat.html:194
+#: characters/templates/characters/fragments/combat.html:212
+#: characters/templates/characters/fragments/combat.html:229
+#: characters/templates/characters/fragments/combat.html:246
 msgid "Movement"
 msgstr "Bewegung"
 
-#: characters/templates/characters/fragments/combat.html:204
-#: characters/templates/characters/pdf/boxes/overview/combat.html:139
+#: characters/templates/characters/fragments/combat.html:193
+#: characters/templates/characters/pdf/boxes/overview/combat.html:129
 msgid "Walk"
 msgstr "Gehen"
 
-#: characters/templates/characters/fragments/combat.html:209
+#: characters/templates/characters/fragments/combat.html:198
 msgid ""
 "\n"
 "                                  You can perform an action while walking. "
@@ -2009,12 +1926,12 @@ msgstr ""
 "ausführen. Der Mindestwurf für diese Aktion ist um 1 erhöht.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:222
-#: characters/templates/characters/pdf/boxes/overview/combat.html:155
+#: characters/templates/characters/fragments/combat.html:211
+#: characters/templates/characters/pdf/boxes/overview/combat.html:145
 msgid "Run"
 msgstr "Laufen"
 
-#: characters/templates/characters/fragments/combat.html:227
+#: characters/templates/characters/fragments/combat.html:216
 msgid ""
 "\n"
 "                                  You can't perform an action while "
@@ -2026,12 +1943,12 @@ msgstr ""
 "Laufen ausführen.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:239
-#: characters/templates/characters/pdf/boxes/overview/combat.html:171
+#: characters/templates/characters/fragments/combat.html:228
+#: characters/templates/characters/pdf/boxes/overview/combat.html:161
 msgid "Crawl"
 msgstr "Robben"
 
-#: characters/templates/characters/fragments/combat.html:244
+#: characters/templates/characters/fragments/combat.html:233
 msgid ""
 "\n"
 "                                  Crawling is only possible while hunkered.\n"
@@ -2041,12 +1958,12 @@ msgstr ""
 "                                    Robben ist nur in der Hocke möglich.\n"
 "                                "
 
-#: characters/templates/characters/fragments/combat.html:256
-#: characters/templates/characters/pdf/boxes/overview/combat.html:187
+#: characters/templates/characters/fragments/combat.html:245
+#: characters/templates/characters/pdf/boxes/overview/combat.html:177
 msgid "Hunker"
 msgstr "In die Hocke gehen"
 
-#: characters/templates/characters/fragments/combat.html:261
+#: characters/templates/characters/fragments/combat.html:250
 msgid ""
 "\n"
 "                          Applies the \"Hunkered\" status effect. Hunkered "
@@ -2061,12 +1978,12 @@ msgstr ""
 "Angriffe und Fertigkeiten.\n"
 "       "
 
-#: characters/templates/characters/fragments/combat.html:271
-#: characters/templates/characters/pdf/boxes/overview/combat.html:201
+#: characters/templates/characters/fragments/combat.html:260
+#: characters/templates/characters/pdf/boxes/overview/combat.html:191
 msgid "Aim"
 msgstr "Zielen"
 
-#: characters/templates/characters/fragments/combat.html:276
+#: characters/templates/characters/fragments/combat.html:265
 msgid ""
 "\n"
 "                                  Reduces the minimum roll for critical hits "
@@ -2081,43 +1998,43 @@ msgstr ""
 "Bonus verfällt wenn der Charakter getroffen wird.\n"
 "                                "
 
-#: characters/templates/characters/fragments/gear.html:15
-#: characters/templates/characters/includes/character_riot_gear_cards.html:46
+#: characters/templates/characters/fragments/gear.html:14
+#: characters/templates/characters/includes/character_riot_gear_cards.html:42
 msgid "Add Armor"
 msgstr "Rüstung hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:23
+#: characters/templates/characters/fragments/gear.html:21
 msgid "Create Armor"
 msgstr "Rüstung anlegen"
 
-#: characters/templates/characters/fragments/gear.html:24
-#: characters/templates/characters/fragments/gear.html:48
-#: characters/templates/characters/fragments/gear.html:76
+#: characters/templates/characters/fragments/gear.html:22
+#: characters/templates/characters/fragments/gear.html:44
+#: characters/templates/characters/fragments/gear.html:70
 msgid "Create"
 msgstr "Erstellen"
 
-#: characters/templates/characters/fragments/gear.html:27 gmtools/forms.py:16
+#: characters/templates/characters/fragments/gear.html:25 gmtools/forms.py:16
 msgid "Armor"
 msgstr "Rüstung"
 
-#: characters/templates/characters/fragments/gear.html:39
-#: characters/templates/characters/includes/character_weapon_cards.html:101
+#: characters/templates/characters/fragments/gear.html:36
+#: characters/templates/characters/includes/character_weapon_cards.html:62
 msgid "Add Weapon"
 msgstr "Waffe hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:63
+#: characters/templates/characters/fragments/gear.html:58
 msgid "Add Item"
 msgstr "Gegenstand hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:65
+#: characters/templates/characters/fragments/gear.html:60
 msgid "Add item"
 msgstr "Gegenstand hinzufügen"
 
-#: characters/templates/characters/fragments/gear.html:74
+#: characters/templates/characters/fragments/gear.html:68
 msgid "Create item"
 msgstr "Gegenstand anlegen"
 
-#: characters/templates/characters/fragments/gear.html:83
+#: characters/templates/characters/fragments/gear.html:77
 #: characters/templates/characters/pdf/boxes/gear/currency.html:4
 msgid "Currency"
 msgstr "Währung"
@@ -2140,7 +2057,6 @@ msgstr "Schützt dich vor ballistischen Schüssen beim Verteidigungswurf."
 #: characters/templates/characters/sidebar/charactercombat.html:8
 #: characters/templates/characters/sidebar/charactercombat.html:22
 #: characters/templates/characters/sidebar/charactercombat.html:23
-#: characters/templates/characters/sidebar/characterriotgear.html:52
 msgid "Evasion"
 msgstr "Ausweichen"
 
@@ -2210,15 +2126,13 @@ msgid "On Body"
 msgstr "Am Körper"
 
 #: characters/templates/characters/includes/character_riot_gear_cards.html:16
-#: characters/templates/characters/includes/character_weapon_cards.html:19
 #: characters/templates/characters/pdf/boxes/gear/armour.html:19
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:46
 #: characters/templates/characters/sidebar/characterriotgear.html:67
-#: characters/templates/characters/sidebar/characterweapon.html:142
+#: characters/templates/characters/sidebar/characterweapon.html:85
 msgid "Condition"
 msgstr "Zustand"
 
-#: characters/templates/characters/includes/character_riot_gear_cards.html:47
+#: characters/templates/characters/includes/character_riot_gear_cards.html:43
 msgid "No armor yet."
 msgstr "Noch keine Rüstung."
 
@@ -2236,7 +2150,7 @@ msgstr "Ritual"
 #: characters/templates/characters/modals/add_spell_template.html:66
 #: characters/templates/characters/pdf/boxes/magic/spells.html:35
 #: characters/templates/characters/sidebar/characterspell.html:64
-#: homebrew/forms.py:67 magic/templates/magic/_basespell_widget.html:28
+#: homebrew/forms.py:101 magic/templates/magic/_basespell_widget.html:28
 #: magic/templates/magic/basespell_detail.html:48
 msgid "Shape"
 msgstr "Form"
@@ -2273,7 +2187,7 @@ msgstr "Glaube"
 msgid "Grace"
 msgstr "Gunst"
 
-#: characters/templates/characters/includes/character_weapon_cards.html:102
+#: characters/templates/characters/includes/character_weapon_cards.html:63
 msgid "No weapon yet."
 msgstr "Noch keine Waffen."
 
@@ -2400,7 +2314,7 @@ msgstr "Erneuern"
 #: characters/templates/characters/modals/rest.html:53
 #: characters/templates/characters/sidebar/wounds.html:25
 #: characters/templates/characters/sidebar/wounds.html:26
-#: characters/views.py:297 characters/views.py:313 characters/views.py:327
+#: characters/views.py:296 characters/views.py:312 characters/views.py:326
 msgid "Rest"
 msgstr "Rast"
 
@@ -2427,17 +2341,6 @@ msgstr "Magieursprung"
 msgid "Items on body"
 msgstr "Gegenstände am Körper"
 
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:34
-msgid "Reload Actions"
-msgstr "Nachladeaktionen"
-
-#: characters/templates/characters/pdf/boxes/gear/weapons.html:61
-#: characters/templates/characters/pdf/boxes/magic/spells.html:44
-#: characters/templates/characters/sidebar/characterweapon.html:50
-#: characters/templates/characters/sidebar/characterweapon.html:183
-msgid "Modifications"
-msgstr "Modifikationen"
-
 #: characters/templates/characters/pdf/boxes/magic/shadows.html:5
 msgid "// Shadows"
 msgstr "// Schatten"
@@ -2446,10 +2349,15 @@ msgstr "// Schatten"
 msgid "// Spells"
 msgstr "// Zauber"
 
-#: characters/templates/characters/pdf/boxes/overview/combat.html:143
+#: characters/templates/characters/pdf/boxes/magic/spells.html:44
+#: characters/templates/characters/sidebar/characterweapon.html:51
+msgid "Modifications"
+msgstr "Modifikationen"
+
+#: characters/templates/characters/pdf/boxes/overview/combat.html:133
 msgid ""
 "\n"
-"                        You can perform an action while walking. The minimum "
+"                      You can perform an action while walking. The minimum "
 "roll for this action is raised by 1.\n"
 "                    "
 msgstr ""
@@ -2458,10 +2366,10 @@ msgstr ""
 "ausführen. Der Mindestwurf für diese Aktion ist um 1 erhöht.\n"
 "                                "
 
-#: characters/templates/characters/pdf/boxes/overview/combat.html:159
+#: characters/templates/characters/pdf/boxes/overview/combat.html:149
 msgid ""
 "\n"
-"                        You can't perform an action while running.\n"
+"                      You can't perform an action while running.\n"
 "                    "
 msgstr ""
 "\n"
@@ -2469,22 +2377,22 @@ msgstr ""
 "Laufen ausführen.\n"
 "                                "
 
-#: characters/templates/characters/pdf/boxes/overview/combat.html:175
+#: characters/templates/characters/pdf/boxes/overview/combat.html:165
 msgid ""
 "\n"
-"                        Crawling is only possible while hunkered.\n"
+"                      Crawling is only possible while hunkered.\n"
 "                    "
 msgstr ""
 "\n"
 "                                    Robben ist nur in der Hocke möglich.\n"
 "                                "
 
-#: characters/templates/characters/pdf/boxes/overview/combat.html:191
+#: characters/templates/characters/pdf/boxes/overview/combat.html:181
 msgid ""
 "\n"
-"                    Applies the \"Hunkered\" status effect. Hunkered "
+"                  Applies the \"Hunkered\" status effect. Hunkered "
 "characters have a 6+ cover and a\n"
-"                    +1 minimum roll for physis, attacks and skills.\n"
+"                  +1 minimum roll for physis, attacks and skills.\n"
 "                "
 msgstr ""
 "\n"
@@ -2494,13 +2402,13 @@ msgstr ""
 "Angriffe und Fertigkeiten.\n"
 "       "
 
-#: characters/templates/characters/pdf/boxes/overview/combat.html:205
+#: characters/templates/characters/pdf/boxes/overview/combat.html:195
 msgid ""
 "\n"
-"                        Reduces the minimum roll for critical hits by 1 per "
-"action. This is not possible when using burst mode. The aim bonus is lost "
-"when the character is hit.\n"
-"                    "
+"            Reduces the minimum roll for critical hits by 1 per action. This "
+"is not possible when using burst\n"
+"            mode. The aim bonus is lost when the character is hit.\n"
+"          "
 msgstr ""
 "\n"
 "                                    Reduziert den Mindestwurf für kritische "
@@ -2634,8 +2542,8 @@ msgstr ""
 
 #: characters/templates/characters/sidebar/characteritem.html:9
 #: characters/templates/characters/sidebar/characterriotgear.html:20
-#: characters/templates/characters/sidebar/characterweapon.html:59
-#: characters/templates/characters/sidebar/characterweapon.html:211
+#: characters/templates/characters/sidebar/characterweapon.html:60
+#: characters/templates/characters/sidebar/characterweapon.html:129
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -2675,13 +2583,13 @@ msgid "Delete Note"
 msgstr "Notiz Löschen"
 
 #: characters/templates/characters/sidebar/characterriotgear.html:9
-#: characters/templates/characters/sidebar/characterweapon.html:33
+#: characters/templates/characters/sidebar/characterweapon.html:34
 #: characters/templates/characters/sidebar/wounds.html:9
 msgid "Damage"
 msgstr "Schaden"
 
 #: characters/templates/characters/sidebar/characterriotgear.html:12
-#: characters/templates/characters/sidebar/characterweapon.html:36
+#: characters/templates/characters/sidebar/characterweapon.html:37
 msgid "Repair"
 msgstr "Reparieren"
 
@@ -2696,7 +2604,7 @@ msgstr "Zauber ausführen"
 
 #: characters/templates/characters/sidebar/characterspell.html:21
 #: characters/templates/characters/sidebar/characterspell.html:23
-#: characters/templates/characters/sidebar/characterweapon.html:49
+#: characters/templates/characters/sidebar/characterweapon.html:50
 msgid "Add Modification"
 msgstr "Modifikatoren hinzufügen"
 
@@ -2710,15 +2618,15 @@ msgstr "Vergessen"
 msgid "Spell Casting"
 msgstr "Zaubern"
 
-#: characters/templates/characters/sidebar/characterweapon.html:15
+#: characters/templates/characters/sidebar/characterweapon.html:16
 msgid "Attack:"
 msgstr "Angriff:"
 
-#: characters/templates/characters/sidebar/characterweapon.html:24
+#: characters/templates/characters/sidebar/characterweapon.html:25
 msgid "Reload"
 msgstr "Nachladen"
 
-#: characters/templates/characters/sidebar/characterweapon.html:209
+#: characters/templates/characters/sidebar/characterweapon.html:127
 msgid "Remove Modification"
 msgstr "Modifikatoren entfernen"
 
@@ -3084,8 +2992,10 @@ msgstr "Kontakt / Datenschutz"
 msgid "Licenses"
 msgstr "Lizenzen"
 
-#: characters/templates/contact.html:302
+#: characters/templates/contact.html:304
+#, python-format
 msgid ""
+"\n"
 "\n"
 "            <h2>Game Content</h2>\n"
 "            Text content on this platform is licensed under the\n"
@@ -3097,11 +3007,13 @@ msgid ""
 "            but you have to state the origin of the material, and you have "
 "no permission to use this material\n"
 "            commercially.\n"
+"\n"
 "            <h2 class=\"mt-3\">Images</h2>\n"
 "            Images on this platform are licensed under the\n"
 "            <a href=\"https://creativecommons.org/publicdomain/zero/1.0/"
 "\">CC0</a> licence. You are free to use the images\n"
 "            from this game for your own purposes.\n"
+"\n"
 "            <h2 class=\"mt-3\">Source Code</h2>\n"
 "            This source code of this plattform is available in a\n"
 "            <a href=\"https://codeberg.org/Nimbostratus/phasesix\">git "
@@ -3111,6 +3023,14 @@ msgid ""
 "            and commercially too. This permission does not include the "
 "permission to use game content commercially (see\n"
 "            above).\n"
+"\n"
+"            <h2 class=\"mt-3\">Icons</h2>\n"
+"            This platform uses icons from the <a href=\"https://game-icons."
+"net\">Game Icons</a> project. The icons\n"
+"            are licensed under the <a "
+"href=\"%(t_game_icons_license_url)s\">CC BY 3.0</a> license. The authors\n"
+"            of the icons can be found on the <a "
+"href=\"%(t_game_icons_page_url)s\">Game Icons</a> page.\n"
 "          "
 msgstr ""
 "\n"
@@ -3123,21 +3043,30 @@ msgstr ""
 "nutzen ,\n"
 "                aber du musst die Herkunft des Matierals benennen und darfst "
 "diese Inhalte nicht kommerziell nutzen .\n"
+"\n"
 "            <h2 class=\"mt-3\">Bilder</h2>\n"
 "            Bilder auf dieser Plattform sind unter der\n"
 "            <a href=\"https://creativecommons.org/publicdomain/zero/1.0/"
 "\">CC0</a> Lizenz lizensiert. Du darfst diese Bilder frei\n"
 "            für deine eigenen Zwecke verwenden.\n"
+"\n"
 "                <h2 class=\"mt-2\">Quellcode</h2>\n"
 "                Der Quellcode dieser Plattform ist in einem <a "
-"href=\"https://codeberg.org/Nimbostratus/phasesix\">gitlab repository</a> "
+"href=\"https://codeberg.org/Nimbostratus/phasesix\">git repository</a> "
 "verfügbar.\n"
 "                Dieser Code ist mit der GPL3 lizensiert und darf frei "
 "verwendet werden. Das Django Projekt darf frei und kommerziell genutzt "
 "werden. Diese\n"
 "                Berechtigung schließt keine Spielinhalte ein.\n"
 "\n"
-"            "
+"              <h2 class=\"mt-3\">Icons</h2>\n"
+"            Diese Plattform benutzt Icons vom  <a href=\"https://game-icons."
+"net\">Game Icons</a> Projekt. Die Icons sind unter der <a "
+"href=\"%(t_game_icons_license_url)s\">CC BY 3.0</a> Lizenz lizensiert. \n"
+"           Die Ersteller die Icons können auf der <a "
+"href=\"%(t_game_icons_page_url)s\">Game Icons</a> Übersicht eingesehen "
+"werden.\n"
+"          "
 
 #: characters/templates/index.html:16
 #, python-format
@@ -3234,41 +3163,41 @@ msgid "Play in one of these worlds, or use Terra to play on earth."
 msgstr ""
 "Spiele in einer dieser Welten, oder wähle Terra, um auf der Erde zu spielen."
 
-#: characters/views.py:168
+#: characters/views.py:167
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:298
+#: characters/views.py:297
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:314
+#: characters/views.py:313
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:328
+#: characters/views.py:327
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:702
+#: characters/views.py:699
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:710
+#: characters/views.py:707
 #, python-brace-format
 msgid "Enter the size of your character in {world.info_name_cm}."
 msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
 
-#: characters/views.py:719
+#: characters/views.py:716
 #, python-brace-format
 msgid "Enter the weight of your character in {world.info_name_kg}."
 msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
-#: characters/views.py:726
+#: characters/views.py:723
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:733
+#: characters/views.py:730
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -3281,7 +3210,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:751
+#: characters/views.py:748
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -3298,7 +3227,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:762
+#: characters/views.py:759
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -3322,21 +3251,21 @@ msgstr "Deutsch"
 msgid "English"
 msgstr "Englisch"
 
-#: forum/models.py:34
+#: forum/models.py:40
 msgid "language"
 msgstr "Sprache"
 
-#: forum/models.py:36
+#: forum/models.py:42
 msgid "is staff only"
 msgstr "Nur Mitarbeiter"
 
-#: forum/models.py:80
+#: forum/models.py:86
 #, python-format
 msgid "PhaseSix Forum: %(user)s answered to the thread %(thread)s"
 msgstr "PhaseSix Forum: %(user)s hat auf das Thema %(thread)s geantwortet"
 
 #: forum/templates/forum/_navigation.html:44
-#: forum/templates/forum/board_detail.html:51
+#: forum/templates/forum/board_detail.html:38
 msgid "Create Thread"
 msgstr "Thema erstellen"
 
@@ -3346,7 +3275,7 @@ msgid "Subscribe"
 msgstr "Abonnieren"
 
 #: forum/templates/forum/_thread_navigation.html:41
-#: forum/templates/forum/thread_detail.html:97
+#: forum/templates/forum/thread_detail.html:68
 msgid "Answer Thread"
 msgstr "Thema beantworten"
 
@@ -3354,15 +3283,20 @@ msgstr "Thema beantworten"
 msgid "You are subscribed to the board"
 msgstr "Du hast dieses Forum abonniert"
 
-#: forum/templates/forum/board_detail.html:47
+#: forum/templates/forum/board_detail.html:33
 msgid "https://en.wikipedia.org/wiki/Markdown"
 msgstr "https://de.wikipedia.org/wiki/Markdown"
 
-#: forum/templates/forum/board_detail.html:47
+#: forum/templates/forum/board_detail.html:33
 msgid "Markdown"
 msgstr "Markdown"
 
-#: forum/templates/forum/board_detail.html:73
+#: forum/templates/forum/board_detail.html:40
+#: forum/templates/forum/thread_detail.html:70
+msgid "Upload Image"
+msgstr "Bild hochladen"
+
+#: forum/templates/forum/board_detail.html:62
 #, python-format
 msgid ""
 "\n"
@@ -3405,7 +3339,7 @@ msgstr ""
 "\n"
 "Cheers\n"
 
-#: forum/templates/forum/thread_detail.html:70
+#: forum/templates/forum/thread_detail.html:37
 #, python-format
 msgid ""
 "\n"
@@ -3418,17 +3352,21 @@ msgstr ""
 "muted small\">%(t_timesince)s</span>\n"
 "                        "
 
-#: forum/templates/forum/thread_detail.html:80
+#: forum/templates/forum/thread_detail.html:49
 msgid "Quote"
 msgstr "Zitieren"
 
-#: forum/templates/forum/thread_detail.html:84
+#: forum/templates/forum/thread_detail.html:52
 msgid "Answer"
 msgstr "Beantworten"
 
-#: forum/views.py:30 forum/views.py:78 forum/views.py:108
+#: forum/views.py:30 forum/views.py:78 forum/views.py:123
 msgid "You have no access to this forum"
 msgstr "Du hast keinen Zugang zu diesem Forum"
+
+#: forum/views.py:109
+msgid "Image"
+msgstr "Bild"
 
 #: gmtools/forms.py:7
 msgid "no cover"
@@ -3560,61 +3498,65 @@ msgstr "Schablonenfertigkeiten"
 msgid "Translation Status"
 msgstr "Übersetzungsstatus"
 
-#: homebrew/forms.py:10 homebrew/forms.py:29 homebrew/forms.py:40
+#: homebrew/forms.py:11 homebrew/forms.py:40 homebrew/forms.py:55
 msgid "Description"
 msgstr "Beschreibung"
 
-#: homebrew/forms.py:11 homebrew/forms.py:41
+#: homebrew/forms.py:14 homebrew/forms.py:58
 msgid "Category"
 msgstr "Kategorie"
 
-#: homebrew/forms.py:12 homebrew/forms.py:32 homebrew/forms.py:50
+#: homebrew/forms.py:16 homebrew/forms.py:44 homebrew/forms.py:66
 msgid "Weight (kg)"
 msgstr "Gewicht (kg)"
 
-#: homebrew/forms.py:17
+#: homebrew/forms.py:21
 msgid "Leave blank for non-chargeable items"
 msgstr "Leer lassen für nicht ladbare Gegenstände"
 
-#: homebrew/forms.py:20
+#: homebrew/forms.py:25
 msgid "Is Container"
 msgstr "Ist Container"
 
-#: homebrew/forms.py:21
+#: homebrew/forms.py:26
 msgid "Check if this item can hold other items"
 msgstr "Wähle dies an wenn der Gegenstand andere Gegenstände beinhalten kann"
 
-#: homebrew/forms.py:23 homebrew/forms.py:35 homebrew/forms.py:53
-#: homebrew/forms.py:69
+#: homebrew/forms.py:30 homebrew/forms.py:48 homebrew/forms.py:69
+#: homebrew/forms.py:105
 msgid "Add to character"
 msgstr "Zum Charakter hinzufügen"
 
-#: homebrew/forms.py:42
+#: homebrew/forms.py:61
 msgid "Is hand to hand weapon"
 msgstr "Ist Nahkampfwaffe"
 
-#: homebrew/forms.py:43
+#: homebrew/forms.py:64
 msgid "Is throwing weapon"
 msgstr "Ist Wurfwaffe"
 
-#: homebrew/forms.py:59 magic/templates/magic/basespell_detail.html:39
+#: homebrew/forms.py:79
+msgid "Keyword"
+msgstr "Schlüsselwort"
+
+#: homebrew/forms.py:86 magic/templates/magic/basespell_detail.html:39
 msgid "Spell Point Cost"
 msgstr "Zauberpunkte Kosten"
 
-#: homebrew/forms.py:60
+#: homebrew/forms.py:87
 msgid "Arcana Cost"
 msgstr "Arkana Kosten"
 
-#: homebrew/forms.py:64 magic/templates/magic/_basespell_widget.html:23
+#: homebrew/forms.py:92 magic/templates/magic/_basespell_widget.html:23
 #: magic/templates/magic/basespell_detail.html:43 rules/models.py:60
 msgid "Origin"
 msgstr "Ursprung"
 
-#: homebrew/forms.py:66
+#: homebrew/forms.py:98
 msgid "Variant"
 msgstr "Variante"
 
-#: homebrew/forms.py:68
+#: homebrew/forms.py:103
 msgid "Is ritual"
 msgstr "Ist Ritual"
 
@@ -3625,6 +3567,10 @@ msgstr "Homebrew"
 #: homebrew/templates/homebrew/index.html:16
 msgid "Created by"
 msgstr "Erzeugt von"
+
+#: homebrew/templates/homebrew/modals/create_weapon.html:50
+msgid "Keywords"
+msgstr "Schlüsselworte"
 
 #: homebrew/views.py:228
 msgid "Spell Rules"
@@ -3653,6 +3599,15 @@ msgstr "Aspekt"
 #: horror/models.py:65 rules/models.py:376
 msgid "aspect modifier"
 msgstr "Aspekt Modifikator"
+
+#: horror/models.py:71 magic/models.py:226 rules/models.py:188
+#: rules/models.py:381
+msgid "attribute"
+msgstr "Attribut"
+
+#: horror/models.py:75 magic/models.py:233 rules/models.py:386
+msgid "attribute modifier"
+msgstr "Attributsmodifikator"
 
 #: horror/models.py:81 rules/models.py:221 rules/models.py:389
 #: worlds/models.py:464
@@ -4113,10 +4068,6 @@ msgstr "Ist Pflicht"
 msgid "is active"
 msgstr "Ist aktiv"
 
-#: rules/models.py:71 rules/models.py:182
-msgid "identifier"
-msgstr "Identifier"
-
 #: rules/models.py:74
 msgid "year range"
 msgstr "Jahr Bereich"
@@ -4280,6 +4231,10 @@ msgstr "Ermöglicht Zauberursprung"
 #: rules/models.py:412
 msgid "allows priest actions"
 msgstr "Erlaubt Priesteraktionen"
+
+#: rules/models.py:450
+msgid "status effect"
+msgstr "Statuseffekt"
 
 #: rules/models.py:451
 msgid "status effects"
@@ -4791,6 +4746,72 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:187
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid "piercing"
+#~ msgstr "Durchschlag"
+
+#~ msgid "damage potential"
+#~ msgstr "Schadenspotential"
+
+#~ msgid "recoil compensation"
+#~ msgstr "Rückstoßkompensation"
+
+#~ msgid "crit minimum roll"
+#~ msgstr "Kritische Treffer Mindestwurf"
+
+#~ msgid "reload actions"
+#~ msgstr "Nachladeaktionen"
+
+#~ msgid "actions to ready"
+#~ msgstr "Aktionen zum Bereitmachen"
+
+#~ msgid "capacity"
+#~ msgstr "Kapazität"
+
+#~ msgid "range (meter)"
+#~ msgstr "Reichweite (Meter)"
+
+#~ msgid "Attack Mode"
+#~ msgstr "Angriffsmodus"
+
+#~ msgid "dice bonus override"
+#~ msgstr "Würfelbonusüberschreibung"
+
+#~ msgid "capacity consumed override"
+#~ msgstr "Würfelbonusüberschreibung"
+
+#~ msgid "weapon attack mode"
+#~ msgstr "Waffen-Angriffsmodus"
+
+#~ msgid "weapon attack modes"
+#~ msgstr "Waffen-Angriffsmodi"
+
+#~ msgid "Recoil compensation"
+#~ msgstr "Rückstoßkompensation"
+
+#~ msgid "Crit minimum roll"
+#~ msgstr "Kritische Treffer Mindestwurf"
+
+#~ msgid "Damage potential"
+#~ msgstr "Schadenspotential"
+
+#~ msgid "Reload actions"
+#~ msgstr "Nachladeaktionen"
+
+#~ msgid "Range (meter)"
+#~ msgstr "Reichweite (Meter)"
+
+#~ msgid "status effect value"
+#~ msgstr "Statuseffektwert"
+
+#~ msgid "Recoil Compensation"
+#~ msgstr "Rückstoßkompensation"
+
+#~ msgid "Crit MR"
+#~ msgstr "Krit MW"
+
+#~ msgid "Reload Actions"
+#~ msgstr "Nachladeaktionen"
 
 #~ msgid "is tirakan spell"
 #~ msgstr "Ist ein Tirakan Zauber"

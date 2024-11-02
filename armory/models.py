@@ -4,6 +4,11 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
+from armory.choices import (
+    COLOR_CLASS_CHOICES,
+    PROTECTION_FA_ICON_CLASS_CHOICES,
+    CURRENCY_FA_ICON_CLASS_CHOICES,
+)
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 from rules.models import ExtensionSelectQuerySet, Extension
 
@@ -331,6 +336,32 @@ class WeaponModificationKeyword(models.Model):
     value = models.IntegerField(_("value"), default=0)
 
 
+class ProtectionType(models.Model, metaclass=TransMeta):
+    name = models.CharField(_("name"), max_length=256)
+    description = models.TextField(_("description"), blank=True, null=True)
+    ordering = models.IntegerField(_("ordering"), default=10)
+    rules = models.TextField(
+        _("rules"),
+        help_text=_("Rules for this protection type."),
+    )
+    color_class = models.CharField(
+        max_length=30, default="text-warning", choices=COLOR_CLASS_CHOICES
+    )
+    fa_icon_class = models.CharField(
+        _("FA Icon Class"),
+        choices=PROTECTION_FA_ICON_CLASS_CHOICES,
+        max_length=30,
+        default="fas fa-shield-alt",
+    )
+
+    class Meta:
+        translate = ("name", "description")
+        ordering = ("-ordering",)
+
+    def __str__(self):
+        return self.name
+
+
 class RiotGearTypeQuerySet(HomebrewQuerySet):
     def for_extensions(self, extension_qs):
         return self.filter(
@@ -410,26 +441,6 @@ class CurrencyMap(models.Model):
 
 
 class CurrencyMapUnit(models.Model, metaclass=TransMeta):
-    FA_ICON_CLASS_CHOICES = (
-        ("fas fa-coins", _("Coins")),
-        ("fas fa-euro-sign", _("Euro")),
-        ("fas fa-dollar-sign", _("Dollar")),
-        ("fas fa-rupee-sign", _("Rupee")),
-        ("fas fa-pound-sign", _("Pound")),
-        ("fas fa-lira-sign", _("Lira")),
-        ("fas fa-shekel-sign", _("Shekel")),
-        ("fas fa-yen-sign", _("Yen")),
-        ("fas fa-won-sign", _("Won")),
-        ("fas fa-cubes", _("Cubes")),
-    )
-    COLOR_CLASS_CHOICES = (
-        ("text-white", _("White")),
-        ("text-success", _("Success")),
-        ("text-primary", _("Primary")),
-        ("text-secondary", _("Secondary")),
-        ("text-warning", _("Warning")),
-        ("text-danger", _("Danger")),
-    )
     currency_map = models.ForeignKey(CurrencyMap, on_delete=models.CASCADE)
     name = models.CharField(_("name"), max_length=20)
 
@@ -446,7 +457,7 @@ class CurrencyMapUnit(models.Model, metaclass=TransMeta):
     )
     fa_icon_class = models.CharField(
         _("FA Icon Class"),
-        choices=FA_ICON_CLASS_CHOICES,
+        choices=CURRENCY_FA_ICON_CLASS_CHOICES,
         max_length=30,
         default="fas fa-coins",
     )
