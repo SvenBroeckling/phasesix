@@ -127,7 +127,6 @@
             </a>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -196,6 +195,43 @@
           {% endfor %}
         </div>
       {% endif %}
+    </div>
+  </div>
+
+  <div class="container-fluid pt-0">
+    <div class="container py-0 py-md-5">
+      <div class="row">
+
+        {# mobile - display above #}
+        <div class="d-flex d-md-none col-md-6 align-items-center justify-content-center">
+          <div class="text-center fs-5 mt-5 mt-md-0">
+            <h2>{% trans "Open Source Role Playing Game" %}</h2>
+            {% url "contact" as contact_url %}
+            {% blocktrans with t_brand_name=brand_name t_contact_url=contact_url %}
+              <em>{{ t_brand_name }}</em> is an open source role playing game that is free to use, copy and modify.
+              The content, rules and code are all available, licensed under CC-BY-NC-SA, GPL and CC0 license.
+              Find out more on the <a href="{{ t_contact_url }}">contact page</a>.
+            {% endblocktrans %}
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 pt-4 pb-0 pt-md-5 h-100 d-flex align-items-center justify-content-center">
+          <span style="font-size: 128pt">🄯</span>
+        </div>
+
+        {# desktop - display right #}
+        <div class="d-none d-md-flex col-md-6 align-items-center justify-content-center">
+          <div class="text-center fs-5">
+            <h2>{% trans "Open Source Role Playing Game" %}</h2>
+            {% url "contact" as contact_url %}
+            {% blocktrans with t_brand_name=brand_name t_contact_url=contact_url %}
+              <em>{{ t_brand_name }}</em> is an open source role playing game that is free to use, copy and modify.
+              The content, rules and code are all available, licensed under CC-BY-NC-SA, GPL and CC0 license.
+              Find out more on the <a href="{{ t_contact_url }}">contact page</a>.
+            {% endblocktrans %}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
