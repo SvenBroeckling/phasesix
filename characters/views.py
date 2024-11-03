@@ -1279,7 +1279,7 @@ class CharacterModifyAttitudeView(View):
 
 
 class XhrCharacterObjectsView(TemplateView):
-    template_name = "characters/modals/add_to_character.html"
+    template_name = "characters/modals/character_objects.html"
 
     def __init__(self):
         super().__init__()
