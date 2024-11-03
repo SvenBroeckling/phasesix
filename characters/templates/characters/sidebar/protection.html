@@ -15,7 +15,7 @@
           <a class="action-link"
              href="{% url 'characters:spend_protection' pk=object.id protection_type_pk=rgp.protection_type.id riot_gear_pk=rgp.riot_gear.id %}">
             <i class="fs-2 {{ rgp.protection_type.icon_class }} {{ rgp.protection_type.color_class }}"
-               title="{{ rgp.name }}"></i>
+               title="{{ rgp.protection_type.name }}"></i>
           </a>
         {% endfor %}
       {% endwith %}

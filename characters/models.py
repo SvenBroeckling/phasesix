@@ -505,12 +505,14 @@ class Character(models.Model):
                     protection_type=r.protection_type,
                 ).aggregate(Sum("value", default=0))["value__sum"]
             )
-            res.append(
-                {
-                    "riot_gear_protection": r,
-                    "available_protection": available_protection,
-                }
-            )
+
+            if available_protection:
+                res.append(
+                    {
+                        "riot_gear_protection": r,
+                        "available_protection": available_protection,
+                    }
+                )
         return res
 
     @property
