@@ -1,3 +1,4 @@
+from django.core.exceptions import FieldError
 from django.db.models import Q
 from django.template import Library
 from django.template.loader import render_to_string
@@ -96,10 +97,13 @@ def has_extensions(template, extensions):
 
 @register.filter
 def for_extensions(queryset, extension_queryset):
-    return queryset.filter(
-        Q(extensions__id__in=extension_queryset.all())
-        | Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
-    )
+    try:
+        return queryset.filter(
+            Q(extensions__id__in=extension_queryset.all())
+            | Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))
+        )
+    except FieldError:  # queryset without extensions
+        return queryset
 
 
 @register.simple_tag

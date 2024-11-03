@@ -1,48 +1,49 @@
 {% load i18n characters_extras rules_extras thumbnail %}
 
-<div class="card mb-3 add-item-card">
-    <div class="card-header">
-        {{ item }}
-        {% if item.concealment %}
-            <span class="float-end"><i class="fas fa-eye-slash fa-fw"></i> {% color_value_span item.concealment 6 invert=True %}</span>
-        {% endif %}
-        {% if item.is_container %}
-            <span class="float-end me-1"><i title="{% trans 'Container' %}" class="fas fa-box-open"></i></span>
-        {% endif %}
-    </div>
-
-    {% if item.image %}
-        {% thumbnail item.image "500" as thumb %}
-            <img src="{{ thumb.url }}" class="card-img-top" alt="{{ item }}">
-        {% endthumbnail %}
+<div class="card mb-3">
+  <div class="card-header">
+    {{ item }}
+    {% if item.concealment %}
+      <span class="float-end"><i
+              class="fas fa-eye-slash fa-fw"></i> {% color_value_span item.concealment 6 invert=True %}</span>
     {% endif %}
-
-    <div class="{% if item.image %}card-img-overlay d-flex flex-row align-items-end{% else %}card-body{% endif %}">
-        {% if not item.image %}
-            <p>{{ item.description }}</p>
-        {% endif %}
-        <div class="w-100">
-            {% if character %}
-                {% with currency_unit=character.common_currency_unit %}
-                    <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}"
-                          class="float-end add-form" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="item_id" value="{{ item.id }}">
-                        <button class="btn btn-sm btn-primary m-2"
-                                data-danger="{% trans 'Not possible' %}"
-                                data-success="{% trans 'Added' %}">
-                            {% trans 'Add' %}
-                            <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
-                            {% color_value_span item.price 500 invert=True %}
-                        </button>
-                    </form>
-                {% endwith %}
-            {% endif %}
-        </div>
-    </div>
-
-    {% if user.is_superuser %}
-        <a href="{% url 'admin:armory_item_change' item.id %}"
-           style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+    {% if item.is_container %}
+      <span class="float-end me-1"><i title="{% trans 'Container' %}" class="fas fa-box-open"></i></span>
     {% endif %}
+  </div>
+
+  {% if item.image %}
+    {% thumbnail item.image "500" as thumb %}
+      <img src="{{ thumb.url }}" class="card-img-top" alt="{{ item }}">
+    {% endthumbnail %}
+  {% endif %}
+
+  <div class="{% if item.image %}card-img-overlay d-flex flex-row align-items-end{% else %}card-body{% endif %}">
+    {% if not item.image %}
+      <p>{{ item.description }}</p>
+    {% endif %}
+    <div class="w-100">
+      {% if character %}
+        {% with currency_unit=character.common_currency_unit %}
+          <form action="{% url 'characters:add_item' pk=character.id item_pk=item.id %}"
+                class="float-end add-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="item_id" value="{{ item.id }}">
+            <button class="btn btn-sm btn-primary m-2"
+                    data-danger="{% trans 'Not possible' %}"
+                    data-success="{% trans 'Added' %}">
+              {% trans 'Add' %}
+              <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+              {% color_value_span item.price 500 invert=True %}
+            </button>
+          </form>
+        {% endwith %}
+      {% endif %}
+    </div>
+  </div>
+
+  {% if user.is_superuser %}
+    <a href="{% url 'admin:armory_item_change' item.id %}"
+       style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+  {% endif %}
 </div>

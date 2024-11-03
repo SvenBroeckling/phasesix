@@ -15,11 +15,14 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-12 col-xl-3 d-none d-xl-block">
-      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
-    </div>
-
-    <div class="col-12 col-xl-9">
+    <div class="col-12">
+      <a href="{% url "armory:material_overview" %}">
+        <div class="card mb-4 d-none d-md-block">
+          <div class="card-body">
+            <i class="fas fa-arrow-left"></i> {% trans "Back to the material page" %}
+          </div>
+        </div>
+      </a>
       <div class="table-responsive">
         <table class="table table-sortable">
           <thead>

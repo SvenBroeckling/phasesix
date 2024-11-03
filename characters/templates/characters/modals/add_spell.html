@@ -19,9 +19,6 @@
             let type_id = $(this).data('type-id')
             $('.type-selection').css('display', 'none')
             $(`#spell-selection-${type_id}`).css('display', 'block')
-            $(`#spell-selection-${type_id}`)
-                .find('.masonry-container')
-                .masonry({percentPosition: true})
         })
 
         $('.back-to-school').on('click', function(e){

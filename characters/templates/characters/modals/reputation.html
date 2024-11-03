@@ -2,32 +2,33 @@
 
 <script src="{% static 'js/add_items_weapons.js' %}?3"></script>
 <script>
-    $(function(){
+    $(function () {
 
         function checkReputationCosts(remaining_reputation) {
-            $('.constructed-template').each(function(idx){
+            $('.constructed-template').each(function (idx) {
                 let elem = $(this);
-                if(parseInt(elem.data('reputation-cost'), 10) > remaining_reputation){
+                if (parseInt(elem.data('reputation-cost'), 10) > remaining_reputation) {
                     elem.addClass('disabled');
                 } else {
                     elem.removeClass('disabled');
                 }
             })
         }
+
         checkReputationCosts($('#initial-reputation').data('initial-reputation'));
 
-        $('.constructed-template').on('click', function(e){
+        $('.constructed-template').on('click', function (e) {
             let elem = $(this);
-            if(!elem.hasClass('disabled')) {
-                if(confirm(elem.data('select-message'))) {
+            if (!elem.hasClass('disabled')) {
+                if (confirm(elem.data('select-message'))) {
                     $.post(
                         elem.data('add-url'),
                         {
                             operation: 'add-template',
                             template_id: elem.data('template-id')
                         },
-                        function(data) {
-                            if(data.status === 'ok') {
+                        function (data) {
+                            if (data.status === 'ok') {
                                 elem.hide('slow');
                                 checkReputationCosts(data.remaining_reputation);
                             } else {
@@ -42,57 +43,57 @@
 </script>
 
 <div class="row" id="initial-reputation" data-initial-reputation="{{ object.reputation_available }}">
-    <div class="col-12 col-md-4 col-lg-3">
-        <div class="input-group input-group-sm mb-3">
-            <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">
-            {% if user.is_superuser %}
-                <a href="{% url 'admin:rules_template_add' %}" class="btn btn-warning"><i
-                        class="fas fa-plus"></i> {% trans 'admin' %}</a>
-            {% endif %}
-        </div>
-        <button
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#add-item-mobile-nav"
-                class="btn btn-secondary btn-add-item-mobile-nav-toggle mb-1 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
-
-        <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
-            <ul class="nav nav-pills flex-column" role="tablist">
-                {% for t in template_categories %}
-                    <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}"
-                        id="nav-item-{{ t.id }}">
-                        <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
-                           data-bs-toggle="tab">{{ t }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+  <div class="col-12 col-md-4 col-lg-3">
+    <div class="input-group input-group-sm mb-3">
+      <input type="text" class="form-control search-items-input" placeholder="{% trans 'Search' %}">
+      {% if user.is_superuser %}
+        <a href="{% url 'admin:rules_template_add' %}" class="btn btn-warning"><i
+                class="fas fa-plus"></i> {% trans 'admin' %}</a>
+      {% endif %}
     </div>
+    <button
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#add-item-mobile-nav"
+            class="btn btn-secondary btn-add-item-mobile-nav-toggle mb-1 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
 
-    <div class="col-12 col-md-8 col-lg-9">
-        <div class="tab-content">
-            {% for t in template_categories %}
-                <div
-                    role="tabpanel"
-                    data-rel="#nav-item-{{ t.id }}"
-                    class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
-                    id="i{{ t.id }}">
-                    <div class="row masonry-container">
-                        {% for i in t.template_set.all %}
-                            {% has_extensions i object.extensions.all as has_ext %}
-                            {% if has_ext and not i.id in character_template_ids %}
-                                <div class="col col-md-6 constructed-template add-item-card"
-                                     data-select-message="{% trans 'Select Template for Reputation?' %}"
-                                     data-reputation-cost="{{ i.cost }}"
-                                     data-template-id="{{ i.id }}"
-                                     data-add-url="{% url 'characters:xhr_reputation' pk=object.id %}">
-                                    {% template_widget i %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+    <div class="collapse dont-collapse-md" id="add-item-mobile-nav">
+      <ul class="nav nav-pills flex-column" role="tablist">
+        {% for t in template_categories %}
+          <li class="nav-item add-item-nav-item {% if forloop.first %}active{% endif %}"
+              id="nav-item-{{ t.id }}">
+            <a class="nav-link" href="#i{{ t.id }}" aria-controls="home" role="tab"
+               data-bs-toggle="tab">{{ t }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-8 col-lg-9">
+    <div class="tab-content">
+      {% for t in template_categories %}
+        <div
+                role="tabpanel"
+                data-rel="#nav-item-{{ t.id }}"
+                class="tab-pane add-item-tab-pane {% if forloop.first %}active{% endif %}"
+                id="i{{ t.id }}">
+          <div class="row masonry-container">
+            {% for i in t.template_set.all %}
+              {% has_extensions i object.extensions.all as has_ext %}
+              {% if has_ext and not i.id in character_template_ids %}
+                <div class="col col-md-6 constructed-template"
+                     data-select-message="{% trans 'Select Template for Reputation?' %}"
+                     data-reputation-cost="{{ i.cost }}"
+                     data-template-id="{{ i.id }}"
+                     data-add-url="{% url 'characters:xhr_reputation' pk=object.id %}">
+                  {% template_widget i %}
                 </div>
+              {% endif %}
             {% endfor %}
+          </div>
         </div>
+      {% endfor %}
     </div>
+  </div>
 </div>

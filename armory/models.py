@@ -9,6 +9,7 @@ from armory.choices import (
     PROTECTION_FA_ICON_CLASS_CHOICES,
     CURRENCY_FA_ICON_CLASS_CHOICES,
 )
+from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 from rules.models import ExtensionSelectQuerySet, Extension
 
@@ -21,7 +22,7 @@ class ItemTypeQuerySet(models.QuerySet):
         ).distinct()
 
 
-class ItemType(models.Model, metaclass=TransMeta):
+class ItemType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     objects = ItemTypeQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=100)
@@ -38,6 +39,9 @@ class ItemType(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def child_item_qs(self):
+        return self.item_set.all()
 
 
 class ItemQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
@@ -127,7 +131,7 @@ class WeaponTypeQuerySet(models.QuerySet):
         ).distinct()
 
 
-class WeaponType(models.Model, metaclass=TransMeta):
+class WeaponType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     objects = WeaponTypeQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=100)
@@ -147,6 +151,9 @@ class WeaponType(models.Model, metaclass=TransMeta):
 
     def get_first_image(self):
         return self.weapon_set.earliest("id").image
+
+    def child_item_qs(self):
+        return self.weapon_set.all()
 
 
 RANGE_CHOICES = (
@@ -368,7 +375,7 @@ class RiotGearTypeQuerySet(HomebrewQuerySet):
         ).distinct()
 
 
-class RiotGearType(models.Model, metaclass=TransMeta):
+class RiotGearType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     objects = RiotGearTypeQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=256)
@@ -382,6 +389,9 @@ class RiotGearType(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def child_item_qs(self):
+        return self.riotgear_set.all()
 
 
 class RiotGearQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):

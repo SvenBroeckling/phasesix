@@ -58,12 +58,4 @@ $(function () {
 
     $('[data-bs-toggle="popover"]').popover()
     $('.template').tilt({glare: false, perspective: 1800})
-
-    setTimeout(() => $('.masonry-container').masonry({percentPosition: true}), 500)
-    body.on('click', 'a[data-bs-toggle="tab"]', function (e) {
-        let target = $(e.target).closest('a[data-bs-toggle="tab"]').attr('data-bs-target')
-        if (target) {
-            $(target).find('.masonry-container').masonry({percentPosition: true})
-        }
-    })
 })

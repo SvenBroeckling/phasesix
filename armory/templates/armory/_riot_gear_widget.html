@@ -21,6 +21,10 @@
     <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
     <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ riot_gear.weight }}<br>
 
+    <p>
+      {{ riot_gear.description|urpg_markup }}
+    </p>
+
     {% if character %}
       {% with currency_unit=character.common_currency_unit %}
         <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=riot_gear.id %}" method="post"

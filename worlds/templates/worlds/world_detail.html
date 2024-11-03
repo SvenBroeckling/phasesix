@@ -4,14 +4,6 @@
 
 {% block javascript %}
   <script src="{% static 'js/worlds_detail.js' %}"></script>
-  <script>
-      $(function () {
-          let masonry = $('.masonry-container').masonry()
-          setTimeout(function () {
-              masonry.masonry('layout')
-          }, 1000)
-      })
-  </script>
 {% endblock %}
 
 {% block bottom_nav %}

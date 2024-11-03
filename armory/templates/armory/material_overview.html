@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <div class="row">
+
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url "world:wiki_page_with_game_values" %}">
+        <div class="card p-4">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <i class="fs-1 me-2 gi-cathelineau-polar-bear"></i>
+            <span class="fs-2">{% trans "Foes" %}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url "rules:template_list" %}">
+        <div class="card p-4">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <i class="fs-1 me-2 gi-delapouite-book-cover"></i>
+            <span class="fs-2">{% trans "Templates" %}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url "armory:item_list" %}">
+        <div class="card p-4">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <i class="fs-1 me-2 gi-delapouite-holy-hand-grenade"></i>
+            <span class="fs-2">{% trans "Items" %}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url "armory:weapon_list" %}">
+        <div class="card p-4">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <i class="fs-1 me-2 gi-delapouite-axe-sword"></i>
+            <span class="fs-2">{% trans "Weapons" %}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url "armory:riot_gear_list" %}">
+        <div class="card p-4">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <i class="fs-1 me-2 gi-delapouite-viking-helmet"></i>
+            <span class="fs-2">{% trans "Armour" %}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url "magic:spell_origin_list" %}">
+        <div class="card p-4">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <i class="fs-1 me-2 gi-lorc-fairy-wand"></i>
+            <span class="fs-2">{% trans "Spells" %}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,4 +1,9 @@
-from django.template import Library
+from django.template import Library, Template, Context
+
+from armory.models import Item, RiotGear, Weapon
+from magic.models import BaseSpell
+from rules.models import Extension
+from rules.models import Template as PhaseSixTemplate
 
 register = Library()
 
@@ -34,6 +39,46 @@ def riot_gear_widget(context, riot_gear, character=None):
         }
     )
     return context
+
+
+@register.simple_tag(takes_context=True)
+def object_widget(context, obj, character=None, add_button=False):
+    template_string = ""
+    if isinstance(obj, Weapon):
+        template_string = "{% load armory_extras %}{% weapon_widget obj character=character add_button=add_button %}"
+    if isinstance(obj, RiotGear):
+        template_string = (
+            "{% load armory_extras %}{% riot_gear_widget obj character=character %}"
+        )
+    if isinstance(obj, Item):
+        template_string = (
+            "{% load armory_extras %}{% item_widget obj character=character %}"
+        )
+    if isinstance(obj, BaseSpell):
+        template_string = (
+            "{% load rules_extras %}{% basespell_widget obj character=character %}"
+        )
+    if isinstance(obj, PhaseSixTemplate):
+        template_string = "{% load rules_extras %}{% template_widget obj %}"
+    return Template(template_string).render(
+        Context({"obj": obj, "character": character, "add_button": add_button})
+    )
+
+
+@register.inclusion_tag("portal/_searchable_object_card_list.html")
+def searchable_object_card_list(
+    category_qs, character=None, homebrew_qs=None, extension_qs=None, add_button=False
+):
+    if extension_qs is None:
+        extension_qs = Extension.objects.all()
+
+    return {
+        "category_qs": category_qs,
+        "extension_qs": extension_qs,
+        "character": character,
+        "homebrew_qs": homebrew_qs,
+        "add_button": add_button,
+    }
 
 
 @register.filter

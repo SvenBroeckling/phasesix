@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load armory_extras %}
 {% load portal_extras %}
 {% load thumbnail i18n %}
 
@@ -11,29 +12,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-12 col-xl-3 d-none d-xl-block">
-      {% include 'armory/_navigation.html' with object=object may_edit=may_edit %}
-    </div>
-
-    <div class="col-12 col-xl-9">
-      <div class="row">
-        {% for object in object_list %}
-          <div class="col-12 col-md-4">
-            {% thumbnail object.image "1024" as img %}
-              <div class="card text-center rounded add-spell-category-card pointer mb-4"
-                   data-type-id="{{ category.id }}">
-                <div class="card-body" style="background-image: url({{ img.url }}); background-size: cover">
-                  <div class="card-text w-100 p-5">
-                    <h5 class="text-center p-0 m-i0">{{ object }}</h5>
-                  </div>
-                </div>
-                <a class="stretched-link" href="{% url 'magic:basespell_list' origin_pk=object.id %}"></a>
-              </div>
-            {% endthumbnail %}
-          </div>
-        {% endfor %}
+  <a href="{% url "armory:material_overview" %}">
+    <div class="card mb-4 d-none d-md-block">
+      <div class="card-body">
+        <i class="fas fa-arrow-left"></i> {% trans "Back to the material page" %}
       </div>
     </div>
-  </div>
+  </a>
+  {% searchable_object_card_list object_list %}
 {% endblock %}

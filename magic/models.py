@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
+from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 
 SPELL_ATTRIBUTE_CHOICES = (
@@ -70,7 +71,7 @@ class SpellType(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class SpellOrigin(models.Model, metaclass=TransMeta):
+class SpellOrigin(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=30)
     fa_icon_class = models.CharField(
         _("FA Icon Class"), max_length=30, default="fas fa-book"
@@ -97,6 +98,9 @@ class SpellOrigin(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def child_item_qs(self):
+        return self.basespell_set.all()
 
 
 class BaseSpell(HomebrewModel, metaclass=TransMeta):

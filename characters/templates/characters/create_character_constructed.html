@@ -54,7 +54,6 @@
                       }
                   });
                   updateTabs();
-                  $('.masonry-container').masonry('layout', {percentPosition: true});
               }, 100);
           });
 
@@ -109,18 +108,6 @@
                   $('.template-list').removeClass('d-none');
               }
           });
-
-          // masonry + bootstrap tabs
-          $('a[data-bs-toggle="tab"]').each(function () {
-              let self = $(this);
-              $(this).on('shown.bs.tab', function () {
-                  let elem = $(`${self.attr('href')}`);
-                  let container = elem.find('.masonry-container');
-                  container.masonry({
-                      percentPosition: true,
-                  })
-              })
-          })
       })
   </script>
 {% endblock %}

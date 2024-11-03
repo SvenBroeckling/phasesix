@@ -1,0 +1,71 @@
+{% load characters_extras %}
+{% load armory_extras %}
+{% load i18n static %}
+
+<div class="row">
+  <div class="col-12 col-md-4 col-lg-3">
+    <div class="input-group input-group-sm mb-3">
+      <input type="text" class="form-control search-objects-input" placeholder="{% trans 'Search' %}">
+    </div>
+
+    <button type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#searchable-object-card-list-mobile-nav"
+            class="btn btn-secondary btn-searchable-object-card-list-mobile-nav-toggle mb-1 w-100 d-block d-md-none">{% trans 'Categories' %}</button>
+
+    <div class="collapse dont-collapse-md" id="searchable-object-card-list-mobile-nav">
+      <ul class="nav nav-pills flex-column" role="tablist">
+        {% for category in category_qs %}
+          <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-{{ category.id }}">
+            <a class="nav-link {% if forloop.first %}active{% endif %}"
+               href="#category-{{ category.id }}" aria-controls="home" role="tab"
+               data-bs-toggle="tab">{{ category }}</a>
+          </li>
+        {% endfor %}
+
+        {% if homebrew_qs and homebrew_qs.exists %}
+          <li class="nav-item searchable-object-card-list-nav-item"
+              id="nav-item-homebrew">
+            <a class="nav-link" href="#category-homebrew" aria-controls="#i-homebrew" role="tab"
+               data-bs-toggle="tab">{% trans "Custom" %}</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-8 col-lg-9">
+    <div class="tab-content">
+      {% for category in category_qs.distinct %}
+        <div role="tabpanel"
+             data-rel="#nav-item-{{ category.id }}"
+             class="tab-pane searchable-object-card-list-tab-pane {% if forloop.first %}active{% endif %}"
+             id="category-{{ category.id }}">
+          <div class="row masonry-container">
+            {% for object in category.child_item_qs.distinct|for_extensions:extension_qs %}
+              <div class="col-12 col-md-6 searchable-object-card">
+                {% object_widget object character=character add_button=add_button %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+
+      {% if homebrew_qs and homebrew_qs.exists %}
+        <div role="tabpanel"
+             data-rel="#nav-item-homebrew"
+             class="tab-pane searchable-object-card-list-tab-pane"
+             id="category-homebrew">
+          <div class="row masonry-container">
+            {% for object in homebrew_qs %}
+              <div class="col-12 col-sm-6 searchable-object-card">
+                {% object_widget object character=character add_button=add_button %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>

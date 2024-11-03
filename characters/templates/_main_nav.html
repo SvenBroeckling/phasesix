@@ -44,7 +44,7 @@
 
       <li class="nav-item">
         {% active_if_url_name_matches "world:wiki_page_with_game_values,rules:template_list,armory:item_list,armory:weapon_list,armory:riot_gear_list,magic:spell_origin_list" as active %}
-        <a href="{% url "world:wiki_page_with_game_values" %}"
+        <a href="{% url "armory:material_overview" %}"
            class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
           <i class="fas fa-cat mb-0"></i>
           <span class="d-none d-md-inline">{% trans "Material" %}</span>

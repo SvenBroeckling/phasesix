@@ -158,6 +158,7 @@
   <script src="{% static 'vendor/htmx/htmx.min.js' %}"></script>
   <script src="{% static 'vendor/bs5-lightbox/lightbox.bundle.min.js' %}"></script>
 
+  <script src="{% static 'js/searchable_object_card_list.js' %}?2"></script>
   <script src="{% static 'js/sidebar.js' %}"></script>
   <script src="{% static 'js/modals.js' %}"></script>
   <script src="{% static 'js/fragments.js' %}"></script>
@@ -218,6 +219,12 @@
 
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {html: true}))
+
+        // Activate masonry after activating tabs
+        $('body').on('shown.bs.tab', ".nav-item", function (e) {
+            $('div.tab-pane.active .masonry-container').masonry({percentPosition: true})
+        })
+        $(".masonry-container:visible").masonry({percentPosition: true})
     });
 </script>
 {% block javascript %}{% endblock %}

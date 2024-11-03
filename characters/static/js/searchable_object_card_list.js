@@ -1,10 +1,11 @@
 $(function () {
     let timer = null
 
+
     function updateTabs() {
-        $('.add-item-tab-pane').each(function (index) {
+        $('.searchable-object-card-list-tab-pane').each(function (index) {
             let elem = $(this)
-            let ct = elem.find('.add-item-card:not(.d-none)')
+            let ct = elem.find('.searchable-object-card:not(.d-none)')
 
             if (ct.length === 0) {
                 elem.addClass('d-none')
@@ -12,18 +13,18 @@ $(function () {
             } else {
                 elem.removeClass('d-none')
                 $(elem.data('rel')).removeClass('d-none')
-                $('li.add-item-nav-item:not(.d-none):first').find('a').tab('show')
+                $('li.searchable-object-card-list-nav-item:not(.d-none):first').find('a').tab('show')
             }
         })
     }
 
-    $('.search-items-input').on('keyup', function (e) {
+    $('.search-objects-input').on('keyup', function (e) {
         let q = $(this).val()
 
         if (timer) clearTimeout(timer)
 
         timer = setTimeout(function () {
-            $('.add-item-card').each(function (index) {
+            $('.searchable-object-card').each(function (index) {
                 if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
                     $(this).removeClass('d-none')
                 } else {
@@ -35,10 +36,8 @@ $(function () {
 
     })
 
-    $('.add-item-nav-item').on('click', function () {
-        $('#add-item-mobile-nav').collapse('hide')
-        $('.btn-add-item-mobile-nav-toggle').text($(this).find('a').text())
+    $('.searchable-object-card-list-nav-item').on('click', function () {
+        $('#searchable-object-card-list-mobile-nav').collapse('hide')
+        $('.btn-searchable-object-card-list-mobile-nav-toggle').text($(this).find('a').text())
     })
-    $('.modal-body a.nav-link').first().addClass('active')
-    $('.modal-body div.tab-pane').first().addClass('active')
 })

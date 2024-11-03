@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
-{% load armory_extras %}
 {% load portal_extras %}
-{% load characters_extras %}
-{% load i18n static rules_extras %}
+{% load i18n static armory_extras %}
 
-{% block title %}{% trans 'Character Templates' %} - {{ block.super }}{% endblock %}
-{% block in_page_title %}{% trans "Templates" %}{% endblock %}
+{% block title %}{% trans 'All Items' %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Items" %}{% endblock %}
 {% block in_page_subtitle %}{% endblock %}
 
 {% block bottom_nav %}

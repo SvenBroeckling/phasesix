@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
 from armory.choices import COLOR_CLASS_CHOICES
+from armory.mixins import SearchableCardListMixin
 
 CHARACTER_ASPECT_CHOICES = (
     ("base_max_health", _("max health")),
@@ -252,7 +253,7 @@ class Knowledge(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class TemplateCategory(models.Model, metaclass=TransMeta):
+class TemplateCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     COLOR_CLASS_CHOICES = (
         ("", _("None")),
         ("primary", "primary"),
@@ -296,6 +297,9 @@ class TemplateCategory(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def child_item_qs(self):
+        return self.template_set.all()
 
     def get_bg_color_class(self):
         if self.bg_color_class:

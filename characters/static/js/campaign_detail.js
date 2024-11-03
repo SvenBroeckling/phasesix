@@ -19,10 +19,3 @@ $('table.campaign-status-sortable').tablesorter({
     }
 })
 
-let body = $('body')
-body.on('click', 'a[data-bs-toggle="tab"]', function (e) {
-    let target = $(e.target).closest('a[data-bs-toggle="tab"]').attr('data-bs-target')
-    if (target) {
-        $(target).find('.masonry-container').masonry({percentPosition: true})
-    }
-})
