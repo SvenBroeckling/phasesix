@@ -40,6 +40,7 @@
                       }
                       $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
                   })
+                  $(".masonry-container").masonry({percentPosition: true})
               }
 
               if (timer) {
@@ -135,9 +136,9 @@
             <button type="submit" class="btn mb-3 w-100 btn-success">{% trans 'Finish Character' %}</button>
             <br>
             <span class="switch switch-sm">
-                            <input type="checkbox" class="mt-3 switch" id="switch-preview">
-                            <label for="switch-preview">{% trans "Preview" %}</label>
-                        </span>
+              <input type="checkbox" class="mt-3 switch" id="switch-preview">
+              <label for="switch-preview">{% trans "Preview" %}</label>
+            </span>
           </form>
         </div>
       </div>

@@ -52,10 +52,10 @@ from characters.models import (
 from characters.utils import crit_successes
 from horror.models import QuirkCategory, Quirk
 from magic.models import (
-    SpellType,
     SpellTemplateCategory,
     SpellTemplate,
     BaseSpell,
+    SpellOrigin,
 )
 from pantheon.models import Entity, PriestAction
 from rules.models import (
@@ -1139,53 +1139,6 @@ class CharacterCastSpellView(View):
         return JsonResponse({"status": "ok"})
 
 
-class XhrAddSpellView(TemplateView):
-    template_name = "characters/modals/add_spell.html"
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        context = super().get_context_data(**kwargs)
-        context["character"] = character
-        context["categories"] = SpellType.objects.all()
-        context["homebrew"] = BaseSpell.objects.homebrew(
-            character=character, campaign=character.campaign
-        )
-        return context
-
-    def post(self, request, *args, **kwargs):
-        from magic.models import BaseSpell
-
-        character = Character.objects.get(id=kwargs["pk"])
-        operation = request.POST.get("operation", "noop")
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        if operation == "add-spell":
-            spell = BaseSpell.objects.get(id=request.POST.get("spell_id"))
-            if not spell.spell_point_cost <= character.spell_points_available:
-                return JsonResponse({"status": "notenoughpoints"})
-            character.characterspell_set.create(spell=spell)
-        return JsonResponse(
-            {"status": "ok", "remaining_spell_points": character.spell_points_available}
-        )
-
-
-class XhrAddSpellByOriginView(XhrAddSpellView):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = context["character"].unlocked_spell_origins
-        return context
-
-
-class XhrRemoveSpellView(View):
-    def post(self, request, *args, **kwargs):
-        character_spell = CharacterSpell.objects.get(id=kwargs["pk"])
-        character = character_spell.character
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        character_spell.delete()
-        return JsonResponse({"status": "ok"})
-
-
 class XhrAddSpellTemplateView(TemplateView):
     template_name = "characters/modals/add_spell_template.html"
 
@@ -1348,11 +1301,24 @@ class XhrCharacterObjectsView(TemplateView):
         if self.object_type == "riot_gear":
             self.model = RiotGearType
             self.child_model = RiotGear
+        if self.object_type == "spell":
+            self.model = SpellOrigin
+            self.child_model = BaseSpell
 
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        return self.model.objects.for_extensions(self.character.extensions)
+        try:
+            qs = self.model.objects.for_extensions(self.character.extensions)
+        except AttributeError:  # model without extensions
+            qs = self.model.objects.all()
+        func = getattr(self, f"filter_{self.object_type}", None)
+        if func is not None:
+            qs = func(qs)
+        return qs
+
+    def filter_spell(self, qs):
+        return self.character.unlocked_spell_origins
 
     def get_homebrew_queryset(self):
         return self.child_model.objects.homebrew(
@@ -1416,3 +1382,10 @@ class XhrCharacterObjectsView(TemplateView):
 
     def delete_riot_gear(self, pk):
         CharacterRiotGear.objects.get(id=pk).delete()
+
+    def add_spell(self, pk):
+        spell = BaseSpell.objects.get(id=pk)
+        self.character.characterspell_set.create(spell=spell)
+
+    def delete_spell(self, pk):
+        CharacterSpell.objects.get(id=pk).delete()

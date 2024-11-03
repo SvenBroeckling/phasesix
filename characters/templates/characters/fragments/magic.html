@@ -6,33 +6,50 @@
     {% if may_edit %}
       <div class="row">
         <div class="col-12">
-          <button
-                  class="btn btn-primary float-end mb-2 modal-trigger"
+          <button class="btn btn-primary float-end mb-2 modal-trigger"
                   data-bs-toggle="modal"
                   data-bs-target=".page-modal"
-                  {% if object.world.select_spells_by == 't' %}
-                  data-url="{% url 'characters:xhr_add_spell' pk=object.id %}"
-                  {% else %}
-                  data-url="{% url 'characters:xhr_add_spell_by_origin' pk=object.id %}"
-                  {% endif %}
-                  data-modal-title="{% trans 'Add a spell' %}">
-            <i class="gi-lorc-fairy-wand text-warning"></i> Add a spell
-            <small>({{ object.spell_points_available }} {% trans 'Spell Points' %})</small>
+                  data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="spell" %}"
+                  data-modal-title="{% trans 'Learn a spell' %}">
+            <i class="gi-lorc-fairy-wand text-warning"></i>{% trans "Add a spell" %}
           </button>
           {% if user.is_authenticated %}
-            <a
-                    class="btn btn-warning float-end mb-2 me-2 modal-trigger"
-                    data-url="{% url 'homebrew:xhr_create_base_spell' %}?character_pk={{ object.id }}"
-                    title="{% trans 'Create Spell' %}"
-                    data-bs-toggle="modal"
-                    data-modal-title="{% trans 'Create Spell' %}"
-                    data-bs-target=".page-modal"
-                    href=""><i class="fa fa-plus"></i> {% trans 'Create Spell' %}</a>
+            <a class="btn btn-warning float-end mb-2 me-2 modal-trigger"
+               data-url="{% url 'homebrew:xhr_create_base_spell' %}?character_pk={{ object.id }}"
+               title="{% trans 'Create Spell' %}"
+               data-bs-toggle="modal"
+               data-modal-title="{% trans 'Create Spell' %}"
+               data-bs-target=".page-modal"
+               href=""><i class="fa fa-plus"></i> {% trans 'Create Spell' %}</a>
           {% endif %}
         </div>
       </div>
     {% endif %}
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 masonry-container">
+
+    {% with spell_points_available=character.spell_points_available %}
+      {% if spell_points_available < 0 %}
+        <div class="card border-danger mb-4">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-start">
+              <i class="fs-2 me-2 gi-lorc-magic-palm text-danger"></i>
+              <h4>{% trans "You have memorized too much!" %}</h4>
+            </div>
+            <p>
+              {% blocktrans %}
+                Your memorised spells use up more spell points than you have available. Either forget some spells or
+                take character templates that increase your spell points.
+              {% endblocktrans %}
+            </p>
+            <p>
+              {% trans "Your current spell points are:" %} <span
+                    class="fs-3 text-danger">{{ spell_points_available }}</span>
+            </p>
+          </div>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="row row-cols-1 row-cols-md-2 masonry-container">
       {% include 'characters/includes/character_spell_cards.html' %}
     </div>
   {% endif %}

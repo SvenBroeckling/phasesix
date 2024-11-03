@@ -58,10 +58,6 @@ class Extension(models.Model, metaclass=TransMeta):
         ("e", _("Epoch")),
         ("w", _("World")),
     )
-    SELECT_SPELLS_BY_COICES = (
-        ("t", _("Type")),
-        ("o", _("Origin")),
-    )
     objects = ExtensionQuerySet.as_manager()
 
     is_mandatory = models.BooleanField(_("is mandatory"), default=False)
@@ -106,13 +102,6 @@ class Extension(models.Model, metaclass=TransMeta):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-    )
-    select_spells_by = models.CharField(
-        _("select spells by"),
-        default="t",
-        max_length=1,
-        choices=SELECT_SPELLS_BY_COICES,
-        help_text=_("Select spells by type (terra, nexus) or origin (tirakan)"),
     )
 
     class Meta:

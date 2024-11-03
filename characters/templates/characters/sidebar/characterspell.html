@@ -23,7 +23,8 @@
                       title="{% trans 'Add Modification' %}"></i>{% trans 'Add Modification' %}</a>
       </div>
       <div class="btn-group w-100">
-        <a href="{% url 'characters:xhr_remove_spell' pk=object.id %}"
+        <a href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="spell" %}?object_id={{ object.id }}"
+           data-method="DELETE"
            class="btn btn-sm btn-danger action-link close-sidebar mt-1"><i class="fas fa-fw fa-trash"
                                                                            title="{% trans 'Forget' %}"></i>{% trans 'Forget' %}
         </a>

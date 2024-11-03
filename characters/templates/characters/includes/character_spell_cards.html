@@ -1,25 +1,26 @@
 {% load characters_extras %}
 {% load rules_extras %}
 {% load i18n %}
+
 {% for s in object.characterspell_set.all %}
   <div class="col mb-2">
-    <div
-            data-sidebar-title="{{ s.name }}"
-            data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}"
-            class="card mb-2 sidebar-trigger">
-      <div class="card-header">
-        <span class="badge bg-dark float-end ms-2"
-              title="{% trans 'Spell point cost' %}">{{ s.spell_point_cost }}</span>
-        <span class="text-muted float-end">{{ s.spell_type }} / {{ s.variant }}</span>
-        {{ s }}
-      </div>
+    <div data-sidebar-title="{{ s.name }}"
+         data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}"
+         class="card mb-2 sidebar-trigger">
+
       <div class="card-body">
+        <h4>{{ s.spell }}</h4>
+        <span class="fs-3 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ s.spell_point_cost }}</span>
+        <small class="text-muted">{{ s.spell.variant }} - {{ s.spell.type }}</small>
+
         {% if s.is_ritual %}
           <span class="text-muted text-center">{% trans 'Ritual' %}</span>
         {% endif %}
+
         <p>
           {{ s.spell.rules|urpg_markup }}
         </p>
+
         {% spell_type_attribute_dice_value object s.spell_type as dice %}
         <i class="fas fa-dice-five fa-fw"></i> {{ object.characterskill_set.spell_casting_skill.skill.name }}: {% color_value_span dice 5 %}
         <small class="text-muted">{{ s.spell_type.reference_attribute.name }}</small><br>
@@ -48,6 +49,18 @@
           {% endfor %}
         </ul>
       {% endif %}
+    </div>
+  </div>
+{% empty %}
+  <div class="card w-100">
+    <div class="card-body d-flex flex-column align-items-center p-5">
+      <i class="fs-1 gi-lorc-magic-swirl"></i>
+      <h2>{% trans "You haven't learned any spells yet." %}</h2>
+      <p>
+        {% blocktrans %}
+          Learn a spell or create a homebrew one, and it will be shown here. You can cast and modify learned spells.
+        {% endblocktrans %}
+      </p>
     </div>
   </div>
 {% endfor %}

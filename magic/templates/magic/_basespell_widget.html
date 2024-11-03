@@ -1,25 +1,23 @@
 {% load i18n characters_extras rules_extras %}
-<div class="card spell-selection-card pointer"
-     data-select-message="{% blocktrans with t_spell=basespell.name t_cost=basespell.spell_point_cost %}Add spell {{ t_spell }} for {{ t_cost }} spell points?{% endblocktrans %}"
-     data-spell-id="{{ basespell.id }}"
-        {% if character %}
-     data-add-url="{% url 'characters:xhr_add_spell' pk=character.id %}"
-        {% endif %}
-     data-spell-point-cost="{{ basespell.spell_point_cost }}">
+<div class="card spell-selection-card mb-3">
+
   {% if not character %}
     <a class="stretched-link" href="{% url 'magic:basespell_detail' pk=basespell.id %}"></a>
   {% endif %}
-  <div class="card-header">
-    <span class="badge bg-dark float-end">{{ basespell.spell_point_cost }}</span>
-    {{ basespell }} <small class="text-muted">{{ basespell.variant }}</small>
-  </div>
-  <div class="card-body">
+
+  <div class="card-body position-relative">
+    <h4>{{ basespell }}</h4>
+    <span class="fs-3 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ basespell.spell_point_cost }}</span>
+    <small class="text-muted">{{ basespell.variant }} - {{ basespell.type }}</small>
+
     {% if basespell.is_ritual %}
       <span class="text-muted text-center">{% trans 'Ritual' %}</span>
     {% endif %}
+
     <p>
       {{ basespell.rules|urpg_markup }}
     </p>
+
     <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ basespell.origin }}<br>
     <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
     <i class="gi-lorc-fairy-wand"></i> {% trans 'Arcana' %}:
@@ -33,6 +31,21 @@
     {% if basespell.duration %}{{ basespell.get_duration_unit_display }}{% endif %}
     {% if basespell.needs_concentration %}
       <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+
+    <div class="w-100">
+      {% if character %}
+        <form action="{% url "characters:xhr_character_objects" pk=character.id object_type="spell" %}"
+              class="float-end add-form" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="object_id" value="{{ basespell.id }}">
+          <button class="btn btn-sm btn-primary m-2"
+                  data-danger="{% trans 'Not possible' %}"
+                  data-success="{% trans 'Learned' %}">
+            {% trans 'Learn' %}
+          </button>
+        </form>
+      {% endif %}
+    </div>
 
     {% if user.is_superuser %}
       <a href="{% url 'admin:magic_basespell_change' basespell.id %}"

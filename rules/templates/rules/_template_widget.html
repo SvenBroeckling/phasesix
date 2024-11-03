@@ -1,10 +1,9 @@
 {% load i18n characters_extras rules_extras %}
 <div class="card mb-3 template">
-  <div class="card-header {{ template.category.get_bg_color_class }} {{ template.category.get_fg_color_class }}">
-    <span>{{ template.category }}: {{ template }}</span>
-    <span class="badge bg-dark float-end">{{ template.cost }}</span>
-  </div>
-  <div class="card-body">
+  <div class="card-body position-relative">
+    <h4>{{ template }}</h4>
+    <span class="fs-3 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ template.cost }}</span>
+
     {% if template.rules %}
       <p>{{ template.rules|urpg_markup }}</p>
     {% endif %}
