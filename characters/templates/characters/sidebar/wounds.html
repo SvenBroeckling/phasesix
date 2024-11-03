@@ -1,100 +1,102 @@
 {% load i18n characters_extras rules_extras %}
 
 {% if may_edit %}
-    <div class="row">
-        <div class="col-12">
-            <div class="btn-group w-100">
-                <a class="btn btn-danger btn-sm action-link"
-                   href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
-                        class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</a>
-                <a class="btn btn-primary btn-sm action-link"
-                   href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
-                        class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</a>
-                <a class="btn btn-warning btn-sm action-link"
-                   href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
-                        class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</a>
-            </div>
-        </div>
-
-        <div class="col-12 mb-3 mt-1">
-            <a
-                    class="btn btn-success btn-sm w-100 modal-trigger small-modal"
-                    data-url="{% url 'characters:xhr_rest' pk=object.id %}"
-                    data-bs-toggle="modal"
-                    data-bs-target=".page-modal"
-                    data-modal-title="{% trans 'Rest' %}"
-                    href=""><i class="fas fa-bed fa-fw"></i> {% trans 'Rest' %}</a>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a class="btn btn-danger btn-sm action-link"
+           href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
+                class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</a>
+        <a class="btn btn-primary btn-sm action-link"
+           href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
+                class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</a>
+        <a class="btn btn-warning btn-sm action-link"
+           href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
+                class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</a>
+      </div>
     </div>
+
+    <div class="col-12 mb-3 mt-1">
+      <a
+              class="btn btn-success btn-sm w-100 modal-trigger small-modal"
+              data-url="{% url 'characters:xhr_rest' pk=object.id %}"
+              data-bs-toggle="modal"
+              data-bs-target=".page-modal"
+              data-modal-title="{% trans 'Rest' %}"
+              href=""><i class="fas fa-bed fa-fw"></i> {% trans 'Rest' %}</a>
+    </div>
+  </div>
 {% endif %}
 
 <div class="row">
-    <div class="col-12 text-center mt-1 mb-3">
-        {% for i in object.health|to_range %}
-            <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
-        {% endfor %}
-        {% for i in object.wounds_taken|to_range %}
-            <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
-        {% endfor %}
-        {% for i in object.boost|to_range %}
-            <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
-        {% endfor %}
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'A full heart. This can compensate a wound.' %}
-    </div>
-    <div class="col-2 mb-2">
-        <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'A wound taken. This empty heart can be restored taking a rest.' %}
-    </div>
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'A temporary boost, given by special equipment or magic. If you take damage this will expended first.' %}
-    </div>
+  <div class="col-12 text-center mt-1 mb-3">
+    {% for i in object.health|to_range %}
+      <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
+    {% endfor %}
+    {% for i in object.wounds_taken|to_range %}
+      <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+    {% endfor %}
+    {% for i in object.boost|to_range %}
+      <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
+    {% endfor %}
+  </div>
 </div>
 
 <div class="row mt-3">
-    <h4 class="text-center">{% trans 'Status effects' %}</h4>
-    <p>
-        {% blocktrans %}
-            Status effects apply over time. Each status effect has a rule for when it expires from the character.
-        {% endblocktrans %}
-    </p>
-    <div class="col-12 pt-2">
-        <div class="card mb-2">
-            <ul class="list-group list-group-flush">
-                {% for se in status_effects %}
-                    {% with se|status_effect_value:object as se_value %}
-                        <li class="list-group-item">
-                            <i class="{{ se.fa_icon_class }} fa-fw"></i>
-                            {{ se }}
-                            <span class="float-end">
-                                <a class="action-link pointer no-decoration text-muted"
-                                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='decrease' %}">-</a>
-                                {% color_value_span se_value 6 invert=True %}
-                                <a class="action-link pointer no-decoration text-muted"
-                                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='increase' %}">+</a>
-                            </span>
-                            {% if se_value %}
-                                <div class="text-muted">
-                                    {{ se.rules|urpg_markup }}
-                                </div>
-                            {% endif %}
-                        </li>
-                    {% endwith %}
-                {% endfor %}
-            </ul>
-        </div>
+  <h4 class="text-center">{% trans 'Status effects' %}</h4>
+  <p>
+    {% blocktrans %}
+      Status effects apply over time. Each status effect has a rule for when it expires from the character.
+    {% endblocktrans %}
+  </p>
+
+  <div class="col-12 pt-2">
+    <div class="card mb-2">
+      <ul class="list-group list-group-flush">
+        {% for se in status_effects %}
+          {% with se|status_effect_value:object as se_value %}
+            <li class="list-group-item">
+              <i class="{{ se.fa_icon_class }} fa-fw"></i>
+              {{ se }}
+              <span class="float-end">
+                <a class="action-link pointer no-decoration text-muted"
+                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='decrease' %}">-</a>
+                  {% color_value_span se_value 6 invert=True %}
+                <a class="action-link pointer no-decoration text-muted"
+                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='increase' %}">+</a>
+                <button class="btn btn-sm status-effect-description-button"><i class="fas fa-info-circle"></i></button>
+              </span>
+              <div class="text-muted d-none status-effect-description mt-1">
+                {{ se.rules|urpg_markup }}
+              </div>
+            </li>
+          {% endwith %}
+        {% endfor %}
+      </ul>
     </div>
+  </div>
 </div>
+
+<div class="row mt-3">
+  <h4 class="text-center">{% trans 'Wound Types' %}</h4>
+  <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-heart text-danger" title="{% trans 'Health' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'A full heart. This can compensate a wound.' %}
+  </div>
+  <div class="col-2 mb-2">
+    <i class="far fa-2x fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'A wound taken. This empty heart can be restored taking a rest.' %}
+  </div>
+  <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-heart text-info" title="{% trans 'Boost' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'A temporary boost, given by special equipment or magic. If you take damage this will expended first.' %}
+  </div>
+</div>
+
 

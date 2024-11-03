@@ -1,6 +1,19 @@
 $(function () {
     let body = $('body')
 
+    body.on("click", ".status-effect-description-button", function (e) {
+        let elem = $(this);
+        let target = elem.closest("li").find('.status-effect-description');
+        if (target.hasClass('d-none')) {
+            target.removeClass('d-none');
+        } else {
+            target.addClass('d-none');
+        }
+        e.preventDefault()
+        return false
+
+    })
+
     body.on('click', '.delete-character', function (e) {
         let elem = $(this)
         if (confirm(elem.data('message'))) {

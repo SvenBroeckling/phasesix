@@ -1,0 +1,72 @@
+{% extends 'characters/fragments/fragment_base.html' %}
+{% load characters_extras rules_extras i18n thumbnail %}
+
+{% block fragment %}
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="card sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
+           data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
+        <div class="card-body">
+          <h5 class="card-title">{% trans "Stress" %}</h5>
+          <p>
+            {% blocktrans %}
+              Your stress level is a measure of how much you have been exposed to the horrors of the world.
+              If it reaches your stress maximum, you will gain a quirk.
+            {% endblocktrans %}
+          </p>
+          <p>
+            {% for i in object.stress|to_range %}
+              <i class="fas fa-2x fa-meh text-warning" title="{% trans 'Stress' %}"></i>
+            {% endfor %}
+            {% for i in object.available_stress|to_range %}
+              <i class="far fa-2x fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {% if object.quirks_need_to_be_chosen and may_edit %}
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{% trans "New Quirk" %}</h5>
+            {% blocktrans %}
+              You gained a not yet chosen quirk due to stress. Choose a
+              Quirk from the list of available quirks or create a new one.
+              Consult your Gamemaster to decide which quirk matches the
+              situation.
+            {% endblocktrans %}
+
+            <div class="col-12 mb-3 mt-1">
+              <a class="btn btn-warning btn-sm w-100 modal-trigger"
+                 data-url="{% url 'characters:xhr_choose_quirk' pk=object.id %}"
+                 data-bs-toggle="modal"
+                 data-bs-target=".page-modal"
+                 data-modal-title="{% trans 'Choose Quirk' %}"
+                 href=""><i class="fas fa-shapes fa-fw"></i> {% trans 'Choose Quirk' %}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% for q in object.quirks.all %}
+      <div class="col-12 col-md-6 mb-2">
+        <div class="card">
+          <div class="card-header">{{ q }}</div>
+          <div class="card-body">
+            <div class="text-muted">
+              {{ q.description|urpg_markup }}
+            </div>
+            {{ q.get_modifier_summary_html|safe }}
+            <a class="btn btn-danger btn-sm float-end mt-2 action-link"
+               href="{% url 'characters:remove_quirk' pk=object.id quirk_pk=q.id %}"><i
+                    class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+{% endblock %}

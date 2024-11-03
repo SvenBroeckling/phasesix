@@ -29,6 +29,15 @@
       {% for i in object.boost|to_range %}
         <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
       {% endfor %}
+
+      <br>
+
+      {% for cse in object.characterstatuseffect_set.all %}
+        {% for v in cse.value|to_range %}
+          <i title="{{ cse }}: {{ cse.value }}"
+             class="fas fa-fw {{ cse.status_effect.fa_icon_class }} {{ cse.status_effect.color_class }}"></i>
+        {% endfor %}
+      {% endfor %}
     </li>
 
     <li class="list-group-item sidebar-trigger text-center" data-sidebar-title="{% trans 'Protection' %}"
@@ -47,37 +56,6 @@
         {% endfor %}
       </li>
     {% endif %}
-
-    {#  {% if object.extension_enabled.horror %}#}
-    {#    <li class="list-group-item sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"#}
-    {#        data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">#}
-    {#      {% for i in object.stress|to_range %}#}
-    {#        <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>#}
-    {#      {% endfor %}#}
-    {#      {% for i in object.available_stress|to_range %}#}
-    {#        <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>#}
-    {#      {% endfor %}#}
-    {#    </li>#}
-    {##}
-    {#    <li class="list-group-item sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"#}
-    {#        data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">#}
-    {#      {% for q in object.quirks_need_to_be_chosen|to_range %}#}
-    {#        <i class="fas fa-frown text-danger" title="{{ q }}"></i>#}
-    {#      {% endfor %}#}
-    {#      {% for q in object.quirks.all %}#}
-    {#        <i class="fas fa-frown text-dark" title="{{ q }}"></i>#}
-    {#      {% endfor %}#}
-    {#    </li>#}
-    {##}
-    {#    <li class="list-group-item sidebar-trigger mt-2" data-sidebar-title="{% trans 'Wounds' %}"#}
-    {#        data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">#}
-    {#      {% for cse in object.characterstatuseffect_set.all %}#}
-    {#        {% for v in cse.value|to_range %}#}
-    {#          <i title="{{ cse }}: {{ cse.value }}" class="fas fa-fw {{ cse.status_effect.fa_icon_class }}"></i>#}
-    {#        {% endfor %}#}
-    {#      {% endfor %}#}
-    {#    </li>#}
-    {#  {% endif %}#}
 
   </ul>
 {% endblock %}

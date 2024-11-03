@@ -6,6 +6,8 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
+from armory.choices import COLOR_CLASS_CHOICES
+
 CHARACTER_ASPECT_CHOICES = (
     ("base_max_health", _("max health")),
     ("base_max_arcana", _("max arcana")),
@@ -409,8 +411,7 @@ class TemplateModifier(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL,
     )
     allows_priest_actions = models.BooleanField(
-        _("allows priest actions"),
-        default=False
+        _("allows priest actions"), default=False
     )
 
     def __str__(self):
@@ -437,6 +438,12 @@ class StatusEffect(models.Model, metaclass=TransMeta):
     is_active = models.BooleanField(_("is active"), default=True)
     fa_icon_class = models.CharField(
         _("FA Icon Class"), max_length=30, default="fas fa-book"
+    )
+    color_class = models.CharField(
+        _("color class"),
+        max_length=20,
+        choices=COLOR_CLASS_CHOICES,
+        default="text-white",
     )
     name = models.CharField(_("name"), max_length=120)
     rules = models.TextField(_("rules"), blank=True, null=True)

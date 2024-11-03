@@ -1,93 +1,92 @@
 {% load characters_extras i18n rules_extras %}
 
 {% if may_edit %}
-    <div class="row mb-2">
-        <div class="col-12">
-            <div class="btn-group mb-1 w-100">
-                <a class="btn btn-warning btn-sm action-link"
-                   href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
-                        class="fas fa-meh fa-fw"></i> {% trans 'Gain Stress' %}</a>
-                <a class="btn btn-success btn-sm action-link"
-                   href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
-                        class="far fa-meh fa-fw"></i> {% trans 'Remove Stress' %}</a>
-            </div>
-            <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
-                    data-dice-roll="{{ object.stress_test_dice }}d6"
-                    data-dice-header="{% trans 'Stress Test' %}"
-                    data-dice-description="{% trans 'Willpower + Logic' %}"
-                    data-dice-character={{ object.id }}>{% trans "Roll Stress Test" %}
-            </button>
-        </div>
+  <div class="row mb-2">
+    <div class="col-12">
+      <div class="btn-group mb-1 w-100">
+        <a class="btn btn-warning btn-sm action-link"
+           href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
+                class="fas fa-meh fa-fw"></i> {% trans 'Gain Stress' %}</a>
+        <a class="btn btn-success btn-sm action-link"
+           href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
+                class="far fa-meh fa-fw"></i> {% trans 'Remove Stress' %}</a>
+      </div>
+      <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+              data-dice-roll="{{ object.stress_test_dice }}d6"
+              data-dice-header="{% trans 'Stress Test' %}"
+              data-dice-description="{% trans 'Willpower + Logic' %}"
+              data-dice-character={{ object.id }}>{% trans "Roll Stress Test" %}
+      </button>
     </div>
+  </div>
 {% endif %}
 
 <div class="row">
-    <div class="col-12 text-center mt-1 mb-3">
-        {% for i in object.stress|to_range %}
-            <i class="fas fa-meh fa-2x text-warning" title="{% trans 'Stress' %}"></i>
-        {% endfor %}
-        {% for i in object.available_stress|to_range %}
-            <i class="far fa-meh fa-2x text-warning" title="{% trans 'Possible Stress' %}"></i>
-        {% endfor %}
-    </div>
+  <div class="col-12 text-center mt-1 mb-3">
+    {% for i in object.stress|to_range %}
+      <i class="fas fa-meh fa-2x text-warning" title="{% trans 'Stress' %}"></i>
+    {% endfor %}
+    {% for i in object.available_stress|to_range %}
+      <i class="far fa-meh fa-2x text-warning" title="{% trans 'Possible Stress' %}"></i>
+    {% endfor %}
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-meh text-warning" title="{% trans 'Stress' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'This is your stress level. You will geht a quirk if it reaches your stress maximum.' %}
-    </div>
-    <div class="col-2 mb-2">
-        <i class="far fa-2x fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'This is possible stress your can cope with. You will get a quirk if all slots are filled.' %}
-    </div>
+  <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-meh text-warning" title="{% trans 'Stress' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'This is your stress level. You will geht a quirk if it reaches your stress maximum.' %}
+  </div>
+  <div class="col-2 mb-2">
+    <i class="far fa-2x fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'This is possible stress your can cope with. You will get a quirk if all slots are filled.' %}
+  </div>
 </div>
 
 <div class="row mt-3">
-    <h4 class="text-center">{% trans 'Your quirks' %}</h4>
+  <h4 class="text-center">{% trans 'Your quirks' %}</h4>
 
-    {% if object.quirks_need_to_be_chosen and may_edit %}
-        <div class="col-12">
-            <p>
-                {% blocktrans %}
-                    You gained a not yet chosen quirk due to stress. Choose a
-                    Quirk from the list of available quirks or create a new one.
-                    Consult your Gamemaster to decide which quirk matches the
-                    situation.
-                {% endblocktrans %}
-            </p>
-            <div class="col-12 mb-3 mt-1">
-                <a
-                        class="btn btn-warning btn-sm w-100 modal-trigger"
-                        data-url="{% url 'characters:xhr_choose_quirk' pk=object.id %}"
-                        data-bs-toggle="modal"
-                        data-bs-target=".page-modal"
-                        data-modal-title="{% trans 'Choose Quirk' %}"
-                        href=""><i class="fas fa-shapes fa-fw"></i> {% trans 'Choose Quirk' %}</a>
-            </div>
-        </div>
-    {% endif %}
+  {% if object.quirks_need_to_be_chosen and may_edit %}
+    <div class="col-12">
+      <p>
+        {% blocktrans %}
+          You gained a not yet chosen quirk due to stress. Choose a
+          Quirk from the list of available quirks or create a new one.
+          Consult your Gamemaster to decide which quirk matches the
+          situation.
+        {% endblocktrans %}
+      </p>
+      <div class="col-12 mb-3 mt-1">
+        <a class="btn btn-warning btn-sm w-100 modal-trigger"
+           data-url="{% url 'characters:xhr_choose_quirk' pk=object.id %}"
+           data-bs-toggle="modal"
+           data-bs-target=".page-modal"
+           data-modal-title="{% trans 'Choose Quirk' %}"
+           href=""><i class="fas fa-shapes fa-fw"></i> {% trans 'Choose Quirk' %}</a>
+      </div>
+    </div>
+  {% endif %}
 
-    {% for q in object.quirks.all %}
-        <div class="col-12 mb-2">
-            <div class="card">
-                <div class="card-header">{{ q }}</div>
-                <div class="card-body">
-                    <div class="text-muted">
-                        {{ q.description|urpg_markup }}
-                    </div>
-                    {{ q.get_modifier_summary_html|safe }}
-                    <a class="btn btn-danger btn-sm float-end mt-2 action-link"
-                       href="{% url 'characters:remove_quirk' pk=object.id quirk_pk=q.id %}"><i
-                            class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
-                </div>
-            </div>
+  {% for q in object.quirks.all %}
+    <div class="col-12 mb-2">
+      <div class="card">
+        <div class="card-header">{{ q }}</div>
+        <div class="card-body">
+          <div class="text-muted">
+            {{ q.description|urpg_markup }}
+          </div>
+          {{ q.get_modifier_summary_html|safe }}
+          <a class="btn btn-danger btn-sm float-end mt-2 action-link"
+             href="{% url 'characters:remove_quirk' pk=object.id quirk_pk=q.id %}"><i
+                  class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
         </div>
-    {% empty %}
-        <p>{% trans "You don't have any quirks." %}</p>
-    {% endfor %}
+      </div>
+    </div>
+  {% empty %}
+    <p>{% trans "You don't have any quirks." %}</p>
+  {% endfor %}
 </div>
