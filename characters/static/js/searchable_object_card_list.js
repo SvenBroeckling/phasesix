@@ -1,5 +1,6 @@
 $(function () {
     let timer = null
+    let body = $('body')
 
 
     function updateTabs() {
@@ -15,10 +16,13 @@ $(function () {
                 $(elem.data('rel')).removeClass('d-none')
                 $('li.searchable-object-card-list-nav-item:not(.d-none):first').find('a').tab('show')
             }
+            setTimeout(function () {
+                $(".page-modal-container .masonry-container").masonry({percentPosition: true})
+            }, 200)
         })
     }
 
-    $('.search-objects-input').on('keyup', function (e) {
+    body.on('keyup', '.search-objects-input', function (e) {
         let q = $(this).val()
 
         if (timer) clearTimeout(timer)
@@ -36,7 +40,7 @@ $(function () {
 
     })
 
-    $('.searchable-object-card-list-nav-item').on('click', function () {
+    body.on('click', '.searchable-object-card-list-nav-item', function () {
         $('#searchable-object-card-list-mobile-nav').collapse('hide')
         $('.btn-searchable-object-card-list-mobile-nav-toggle').text($(this).find('a').text())
     })
