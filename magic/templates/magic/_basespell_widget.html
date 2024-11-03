@@ -22,8 +22,8 @@
     </p>
     <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ basespell.origin }}<br>
     <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
-    <i class="fas fa-magic fa-fw"></i> {% trans 'Arcana' %}:
-    {% for a in basespell.arcana_cost|to_range %}<i class="fas fa-magic text-warning"></i>{% endfor %}<br>
+    <i class="gi-lorc-fairy-wand"></i> {% trans 'Arcana' %}:
+    {% for a in basespell.arcana_cost|to_range %}<i class="gi-lorc-fairy-wand text-warning"></i>{% endfor %}<br>
     <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span basespell.range 4 %}<br>
     <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ basespell.shape|default:"-" }}<br>
     <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span basespell.actions 3 invert=True %}<br>

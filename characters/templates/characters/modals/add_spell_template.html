@@ -10,81 +10,81 @@
 
 
 <div>
-    <ul class="nav nav-tabs justify-content-center" role="tablist">
-        {% for stc in spell_template_categories %}
-            <li class="nav-item">
-                <a class="nav-link" href="#stc{{ stc.id }}" aria-controls="home" role="tab"
-                   data-bs-toggle="tab">{{ stc }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+  <ul class="nav nav-tabs justify-content-center" role="tablist">
+    {% for stc in spell_template_categories %}
+      <li class="nav-item">
+        <a class="nav-link" href="#stc{{ stc.id }}" aria-controls="home" role="tab"
+           data-bs-toggle="tab">{{ stc }}</a>
+      </li>
+    {% endfor %}
+  </ul>
 
-    <div class="tab-content">
-        {% for stc in spell_template_categories %}
-            <div role="tabpanel" class="tab-pane" id="stc{{ stc.id }}">
-                <div class="row masonry-container">
-                    {% for st in stc.spelltemplate_set.all %}
-                        <div class="col-lg-6 mt-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <span class="badge bg-dark float-end">{{ st.spell_point_cost }}</span>
-                                    {{ st }}
-                                </div>
-                                <div class="card-body">
-                                    {% if st.rules %}
-                                        <p>
-                                            {{ st.rules }}
-                                        </p>
-                                    {% endif %}
-
-                                    {% with all_modifiers=st.spelltemplatemodifier_set.all %}
-                                        {% for stm in all_modifiers %}
-                                            {% if stm.attribute %}
-                                                <i class="fas fa-asterisk fa-fw" title="{% trans 'Attribute' %}"></i>
-                                                {{ stm.get_attribute_display|capfirst }}:
-                                                {% color_value_span stm.attribute_modifier 3 algebraic_sign=True %}<br>
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        {% for stm in all_modifiers %}
-                                            {% if stm.variant_change %}
-                                                <i class="fas fa-magic fa-fw" title="{% trans 'Affinity' %}"></i>
-                                                {% trans 'Affinity' %}: {{ stm.variant_change }} <br>
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        {% for stm in all_modifiers %}
-                                            {% if stm.type_change %}
-                                                <i class="fas fa-book fa-fw" title="{% trans 'School' %}"></i>
-                                                {% trans 'School' %}: {{ stm.type_change }} <br>
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        {% for stm in all_modifiers %}
-                                            {% if stm.shape_change %}
-                                                <i class="fas fa-circle fa-fw" title="{% trans 'Shape' %}"></i>
-                                                {% trans 'Shape' %}: {{ stm.shape_change }} <br>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endwith %}
-
-                                    <form action="{% url 'characters:add_spell_template' pk=character.id spell_template_pk=st.id character_spell_pk=character_spell.id %}"
-                                          class="float-end add-form" method="post">
-                                        {% csrf_token %}
-                                        <button class="btn btn-sm btn-primary float-end"
-                                                data-danger="{% trans 'Not possible' %}"
-                                                data-success="{% trans 'Added' %}">{% trans 'Add modification' %}</button>
-                                    </form>
-                                    {% if user.is_superuser %}
-                                        <a href="{% url 'admin:magic_spelltemplate_change' st.id %}"
-                                           style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+  <div class="tab-content">
+    {% for stc in spell_template_categories %}
+      <div role="tabpanel" class="tab-pane" id="stc{{ stc.id }}">
+        <div class="row masonry-container">
+          {% for st in stc.spelltemplate_set.all %}
+            <div class="col-lg-6 mt-3">
+              <div class="card">
+                <div class="card-header">
+                  <span class="badge bg-dark float-end">{{ st.spell_point_cost }}</span>
+                  {{ st }}
                 </div>
+                <div class="card-body">
+                  {% if st.rules %}
+                    <p>
+                      {{ st.rules }}
+                    </p>
+                  {% endif %}
+
+                  {% with all_modifiers=st.spelltemplatemodifier_set.all %}
+                    {% for stm in all_modifiers %}
+                      {% if stm.attribute %}
+                        <i class="fas fa-asterisk fa-fw" title="{% trans 'Attribute' %}"></i>
+                        {{ stm.get_attribute_display|capfirst }}:
+                        {% color_value_span stm.attribute_modifier 3 algebraic_sign=True %}<br>
+                      {% endif %}
+                    {% endfor %}
+
+                    {% for stm in all_modifiers %}
+                      {% if stm.variant_change %}
+                        <i class="gi-lorc-fairy-wand" title="{% trans 'Affinity' %}"></i>
+                        {% trans 'Affinity' %}: {{ stm.variant_change }} <br>
+                      {% endif %}
+                    {% endfor %}
+
+                    {% for stm in all_modifiers %}
+                      {% if stm.type_change %}
+                        <i class="fas fa-book fa-fw" title="{% trans 'School' %}"></i>
+                        {% trans 'School' %}: {{ stm.type_change }} <br>
+                      {% endif %}
+                    {% endfor %}
+
+                    {% for stm in all_modifiers %}
+                      {% if stm.shape_change %}
+                        <i class="fas fa-circle fa-fw" title="{% trans 'Shape' %}"></i>
+                        {% trans 'Shape' %}: {{ stm.shape_change }} <br>
+                      {% endif %}
+                    {% endfor %}
+                  {% endwith %}
+
+                  <form action="{% url 'characters:add_spell_template' pk=character.id spell_template_pk=st.id character_spell_pk=character_spell.id %}"
+                        class="float-end add-form" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-primary float-end"
+                            data-danger="{% trans 'Not possible' %}"
+                            data-success="{% trans 'Added' %}">{% trans 'Add modification' %}</button>
+                  </form>
+                  {% if user.is_superuser %}
+                    <a href="{% url 'admin:magic_spelltemplate_change' st.id %}"
+                       style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+                  {% endif %}
+                </div>
+              </div>
             </div>
-        {% endfor %}
-    </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>

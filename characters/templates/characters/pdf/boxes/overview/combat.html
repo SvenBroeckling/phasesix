@@ -82,7 +82,7 @@
     {% for s in object.characterspell_set.all %}
       <tr>
         <td>
-          <i class="fas fa-magic text-danger"></i> {{ s.spell }}<br>
+          <i class="gi-lorc-fairy-wand text-danger"></i> {{ s.spell }}<br>
         </td>
         <td class="text-end">
           {% spell_type_attribute_dice_value s.character s.spell_type as dice %}
@@ -94,7 +94,7 @@
           {% trans 'Actions' %} <span class="text-light">{{ s.actions }}</span>
         </td>
         <td class="text-end">
-          {% for a in s.arcana_cost|to_range %} <i class="fas fa-magic text-light"></i>{% endfor %}
+          {% for a in s.arcana_cost|to_range %} <i class="gi-lorc-fairy-wand text-muted"></i>{% endfor %}
         </td>
         <td class="text-end">
           <span class="text-light">{{ s.range }} {% trans 'Meter' %}</span>

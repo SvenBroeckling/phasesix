@@ -139,7 +139,7 @@
             <tr class="sidebar-trigger" data-sidebar-title="{{ s }}"
                 data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}">
               <td>
-                <i class="fas fa-magic text-danger"></i> {{ s.spell }}
+                <i class="gi-lorc-fairy-wand text-danger"></i> {{ s.spell }}
                 <small class="text-muted">{{ s.spell_type }} - {{ s.variant }}</small>
               </td>
               <td class="text-end">
@@ -153,7 +153,7 @@
               </td>
               <td class="text-end">
                 {% for a in s.arcana_cost|to_range %}
-                  <i class="fas fa-magic text-warning"></i>{% endfor %}<br>
+                  <i class="gi-lorc-fairy-wand text-warning"></i>{% endfor %}<br>
               </td>
               <td class="text-end">
                 {% color_value_span s.range 20 %} {% trans 'Meter' %}

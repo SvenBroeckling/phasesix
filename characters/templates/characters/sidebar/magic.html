@@ -1,44 +1,44 @@
 {% load i18n characters_extras %}
 
 {% if may_edit %}
-    <div class="row">
-        <div class="col-12">
-            <div class="btn-group w-100">
-                <a href="{% url 'characters:modify_arcana' pk=object.id mode="use" %}"
-                   class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-magic"
-                                                                 title="{% trans 'Use Arcana' %}"></i>{% trans '-Arcana' %}
-                </a>
-                <a href="{% url 'characters:modify_arcana' pk=object.id mode="restore" %}"
-                   class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-magic"
-                                                                 title="{% trans 'Restore Arcana' %}"></i>{% trans '+Arcana' %}
-                </a>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a href="{% url 'characters:modify_arcana' pk=object.id mode="use" %}"
+           class="btn btn-sm btn-warning action-link"><i class="gi-lorc-fairy-wand"
+                                                         title="{% trans 'Use Arcana' %}"></i>{% trans '-Arcana' %}
+        </a>
+        <a href="{% url 'characters:modify_arcana' pk=object.id mode="restore" %}"
+           class="btn btn-sm btn-success action-link"><i class="gi-lorc-fairy-wand"
+                                                         title="{% trans 'Restore Arcana' %}"></i>{% trans '+Arcana' %}
+        </a>
+      </div>
     </div>
+  </div>
 {% endif %}
 
 <div class="row mt-4 mb-4">
-    <div class="col-12 text-center">
-        {% for i in object.arcana|to_range %}
-            <i class="fas fa-magic fa-2x text-warning"></i>
-        {% endfor %}
-        {% for i in object.arcana_used|to_range %}
-            <i class="fas fa-magic fa-2x text-dark"></i>
-        {% endfor %}
-    </div>
+  <div class="col-12 text-center">
+    {% for i in object.arcana|to_range %}
+      <i class="fs-2 gi-lorc-fairy-wand text-warning"></i>
+    {% endfor %}
+    {% for i in object.arcana_used|to_range %}
+      <i class="fs-2 gi-lorc-fairy-wand text-muted"></i>
+    {% endfor %}
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-fw fa-magic text-warning" title="{% trans 'Arcana' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'An arcana slot, which can be used to cast spells.' %}
-    </div>
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-fw fa-magic text-dark" title="{% trans 'Used Arcana' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'An used arcane slot. This can be refreshed taking a rest.' %}
-    </div>
+  <div class="col-2 mb-2">
+    <i class="fs-2 gi-lorc-fairy-wand text-warning" title="{% trans 'Arcana' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'An arcana slot, which can be used to cast spells.' %}
+  </div>
+  <div class="col-2 mb-2">
+    <i class="fs-2 gi-lorc-fairy-wand text-muted" title="{% trans 'Used Arcana' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'An used arcane slot. This can be refreshed taking a rest.' %}
+  </div>
 </div>
