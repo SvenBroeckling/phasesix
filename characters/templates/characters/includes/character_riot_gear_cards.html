@@ -34,15 +34,14 @@
   {% if may_edit %}
     <div class="card mb-4">
       <div class="card-body">
-        <a
-                class="modal-trigger"
-                data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
+        <a class="modal-trigger"
+           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
                 {% if may_edit %}
-                data-bs-toggle="modal"
+           data-bs-toggle="modal"
                 {% endif %}
-                data-bs-target=".page-modal"
-                data-modal-title="{% trans 'Add Armor' %}"
-                href="">{% trans 'No armor yet.' %}</a>
+           data-bs-target=".page-modal"
+           data-modal-title="{% trans 'Add Armor' %}"
+           href="">{% trans 'No armor yet.' %}</a>
       </div>
     </div>
   {% endif %}

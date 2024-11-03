@@ -54,7 +54,7 @@
     <div class="card mb-4">
       <div class="card-body">
         <a class="modal-trigger"
-           data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
                 {% if may_edit %}
            data-bs-toggle="modal"
                 {% endif %}

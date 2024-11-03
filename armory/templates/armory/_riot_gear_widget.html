@@ -27,10 +27,11 @@
 
     {% if character %}
       {% with currency_unit=character.common_currency_unit %}
-        <form action="{% url 'characters:add_riot_gear' pk=character.id riot_gear_pk=riot_gear.id %}" method="post"
+        <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
+              method="post"
               class="float-end add-form">
           {% csrf_token %}
-          <input type="hidden" name="riot_gear_id" value="{{ riot_gear.id }}">
+          <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
           <button type="submit" class="btn btn-primary btn-sm float-end"
                   data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
             {% trans 'Add' %}

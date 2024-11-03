@@ -954,42 +954,6 @@ class XhrReputationView(TemplateView):
 # gear
 
 
-class XhrAddWeaponsView(TemplateView):
-    template_name = "characters/modals/add_weapons.html"
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        context = super().get_context_data(**kwargs)
-        context["character"] = character
-        context["weapon_types"] = WeaponType.objects.for_extensions(
-            character.extensions
-        )
-        context["homebrew"] = Weapon.objects.homebrew(
-            character=character, campaign=character.campaign
-        )
-        return context
-
-
-class AddWeaponView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        weapon = Weapon.objects.get(id=kwargs["weapon_pk"])
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        character.characterweapon_set.create(weapon=weapon)
-        return JsonResponse({"status": "ok"})
-
-
-class XhrRemoveWeaponView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        weapon = CharacterWeapon.objects.get(id=kwargs["weapon_pk"])
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        weapon.delete()
-        return JsonResponse({"status": "ok"})
-
-
 class XhrRemoveWeaponModificationView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
@@ -1017,42 +981,6 @@ class XhrWeaponConditionView(View):
         return JsonResponse({"status": "ok"})
 
 
-class XhrAddRiotGearView(TemplateView):
-    template_name = "characters/modals/add_riot_gear.html"
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        context = super().get_context_data(**kwargs)
-        context["character"] = character
-        context["riot_gear_types"] = RiotGearType.objects.for_extensions(
-            character.extensions
-        )
-        context["homebrew"] = RiotGear.objects.homebrew(
-            character=character, campaign=character.campaign
-        )
-        return context
-
-
-class AddRiotGearView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        riot_gear = RiotGear.objects.get(id=kwargs["riot_gear_pk"])
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        character.characterriotgear_set.create(riot_gear=riot_gear)
-        return JsonResponse({"status": "ok"})
-
-
-class XhrRemoveRiotGearView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        riot_gear = CharacterRiotGear.objects.get(id=kwargs["riot_gear_pk"])
-        riot_gear.delete()
-        return JsonResponse({"status": "ok"})
-
-
 class XhrRiotGearConditionView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
@@ -1066,41 +994,6 @@ class XhrRiotGearConditionView(View):
             riot_gear.condition += 10
 
         riot_gear.save()
-        return JsonResponse({"status": "ok"})
-
-
-class XhrAddItemsView(TemplateView):
-    template_name = "characters/modals/add_items.html"
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        context = super().get_context_data(**kwargs)
-        context["character"] = character
-        context["item_types"] = ItemType.objects.for_extensions(character.extensions)
-        context["homebrew"] = Item.objects.homebrew(
-            character=character, campaign=character.campaign
-        )
-        return context
-
-
-class AddItemView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        item = Item.objects.get(id=kwargs["item_pk"])
-
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-
-        # Containers don't stack
-        if (
-            character.characteritem_set.filter(item=item).exists()
-            and not item.is_container
-        ):
-            ci = character.characteritem_set.filter(item=item).latest("id")
-            ci.quantity += 1
-            ci.save()
-        else:
-            character.characteritem_set.create(item=item)
         return JsonResponse({"status": "ok"})
 
 
@@ -1430,3 +1323,96 @@ class CharacterModifyAttitudeView(View):
                 character.attitude -= 5
             character.save()
         return JsonResponse({"status": "ok"})
+
+
+class XhrCharacterObjectsView(TemplateView):
+    template_name = "characters/modals/add_to_character.html"
+
+    def __init__(self):
+        super().__init__()
+        self.model = None
+        self.child_model = None
+        self.character = None
+        self.object_type = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.character = Character.objects.get(id=kwargs["pk"])
+        self.object_type = self.kwargs["object_type"]
+
+        if self.object_type == "weapon":
+            self.model = WeaponType
+            self.child_model = Weapon
+        if self.object_type == "item":
+            self.model = ItemType
+            self.child_model = Item
+        if self.object_type == "riot_gear":
+            self.model = RiotGearType
+            self.child_model = RiotGear
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return self.model.objects.for_extensions(self.character.extensions)
+
+    def get_homebrew_queryset(self):
+        return self.child_model.objects.homebrew(
+            character=self.character, campaign=self.character.campaign
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["character"] = Character.objects.get(id=self.kwargs["pk"])
+        context["object_type"] = self.kwargs["object_type"]
+        context["object_list"] = self.get_queryset()
+        context["homebrew"] = self.get_homebrew_queryset()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if not self.character.may_edit(request.user):
+            return JsonResponse({"status": "forbidden"})
+        func = getattr(self, f"add_{self.object_type}")
+        func(request.POST.get("object_id"))
+        return JsonResponse({"status": "ok"})
+
+    def delete(self, request, *args, **kwargs):
+        if not self.character.may_edit(request.user):
+            return JsonResponse({"status": "forbidden"})
+        func = getattr(self, f"delete_{self.object_type}")
+        func(request.GET.get("object_id"))
+        return JsonResponse({"status": "ok"})
+
+    def add_weapon(self, pk):
+        weapon = Weapon.objects.get(id=pk)
+        self.character.characterweapon_set.create(weapon=weapon)
+
+    def delete_weapon(self, pk):
+        CharacterWeapon.objects.get(id=pk).delete()
+
+    def add_item(self, pk):
+        item = Item.objects.get(id=pk)
+        if (
+            self.character.characteritem_set.filter(item=item).exists()
+            and not item.is_container
+        ):
+            ci = self.character.characteritem_set.filter(item=item).latest("id")
+            ci.quantity += 1
+            ci.save()
+        else:
+            self.character.characteritem_set.create(item=item)
+
+    def delete_item(self, pk):
+        item = Item.objects.get(id=pk)
+        if self.character.characteritem_set.filter(item=item).exists():
+            ci = self.character.characteritem_set.filter(item=item).latest("id")
+            if ci.quantity > 1:
+                ci.quantity -= 1
+                ci.save()
+            else:
+                ci.delete()
+
+    def add_riot_gear(self, pk):
+        riot_gear = RiotGear.objects.get(id=pk)
+        self.character.characterriotgear_set.create(riot_gear=riot_gear)
+
+    def delete_riot_gear(self, pk):
+        CharacterRiotGear.objects.get(id=pk).delete()

@@ -56,8 +56,9 @@
     <div class="col-12">
       <div class="btn-group w-100">
         <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
-           href="{% url 'characters:xhr_remove_weapon' pk=object.character.id weapon_pk=object.id %}"><i
-                class="fas fa-trash"></i> {% trans 'Remove' %}</a>
+           data-method="DELETE"
+           href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="weapon" %}?object_id={{ object.id }}">
+          <i class="fas fa-trash"></i> {% trans 'Remove' %}</a>
       </div>
     </div>
   </div>

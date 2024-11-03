@@ -238,22 +238,13 @@ urlpatterns = [
         views.XhrCharacterStatusEffectsChangeView.as_view(),
         name="xhr_status_effects_change",
     ),
+    # generic add and remove
+    path(
+        "xhr_character_objects/<int:pk>/<str:object_type>",
+        views.XhrCharacterObjectsView.as_view(),
+        name="xhr_character_objects",
+    ),
     # weapons
-    path(
-        "xhr_add_weapons/<int:pk>",
-        views.XhrAddWeaponsView.as_view(),
-        name="xhr_add_weapons",
-    ),
-    path(
-        "add_weapon/<int:pk>/<int:weapon_pk>",
-        views.AddWeaponView.as_view(),
-        name="add_weapon",
-    ),
-    path(
-        "xhr_remove_weapon/<int:pk>/<int:weapon_pk>",
-        views.XhrRemoveWeaponView.as_view(),
-        name="xhr_remove_weapon",
-    ),
     path(
         "xhr_remove_weapon_modification/<int:pk>/<int:weapon_pk>/<int:weapon_modification_pk>",
         views.XhrRemoveWeaponModificationView.as_view(),
@@ -266,32 +257,11 @@ urlpatterns = [
     ),
     # riot gear
     path(
-        "xhr_add_riot_gear/<int:pk>",
-        views.XhrAddRiotGearView.as_view(),
-        name="xhr_add_riot_gear",
-    ),
-    path(
-        "add_riot_gear/<int:pk>/<int:riot_gear_pk>",
-        views.AddRiotGearView.as_view(),
-        name="add_riot_gear",
-    ),
-    path(
-        "xhr_remove_riot_gear/<int:pk>/<int:riot_gear_pk>",
-        views.XhrRemoveRiotGearView.as_view(),
-        name="xhr_remove_riot_gear",
-    ),
-    path(
         "xhr_riot_gear_condition/<int:pk>/<int:riot_gear_pk><mode>/",
         views.XhrRiotGearConditionView.as_view(),
         name="xhr_riot_gear_condition",
     ),
     # items
-    path(
-        "xhr_add_items/<int:pk>", views.XhrAddItemsView.as_view(), name="xhr_add_items"
-    ),
-    path(
-        "add_item/<int:pk>/<int:item_pk>", views.AddItemView.as_view(), name="add_item"
-    ),
     path(
         "xhr_modify_item/<int:pk>/<int:item_pk>/<mode>",
         views.XhrModifyItemView.as_view(),

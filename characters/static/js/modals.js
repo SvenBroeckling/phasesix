@@ -20,14 +20,12 @@ $(function () {
             function (response, status, xhr) {
                 setTimeout(function () {
                     $(".page-modal-container .masonry-container").masonry({percentPosition: true})
-                }, 50)
+                }, 200)
             }
         )
     })
 
     pageModal.on('hidden.bs.modal', function (e) {
-        console.log('modal hidden');
-        refresh_fragments()
         $('.page-modal-container').html('')
     })
 })

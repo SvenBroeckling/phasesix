@@ -8,7 +8,7 @@
       <div>
         {% if may_edit %}
           <a class="btn btn-primary btn-sm float-end modal-trigger"
-             data-url="{% url 'characters:xhr_add_riot_gear' pk=object.id %}"
+             data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
              data-bs-toggle="modal"
              data-bs-target=".page-modal"
              data-modal-title="{% trans 'Add Armor' %}"
@@ -30,7 +30,7 @@
       <div>
         {% if may_edit %}
           <a class="btn btn-primary btn-sm float-end modal-trigger"
-             data-url="{% url 'characters:xhr_add_weapons' pk=object.id %}"
+             data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
              data-bs-toggle="modal"
              data-bs-target=".page-modal"
              data-modal-title="{% trans 'Add Weapon' %}"
@@ -54,7 +54,7 @@
       <div>
         {% if may_edit %}
           <a class="btn btn-primary btn-sm float-end modal-trigger"
-             data-url="{% url 'characters:xhr_add_items' pk=object.id %}"
+             data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
              title="{% trans 'Add Item' %}"
              data-bs-toggle="modal"
              data-modal-title="{% trans 'Add item' %}"

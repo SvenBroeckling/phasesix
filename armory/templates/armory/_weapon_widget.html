@@ -25,10 +25,10 @@
 
         {% if character and add_button %}
           {% with currency_unit=character.common_currency_unit %}
-            <form action="{% url 'characters:add_weapon' pk=character.id weapon_pk=weapon.id %}"
-                  class="float-end add-form pt-3" method="post">
+            <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="weapon" %}"
+                  class=" float-end add-form pt-3" method="post">
               {% csrf_token %}
-              <input type="hidden" name="weapon_id" value="{{ weapon.id }}">
+              <input type="hidden" name="object_id" value="{{ weapon.id }}">
               <button class="btn btn-sm btn-primary float-end"
                       data-danger="{% trans 'Not possible' %}"
                       data-success="{% trans 'Added' %}">

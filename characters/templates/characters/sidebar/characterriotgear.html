@@ -17,7 +17,8 @@
     <div class="col-12">
       <div class="btn-group w-100">
         <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
-           href="{% url 'characters:xhr_remove_riot_gear' pk=object.character.id riot_gear_pk=object.id %}"><i
+           data-method="DELETE"
+           href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="riot_gear" %}?object_id={{ object.id }}"><i
                 class="fas fa-trash"></i> {% trans 'Remove' %}</a>
       </div>
     </div>

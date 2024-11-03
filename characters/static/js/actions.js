@@ -11,7 +11,7 @@ $(function () {
         setTimeout(function () {
             btn.html(original_btn_html);
             btn.removeClass(`btn-${kind}`);
-            if(btn.data('refresh-fragments') === 'yes') {
+            if (btn.data('refresh-fragments') === 'yes') {
                 refresh_fragments()
             }
         }, 1000);
@@ -19,9 +19,22 @@ $(function () {
 
     // interactions / events
     body.on('click', '.action-link', function (e) {
-        $.post($(this).attr('href'), function (data) {
-            refresh_fragments()
-        })
+        let method = $(this).data('method') || 'POST';
+        let url = $(this).attr('href');
+
+        $.ajax(
+            url,
+            {
+                type: method,
+                success: function (data) {
+                    refresh_fragments()
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            }
+        )
+
         if ($(this).hasClass('close-sidebar')) {
             $('#sidebar-right').css('width', '');
         }
