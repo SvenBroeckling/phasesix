@@ -24,6 +24,12 @@ class CharacterQuerySet(models.QuerySet):
     def with_templates(self):
         return self.filter(charactertemplate__id__isnull=False).distinct()
 
+    def npc(self):
+        return self.filter(npc_campaign__isnull=False)
+
+    def pc(self):
+        return self.filter(npc_campaign__isnull=True)
+
 
 class Character(models.Model):
     objects = CharacterQuerySet.as_manager()

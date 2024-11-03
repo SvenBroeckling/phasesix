@@ -92,7 +92,7 @@
 
       <li class="nav-item">
         {% if user.is_authenticated %}
-          <a href="{% url "portal:profile" %}"
+          <a href="{% url "portal:profile" pk=user.id %}"
              class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">
             <i class="fas fa-user"></i>
             <span class="d-none d-md-inline">{{ request.user|capfirst }}</span>

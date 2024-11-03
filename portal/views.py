@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
 from django.db.models import Q, Count
 from django.db.models.functions import Trunc
-from django.views.generic import TemplateView
+from django.shortcuts import redirect
+from django.views import View
+from django.views.generic import TemplateView, DetailView
 
 from campaigns.models import Roll, Campaign
 from characters.models import Character
+from portal.models import Profile
 from worlds.models import WikiPage
 
 
@@ -38,18 +41,26 @@ class XhrSearchResultsView(TemplateView):
         return context
 
 
-class ProfileView(TemplateView):
+class ProfileView(DetailView):
     template_name = "portal/profile.html"
+    model = User
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["object"] = self.request.user
+        context["may_edit"] = self.request.user == self.object
         return context
+
+
+class ProfileUploadImageView(View):
+    def post(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=request.user)
+        profile.image = request.FILES["image"]
+        profile.save()
+        return redirect("portal:profile", pk=request.user.id)
 
 
 class YearlyWrapUpView(TemplateView):
     template_name = "portal/yearly_wrapup.html"
-    YEAR = 2023
 
     def get_most_played(self, qs):
         res = []
@@ -88,11 +99,11 @@ class YearlyWrapUpView(TemplateView):
         context = super().get_context_data(**kwargs)
         qs = Roll.objects.filter(
             character__created_by=User.objects.get(id=self.kwargs["pk"]),
-            created_at__year=self.YEAR,
+            created_at__year=self.kwargs["year"],
         )
         context.update(
             {
-                "year": self.YEAR,
+                "year": self.kwargs["year"],
                 "qs": qs,
                 "most_played": self.get_most_played(qs),
                 "played_campaigns": self.get_played_campaigns(qs),

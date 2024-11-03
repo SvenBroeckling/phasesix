@@ -2,7 +2,7 @@
 {% load portal_extras %}
 <div class="list-group mb-3">
 
-  <a href="{% url 'portal:profile' %}"
+  <a href="{% url 'portal:profile' pk=object.id %}"
      class="list-group-item p-0 overflow-hidden border-bottom-0"
      style="background-image: url('{% profile_backdrop_image_url object.profile geometry='600x160' %}');
              background-repeat: no-repeat;
@@ -12,7 +12,7 @@
              background-size: cover;">
   </a>
 
-  <a href="{% url 'portal:profile' %}"
+  <a href="{% url 'portal:profile' pk=object.id %}"
      class="py-3 list-group-item list-group-item-action d-flex flex-column text-center justify-content-center align-items-center"
      aria-current="true">
 
@@ -44,6 +44,17 @@
     </div>
   </a>
 
+  <a class="navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+     data-bs-toggle="tab"
+     data-bs-target="#npc-tab-pane"
+     role="tab"
+     aria-current="true">
+    <div class="d-flex justify-content-center align-items-center">
+      <i class="fas fa-home"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "NPC" %}</span>
+    </div>
+  </a>
+
   <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
      data-bs-toggle="tab"
      data-bs-target="#gm-campaigns-tab-pane"
@@ -65,18 +76,21 @@
       <span class="ms-3 d-block d-lg-block">{% trans "More" %}</span>
     </div>
   </a>
-
-  {% comment %}
-  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     hx-post="{% url 'logout' %}"
-     hx-swap="none"
-     hx-on:htmx:after-request="window.location='/'"
-     href="">
-    <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-lock"></i>
-      <span class="ms-3 d-block d-lg-block">{% trans "Logout" %}</span>
-    </div>
-  </a>
-  {% endcomment %}
-
 </div>
+
+{% if may_edit %}
+  <div class="list-group mb-3">
+    <div class="list-group-item py-3" role="button">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-fw fa-pen"></i>
+        <form action="{% url "portal:upload_image" %}" method="post" id="profile-image-form"
+              enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="file" name="image" id="id_profile_image_upload" class="d-none">
+        </form>
+        <span class="ms-3 d-block profile-image-upload-button d-lg-block">{% trans "Upload Image" %}</span>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
