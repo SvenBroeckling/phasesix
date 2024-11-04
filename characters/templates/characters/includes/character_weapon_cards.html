@@ -50,18 +50,21 @@
     </div>
   </div>
 {% empty %}
-  {% if may_edit %}
-    <div class="card mb-4">
-      <div class="card-body">
-        <a class="modal-trigger"
-           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
-                {% if may_edit %}
-           data-bs-toggle="modal"
-                {% endif %}
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Weapon' %}"
-           href="">{% trans 'No weapon yet.' %}</a>
+  <div {% if may_edit %}
+    data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
+    data-bs-toggle="modal"
+    data-bs-target=".page-modal"
+    data-modal-title="{% trans 'Add Weapons' %}"
+  {% endif %}
+    class="card mb-4 pointer {% if may_edit %}modal-trigger{% endif %}">
+    <div class="card-body p-4 d-flex align-items-center justify-content-start">
+      <i class="fs-1 me-3 gi-delapouite-axe-sword"></i>
+      <div>
+        <span class="fs-4">{% trans "No weapons." %}</span><br>
+        {% if may_edit %}
+          <small class="text-muted">{% trans "Click to add a weapon" %}</small>
+        {% endif %}
       </div>
     </div>
-  {% endif %}
+  </div>
 {% endfor %}

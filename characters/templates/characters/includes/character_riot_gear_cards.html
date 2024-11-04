@@ -1,48 +1,49 @@
+{% load rules_extras %}
 {% load armory_extras %}
 {% load characters_extras %}
 {% load i18n %}
 {% for r in character.characterriotgear_set.all %}
   <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
        data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
-    <div class="card-header">
-      {{ r.riot_gear }} <span class="small text-muted">{{ r.riot_gear.type }}</span>
-      {% if r.riot_gear.concealment > 0 %}
-        <span class="float-end">
-          <i class="fas fa-eye-slash fa-fw"
-             title="{% trans 'Concealment' %}"></i> {% color_value_span r.riot_gear.concealment 6 invert=True %}
-        </span>
-      {% endif %}
-      {% if r.condition < 100 %}
-        <span class="float-end me-1">
-          <span title="{% trans 'Condition' %}">{% color_value_span r.condition 100 %}%</span>
-        </span>
-      {% endif %}
-    </div>
     <div class="card-body">
+      <h4>{{ r.riot_gear }}</h4>
+      <small class="text-muted">{{ r.riot_gear.type }}</small>
+
+      <p>
+        {{ r.riot_gear.description|urpg_markup }}
+      </p>
+
+      <div class="mb-2">
+        {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 5 invert=True %}<br>
+      </div>
+
       {% if r.riot_gear.type.is_shield %}
         <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Cover' %}:
         {% color_value_span r.riot_gear.shield_cover 6 invert=True %}+<br>
       {% else %}
-        <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}:
-        {% riot_gear_protection_display r.riot_gear %}
+        <span class="w-100 fs-3">
+          {% riot_gear_protection_display r.riot_gear %}
+        </span>
         <br>
       {% endif %}
-      <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 6 invert=True %}<br>
     </div>
   </div>
 {% empty %}
-  {% if may_edit %}
-    <div class="card mb-4">
-      <div class="card-body">
-        <a class="modal-trigger"
-           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
-                {% if may_edit %}
-           data-bs-toggle="modal"
-                {% endif %}
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Armor' %}"
-           href="">{% trans 'No armor yet.' %}</a>
+  <div {% if may_edit %}
+    data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
+    data-bs-toggle="modal"
+    data-bs-target=".page-modal"
+    data-modal-title="{% trans 'Add Armor' %}"
+  {% endif %}
+    class="card mb-4 pointer {% if may_edit %}modal-trigger{% endif %}">
+    <div class="card-body p-4 d-flex align-items-center justify-content-start">
+      <i class="fs-1 me-3 gi-delapouite-viking-helmet"></i>
+      <div>
+        <span class="fs-4">{% trans "No armour." %}</span><br>
+        {% if may_edit %}
+          <small class="text-muted">{% trans "Click to add armour" %}</small>
+        {% endif %}
       </div>
     </div>
-  {% endif %}
+  </div>
 {% endfor %}

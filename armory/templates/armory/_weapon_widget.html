@@ -18,7 +18,7 @@
           <br>
           {% for fm in weapon.attack_modes.all %}
             <button disabled class="btn btn-outline-primary mb-2 w-100">
-              {{ fm.name }} - {{ weapon.range_meter }}m<br>
+              {{ fm.name }}<br>
             </button>
           {% endfor %}
         {% endif %}

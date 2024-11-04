@@ -2,45 +2,46 @@
 {% load i18n characters_extras rules_extras thumbnail %}
 
 <div class="card mb-3">
-  <div class="card-header">
-    {{ riot_gear }}
-    {% if riot_gear.concealment %}
-      <span class="float-end"><i
-              class="fas fa-eye-slash fa-fw"></i> {% color_value_span riot_gear.concealment 6 invert=True %}</span>
-    {% endif %}
-  </div>
 
   <div class="card-body">
-    {% if riot_gear.type.is_shield %}
-      <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Cover' %}:
-      {% color_value_span riot_gear.shield_cover 6 invert=True %}+<br>
-    {% else %}
-      <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Protection' %}:
-      {% riot_gear_protection_display riot_gear %}
-      <br>
-    {% endif %}
-    <i class="fas fa-weight fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
-    <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}: {{ riot_gear.weight }}<br>
+    <h4>{{ riot_gear }}</h4>
+    <span class="fs-5 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0"><i
+            class="fas fa-coins"></i> {{ riot_gear.price|floatformat:0 }}</span>
 
     <p>
       {{ riot_gear.description|urpg_markup }}
     </p>
 
+    <div class="mb-2">
+      {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
+    </div>
+
+    {% if riot_gear.type.is_shield %}
+      <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Cover' %}:
+      {% color_value_span riot_gear.shield_cover 6 invert=True %}+<br>
+    {% else %}
+      <span class="w-100 fs-3">
+        {% riot_gear_protection_display riot_gear %}
+      </span>
+      <br>
+    {% endif %}
+
     {% if character %}
-      {% with currency_unit=character.common_currency_unit %}
-        <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
-              method="post"
-              class="float-end add-form">
-          {% csrf_token %}
-          <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
-          <button type="submit" class="btn btn-primary btn-sm float-end"
-                  data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
-            {% trans 'Add' %}
-            <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
-            {% color_value_span riot_gear.price 2000 invert=True %}
-          </button>
-        </form>
-      {% endwith %}
+      <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
+            method="post"
+            class="float-end add-form">
+        {% csrf_token %}
+        <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
+        <button type="submit" class="btn btn-primary btn-sm float-end"
+                data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+          {% trans 'Add' %}
+        </button>
+      </form>
+    {% else %}
+      {% for extension in riot_gear.extensions.all %}
+        <span class="mt-2 badge text-muted bg-primary-subtle" title="{{ extension }}">
+          <i class="m-1 {{ extension.fa_icon_class }}"></i></span>
+      {% endfor %}
     {% endif %}
 
     {% if user.is_superuser %}

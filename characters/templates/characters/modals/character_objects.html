@@ -1,2 +1,2 @@
 {% load armory_extras %}
-{% searchable_object_card_list object_list character=character add_button=True %}
+{% searchable_object_card_list object_list homebrew_qs=homebrew extension_qs=character.extensions.all character=character add_button=True %}

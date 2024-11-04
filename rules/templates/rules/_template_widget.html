@@ -2,7 +2,7 @@
 <div class="card mb-3 template">
   <div class="card-body position-relative">
     <h4>{{ template }}</h4>
-    <span class="fs-3 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ template.cost }}</span>
+    <span class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ template.cost }}</span>
 
     {% if template.rules %}
       <p>{{ template.rules|urpg_markup }}</p>

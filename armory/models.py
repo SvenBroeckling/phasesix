@@ -122,6 +122,13 @@ class Item(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def get_image_thumbnail(self):
+        return None  # TODO: Check if it is possible to make this beautiful in _gear_item.html
+        # if not self.image:
+        #     return None
+        # thumbnail = get_thumbnail(self.image, "100x20", crop="center")
+        # return thumbnail.url
+
 
 class WeaponTypeQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
@@ -424,7 +431,7 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
 
     concealment = models.IntegerField(_("concealment"), default=0)
     weight = models.DecimalField(_("weight"), decimal_places=2, max_digits=6)
-    price = models.DecimalField(_("price"), decimal_places=2, max_digits=6)
+    price = models.DecimalField(_("price"), decimal_places=2, max_digits=8)
 
     class Meta:
         translate = ("name", "description")

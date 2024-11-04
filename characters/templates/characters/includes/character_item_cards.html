@@ -1,19 +1,19 @@
 {% load i18n %}
 <div class="card">
-    <div class="card-header">{% trans 'On Body' %}</div>
-    <div class="card-body">
-        {% include 'characters/fragments/_gear_item.html' with qs=character.characteritem_set.not_in_container.without_containers %}
-    </div>
+  <div class="card-header">{% trans 'On Body' %}</div>
+  <div class="card-body">
+    {% include 'characters/fragments/_gear_item.html' with qs=character.characteritem_set.not_in_container.without_containers empty_message="body" %}
+  </div>
 </div>
 
 {% for container in character.characteritem_set.containers %}
-    <div class="card mt-4 sidebar-trigger"
-         data-pk="container.id"
-         data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=container.id sidebar_template="characteritem" %}"
-         data-sidebar-title="{{ container.item }}">
-        <div class="card-header">{{ container.item }}</div>
-        <div class="card-body">
-            {% include 'characters/fragments/_gear_item.html' with qs=container.characteritem_set.without_containers %}
-        </div>
+  <div class="card mt-4 sidebar-trigger"
+       data-pk="container.id"
+       data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=container.id sidebar_template="characteritem" %}"
+       data-sidebar-title="{{ container.item }}">
+    <div class="card-header">{{ container.item }}</div>
+    <div class="card-body">
+      {% include 'characters/fragments/_gear_item.html' with qs=container.characteritem_set.without_containers empty_message="container" %}
     </div>
+  </div>
 {% endfor %}

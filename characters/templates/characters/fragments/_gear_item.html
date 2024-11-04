@@ -1,38 +1,57 @@
 {% load characters_extras rules_extras i18n %}
 <div class="item-sortable"
      data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
-    {% for ci in qs %}
-        <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ ci.item }}"
-             data-pk="{{ ci.id }}"
-             data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=ci.id sidebar_template="characteritem" %}">
-            <div class="card-header">
-                {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}
-                    x {% endif %} {{ ci.item }}
-                <span class="small text-muted">{{ ci.item.type }}</span>
-                {% if ci.item.concealment > 0 %}
-                    <span class="float-end">
-                                <i class="fas fa-eye-slash fa-fw"
-                                   title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
-                            </span>
-                {% endif %}
-            </div>
-            {% if ci.item.description %}
-                <div class="card-body d-none">
-                    <p class="mb-0">{{ ci.item.description }}</p>
-                </div>
+
+  {% for ci in qs %}
+    <div class="card mb-2 sidebar-trigger"
+         data-sidebar-title="{{ ci.item }}"
+         data-pk="{{ ci.id }}"
+            {% if ci.item.get_image_thumbnail %}
+         style="background-image: url('{{ ci.item.get_image_thumbnail }}'), linear-gradient(to left, rgb(0 0 0 / 1%), rgb(0 0 0 / 99%)); background-blend-mode: overlay; background-size: cover;"
             {% endif %}
-            <div class="card-footer d-none">
-                <i class="fas fa-eye-slash fa-fw"
-                   title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
-                <i class="fas fa-balance-scale fa-fw ms-1"
-                   title="{% trans 'Weight' %}"></i> {{ ci.item.weight }}
-                {% if user.is_superuser %}
-                    <a href="{% url 'admin:armory_item_change' ci.item.id %}"
-                       style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                {% endif %}
-            </div>
+         data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=ci.id sidebar_template="characteritem" %}">
+
+      <div class="card-body position-relative z-2">
+        {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}
+          x {% endif %} {{ ci.item }}
+        <span class="small text-muted">{{ ci.item.type }}</span>
+        {% if ci.item.concealment > 0 %}
+          <span class="float-end">
+            <i class="fas fa-eye-slash fa-fw"
+               title="{% trans 'Concealment' %}"></i> {% color_value_span ci.item.concealment 6 invert=True %}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+
+  {% empty %}
+
+    {% if empty_message == "body" %}
+      <div {% if may_edit %}
+        data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
+        data-bs-toggle="modal"
+        data-bs-target=".page-modal"
+        data-modal-title="{% trans 'Add Items' %}"
+      {% endif %}
+        class="pointer p-4 d-flex align-items-center justify-content-start {% if may_edit %}modal-trigger{% endif %}">
+        <i class="fs-1 me-3 gi-delapouite-holy-hand-grenade"></i>
+        <div>
+          <span class="fs-4">{% trans "No items." %}</span><br>
+          {% if may_edit %}
+            <small class="text-muted">{% trans "Click to add item" %}</small>
+          {% endif %}
         </div>
-    {% empty %}
-        {% trans 'Empty' %}
-    {% endfor %}
+      </div>
+    {% else %}
+      <div class="pointer p-4 d-flex align-items-center justify-content-start">
+        <i class="fs-1 me-3 gi-delapouite-holy-hand-grenade"></i>
+        <div>
+          <span class="fs-4">{% trans "No items." %}</span><br>
+          {% if may_edit %}
+            <small class="text-muted">{% trans "Click on any item to place it in this container." %}</small>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
 </div>
