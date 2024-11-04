@@ -27,7 +27,13 @@
 
         {% if lead_image %}
           <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+            {% if lead_image.character %}
+              <a href="{{ lead_image.character.get_absolute_url }}">
+            {% endif %}
             <img class="img-fluid" src="{{ lead_image.image.url }}" alt="{% trans "Lead Image" %}">
+            {% if lead_image.character %}
+              </a>
+            {% endif %}
           </div>
         {% endif %}
       </div>

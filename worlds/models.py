@@ -169,6 +169,13 @@ class World(models.Model, metaclass=TransMeta):
 class WorldLeadImage(models.Model):
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     image = models.ImageField(_("image"), upload_to="world_lead_images", max_length=256)
+    character = models.ForeignKey(
+        "characters.Character",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("character"),
+    )
 
     class Meta:
         verbose_name = _("world lead image")

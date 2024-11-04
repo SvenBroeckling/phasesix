@@ -20,6 +20,7 @@ class WorldSiteConfigurationInline(admin.TabularInline):
 
 class WorldLeadImageInline(admin.TabularInline):
     model = WorldLeadImage
+    raw_id_fields = ("character",)
 
 
 class WorldAdmin(VersionAdmin):
