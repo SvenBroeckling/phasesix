@@ -3,17 +3,7 @@ from django.views.generic import ListView, DetailView, TemplateView
 from armory.models import Item, WeaponType, RiotGearType, ItemType
 
 
-class MaterialListView(ListView):
-    def get_queryset(self):
-        qs = super().get_queryset()
-        if self.request.world_configuration is not None:
-            qs = qs.for_world(self.request.world_configuration.world)
-        if self.request.GET.get("extension", None) is not None:
-            qs = qs.filter(extensions__id=self.request.GET.get("extension"))
-        return qs.distinct()
-
-
-class WeaponListView(MaterialListView):
+class WeaponListView(ListView):
     model = WeaponType
 
     def get_context_data(self, **kwargs):
@@ -22,7 +12,7 @@ class WeaponListView(MaterialListView):
         return context
 
 
-class RiotGearListView(MaterialListView):
+class RiotGearListView(ListView):
     model = RiotGearType
 
     def get_context_data(self, **kwargs):
@@ -31,7 +21,7 @@ class RiotGearListView(MaterialListView):
         return context
 
 
-class ItemListView(MaterialListView):
+class ItemListView(ListView):
     model = ItemType
 
     def get_context_data(self, **kwargs):

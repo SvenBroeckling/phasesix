@@ -16,11 +16,13 @@
     <div class="collapse dont-collapse-md" id="searchable-object-card-list-mobile-nav">
       <ul class="nav nav-pills flex-column" role="tablist">
         {% for category in category_qs %}
-          <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-{{ category.id }}">
-            <a class="nav-link {% if forloop.first %}active{% endif %}"
-               href="#category-{{ category.id }}" aria-controls="home" role="tab"
-               data-bs-toggle="tab">{{ category }}</a>
-          </li>
+          {% if category|has_content_for_extensions:extension_qs %}
+            <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-{{ category.id }}">
+              <a class="nav-link {% if forloop.first %}active{% endif %}"
+                 href="#category-{{ category.id }}" aria-controls="home" role="tab"
+                 data-bs-toggle="tab">{{ category }}</a>
+            </li>
+          {% endif %}
         {% endfor %}
 
         {% if homebrew_qs and homebrew_qs.exists %}

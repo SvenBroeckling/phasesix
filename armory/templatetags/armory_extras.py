@@ -65,12 +65,21 @@ def object_widget(context, obj, character=None, add_button=False):
     )
 
 
-@register.inclusion_tag("portal/_searchable_object_card_list.html")
+@register.inclusion_tag("portal/_searchable_object_card_list.html", takes_context=True)
 def searchable_object_card_list(
-    category_qs, character=None, homebrew_qs=None, extension_qs=None, add_button=False
+    context,
+    category_qs,
+    character=None,
+    homebrew_qs=None,
+    extension_qs=None,
+    add_button=False,
 ):
     if extension_qs is None:
-        extension_qs = Extension.objects.all()
+        wc = context["request"].world_configuration
+        if wc and wc.world:
+            extension_qs = Extension.objects.for_world(wc.world)
+        else:
+            extension_qs = Extension.objects.all()
 
     return {
         "category_qs": category_qs,

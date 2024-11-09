@@ -31,6 +31,7 @@ CURRENCY_FA_ICON_CLASS_CHOICES = (
 )
 COLOR_CLASS_CHOICES = (
     ("text-white", _("White")),
+    ("text-info", _("Info")),
     ("text-success", _("Success")),
     ("text-primary", _("Primary")),
     ("text-secondary", _("Secondary")),

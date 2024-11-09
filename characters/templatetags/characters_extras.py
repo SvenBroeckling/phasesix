@@ -96,6 +96,11 @@ def has_extensions(template, extensions):
 
 
 @register.filter
+def has_content_for_extensions(category, extension_qs):
+    return for_extensions(category.child_item_qs(), extension_qs).exists()
+
+
+@register.filter
 def for_extensions(queryset, extension_queryset):
     try:
         return queryset.filter(
