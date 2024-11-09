@@ -61,7 +61,14 @@ def object_widget(context, obj, character=None, add_button=False):
     if isinstance(obj, PhaseSixTemplate):
         template_string = "{% load rules_extras %}{% template_widget obj %}"
     return Template(template_string).render(
-        Context({"obj": obj, "character": character, "add_button": add_button})
+        Context(
+            {
+                "obj": obj,
+                "character": character,
+                "add_button": add_button,
+                "world_configuration": context["world_configuration"],
+            }
+        )
     )
 
 
@@ -82,6 +89,7 @@ def searchable_object_card_list(
             extension_qs = Extension.objects.all()
 
     return {
+        "world_configuration": context["request"].world_configuration,
         "category_qs": category_qs,
         "extension_qs": extension_qs,
         "character": character,

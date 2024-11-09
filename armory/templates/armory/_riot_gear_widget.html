@@ -38,10 +38,12 @@
         </button>
       </form>
     {% else %}
-      {% for extension in riot_gear.extensions.all %}
-        <span class="mt-2 badge text-muted bg-primary-subtle" title="{{ extension }}">
+      {% if not world_configuration %}
+        {% for extension in riot_gear.extensions.all %}
+          <span class="mt-2 badge text-muted bg-primary-subtle" title="{{ extension }}">
           <i class="m-1 {{ extension.fa_icon_class }}"></i></span>
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
     {% endif %}
 
     {% if user.is_superuser %}

@@ -60,6 +60,14 @@
       <p class="text-muted pt-3"><i>
         {{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>
     {% endif %}
+
+    {% if not world_configuration %}
+      {% for extension in template.extensions.all %}
+        <span class="mt-3 badge text-muted bg-primary-subtle" title="{{ extension }}">
+          <i class="m-1 {{ extension.fa_icon_class }}"></i></span>
+      {% endfor %}
+    {% endif %}
+
     {% if user.is_superuser %}
       <a href="{% url 'admin:rules_template_change' template.id %}"
          style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
