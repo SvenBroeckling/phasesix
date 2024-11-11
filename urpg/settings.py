@@ -223,3 +223,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media_files")
 RULEBOOK_ROOT = os.path.join(BASE_DIR, "rulebook", "static", "rulebook")
 
 LOGIN_REDIRECT_URL = "/"
+
+UNFOLD = {
+    "SITE_TITLE": "Phase Six",
+    "SITE_HEADER": "Phase Six",
+    "SITE_ICON": {
+        "light": "/static/img/phsaesix_logo_2.png",
+        "dark": "/static/img/phasesix_logo_2.png",
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+    },
+}

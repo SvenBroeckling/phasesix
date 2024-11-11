@@ -12,16 +12,11 @@
 
         <div class="d-flex align-items-center justify-content-center col-12 col-md-6 pt-4 pb-0 pt-md-5">
           <div class="text-center fs-5 px-md-5">
+            <img class="w-25 mb-2"
+                 src="{{ brand_logo }}"
+                 alt="{% trans "Logo" %}">
             <h2>{{ brand_name }}</h2>
-            {% blocktrans with t_brand_name=brand_name %}
-              <em>{{ t_brand_name }}</em> is a quick to play roleplaying game rulebook that can be used in
-              any setting.
-              All you need to play is a handful of regular six-sided dice and some paper.
-            {% endblocktrans %}
-            <br><br>
-            {% blocktrans %}
-              Start now by taking a look at the rules or creating a character.
-            {% endblocktrans %}
+            {{ brand_description }}
           </div>
         </div>
 
