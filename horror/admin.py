@@ -1,18 +1,18 @@
 from django.contrib import admin
-from reversion.admin import VersionAdmin
+from unfold.admin import ModelAdmin, TabularInline
 
 from horror.models import QuirkModifier, Quirk, QuirkCategory
 
 
-class QuirkModifierInline(admin.TabularInline):
+class QuirkModifierInline(TabularInline):
     model = QuirkModifier
 
 
-class QuirkAdmin(VersionAdmin):
+class QuirkAdmin(ModelAdmin):
     inlines = [QuirkModifierInline]
-    list_display = ('name_de', 'name_en', 'category')
-    list_filter = 'category',
+    list_display = ("name_de", "name_en", "category")
+    list_filter = ("category",)
 
 
 admin.site.register(Quirk, QuirkAdmin)
-admin.site.register(QuirkCategory, VersionAdmin)
+admin.site.register(QuirkCategory, ModelAdmin)

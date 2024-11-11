@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reversion.admin import VersionAdmin
+from unfold.admin import ModelAdmin, TabularInline
 
 from rules.models import (
     Skill,
@@ -15,7 +15,7 @@ from rules.models import (
 )
 
 
-class ExtensionAdmin(VersionAdmin):
+class ExtensionAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -31,16 +31,16 @@ class ExtensionAdmin(VersionAdmin):
     list_editable = ("ordering", "is_active", "type")
 
 
-class TemplateModifierInline(admin.TabularInline):
+class TemplateModifierInline(TabularInline):
     model = TemplateModifier
 
 
-class TemplateRequirementInline(admin.TabularInline):
+class TemplateRequirementInline(TabularInline):
     model = TemplateRequirement
     fk_name = "template"
 
 
-class TemplateCategoryAdmin(VersionAdmin):
+class TemplateCategoryAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -51,7 +51,7 @@ class TemplateCategoryAdmin(VersionAdmin):
     list_editable = ("bg_color_class", "fg_color_class", "sort_order")
 
 
-class TemplateAdmin(VersionAdmin):
+class TemplateAdmin(ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
     search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     list_display = (
@@ -67,12 +67,12 @@ class TemplateAdmin(VersionAdmin):
     save_as = True
 
 
-class AttributeAdmin(VersionAdmin):
+class AttributeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "kind")
     list_editable = ("kind",)
 
 
-class SkillAdmin(VersionAdmin):
+class SkillAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -83,17 +83,23 @@ class SkillAdmin(VersionAdmin):
     list_editable = ("kind",)
 
 
-class KnowledgeAdmin(VersionAdmin):
+class KnowledgeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "skill")
     list_editable = ("skill",)
 
 
-class LineageAdmin(VersionAdmin):
-    list_display = ("name_de", "name_en", "template_points", "template", "base_max_health")
+class LineageAdmin(ModelAdmin):
+    list_display = (
+        "name_de",
+        "name_en",
+        "template_points",
+        "template",
+        "base_max_health",
+    )
     list_editable = ("base_max_health",)
 
 
-class StatusEffectAdmin(VersionAdmin):
+class StatusEffectAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "fa_icon_class", "is_active")
     list_editable = ("is_active",)
 

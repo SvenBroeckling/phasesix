@@ -1,9 +1,10 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from campaigns.models import Campaign, Roll
 
 
-class RollAdmin(admin.ModelAdmin):
+class RollAdmin(ModelAdmin):
     list_display = (
         "campaign",
         "character",

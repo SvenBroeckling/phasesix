@@ -1,13 +1,14 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin, TabularInline
 
 from characters.models import Character, CharacterTemplate
 
 
-class CharacterTemplateInline(admin.TabularInline):
+class CharacterTemplateInline(TabularInline):
     model = CharacterTemplate
 
 
-class CharacterAdmin(admin.ModelAdmin):
+class CharacterAdmin(ModelAdmin):
     list_display = (
         "name",
         "may_appear_on_start_page",

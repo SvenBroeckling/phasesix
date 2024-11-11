@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reversion.admin import VersionAdmin
+from unfold.admin import ModelAdmin, TabularInline
 
 from magic.models import (
     BaseSpell,
@@ -13,7 +13,7 @@ from magic.models import (
 )
 
 
-class BaseSpellAdmin(VersionAdmin):
+class BaseSpellAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -62,11 +62,11 @@ class BaseSpellAdmin(VersionAdmin):
     )
 
 
-class SpellTemplateModifierInline(admin.TabularInline):
+class SpellTemplateModifierInline(TabularInline):
     model = SpellTemplateModifier
 
 
-class SpellTemplateAdmin(VersionAdmin):
+class SpellTemplateAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "category", "spell_point_cost")
     list_editable = "category", "spell_point_cost"
     list_filter = "spell_point_cost", "category"
@@ -79,27 +79,27 @@ class SpellTemplateAdmin(VersionAdmin):
     )
 
 
-class SpellTypeAdmin(VersionAdmin):
+class SpellTypeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "image", "reference_attribute")
     list_editable = ("reference_attribute",)
 
 
-class BaseSpellInline(admin.TabularInline):
+class BaseSpellInline(TabularInline):
     model = BaseSpell
     fields = ("name_de", "name_en", "arcana_cost", "spell_point_cost")
     show_change_link = True
 
 
-class SpellOriginAdmin(VersionAdmin):
+class SpellOriginAdmin(ModelAdmin):
     list_display = ("name_de", "name_en")
     inlines = [BaseSpellInline]
 
 
 admin.site.register(SpellOrigin, SpellOriginAdmin)
 admin.site.register(BaseSpell, BaseSpellAdmin)
-admin.site.register(SpellTemplateCategory, VersionAdmin)
+admin.site.register(SpellTemplateCategory, ModelAdmin)
 admin.site.register(SpellTemplate, SpellTemplateAdmin)
-admin.site.register(SpellTemplateModifier, VersionAdmin)
-admin.site.register(SpellShape, VersionAdmin)
+admin.site.register(SpellTemplateModifier, ModelAdmin)
+admin.site.register(SpellShape, ModelAdmin)
 admin.site.register(SpellType, SpellTypeAdmin)
-admin.site.register(SpellVariant, VersionAdmin)
+admin.site.register(SpellVariant, ModelAdmin)

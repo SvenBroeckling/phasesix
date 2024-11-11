@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin, TabularInline
 
 from armory.models import (
     WeaponType,
@@ -20,11 +21,11 @@ from armory.models import (
 )
 
 
-class WeaponKeywordInline(admin.TabularInline):
+class WeaponKeywordInline(TabularInline):
     model = WeaponKeyword
 
 
-class WeaponAdmin(admin.ModelAdmin):
+class WeaponAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -64,16 +65,16 @@ class WeaponAdmin(admin.ModelAdmin):
     ]
 
 
-class ProtectionTypeAdmin(admin.ModelAdmin):
+class ProtectionTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering", "color_class", "icon_class")
     list_editable = ("ordering", "color_class", "icon_class")
 
 
-class RiotGearProtectionInline(admin.TabularInline):
+class RiotGearProtectionInline(TabularInline):
     model = RiotGearProtection
 
 
-class RiotGearAdmin(admin.ModelAdmin):
+class RiotGearAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -111,12 +112,12 @@ class RiotGearAdmin(admin.ModelAdmin):
     ]
 
 
-class ItemTypeAdmin(admin.ModelAdmin):
+class ItemTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
 
 
-class ItemAdmin(admin.ModelAdmin):
+class ItemAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -133,25 +134,25 @@ class ItemAdmin(admin.ModelAdmin):
     search_fields = ("name_de", "name_en", "description_de", "description_en")
 
 
-class WeaponTypeAdmin(admin.ModelAdmin):
+class WeaponTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
 
 
-class RiotGearTypeAdmin(admin.ModelAdmin):
+class RiotGearTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
 
 
-class WeaponModificationTypeAdmin(admin.ModelAdmin):
+class WeaponModificationTypeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "unique_equip")
 
 
-class WeapomModificationKeywordInline(admin.TabularInline):
+class WeapomModificationKeywordInline(TabularInline):
     model = WeaponModificationKeyword
 
 
-class WeaponModificationAdmin(admin.ModelAdmin):
+class WeaponModificationAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "type", "extension_string", "price")
     list_filter = ("type",)
     search_fields = "name_de", "name_en"
@@ -174,20 +175,20 @@ class WeaponModificationAdmin(admin.ModelAdmin):
     ]
 
 
-class AttackModeAdmin(admin.ModelAdmin):
+class AttackModeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "dice_bonus")
     list_editable = ("dice_bonus",)
 
 
-class CurrencyMapUnitInline(admin.TabularInline):
+class CurrencyMapUnitInline(TabularInline):
     model = CurrencyMapUnit
 
 
-class CurrencyMapAdmin(admin.ModelAdmin):
+class CurrencyMapAdmin(ModelAdmin):
     inlines = [CurrencyMapUnitInline]
 
 
-class CurrencyMapUnitAdmin(admin.ModelAdmin):
+class CurrencyMapUnitAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -200,7 +201,7 @@ class CurrencyMapUnitAdmin(admin.ModelAdmin):
     list_filter = ("currency_map", "is_common")
 
 
-class KeywordAdmin(admin.ModelAdmin):
+class KeywordAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",

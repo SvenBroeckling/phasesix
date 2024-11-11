@@ -37,6 +37,10 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = reverse_lazy("login")
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

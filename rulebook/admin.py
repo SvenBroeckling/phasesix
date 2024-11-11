@@ -1,10 +1,10 @@
 from django.contrib import admin
-from reversion.admin import VersionAdmin
+from unfold.admin import ModelAdmin
 
 from rulebook.models import Book, Chapter, WorldBook
 
 
-class ChapterAdmin(VersionAdmin):
+class ChapterAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -17,5 +17,5 @@ class ChapterAdmin(VersionAdmin):
 
 
 admin.site.register(WorldBook)
-admin.site.register(Book, VersionAdmin)
+admin.site.register(Book, ModelAdmin)
 admin.site.register(Chapter, ChapterAdmin)

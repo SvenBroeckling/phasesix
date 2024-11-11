@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reversion.admin import VersionAdmin
+from unfold.admin import ModelAdmin, StackedInline, TabularInline
 
 from worlds.models import (
     World,
@@ -14,38 +14,38 @@ from worlds.models import (
 )
 
 
-class WorldSiteConfigurationInline(admin.TabularInline):
+class WorldSiteConfigurationInline(TabularInline):
     model = WorldSiteConfiguration
 
 
-class WorldLeadImageInline(admin.TabularInline):
+class WorldLeadImageInline(TabularInline):
     model = WorldLeadImage
     raw_id_fields = ("character",)
 
 
-class WorldAdmin(VersionAdmin):
+class WorldAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "is_active", "ordering")
     list_filter = ("is_active",)
     search_fields = ("name_de", "name_en")
     inlines = [WorldLeadImageInline, WorldSiteConfigurationInline]
 
 
-class WikiPageImageInline(admin.TabularInline):
+class WikiPageImageInline(TabularInline):
     model = WikiPageImage
     extra = 0
 
 
-class WikiPageGameValuesInline(admin.StackedInline):
+class WikiPageGameValuesInline(StackedInline):
     model = WikiPageGameValues
     extra = 0
 
 
-class WikiPageGameActionInline(admin.StackedInline):
+class WikiPageGameActionInline(StackedInline):
     model = WikiPageGameAction
     extra = 0
 
 
-class WikiPageAdmin(VersionAdmin):
+class WikiPageAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
@@ -74,7 +74,7 @@ class WikiPageAdmin(VersionAdmin):
     inlines = (WikiPageImageInline, WikiPageGameValuesInline, WikiPageGameActionInline)
 
 
-class WikiPageGameValuesAdmin(admin.ModelAdmin):
+class WikiPageGameValuesAdmin(ModelAdmin):
     list_display = (
         "wiki_page",
         "actions",
