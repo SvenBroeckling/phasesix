@@ -70,7 +70,14 @@ class WikiPageAdmin(ModelAdmin):
         "exclude_from_foe_search",
         "wikipagegamevalues__type",
     )
-    search_fields = ("name_de", "world__name_de", "name_en", "world__name_en")
+    search_fields = (
+        "name_de",
+        "world__name_de",
+        "name_en",
+        "world__name_en",
+        "text_de",
+        "text_en",
+    )
     inlines = (WikiPageImageInline, WikiPageGameValuesInline, WikiPageGameActionInline)
 
 
