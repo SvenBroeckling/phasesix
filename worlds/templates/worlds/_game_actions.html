@@ -1,0 +1,11 @@
+{% load campaign_extras %}
+{% load i18n %}
+{% load characters_extras %}
+{% if object.wikipagegameaction_set.exists %}
+  <h5>{{ object.actions_heading|default:"Abilities" }}</h5>
+  {% for action in object.wikipagegameaction_set.all %}
+    <div class="mt-2">
+      <b>{{ action.name }}</b> ({% color_value_span action.skill 5 %}): <i>{{ action.effect }}</i><br>
+    </div>
+  {% endfor %}
+{% endif %}

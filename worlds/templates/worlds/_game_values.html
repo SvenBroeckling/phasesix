@@ -1,82 +1,56 @@
-{% load campaign_extras %}
-{% load rules_extras %}
-{% load i18n characters_extras %}
-<h5>{% trans "Foe" %}</h5>
-<div class="col-12 mt-1">
-  <b>{% trans 'Type' %}</b>:
-  {{ game_values.type }}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Wounds' %}</b>:
-  {% color_value_span game_values.health 6 %}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Protection' %}</b>:
-  {% color_value_span game_values.protection 3 %}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Arcana' %}</b>:
-  {% color_value_span game_values.arcana 6 %}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Actions' %}</b>:
-  {% color_value_span game_values.actions 3 %}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Minimum Roll' %}</b>:
-  {% color_value_span game_values.minimum_roll 5 invert=True %}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Walking Range' %}</b>:
-  {% color_value_span game_values.walking_range 5 %}m
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Perception' %}</b>:
-  {% color_value_span game_values.perception 3 %}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Quickness' %}</b>:
-  {% color_value_span game_values.quickness 3 %}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Resistances' %}</b>:
-  {{ game_values.resistance_string }}
-</div>
-<div class="col-12 mt-1">
-  <b>{% trans 'Weaknesses' %}</b>:
-  {{ game_values.weakness_string }}
-</div>
-{% if game_values.stress_test_succeeded_stress or game_values.stress_test_failed_stress %}
-  <div class="col-12 mt-1">
-    <b>{% trans 'Stress' %}</b>:
-    {% color_value_span game_values.stress_test_succeeded_stress 2 invert=True %}/{% color_value_span game_values.stress_test_failed_stress 5 invert=True %}
+{% load characters_extras %}
+{% load i18n %}
+{% for game_values in object.wikipagegamevalues_set.all %}
+  <div class="mb-3">
+    <h4>{% trans "Foe" %}</h4>
+    <div class="col-12 mt-1">
+      {{ game_values.type }}
+    </div>
+    <div class="col-12 mt-3">
+      <b>{% trans 'Wounds' %}</b>:
+      {% color_value_span game_values.health 6 %}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Protection' %}</b>:
+      {% color_value_span game_values.protection 3 %}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Arcana' %}</b>:
+      {% color_value_span game_values.arcana 6 %}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Actions' %}</b>:
+      {% color_value_span game_values.actions 3 %}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Minimum Roll' %}</b>:
+      {% color_value_span game_values.minimum_roll 5 invert=True %}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Movement' %}</b>:
+      {% color_value_span game_values.walking_range 5 %}m
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Perception' %}</b>:
+      {% color_value_span game_values.perception 3 %}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Quickness' %}</b>:
+      {% color_value_span game_values.quickness 3 %}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Resistances' %}</b>:
+      {{ game_values.resistance_string }}
+    </div>
+    <div class="col-12 mt-1">
+      <b>{% trans 'Weaknesses' %}</b>:
+      {{ game_values.weakness_string }}
+    </div>
+    {% if game_values.stress_test_succeeded_stress or game_values.stress_test_failed_stress %}
+      <div class="col-12 mt-1">
+        <b>{% trans 'Stress' %}</b>:
+        {% color_value_span game_values.stress_test_succeeded_stress 2 invert=True %}/{% color_value_span game_values.stress_test_failed_stress 5 invert=True %}
+      </div>
+    {% endif %}
   </div>
-{% endif %}
-
-{% if object.wikipagegameaction_set.exists %}
-  <div class="mt-3">
-    <h5>{{ object.actions_heading|default:"Actions" }}</h5>
-    {% for action in object.wikipagegameaction_set.all %}
-      <b>{{ action.name }}</b> ({% color_value_span action.skill 5 %}): <i>{{ action.effect }}</i><br>
-    {% endfor %}
-  </div>
-{% endif %}
-
-{% if request.user.is_authenticated and request.user.campaign_set.exists and object.may_be_added_to_campaign %}
-  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split mt-2 w-100"
-          data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="visually-hidden">Toggle Dropdown</span>
-    {% trans "Add to campaign" %}
-  </button>
-  <div class="dropdown-menu">
-    {% user_campaigns request.user as campaigns %}
-    {% for campaign in campaigns %}
-      <a
-              class="dropdown-item action-link add-foe-link"
-              data-message="{% trans "Added" %}"
-              href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
-        {{ campaign }}
-      </a>
-    {% endfor %}
-  </div>
-{% endif %}
+{% endfor %}

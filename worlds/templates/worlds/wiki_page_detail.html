@@ -15,7 +15,6 @@
               }, 1000)
           })
 
-
           const options = {
               keyboard: true,
               size: 'fullscreen'
@@ -86,7 +85,8 @@
       {% endwith %}
 
       <div class="clearfix">
-        {% for game_values in object.wikipagegamevalues_set.all %}
+
+        {% if object.has_values_or_actions %}
           <div class="d-lg-none">
             <button data-bs-toggle="collapse"
                     data-bs-target="#game-values-collapse"
@@ -95,18 +95,22 @@
               <div class="card">
                 <div class="card-body">
                   {% include 'worlds/_game_values.html' %}
+                  {% include 'worlds/_game_actions.html' %}
+                  {% include 'worlds/_add_to_campaign.html' %}
                 </div>
               </div>
             </div>
           </div>
-          <div class="d-none d-lg-block float-end ms-3 mb-2 w-25">
+          <div class="d-none d-lg-block float-end ms-3 mb-2" style="width: 35%;">
             <div class="card">
               <div class="card-body">
                 {% include 'worlds/_game_values.html' %}
+                {% include 'worlds/_game_actions.html' %}
+                {% include 'worlds/_add_to_campaign.html' %}
               </div>
             </div>
           </div>
-        {% endfor %}
+        {% endif %}
 
         {{ object.text|urpg_markup|replace_wiki_tags:object.world }}
       </div>

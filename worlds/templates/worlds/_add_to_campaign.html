@@ -1,0 +1,19 @@
+{% load campaign_extras %}
+{% load i18n %}
+{% if request.user.is_authenticated and request.user.campaign_set.exists and object.may_be_added_to_campaign %}
+  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split mt-3 w-100"
+          data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="visually-hidden">{% trans "Toggle Dropdown" %}</span>
+    {% trans "Campaign" %}
+  </button>
+  <div class="dropdown-menu">
+    {% user_campaigns request.user as campaigns %}
+    {% for campaign in campaigns %}
+      <a class="dropdown-item action-link add-foe-link"
+         data-message="{% trans "Added" %}"
+         href="{% url 'campaigns:xhr_add_foe' pk=campaign.id wiki_page_pk=object.id %}">
+        {{ campaign }}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}

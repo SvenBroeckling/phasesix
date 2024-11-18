@@ -85,11 +85,16 @@ class WikiPageGameValuesAdmin(ModelAdmin):
     list_display = (
         "wiki_page",
         "actions",
+        "minimum_roll",
+        "health",
         "walking_range",
         "stress_test_succeeded_stress",
         "stress_test_failed_stress",
     )
     list_editable = (
+        "actions",
+        "minimum_roll",
+        "health",
         "walking_range",
         "stress_test_succeeded_stress",
         "stress_test_failed_stress",
@@ -97,9 +102,23 @@ class WikiPageGameValuesAdmin(ModelAdmin):
     list_filter = "wiki_page__world", "type"
 
 
+class WikiPageGameActionAdmin(ModelAdmin):
+    list_display = (
+        "wiki_page",
+        "name_de",
+        "name_en",
+        "skill",
+        "entity_work_type",
+    )
+    list_filter = (
+        "wiki_page__world",
+        "entity_work_type",
+    )
+
+
 admin.site.register(World, WorldAdmin)
 admin.site.register(WikiPage, WikiPageAdmin)
-admin.site.register(WikiPageFoeType)
+admin.site.register(WikiPageFoeType, ModelAdmin)
 admin.site.register(WikiPageFoeResistanceOrWeakness)
 admin.site.register(WikiPageGameValues, WikiPageGameValuesAdmin)
-admin.site.register(WikiPageGameAction)
+admin.site.register(WikiPageGameAction, WikiPageGameActionAdmin)

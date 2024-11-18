@@ -282,6 +282,8 @@ class WikiPage(models.Model, metaclass=TransMeta):
         return self.name
 
     def may_be_added_to_campaign(self):
+        if self.exclude_from_foe_search:
+            return False
         if self.wikipagegameaction_set.exists():
             return True
         if self.wikipagegamevalues_set.exists():
@@ -308,6 +310,11 @@ class WikiPage(models.Model, metaclass=TransMeta):
         if self.parent:
             return self.parent.is_subpage_of(parent)
         return False
+
+    def has_values_or_actions(self):
+        return (
+            self.wikipagegamevalues_set.exists() or self.wikipagegameaction_set.exists()
+        )
 
 
 @reversion.register
