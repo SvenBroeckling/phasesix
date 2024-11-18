@@ -100,6 +100,7 @@ class WikiPageGameValuesAdmin(ModelAdmin):
         "stress_test_failed_stress",
     )
     list_filter = "wiki_page__world", "type"
+    search_fields = ("wiki_page__name_de", "wiki_page__name_en")
 
 
 class WikiPageGameActionAdmin(ModelAdmin):
@@ -114,6 +115,7 @@ class WikiPageGameActionAdmin(ModelAdmin):
         "wiki_page__world",
         "entity_work_type",
     )
+    search_fields = ("name_de", "name_en", "wiki_page__name_de", "wiki_page__name_en")
 
 
 admin.site.register(World, WorldAdmin)
