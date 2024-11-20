@@ -19,7 +19,7 @@ class PriestActionAdmin(ModelAdmin):
     inlines = [PriestActionRollInline]
 
 
-admin.site.register(EntityCategory)
+admin.site.register(EntityCategory, ModelAdmin)
 admin.site.register(Entity, EntityAdmin)
 admin.site.register(PriestAction, PriestActionAdmin)
-admin.site.register(PriestActionRoll)
+admin.site.register(PriestActionRoll, ModelAdmin)

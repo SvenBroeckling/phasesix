@@ -17,5 +17,5 @@ class RollAdmin(ModelAdmin):
     list_filter = ("campaign", "character", "header")
 
 
-admin.site.register(Campaign)
+admin.site.register(Campaign, ModelAdmin)
 admin.site.register(Roll, RollAdmin)

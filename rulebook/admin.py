@@ -16,6 +16,6 @@ class ChapterAdmin(ModelAdmin):
     list_editable = ("number", "identifier")
 
 
-admin.site.register(WorldBook)
+admin.site.register(WorldBook, ModelAdmin)
 admin.site.register(Book, ModelAdmin)
 admin.site.register(Chapter, ChapterAdmin)
