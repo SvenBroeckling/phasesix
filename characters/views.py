@@ -366,6 +366,22 @@ class XhrCharacterStatusEffectsChangeView(View):
         return JsonResponse({"status": "forbidden", "value": 0})
 
 
+class CharacterModifyAttributeView(View):
+    def post(self, request, *args, **kwargs):
+        character_attribute = CharacterAttribute.objects.get(
+            id=kwargs["character_attribute_pk"]
+        )
+        if character_attribute.character.may_edit(request.user):
+            if self.kwargs["mode"] == "bonus":
+                character_attribute.modifier += 1
+            elif self.kwargs["mode"] == "malus":
+                character_attribute.modifier -= 1
+            elif self.kwargs["mode"] == "set_zero":
+                character_attribute.modifier = 0
+            character_attribute.save()
+        return JsonResponse({"status": "ok"})
+
+
 class CharacterModifyStressView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])

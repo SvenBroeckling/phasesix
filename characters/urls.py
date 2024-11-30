@@ -72,6 +72,12 @@ urlpatterns = [
         views.XhrDetailFragmentView.as_view(),
         name="xhr_detail_fragment",
     ),
+    # attributes
+    path(
+        "attribute/<int:character_attribute_pk>/<mode>/",
+        views.CharacterModifyAttributeView.as_view(),
+        name="modify_attribute",
+    ),
     # health and protection
     path(
         "health/<int:pk>/<mode>/",

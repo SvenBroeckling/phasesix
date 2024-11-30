@@ -673,6 +673,7 @@ class CharacterAttribute(models.Model):
     objects = CharacterAttributeQuerySet.as_manager()
     character = models.ForeignKey(Character, models.CASCADE)
     attribute = models.ForeignKey("rules.Attribute", on_delete=models.CASCADE)
+    modifier = models.IntegerField(_("Modifier"), default=0)
 
     class Meta:
         ordering = ("attribute__name_de",)
@@ -684,7 +685,7 @@ class CharacterAttribute(models.Model):
         return self.character.may_edit(user)
 
     @property
-    def value(self):
+    def base_value(self):
         s = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.character.charactertemplate_set.all(),
             attribute=self.attribute,
@@ -697,6 +698,10 @@ class CharacterAttribute(models.Model):
             + (s["attribute_modifier__sum"] or 0)
             + (q["attribute_modifier__sum"] or 0)
         )
+
+    @property
+    def value(self):
+        return self.base_value + self.modifier
 
 
 class CharacterSkill(models.Model):

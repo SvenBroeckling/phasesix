@@ -1,21 +1,39 @@
+{% load characters_extras %}
 {% load i18n django_bootstrap5 %}
 
+<div class="row mb-3">
+  <div class="col-12 text-center">
+    <span class="fs-1">
+      {% color_value_span object.base_value 5 %} +
+      {% color_value_span object.modifier 2 %} =
+      {% color_value_span object.value 5 %}
+  </div>
+</div>
+
 {% if may_edit %}
-    <div class="row">
-        <div class="col-12">
-            <button
-                    data-dice-roll="{{ object.value }}d6"
-                    data-dice-header="{{ object.attribute }}"
-                    data-dice-description=""
-                    data-dice-character="{{ object.character.id }}"
-                    class="btn btn-primary btn-sm w-100 dice-roll">
-                <i class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %}</button>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group mb-1 w-100">
+        <a class="btn btn-warning btn-sm action-link"
+           href="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='malus' %}">{% trans 'Minus' %}</a>
+        <a class="btn btn-primary btn-sm action-link"
+           href="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='set_zero' %}">{% trans 'Reset' %}</a>
+        <a class="btn btn-success btn-sm action-link"
+           href="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='bonus' %}">{% trans 'Plus' %}</a>
+      </div>
+      <button
+              data-dice-roll="{{ object.value }}d6"
+              data-dice-header="{{ object.attribute }}"
+              data-dice-description=""
+              data-dice-character="{{ object.character.id }}"
+              class="btn btn-primary btn-sm w-100 dice-roll">
+        <i class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %}</button>
     </div>
+  </div>
 {% endif %}
 
 <div class="row">
-    <div class="col-12 {% if may_edit %}mt-3{% endif %}">
-        {{ object.attribute.description }}
-    </div>
+  <div class="col-12 {% if may_edit %}mt-3{% endif %}">
+    {{ object.attribute.description }}
+  </div>
 </div>
