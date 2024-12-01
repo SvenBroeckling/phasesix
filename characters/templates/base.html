@@ -33,7 +33,12 @@
     <meta property="og:title" content="{{ brand_name }}"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
-    <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
+    {% image_url object as image %}
+    {% if image %}
+      <meta property="og:image" content="https://{{ brand_domain_name }}{{ image }}"/>
+    {% else %}
+      <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
+    {% endif %}
     <meta property="og:description" content="{{ brand_description }}"/>
   {% endblock %}
 
