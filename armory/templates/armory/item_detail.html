@@ -6,12 +6,6 @@
 {% block in_page_title %}{{ object }}{% endblock %}
 {% block in_page_subtitle %}{{ object.type }}{% endblock %}
 
-{% block background %}{% thumbnail object.image '1900' as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
-
-{% block background_copyright %}
-  Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
-{% endblock %}
-
 {% block javascript %}
   <script>
       const options = {

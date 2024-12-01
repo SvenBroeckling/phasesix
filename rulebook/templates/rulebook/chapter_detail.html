@@ -6,12 +6,6 @@
 {% block in_page_title %}{{ object.name }}{% endblock %}
 {% block in_page_subtitle %}{{ object.book.name }}{% endblock %}
 
-{% block background %}{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
-
-{% block background_copyright %}
-  Image by <a href="{{ object.image_copyright_url }}">{{ object.image_copyright }}</a>
-{% endblock %}
-
 {% block bottom_nav %}
   {% bottom_navigation_button "rulebook/_navigation.html" %}
 {% endblock %}

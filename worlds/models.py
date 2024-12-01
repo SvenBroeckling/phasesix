@@ -4,8 +4,10 @@ from django.db import models
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
+from characters.utils import static_thumbnail
 from worlds.unique_slugify import unique_slugify
 
 
@@ -289,6 +291,23 @@ class WikiPage(models.Model, metaclass=TransMeta):
         if self.wikipagegamevalues_set.exists():
             return True
         return False
+
+    def get_image_url(self, geometry="180", crop="center"):
+        image = self.get_image()
+
+        if image:
+            return get_thumbnail(image["image"], geometry, crop=crop, quality=99).url
+
+        return static_thumbnail(
+            f"img/silhouette.png",
+            geometry_string=geometry,
+            crop=crop,
+        )
+
+    def get_backdrop_image_url(self, geometry="1800x500", crop="center"):
+        if self.image:
+            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+        return None
 
     def get_image(self):
         if self.image:

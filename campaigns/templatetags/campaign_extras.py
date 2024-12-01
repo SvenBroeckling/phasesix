@@ -8,16 +8,6 @@ from campaigns.models import Campaign
 register = Library()
 
 
-@register.simple_tag
-def campaign_image_url(campaign, geometry="100x100", crop="center"):
-    return campaign.get_image_url(geometry, crop)
-
-
-@register.simple_tag
-def campaign_backdrop_image_url(campaign, geometry="100x100", crop="center"):
-    return campaign.get_backdrop_image_url(geometry, crop)
-
-
 @register.simple_tag(takes_context=True)
 def campaign_fragment(context, fragment_template):
     context = context.flatten()

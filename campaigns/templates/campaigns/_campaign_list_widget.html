@@ -1,16 +1,15 @@
-{% load characters_extras %}
-{% load campaign_extras %}
+{% load portal_extras %}
 {% load i18n %}
 {% load thumbnail %}
 
 <a href="{{ campaign.get_absolute_url }}">
   <div class="card campaign-list-item h-100">
-    <img src="{{ campaign.get_backdrop_image_url }}" alt="{{ campaign }}" class="card-img-top object-fit-cover"
+    <img src="{% backdrop_image_url campaign %}" alt="{{ campaign }}" class="card-img-top object-fit-cover"
          style="height:120px;">
     <div class="d-flex align-items-center hover-pointer"
          style="position:absolute; left:32px; top:32px">
       <img class="img-fluid rounded float-start me-3 border-3 border-black"
-           src="{% campaign_image_url campaign "120x120" %}"
+           src="{% image_url campaign "120x120" %}"
            alt="{{ character.name }}">
     </div>
     <div class="card-body mt-5">
@@ -18,7 +17,7 @@
     
       <div class="d-flex justify-content-start flex-wrap mt-2">
         {% for c in campaign.character_set.all %}
-          <img src="{% character_image_url c geometry="40x40" crop="center" %}" alt="{{ c }}">
+          <img src="{% image_url c geometry="40x40" crop="center" %}" alt="{{ c }}">
         {% endfor %}
       </div>
     

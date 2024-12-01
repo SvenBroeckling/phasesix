@@ -6,13 +6,15 @@ register = Library()
 
 
 @register.simple_tag
-def profile_image_url(profile, geometry="100x100", crop="center"):
-    return profile.get_image_url(geometry, crop)
+def image_url(obj, geometry="100x100", crop="center"):
+    if hasattr(obj, "get_image_url"):
+        return obj.get_image_url(geometry, crop)
 
 
 @register.simple_tag
-def profile_backdrop_image_url(profile, geometry="100x100", crop="center"):
-    return profile.get_backdrop_image_url(geometry, crop)
+def backdrop_image_url(obj, geometry="100x100", crop="center"):
+    if hasattr(obj, "get_backdrop_image_url"):
+        return obj.get_backdrop_image_url(geometry, crop)
 
 
 @register.filter

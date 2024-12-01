@@ -1,5 +1,5 @@
 {% extends 'campaigns/fragments/fragment_base.html' %}
-{% load characters_extras %}
+{% load portal_extras %}
 {% load i18n thumbnail static %}
 
 {% block fragment %}
@@ -30,7 +30,7 @@
            data-sidebar-title="{{ c }}"
            data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
            class="sidebar-trigger sidebar-spinner mb-2 me-2">
-          <img src="{% character_image_url c geometry="200x200" crop="center" %}" alt="{{ c }}">
+          <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}">
         </a>
       {% endfor %}
 

@@ -1,12 +1,6 @@
 {% extends 'base.html' %}
 {% load static django_bootstrap5 i18n characters_extras rules_extras thumbnail %}
 
-{% block background %}{% thumbnail object.get_image.image '1900' as im %}{{ im.url }}{% endthumbnail %}{% endblock %}
-
-{% block background_copyright %}
-    Image by <a href="{{ object.get_image.copyright_url }}">{{ object.get_image.copyright }}</a>
-{% endblock %}
-
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
 {% block javascript %}

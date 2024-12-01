@@ -10,13 +10,6 @@
   {% bottom_navigation_button "worlds/_navigation.html" %}
 {% endblock %}
 
-{% block background %}{% if world.image %}{% thumbnail world.image "1900" as im %}{{ im.url }}{% endthumbnail %}
-{% else %}{% static 'img/default-background.jpg' %}{% endif %}{% endblock %}
-
-{% block background_copyright %}
-  Image by <a href="{{ world.type.image_copyright_url }}">{{ world.image_copyright }}</a>
-{% endblock %}
-
 {% block title %}{{ world }} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{{ world }}{% endblock %}
 {% block in_page_subtitle %}{% endblock %}

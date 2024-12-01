@@ -179,7 +179,7 @@ class Character(models.Model):
             crop=crop,
         )
 
-    def get_backdrop_image_url(self, geometry="1800", crop="center"):
+    def get_backdrop_image_url(self, geometry="1800x500", crop="center"):
         if self.backdrop_image:
             return get_thumbnail(
                 self.backdrop_image, geometry, crop=crop, quality=99

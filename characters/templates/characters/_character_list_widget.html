@@ -1,21 +1,22 @@
+{% load portal_extras %}
 {% load i18n static thumbnail characters_extras %}
 
 <a class="character-list-widget" href="{{ character.get_absolute_url }}" data-character-id="{{ character.id }}">
-    <div class="card character-list-item h-100">
-        <img src="{{ character.get_backdrop_image_url }}" alt="{{ character }}" class="card-img-top object-fit-cover"
-             style="height:120px;">
-        <div class="d-flex align-items-center hover-pointer"
-             style="position:absolute; left:32px; top:32px">
-            <img class="img-fluid rounded float-start me-3 border-3 border-black"
-                 src="{% character_image_url character "120x120" %}"
-                 alt="{{ character.name }}">
-        </div>
-        <div class="card-body mt-5">
-            <h4>{{ character.name }}</h4>
-            {% template_category_string character 3 %}
-            {% if character.created_by != request.user %}
-                <small>{{ character.created_by|default:"" }}</small>
-            {% endif %}
-        </div>
+  <div class="card character-list-item h-100">
+    <img src="{% backdrop_image_url character %}" alt="{{ character }}" class="card-img-top object-fit-cover"
+         style="height:120px;">
+    <div class="d-flex align-items-center hover-pointer"
+         style="position:absolute; left:32px; top:32px">
+      <img class="img-fluid rounded float-start me-3 border-3 border-black"
+           src="{% image_url character "120x120" %}"
+           alt="{{ character.name }}">
     </div>
+    <div class="card-body mt-5">
+      <h4>{{ character.name }}</h4>
+      {% template_category_string character 3 %}
+      {% if character.created_by != request.user %}
+        <small>{{ character.created_by|default:"" }}</small>
+      {% endif %}
+    </div>
+  </div>
 </a>

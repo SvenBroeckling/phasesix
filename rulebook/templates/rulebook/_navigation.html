@@ -5,28 +5,6 @@
 {% load portal_extras %}
 <div class="list-group mb-3">
 
-  <div class="sidebar-trigger list-group-item p-0 overflow-hidden border-bottom-0"
-       style="background-image: url('{% thumbnail object.image "1900" as im %}{{ im.url }}{% endthumbnail %}');
-               background-repeat: no-repeat;
-               background-position: center;
-               height: 80px;
-               min-height: 100%;
-               background-size: cover;">
-  </div>
-
-  <div class="py-3 navigation-link sidebar-trigger navigation-link pointer list-group-item list-group-item-action d-flex flex-column text-center justify-content-center align-items-center"
-       aria-current="true">
-
-    <div class="mt-1 d-flex align-items-center flex-column justify-content-center">
-      {% if object.first_name or object.last_name %}
-        <span class="fw-bold">{{ object.first_name }} {{ object.last_name }}</span>
-      {% else %}
-        <span class="fw-bold">{{ object|capfirst }}</span>
-      {% endif %}
-      <span class="small opacity-75 lh-sm">{{ object.description|default:"" }}</span>
-    </div>
-  </div>
-
   {% for chapter in chapters %}
     <a class="{% if chapter.id == object.id %}active{% endif %} navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
        href="{% url 'rulebook:detail' pk=chapter.id %}"
