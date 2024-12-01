@@ -109,7 +109,7 @@
       {% block in_page_subtitle %}{% trans "Free online pen and paper rpg" %}{% endblock %}</p>
   </div>
 
-  {% image_url object as image %}
+  {% image_url object "600x600" as image %}
   {% if image %}
     <a class="toggle-lightbox" href="{% image_url object "1400" %}">
       <img class="border border-2 border-black header-image"
