@@ -36,38 +36,48 @@ span.background-image-copyright {
 
 .header-with-overlay .header-image {
   position: absolute;
-  width: 200px;
+  bottom: -50px;
+  left: 20px;
+  width: 150px;
   z-index: 2;
+  border-radius: 15px; /* Adds rounded corners */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6); /* Adds a subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover animation */
 }
 
-@media screen and (min-width: 0px) and (max-width: 576px) {
+.header-with-overlay .header-image:hover {
+  transform: scale(1.1); /* Adds a slight zoom on hover */
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.8); /* Intensifies shadow on hover */
+}
+
+@media screen and (max-width: 576px) {
   .header-with-overlay .header-image {
-    bottom: -90px;
+    bottom: -70px;
     left: 10px;
-    width: 90px;
+    width: 80px;
   }
 }
 
 @media screen and (min-width: 576px) and (max-width: 1000px) {
   .header-with-overlay .header-image {
     bottom: -60px;
-    left: 10px;
-    transform: rotate(-12deg);
+    left: 20px;
+    width: 120px;
   }
 }
 
 @media screen and (min-width: 1000px) and (max-width: 1450px) {
   .header-with-overlay .header-image {
-    bottom: -100px;
-    left: 0;
-    transform: rotate(-12deg);
+    bottom: -80px;
+    left: 20px;
+    width: 130px;
   }
 }
 
 @media screen and (min-width: 1450px) {
   .header-with-overlay .header-image {
-    bottom: -100px;
-    left: -130px;
-    transform: rotate(-12deg);
+    bottom: -80px;
+    left: 20px;
+    width: 150px;
   }
 }
