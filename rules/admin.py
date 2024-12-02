@@ -81,7 +81,7 @@ class SkillAdmin(ModelAdmin):
         "reference_attribute_1",
         "reference_attribute_2",
     )
-    list_editable = ("kind",)
+    list_editable = ("kind", "reference_attribute_1", "reference_attribute_2")
 
 
 class KnowledgeAdmin(ModelAdmin):
