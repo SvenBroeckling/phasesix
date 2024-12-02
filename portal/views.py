@@ -24,16 +24,26 @@ class XhrSearchResultsView(TemplateView):
         search_descriptions = self.request.GET.get("search_descriptions", "off")
         if query:
             if search_descriptions == "on":
-                context["wiki_pages"] = WikiPage.objects.filter(
+                wiki_pages = WikiPage.objects.filter(
                     Q(name_en__icontains=query)
                     | Q(name_de__icontains=query)
                     | Q(text_en__icontains=query)
                     | Q(text_de__icontains=query)
                 )
             else:
-                context["wiki_pages"] = WikiPage.objects.filter(
+                wiki_pages = WikiPage.objects.filter(
                     Q(name_de__icontains=query) | Q(name_en__icontains=query)
                 )
+
+            if (
+                self.request.world_configuration
+                and self.request.world_configuration.world
+            ):
+                wiki_pages = wiki_pages.filter(
+                    Q(world=self.request.world_configuration.world)
+                )
+            context["wiki_pages"] = wiki_pages
+
             if self.request.user.is_authenticated:
                 context["characters"] = Character.objects.filter(
                     Q(created_by=self.request.user) | Q(created_by__isnull=True)
