@@ -1,5 +1,8 @@
 {% load i18n characters_extras rules_extras %}
-<div class="card mb-3 template">
+<div class="card mb-3 template
+  {% if template.is_mastery %}border-danger{% endif %}
+  {% if template.is_magic_template %}border-warning{% endif %}
+  {% if template.has_allows_priest_action %}border-success{% endif %}">
   <div class="card-body position-relative">
     <h4>{{ template }}</h4>
     <span class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ template.cost }}</span>
@@ -8,7 +11,7 @@
       <p>{{ template.rules|urpg_markup }}</p>
     {% endif %}
 
-    {% if template.templatemodifier_set.all|has_allows_priest_action %}
+    {% if template.has_allows_priest_action %}
       <p class="text-success">
         {% trans "Allows to perform the acts of a priest." %}
       </p>
@@ -47,25 +50,29 @@
       {% endfor %}
     {% endwith %}
 
-    {% comment %}
-            {% if template.templaterequirement_set.exists %}
-                <br>
-                {% for req in template.templaterequirement_set.all %}
-                    <span class="text-danger">{% trans 'Requires' %}</span> {{ req.required_template }}<br>
-                {% endfor %}
-            {% endif %}
-            {% endcomment %}
-
     {% if template.quote %}
       <p class="text-muted pt-3"><i>
         {{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>
     {% endif %}
 
-    {% if not world_configuration %}
+    {% if not world_configuration and not character %}
       {% for extension in template.extensions.all %}
         <span class="mt-3 badge text-muted bg-primary-subtle" title="{{ extension }}">
           <i class="m-1 {{ extension.fa_icon_class }}"></i></span>
       {% endfor %}
+    {% endif %}
+
+    {% if character and add_button %}
+      <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="template" %}"
+            class="float-end add-form" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="object_id" value="{{ template.id }}">
+        <button class="btn btn-sm btn-primary m-2"
+                data-danger="{% trans 'Not possible' %}"
+                data-success="{% trans 'Added' %}">
+          {% trans 'Add' %}
+        </button>
+      </form>
     {% endif %}
 
     {% if user.is_superuser %}

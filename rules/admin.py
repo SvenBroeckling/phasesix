@@ -59,10 +59,11 @@ class TemplateAdmin(ModelAdmin):
         "cost",
         "category",
         "has_rules",
+        "is_mastery",
         "show_rules_in_combat",
         "has_quote",
     )
-    list_editable = ("category", "cost", "show_rules_in_combat")
+    list_editable = ("category", "cost", "show_rules_in_combat", "is_mastery")
     list_filter = ("extensions", "category", "extensions")
     save_as = True
 

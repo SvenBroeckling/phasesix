@@ -720,7 +720,7 @@ class CharacterSkill(models.Model):
         return self.character.may_edit(user)
 
     @property
-    def value(self):
+    def base_value(self):
         s = TemplateModifier.objects.filter(
             template__charactertemplate__in=self.character.charactertemplate_set.all(),
             skill=self.skill,
@@ -728,16 +728,17 @@ class CharacterSkill(models.Model):
         q = QuirkModifier.objects.filter(
             quirk__in=self.character.quirks.all(), skill=self.skill
         ).aggregate(Sum("skill_modifier"))
-        dom = self.character.characterattribute_set.get(
+        return (s["skill_modifier__sum"] or 0) + (q["skill_modifier__sum"] or 0)
+
+    @property
+    def modifier(self):
+        return self.character.characterattribute_set.get(
             attribute=self.skill.reference_attribute_1
         ).value
-        sup = self.character.characterattribute_set.get(
-            attribute=self.skill.reference_attribute_2
-        ).value
-        attr_mod = math.ceil((dom + sup) / 2)
-        return (
-            attr_mod + (s["skill_modifier__sum"] or 0) + (q["skill_modifier__sum"] or 0)
-        )
+
+    @property
+    def value(self):
+        return self.base_value + self.modifier
 
 
 class CharacterStatusEffect(models.Model):
@@ -766,6 +767,9 @@ class CharacterTemplate(models.Model):
 
     def __str__(self):
         return self.template.name
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)
 
 
 class CharacterWeapon(models.Model):

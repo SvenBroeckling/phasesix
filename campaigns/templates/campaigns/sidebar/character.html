@@ -100,9 +100,7 @@
 
     {% if object.extension_enabled.magic and object.is_magical %}
       <div class="tab-pane fade" id="cs-magic">
-        <div class="row row-cols-1">
-          {% include 'characters/includes/character_spell_cards.html' %}
-        </div>
+        {% include 'characters/includes/character_spell_cards.html' %}
       </div>
     {% endif %}
 

@@ -48,6 +48,7 @@ from characters.models import (
     CharacterAttribute,
     CharacterNote,
     CharacterRiotGearProtectionUsed,
+    CharacterTemplate,
 )
 from characters.utils import crit_successes
 from horror.models import QuirkCategory, Quirk
@@ -230,6 +231,10 @@ class XhrCharacterAttributeSidebarView(XhrSidebarView):
 
 class XhrCharacterNoteSidebarView(XhrSidebarView):
     model = CharacterNote
+
+
+class XhrCharacterTemplateSidebarView(XhrSidebarView):
+    model = CharacterTemplate
 
 
 class XhrCharacterKnowledgeSidebarView(XhrSidebarView):
@@ -866,13 +871,14 @@ class CreateCharacterConstructedView(DetailView):
         obj.health = obj.max_health
         obj.arcana = obj.max_arcana
         obj.save()
-        mail_admins(
-            "PhaseSix: New Character",
-            render_to_string(
-                "characters/mail/character_created_admin_notification.html",
-                {"character": obj, "base_url": settings.BASE_URL},
-            ),
-        )
+        if not settings.DEBUG:
+            mail_admins(
+                "PhaseSix: New Character",
+                render_to_string(
+                    "characters/mail/character_created_admin_notification.html",
+                    {"character": obj, "base_url": settings.BASE_URL},
+                ),
+            )
         return HttpResponseRedirect(obj.get_absolute_url())
 
 
@@ -931,20 +937,7 @@ class ChangeImageView(View):
 # reputation
 
 
-class XhrReputationView(TemplateView):
-    template_name = "characters/modals/reputation.html"
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        context = super().get_context_data(**kwargs)
-        context["object"] = character
-        context["template_categories"] = TemplateCategory.objects.filter(
-            allow_for_reputation=True
-        )
-        context["character_template_ids"] = [
-            ct.template.id for ct in character.charactertemplate_set.all()
-        ]
-        return context
+class XhrCharacterModifyReputationView(View):
 
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
@@ -957,11 +950,6 @@ class XhrReputationView(TemplateView):
                 character.save()
             except ValueError:
                 pass
-        if operation == "add-template":
-            template = Template.objects.get(id=request.POST.get("template_id"))
-            if not template.cost <= character.reputation_available:
-                return JsonResponse({"status": "notenoughpoints"})
-            character.add_template(template)
         return JsonResponse(
             {"status": "ok", "remaining_reputation": character.reputation_available}
         )
@@ -1320,6 +1308,9 @@ class XhrCharacterObjectsView(TemplateView):
         if self.object_type == "spell":
             self.model = SpellOrigin
             self.child_model = BaseSpell
+        if self.object_type == "template":
+            self.model = TemplateCategory
+            self.child_model = Template
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -1335,6 +1326,9 @@ class XhrCharacterObjectsView(TemplateView):
 
     def filter_spell(self, qs):
         return self.character.unlocked_spell_origins
+
+    def filter_template(self, qs):
+        return qs.filter(allow_for_reputation=True)
 
     def get_homebrew_queryset(self):
         return self.child_model.objects.homebrew(
@@ -1353,14 +1347,23 @@ class XhrCharacterObjectsView(TemplateView):
         if not self.character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
         func = getattr(self, f"add_{self.object_type}")
-        func(request.POST.get("object_id"))
+
+        try:
+            func(request.POST.get("object_id"))
+        except ValueError:
+            return JsonResponse({"status": "error"})
         return JsonResponse({"status": "ok"})
 
     def delete(self, request, *args, **kwargs):
         if not self.character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
         func = getattr(self, f"delete_{self.object_type}")
-        func(request.GET.get("object_id"))
+
+        try:
+            func(request.GET.get("object_id"))
+        except ValueError:
+            return JsonResponse({"status": "error"})
+
         return JsonResponse({"status": "ok"})
 
     def add_weapon(self, pk):
@@ -1405,3 +1408,13 @@ class XhrCharacterObjectsView(TemplateView):
 
     def delete_spell(self, pk):
         CharacterSpell.objects.get(id=pk).delete()
+
+    def add_template(self, pk):
+        template = Template.objects.get(id=pk)
+        if template.cost <= self.character.reputation_available:
+            self.character.add_template(template)
+        else:
+            raise ValueError()
+
+    def delete_template(self, pk):
+        CharacterTemplate.objects.get(id=pk).delete()

@@ -117,8 +117,6 @@
            alt="{% trans "Profile image" %}">
     </a>
   {% endif %}
-
-
 </div>
 </header>
 {% endblock %}
@@ -169,8 +167,6 @@
   <script src="{% static 'vendor/jquery/popper.min.js' %}"></script>
   <script src="{% static 'vendor/fontawesome/js/all.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'vendor/masonry/masonry.pkgd.min.js' %}"></script>
-  <script src="{% static 'vendor/jquery/jquery.matchHeight.js' %}"></script>
   <script src="{% static 'vendor/dropzone/dropzone.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap-slider/bootstrap-slider.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.js' %}"></script>
@@ -190,74 +186,69 @@
 
 <script>
     $(document).ready(function () {
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
                     }
                 }
+                return cookieValue;
             }
-            return cookieValue;
-        }
 
-        var csrftoken = getCookie('csrftoken');
+            var csrftoken = getCookie('csrftoken');
 
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
 
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
                 }
-            }
-        });
-
-        $('table.table-sortable').tablesorter();
-
-        $(".navigation-link").on("click", function (e) {
-            const myModal = bootstrap.Modal.getInstance(document.getElementById('bottom-nav-modal'));
-            if (myModal)
-                myModal.hide();
-        })
-
-        $('.language-link').on('click', function (event) {
-            $.post(
-                $(this).attr('href'),
-                {language: $(this).data('language')},
-                function (data) {
-                    window.location.reload()
-                })
-            event.preventDefault()
-            return false
-        })
-
-        document.querySelectorAll('.toggle-lightbox').forEach((el) => el.addEventListener('click', (e) => {
-            e.preventDefault();
-            const lightbox = new Lightbox(el, {
-                keyboard: true,
-                size: 'fullscreen'
             });
-            lightbox.show();
-        }));
 
-        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {html: true}))
+            $('table.table-sortable').tablesorter();
 
-        // Activate masonry after activating tabs
-        $('body').on('shown.bs.tab', ".nav-item", function (e) {
-            $('div.tab-pane.active .masonry-container').masonry({percentPosition: true})
-        })
-        $(".masonry-container:visible").masonry({percentPosition: true})
-    });
+            $(".navigation-link").on("click", function (e) {
+                const myModal = bootstrap.Modal.getInstance(document.getElementById('bottom-nav-modal'));
+                if (myModal)
+                    myModal.hide();
+            })
+
+            $('.language-link').on('click', function (event) {
+                $.post(
+                    $(this).attr('href'),
+                    {language: $(this).data('language')},
+                    function (data) {
+                        window.location.reload()
+                    })
+                event.preventDefault()
+                return false
+            })
+
+            document.querySelectorAll('.toggle-lightbox').forEach((el) => el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lightbox = new Lightbox(el, {
+                    keyboard: true,
+                    size: 'fullscreen'
+                });
+                lightbox.show();
+            }));
+
+            const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+            const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {html: true}))
+        }
+    )
 </script>
 {% block javascript %}{% endblock %}
 

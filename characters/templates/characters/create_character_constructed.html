@@ -40,7 +40,6 @@
                       }
                       $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
                   })
-                  $(".masonry-container").masonry({percentPosition: true})
               }
 
               if (timer) {
@@ -163,11 +162,11 @@
           {% for tc in template_categories %}
             <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="tc{{ tc.id }}"
                  data-rel="#tab{{ tc.id }}">
-              <div class="row masonry-container" data-masonry='{"percentPosition": true }'>
+              <div class="column-container column-layout-2">
                 {% for i in tc.template_set.all %}
                   {% has_extensions i object.extensions.all as has_extension %}
                   {% if has_extension %}
-                    <div class="col col-md-6 constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
+                    <div class="constructed-template {% if i.id in character_template_ids %}selected{% endif %}"
                          data-template-id="{{ i.id }}"
                          data-add-url="{% url 'characters:xhr_constructed_add_template' pk=object.id %}"
                          data-remove-url="{% url 'characters:xhr_constructed_remove_template' pk=object.id %}"
@@ -183,7 +182,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-8 character-preview d-none">
+    <div class="col-12 col-md-9 character-preview d-none">
       {% detail_fragment 'character' %}
     </div>
   </div>

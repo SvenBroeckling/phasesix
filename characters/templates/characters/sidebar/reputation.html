@@ -1,77 +1,77 @@
 {% load i18n characters_extras django_bootstrap5 %}
 
 <div class="row">
-    <div class="col-12">
-        <p>
-            {% blocktrans %}
-                Reputation represents the characters degree of popularity. Reputation may be
-                spent to get new character templates.
-            {% endblocktrans %}
-        </p>
-        <p>
-            {% blocktrans %}
-                The game master distributes reputation after each game session and for
-                special events.
-            {% endblocktrans %}
-        </p>
-    </div>
+  <div class="col-12">
+    <p>
+      {% blocktrans %}
+        Reputation represents the characters degree of popularity. Reputation may be
+        spent to get new character templates.
+      {% endblocktrans %}
+    </p>
+    <p>
+      {% blocktrans %}
+        The game master distributes reputation after each game session and for
+        special events.
+      {% endblocktrans %}
+    </p>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <div class="card mb-2">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <i class="fas fa-fw fa-graduation-cap text-primary" title="{% trans 'Reputation gained' %}"></i>
-                    {% trans 'Reputation gained' %}
-                    <span class="float-end">{% color_value_span object.reputation_gained 5 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-fw fa-graduation-cap text-success" title="{% trans 'Reputation available' %}"></i>
-                    {% trans 'Reputation available' %}
-                    <span class="float-end">{% color_value_span object.reputation_available 5 %}</span>
-                </li>
-            </ul>
-        </div>
+  <div class="col-12">
+    <div class="card mb-2">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <i class="fas fa-fw fa-graduation-cap text-primary" title="{% trans 'Reputation gained' %}"></i>
+          {% trans 'Reputation gained' %}
+          <span class="float-end">{% color_value_span object.reputation_gained 5 %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-fw fa-graduation-cap text-success" title="{% trans 'Reputation available' %}"></i>
+          {% trans 'Reputation available' %}
+          <span class="float-end">{% color_value_span object.reputation_available 5 %}</span>
+        </li>
+      </ul>
     </div>
+  </div>
 </div>
 
 <div class="row mt-2">
-    <div class="col-12">
-        {% if may_edit %}
-            <form action="{% url 'characters:xhr_reputation' pk=object.id %}" method="post"
-                  class="add-form">
-                {% csrf_token %}
-                <input type="hidden" name="operation" value="add">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Reputation"
-                           aria-label="Reputation" name="reputation">
-                    <button type="submit" name="add_reputation" class="btn btn-primary"
-                            data-success="{% trans 'Added' %}" data-danger="{% trans 'Not possible' %}">
-                        <i class="fa fa-eye text-warning"></i> Hinzufügen
-                    </button>
-                </div>
-            </form>
+  <div class="col-12">
+    {% if may_edit %}
+      <form action="{% url 'characters:xhr_modify_reputation' pk=object.id %}" method="post"
+            class="add-form">
+        {% csrf_token %}
+        <input type="hidden" name="operation" value="add">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Reputation"
+                 aria-label="Reputation" name="reputation">
+          <button type="submit" name="add_reputation" class="btn btn-primary"
+                  data-success="{% trans 'Added' %}" data-danger="{% trans 'Not possible' %}">
+            <i class="fa fa-eye text-warning"></i> {% trans "Add" %}
+          </button>
+        </div>
+      </form>
 
-            {% if character.reputation_available > 0 %}
-                <p>
-                    {% blocktrans %}
-                        You have unspent reputation points. Use them to add new templates to your
-                        character and advance in your professions.
-                    {% endblocktrans %}
-                </p>
-            {% endif %}
+      {% if character.reputation_available > 0 %}
+        <p>
+          {% blocktrans %}
+            You have unspent reputation points. Use them to add new templates to your
+            character and advance in your professions.
+          {% endblocktrans %}
+        </p>
+      {% endif %}
 
-            {% if may_edit %}
-                <button
-                    class="btn btn-success w-100 mt-1 modal-trigger"
-                    data-bs-toggle="modal"
-                    data-bs-target=".page-modal"
-                    data-modal-title="{% trans 'Reputation' %}"
-                    data-url="{% url 'characters:xhr_reputation' object.id %}">
-                        {% trans 'Add character templates' %}
-                </button>
-            {% endif %}
-        {% endif %}
-    </div>
+      {% if may_edit %}
+        <button
+                class="btn btn-success w-100 mt-1 modal-trigger"
+                data-bs-toggle="modal"
+                data-bs-target=".page-modal"
+                data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}"
+                data-modal-title="{% trans 'Reputation' %}">
+          {% trans 'Add character templates' %}
+        </button>
+      {% endif %}
+    {% endif %}
+  </div>
 </div>

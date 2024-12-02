@@ -63,6 +63,11 @@ urlpatterns = [
         name="xhr_characternote_sidebar",
     ),
     path(
+        r"sidebar_charactertemplate/<int:pk>/<str:sidebar_template>/",
+        views.XhrCharacterTemplateSidebarView.as_view(),
+        name="xhr_charactertemplate_sidebar",
+    ),
+    path(
         r"sidebar_priest_action/<int:pk>/<str:sidebar_template>/<int:priest_action_pk>/",
         views.XhrCharacterPriestActionSidebarView.as_view(),
         name="xhr_characterpriestaction_sidebar",
@@ -223,8 +228,8 @@ urlpatterns = [
     # reputation and status
     path(
         "xhr_reputation/<int:pk>",
-        views.XhrReputationView.as_view(),
-        name="xhr_reputation",
+        views.XhrCharacterModifyReputationView.as_view(),
+        name="xhr_modify_reputation",
     ),
     path(
         "xhr_status_effects/change/<int:pk>/<int:status_effect_pk>/<mode>/",

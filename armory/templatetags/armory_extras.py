@@ -59,7 +59,7 @@ def object_widget(context, obj, character=None, add_button=False):
             "{% load rules_extras %}{% basespell_widget obj character=character %}"
         )
     if isinstance(obj, PhaseSixTemplate):
-        template_string = "{% load rules_extras %}{% template_widget obj %}"
+        template_string = "{% load rules_extras %}{% template_widget obj character=character add_button=add_button %}"
     return Template(template_string).render(
         Context(
             {
@@ -67,6 +67,7 @@ def object_widget(context, obj, character=None, add_button=False):
                 "character": character,
                 "add_button": add_button,
                 "world_configuration": context["world_configuration"],
+                "user": context["user"],
             }
         )
     )
@@ -95,6 +96,7 @@ def searchable_object_card_list(
         "character": character,
         "homebrew_qs": homebrew_qs,
         "add_button": add_button,
+        "user": context["user"],
     }
 
 

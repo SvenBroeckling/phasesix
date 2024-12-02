@@ -16,12 +16,7 @@ $(function () {
 
     pageModal.on('shown.bs.modal', function (e) {
         $('.page-modal-container').load(
-            $(this).data('url'),
-            function (response, status, xhr) {
-                setTimeout(function () {
-                    $(".page-modal-container .masonry-container").masonry({percentPosition: true})
-                }, 200)
-            }
+            $(this).data('url')
         )
     })
 

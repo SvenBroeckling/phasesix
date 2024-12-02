@@ -2,36 +2,35 @@
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
-    <div class="row">
-        <div class="col-md-12">
-            {% if may_edit %}
-            <div class="row">
-                <div class="col-12">
-                    <button class="btn btn-primary float-end mb-2 sidebar-trigger" data-sidebar-title="{% trans 'Take a note' %}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">{% trans "Take a note" %}</button>
-                </div>
-            </div>
-            {% endif %}
-            <div class="row masonry-container">
-                {% character_notes character user as notes %}
-                {% for note in notes %}
-                    <div class="col-12 col-md-6">
-                        <div
-                                data-sidebar-title="{% trans 'Note' %}"
-                                data-sidebar-url="{% url 'characters:xhr_characternote_sidebar' pk=note.id sidebar_template="characternote" %}"
-                                class="card mb-3 sidebar-trigger">
-                            <div class="card-header">
-                                {% if note.is_private %}
-                                    <span class="float-end"><i class="fas fa-lock"></i></span>
-                                {% endif %}
-                                {{ note.subject|default:"Note" }}
-                            </div>
-                            <div class="card-body">
-                                {{ note.text|default:""|urpg_markup }}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+  <div class="row">
+    <div class="col-md-12">
+      {% if may_edit %}
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-primary float-end mb-2 sidebar-trigger"
+                    data-sidebar-title="{% trans 'Take a note' %}"
+                    data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">{% trans "Take a note" %}</button>
+          </div>
         </div>
+      {% endif %}
+      <div class="column-container">
+        {% character_notes character user as notes %}
+        {% for note in notes %}
+          <div data-sidebar-title="{% trans 'Note' %}"
+               data-sidebar-url="{% url 'characters:xhr_characternote_sidebar' pk=note.id sidebar_template="characternote" %}"
+               class="card mb-3 sidebar-trigger">
+            <div class="card-header">
+              {% if note.is_private %}
+                <span class="float-end"><i class="fas fa-lock"></i></span>
+              {% endif %}
+              {{ note.subject|default:"Note" }}
+            </div>
+            <div class="card-body">
+              {{ note.text|default:""|urpg_markup }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
+  </div>
 {% endblock %}

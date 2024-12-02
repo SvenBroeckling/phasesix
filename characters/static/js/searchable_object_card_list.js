@@ -16,9 +16,6 @@ $(function () {
                 $(elem.data('rel')).removeClass('d-none')
                 $('li.searchable-object-card-list-nav-item:not(.d-none):first').find('a').tab('show')
             }
-            setTimeout(function () {
-                $(".page-modal-container .masonry-container").masonry({percentPosition: true})
-            }, 200)
         })
     }
 

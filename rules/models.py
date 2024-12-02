@@ -8,6 +8,7 @@ from transmeta import TransMeta
 
 from armory.choices import COLOR_CLASS_CHOICES
 from armory.mixins import SearchableCardListMixin
+from homebrew.models import HomebrewModel, HomebrewQuerySet
 
 CHARACTER_ASPECT_CHOICES = (
     ("base_max_health", _("max health")),
@@ -203,6 +204,7 @@ class Skill(models.Model, metaclass=TransMeta):
     description = models.TextField(_("description"), blank=True, null=True)
     kind = models.CharField(_("kind"), max_length=1, choices=KIND_CHOICES)
     extensions = models.ManyToManyField("rules.Extension")
+    is_magical = models.BooleanField(_("is magical"), default=False)
 
     reference_attribute_1 = models.ForeignKey(
         "rules.Attribute",
@@ -227,10 +229,6 @@ class Skill(models.Model, metaclass=TransMeta):
 
 
 class Knowledge(models.Model, metaclass=TransMeta):
-    """
-    A URPG skill
-    """
-
     objects = ExtensionSelectQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=120)
@@ -310,12 +308,16 @@ class TemplateCategory(SearchableCardListMixin, models.Model, metaclass=TransMet
         return ""
 
 
-class Template(models.Model, metaclass=TransMeta):
+class TemplateQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
+    pass
+
+
+class Template(HomebrewModel, metaclass=TransMeta):
     """
     A character creation template
     """
 
-    objects = ExtensionSelectQuerySet.as_manager()
+    objects = TemplateQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=120)
     extensions = models.ManyToManyField("rules.Extension")
@@ -342,6 +344,7 @@ class Template(models.Model, metaclass=TransMeta):
     )
 
     cost = models.IntegerField(verbose_name=_("cost"), default=1)
+    is_mastery = models.BooleanField(_("is mastery"), default=False)
 
     class Meta:
         translate = ("name", "rules")
@@ -363,6 +366,18 @@ class Template(models.Model, metaclass=TransMeta):
         if self.rules:
             return True
         return False
+
+    @property
+    def has_allows_priest_action(self):
+        return self.templatemodifier_set.filter(allows_priest_actions=True).exists()
+
+    @property
+    def is_magic_template(self):
+        return self.templatemodifier_set.filter(
+            Q(skill__is_magical=True)
+            | Q(unlocks_spell_origin__isnull=False)
+            | Q(aspect__in=["base_max_arcana", "base_spell_points"])
+        ).exists()
 
 
 class TemplateModifier(models.Model, metaclass=TransMeta):

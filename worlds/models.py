@@ -149,6 +149,21 @@ class World(models.Model, metaclass=TransMeta):
         """Used to unify the navigation"""
         return True
 
+    def get_backdrop_image_url(self, geometry="180", crop="center"):
+        return self.get_image_url(geometry=geometry, crop=crop)
+
+    def get_image_url(self, geometry="180", crop="center"):
+        image = self.get_image()
+
+        if image:
+            return get_thumbnail(image["image"], geometry, crop=crop, quality=99).url
+
+        return static_thumbnail(
+            f"img/silhouette.png",
+            geometry_string=geometry,
+            crop=crop,
+        )
+
     def get_image(self):
         if self.image:
             return {

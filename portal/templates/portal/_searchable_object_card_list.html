@@ -43,9 +43,9 @@
              data-rel="#nav-item-{{ category.id }}"
              class="tab-pane searchable-object-card-list-tab-pane {% if forloop.first %}active{% endif %}"
              id="category-{{ category.id }}">
-          <div class="row masonry-container">
+          <div class="column-container column-layout-2">
             {% for object in category.child_item_qs.distinct|for_extensions:extension_qs %}
-              <div class="col-12 col-md-6 searchable-object-card">
+              <div class="searchable-object-card">
                 {% object_widget object character=character add_button=add_button %}
               </div>
             {% endfor %}
@@ -58,9 +58,9 @@
              data-rel="#nav-item-homebrew"
              class="tab-pane searchable-object-card-list-tab-pane"
              id="category-homebrew">
-          <div class="row masonry-container">
+          <div class="column-container column-layout-2">
             {% for object in homebrew_qs %}
-              <div class="col-12 col-sm-6 searchable-object-card">
+              <div class="searchable-object-card">
                 {% object_widget object character=character add_button=add_button %}
               </div>
             {% endfor %}

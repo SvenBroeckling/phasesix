@@ -1,0 +1,69 @@
+{% load rules_extras %}
+{% load i18n characters_extras django_bootstrap5 %}
+
+{% if may_edit %}
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="template" %}?object_id={{ object.id }}"
+           data-method="DELETE"
+           class="btn btn-sm btn-danger action-link close-sidebar mt-1">
+          <i class="fas fa-fw fa-trash" title="{% trans 'Forget' %}"></i>{% trans 'Remove' %}
+        </a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<div class="row mt-4 mb-4">
+  <div class="col-12">
+    {% if object.template.rules %}
+      <p>{{ object.template.rules|urpg_markup }}</p>
+    {% endif %}
+
+    {% if object.template.has_allows_priest_action %}
+      <p class="text-success">
+        {% trans "Allows to perform the acts of a priest." %}
+      </p>
+    {% endif %}
+
+    {% with all_modifiers=object.template.templatemodifier_set.all %}
+      {% for mod in all_modifiers %}
+        {% if mod.aspect %}
+          <i class="fas fa-sun fa-fw" title="{% trans 'Aspect' %}"></i> {{ mod.get_aspect_display|capfirst }}
+          {% color_value_span mod.aspect_modifier 3 algebraic_sign=True %}<br>
+        {% endif %}
+      {% endfor %}
+      {% for mod in all_modifiers %}
+        {% if mod.attribute %}
+          <i class="fas fa-asterisk fa-fw" title="{% trans 'Attribute' %}"></i> {{ mod.attribute.name }}
+          {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
+        {% endif %}
+      {% endfor %}
+      {% for mod in all_modifiers %}
+        {% if mod.skill %}
+          <i class="fas fa-hand-scissors fa-fw" title="{% trans 'Skill' %}"></i> {{ mod.skill }}
+          {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
+        {% endif %}
+      {% endfor %}
+      {% for mod in all_modifiers %}
+        {% if mod.knowledge %}
+          <i class="fas fa-book fa-fw" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }}
+          {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
+        {% endif %}
+      {% endfor %}
+      {% for mod in all_modifiers %}
+        {% if mod.unlocks_spell_origin %}
+          <i class="gi-lorc-fairy-wand" title="{% trans 'Magic Origin' %}"></i> {% trans 'Magic Origin' %}:
+          <span class="text-warning">{{ mod.unlocks_spell_origin }}</span><br>
+        {% endif %}
+      {% endfor %}
+    {% endwith %}
+
+    {% if object.template.quote %}
+      <p class="text-muted pt-3"><i>
+        {{ object.template.quote }}{% if object.template.quote_author %}<br>-
+          {{ object.template.quote_author }}{% endif %}</i></p>
+    {% endif %}
+  </div>
+</div>

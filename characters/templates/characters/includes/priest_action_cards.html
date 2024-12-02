@@ -3,40 +3,38 @@
 {% load rules_extras %}
 {% load i18n %}
 {% for s in object.priest_actions.all %}
-    <div class="col col-sm-6 col-xl-4 mb-2">
-        <div
-            data-sidebar-title="{{ s.name }}"
-            data-sidebar-url="{% url 'characters:xhr_characterpriestaction_sidebar' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
-            class="card mb-2 sidebar-trigger">
-            <div class="card-header">
+  <div data-sidebar-title="{{ s.name }}"
+       data-sidebar-url="{% url 'characters:xhr_characterpriestaction_sidebar' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
+       class="card mb-3 sidebar-trigger">
+    <div class="card-header">
                 <span class="badge bg-dark float-end ms-2" title="{% trans 'Grace cost' %}">
                     {% if s.grace_cost > 0 %}
-                        {{ s.grace_cost }} {% trans 'Grace' %}
+                      {{ s.grace_cost }} {% trans 'Grace' %}
                     {% else %}
-                        {% trans 'Special' %}
+                      {% trans 'Special' %}
                     {% endif %}
                 </span>
-                {{ s }}
-            </div>
-            <div class="card-body">
-                <p>
-                    {{ s.rules|urpg_markup }}
-                </p>
-                {% if user.is_superuser %}
-                    <a href="{% url 'admin:pantheon_priestaction_change' s.id %}" style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-                {% endif %}
-            </div>
-            <ul class="list-group list-group-flush">
-                {% entity_work object s as entity_work_list %}
-                {% for ew in entity_work_list %}
-                    <li class="list-group-item p-0 d-flex flex-row">
-                        <div class="p-2">
-                            <strong>{{ ew.name }}</strong><br>
-                            <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+      {{ s }}
     </div>
+    <div class="card-body">
+      <p>
+        {{ s.rules|urpg_markup }}
+      </p>
+      {% if user.is_superuser %}
+        <a href="{% url 'admin:pantheon_priestaction_change' s.id %}"
+           style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+      {% endif %}
+    </div>
+    <ul class="list-group list-group-flush">
+      {% entity_work object s as entity_work_list %}
+      {% for ew in entity_work_list %}
+        <li class="list-group-item p-0 d-flex flex-row">
+          <div class="p-2">
+            <strong>{{ ew.name }}</strong><br>
+            <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endfor %}

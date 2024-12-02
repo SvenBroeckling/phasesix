@@ -15,8 +15,10 @@ register = Library()
 
 
 @register.inclusion_tag("rules/_template_widget.html", takes_context=True)
-def template_widget(context, template):
-    context.update({"template": template})
+def template_widget(context, template, character=None, add_button=False):
+    context.update(
+        {"template": template, "character": character, "add_button": add_button}
+    )
     return context
 
 
@@ -180,11 +182,6 @@ def latest_user_image(user):
         )
     except Character.DoesNotExist:
         return None
-
-
-@register.filter
-def has_allows_priest_action(qs):
-    return qs.filter(allows_priest_actions=True).exists()
 
 
 @register.filter

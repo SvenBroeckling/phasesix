@@ -1,11 +1,11 @@
 {% load i18n thumbnail static armory_extras rules_extras %}
 
 {% block fragment %}
-  <div class="row masonry-container">
+  <div class="column-container column-layout-3">
 
     {% if may_edit %}
-      <div class="col-12 col-md-4 pb-3">
-        <div class="card h-100 pointer" data-bs-toggle="dropdown">
+      <div class="pb-3">
+        <div class="card pointer" data-bs-toggle="dropdown">
           <div class="card-body d-flex flex-column align-items-center justify-content-center">
             <i class="fas fa-plus fa-2x"></i><br>
             <div class="dropdown mt-2">
@@ -51,24 +51,16 @@
     {% endif %}
 
     {% for item in object.homebrew_armory_item_set.all %}
-      <div class="col-12 col-md-4">
-        {% item_widget item %}
-      </div>
+      {% item_widget item %}
     {% endfor %}
     {% for weapon in object.homebrew_armory_weapon_set.all %}
-      <div class="col-12 col-md-4">
-        {% weapon_widget weapon %}
-      </div>
+      {% weapon_widget weapon %}
     {% endfor %}
     {% for riot_gear in object.homebrew_armory_riot_gear_set.all %}
-      <div class="col-12 col-md-4">
-        {% riot_gear_widget riot_gear %}
-      </div>
+      {% riot_gear_widget riot_gear %}
     {% endfor %}
     {% for spell in object.homebrew_magic_basespell_set.all %}
-      <div class="col-12 col-md-4">
-        {% basespell_widget spell %}
-      </div>
+      {% basespell_widget spell %}
     {% endfor %}
   </div>
 {% endblock %}
