@@ -502,7 +502,7 @@ class WikiPageGameAction(models.Model, metaclass=TransMeta):
     wiki_page = models.ForeignKey(
         "worlds.WikiPage",
         verbose_name=_("wiki page"),
-        help_text=_("The wiki page the values belong to."),
+        help_text=_("The wiki page the values belongs to."),
         on_delete=models.CASCADE,
     )
 
@@ -524,3 +524,22 @@ class WikiPageGameAction(models.Model, metaclass=TransMeta):
         translate = ("name", "effect")
         verbose_name = _("wiki page game action")
         verbose_name_plural = _("wiki page game actions")
+
+
+class WikiPageEmbedding(models.Model):
+    wiki_page = models.ForeignKey(
+        "worlds.WikiPage",
+        verbose_name=_("wiki page"),
+        help_text=_("The wiki page the embedding belongs to."),
+        on_delete=models.CASCADE,
+    )
+
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+
+    character = models.ForeignKey(
+        "characters.Character", blank=True, null=True, on_delete=models.SET_NULL
+    )
+    spell_origin = models.ForeignKey(
+        "magic.SpellOrigin", blank=True, null=True, on_delete=models.SET_NULL
+    )

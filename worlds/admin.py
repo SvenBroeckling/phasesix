@@ -11,6 +11,7 @@ from worlds.models import (
     WikiPageGameValues,
     WikiPageGameAction,
     WorldLeadImage,
+    WikiPageEmbedding,
 )
 
 
@@ -42,6 +43,12 @@ class WikiPageGameValuesInline(StackedInline):
 
 class WikiPageGameActionInline(StackedInline):
     model = WikiPageGameAction
+    extra = 0
+
+
+class WikiPageEmbeddingInline(TabularInline):
+    model = WikiPageEmbedding
+    raw_id_fields = ("character",)
     extra = 0
 
 
@@ -78,7 +85,12 @@ class WikiPageAdmin(ModelAdmin):
         "text_de",
         "text_en",
     )
-    inlines = (WikiPageImageInline, WikiPageGameValuesInline, WikiPageGameActionInline)
+    inlines = (
+        WikiPageImageInline,
+        WikiPageGameValuesInline,
+        WikiPageGameActionInline,
+        WikiPageEmbeddingInline,
+    )
 
 
 class WikiPageGameValuesAdmin(ModelAdmin):

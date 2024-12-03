@@ -160,9 +160,10 @@ class XhrSidebarView(DetailView):
                         is_active=True
                     ).order_by("ordering"),
                     "character_form": CharacterImageForm(instance=self.object),
-                    "protection_types": ProtectionType.objects.all(),
                 }
             )
+        elif sidebar_template == "protection":
+            context["protection_types"] = ProtectionType.objects.all()
         elif sidebar_template == "knowledge":
             context["knowledge"] = Knowledge.objects.get(id=self.kwargs["knowledge_pk"])
         elif sidebar_template == "priest_action":

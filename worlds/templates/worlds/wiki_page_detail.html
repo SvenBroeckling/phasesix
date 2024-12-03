@@ -99,6 +99,30 @@
         {{ object.text|urpg_markup|replace_wiki_tags:object.world }}
       </div>
 
+      {% if object.wikipageembedding_set.exists %}
+        {% for embedding in object.wikipageembedding_set.all %}
+
+          {% if embedding.spell_origin %}
+            <h2 class="mt-5">{% trans "Spells" %}</h2>
+            <div class="column-container column-layout-2 mt-4">
+              {% for spell in embedding.spell_origin.basespell_set.all %}
+                {% basespell_widget spell %}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if embedding.character %}
+            <h2 class="mt-5">{% trans "Character Sheet" %}</h2>
+            <div class="column-container column-layout-2 mt-4">
+              <div>
+                {% include 'characters/_character_list_widget.html' with character=embedding.character %}
+              </div>
+            </div>
+          {% endif %}
+
+        {% endfor %}
+      {% endif %}
+
       <div class="column-container column-layout-2 mt-4">
         {% for page in object.wikipage_set.all %}
           <div class="card pointer my-3">
