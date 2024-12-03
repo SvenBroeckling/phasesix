@@ -26,6 +26,18 @@
 {% endblock %}
 
 {% block content %}
+  <div id="dice-log-toggle"
+       hx-get="{% url 'characters:xhr_dice_log' pk=object.id %}"
+       hx-target="#dice-log-entries"
+       onclick="toggleDiceLog()">
+    <i class="gi gi-delapouite-dice-six-faces-five me-2"></i>
+    {% trans "Dice Log" %}
+  </div>
+
+  <div id="dice-log">
+    <div id="dice-log-entries"></div>
+  </div>
+
   <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
   <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 

@@ -59,3 +59,4 @@ $(function () {
     $('[data-bs-toggle="popover"]').popover()
     $('.template').tilt({glare: false, perspective: 1800})
 })
+

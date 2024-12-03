@@ -101,6 +101,15 @@ class CampaignDetailView(DetailView):
         return context
 
 
+class XhrDiceLogView(ListView):
+    template_name = "campaigns/dice_log.html"
+    paginate_by = 8
+
+    def get_queryset(self):
+        campaign = Campaign.objects.get(id=self.kwargs["pk"])
+        return Roll.objects.filter(campaign=campaign)
+
+
 class XhrCampaignFragmentView(DetailView):
     model = Campaign
 

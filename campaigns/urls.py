@@ -33,6 +33,7 @@ urlpatterns = [
         views.SaveSettingsView.as_view(),
         name="save_settings",
     ),
+    path("dice_log/<int:pk>", views.XhrDiceLogView.as_view(), name="xhr_dice_log"),
     path(
         "xhr_campaign_fragment/<int:pk>/<fragment_template>",
         views.XhrCampaignFragmentView.as_view(),

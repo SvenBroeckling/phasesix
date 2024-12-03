@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import TemplateView, DetailView, FormView
+from django.views.generic import TemplateView, DetailView, FormView, ListView
 from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
 
@@ -29,7 +29,7 @@ from armory.models import (
     ProtectionType,
 )
 from campaigns.consumers import roll_and_send
-from campaigns.models import Campaign
+from campaigns.models import Campaign, Roll
 from characters.forms import (
     CharacterImageForm,
     CreateCharacterDataForm,
@@ -77,6 +77,17 @@ class CharacterDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["may_edit"] = self.object.may_edit(self.request.user)
         return context
+
+
+class XhrDiceLogView(ListView):
+    template_name = "characters/dice_log.html"
+    paginate_by = 8
+
+    def get_queryset(self):
+        character = Character.objects.get(id=self.kwargs["pk"])
+        if character.campaign:
+            return Roll.objects.filter(campaign=character.campaign)
+        return Roll.objects.filter(character=character)
 
 
 class XhrDeleteCharacterView(View):

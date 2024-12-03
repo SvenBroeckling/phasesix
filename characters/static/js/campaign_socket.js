@@ -1,4 +1,4 @@
-$(function(){
+$(function () {
     let socket = new ReconnectingWebSocket($('#room-url').text(), null, {reconnectInterval: 3000})
     let indicator = $('#dice-ws-connected')
 
@@ -23,18 +23,30 @@ $(function(){
         const data = JSON.parse(e.data)
         const audioElement = document.getElementById('room-audio')
 
-        Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT)
-        Toast.setMaxCount(7)
-        Toast.create({
-            title: data.message.character,
-            message: `${data.message.header} <small class="text-muted">${data.message.description}</small><br>${data.message.result_html}`,
-            status: TOAST_STATUS.SUCCESS,
-            timeout: 10000,
-        })
+        let diceLogVisible = document.querySelector("#dice-log.show")
+
+        if (!diceLogVisible) {
+            Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT)
+            Toast.setMaxCount(5)
+            Toast.create({
+                title: data.message.character,
+                message: `${data.message.header} <small class="text-muted">${data.message.description}</small><br>${data.message.result_html}`,
+                status: TOAST_STATUS.SUCCESS,
+                timeout: 5000,
+            })
+        }
+
+        let diceLogEntries = document.querySelector("#dice-log-entries")
+        if (diceLogEntries) {
+            let html = `${data.message.character} - ${data.message.header} ${data.message.result_html}<hr>`
+            diceLogEntries.innerHTML = html + diceLogEntries.innerHTML;
+            diceLogEntries.scrollTop = 0
+        }
+
         audioElement.play()
     }
 
-    $('body').on('click', '.dice-roll', function(e) {
+    $('body').on('click', '.dice-roll', function (e) {
         let elem = $(this)
         let data = {
             roll: elem.data('dice-roll'),
@@ -47,3 +59,9 @@ $(function(){
         socket.send(JSON.stringify(data))
     })
 })
+
+function toggleDiceLog() {
+    const diceLog = document.getElementById('dice-log');
+    if (diceLog) diceLog.classList.toggle('show');
+}
+

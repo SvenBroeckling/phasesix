@@ -1,0 +1,8 @@
+{% load rules_extras %}
+{% load i18n %}
+{% for roll in page_obj %}
+  {% trans 'GM' as character_default %}
+  {{ roll.character|default:character_default }} - {{ roll.header }}
+  {% include "campaigns/_dice_socket_results.html" with roll=roll %}
+  <hr>
+{% endfor %}

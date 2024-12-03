@@ -10,6 +10,7 @@ urlpatterns = [
     path(
         "xhr_delete/<int:pk>", views.XhrDeleteCharacterView.as_view(), name="xhr_delete"
     ),
+    path("dice_log/<int:pk>", views.XhrDiceLogView.as_view(), name="xhr_dice_log"),
     # Sidebars and Fragments
     path(
         r"sidebar/<int:pk>/<str:sidebar_template>/",
