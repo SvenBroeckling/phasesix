@@ -2,18 +2,20 @@
 {% if roll %}
   <div class="d-flex flex-column align-items-center my-2 mx-1">
     {% with character=roll.character %}
-      {% if character.image %}
-        {% thumbnail character.image "400x400" crop="center" as im %}
+      <a href="{% url "characters:detail" pk=character.id %}" class="no-decoration no-link-colors">
+        {% if character.image %}
+          {% thumbnail character.image "400x400" crop="center" as im %}
+            <img class="img-fluid rounded float-start me-3"
+                 src="{{ im.url }}"
+                 alt="{{ character.name }}">
+          {% endthumbnail %}
+        {% else %}
           <img class="img-fluid rounded float-start me-3"
-               src="{{ im.url }}"
+               height="400" width="400"
+               src="{% static 'img/silhuette.png' %}"
                alt="{{ character.name }}">
-        {% endthumbnail %}
-      {% else %}
-        <img class="img-fluid rounded float-start me-3"
-             height="400" width="400"
-             src="{% static 'img/silhuette.png' %}"
-             alt="{{ character.name }}">
-      {% endif %}
+        {% endif %}
+      </a>
     {% endwith %}
     <div class="fs-3">{{ roll_text }}</div>
     <div class="fs-4 mt-2">{{ roll.header }}</div>

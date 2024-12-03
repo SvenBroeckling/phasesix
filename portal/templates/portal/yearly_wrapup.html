@@ -1,10 +1,21 @@
 {% extends "base.html" %}
+{% load portal_extras %}
 {% load characters_extras %}
 {% load i18n static thumbnail %}
 
 
 {% block title %}{% blocktrans with t_year=year %}{{ t_year }} in Review{% endblocktrans %}
   - {{ block.super }}{% endblock %}
+
+{% block opengraph %}
+  <meta property="og:title" content="{% blocktrans with t_year=year %}{{ t_year }} in Review{% endblocktrans %}"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
+  <meta property="og:image" content="https://{{ brand_domain_name }}{{ header_image }}"/>
+  <meta property="og:description"
+        content="
+                {% blocktrans with t_year=year t_user=wrapup_user.profile|capfirst|genitive_ending t_brand_name=brand_name %}{{ t_user }} year {{ t_year }} with {{ t_brand_name }} in review. Most played characters, best and worst rolls, and everything else!{% endblocktrans %}"/>
+{% endblock %}
 
 {% block header %}{% endblock %}
 
@@ -22,18 +33,20 @@
         <div class="d-flex justify-content-center flex-wrap">
           {% for mp in most_played %}
             <div class="text-center my-2 mx-1">
-              {% if mp.0.image %}
-                {% thumbnail mp.0.image "400x400" crop="center" as im %}
+              <a href="{% url "characters:detail" pk=mp.0.id %}" class="no-decoration no-link-colors">
+                {% if mp.0.image %}
+                  {% thumbnail mp.0.image "400x400" crop="center" as im %}
+                    <img class="img-fluid rounded float-start me-3"
+                         src="{{ im.url }}"
+                         alt="{{ mp.0.name }}">
+                  {% endthumbnail %}
+                {% else %}
                   <img class="img-fluid rounded float-start me-3"
-                       src="{{ im.url }}"
+                       height="400" width="400"
+                       src="{% static 'img/silhuette.png' %}"
                        alt="{{ mp.0.name }}">
-                {% endthumbnail %}
-              {% else %}
-                <img class="img-fluid rounded float-start me-3"
-                     height="400" width="400"
-                     src="{% static 'img/silhuette.png' %}"
-                     alt="{{ mp.0.name }}">
-              {% endif %}
+                {% endif %}
+              </a>
               <div class="fs-3">{{ forloop.counter }}. {{ mp.0.name }}</div>
               <div class="fs-5">
                 {% blocktrans with t_rolls=mp.1 t_days=mp.2 %}

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 16:50+0000\n"
-"PO-Revision-Date: 2024-12-03 17:51+0100\n"
+"POT-Creation-Date: 2024-12-03 17:36+0000\n"
+"PO-Revision-Date: 2024-12-03 18:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -528,14 +528,14 @@ msgid "Add"
 msgstr "Hinzufügen"
 
 #: armory/templates/armory/_navigation.html:24
-#: characters/templates/_main_nav.html:50 characters/templates/base.html:151
+#: characters/templates/_main_nav.html:50 characters/templates/base.html:152
 msgid "Material"
 msgstr "Material"
 
 #: armory/templates/armory/_navigation.html:33
 #: armory/templates/armory/material_overview.html:12
 #: campaigns/templates/campaigns/_navigation.html:61
-#: characters/templates/base.html:144
+#: characters/templates/base.html:145
 #: worlds/templates/worlds/wiki_page_with_game_values.html:5
 #: worlds/templates/worlds/wiki_page_with_game_values.html:7
 msgid "Foes"
@@ -543,7 +543,7 @@ msgstr "Gegner"
 
 #: armory/templates/armory/_navigation.html:42
 #: armory/templates/armory/material_overview.html:23
-#: characters/templates/base.html:153
+#: characters/templates/base.html:154
 #: rules/templates/rules/templatecategory_list.html:8
 msgid "Templates"
 msgstr "Schablonen"
@@ -551,7 +551,7 @@ msgstr "Schablonen"
 #: armory/templates/armory/_navigation.html:51
 #: armory/templates/armory/itemtype_list.html:6
 #: armory/templates/armory/material_overview.html:34
-#: characters/templates/base.html:155
+#: characters/templates/base.html:156
 #: characters/templates/characters/fragments/gear.html:73
 msgid "Items"
 msgstr "Gegenstände"
@@ -560,7 +560,7 @@ msgstr "Gegenstände"
 #: armory/templates/armory/material_overview.html:45
 #: armory/templates/armory/weapontype_list.html:6
 #: armory/templates/armory/weapontype_list.html:7
-#: characters/templates/base.html:154
+#: characters/templates/base.html:155
 #: characters/templates/characters/fragments/gear.html:47
 #: gmtools/templates/gmtools/roll_statistics.html:21
 msgid "Weapons"
@@ -570,14 +570,14 @@ msgstr "Waffen"
 #: armory/templates/armory/material_overview.html:56
 #: armory/templates/armory/riotgeartype_list.html:6
 #: armory/templates/armory/riotgeartype_list.html:7
-#: characters/templates/base.html:157
+#: characters/templates/base.html:158
 #: characters/templates/characters/pdf/boxes/gear/armour.html:5
 msgid "Armour"
 msgstr "Rüstung"
 
 #: armory/templates/armory/_navigation.html:78
 #: armory/templates/armory/material_overview.html:67
-#: characters/templates/base.html:156
+#: characters/templates/base.html:157
 #: gmtools/templates/gmtools/roll_statistics.html:27
 msgid "Spells"
 msgstr "Zauber"
@@ -1632,7 +1632,7 @@ msgstr "Home"
 msgid "Worlds"
 msgstr "Welten"
 
-#: characters/templates/_main_nav.html:41 characters/templates/base.html:145
+#: characters/templates/_main_nav.html:41 characters/templates/base.html:146
 #: homebrew/forms.py:102
 msgid "Rules"
 msgstr "Regeln"
@@ -1646,35 +1646,35 @@ msgstr "Forum"
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:67
+#: characters/templates/base.html:68
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: characters/templates/base.html:84
+#: characters/templates/base.html:85
 msgid "Loading"
 msgstr "Lade"
 
-#: characters/templates/base.html:89
+#: characters/templates/base.html:90
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/base.html:109
+#: characters/templates/base.html:110
 msgid "Free online pen and paper rpg"
 msgstr "Freies online Pen'n'Paper Rollenspiel"
 
-#: characters/templates/base.html:117
+#: characters/templates/base.html:118
 msgid "Profile image"
 msgstr "Profilbild"
 
-#: characters/templates/base.html:143
+#: characters/templates/base.html:144
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
 
-#: characters/templates/base.html:146
+#: characters/templates/base.html:147
 msgid "Privacy"
 msgstr "Privatsphäre"
 
-#: characters/templates/base.html:147
+#: characters/templates/base.html:148
 msgid "Tirakan HuS"
 msgstr "Tirakan HuS"
 
@@ -3281,8 +3281,9 @@ msgstr ""
 "          "
 
 #: characters/templates/index.html:14
-#: portal/templates/portal/yearly_wrapup.html:6
-#: portal/templates/portal/yearly_wrapup.html:14
+#: portal/templates/portal/yearly_wrapup.html:7
+#: portal/templates/portal/yearly_wrapup.html:11
+#: portal/templates/portal/yearly_wrapup.html:25
 #, python-format
 msgid "%(t_year)s in Review"
 msgstr "Jahresrückblick %(t_year)s"
@@ -4108,11 +4109,20 @@ msgstr "Charaktere, Welten etc.."
 msgid "Search in descriptions"
 msgstr "In Beschreibungen suchen"
 
-#: portal/templates/portal/yearly_wrapup.html:21
+#: portal/templates/portal/yearly_wrapup.html:17
+#, python-format
+msgid ""
+"%(t_user)s year %(t_year)s with %(t_brand_name)s in review. Most played "
+"characters, best and worst rolls, and everything else!"
+msgstr ""
+"%(t_user)s Jahr %(t_year)s mit %(t_brand_name)s im Rückblick. Die meist "
+"gespielten Charaktere, die besten und schlechtesten Würfe, und alles andere!"
+
+#: portal/templates/portal/yearly_wrapup.html:32
 msgid "Your most played characters"
 msgstr "Deine meistgespielten Charaktere"
 
-#: portal/templates/portal/yearly_wrapup.html:39
+#: portal/templates/portal/yearly_wrapup.html:52
 #, python-format
 msgid ""
 "\n"
@@ -4124,52 +4134,52 @@ msgstr ""
 "gemacht.\n"
 "                        "
 
-#: portal/templates/portal/yearly_wrapup.html:53
+#: portal/templates/portal/yearly_wrapup.html:66
 msgid "You played in the following campaigns"
 msgstr "Du hast in den folgenden Kampagnen gespielt"
 
-#: portal/templates/portal/yearly_wrapup.html:68
+#: portal/templates/portal/yearly_wrapup.html:81
 msgid "Your best rolls"
 msgstr "Deine besten Würfe"
 
-#: portal/templates/portal/yearly_wrapup.html:71
-#: portal/templates/portal/yearly_wrapup.html:144
+#: portal/templates/portal/yearly_wrapup.html:84
+#: portal/templates/portal/yearly_wrapup.html:157
 msgid "Most Crits"
 msgstr "Meiste Crits"
 
-#: portal/templates/portal/yearly_wrapup.html:73
-#: portal/templates/portal/yearly_wrapup.html:146
+#: portal/templates/portal/yearly_wrapup.html:86
+#: portal/templates/portal/yearly_wrapup.html:159
 msgid "Most exploded dice"
 msgstr "Die meisten Exploding Dice"
 
-#: portal/templates/portal/yearly_wrapup.html:75
-#: portal/templates/portal/yearly_wrapup.html:148
+#: portal/templates/portal/yearly_wrapup.html:88
+#: portal/templates/portal/yearly_wrapup.html:161
 msgid "Most successes"
 msgstr "Die meisten Erfolge"
 
-#: portal/templates/portal/yearly_wrapup.html:77
-#: portal/templates/portal/yearly_wrapup.html:150
+#: portal/templates/portal/yearly_wrapup.html:90
+#: portal/templates/portal/yearly_wrapup.html:163
 msgid "Highest single roll"
 msgstr "Höchster einzelner Wurf"
 
-#: portal/templates/portal/yearly_wrapup.html:79
-#: portal/templates/portal/yearly_wrapup.html:152
+#: portal/templates/portal/yearly_wrapup.html:92
+#: portal/templates/portal/yearly_wrapup.html:165
 msgid "Total sum"
 msgstr "Gesamtsumme"
 
-#: portal/templates/portal/yearly_wrapup.html:89
+#: portal/templates/portal/yearly_wrapup.html:102
 msgid "Your worst roll"
 msgstr "Dein schlechtester Wurf"
 
-#: portal/templates/portal/yearly_wrapup.html:92
+#: portal/templates/portal/yearly_wrapup.html:105
 msgid "Most fails"
 msgstr "Meiste Fehlschläge"
 
-#: portal/templates/portal/yearly_wrapup.html:102
+#: portal/templates/portal/yearly_wrapup.html:115
 msgid "What else was happening?"
 msgstr "Was ist noch passiert?"
 
-#: portal/templates/portal/yearly_wrapup.html:108
+#: portal/templates/portal/yearly_wrapup.html:121
 #, python-format
 msgid ""
 "\n"
@@ -4186,7 +4196,7 @@ msgstr ""
 "Tagen gemacht.</span>\n"
 "          "
 
-#: portal/templates/portal/yearly_wrapup.html:118
+#: portal/templates/portal/yearly_wrapup.html:131
 #, python-format
 msgid ""
 "\n"
@@ -4199,7 +4209,7 @@ msgstr ""
 "class=\"fs-2\"> Charaktere wurden erstellt.</span>\n"
 "          "
 
-#: portal/templates/portal/yearly_wrapup.html:127
+#: portal/templates/portal/yearly_wrapup.html:140
 #, python-format
 msgid ""
 "\n"
@@ -4214,7 +4224,7 @@ msgstr ""
 "            <span class=\"fs-2\">neue Kampagnen gestartet.</span>\n"
 "          "
 
-#: portal/templates/portal/yearly_wrapup.html:141
+#: portal/templates/portal/yearly_wrapup.html:154
 msgid "Top rolls"
 msgstr "Toppwürfe"
 
