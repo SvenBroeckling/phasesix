@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 03:16+0000\n"
-"PO-Revision-Date: 2024-12-03 04:17+0100\n"
+"POT-Creation-Date: 2024-12-03 16:50+0000\n"
+"PO-Revision-Date: 2024-12-03 17:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -855,7 +855,7 @@ msgstr "Würfe"
 #: campaigns/templates/campaigns/create_campaign.html:4
 #: campaigns/templates/campaigns/create_campaign_epoch.html:4
 #: campaigns/templates/campaigns/create_campaign_extensions.html:4
-#: characters/templates/index.html:126 portal/templates/portal/profile.html:71
+#: characters/templates/index.html:137 portal/templates/portal/profile.html:71
 msgid "Create Campaign"
 msgstr "Kampagne erstellen"
 
@@ -1762,7 +1762,7 @@ msgstr ""
 #: characters/templates/characters/create_character_epoch.html:4
 #: characters/templates/characters/create_character_extensions.html:4
 #: characters/templates/characters/random_npc_form.html:4
-#: characters/templates/index.html:72 portal/templates/portal/profile.html:38
+#: characters/templates/index.html:83 portal/templates/portal/profile.html:38
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
@@ -3280,19 +3280,30 @@ msgstr ""
 "werden.\n"
 "          "
 
-#: characters/templates/index.html:17
+#: characters/templates/index.html:14
+#: portal/templates/portal/yearly_wrapup.html:6
+#: portal/templates/portal/yearly_wrapup.html:14
+#, python-format
+msgid "%(t_year)s in Review"
+msgstr "Jahresrückblick %(t_year)s"
+
+#: characters/templates/index.html:15
+msgid "Click here"
+msgstr "Hier klicken"
+
+#: characters/templates/index.html:28
 msgid "Logo"
 msgstr "Logo"
 
-#: characters/templates/index.html:28
+#: characters/templates/index.html:39
 msgid "Lead Image"
 msgstr "Seitenbild"
 
-#: characters/templates/index.html:45 characters/templates/index.html:81
+#: characters/templates/index.html:56 characters/templates/index.html:92
 msgid "Create Characters"
 msgstr "Charaktere erstellen"
 
-#: characters/templates/index.html:46 characters/templates/index.html:82
+#: characters/templates/index.html:57 characters/templates/index.html:93
 msgid ""
 "\n"
 "              This website lets you create and manage your characters as "
@@ -3309,11 +3320,11 @@ msgstr ""
 "<a href=\"https://roll20.net\">Roll20</a> für deine Sitzungen zu benutzen.\n"
 " "
 
-#: characters/templates/index.html:99
+#: characters/templates/index.html:110
 msgid "Manage Campaigns"
 msgstr "Kampagnen verwalten"
 
-#: characters/templates/index.html:100
+#: characters/templates/index.html:111
 msgid ""
 "\n"
 "              Create and manage your campaigns. Invite your friends to join "
@@ -3331,29 +3342,29 @@ msgstr ""
 "     können an Discord gesendet werden.\n"
 "   "
 
-#: characters/templates/index.html:143
+#: characters/templates/index.html:154
 msgid "Discover the world"
 msgstr "Entdecke die Welt"
 
-#: characters/templates/index.html:163 characters/templates/index.html:191
+#: characters/templates/index.html:174 characters/templates/index.html:202
 #: worlds/templates/worlds/world_list.html:21
 msgid "Discover"
 msgstr "Entdecken"
 
-#: characters/templates/index.html:176
+#: characters/templates/index.html:187
 msgid "Discover worlds"
 msgstr "Entdecke Welten"
 
-#: characters/templates/index.html:177
+#: characters/templates/index.html:188
 msgid "Play in one of these worlds, or use Terra to play on earth."
 msgstr ""
 "Spiele in einer dieser Welten, oder wähle Terra, um auf der Erde zu spielen."
 
-#: characters/templates/index.html:209 characters/templates/index.html:226
+#: characters/templates/index.html:220 characters/templates/index.html:237
 msgid "Open Source Role Playing Game"
 msgstr "OpenSource Rollenspiel"
 
-#: characters/templates/index.html:211 characters/templates/index.html:228
+#: characters/templates/index.html:222 characters/templates/index.html:239
 #, python-format
 msgid ""
 "\n"
@@ -3589,7 +3600,7 @@ msgid "Attack value"
 msgstr "Angriffswert"
 
 #: gmtools/templates/gmtools/extension_grid.html:4
-#: portal/templates/portal/profile.html:117
+#: portal/templates/portal/profile.html:127
 msgid "Extension Grids"
 msgstr "Erweiterungstabellen"
 
@@ -3626,7 +3637,7 @@ msgid "Template"
 msgstr "Schablone"
 
 #: gmtools/templates/gmtools/roll_statistics.html:4
-#: portal/templates/portal/profile.html:164
+#: portal/templates/portal/profile.html:174
 msgid "Roll Statistics"
 msgstr "Statistiken"
 
@@ -3635,7 +3646,7 @@ msgid "Attributes"
 msgstr "Attribute"
 
 #: gmtools/templates/gmtools/template_statistics.html:4
-#: portal/templates/portal/profile.html:129
+#: portal/templates/portal/profile.html:139
 msgid "Template Statistics"
 msgstr "Schablonenstatistiken"
 
@@ -3656,7 +3667,7 @@ msgid "Template Skills"
 msgstr "Schablonenfertigkeiten"
 
 #: gmtools/templates/gmtools/translation_status.html:4
-#: portal/templates/portal/profile.html:140
+#: portal/templates/portal/profile.html:150
 msgid "Translation Status"
 msgstr "Übersetzungsstatus"
 
@@ -4078,10 +4089,14 @@ msgid "Admin"
 msgstr "Admin"
 
 #: portal/templates/portal/profile.html:105
+msgid "2024 WrapUp"
+msgstr "2024 WrapUp"
+
+#: portal/templates/portal/profile.html:115
 msgid "2023 WrapUp"
 msgstr "2023 WrapUp"
 
-#: portal/templates/portal/profile.html:152
+#: portal/templates/portal/profile.html:162
 msgid "Review Homebrew"
 msgstr "Homebrew Review"
 
@@ -4093,63 +4108,115 @@ msgstr "Charaktere, Welten etc.."
 msgid "Search in descriptions"
 msgstr "In Beschreibungen suchen"
 
-#: portal/templates/portal/yearly_wrapup.html:5
-#: portal/templates/portal/yearly_wrapup.html:13
-#, python-format
-msgid "%(t_year)s in Review"
-msgstr "Jahresrückblick %(t_year)s"
-
-#: portal/templates/portal/yearly_wrapup.html:17
+#: portal/templates/portal/yearly_wrapup.html:21
 msgid "Your most played characters"
 msgstr "Deine meistgespielten Charaktere"
 
-#: portal/templates/portal/yearly_wrapup.html:35
+#: portal/templates/portal/yearly_wrapup.html:39
 #, python-format
 msgid ""
 "\n"
-"              You have made %(t_rolls)s rolls on %(t_days)s days.\n"
-"            "
+"                  You have made %(t_rolls)s rolls on %(t_days)s days.\n"
+"                "
 msgstr ""
 "\n"
 "                            Du hast %(t_rolls)s Würfe an %(t_days)s Tagen "
 "gemacht.\n"
 "                        "
 
-#: portal/templates/portal/yearly_wrapup.html:45
+#: portal/templates/portal/yearly_wrapup.html:53
 msgid "You played in the following campaigns"
 msgstr "Du hast in den folgenden Kampagnen gespielt"
 
-#: portal/templates/portal/yearly_wrapup.html:56
+#: portal/templates/portal/yearly_wrapup.html:68
 msgid "Your best rolls"
 msgstr "Deine besten Würfe"
 
-#: portal/templates/portal/yearly_wrapup.html:59
+#: portal/templates/portal/yearly_wrapup.html:71
+#: portal/templates/portal/yearly_wrapup.html:144
 msgid "Most Crits"
 msgstr "Meiste Crits"
 
-#: portal/templates/portal/yearly_wrapup.html:61
+#: portal/templates/portal/yearly_wrapup.html:73
+#: portal/templates/portal/yearly_wrapup.html:146
 msgid "Most exploded dice"
 msgstr "Die meisten Exploding Dice"
 
-#: portal/templates/portal/yearly_wrapup.html:63
+#: portal/templates/portal/yearly_wrapup.html:75
+#: portal/templates/portal/yearly_wrapup.html:148
 msgid "Most successes"
 msgstr "Die meisten Erfolge"
 
-#: portal/templates/portal/yearly_wrapup.html:65
+#: portal/templates/portal/yearly_wrapup.html:77
+#: portal/templates/portal/yearly_wrapup.html:150
 msgid "Highest single roll"
 msgstr "Höchster einzelner Wurf"
 
-#: portal/templates/portal/yearly_wrapup.html:67
+#: portal/templates/portal/yearly_wrapup.html:79
+#: portal/templates/portal/yearly_wrapup.html:152
 msgid "Total sum"
 msgstr "Gesamtsumme"
 
-#: portal/templates/portal/yearly_wrapup.html:73
+#: portal/templates/portal/yearly_wrapup.html:89
 msgid "Your worst roll"
 msgstr "Dein schlechtester Wurf"
 
-#: portal/templates/portal/yearly_wrapup.html:76
+#: portal/templates/portal/yearly_wrapup.html:92
 msgid "Most fails"
 msgstr "Meiste Fehlschläge"
+
+#: portal/templates/portal/yearly_wrapup.html:102
+msgid "What else was happening?"
+msgstr "Was ist noch passiert?"
+
+#: portal/templates/portal/yearly_wrapup.html:108
+#, python-format
+msgid ""
+"\n"
+"            <span class=\"fs-1\">%(t_roll_count)s</span><span "
+"class=\"fs-2\"> rolls were made on </span>\n"
+"            <span class=\"fs-1\">%(t_days)s</span><span class=\"fs-2\"> days."
+"</span>\n"
+"          "
+msgstr ""
+"\n"
+"            <span class=\"fs-1\">%(t_roll_count)s</span><span "
+"class=\"fs-2\"> Würfe wurden an </span>\n"
+"            <span class=\"fs-1\">%(t_days)s</span><span class=\"fs-2\"> "
+"Tagen gemacht.</span>\n"
+"          "
+
+#: portal/templates/portal/yearly_wrapup.html:118
+#, python-format
+msgid ""
+"\n"
+"            <span class=\"fs-1\">%(t_characters_created)s</span><span "
+"class=\"fs-2\"> characters have been created.</span>\n"
+"          "
+msgstr ""
+"\n"
+"            <span class=\"fs-1\">%(t_characters_created)s</span><span "
+"class=\"fs-2\"> Charaktere wurden erstellt.</span>\n"
+"          "
+
+#: portal/templates/portal/yearly_wrapup.html:127
+#, python-format
+msgid ""
+"\n"
+"            <span class=\"fs-2\">GMs have started</span>\n"
+"            <span class=\"fs-1\">%(t_campaigns_created)s</span>\n"
+"            <span class=\"fs-2\">new campaigns.</span>\n"
+"          "
+msgstr ""
+"\n"
+"            <span class=\"fs-2\">Spielleiter haben</span>\n"
+"            <span class=\"fs-1\">%(t_campaigns_created)s</span>\n"
+"            <span class=\"fs-2\">neue Kampagnen gestartet.</span>\n"
+"          "
+
+#: portal/templates/portal/yearly_wrapup.html:141
+msgid "Top rolls"
+msgstr "Toppwürfe"
 
 #: rulebook/templates/rulebook/book_toc.html:111
 msgid "Table of contents"
@@ -5944,9 +6011,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "You have to select weapons."
 #~ msgstr "Du musst Waffen wählen."
-
-#~ msgid "armor roll"
-#~ msgstr "Rüstungswurf"
 
 #~ msgid "damage"
 #~ msgstr "Schaden"

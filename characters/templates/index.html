@@ -6,6 +6,17 @@
 {% block header %}{% endblock %}
 
 {% block raw_content %}
+
+  {% if user.is_authenticated %}
+    <a href="{% url "portal:wrapup" pk=user.id year=2024 %}" class="no-decoration no-link-colors">
+      <header class="d-flex flex-column justify-content-center align-items-center"
+              style="height: 20vh; background: url({% static "img/wrapup_2024.png" %}) no-repeat; background-size: cover; background-position: 0% 80%">
+        <h3 class="display-4">{% blocktrans with t_year=2024 %}{{ t_year }} in Review{% endblocktrans %}</h3>
+        <h4>{% trans "Click here" %}</h4>
+      </header>
+    </a>
+  {% endif %}
+
   <div class="container-fluid pt-0 pt-md-5">
     <div class="container pt-0 pt-md-5">
       <div class="row">

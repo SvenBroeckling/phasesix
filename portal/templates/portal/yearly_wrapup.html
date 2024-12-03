@@ -1,80 +1,158 @@
 {% extends "base.html" %}
+{% load characters_extras %}
 {% load i18n static thumbnail %}
 
 
 {% block title %}{% blocktrans with t_year=year %}{{ t_year }} in Review{% endblocktrans %}
   - {{ block.super }}{% endblock %}
 
-{% block content %}
-  <div class="card">
-    <img class="card-img-top" src="{% static "img/yearly_review.png" %}" alt="Yearly Review Background">
-  </div>
-  <div class="text-center mt-3">
+{% block header %}{% endblock %}
+
+{% block raw_content %}
+  <header class="d-flex flex-column justify-content-center align-items-center"
+          style="height: 50vh; background: url({{ header_image }}) no-repeat; background-size: cover; background-position: bottom">
     <h1 class="display-4">{% blocktrans with t_year=year %}{{ t_year }} in Review{% endblocktrans %}</h1>
+    <h2>{{ wrapup_user|capfirst }}</h2>
+  </header>
+
+  <div class="container-fluid pt-0 bg-body-tertiary">
+    <div class="container py-0 py-md-5">
+      <section class="pt-5 pb-3 my-3">
+        <h2 class="text-center">{% trans "Your most played characters" %}</h2>
+        <div class="d-flex justify-content-center flex-wrap">
+          {% for mp in most_played %}
+            <div class="text-center my-2 mx-1">
+              {% if mp.0.image %}
+                {% thumbnail mp.0.image "400x400" crop="center" as im %}
+                  <img class="img-fluid rounded float-start me-3"
+                       src="{{ im.url }}"
+                       alt="{{ mp.0.name }}">
+                {% endthumbnail %}
+              {% else %}
+                <img class="img-fluid rounded float-start me-3"
+                     height="400" width="400"
+                     src="{% static 'img/silhuette.png' %}"
+                     alt="{{ mp.0.name }}">
+              {% endif %}
+              <div class="fs-3">{{ forloop.counter }}. {{ mp.0.name }}</div>
+              <div class="fs-5">
+                {% blocktrans with t_rolls=mp.1 t_days=mp.2 %}
+                  You have made {{ t_rolls }} rolls on {{ t_days }} days.
+                {% endblocktrans %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
   </div>
 
-  <section class="pt-5 pb-3 my-3">
-    <h2 class="text-center">{% trans "Your most played characters" %}</h2>
-    <div class="d-flex justify-content-center flex-wrap">
-      {% for mp in most_played %}
-        <div class="text-center my-2 mx-1">
-          {% if mp.0.image %}
-            {% thumbnail mp.0.image "500x500" crop="center" as im %}
-              <img class="img-fluid rounded float-start me-3"
-                   src="{{ im.url }}"
-                   alt="{{ mp.0.name }}">
-            {% endthumbnail %}
-          {% else %}
-            <img class="img-fluid rounded float-start me-3"
-                 height="500" width="500"
-                 src="{% static 'img/silhuette.png' %}"
-                 alt="{{ mp.0.name }}">
-          {% endif %}
-          <div class="fs-3">{{ forloop.counter }}. {{ mp.0.name }}</div>
-          <div class="fs-5">
-            {% blocktrans with t_rolls=mp.1 t_days=mp.2 %}
-              You have made {{ t_rolls }} rolls on {{ t_days }} days.
-            {% endblocktrans %}
-          </div>
+  <div class="container-fluid pt-0 pt-md-5">
+    <div class="container pt-0 pt-md-5">
+      <section class="my-3 py-3">
+        <h2 class="text-center">{% trans "You played in the following campaigns" %}</h2>
+        <div class="row">
+          {% for pc in played_campaigns %}
+            <div class="mb-4 col-12 col-md-6">
+              {% include "campaigns/_campaign_list_widget.html" with campaign=pc.0 %}
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
+      </section>
     </div>
-  </section>
+  </div>
 
-  <section class="my-3 py-3">
-    <h2 class="text-center">{% trans "You played in the following campaigns" %}</h2>
-    <div class="row">
-      {% for pc in played_campaigns %}
-        <div class="mb-4 col-12 col-md-6">
-          {% include "campaigns/_campaign_list_widget.html" with campaign=pc.0 %}
+  <div class="container-fluid pt-0 bg-body-tertiary">
+    <div class="container py-0 py-md-5">
+      <section class="py-3 my-3">
+        <h2 class="text-center">{% trans "Your best rolls" %}</h2>
+
+        <div class="d-flex justify-content-center flex-wrap">
+          {% trans "Most Crits" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_crit_count roll_text=roll_text %}
+          {% trans "Most exploded dice" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_exploded_dice_count roll_text=roll_text %}
+          {% trans "Most successes" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_successes_count roll_text=roll_text %}
+          {% trans "Highest single roll" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_highest_single_roll roll_text=roll_text %}
+          {% trans "Total sum" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_total_sum roll_text=roll_text %}
         </div>
-      {% endfor %}
+      </section>
     </div>
-  </section>
+  </div>
 
-  <section class="py-3 my-3">
-    <h2 class="text-center">{% trans "Your best rolls" %}</h2>
+  <div class="container-fluid pt-0 pt-md-5">
+    <div class="container pt-0 pt-md-5">
+      <section class="py-3 my-3">
+        <h2 class="text-center">{% trans "Your worst roll" %}</h2>
 
-    <div class="d-flex justify-content-center flex-wrap">
-      {% trans "Most Crits" as roll_text %}
-      {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_crit_count roll_text=roll_text %}
-      {% trans "Most exploded dice" as roll_text %}
-      {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_exploded_dice_count roll_text=roll_text %}
-      {% trans "Most successes" as roll_text %}
-      {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_successes_count roll_text=roll_text %}
-      {% trans "Highest single roll" as roll_text %}
-      {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_highest_single_roll roll_text=roll_text %}
-      {% trans "Total sum" as roll_text %}
-      {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_total_sum roll_text=roll_text %}
+        <div class="d-flex justify-content-center flex-wrap">
+          {% trans "Most fails" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_fails_count roll_text=roll_text %}
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 
-  <section class="py-3 my-3">
-    <h2 class="text-center">{% trans "Your worst roll" %}</h2>
+  <div class="container-fluid pt-0 bg-body-tertiary">
+    <div class="container pt-0 pt-md-5">
+      <section class="py-3 my-3">
+        <h2 class="text-center">{% trans "What else was happening?" %}</h2>
 
-    <div class="d-flex justify-content-center flex-wrap">
-      {% trans "Most fails" as roll_text %}
-      {% include "portal/_yearly_wrapup_roll_tile.html" with roll=roll_fails_count roll_text=roll_text %}
+        <div class="d-flex my-5 align-items-baseline justify-content-center flex-wrap">
+          {% color_value_span platform_roll_count 700 as roll_count %}
+          {% color_value_span platform_days 300 as days %}
+          <span>
+          {% blocktrans with t_roll_count=roll_count t_days=days %}
+            <span class="fs-1">{{ t_roll_count }}</span><span class="fs-2"> rolls were made on </span>
+            <span class="fs-1">{{ t_days }}</span><span class="fs-2"> days.</span>
+          {% endblocktrans %}
+          </span>
+        </div>
+
+        <div class="d-flex my-5 align-items-baseline justify-content-center flex-wrap">
+          {% color_value_span platform_characters_created 10 as characters_created %}
+          <span>
+          {% blocktrans with t_characters_created=characters_created %}
+            <span class="fs-1">{{ t_characters_created }}</span><span class="fs-2"> characters have been created.</span>
+          {% endblocktrans %}
+          </span>
+        </div>
+
+        <div class="d-flex my-5 align-items-baseline justify-content-center flex-wrap">
+          {% color_value_span platform_campaigns_created 10 as campaigns_created %}
+          <span>
+          {% blocktrans with t_campaigns_created=campaigns_created %}
+            <span class="fs-2">GMs have started</span>
+            <span class="fs-1">{{ t_campaigns_created }}</span>
+            <span class="fs-2">new campaigns.</span>
+          {% endblocktrans %}
+          </span>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
+
+  <div class="container-fluid pt-0 pt-md-5">
+    <div class="container py-0 py-md-5">
+      <section class="py-3 my-3">
+        <h2 class="text-center">{% trans "Top rolls" %}</h2>
+
+        <div class="d-flex justify-content-center flex-wrap">
+          {% trans "Most Crits" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=platform_crit_count roll_text=roll_text %}
+          {% trans "Most exploded dice" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=platform_exploded_dice_count roll_text=roll_text %}
+          {% trans "Most successes" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=platform_successes_count roll_text=roll_text %}
+          {% trans "Highest single roll" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=platform_highest_single_roll roll_text=roll_text %}
+          {% trans "Total sum" as roll_text %}
+          {% include "portal/_yearly_wrapup_roll_tile.html" with roll=platform_total_sum roll_text=roll_text %}
+        </div>
+      </section>
+    </div>
+  </div>
 {% endblock %}
