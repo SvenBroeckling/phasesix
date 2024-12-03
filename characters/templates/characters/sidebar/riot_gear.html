@@ -31,6 +31,28 @@
   </div>
 </div>
 
+{% if object.riot_gear.shield_cover %}
+  <div class="row">
+    <div class="col-12 mb-3 mt-2">
+      {% blocktrans with t_cover=object.riot_gear.shield_cover %}
+        This shield provides {{ t_cover }} cover. Roll a d6 for each hit, a success prevents that hit.
+      {% endblocktrans %}
+    </div>
+    {% with ""|center:12 as range %}
+      {% for _ in range %}
+        <div class="col-2 mb-2">
+          <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+                  data-dice-roll="{{ forloop.counter }}d6"
+                  data-dice-header="{{ forloop.counter }}d6"
+                  data-dice-description="{% trans 'Shield Cover' %}"
+                  data-dice-character="{{ object.character.id }}">{{ forloop.counter }}
+          </button>
+        </div>
+      {% endfor %}
+    {% endwith %}
+  </div>
+{% endif %}
+
 <div class="row">
   <div class="col-12">
     <div class="card mb-2 mt-2">
