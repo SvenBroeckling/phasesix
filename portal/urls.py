@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from portal import views
 
@@ -14,7 +15,7 @@ urlpatterns = [
     path("sidebar/search", views.SidebarSearchView.as_view(), name="search"),
     path(
         "wrapup/<int:pk>/<int:year>",
-        views.YearlyWrapUpView.as_view(),
+        cache_page(60 * 30)(views.YearlyWrapUpView.as_view()),
         name="wrapup",
     ),
     path("xhr/search", views.XhrSearchResultsView.as_view(), name="xhr_search_results"),
