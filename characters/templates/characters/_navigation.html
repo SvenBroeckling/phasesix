@@ -124,7 +124,7 @@
     {% if may_edit %}
       <button type="button" class="btn btn-sm ms-2 sidebar-trigger"
               data-sidebar-title="{% trans 'Take a note' %}"
-              data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">
+              data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="create_note" %}">
         +
       </button>
     {% endif %}
@@ -134,7 +134,7 @@
 <div class="list-group mb-3">
   <span class="list-group-item py-3 sidebar-trigger"
         data-sidebar-title="{% trans 'Character' %}"
-        data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="character" %}"
+        data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="character" %}"
         role="button">
 
     {% if may_edit %}

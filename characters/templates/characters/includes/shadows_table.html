@@ -1,20 +1,22 @@
 {% load i18n %}
 {% if object.templates_with_rules.exists %}
-    <table class="table">
-        <thead>
-        <tr>
-            <th>{% trans 'Shadows' %}</th>
-        </tr>
-        </thead>
-        {% for template in object.templates_with_rules.all %}
-            <tr class="sidebar-trigger" data-sidebar-title="{{ template.template.name }}" data-sidebar-url="{% url 'characters:xhr_charactertemplateshadow_sidebar' pk=template.template.id sidebar_template="charactertemplateshadow" %}">
-                <td>{{ template.template.name }}</td>
-            </tr>
-        {% endfor %}
-        {% for quirk in object.quirks.all %}
-            <tr class="sidebar-trigger" data-sidebar-title="{{ quirk }}" data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
-                <td>{{ quirk }} <small>({% trans 'Quirk' %})</small></td>
-            </tr>
-        {% endfor %}
-    </table>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>{% trans 'Shadows' %}</th>
+    </tr>
+    </thead>
+    {% for template in object.templates_with_rules.all %}
+      <tr class="sidebar-trigger" data-sidebar-title="{{ template.template.name }}"
+          data-sidebar-url="{% url 'characters:xhr_sidebar' pk=template.template.id sidebar_template="template_shadow" %}">
+        <td>{{ template.template.name }}</td>
+      </tr>
+    {% endfor %}
+    {% for quirk in object.quirks.all %}
+      <tr class="sidebar-trigger" data-sidebar-title="{{ quirk }}"
+          data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
+        <td>{{ quirk }} <small>({% trans 'Quirk' %})</small></td>
+      </tr>
+    {% endfor %}
+  </table>
 {% endif %}

@@ -4,7 +4,7 @@
 {% load i18n %}
 {% for s in object.priest_actions.all %}
   <div data-sidebar-title="{{ s.name }}"
-       data-sidebar-url="{% url 'characters:xhr_characterpriestaction_sidebar' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
+       data-sidebar-url="{% url 'characters:xhr_sidebar_priest_action' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
        class="card mb-3 sidebar-trigger">
     <div class="card-header">
                 <span class="badge bg-dark float-end ms-2" title="{% trans 'Grace cost' %}">

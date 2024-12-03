@@ -9,7 +9,7 @@
             {% if ci.item.get_image_thumbnail %}
          style="background-image: url('{{ ci.item.get_image_thumbnail }}'), linear-gradient(to left, rgb(0 0 0 / 1%), rgb(0 0 0 / 99%)); background-blend-mode: overlay; background-size: cover;"
             {% endif %}
-         data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=ci.id sidebar_template="characteritem" %}">
+         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=ci.id sidebar_template="item" %}">
 
       <div class="card-body position-relative z-2">
         {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}

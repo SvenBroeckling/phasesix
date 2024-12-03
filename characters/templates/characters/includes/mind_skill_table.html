@@ -9,7 +9,7 @@
   </thead>
   {% for skill in object.skills.mind_skills %}
     <tr class="sidebar-trigger" data-sidebar-title="{{ skill.skill }}"
-        data-sidebar-url="{% url 'characters:xhr_characterskill_sidebar' pk=skill.id sidebar_template="characterskill" %}">
+        data-sidebar-url="{% url 'characters:xhr_sidebar' pk=skill.id sidebar_template="skill" %}">
       <td>
         {{ skill.skill }} <small class="text-muted text-tiny">({{ skill.skill.reference_attribute_1.name }})</small>
       </td>

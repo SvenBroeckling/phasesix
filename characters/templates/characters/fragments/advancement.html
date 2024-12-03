@@ -6,7 +6,7 @@
 
     <div class="col-12 col-md-6 mb-3">
       <div class="card sidebar-trigger h-100" data-sidebar-title="{% trans 'Reputation' %}"
-           data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="reputation" %}">
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="reputation" %}">
         <div class="card-body">
           <h4 class="card-title">{% trans "Reputation gained" %}</h4>
           <p>
@@ -72,7 +72,7 @@
         {% for template in character.charactertemplate_set.all %}
           <div class="sidebar-trigger"
                data-sidebar-title="{{ template.template }}"
-               data-sidebar-url="{% url 'characters:xhr_charactertemplate_sidebar' pk=template.id sidebar_template="charactertemplate" %}">
+               data-sidebar-url="{% url 'characters:xhr_sidebar' pk=template.id sidebar_template="template" %}">
             {% template_widget template.template character=character add_button=False %}
           </div>
         {% endfor %}

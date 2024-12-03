@@ -9,7 +9,7 @@
 {% for container in character.characteritem_set.containers %}
   <div class="card mt-4 sidebar-trigger"
        data-pk="container.id"
-       data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=container.id sidebar_template="characteritem" %}"
+       data-sidebar-url="{% url 'characters:xhr_sidebar' pk=container.id sidebar_template="item" %}"
        data-sidebar-title="{{ container.item }}">
     <div class="card-header">{{ container.item }}</div>
     <div class="card-body">

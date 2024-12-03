@@ -10,66 +10,21 @@ urlpatterns = [
     path(
         "xhr_delete/<int:pk>", views.XhrDeleteCharacterView.as_view(), name="xhr_delete"
     ),
-    # Sidebars
+    # Sidebars and Fragments
     path(
-        r"sidebar_character/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterSidebarView.as_view(),
-        name="xhr_character_sidebar",
+        r"sidebar/<int:pk>/<str:sidebar_template>/",
+        views.XhrSidebarView.as_view(),
+        name="xhr_sidebar",
     ),
     path(
-        r"sidebar_characteritem/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterItemSidebarView.as_view(),
-        name="xhr_characteritem_sidebar",
+        r"sidebar/<int:pk>/<str:sidebar_template>/knowledge/<int:knowledge_pk>/",
+        views.XhrSidebarView.as_view(),
+        name="xhr_sidebar_knowledge",
     ),
     path(
-        r"sidebar_characterskill/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterSkillSidebarView.as_view(),
-        name="xhr_characterskill_sidebar",
-    ),
-    path(
-        r"sidebar_characterspell/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterSpellSidebarView.as_view(),
-        name="xhr_characterspell_sidebar",
-    ),
-    path(
-        r"sidebar_characterweapon/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterWeaponSidebarView.as_view(),
-        name="xhr_characterweapon_sidebar",
-    ),
-    path(
-        r"sidebar_characterriotgear/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterRiotGearSidebarView.as_view(),
-        name="xhr_characterriotgear_sidebar",
-    ),
-    path(
-        r"sidebar_characterattribute/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterAttributeSidebarView.as_view(),
-        name="xhr_characterattribute_sidebar",
-    ),
-    path(
-        r"sidebar_characterknowledge/<int:pk>/<str:sidebar_template>/<int:knowledge_pk>/",
-        views.XhrCharacterKnowledgeSidebarView.as_view(),
-        name="xhr_characterknowledge_sidebar",
-    ),
-    path(
-        r"sidebar_charactertemplateshadow/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterTemplateShadowSidebarView.as_view(),
-        name="xhr_charactertemplateshadow_sidebar",
-    ),
-    path(
-        r"sidebar_characternote/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterNoteSidebarView.as_view(),
-        name="xhr_characternote_sidebar",
-    ),
-    path(
-        r"sidebar_charactertemplate/<int:pk>/<str:sidebar_template>/",
-        views.XhrCharacterTemplateSidebarView.as_view(),
-        name="xhr_charactertemplate_sidebar",
-    ),
-    path(
-        r"sidebar_priest_action/<int:pk>/<str:sidebar_template>/<int:priest_action_pk>/",
-        views.XhrCharacterPriestActionSidebarView.as_view(),
-        name="xhr_characterpriestaction_sidebar",
+        r"sidebar/<int:pk>/<str:sidebar_template>/action/<int:priest_action_pk>/",
+        views.XhrSidebarView.as_view(),
+        name="xhr_sidebar_priest_action",
     ),
     path(
         "xhr_detail_fragment/<int:pk>/<fragment_template>",

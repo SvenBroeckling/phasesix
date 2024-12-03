@@ -32,7 +32,7 @@
           </thead>
           <tbody>
           <tr class="sidebar-trigger" data-sidebar-title="{% trans 'Weaponless' %}"
-              data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="weaponless" %}">
+              data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="weaponless" %}">
             <td>
               <i class="fas fa-hand-rock text-success"></i> {% trans 'Weaponless' %}
               <small class="text-muted">{% trans 'Melee' %}</small>
@@ -55,7 +55,7 @@
           {% for w in object.characterweapon_set.all %}
             {% with modified_keywords=w.modified_keywords %}
               <tr class="sidebar-trigger" data-sidebar-title="{{ w.weapon }}"
-                  data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=w.id sidebar_template="characterweapon" %}">
+                  data-sidebar-url="{% url 'characters:xhr_sidebar' pk=w.id sidebar_template="weapon" %}">
                 <td>
                   <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
                   <small class="text-muted">{{ w.weapon.type }}</small>
@@ -92,7 +92,7 @@
 
           {% for r in object.characterriotgear_set.shields %}
             <tr class="sidebar-trigger" data-sidebar-title="{{ r.riot_gear }}"
-                data-sidebar-url="{% url 'characters:xhr_characterriotgear_sidebar' pk=r.id sidebar_template="characterriotgear" %}">
+                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=r.id sidebar_template="riotgear" %}">
               <td>
                 <i class="fas fa-shield-alt text-info"></i> <span class="text-muted"></span>{{ r.riot_gear }}
                 <small class="text-muted">{{ r.riot_gear.type }}</small>
@@ -113,7 +113,7 @@
 
           {% for i in object.characteritem_set.usable_in_combat %}
             <tr class="sidebar-trigger" data-sidebar-title="{{ i.item }}"
-                data-sidebar-url="{% url 'characters:xhr_characteritem_sidebar' pk=i.id sidebar_template="characteritem" %}">
+                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=i.id sidebar_template="item" %}">
               <td>
                 <i class="fas fa-bomb text-info"></i> <span class="text-muted"></span>{{ i.item }}
                 <small class="text-muted">{{ i.item.type }}</small>
@@ -137,7 +137,7 @@
 
           {% for s in object.characterspell_set.all %}
             <tr class="sidebar-trigger" data-sidebar-title="{{ s }}"
-                data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}">
+                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=s.id sidebar_template="spell" %}">
               <td>
                 <i class="gi-lorc-fairy-wand text-danger"></i> {{ s.spell }}
                 <small class="text-muted">{{ s.spell_type }} - {{ s.variant }}</small>
@@ -167,7 +167,7 @@
               <small class="text-muted">{% trans 'Movement' %}</small>
             </td>
             <td class="text-end sidebar-trigger" data-sidebar-title="{% trans 'Evade' %} "
-                data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="charactercombat" %}">
+                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="combat" %}">
               {% color_value_span character.evasion 6 %} <i class="fas fa-dice-five text-muted"></i>
             </td>
             <td colspan="3"></td>

@@ -5,7 +5,7 @@
   <ul class="list-group mb-3">
     {% if object.bonus_dice_free|add:object.destiny_dice_free|add:object.rerolls_free %}
       <li class="list-group-item sidebar-trigger text-center" data-sidebar-title="{% trans 'Dice' %}"
-          data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="dice" %}">
+          data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="dice" %}">
         {% for i in object.bonus_dice_free|to_range %}
           <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Die' %}"></i>
         {% endfor %}
@@ -19,7 +19,7 @@
     {% endif %}
 
     <li class="list-group-item sidebar-trigger text-center" data-sidebar-title="{% trans 'Wounds' %}"
-        data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="wounds" %}">
+        data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="wounds" %}">
       {% for i in object.health|to_range %}
         <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
       {% endfor %}
@@ -41,13 +41,13 @@
     </li>
 
     <li class="list-group-item sidebar-trigger text-center" data-sidebar-title="{% trans 'Protection' %}"
-        data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="protection" %}">
+        data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="protection" %}">
       {% protection_display object %}
     </li>
 
     {% if object.extension_enabled.magic and object.is_magical %}
       <li class="list-group-item sidebar-trigger text-center" data-sidebar-title="{% trans 'Magic' %}"
-          data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="magic" %}">
+          data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
         {% for i in object.arcana|to_range %}
           <i class="gi-lorc-fairy-wand text-warning"></i>
         {% endfor %}

@@ -9,7 +9,7 @@
           <div class="col-12">
             <button class="btn btn-primary float-end mb-2 sidebar-trigger"
                     data-sidebar-title="{% trans 'Take a note' %}"
-                    data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="createnote" %}">{% trans "Take a note" %}</button>
+                    data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="create_note" %}">{% trans "Take a note" %}</button>
           </div>
         </div>
       {% endif %}
@@ -17,7 +17,7 @@
         {% character_notes character user as notes %}
         {% for note in notes %}
           <div data-sidebar-title="{% trans 'Note' %}"
-               data-sidebar-url="{% url 'characters:xhr_characternote_sidebar' pk=note.id sidebar_template="characternote" %}"
+               data-sidebar-url="{% url 'characters:xhr_sidebar' pk=note.id sidebar_template="note" %}"
                class="card mb-3 sidebar-trigger">
             <div class="card-header">
               {% if note.is_private %}

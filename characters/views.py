@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.mail import mail_admins
 from django.db.models import Q
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse, Http404
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import gettext
@@ -43,11 +43,11 @@ from characters.models import (
     CharacterItem,
     CharacterStatusEffect,
     CharacterSpell,
-    CharacterSkill,
     CharacterAttribute,
     CharacterNote,
     CharacterRiotGearProtectionUsed,
     CharacterTemplate,
+    CharacterSkill,
 )
 from characters.utils import crit_successes
 from horror.models import QuirkCategory, Quirk
@@ -65,8 +65,8 @@ from rules.models import (
     StatusEffect,
     Skill,
     Attribute,
-    Knowledge,
     TemplateCategory,
+    Knowledge,
 )
 
 
@@ -94,87 +94,76 @@ class XhrDeleteCharacterView(View):
 
 
 class XhrSidebarView(DetailView):
-    model = Character
+    # Mapping from sidebar_template to model
+    template_model_map = {
+        "attribute": CharacterAttribute,
+        "character": Character,
+        "combat": Character,
+        "create_note": Character,
+        "currency": Character,
+        "dice": Character,
+        "magic": Character,
+        "grace": Character,
+        "horror": Character,
+        "item": CharacterItem,
+        "knowledge": Character,  # Context depends on knowledge_pk
+        "note": CharacterNote,
+        "priest_action": Character,  # Context depends on priest_action_pk
+        "protection": Character,
+        "reputation": Character,
+        "riot_gear": CharacterRiotGear,
+        "skill": CharacterSkill,
+        "spell": CharacterSpell,
+        "template": CharacterTemplate,
+        "template_shadow": Template,
+        "weapon": CharacterWeapon,
+        "weaponless": Character,
+        "wounds": Character,
+    }
+
+    def get_model(self):
+        sidebar_template = self.kwargs.get("sidebar_template")
+        model = self.template_model_map.get(sidebar_template)
+        if not model:
+            raise Http404("Invalid sidebar template")
+        return model
+
+    def get_queryset(self):
+        return self.get_model().objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        sidebar_template = self.kwargs.get("sidebar_template")
+
+        # Common context
         try:
             context["may_edit"] = self.object.may_edit(self.request.user)
         except AttributeError:
             context["may_edit"] = False
+
+        # Additional context for specific templates
+        if sidebar_template == "character":
+            context.update(
+                {
+                    "status_effects": StatusEffect.objects.filter(
+                        is_active=True
+                    ).order_by("ordering"),
+                    "character_form": CharacterImageForm(instance=self.object),
+                    "protection_types": ProtectionType.objects.all(),
+                }
+            )
+        elif sidebar_template == "knowledge":
+            context["knowledge"] = Knowledge.objects.get(id=self.kwargs["knowledge_pk"])
+        elif sidebar_template == "priest_action":
+            context["priest_action"] = PriestAction.objects.get(
+                id=self.kwargs["priest_action_pk"]
+            )
+
         return context
 
     def get_template_names(self):
-        return ["characters/sidebar/" + self.kwargs["sidebar_template"] + ".html"]
-
-
-class XhrCharacterSidebarView(XhrSidebarView):
-    model = Character
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["status_effects"] = StatusEffect.objects.filter(
-            is_active=True
-        ).order_by("ordering")
-        context["character_form"] = CharacterImageForm(instance=self.object)
-        context["protection_types"] = ProtectionType.objects.all()
-        return context
-
-
-class XhrCharacterWeaponSidebarView(XhrSidebarView):
-    model = CharacterWeapon
-
-
-class XhrCharacterRiotGearSidebarView(XhrSidebarView):
-    model = CharacterRiotGear
-
-
-class XhrCharacterItemSidebarView(XhrSidebarView):
-    model = CharacterItem
-
-
-class XhrCharacterSpellSidebarView(XhrSidebarView):
-    model = CharacterSpell
-
-
-class XhrCharacterSkillSidebarView(XhrSidebarView):
-    model = CharacterSkill
-
-
-class XhrCharacterAttributeSidebarView(XhrSidebarView):
-    model = CharacterAttribute
-
-
-class XhrCharacterNoteSidebarView(XhrSidebarView):
-    model = CharacterNote
-
-
-class XhrCharacterTemplateSidebarView(XhrSidebarView):
-    model = CharacterTemplate
-
-
-class XhrCharacterKnowledgeSidebarView(XhrSidebarView):
-    model = Character
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["knowledge"] = Knowledge.objects.get(id=self.kwargs["knowledge_pk"])
-        return context
-
-
-class XhrCharacterPriestActionSidebarView(XhrSidebarView):
-    model = Character
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["priest_action"] = PriestAction.objects.get(
-            id=self.kwargs["priest_action_pk"]
-        )
-        return context
-
-
-class XhrCharacterTemplateShadowSidebarView(XhrSidebarView):
-    model = Template
+        sidebar_template = self.kwargs.get("sidebar_template")
+        return [f"characters/sidebar/{sidebar_template}.html"]
 
 
 class XhrDetailFragmentView(DetailView):
@@ -1234,18 +1223,12 @@ class XhrCharacterObjectsView(TemplateView):
             return JsonResponse({"status": "error"})
         return JsonResponse({"status": "ok"})
 
-    def _add_object(self, model, object_id):
-        obj = model.objects.get(id=object_id)
-        self.character.character_objects.create(obj=obj)
-
-    def _delete_object(self, model, object_id):
-        model.objects.get(id=object_id).delete()
-
     def add_weapon(self, pk):
-        self._add_object(Weapon, pk)
+        obj = Weapon.objects.get(id=pk)
+        self.character.characterweapon_set.create(weapon=obj)
 
     def delete_weapon(self, pk):
-        self._delete_object(CharacterWeapon, pk)
+        self.character.characterweapon_set.filter(id=pk).delete()
 
     def add_item(self, pk):
         item = Item.objects.get(id=pk)
@@ -1270,16 +1253,18 @@ class XhrCharacterObjectsView(TemplateView):
                 ci.delete()
 
     def add_riot_gear(self, pk):
-        self._add_object(RiotGear, pk)
+        obj = RiotGear.objects.get(id=pk)
+        self.character.characterriotgear_set.create(riot_gear=obj)
 
     def delete_riot_gear(self, pk):
-        self._delete_object(CharacterRiotGear, pk)
+        self.character.characterriotgear_set.filter(id=pk).delete()
 
     def add_spell(self, pk):
-        self._add_object(BaseSpell, pk)
+        obj = BaseSpell.objects.get(id=pk)
+        self.character.characterspell_set.create(spell=obj)
 
     def delete_spell(self, pk):
-        self._delete_object(CharacterSpell, pk)
+        self.character.characterspell_set.filter(id=pk).delete()
 
     def add_template(self, pk):
         template = Template.objects.get(id=pk)
@@ -1289,4 +1274,11 @@ class XhrCharacterObjectsView(TemplateView):
             raise ValueError()
 
     def delete_template(self, pk):
-        self._delete_object(CharacterTemplate, pk)
+        self.character.charactertemplate_set.filter(id=pk).delete()
+
+    def add_quirk(self, pk):
+        obj = Quirk.objects.get(id=pk)
+        self.character.quirks.add(obj)
+
+    def delete_quirk(self, pk):
+        self.character.quirks.remove(pk)

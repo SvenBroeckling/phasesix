@@ -7,7 +7,7 @@
     <div class="col-12 col-md-6">
 
       <div class="card sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
-           data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="grace" %}">
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="grace" %}">
         <div class="card-body">
           <h5 class="card-title">{% trans "Attitude" %}</h5>
           <p>
@@ -25,7 +25,7 @@
 
       {% if object.is_priest %}
         <div class="card sidebar-trigger mt-2" data-sidebar-title="{% trans 'Belief' %}"
-             data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="grace" %}">
+             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="grace" %}">
           <div class="card-body">
             <h5 class="card-title">{% trans "Grace" %}</h5>
             <p>

@@ -4,8 +4,8 @@
 {% block fragment %}
   <div class="row">
     <div class="col-12 col-md-6">
-      <div class="card sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
-           data-sidebar-url="{% url 'characters:xhr_character_sidebar' pk=object.id sidebar_template="horror" %}">
+      <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Belief' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
         <div class="card-body">
           <h5 class="card-title">{% trans "Stress" %}</h5>
           <p>
@@ -28,7 +28,7 @@
 
     {% if object.quirks_need_to_be_chosen and may_edit %}
       <div class="col-12 col-md-6">
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-body">
             <h5 class="card-title">{% trans "New Quirk" %}</h5>
             {% blocktrans %}
@@ -53,7 +53,7 @@
 
     {% for q in object.quirks.all %}
       <div class="col-12 col-md-6 mb-2">
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-header">{{ q }}</div>
           <div class="card-body">
             <div class="text-muted">
@@ -61,8 +61,9 @@
             </div>
             {{ q.get_modifier_summary_html|safe }}
             <a class="btn btn-danger btn-sm float-end mt-2 action-link"
-               href="{% url 'characters:remove_quirk' pk=object.id quirk_pk=q.id %}"><i
-                    class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
+               data-method="DELETE"
+               href="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}?object_id={{ q.id }}">
+              <i class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
           </div>
         </div>
       </div>

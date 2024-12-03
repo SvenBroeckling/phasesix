@@ -5,7 +5,7 @@
 {% for s in object.characterspell_set.all %}
   <div class="mb-2">
     <div data-sidebar-title="{{ s.name }}"
-         data-sidebar-url="{% url 'characters:xhr_characterspell_sidebar' pk=s.id sidebar_template="characterspell" %}"
+         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=s.id sidebar_template="spell" %}"
          class="card mb-2 sidebar-trigger">
 
       <div class="card-body">

@@ -7,7 +7,7 @@
   <div class="weapon-sortable"
        data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
     <div class="card mb-4 sidebar-trigger" data-sidebar-title="{{ character_weapon.weapon }}"
-         data-sidebar-url="{% url 'characters:xhr_characterweapon_sidebar' pk=character_weapon.id sidebar_template="characterweapon" %}">
+         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=character_weapon.id sidebar_template="weapon" %}">
 
       <div class="card-body">
         <h4>{{ character_weapon.weapon }}</h4>

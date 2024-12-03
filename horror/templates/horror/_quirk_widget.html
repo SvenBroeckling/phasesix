@@ -12,10 +12,10 @@
     {{ quirk.get_modifier_summary_html|safe }}
 
     {% if character and add_button %}
-      <form action="{% url 'characters:add_quirk' pk=character.id quirk_pk=quirk.id %}"
+      <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="quirk" %}"
             class="float-end add-form" method="post">
         {% csrf_token %}
-        <input type="hidden" name="weapon_id" value="{{ quirk.id }}">
+        <input type="hidden" name="object_id" value="{{ quirk.id }}">
         <button class="btn btn-sm btn-primary float-end"
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}">{% trans 'Add Quirk' %}</button>
