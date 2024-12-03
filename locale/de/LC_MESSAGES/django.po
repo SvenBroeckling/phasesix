@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-03 17:36+0000\n"
-"PO-Revision-Date: 2024-12-03 18:37+0100\n"
+"POT-Creation-Date: 2024-12-03 19:29+0000\n"
+"PO-Revision-Date: 2024-12-03 20:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -585,14 +585,14 @@ msgstr "Zauber"
 #: armory/templates/armory/_riot_gear_widget.html:16
 #: characters/templates/characters/includes/character_riot_gear_cards.html:17
 #: characters/templates/characters/pdf/boxes/gear/armour.html:18
-#: characters/templates/characters/sidebar/riot_gear.html:56
+#: characters/templates/characters/sidebar/riot_gear.html:78
 #: homebrew/forms.py:50
 msgid "Encumbrance"
 msgstr "Belastung"
 
 #: armory/templates/armory/_riot_gear_widget.html:20
 #: characters/templates/characters/includes/character_riot_gear_cards.html:21
-#: characters/templates/characters/sidebar/riot_gear.html:41
+#: characters/templates/characters/sidebar/riot_gear.html:63
 #: gmtools/forms.py:18
 msgid "Cover"
 msgstr "Deckung"
@@ -611,7 +611,7 @@ msgstr "Ladungen"
 
 #: armory/templates/armory/item_detail.html:57 characters/forms.py:60
 #: characters/templates/characters/sidebar/item.html:152
-#: characters/templates/characters/sidebar/riot_gear.html:61
+#: characters/templates/characters/sidebar/riot_gear.html:83
 #: characters/views.py:656
 msgid "Weight"
 msgstr "Gewicht"
@@ -621,7 +621,7 @@ msgstr "Gewicht"
 #: characters/templates/characters/pdf/boxes/gear/armour.html:26
 #: characters/templates/characters/pdf/boxes/overview/concealment.html:3
 #: characters/templates/characters/sidebar/item.html:157
-#: characters/templates/characters/sidebar/riot_gear.html:66
+#: characters/templates/characters/sidebar/riot_gear.html:88
 #: homebrew/forms.py:26 homebrew/forms.py:53
 msgid "Concealment"
 msgstr "Verborgenheit"
@@ -629,7 +629,7 @@ msgstr "Verborgenheit"
 #: armory/templates/armory/item_detail.html:59
 #: characters/templates/characters/modals/add_weapon_mod.html:58
 #: characters/templates/characters/sidebar/item.html:164
-#: characters/templates/characters/sidebar/riot_gear.html:78
+#: characters/templates/characters/sidebar/riot_gear.html:100
 #: characters/templates/characters/sidebar/weapon.html:93 homebrew/forms.py:25
 #: homebrew/forms.py:52 homebrew/forms.py:84
 msgid "Price"
@@ -976,7 +976,7 @@ msgstr "Wunden"
 #: characters/templates/characters/fragments/status.html:43
 #: characters/templates/characters/pdf/boxes/gear/armour.html:12
 #: characters/templates/characters/pdf/boxes/overview/protection.html:4
-#: characters/templates/characters/sidebar/riot_gear.html:47
+#: characters/templates/characters/sidebar/riot_gear.html:69
 #: homebrew/templates/homebrew/modals/create_riot_gear.html:28
 #: worlds/templates/worlds/_game_values.html:14
 #: worlds/templates/worlds/wiki_page_with_game_values.html:32
@@ -2501,7 +2501,7 @@ msgid "Magic Origin"
 msgstr "Magieursprung"
 
 #: characters/templates/characters/pdf/boxes/gear/armour.html:22
-#: characters/templates/characters/sidebar/riot_gear.html:71
+#: characters/templates/characters/sidebar/riot_gear.html:93
 #: characters/templates/characters/sidebar/weapon.html:86
 msgid "Condition"
 msgstr "Zustand"
@@ -3065,6 +3065,25 @@ msgstr "Schaden"
 #: characters/templates/characters/sidebar/weapon.html:37
 msgid "Repair"
 msgstr "Reparieren"
+
+#: characters/templates/characters/sidebar/riot_gear.html:37
+#, python-format
+msgid ""
+"\n"
+"        This shield provides %(t_cover)s cover. Roll a d6 for each hit, a "
+"success prevents that hit.\n"
+"      "
+msgstr ""
+"\n"
+"     Dieses Schild bietet %(t_cover)s Deckung. Wirf für jeden Treffer einen "
+"W6, jeder Erfolg verhindert den jeweiligen Treffer.\n"
+"     "
+
+#: characters/templates/characters/sidebar/riot_gear.html:47
+#, fuzzy
+#| msgid "shield cover"
+msgid "Shield Cover"
+msgstr "Schilddeckung"
 
 #: characters/templates/characters/sidebar/spell.html:9 magic/models.py:10
 msgid "power"
