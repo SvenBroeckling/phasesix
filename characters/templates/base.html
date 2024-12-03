@@ -249,6 +249,11 @@
             const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {html: true}))
         }
     )
+
+    function toggleDiceLog() {
+        const diceLog = document.getElementById('dice-log');
+        if (diceLog) diceLog.classList.toggle('show');
+    }
 </script>
 {% block javascript %}{% endblock %}
 

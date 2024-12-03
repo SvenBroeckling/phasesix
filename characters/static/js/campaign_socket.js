@@ -60,8 +60,3 @@ $(function () {
     })
 })
 
-function toggleDiceLog() {
-    const diceLog = document.getElementById('dice-log');
-    if (diceLog) diceLog.classList.toggle('show');
-}
-

@@ -18,32 +18,8 @@
   filter: drop-shadow(0 0 10px black);
 }
 
-.character-info-row {
-  img {
-    width: 180px;
-    height: 180px;
-    border: 2px solid black;
-    filter: drop-shadow(0 0 10px black);
-  }
-
-  .character-image {
-    position: relative;
-    aspect-ratio: 1;
-  }
-
-  span.dice-icon {
-    position: absolute;
-    bottom: 1px;
-    right: 5px;
-  }
-
-  span.dice-icon svg {
-    filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .7));
-  }
-}
-
 /* dice log */
-/* Dice Log Toggle Button */
+
 #dice-log-toggle {
   position: fixed;
   bottom: 10px;
@@ -61,7 +37,7 @@
 }
 
 #dice-log-toggle:hover {
-  background-color: #666;
+  background-color: $body-secondary-bg-dark;
 }
 
 /* Dice Log Panel */
