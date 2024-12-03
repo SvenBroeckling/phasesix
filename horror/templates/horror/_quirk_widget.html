@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load rules_extras %}
+<div class="card mb-3">
+  <div class="card-header">
+    {{ quirk }}
+  </div>
+  <div class="card-body">
+    <div class="text-muted">
+      {{ quirk.description|urpg_markup }}
+    </div>
+
+    {{ quirk.get_modifier_summary_html|safe }}
+
+    {% if character and add_button %}
+      <form action="{% url 'characters:add_quirk' pk=character.id quirk_pk=quirk.id %}"
+            class="float-end add-form" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="weapon_id" value="{{ quirk.id }}">
+        <button class="btn btn-sm btn-primary float-end"
+                data-danger="{% trans 'Not possible' %}"
+                data-success="{% trans 'Added' %}">{% trans 'Add Quirk' %}</button>
+      </form>
+    {% endif %}
+  </div>
+
+  {% if user.is_superuser %}
+    <a href="{% url 'admin:horror_quirk_change' quirk.id %}"
+       style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+  {% endif %}
+</div>

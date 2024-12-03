@@ -5,7 +5,6 @@ from characters import views
 app_name = "characters"
 
 urlpatterns = [
-    path("", views.IndexView.as_view(), name="index"),
     path("detail/<int:pk>", views.CharacterDetailView.as_view(), name="detail"),
     path("pdf/<int:pk>", views.CharacterPDFView.as_view(), name="pdf"),
     path(
@@ -154,21 +153,6 @@ urlpatterns = [
         "stress/<int:pk>/<mode>/",
         views.CharacterModifyStressView.as_view(),
         name="modify_stress",
-    ),
-    path(
-        "choose_quirk/<int:pk>/",
-        views.XhrAddQuirkView.as_view(),
-        name="xhr_choose_quirk",
-    ),
-    path(
-        "add_quirk/<int:pk>/<int:quirk_pk>",
-        views.AddQuirkView.as_view(),
-        name="add_quirk",
-    ),
-    path(
-        "remove_quirk/<int:pk>/<int:quirk_pk>",
-        views.XhrRemoveQuirkView.as_view(),
-        name="remove_quirk",
     ),
     # new character
     path("new/", views.CreateCharacterView.as_view(), name="create_character"),

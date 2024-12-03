@@ -1,6 +1,7 @@
 from django.template import Library, Template, Context
 
 from armory.models import Item, RiotGear, Weapon
+from horror.models import Quirk
 from magic.models import BaseSpell
 from rules.models import Extension
 from rules.models import Template as PhaseSixTemplate
@@ -60,6 +61,9 @@ def object_widget(context, obj, character=None, add_button=False):
         )
     if isinstance(obj, PhaseSixTemplate):
         template_string = "{% load rules_extras %}{% template_widget obj character=character add_button=add_button %}"
+    if isinstance(obj, Quirk):
+        template_string = "{% load horror_extras %}{% quirk_widget obj character=character add_button=add_button %}"
+
     return Template(template_string).render(
         Context(
             {

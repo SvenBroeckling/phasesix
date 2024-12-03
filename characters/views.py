@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.mail import mail_admins
 from django.db.models import Q
-from django.db.models.functions import Length
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -69,89 +68,6 @@ from rules.models import (
     Knowledge,
     TemplateCategory,
 )
-from worlds.models import WikiPage, World, WorldLeadImage
-
-
-class IndexView(TemplateView):
-    template_name = "index.html"
-
-    def get_context_characters(self):
-        context = {}
-        characters = Character.objects.filter(image__isnull=False)
-
-        lead_images = WorldLeadImage.objects.all()
-
-        if self.request.world_configuration is not None:
-            characters = characters.filter(
-                extensions=self.request.world_configuration.world.extension
-            )
-            lead_images = lead_images.filter(
-                world=self.request.world_configuration.world
-            )
-        if self.request.user.is_authenticated:
-            characters = characters.filter(created_by=self.request.user).order_by(
-                "-modified_at"
-            )
-        else:
-            characters = characters.filter(may_appear_on_start_page=True).order_by("?")
-
-        context["characters"] = characters[:3]
-        try:
-            context["lead_image"] = lead_images.order_by("?").first()
-        except WorldLeadImage.DoesNotExist:
-            context["lead_image"] = None
-        return context
-
-    def get_context_campaigns(self):
-        context = {}
-        campaigns = Campaign.objects.filter(image__isnull=False)
-        if self.request.world_configuration is not None:
-            campaigns = campaigns.filter(
-                world=self.request.world_configuration.world.extension
-            )
-
-        if self.request.user.is_authenticated:
-            campaigns = campaigns.filter(created_by=self.request.user).order_by(
-                "-created_at"
-            )
-        else:
-            campaigns = campaigns.filter(may_appear_on_start_page=True).order_by("?")
-        context["campaigns"] = campaigns[:3]
-        return context
-
-    def get_context_worlds(self):
-        context = {}
-        if not self.request.world_configuration:
-            context["worlds"] = World.objects.filter(is_active=True)
-        return context
-
-    def get_context_wiki_pages(self):
-        context = {}
-        if self.request.world_configuration is not None:
-            world = self.request.world_configuration.world
-            context["wiki_pages"] = (
-                WikiPage.objects.annotate(text_len=Length("text_de"))
-                .filter(world=world, text_len__gte=30)
-                .order_by("?")[:3]
-            )
-        return context
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(self.get_context_characters())
-        context.update(self.get_context_worlds())
-        context.update(self.get_context_campaigns())
-        context.update(self.get_context_wiki_pages())
-
-        if self.request.world_configuration:
-            world = self.request.world_configuration.world
-            context["world"] = world
-            context["may_edit"] = world.may_edit(self.request.user)
-        else:
-            context["world"] = None
-            context["may_edit"] = False
-
-        return context
 
 
 class CharacterDetailView(DetailView):
@@ -400,42 +316,6 @@ class CharacterModifyStressView(View):
                 if character.stress > 0:
                     character.stress -= 1
             character.save()
-        return JsonResponse({"status": "ok"})
-
-
-class XhrAddQuirkView(TemplateView):
-    template_name = "characters/modals/add_quirk.html"
-
-    def get_context_data(self, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        context = super().get_context_data(**kwargs)
-        context["character"] = character
-        context["quirk_categories"] = QuirkCategory.objects.all()
-        return context
-
-
-class AddQuirkView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        quirk = Quirk.objects.get(id=kwargs["quirk_pk"])
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        character.quirks.add(quirk)
-        return JsonResponse({"status": "ok"})
-
-
-class XhrRemoveQuirkView(View):
-    def post(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        quirk = Quirk.objects.get(id=kwargs["quirk_pk"])
-
-        if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-
-        character.quirks.remove(quirk)
-        character.quirks_healed += 1
-        character.save()
-
         return JsonResponse({"status": "ok"})
 
 
@@ -1294,24 +1174,19 @@ class XhrCharacterObjectsView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.character = Character.objects.get(id=kwargs["pk"])
+        if not self.character.may_edit(request.user):
+            return JsonResponse({"status": "forbidden"})
+
         self.object_type = self.kwargs["object_type"]
-
-        if self.object_type == "weapon":
-            self.model = WeaponType
-            self.child_model = Weapon
-        if self.object_type == "item":
-            self.model = ItemType
-            self.child_model = Item
-        if self.object_type == "riot_gear":
-            self.model = RiotGearType
-            self.child_model = RiotGear
-        if self.object_type == "spell":
-            self.model = SpellOrigin
-            self.child_model = BaseSpell
-        if self.object_type == "template":
-            self.model = TemplateCategory
-            self.child_model = Template
-
+        object_type_mapping = {
+            "weapon": (WeaponType, Weapon),
+            "item": (ItemType, Item),
+            "riot_gear": (RiotGearType, RiotGear),
+            "spell": (SpellOrigin, BaseSpell),
+            "template": (TemplateCategory, Template),
+            "quirk": (QuirkCategory, Quirk),
+        }
+        self.model, self.child_model = object_type_mapping.get(self.object_type)
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -1319,9 +1194,11 @@ class XhrCharacterObjectsView(TemplateView):
             qs = self.model.objects.for_extensions(self.character.extensions)
         except AttributeError:  # model without extensions
             qs = self.model.objects.all()
+
         func = getattr(self, f"filter_{self.object_type}", None)
         if func is not None:
             qs = func(qs)
+
         return qs
 
     def filter_spell(self, qs):
@@ -1344,34 +1221,31 @@ class XhrCharacterObjectsView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if not self.character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        func = getattr(self, f"add_{self.object_type}")
-
         try:
-            func(request.POST.get("object_id"))
+            getattr(self, f"add_{self.object_type}")(request.POST.get("object_id"))
         except ValueError:
             return JsonResponse({"status": "error"})
         return JsonResponse({"status": "ok"})
 
     def delete(self, request, *args, **kwargs):
-        if not self.character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
-        func = getattr(self, f"delete_{self.object_type}")
-
         try:
-            func(request.GET.get("object_id"))
+            getattr(self, f"delete_{self.object_type}")(request.GET.get("object_id"))
         except ValueError:
             return JsonResponse({"status": "error"})
-
         return JsonResponse({"status": "ok"})
 
+    def _add_object(self, model, object_id):
+        obj = model.objects.get(id=object_id)
+        self.character.character_objects.create(obj=obj)
+
+    def _delete_object(self, model, object_id):
+        model.objects.get(id=object_id).delete()
+
     def add_weapon(self, pk):
-        weapon = Weapon.objects.get(id=pk)
-        self.character.characterweapon_set.create(weapon=weapon)
+        self._add_object(Weapon, pk)
 
     def delete_weapon(self, pk):
-        CharacterWeapon.objects.get(id=pk).delete()
+        self._delete_object(CharacterWeapon, pk)
 
     def add_item(self, pk):
         item = Item.objects.get(id=pk)
@@ -1396,18 +1270,16 @@ class XhrCharacterObjectsView(TemplateView):
                 ci.delete()
 
     def add_riot_gear(self, pk):
-        riot_gear = RiotGear.objects.get(id=pk)
-        self.character.characterriotgear_set.create(riot_gear=riot_gear)
+        self._add_object(RiotGear, pk)
 
     def delete_riot_gear(self, pk):
-        CharacterRiotGear.objects.get(id=pk).delete()
+        self._delete_object(CharacterRiotGear, pk)
 
     def add_spell(self, pk):
-        spell = BaseSpell.objects.get(id=pk)
-        self.character.characterspell_set.create(spell=spell)
+        self._add_object(BaseSpell, pk)
 
     def delete_spell(self, pk):
-        CharacterSpell.objects.get(id=pk).delete()
+        self._delete_object(CharacterSpell, pk)
 
     def add_template(self, pk):
         template = Template.objects.get(id=pk)
@@ -1417,4 +1289,4 @@ class XhrCharacterObjectsView(TemplateView):
             raise ValueError()
 
     def delete_template(self, pk):
-        CharacterTemplate.objects.get(id=pk).delete()
+        self._delete_object(CharacterTemplate, pk)
