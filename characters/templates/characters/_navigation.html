@@ -24,7 +24,7 @@
      role="tab"
      aria-current="true">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-fw fa-male"></i>
+      <i class="gi gi-delapouite-person"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Character" %}</span>
     </div>
   </a>
@@ -35,7 +35,7 @@
      role="tab"
      aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-fw fa-suitcase"></i>
+      <i class="gi gi-lorc-battle-gear"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Gear" %}</span>
     </div>
   </a>
@@ -46,7 +46,7 @@
      role="tab"
      aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-fw fa-chess-pawn"></i>
+      <i class="gi gi-lorc-crossed-swords"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Combat" %}</span>
     </div>
   </a>
@@ -74,7 +74,7 @@
        role="tab"
        aria-current="false">
       <div class="d-flex justify-content-center align-items-center">
-        <i class="fas fa-fw fa-ankh"></i>
+        <i class="gi gi-lorc-ankh"></i>
         <span class="ms-3 d-block d-lg-block">{% trans "Belief" %}</span>
       </div>
       {% if object.grace %}
@@ -90,7 +90,7 @@
        role="tab"
        aria-current="false">
       <div class="d-flex justify-content-center align-items-center">
-        <i class="fas fa-fw fa-spider"></i>
+        <i class="gi gi-lorc-monster-grasp"></i>
         <span class="ms-3 d-block d-lg-block">{% trans "Horror" %}</span>
       </div>
       {% if object.stress %}
@@ -105,7 +105,7 @@
      role="tab"
      aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-fw fa-graduation-cap"></i>
+      <i class="gi gi-delapouite-graduate-cap"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Background" %}</span>
     </div>
   </a>
@@ -116,7 +116,7 @@
      role="tab"
      aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-fw fa-feather"></i>
+      <i class="gi gi-delapouite-bookshelf"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Notes" %}</span>
     </div>
     {% if may_edit %}
@@ -127,6 +127,18 @@
       </button>
     {% endif %}
   </a>
+
+  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+     data-bs-toggle="tab"
+     data-bs-target="#v-description"
+     role="tab"
+     aria-current="false">
+    <div class="d-flex justify-content-center align-items-center">
+      <i class="gi gi-lorc-bookmark"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Description" %}</span>
+    </div>
+  </a>
+
 </div>
 
 <div class="list-group mb-3">
@@ -137,12 +149,12 @@
 
     {% if may_edit %}
       <div class="d-flex align-items-center">
-      <i class="fas fa-fw fa-pen"></i>
+      <i class="gi gi-lorc-fountain-pen"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Edit / Download" %}</span>
     </div>
     {% else %}
       <div class="d-flex align-items-center">
-      <i class="fas fa-fw fa-pen"></i>
+      <i class="gi gi-lorc-fountain-pen"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Download" %}</span>
     </div>
     {% endif %}

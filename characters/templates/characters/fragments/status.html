@@ -27,7 +27,7 @@
       <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}"
            data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="dice" %}">
         <div class="card-body">
-          <h5>{% trans "Dice" %}</h5>
+          <h5>{% trans "Dice" %} / {% trans "Custom roll" %}</h5>
           {% dice_display object %}
         </div>
       </div>
