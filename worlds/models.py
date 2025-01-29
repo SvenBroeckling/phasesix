@@ -543,3 +543,21 @@ class WikiPageEmbedding(models.Model):
     spell_origin = models.ForeignKey(
         "magic.SpellOrigin", blank=True, null=True, on_delete=models.SET_NULL
     )
+
+
+class Language(models.Model, metaclass=TransMeta):
+    name = models.CharField(_("name"), max_length=100)
+    country_name = models.CharField(_("country name"), max_length=100)
+    amount_of_people_speaking = models.IntegerField(_("amount of people speaking"))
+    extensions = models.ManyToManyField(
+        "rules.Extension",
+        blank=True,
+        related_name="languages",
+        verbose_name=_("extensions"),
+    )
+
+    class Meta:
+        translate = ("name", "country_name")
+        ordering = ("amount_of_people_speaking",)
+        verbose_name = _("language")
+        verbose_name_plural = _("languages")

@@ -12,6 +12,7 @@ from worlds.models import (
     WikiPageGameAction,
     WorldLeadImage,
     WikiPageEmbedding,
+    Language,
 )
 
 
@@ -130,9 +131,21 @@ class WikiPageGameActionAdmin(ModelAdmin):
     search_fields = ("name_de", "name_en", "wiki_page__name_de", "wiki_page__name_en")
 
 
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = (
+        "name_de",
+        "name_en",
+        "country_name_de",
+        "country_name_en",
+        "amount_of_people_speaking",
+    )
+    list_filter = ("extensions",)
+
+
 admin.site.register(World, WorldAdmin)
 admin.site.register(WikiPage, WikiPageAdmin)
 admin.site.register(WikiPageFoeType, ModelAdmin)
 admin.site.register(WikiPageFoeResistanceOrWeakness)
 admin.site.register(WikiPageGameValues, WikiPageGameValuesAdmin)
 admin.site.register(WikiPageGameAction, WikiPageGameActionAdmin)
+admin.site.register(Language, LanguageAdmin)
