@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load characters_extras %}
+{% if character.bonus_dice_free|add:character.destiny_dice_free|add:character.rerolls_free %}
+  {% for i in character.bonus_dice_free|to_range %}
+    <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Die' %}"></i>
+  {% endfor %}
+  {% for i in character.destiny_dice_free|to_range %}
+    <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Die' %}"></i>
+  {% endfor %}
+  {% for i in character.rerolls_free|to_range %}
+    <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Reroll' %}"></i>
+  {% endfor %}
+{% else %}
+  {% trans "- no bonus dice -" %}
+{% endif %}

@@ -1,0 +1,7 @@
+{% load characters_extras %}
+{% for i in character.arcana|to_range %}
+  <i class="gi-lorc-fairy-wand fs-2 text-warning"></i>
+{% endfor %}
+{% for i in character.arcana_used|to_range %}
+  <i class="gi-lorc-fairy-wand fs-2 text-muted"></i>
+{% endfor %}

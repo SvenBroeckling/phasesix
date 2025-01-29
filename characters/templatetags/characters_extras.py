@@ -10,6 +10,21 @@ from rules.models import Extension
 register = Library()
 
 
+@register.inclusion_tag("characters/_arcana_display.html")
+def arcana_display(character):
+    return {"character": character}
+
+
+@register.inclusion_tag("characters/_dice_display.html")
+def dice_display(character):
+    return {"character": character}
+
+
+@register.inclusion_tag("characters/_wound_display.html")
+def wound_display(character):
+    return {"character": character}
+
+
 @register.inclusion_tag("characters/_protection_display.html")
 def protection_display(character):
     return {"character": character}

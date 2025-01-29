@@ -32,7 +32,19 @@
     </div>
   </div>
 {% endif %}
-<div class="row mt-4 mb-4">
+
+<div class="text-center mt-4">
+  <h2>{% trans "Arcana" %}</h2>
+  {% arcana_display object.character %}
+</div>
+
+<hr>
+<div class="text-center mt-2 fs-2">
+  <h2>{% trans "Spell cost" %}</h2>
+  {% for a in object.arcana_cost|to_range %}<i class="gi-lorc-fairy-wand text-warning"></i>{% endfor %}
+</div>
+
+<div class="row mt-2">
   <div class="col-12">
     <p class="mb-4">{{ object.spell.rules|urpg_markup }}</p>
     <div class="card mb-2 mt-2">
@@ -42,13 +54,6 @@
           {% trans 'Spell Casting' %}
           <span class="float-end"><small
                   class="text-muted">{{ object.spell_type.reference_attribute.name }}</small> {% color_value_span dice 5 %}</span>
-        </li>
-        <li class="list-group-item">
-          <i class="gi-lorc-fairy-wand"></i>
-          {% trans 'Arcana' %}
-          <span class="float-end">
-            {% for a in object.arcana_cost|to_range %}<i class="gi-lorc-fairy-wand text-warning"></i>{% endfor %}
-          </span>
         </li>
         <li class="list-group-item">
           <i class="fas fa-bolt fa-fw"></i>

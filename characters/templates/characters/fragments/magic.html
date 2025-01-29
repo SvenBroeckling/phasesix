@@ -3,6 +3,16 @@
 
 {% block fragment %}
   {% if object.extension_enabled.magic %}
+    {% if object.extension_enabled.magic and object.is_magical %}
+      <div class="card sidebar-trigger mb-3" data-sidebar-title="{% trans 'Magic' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
+        <div class="card-body">
+          <h5>{% trans "Arcana" %}</h5>
+          {% arcana_display object %}
+        </div>
+      </div>
+    {% endif %}
+
     {% if may_edit %}
       <div class="row">
         <div class="col-12">

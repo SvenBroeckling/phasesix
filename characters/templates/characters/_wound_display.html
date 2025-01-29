@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load characters_extras %}
+{% for i in character.health|to_range %}
+  <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
+{% endfor %}
+{% for i in character.wounds_taken|to_range %}
+  <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+{% endfor %}
+{% for i in character.boost|to_range %}
+  <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
+{% endfor %}
+<br>
+{% for cse in character.characterstatuseffect_set.all %}
+  {% for v in cse.value|to_range %}
+    <i title="{{ cse }}: {{ cse.value }}"
+       class="fas fa-fw {{ cse.status_effect.fa_icon_class }} {{ cse.status_effect.color_class }}"></i>
+  {% endfor %}
+{% endfor %}
