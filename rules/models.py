@@ -113,6 +113,9 @@ class Extension(models.Model, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL,
     )
+    exclusive_languages = models.BooleanField(
+        default=False, help_text=_("Don't allow epoch languages if this is set.")
+    )
 
     class Meta:
         ordering = ("ordering",)

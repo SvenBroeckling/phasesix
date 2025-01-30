@@ -4,11 +4,12 @@
 <div class="card mb-3">
   <div class="card-body">
     <h3>{{ language }}</h3>
-    <small class="text-muted">
+    <div class="text-muted mb-3">
       {% blocktrans with t_amount=language.amount_of_people_speaking|intword t_country=language.country_name %}
         Spoken by {{ t_amount }} individuals.
-        Originates in {{ t_country }}.
-      {% endblocktrans %}</small>
+        Origin: {{ t_country }}
+      {% endblocktrans %}
+    </div>
 
     {% if character %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="language" %}"

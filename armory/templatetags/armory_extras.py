@@ -1,6 +1,7 @@
 from django.template import Library, Template, Context
 
 from armory.models import Item, RiotGear, Weapon
+from characters.templatetags.characters_extras import for_extensions
 from horror.models import Quirk
 from magic.models import BaseSpell
 from rules.models import Extension
@@ -95,6 +96,13 @@ def searchable_object_card_list(
             extension_qs = Extension.objects.for_world(wc.world)
         else:
             extension_qs = Extension.objects.all()
+
+    ids_with_content = [
+        category.id
+        for category in category_qs
+        if for_extensions(category.child_item_qs(), extension_qs).exists()
+    ]
+    category_qs = category_qs.filter(id__in=ids_with_content).distinct()
 
     return {
         "world_configuration": context["request"].world_configuration,

@@ -16,13 +16,11 @@
     <div class="collapse dont-collapse-md" id="searchable-object-card-list-mobile-nav">
       <ul class="nav nav-pills flex-column" role="tablist">
         {% for category in category_qs %}
-          {% if category|has_content_for_extensions:extension_qs %}
-            <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-{{ category.id }}">
-              <a class="nav-link {% if forloop.first %}active{% endif %}"
-                 href="#category-{{ category.id }}" aria-controls="home" role="tab"
-                 data-bs-toggle="tab">{{ category }}</a>
-            </li>
-          {% endif %}
+          <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-{{ category.id }}">
+            <a class="nav-link {% if forloop.first %}active{% endif %}"
+               href="#category-{{ category.id }}" aria-controls="home" role="tab"
+               data-bs-toggle="tab">{{ category }}</a>
+          </li>
         {% endfor %}
 
         {% if homebrew_qs and homebrew_qs.exists %}
@@ -38,7 +36,7 @@
 
   <div class="col-12 col-md-8 col-lg-9">
     <div class="tab-content">
-      {% for category in category_qs.distinct %}
+      {% for category in category_qs %}
         <div role="tabpanel"
              data-rel="#nav-item-{{ category.id }}"
              class="tab-pane searchable-object-card-list-tab-pane {% if forloop.first %}active{% endif %}"

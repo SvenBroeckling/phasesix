@@ -1199,6 +1199,10 @@ class XhrCharacterObjectsView(TemplateView):
         if func is not None:
             qs = func(qs)
 
+        func = getattr(self, f"sort_{self.object_type}", None)
+        if func is not None:
+            qs = func(qs)
+
         return qs
 
     def filter_spell(self, qs):
@@ -1206,6 +1210,13 @@ class XhrCharacterObjectsView(TemplateView):
 
     def filter_template(self, qs):
         return qs.filter(allow_for_reputation=True)
+
+    def filter_language(self, qs):
+        """The world extension overides the epoch extensions, if present."""
+        world_extension = self.character.extensions.filter(type="w").first()
+        if world_extension and world_extension.exclusive_languages:
+            return qs.filter(language__extensions__type="w")
+        return qs
 
     def get_homebrew_queryset(self):
         return self.child_model.objects.homebrew(

@@ -11,16 +11,19 @@
              src="{{ image }}"
              alt="{% trans "Profile image" %}">
       {% endif %}
+    </div>
+
+    <div class="col-12 col-md-6">
 
       {% if object.description %}
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-body">
             {{ object.description|urpg_markup }}
           </div>
         </div>
       {% else %}
         {% if may_edit %}
-          <div class="card"
+          <div class="card mb-3"
                data-url=""
                data-bs-toggle="modal"
                data-bs-target=".page-modal"
@@ -35,9 +38,6 @@
           </div>
         {% endif %}
       {% endif %}
-    </div>
-
-    <div class="col-12 col-md-6">
 
       <div {% if may_edit %}
         data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}"
