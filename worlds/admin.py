@@ -134,16 +134,18 @@ class WikiPageGameActionAdmin(ModelAdmin):
 
 class LanguageAdmin(ModelAdmin):
     list_display = (
-        "name_de",
         "name_en",
         "group",
-        "country_name_de",
+        "extension_string",
         "country_name_en",
         "amount_of_people_speaking",
     )
     search_fields = "name_de", "name_en"
     list_editable = ("group",)
     list_filter = ("extensions",)
+
+    def extension_string(self, obj):
+        return ", ".join(e.name for e in obj.extensions.all())
 
 
 admin.site.register(World, WorldAdmin)
