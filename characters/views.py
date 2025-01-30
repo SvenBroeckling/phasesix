@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse, Http404
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.translation import gettext
+from django.utils.translation import gettext, get_language
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView, DetailView, FormView, ListView
@@ -1199,10 +1199,6 @@ class XhrCharacterObjectsView(TemplateView):
         if func is not None:
             qs = func(qs)
 
-        func = getattr(self, f"sort_{self.object_type}", None)
-        if func is not None:
-            qs = func(qs)
-
         return qs
 
     def filter_spell(self, qs):
@@ -1215,8 +1211,8 @@ class XhrCharacterObjectsView(TemplateView):
         """The world extension overides the epoch extensions, if present."""
         world_extension = self.character.extensions.filter(type="w").first()
         if world_extension and world_extension.exclusive_languages:
-            return qs.filter(language__extensions__type="w")
-        return qs
+            qs = qs.filter(language__extensions__type="w")
+        return qs.order_by(f"name_{get_language()}")
 
     def get_homebrew_queryset(self):
         return self.child_model.objects.homebrew(
@@ -1304,3 +1300,10 @@ class XhrCharacterObjectsView(TemplateView):
 
     def delete_quirk(self, pk):
         self.character.quirks.remove(pk)
+
+    def add_language(self, pk):
+        language = Language.objects.get(id=pk)
+        self.character.characterlanguage_set.get_or_create(language=language)
+
+    def delete_language(self, pk):
+        self.character.characterlanguage_set.filter(id=pk).delete()

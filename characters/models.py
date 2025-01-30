@@ -669,6 +669,12 @@ class CharacterSkillQuerySet(models.QuerySet):
         return self.get(skill__name_en="Spell Casting")
 
 
+class CharacterLanguage(models.Model):
+    character = models.ForeignKey(Character, models.CASCADE)
+    language = models.ForeignKey("worlds.Language", on_delete=models.CASCADE)
+    modifier = models.IntegerField(_("Modifier"), default=0)
+
+
 class CharacterAttribute(models.Model):
     objects = CharacterAttributeQuerySet.as_manager()
     character = models.ForeignKey(Character, models.CASCADE)
