@@ -23,3 +23,11 @@ def breadcrumbs(page):
         bc += pages[::-1]
 
     return bc
+
+
+@register.inclusion_tag("worlds/_language_widget.html", takes_context=True)
+def language_widget(context, language, character=None, add_button=False):
+    context.update(
+        {"language": language, "character": character, "add_button": add_button}
+    )
+    return context

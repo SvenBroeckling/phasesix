@@ -68,6 +68,7 @@ from rules.models import (
     TemplateCategory,
     Knowledge,
 )
+from worlds.models import Language, LanguageGroup
 
 
 class CharacterDetailView(DetailView):
@@ -154,14 +155,11 @@ class XhrSidebarView(DetailView):
 
         # Additional context for specific templates
         if sidebar_template == "character":
-            context.update(
-                {
-                    "status_effects": StatusEffect.objects.filter(
-                        is_active=True
-                    ).order_by("ordering"),
-                    "character_form": CharacterImageForm(instance=self.object),
-                }
-            )
+            context["character_form"] = CharacterImageForm(instance=self.object)
+        elif sidebar_template == "wounds":
+            context["status_effects"] = StatusEffect.objects.filter(
+                is_active=True
+            ).order_by("ordering")
         elif sidebar_template == "protection":
             context["protection_types"] = ProtectionType.objects.all()
         elif sidebar_template == "knowledge":
@@ -1186,6 +1184,7 @@ class XhrCharacterObjectsView(TemplateView):
             "spell": (SpellOrigin, BaseSpell),
             "template": (TemplateCategory, Template),
             "quirk": (QuirkCategory, Quirk),
+            "language": (LanguageGroup, Language),
         }
         self.model, self.child_model = object_type_mapping.get(self.object_type)
         return super().dispatch(request, *args, **kwargs)

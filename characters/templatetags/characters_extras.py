@@ -107,6 +107,8 @@ def has_content_for_extensions(category, extension_qs):
 
 @register.filter
 def for_extensions(queryset, extension_queryset):
+    print(queryset, extension_queryset)
+    print([e.extensions.all() for e in queryset])
     try:
         return queryset.filter(
             Q(extensions__id__in=extension_queryset.all())

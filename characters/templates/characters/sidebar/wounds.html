@@ -17,13 +17,12 @@
     </div>
 
     <div class="col-12 mb-3 mt-1">
-      <a
-              class="btn btn-success btn-sm w-100 modal-trigger small-modal"
-              data-url="{% url 'characters:xhr_rest' pk=object.id %}"
-              data-bs-toggle="modal"
-              data-bs-target=".page-modal"
-              data-modal-title="{% trans 'Rest' %}"
-              href=""><i class="fas fa-bed fa-fw"></i> {% trans 'Rest' %}</a>
+      <a class="btn btn-success btn-sm w-100 modal-trigger small-modal"
+         data-url="{% url 'characters:xhr_rest' pk=object.id %}"
+         data-bs-toggle="modal"
+         data-bs-target=".page-modal"
+         data-modal-title="{% trans 'Rest' %}"
+         href=""><i class="fas fa-bed fa-fw"></i> {% trans 'Rest' %}</a>
     </div>
   </div>
 {% endif %}

@@ -13,6 +13,7 @@ from worlds.models import (
     WorldLeadImage,
     WikiPageEmbedding,
     Language,
+    LanguageGroup,
 )
 
 
@@ -131,14 +132,17 @@ class WikiPageGameActionAdmin(ModelAdmin):
     search_fields = ("name_de", "name_en", "wiki_page__name_de", "wiki_page__name_en")
 
 
-class LanguageAdmin(admin.ModelAdmin):
+class LanguageAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
+        "group",
         "country_name_de",
         "country_name_en",
         "amount_of_people_speaking",
     )
+    search_fields = "name_de", "name_en"
+    list_editable = ("group",)
     list_filter = ("extensions",)
 
 
@@ -149,3 +153,4 @@ admin.site.register(WikiPageFoeResistanceOrWeakness)
 admin.site.register(WikiPageGameValues, WikiPageGameValuesAdmin)
 admin.site.register(WikiPageGameAction, WikiPageGameActionAdmin)
 admin.site.register(Language, LanguageAdmin)
+admin.site.register(LanguageGroup, ModelAdmin)

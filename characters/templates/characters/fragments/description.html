@@ -1,9 +1,71 @@
 {% extends 'characters/fragments/fragment_base.html' %}
+{% load portal_extras %}
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-12 col-md-6">
+      {% image_url object "1200x1200" as image %}
+      {% if image %}
+        <img class="border border-2 border-black img-fluid mb-2"
+             src="{{ image }}"
+             alt="{% trans "Profile image" %}">
+      {% endif %}
+
+      {% if object.description %}
+        <div class="card">
+          <div class="card-body">
+            {{ object.description|urpg_markup }}
+          </div>
+        </div>
+      {% else %}
+        {% if may_edit %}
+          <div class="card"
+               data-url=""
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Edit description' %}">
+            <div class="card-body p-4 d-flex align-items-center justify-content-start">
+              <i class="fs-1 me-3 gi gi-lorc-open-book"></i>
+              <div>
+                <span class="fs-4">{% trans "No description yet." %}</span><br>
+                <small class="text-muted">{% trans "Click to edit" %}</small>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="col-12 col-md-6">
+
+      <div {% if may_edit %}
+        data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}"
+        data-bs-toggle="modal"
+        data-bs-target=".page-modal"
+        data-modal-title="{% trans 'Add Language' %}"
+      {% endif %}
+        class="card mb-3 pointer {% if may_edit %}modal-trigger{% endif %}">
+        <div class="card-body p-4 d-flex align-items-center justify-content-start">
+          <i class="fs-1 me-3 gi gi-delapouite-hieroglyph-y"></i>
+          <div>
+            <span class="fs-4">{% trans "No languages yet." %}</span><br>
+            {% if may_edit %}
+              <small class="text-muted">{% trans "Click to edit" %}</small>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body p-4 d-flex align-items-center justify-content-start">
+          <i class="fs-1 me-3 gi gi-darkzaitzev-hooded-figure"></i>
+          <div>
+            <span class="fs-4">{% trans "No contacts yet." %}</span><br>
+            <small class="text-muted">{% trans "Click to add a contact" %}</small>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

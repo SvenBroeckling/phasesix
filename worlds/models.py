@@ -8,6 +8,7 @@ from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
 from characters.utils import static_thumbnail
+from homebrew.models import HomebrewModel, HomebrewQuerySet
 from worlds.unique_slugify import unique_slugify
 
 
@@ -545,10 +546,38 @@ class WikiPageEmbedding(models.Model):
     )
 
 
-class Language(models.Model, metaclass=TransMeta):
+class LanguageGroup(models.Model, metaclass=TransMeta):
+    name = models.CharField(_("name"), max_length=100)
+
+    class Meta:
+        translate = ("name",)
+        verbose_name = _("language group")
+        verbose_name_plural = _("language groups")
+
+    def __str__(self):
+        return self.name
+
+    def child_item_qs(self):
+        return self.language_set.all()
+
+
+class LanguageQuerySet(HomebrewQuerySet):
+    pass
+
+
+class Language(HomebrewModel, metaclass=TransMeta):
+    objects = LanguageQuerySet.as_manager()
+
     name = models.CharField(_("name"), max_length=100)
     country_name = models.CharField(_("country name"), max_length=100)
     amount_of_people_speaking = models.IntegerField(_("amount of people speaking"))
+    group = models.ForeignKey(
+        LanguageGroup,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_("group"),
+    )
     extensions = models.ManyToManyField(
         "rules.Extension",
         blank=True,
@@ -561,3 +590,6 @@ class Language(models.Model, metaclass=TransMeta):
         ordering = ("amount_of_people_speaking",)
         verbose_name = _("language")
         verbose_name_plural = _("languages")
+
+    def __str__(self):
+        return self.name

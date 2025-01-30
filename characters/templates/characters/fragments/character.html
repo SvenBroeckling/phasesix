@@ -2,32 +2,31 @@
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
-    <div class="row">
-
-        <div class="col-md-4">
-            {% include 'characters/includes/physis_table.html' %}
-        </div>
-
-        <div class="col-md-4">
-            {% include 'characters/includes/persona_table.html' %}
-        </div>
-
-        <div class="col-md-4">
-            {% include 'characters/includes/knowledge_table.html' %}
-        </div>
-    </div>
-
-<div class="row mt-2">
+  <div class="row">
     <div class="col-md-4">
-        {% include 'characters/includes/mind_skill_table.html' %}
+      {% include 'characters/includes/physis_table.html' %}
     </div>
 
     <div class="col-md-4">
-        {% include 'characters/includes/practical_skill_table.html' %}
+      {% include 'characters/includes/persona_table.html' %}
     </div>
 
     <div class="col-md-4">
-        {% include 'characters/includes/shadows_table.html' %}
+      {% include 'characters/includes/knowledge_table.html' %}
     </div>
-</div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-md-4">
+      {% include 'characters/includes/mind_skill_table.html' %}
+    </div>
+
+    <div class="col-md-4">
+      {% include 'characters/includes/practical_skill_table.html' %}
+    </div>
+
+    <div class="col-md-4">
+      {% include 'characters/includes/shadows_table.html' %}
+    </div>
+  </div>
 {% endblock %}

@@ -12,27 +12,33 @@
     {% for total in object.total_protection_available %}
       {% with rgp=total.riot_gear_protection %}
         {% for i in total.available_protection|to_range %}
-          <a class="action-link"
-             href="{% url 'characters:spend_protection' pk=object.id protection_type_pk=rgp.protection_type.id riot_gear_pk=rgp.riot_gear.id %}">
-            <i class="fs-2 {{ rgp.protection_type.icon_class }} {{ rgp.protection_type.color_class }}"
-               title="{{ rgp.protection_type.name }}"></i>
+          {% if may_edit %}
+            <a class="action-link"
+               href="{% url 'characters:spend_protection' pk=object.id protection_type_pk=rgp.protection_type.id riot_gear_pk=rgp.riot_gear.id %}">
+          {% endif %}
+        <i class="fs-2 {{ rgp.protection_type.icon_class }} {{ rgp.protection_type.color_class }}"
+           title="{{ rgp.protection_type.name }}"></i>
+        {% if may_edit %}
           </a>
+        {% endif %}
         {% endfor %}
       {% endwith %}
     {% endfor %}
   </div>
 </div>
 
-<div class="row">
-  <div class="col-12">
-    <a href="{% url "characters:restore_protection" pk=object.id %}"
-       class="btn btn-primary w-100 mb-2 action-link">{% trans "Restore all" %}</a>
-    {% blocktrans %}
-      Click on the shield icons above to spend protection points.
-      You can spend protection points whenever a hit is taken and not otherwise prevented.
-    {% endblocktrans %}
+{% if may_edit %}
+  <div class="row">
+    <div class="col-12">
+      <a href="{% url "characters:restore_protection" pk=object.id %}"
+         class="btn btn-primary w-100 mb-2 action-link">{% trans "Restore all" %}</a>
+      {% blocktrans %}
+        Click on the shield icons above to spend protection points.
+        You can spend protection points whenever a hit is taken and not otherwise prevented.
+      {% endblocktrans %}
+    </div>
   </div>
-</div>
+{% endif %}
 
 <div class="row">
   <div class="col-12 text-center mt-3">

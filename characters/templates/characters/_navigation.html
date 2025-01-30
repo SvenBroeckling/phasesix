@@ -18,7 +18,19 @@
 </ul>
 
 <div class="list-group mb-3">
-  <a class="active navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+
+  <a class="active py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+     data-bs-toggle="tab"
+     data-bs-target="#v-description"
+     role="tab"
+     aria-current="false">
+    <div class="d-flex justify-content-center align-items-center">
+      <i class="gi gi-lorc-bookmark"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Description" %}</span>
+    </div>
+  </a>
+
+  <a class="navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
      data-bs-toggle="tab"
      data-bs-target="#v-character"
      role="tab"
@@ -126,17 +138,6 @@
         +
       </button>
     {% endif %}
-  </a>
-
-  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-description"
-     role="tab"
-     aria-current="false">
-    <div class="d-flex justify-content-center align-items-center">
-      <i class="gi gi-lorc-bookmark"></i>
-      <span class="ms-3 d-block d-lg-block">{% trans "Description" %}</span>
-    </div>
   </a>
 
 </div>

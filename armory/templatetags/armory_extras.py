@@ -5,6 +5,7 @@ from horror.models import Quirk
 from magic.models import BaseSpell
 from rules.models import Extension
 from rules.models import Template as PhaseSixTemplate
+from worlds.models import Language
 
 register = Library()
 
@@ -63,6 +64,8 @@ def object_widget(context, obj, character=None, add_button=False):
         template_string = "{% load rules_extras %}{% template_widget obj character=character add_button=add_button %}"
     if isinstance(obj, Quirk):
         template_string = "{% load horror_extras %}{% quirk_widget obj character=character add_button=add_button %}"
+    if isinstance(obj, Language):
+        template_string = "{% load world_extras %}{% language_widget obj character=character add_button=add_button %}"
 
     return Template(template_string).render(
         Context(
