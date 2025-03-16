@@ -4,7 +4,7 @@
 
 <a href="{{ campaign.get_absolute_url }}">
   <div class="card campaign-list-item h-100">
-    <img src="{% backdrop_image_url campaign %}" alt="{{ campaign }}" class="card-img-top object-fit-cover"
+    <img src="{% backdrop_image_url campaign "800x800" %}" alt="{{ campaign }}" class="card-img-top object-fit-cover"
          style="height:120px;">
     <div class="d-flex align-items-center hover-pointer"
          style="position:absolute; left:32px; top:32px">
@@ -14,13 +14,13 @@
     </div>
     <div class="card-body mt-5">
       <h4>{{ campaign.name }}</h4>
-    
+
       <div class="d-flex justify-content-start flex-wrap mt-2">
         {% for c in campaign.character_set.all %}
           <img src="{% image_url c geometry="40x40" crop="center" %}" alt="{{ c }}">
         {% endfor %}
       </div>
-    
+
     </div>
   </div>
 </a>

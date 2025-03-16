@@ -155,7 +155,7 @@ class Character(models.Model):
         return self.name
 
     class Meta:
-        ordering = ("-modified_at",)
+        ordering = ("-created_at",)
 
     def may_edit(self, user):
         if self.created_by == user:

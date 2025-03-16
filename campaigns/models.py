@@ -117,6 +117,11 @@ class Campaign(models.Model):
         _("character visibility"), max_length=1, default="A", choices=VISIBILITY_CHOICES
     )
 
+    class Meta:
+        verbose_name = _("Campaign")
+        verbose_name_plural = _("Campaigns")
+        ordering = ("-created_at",)
+
     def __str__(self):
         return self.name
 

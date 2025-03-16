@@ -92,11 +92,102 @@
 
       <li class="nav-item">
         {% if user.is_authenticated %}
-          <a href="{% url "portal:profile" pk=user.id %}"
-             class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">
+          <button type="button"
+                  data-bs-toggle="dropdown"
+                  class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">
             <i class="fas fa-user"></i>
             <span class="d-none d-md-inline">{{ request.user|capfirst }}</span>
-          </a>
+          </button>
+          <ul style="width:350px; max-height:calc(100vh - 120px); overflow-x:hidden; overflow-y:auto;"
+              class="dropdown-menu dropdown-menu-end shadow">
+            <li>
+              <a class="dropdown-item d-flex w-100 flex-column gap-2 pb-2"
+                 href="{% url "portal:profile" pk=user.id %}">
+                <span class="d-flex justify-content-center fw-semibold p-1 border rounded-pill">{% trans "Show profile" %}</span>
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            {% create_character_url as create_url %}
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-3"
+                 href="{{ create_url }}">
+                {% trans "Create character" %}
+              </a>
+            </li>
+            <li>
+              {% create_campaign_url as create_url %}
+              <a class="dropdown-item d-flex align-items-center gap-3"
+                 href="{{ create_url }}">
+                {% trans "Create campaign" %}
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <span class="dropdown-header fw-semibold fs-6">{% trans "Characters" %}</span>
+            </li>
+            {% for character in user.character_set.pc|slice:":4" %}
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-3"
+                   href="{% url 'characters:detail' pk=character.id %}">
+                  {% image_url character "50x50" as image %}
+                  <img width="25" height="25" class="rounded"
+                       src="{{ image }}"
+                       alt="{% trans "Character image" %}">
+                  {{ character }}
+                </a>
+              </li>
+            {% endfor %}
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <span class="dropdown-header fw-semibold fs-6">{% trans "Campaigns" %}</span>
+            </li>
+            {% for campaign in user.campaign_set.all|slice:":4" %}
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-3"
+                   href="{% url 'campaigns:detail' pk=campaign.id %}">
+                  {% image_url campaign "50x50" as image %}
+                  <img width="25" height="25" class="rounded"
+                       src="{{ image }}"
+                       alt="{% trans "Campaign image" %}">
+                  {{ campaign }}
+                </a>
+              </li>
+            {% endfor %}
+
+            {% if user.is_staff %}
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                {% create_campaign_url as create_url %}
+                <a class="dropdown-item d-flex align-items-center gap-3"
+                   href="/admin">
+                  {% trans "Admin" %}
+                </a>
+              </li>
+            {% endif %}
+
+            <li>
+              <a hx-post="{% url 'logout' %}"
+                 hx-swap="none"
+                 hx-on::after-request="window.location='/'"
+                 class="dropdown-item d-flex align-items-center gap-3"
+                 href="">{% trans "Logout" %}
+              </a>
+            </li>
+          </ul>
         {% else %}
           <a href="{% url "login" %}"
              class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">

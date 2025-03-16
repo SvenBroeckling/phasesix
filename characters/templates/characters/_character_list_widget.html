@@ -3,7 +3,7 @@
 
 <a class="character-list-widget" href="{{ character.get_absolute_url }}" data-character-id="{{ character.id }}">
   <div class="card character-list-item h-100">
-    <img src="{% backdrop_image_url character %}" alt="{{ character }}" class="card-img-top object-fit-cover"
+    <img src="{% backdrop_image_url character "800x800" %}" alt="{{ character }}" class="card-img-top object-fit-cover"
          style="height:120px;">
     <div class="d-flex align-items-center hover-pointer"
          style="position:absolute; left:32px; top:32px">
