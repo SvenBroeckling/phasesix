@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 18:12+0000\n"
-"PO-Revision-Date: 2025-01-30 19:15+0100\n"
+"POT-Creation-Date: 2025-03-16 05:36+0000\n"
+"PO-Revision-Date: 2025-03-16 06:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -150,8 +150,8 @@ msgstr "Gefahr"
 #: armory/models.py:177 armory/models.py:206 armory/models.py:246
 #: armory/models.py:296 armory/models.py:320 armory/models.py:354
 #: armory/models.py:388 armory/models.py:423 armory/models.py:462
-#: armory/models.py:470 campaigns/models.py:28 campaigns/models.py:184
-#: campaigns/models.py:192 characters/models.py:37 forum/models.py:38
+#: armory/models.py:470 campaigns/models.py:28 campaigns/models.py:189
+#: campaigns/models.py:197 characters/models.py:37 forum/models.py:38
 #: forum/models.py:60 horror/models.py:12 horror/models.py:30
 #: magic/models.py:18 magic/models.py:31 magic/models.py:44 magic/models.py:75
 #: magic/models.py:171 magic/models.py:189 magic/models.py:201
@@ -167,7 +167,7 @@ msgstr "Name"
 #: armory/models.py:29 armory/models.py:55 armory/models.py:145
 #: armory/models.py:207 armory/models.py:247 armory/models.py:297
 #: armory/models.py:321 armory/models.py:355 armory/models.py:390
-#: armory/models.py:424 campaigns/models.py:213 characters/models.py:38
+#: armory/models.py:424 campaigns/models.py:218 characters/models.py:38
 #: horror/models.py:35 pantheon/models.py:23 pantheon/models.py:66
 #: rules/models.py:81 rules/models.py:142 rules/models.py:188
 #: rules/models.py:207 rules/models.py:241 rules/models.py:284
@@ -176,7 +176,7 @@ msgstr "Beschreibung"
 
 #: armory/models.py:30 armory/models.py:64 armory/models.py:146
 #: armory/models.py:198 armory/models.py:420 campaigns/models.py:65
-#: campaigns/models.py:211 characters/models.py:87 characters/models.py:769
+#: campaigns/models.py:216 characters/models.py:87 characters/models.py:769
 #: characters/models.py:1077 forum/models.py:21 forum/models.py:27
 #: forum/models.py:31 forum/models.py:37 forum/models.py:55 forum/models.py:99
 #: magic/models.py:129 magic/models.py:208 pantheon/models.py:24
@@ -274,7 +274,7 @@ msgid "Shows a roll button at the item if not empty."
 msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:108 armory/models.py:226 campaigns/models.py:30
-#: campaigns/models.py:194 characters/models.py:64 forum/models.py:33
+#: campaigns/models.py:199 characters/models.py:64 forum/models.py:33
 #: magic/models.py:49 magic/models.py:80 pantheon/models.py:69
 #: portal/models.py:14 rules/models.py:89 worlds/models.py:86
 #: worlds/models.py:189 worlds/models.py:259 worlds/models.py:375
@@ -282,7 +282,7 @@ msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:111 armory/models.py:229 campaigns/models.py:33
-#: campaigns/models.py:55 campaigns/models.py:197 characters/models.py:67
+#: campaigns/models.py:55 campaigns/models.py:202 characters/models.py:67
 #: characters/models.py:81 magic/models.py:52 magic/models.py:87
 #: pantheon/models.py:72 portal/models.py:17 portal/models.py:31
 #: rules/models.py:92 worlds/models.py:89 worlds/models.py:262
@@ -291,7 +291,7 @@ msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:114 armory/models.py:232 campaigns/models.py:36
-#: campaigns/models.py:58 campaigns/models.py:200 characters/models.py:70
+#: campaigns/models.py:58 campaigns/models.py:205 characters/models.py:70
 #: characters/models.py:84 magic/models.py:55 magic/models.py:90
 #: pantheon/models.py:75 portal/models.py:20 portal/models.py:34
 #: rules/models.py:95 worlds/models.py:92 worlds/models.py:265
@@ -734,76 +734,81 @@ msgstr "Spielprotokollsichtbarkeit"
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:185 characters/models.py:1080 forum/models.py:104
+#: campaigns/models.py:121 campaigns/templates/campaigns/_navigation.html:12
+#: characters/models.py:113 homebrew/templates/homebrew/index.html:15
+#: worlds/templates/worlds/_add_to_campaign.html:7
+msgid "Campaign"
+msgstr "Kampagne"
+
+#: campaigns/models.py:122 characters/templates/_main_nav.html:154
+#: portal/templates/portal/_navigation.html:33
+msgid "Campaigns"
+msgstr "Kampagnen"
+
+#: campaigns/models.py:190 characters/models.py:1080 forum/models.py:104
 #: worlds/models.py:252
 msgid "text"
 msgstr "Text"
 
-#: campaigns/models.py:212
+#: campaigns/models.py:217
 msgid "header"
 msgstr "Kopfzeile"
 
-#: campaigns/models.py:215
+#: campaigns/models.py:220
 msgid "roll string"
 msgstr "Würfelstring"
 
-#: campaigns/models.py:217
+#: campaigns/models.py:222
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
-#: campaigns/models.py:219
+#: campaigns/models.py:224
 msgid "modifier"
 msgstr "Modifikator"
 
-#: campaigns/models.py:220 rules/models.py:18 worlds/models.py:460
+#: campaigns/models.py:225 rules/models.py:18 worlds/models.py:460
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: campaigns/models.py:223
+#: campaigns/models.py:228
 msgid "crit count"
 msgstr "Anzahl kritischer Erfolge"
 
-#: campaigns/models.py:224
+#: campaigns/models.py:229
 msgid "crit sum"
 msgstr "Summe kritischer Erfolge"
 
-#: campaigns/models.py:225
+#: campaigns/models.py:230
 msgid "exploded dice count"
 msgstr "Anzahl Exploding Dice"
 
-#: campaigns/models.py:226
+#: campaigns/models.py:231
 msgid "exploded dice sum"
 msgstr "Summe Exploding Dice"
 
-#: campaigns/models.py:227
+#: campaigns/models.py:232
 msgid "highest single roll"
 msgstr "Höchster einzelner Wurf"
 
-#: campaigns/models.py:228
+#: campaigns/models.py:233
 msgid "successes count"
 msgstr "Anzahl Erfolge"
 
-#: campaigns/models.py:229
+#: campaigns/models.py:234
 msgid "successes sum"
 msgstr "Summe Erfolge"
 
-#: campaigns/models.py:230
+#: campaigns/models.py:235
 msgid "fails count"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:231
+#: campaigns/models.py:236
 msgid "fails sum"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:232
+#: campaigns/models.py:237
 msgid "total sum"
 msgstr "Gesamtsumme"
-
-#: campaigns/templates/campaigns/_navigation.html:12 characters/models.py:113
-#: homebrew/templates/homebrew/index.html:15
-#: worlds/templates/worlds/_add_to_campaign.html:7
-msgid "Campaign"
-msgstr "Kampagne"
 
 #: campaigns/templates/campaigns/_navigation.html:23
 msgid "Settings"
@@ -887,6 +892,7 @@ msgstr ""
 "   "
 
 #: campaigns/templates/campaigns/campaign_form.html:22
+#: characters/templates/_main_nav.html:125
 msgid "Create campaign"
 msgstr "Kampagne erstellen"
 
@@ -1650,7 +1656,38 @@ msgstr "Regeln"
 msgid "Forum"
 msgstr "Forum"
 
-#: characters/templates/_main_nav.html:104 templates/registration/login.html:4
+#: characters/templates/_main_nav.html:106
+msgid "Show profile"
+msgstr "Profil anzeigen"
+
+#: characters/templates/_main_nav.html:118
+msgid "Create character"
+msgstr "Erstelle einen Charakter"
+
+#: characters/templates/_main_nav.html:134
+#: portal/templates/portal/_navigation.html:11
+msgid "Characters"
+msgstr "Charaktere"
+
+#: characters/templates/_main_nav.html:143
+msgid "Character image"
+msgstr "Charakterbild"
+
+#: characters/templates/_main_nav.html:163
+msgid "Campaign image"
+msgstr "Kampagnenbild"
+
+#: characters/templates/_main_nav.html:177
+#: portal/templates/portal/profile.html:94
+#: worlds/templates/worlds/_navigation.html:55
+msgid "Admin"
+msgstr "Admin"
+
+#: characters/templates/_main_nav.html:187
+msgid "Logout"
+msgstr "Abmelden"
+
+#: characters/templates/_main_nav.html:195 templates/registration/login.html:4
 #: templates/registration/login.html:14
 msgid "Login"
 msgstr "Anmelden"
@@ -4114,14 +4151,6 @@ msgstr "Profil"
 msgid "Profiles"
 msgstr "Profile"
 
-#: portal/templates/portal/_navigation.html:11
-msgid "Characters"
-msgstr "Charaktere"
-
-#: portal/templates/portal/_navigation.html:33
-msgid "Campaigns"
-msgstr "Kampagnen"
-
 #: portal/templates/portal/_navigation.html:44
 msgid "More"
 msgstr "Mehr"
@@ -4137,11 +4166,6 @@ msgstr "Individuell"
 #: portal/templates/portal/profile.html:10
 msgid "Member since"
 msgstr "Mitglied seit"
-
-#: portal/templates/portal/profile.html:94
-#: worlds/templates/worlds/_navigation.html:55
-msgid "Admin"
-msgstr "Admin"
 
 #: portal/templates/portal/profile.html:105
 msgid "2024 WrapUp"
@@ -5418,9 +5442,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "Play"
 #~ msgstr "Spielen"
-
-#~ msgid "Create character"
-#~ msgstr "Erstelle einen Charakter"
 
 #~ msgid "The World"
 #~ msgstr "Die Welt"
