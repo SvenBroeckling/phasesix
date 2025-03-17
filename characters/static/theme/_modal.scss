@@ -1,0 +1,23 @@
+/* Scroll only modal body */
+
+.modal-trigger {
+  cursor: pointer;
+}
+
+.modal-trigger:not(.btn):not(.nav-link):not(.dropdown-item):not(.list-group-item):hover {
+  background-color: $body-tertiary-bg-dark;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+  overflow-y: initial !important;
+}
+
+.modal-xl .modal-body {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.modal-fullscreen .btn-close {
+  background-color: $secondary !important;
+}

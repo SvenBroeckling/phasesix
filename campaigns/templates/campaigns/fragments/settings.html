@@ -2,59 +2,59 @@
 {% load i18n thumbnail static characters_extras campaign_extras %}
 
 {% block fragment %}
-    <div class="row">
-        <div class="col-12">
-            {% trans 'World' %}
-            <span class="float-end">{{ object.world }}</span>
-            <hr>
+  <div class="row">
+    <div class="col-12">
+      {% trans 'World' %}
+      <span class="float-end">{{ object.world }}</span>
+      <hr>
 
-            {% trans 'Epoch' %}
-            <span class="float-end">{{ object.epoch }}</span>
-            <hr>
+      {% trans 'Epoch' %}
+      <span class="float-end">{{ object.epoch }}</span>
+      <hr>
 
-            {% trans 'Extensions' %}
-            <span class="float-end">{{ object.extension_string }}</span>
-            <hr>
+      {% trans 'Extensions' %}
+      <span class="float-end">{{ object.extension_string }}</span>
+      <hr>
 
-            {% trans 'Currency Map' %}
-            <span class="float-end">{{ object.currency_map }}</span>
-            <hr>
+      {% trans 'Currency Map' %}
+      <span class="float-end">{{ object.currency_map }}</span>
+      <hr>
 
-            {% trans 'Seed Money' %}
-            <span class="float-end">{{ object.seed_money }}</span>
-            <hr>
+      {% trans 'Seed Money' %}
+      <span class="float-end">{{ object.seed_money }}</span>
+      <hr>
 
-            {% trans 'Additional starting career points' %}
-            <span class="float-end">{{ object.starting_template_points }}</span>
-            <hr>
+      {% trans 'Additional starting career points' %}
+      <span class="float-end">{{ object.starting_template_points }}</span>
+      <hr>
 
-            {% trans 'Character Visibility' %}
-            <span class="float-end">{{ object.get_character_visibility_display }}</span>
-            <hr>
+      {% trans 'Character Visibility' %}
+      <span class="float-end">{{ object.get_character_visibility_display }}</span>
+      <hr>
 
-            {% trans 'NPC Visibility' %}
-            <span class="float-end">{{ object.get_npc_visibility_display }}</span>
-            <hr>
+      {% trans 'NPC Visibility' %}
+      <span class="float-end">{{ object.get_npc_visibility_display }}</span>
+      <hr>
 
-            {% trans 'Foe Visibility' %}
-            <span class="float-end">{{ object.get_foe_visibility_display }}</span>
-            <hr>
+      {% trans 'Foe Visibility' %}
+      <span class="float-end">{{ object.get_foe_visibility_display }}</span>
+      <hr>
 
-            {% trans 'Game Log Visibility' %}
-            <span class="float-end">{{ object.get_game_log_visibility_display }}</span>
-            <hr>
+      {% trans 'Game Log Visibility' %}
+      <span class="float-end">{{ object.get_game_log_visibility_display }}</span>
+      <hr>
 
-            {% trans 'Discord Dice Rolls' %}
-            <span class="float-end">{% if object.discord_webhook_url %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</span>
-            <hr>
+      {% trans 'Discord Dice Rolls' %}
+      <span class="float-end">{% if object.discord_webhook_url %}{% trans 'Yes' %}{% else %}
+        {% trans 'No' %}{% endif %}</span>
+      <hr>
 
-            {% if may_edit %}
-                <a href=""
-                   data-sidebar-title="{% trans 'Edit settings' %}"
-                   data-sidebar-url="{% url 'campaigns:xhr_settings_sidebar' pk=object.id sidebar_template='settings' %}"
-                   class="btn btn-primary sidebar-trigger">{% trans 'Edit settings' %}</a>
-            {% endif %}
-        </div>
-
+      {% if may_edit %}
+        <a href=""
+           data-sidebar-title="{% trans 'Edit settings' %}"
+           data-sidebar-url="{% url 'campaigns:xhr_settings_sidebar' pk=object.id sidebar_template='settings' %}"
+           class="btn btn-primary sidebar-trigger">{% trans 'Edit settings' %}</a>
+      {% endif %}
     </div>
+  </div>
 {% endblock %}
