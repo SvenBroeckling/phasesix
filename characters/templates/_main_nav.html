@@ -1,202 +1,206 @@
 {% load static i18n portal_extras world_extras campaign_extras %}
 
-<nav class="navbar navbar-expand">
-  <div class="container px-4 px-lg-5">
-    <ul class="navbar-nav">
+<div class="container">
 
-      <li class="nav-item d-none d-md-block">
-        {% active_if_url_name_matches "index" as active %}
-        <a href="/"
-           class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
-          <i class="fas fa-home mb-0"></i>
-          <span class="d-none d-md-inline">{% trans "Home" %}</span>
-        </a>
-      </li>
+  <nav class="navbar navbar-expand">
+    <div class="container px-4 px-lg-5">
+      <ul class="navbar-nav">
 
-      {% if request.world_configuration %}
-        <li class="nav-item">
-          {% active_if_url_name_matches "worlds:detail,worlds:wiki_page,worlds:edit_text" as active %}
-          <a href="{% url "worlds:detail" slug=request.world_configuration.world.slug %}"
+        <li class="nav-item d-none d-md-block">
+          {% active_if_url_name_matches "index" as active %}
+          <a href="/"
              class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
-            <i class="fas fa-spa mb-0"></i>
-            <span class="d-none d-md-inline">{% trans "World" %}</span>
+            <i class="fas fa-home mb-0"></i>
+            <span class="d-none d-md-inline">{% trans "Home" %}</span>
           </a>
         </li>
-      {% else %}
-        <li class="nav-item">
-          {% active_if_url_name_matches "worlds:list,worlds:detail,worlds:wiki_page,worlds:edit_text" as active %}
-          <a href="{% url "worlds:list" %}"
-             class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
-            <i class="fas fa-spa mb-0"></i>
-            <span class="d-none d-md-inline">{% trans "Worlds" %}</span>
-          </a>
-        </li>
-      {% endif %}
 
-      <li class="nav-item">
-        {% active_if_url_name_matches "rulebook:detail" as active %}
-        <a href="{% url "rulebook:detail" pk=11 %}"
-           class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
-          <i class="fas fa-book-dead mb-0"></i>
-          <span class="d-none d-md-inline">{% trans "Rules" %}</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        {% active_if_url_name_matches "world:wiki_page_with_game_values,rules:template_list,armory:item_list,armory:weapon_list,armory:riot_gear_list,magic:spell_origin_list" as active %}
-        <a href="{% url "armory:material_overview" %}"
-           class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
-          <i class="fas fa-cat mb-0"></i>
-          <span class="d-none d-md-inline">{% trans "Material" %}</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        {% active_if_url_name_matches "forum:board_detail,forum:thread_detail" as active %}
-        <a href="{% url 'forum:board_detail' pk=3 %}"
-           class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
-          <i class="fas fa-comment mb-0"></i>
-          <span class="d-none d-md-inline">{% trans "Forum" %}</span>
-        </a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link sidebar-trigger d-md-flex flex-md-column align-items-center justify-content-center"
-           data-sidebar-url="{% url 'portal:search' %}"
-           data-sidebar-title="{% trans 'Search' %}"
-           accesskey="k">
-          <i class="fas fa-search fa-fw"></i>
-          <span class="d-none d-md-inline">{% trans "Search" %}</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        {% if request.LANGUAGE_CODE == 'de' %}
-          <a class="language-link nav-link d-md-flex flex-md-column align-items-center justify-content-center"
-             data-language="en"
-             href="{% url 'set_language' %}">
-            <i class="fas fa-flag d-none d-md-inline"></i>
-            DE
-          </a>
+        {% if request.world_configuration %}
+          <li class="nav-item">
+            {% active_if_url_name_matches "worlds:detail,worlds:wiki_page,worlds:edit_text" as active %}
+            <a href="{% url "worlds:detail" slug=request.world_configuration.world.slug %}"
+               class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
+              <i class="fas fa-spa mb-0"></i>
+              <span class="d-none d-md-inline">{% trans "World" %}</span>
+            </a>
+          </li>
         {% else %}
-          <a class="language-link nav-link d-md-flex flex-md-column align-items-center justify-content-center"
-             data-language="de"
-             href="{% url 'set_language' %}">
-            <i class="fas fa-flag d-none d-md-inline"></i>
-            EN
-          </a>
+          <li class="nav-item">
+            {% active_if_url_name_matches "worlds:list,worlds:detail,worlds:wiki_page,worlds:edit_text" as active %}
+            <a href="{% url "worlds:list" %}"
+               class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
+              <i class="fas fa-spa mb-0"></i>
+              <span class="d-none d-md-inline">{% trans "Worlds" %}</span>
+            </a>
+          </li>
         {% endif %}
-      </li>
 
-      <li class="nav-item">
-        {% if user.is_authenticated %}
-          <button type="button"
-                  data-bs-toggle="dropdown"
-                  class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">
-            <i class="fas fa-user"></i>
-            <span class="d-none d-md-inline">{{ request.user|capfirst }}</span>
-          </button>
-          <ul style="width:350px; max-height:calc(100vh - 120px); overflow-x:hidden; overflow-y:auto;"
-              class="dropdown-menu dropdown-menu-end shadow">
-            <li>
-              <a class="dropdown-item d-flex w-100 flex-column gap-2 pb-2"
-                 href="{% url "portal:profile" pk=user.id %}">
-                <span class="d-flex justify-content-center fw-semibold p-1 border rounded-pill">{% trans "Show profile" %}</span>
-              </a>
-            </li>
+        <li class="nav-item">
+          {% active_if_url_name_matches "rulebook:detail" as active %}
+          <a href="{% url "rulebook:detail" pk=11 %}"
+             class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
+            <i class="fas fa-book-dead mb-0"></i>
+            <span class="d-none d-md-inline">{% trans "Rules" %}</span>
+          </a>
+        </li>
 
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+        <li class="nav-item">
+          {% active_if_url_name_matches "world:wiki_page_with_game_values,rules:template_list,armory:item_list,armory:weapon_list,armory:riot_gear_list,magic:spell_origin_list" as active %}
+          <a href="{% url "armory:material_overview" %}"
+             class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
+            <i class="fas fa-cat mb-0"></i>
+            <span class="d-none d-md-inline">{% trans "Material" %}</span>
+          </a>
+        </li>
 
-            {% create_character_url as create_url %}
-            <li>
-              <a class="dropdown-item d-flex align-items-center gap-3"
-                 href="{{ create_url }}">
-                {% trans "Create character" %}
-              </a>
-            </li>
-            <li>
-              {% create_campaign_url as create_url %}
-              <a class="dropdown-item d-flex align-items-center gap-3"
-                 href="{{ create_url }}">
-                {% trans "Create campaign" %}
-              </a>
-            </li>
+        <li class="nav-item">
+          {% active_if_url_name_matches "forum:board_detail,forum:thread_detail" as active %}
+          <a href="{% url 'forum:board_detail' pk=3 %}"
+             class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
+            <i class="fas fa-comment mb-0"></i>
+            <span class="d-none d-md-inline">{% trans "Forum" %}</span>
+          </a>
+        </li>
+      </ul>
 
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link sidebar-trigger d-md-flex flex-md-column align-items-center justify-content-center"
+             data-sidebar-url="{% url 'portal:search' %}"
+             data-sidebar-title="{% trans 'Search' %}"
+             accesskey="k">
+            <i class="fas fa-search fa-fw"></i>
+            <span class="d-none d-md-inline">{% trans "Search" %}</span>
+          </a>
+        </li>
 
-            <li>
-              <span class="dropdown-header fw-semibold fs-6">{% trans "Characters" %}</span>
-            </li>
-            {% for character in user.character_set.pc|slice:":4" %}
+        <li class="nav-item">
+          {% if request.LANGUAGE_CODE == 'de' %}
+            <a class="language-link nav-link d-md-flex flex-md-column align-items-center justify-content-center"
+               data-language="en"
+               href="{% url 'set_language' %}">
+              <i class="fas fa-flag d-none d-md-inline"></i>
+              DE
+            </a>
+          {% else %}
+            <a class="language-link nav-link d-md-flex flex-md-column align-items-center justify-content-center"
+               data-language="de"
+               href="{% url 'set_language' %}">
+              <i class="fas fa-flag d-none d-md-inline"></i>
+              EN
+            </a>
+          {% endif %}
+        </li>
+
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+            <button type="button"
+                    data-bs-toggle="dropdown"
+                    class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">
+              <i class="fas fa-user"></i>
+              <span class="d-none d-md-inline">{{ request.user|capfirst }}</span>
+            </button>
+            <ul style="width:clamp(250px); max-height:calc(100vh - 120px); overflow-x:hidden; overflow-y:auto;"
+                class="dropdown-menu dropdown-menu-end shadow">
               <li>
-                <a class="dropdown-item d-flex align-items-center gap-3"
-                   href="{% url 'characters:detail' pk=character.id %}">
-                  {% image_url character "50x50" as image %}
-                  <img width="25" height="25" class="rounded"
-                       src="{{ image }}"
-                       alt="{% trans "Character image" %}">
-                  {{ character }}
+                <a class="dropdown-item d-flex w-100 flex-column gap-2 pb-2"
+                   href="{% url "portal:profile" pk=user.id %}">
+                  <span
+                    class="d-flex justify-content-center fw-semibold p-1 border rounded-pill">{% trans "Show profile" %}</span>
                 </a>
               </li>
-            {% endfor %}
 
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <span class="dropdown-header fw-semibold fs-6">{% trans "Campaigns" %}</span>
-            </li>
-            {% for campaign in user.campaign_set.all|slice:":4" %}
-              <li>
-                <a class="dropdown-item d-flex align-items-center gap-3"
-                   href="{% url 'campaigns:detail' pk=campaign.id %}">
-                  {% image_url campaign "50x50" as image %}
-                  <img width="25" height="25" class="rounded"
-                       src="{{ image }}"
-                       alt="{% trans "Campaign image" %}">
-                  {{ campaign }}
-                </a>
-              </li>
-            {% endfor %}
-
-            {% if user.is_staff %}
               <li>
                 <hr class="dropdown-divider">
+              </li>
+
+              {% create_character_url as create_url %}
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-3"
+                   href="{{ create_url }}">
+                  {% trans "Create character" %}
+                </a>
               </li>
               <li>
                 {% create_campaign_url as create_url %}
                 <a class="dropdown-item d-flex align-items-center gap-3"
-                   href="/admin">
-                  {% trans "Admin" %}
+                   href="{{ create_url }}">
+                  {% trans "Create campaign" %}
                 </a>
               </li>
-            {% endif %}
 
-            <li>
-              <a hx-post="{% url 'logout' %}"
-                 hx-swap="none"
-                 hx-on::after-request="window.location='/'"
-                 class="dropdown-item d-flex align-items-center gap-3"
-                 href="">{% trans "Logout" %}
-              </a>
-            </li>
-          </ul>
-        {% else %}
-          <a href="{% url "login" %}"
-             class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">
-            <i class="fas fa-user"></i>
-            <span class="d-none d-md-inline">{% trans 'Login' %}</span>
-          </a>
-        {% endif %}
-      </li>
-    </ul>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
 
-  </div>
-</nav>
+              <li>
+                <span class="dropdown-header fw-semibold fs-6">{% trans "Characters" %}</span>
+              </li>
+              {% for character in user.character_set.pc|slice:":4" %}
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-3"
+                     href="{% url 'characters:detail' pk=character.id %}">
+                    {% image_url character "50x50" as image %}
+                    <img width="25" height="25" class="rounded"
+                         src="{{ image }}"
+                         alt="{% trans "Character image" %}">
+                    {{ character }}
+                  </a>
+                </li>
+              {% endfor %}
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
+                <span class="dropdown-header fw-semibold fs-6">{% trans "Campaigns" %}</span>
+              </li>
+              {% for campaign in user.campaign_set.all|slice:":4" %}
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-3"
+                     href="{% url 'campaigns:detail' pk=campaign.id %}">
+                    {% image_url campaign "50x50" as image %}
+                    <img width="25" height="25" class="rounded"
+                         src="{{ image }}"
+                         alt="{% trans "Campaign image" %}">
+                    {{ campaign }}
+                  </a>
+                </li>
+              {% endfor %}
+
+              {% if user.is_staff %}
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li>
+                  {% create_campaign_url as create_url %}
+                  <a class="dropdown-item d-flex align-items-center gap-3"
+                     href="/admin">
+                    {% trans "Admin" %}
+                  </a>
+                </li>
+              {% endif %}
+
+              <li>
+                <a hx-post="{% url 'logout' %}"
+                   hx-swap="none"
+                   hx-on::after-request="window.location='/'"
+                   class="dropdown-item d-flex align-items-center gap-3"
+                   href="">{% trans "Logout" %}
+                </a>
+              </li>
+            </ul>
+          {% else %}
+            <a href="{% url "login" %}"
+               class="nav-link d-md-flex flex-md-column align-items-center justify-content-center">
+              <i class="fas fa-user"></i>
+              <span class="d-none d-md-inline">{% trans 'Login' %}</span>
+            </a>
+          {% endif %}
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+</div>
