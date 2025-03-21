@@ -4,40 +4,47 @@
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <form action="" method="post">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1>- {% trans 'New Random NPC' %} -</h1>
-                {% if campaign %}
-                    <h4 class="text-muted">{{ campaign }}</h4>
-                    <p class="text-muted">{% trans 'Choose a name and a lineage' %}</p>
-                {% else %}
-                    <p class="text-muted">{% trans 'Choose a name and additional extensions for your character' %}</p>
-                {% endif %}
-            </div>
-        </div>
+  <form action="" method="post">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>- {% trans 'New Random NPC' %} -</h1>
+        {% if campaign %}
+          <h4 class="text-muted">{{ campaign }}</h4>
+          <p class="text-muted">{% trans 'Choose a name and a lineage' %}</p>
+        {% else %}
+          <p class="text-muted">{% trans 'Choose a name and additional extensions for your character' %}</p>
+        {% endif %}
+      </div>
+    </div>
 
+    <div class="row">
+      {% csrf_token %}
+      <div class="col-12 {% if not campaign %}col-md-6{% else %}col-md-8 offset-md-2{% endif %}">
         <div class="row">
-            {% csrf_token %}
-            <div class="col-12 {% if not campaign %}col-md-6{% else %}col-md-8 offset-md-2{% endif %}">
-                {% bootstrap_field form.name %}
-            </div>
-            <div class="col-12 {% if not campaign %}col-md-6{% else %}col-md-8 offset-md-2{% endif %}">
-                {% bootstrap_field form.lineage %}
-                {% bootstrap_field form.epoch show_label=False %}
-                {% bootstrap_field form.world show_label=False %}
-                {% bootstrap_field form.currency_map %}
-                {% bootstrap_field form.seed_money %}
-                {% bootstrap_field form.starting_reputation %}
-                {% bootstrap_field form.extensions show_label=False %}
-                {% bootstrap_field form.attitude %}
-            </div>
+          <div class="col-12 col-md-8">
+            {% bootstrap_field form.name %}
+          </div>
+          <div class="col-12 col-md-4">
+            {% bootstrap_field form.pronoun %}
+          </div>
         </div>
+      </div>
+      <div class="col-12 {% if not campaign %}col-md-6{% else %}col-md-8 offset-md-2{% endif %}">
+        {% bootstrap_field form.lineage %}
+        {% bootstrap_field form.epoch show_label=False %}
+        {% bootstrap_field form.world show_label=False %}
+        {% bootstrap_field form.currency_map %}
+        {% bootstrap_field form.seed_money %}
+        {% bootstrap_field form.starting_reputation %}
+        {% bootstrap_field form.extensions show_label=False %}
+        {% bootstrap_field form.attitude %}
+      </div>
+    </div>
 
-        <div class="row mb-3">
-            <div class="col-12 {% if campaign %}col-md-8 offset-md-2{% endif %}">
-                <button type="submit" class="btn btn-primary btn-block mt-2">{% trans 'Create NPC' %}</button>
-            </div>
-        </div>
-    </form>
+    <div class="row mb-3">
+      <div class="col-12 {% if campaign %}col-md-8 offset-md-2{% endif %}">
+        <button type="submit" class="btn btn-primary btn-block mt-2">{% trans 'Create NPC' %}</button>
+      </div>
+    </div>
+  </form>
 {% endblock %}

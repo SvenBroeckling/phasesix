@@ -6,6 +6,7 @@ from django.db.models import Sum, Max, Q
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _, get_language
 from sorl.thumbnail import get_thumbnail
+from transmeta import TransMeta
 
 from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit, RiotGearProtection
 from characters.utils import static_thumbnail
@@ -29,6 +30,19 @@ class CharacterQuerySet(models.QuerySet):
 
     def pc(self):
         return self.filter(npc_campaign__isnull=True)
+
+
+class Pronoun(models.Model, metaclass=TransMeta):
+    nominative = models.CharField(_("nominative"), max_length=12)
+    dative = models.CharField(_("dative"), max_length=12)
+    possessive = models.CharField(_("possessive"), max_length=12)
+    copula_verb = models.CharField(_("copula verb"), max_length=12)
+
+    class Meta:
+        translate = ("nominative", "dative", "possessive", "copula_verb")
+
+    def __str__(self):
+        return f"{self.nominative}/{self.dative}"
 
 
 class Character(models.Model):
@@ -86,6 +100,11 @@ class Character(models.Model):
 
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+    pronoun = models.ForeignKey(
+        Pronoun,
+        verbose_name=_("pronoun"),
+        on_delete=models.CASCADE,
+    )
 
     created_by = models.ForeignKey(
         "auth.User",

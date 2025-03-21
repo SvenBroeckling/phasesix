@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import CurrencyMap
-from characters.models import Character
+from characters.models import Character, Pronoun
 from pantheon.models import Entity
 from rules.models import Lineage, Extension
 
@@ -10,7 +10,15 @@ from rules.models import Lineage, Extension
 class CharacterImageForm(forms.ModelForm):
     class Meta:
         model = Character
-        fields = ("name", "description", "image", "backdrop_image")
+        fields = (
+            "name",
+            "pronoun",
+            "date_of_birth",
+            "size",
+            "weight",
+            "image",
+            "backdrop_image",
+        )
 
 
 class CreateCharacterExtensionsForm(forms.Form):
@@ -26,6 +34,9 @@ class CreateCharacterExtensionsForm(forms.Form):
 
 class CreateCharacterDataForm(forms.Form):
     name = forms.CharField(label=_("Name"), max_length=80)
+    pronoun = forms.ModelChoiceField(
+        empty_label=None, label=_("Pronouns"), queryset=Pronoun.objects.all()
+    )
     lineage = forms.ModelChoiceField(
         queryset=Lineage.objects.all(), empty_label=None, label=_("Lineage")
     )

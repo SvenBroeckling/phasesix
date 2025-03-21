@@ -3,15 +3,23 @@ import io
 from django import forms
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.core.mail import mail_admins
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse, Http404
+from django.template import Template as DjangoTemplate, Context
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import gettext, get_language
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import TemplateView, DetailView, FormView, ListView
+from django.views.generic import (
+    TemplateView,
+    DetailView,
+    FormView,
+    ListView,
+    UpdateView,
+)
 from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
 
@@ -530,11 +538,13 @@ class CreateCharacterDataView(FormView):
         self.object = Character.objects.create(
             name=form.cleaned_data["name"],
             currency_map=form.cleaned_data["currency_map"],
+            date_of_birth=form.cleaned_data["date_of_birth"],
             lineage=form.cleaned_data["lineage"],
             size=form.cleaned_data["size"],
             weight=form.cleaned_data["weight"],
             entity=form.cleaned_data["entity"],
             attitude=form.cleaned_data["attitude"],
+            pronoun=form.cleaned_data["pronoun"],
         )
         self.object.extensions.add(form.cleaned_data["epoch"])
         self.object.extensions.add(form.cleaned_data["world"])
@@ -655,6 +665,15 @@ class CreateCharacterInfoView(TemplateView):
             "title": gettext("Weight"),
             "description": gettext(
                 f"Enter the weight of your character in {world.info_name_kg}."
+            ),
+        }
+
+    def pronouns_info(self, value):
+        return {
+            "title": gettext("Pronouns"),
+            "description": gettext(
+                f"At several places in the interface, your character will be referred to using their"
+                " pronouns. Choose the pronouns that best describe your character."
             ),
         }
 
@@ -1307,3 +1326,22 @@ class XhrCharacterObjectsView(TemplateView):
 
     def delete_language(self, pk):
         self.character.characterlanguage_set.filter(id=pk).delete()
+
+
+class XhrEditCharacterDescriptionView(UpdateView):
+    template_name = "characters/modals/edit_description.html"
+    fields = ["description"]
+    model = Character
+
+    def dispatch(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs["pk"])
+        if not character.may_edit(request.user):
+            raise PermissionDenied()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        result = DjangoTemplate(
+            "{% load rules_extras %}{{ object.description|urpg_markup }}"
+        ).render(Context({"object": self.object}))
+        return HttpResponse(result)

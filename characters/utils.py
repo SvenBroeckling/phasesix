@@ -5,6 +5,14 @@ from django.conf import settings
 from django.contrib.staticfiles import finders
 
 
+def render_string(string, context):
+    from django.template import Template, Context
+
+    t = Template(string)
+    c = Context(context)
+    return t.render(c)
+
+
 def crit_successes(value, crit_threshold=11):
     """Returns the number of additional successes caused by crits"""
     ca = 0

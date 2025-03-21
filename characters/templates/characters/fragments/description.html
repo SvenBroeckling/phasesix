@@ -1,51 +1,52 @@
 {% extends 'characters/fragments/fragment_base.html' %}
+{% load humanize %}
 {% load portal_extras %}
 {% load characters_extras rules_extras i18n %}
 
 {% block fragment %}
   <div class="row">
     <div class="col-12 col-md-6">
-      {% image_url object "1200x1200" as image %}
-      {% if image %}
-        <img class="border border-2 border-black img-fluid mb-2"
-             src="{{ image }}"
-             alt="{% trans "Profile image" %}">
+
+      {% url "portal:profile" pk=object.created_by.id as created_by_url %}
+      {% blocktrans with t_name=object.name t_created_by=object.created_by|capfirst t_created_by_url=created_by_url t_size=object.size t_weight=object.weight t_size_unit=object.world.world_set.first.info_name_cm|default:"cm" t_weight_unit=object.world.world_set.first.info_name_kg|default:"kg" t_pronoun=object.pronoun.nominative|capfirst t_copula_verb=object.pronoun.copula_verb %}
+        <b>{{ t_name }}</b> is a character created by <a href="{{ t_created_by_url }}">{{ t_created_by }}</a>.
+        {{ t_pronoun }} {{ t_copula_verb }} <b>{{ t_size }}</b> {{ t_size_unit }} tall and weigh <b>{{ t_weight }}</b>
+        {{ t_weight_unit }}.
+      {% endblocktrans %}
+      {% if object.date_of_birth %}
+        {% blocktrans with t_possessive=object.pronoun.possessive|capfirst t_birthday=object.date_of_birth %}
+          {{ t_possessive }} birthdate is <b>{{ t_birthday }}</b>.
+        {% endblocktrans %}
+      {% endif %}
+
+      <div id="character-description" class="mt-3">
+        {% if object.description %}
+          {{ object.description|urpg_markup }}
+        {% endif %}
+      </div>
+
+      {% if may_edit %}
+        <div class="mt-3 card pointer hover-cta"
+             hx-target="#character-description"
+             hx-get="{% url "characters:xhr_edit_description" pk=object.id %}">
+          <div class="card-body p-4 d-flex align-items-center justify-content-start">
+            <i class="fs-1 me-3 gi gi-delapouite-hieroglyph-y"></i>
+            <div>
+              <span class="fs-4">{% trans "Edit Description" %}</span><br>
+            </div>
+          </div>
+        </div>
       {% endif %}
     </div>
 
     <div class="col-12 col-md-6">
-
-      {% if object.description %}
-        <div class="card mb-3">
-          <div class="card-body">
-            {{ object.description|urpg_markup }}
-          </div>
-        </div>
-      {% else %}
-        {% if may_edit %}
-          <div class="card mb-3"
-               data-url=""
-               data-bs-toggle="modal"
-               data-bs-target=".page-modal"
-               data-modal-title="{% trans 'Edit description' %}">
-            <div class="card-body p-4 d-flex align-items-center justify-content-start">
-              <i class="fs-1 me-3 gi gi-lorc-open-book"></i>
-              <div>
-                <span class="fs-4">{% trans "No description yet." %}</span><br>
-                <small class="text-muted">{% trans "Click to edit" %}</small>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-      {% endif %}
-
       <div {% if may_edit %}
         data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}"
         data-bs-toggle="modal"
         data-bs-target=".page-modal"
         data-modal-title="{% trans 'Add Language' %}"
       {% endif %}
-        class="card pointer {% if may_edit %}modal-trigger{% endif %}">
+        class="card {% if may_edit %}modal-trigger{% endif %}">
         <div class="card-body p-4 d-flex align-items-center justify-content-start">
           <i class="fs-1 me-3 gi gi-delapouite-hieroglyph-y"></i>
           <div>
@@ -64,12 +65,20 @@
       {% for character_language in object.characterlanguage_set.all %}
         <div class="card my-1">
           <div class="card-body d-flex justify-content-between align-items-center">
-            <span>{{ character_language.language }}</span>
-            <a class="btn btn-danger btn-sm action-link"
-               data-method="DELETE"
-               href="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}?object_id={{ character_language.id }}">
-              <i class="far fa-trash-alt fa-fw"></i>
-            </a>
+            <div>
+              <h5>{{ character_language.language }}</h5>
+              {% blocktrans with t_amount=character_language.language.amount_of_people_speaking|intword t_country=character_language.language.country_name %}
+                Spoken by {{ t_amount }} individuals.<br>
+                Origin: {{ t_country }}
+              {% endblocktrans %}
+            </div>
+            {% if may_edit %}
+              <a class="btn btn-danger btn-sm action-link"
+                 data-method="DELETE"
+                 href="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}?object_id={{ character_language.id }}">
+                <i class="far fa-trash-alt fa-fw"></i>
+              </a>
+            {% endif %}
           </div>
         </div>
       {% endfor %}

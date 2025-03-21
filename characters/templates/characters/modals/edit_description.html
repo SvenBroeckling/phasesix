@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+<form hx-post="{% url "characters:xhr_edit_description" pk=object.id %}"
+      hx-swap="outerHTML"
+      class="mt-3"
+      action="{% url "characters:xhr_edit_description" pk=object.id %}">
+  <small class="text-muted mt-0">{% trans "Markdown is allowed" %}</small><br>
+  {% csrf_token %}
+  {% bootstrap_form form show_label=False %}
+  <button class="btn btn-primary">{% trans "Save" %}</button>
+</form>

@@ -30,8 +30,13 @@
       {% csrf_token %}
       <div class="col-12 col-md-6">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 col-md-8">
             {% bootstrap_field form.name %}
+          </div>
+          <div class="col-12 col-md-4">
+            {% bootstrap_field form.pronoun %}
+          </div>
+          <div class="col-12">
             {% bootstrap_field form.currency_map %}
             {% bootstrap_field form.seed_money %}
             {% bootstrap_field form.lineage %}
