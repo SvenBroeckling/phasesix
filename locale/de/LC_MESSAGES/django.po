@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-22 23:05+0000\n"
+"POT-Creation-Date: 2025-03-22 23:42+0000\n"
 "PO-Revision-Date: 2025-03-23 00:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -150,8 +150,8 @@ msgstr "Gefahr"
 #: armory/models.py:177 armory/models.py:206 armory/models.py:246
 #: armory/models.py:296 armory/models.py:320 armory/models.py:354
 #: armory/models.py:388 armory/models.py:423 armory/models.py:462
-#: armory/models.py:470 campaigns/models.py:28 campaigns/models.py:189
-#: campaigns/models.py:197 characters/models.py:51 forum/models.py:38
+#: armory/models.py:470 campaigns/models.py:28 campaigns/models.py:193
+#: campaigns/models.py:201 characters/models.py:51 forum/models.py:38
 #: forum/models.py:60 horror/models.py:12 horror/models.py:30
 #: magic/models.py:18 magic/models.py:31 magic/models.py:44 magic/models.py:75
 #: magic/models.py:171 magic/models.py:189 magic/models.py:201
@@ -167,7 +167,7 @@ msgstr "Name"
 #: armory/models.py:29 armory/models.py:55 armory/models.py:145
 #: armory/models.py:207 armory/models.py:247 armory/models.py:297
 #: armory/models.py:321 armory/models.py:355 armory/models.py:390
-#: armory/models.py:424 campaigns/models.py:218 characters/models.py:52
+#: armory/models.py:424 campaigns/models.py:222 characters/models.py:52
 #: horror/models.py:35 pantheon/models.py:23 pantheon/models.py:66
 #: rules/models.py:81 rules/models.py:142 rules/models.py:188
 #: rules/models.py:207 rules/models.py:241 rules/models.py:284
@@ -176,7 +176,7 @@ msgstr "Beschreibung"
 
 #: armory/models.py:30 armory/models.py:64 armory/models.py:146
 #: armory/models.py:198 armory/models.py:420 campaigns/models.py:65
-#: campaigns/models.py:216 characters/models.py:101 characters/models.py:795
+#: campaigns/models.py:220 characters/models.py:101 characters/models.py:795
 #: characters/models.py:1103 forum/models.py:21 forum/models.py:27
 #: forum/models.py:31 forum/models.py:37 forum/models.py:55 forum/models.py:99
 #: magic/models.py:129 magic/models.py:208 pantheon/models.py:24
@@ -274,7 +274,7 @@ msgid "Shows a roll button at the item if not empty."
 msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:108 armory/models.py:226 campaigns/models.py:30
-#: campaigns/models.py:199 characters/models.py:78 forum/models.py:33
+#: campaigns/models.py:203 characters/models.py:78 forum/models.py:33
 #: magic/models.py:49 magic/models.py:80 pantheon/models.py:69
 #: portal/models.py:14 rules/models.py:89 worlds/models.py:86
 #: worlds/models.py:189 worlds/models.py:259 worlds/models.py:375
@@ -282,7 +282,7 @@ msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:111 armory/models.py:229 campaigns/models.py:33
-#: campaigns/models.py:55 campaigns/models.py:202 characters/models.py:81
+#: campaigns/models.py:55 campaigns/models.py:206 characters/models.py:81
 #: characters/models.py:95 magic/models.py:52 magic/models.py:87
 #: pantheon/models.py:72 portal/models.py:17 portal/models.py:31
 #: rules/models.py:92 worlds/models.py:89 worlds/models.py:262
@@ -291,7 +291,7 @@ msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:114 armory/models.py:232 campaigns/models.py:36
-#: campaigns/models.py:58 campaigns/models.py:205 characters/models.py:84
+#: campaigns/models.py:58 campaigns/models.py:209 characters/models.py:84
 #: characters/models.py:98 magic/models.py:55 magic/models.py:90
 #: pantheon/models.py:75 portal/models.py:20 portal/models.py:34
 #: rules/models.py:95 worlds/models.py:92 worlds/models.py:265
@@ -687,128 +687,142 @@ msgstr "Hintergrundbild"
 msgid "abstract"
 msgstr "Zusammenfassung"
 
-#: campaigns/models.py:72
+#: campaigns/models.py:66 characters/models.py:118
+msgid "is favorite"
+msgstr "Ist Favorit"
+
+#: campaigns/models.py:73
 #: campaigns/templates/campaigns/fragments/settings.html:11
 #: characters/forms.py:54 characters/forms.py:59 rules/models.py:68
 msgid "Epoch"
 msgstr "Epoche"
 
-#: campaigns/models.py:79
+#: campaigns/models.py:80
 #: campaigns/templates/campaigns/fragments/settings.html:7
 #: characters/templates/_main_nav.html:24 rules/models.py:69
 msgid "World"
 msgstr "Welt"
 
-#: campaigns/models.py:88
+#: campaigns/models.py:89
 msgid "additional starting career points"
 msgstr "Zusätzliche Werdegangspunkte"
 
-#: campaigns/models.py:92
+#: campaigns/models.py:93
 msgid "discord webhook url"
 msgstr "Discord Webhook URL"
 
-#: campaigns/models.py:95
+#: campaigns/models.py:96
 msgid ""
 "Create a discord webhook and paste it's url here to display dice results."
 msgstr ""
 "Lege einen Discord Webhook an und kopiere seine URL hier herein, um "
 "Würfelergebnisse anzuzeigen."
 
-#: campaigns/models.py:102
+#: campaigns/models.py:103
 msgid "seed money"
 msgstr "Startkapital"
 
-#: campaigns/models.py:105
+#: campaigns/models.py:106
 msgid "foe visibility"
 msgstr "Gegnersichtbarkeit"
 
-#: campaigns/models.py:109
+#: campaigns/models.py:110
 msgid "npc visibility"
 msgstr "NSC Sichtbarkeit"
 
-#: campaigns/models.py:113
+#: campaigns/models.py:114
 msgid "game log visibility"
 msgstr "Spielprotokollsichtbarkeit"
 
-#: campaigns/models.py:117
+#: campaigns/models.py:118
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:121 campaigns/templates/campaigns/_navigation.html:12
+#: campaigns/models.py:122 campaigns/templates/campaigns/_navigation.html:12
 #: characters/models.py:136 homebrew/templates/homebrew/index.html:15
 #: worlds/templates/worlds/_add_to_campaign.html:7
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: campaigns/models.py:122 characters/templates/_main_nav.html:157
+#: campaigns/models.py:123 characters/templates/_main_nav.html:157
 #: portal/templates/portal/_navigation.html:33
 msgid "Campaigns"
 msgstr "Kampagnen"
 
-#: campaigns/models.py:190 characters/models.py:1106 forum/models.py:104
+#: campaigns/models.py:194 characters/models.py:1106 forum/models.py:104
 #: worlds/models.py:252
 msgid "text"
 msgstr "Text"
 
-#: campaigns/models.py:217
+#: campaigns/models.py:221
 msgid "header"
 msgstr "Kopfzeile"
 
-#: campaigns/models.py:220
+#: campaigns/models.py:224
 msgid "roll string"
 msgstr "Würfelstring"
 
-#: campaigns/models.py:222
+#: campaigns/models.py:226
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
-#: campaigns/models.py:224
+#: campaigns/models.py:228
 msgid "modifier"
 msgstr "Modifikator"
 
-#: campaigns/models.py:225 rules/models.py:18 worlds/models.py:460
+#: campaigns/models.py:229 rules/models.py:18 worlds/models.py:460
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: campaigns/models.py:228
+#: campaigns/models.py:232
 msgid "crit count"
 msgstr "Anzahl kritischer Erfolge"
 
-#: campaigns/models.py:229
+#: campaigns/models.py:233
 msgid "crit sum"
 msgstr "Summe kritischer Erfolge"
 
-#: campaigns/models.py:230
+#: campaigns/models.py:234
 msgid "exploded dice count"
 msgstr "Anzahl Exploding Dice"
 
-#: campaigns/models.py:231
+#: campaigns/models.py:235
 msgid "exploded dice sum"
 msgstr "Summe Exploding Dice"
 
-#: campaigns/models.py:232
+#: campaigns/models.py:236
 msgid "highest single roll"
 msgstr "Höchster einzelner Wurf"
 
-#: campaigns/models.py:233
+#: campaigns/models.py:237
 msgid "successes count"
 msgstr "Anzahl Erfolge"
 
-#: campaigns/models.py:234
+#: campaigns/models.py:238
 msgid "successes sum"
 msgstr "Summe Erfolge"
 
-#: campaigns/models.py:235
+#: campaigns/models.py:239
 msgid "fails count"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:236
+#: campaigns/models.py:240
 msgid "fails sum"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:237
+#: campaigns/models.py:241
 msgid "total sum"
 msgstr "Gesamtsumme"
+
+#: campaigns/templates/campaigns/_campaign_list_widget.html:32
+#: characters/templates/characters/_character_list_widget.html:30
+msgid "Remove from favorites"
+msgstr "Von Favoriten entfernen"
+
+#: campaigns/templates/campaigns/_campaign_list_widget.html:34
+#: characters/templates/characters/_character_list_widget.html:32
+msgid "Add to favorites"
+msgstr "Zu Favoriten hinzufügen"
 
 #: campaigns/templates/campaigns/_navigation.html:23
 msgid "Settings"
@@ -1539,10 +1553,6 @@ msgstr "Pronomen"
 msgid "Characters without user will be cleaned daily."
 msgstr "Charaktere ohne Benutzer werden täglich gelöscht."
 
-#: characters/models.py:118
-msgid "is favorite"
-msgstr "Ist Favorit"
-
 #: characters/models.py:127 rules/models.py:174
 msgid "lineage"
 msgstr "Abstammung"
@@ -1752,14 +1762,6 @@ msgstr "Privatsphäre"
 #: characters/templates/base.html:148
 msgid "Tirakan HuS"
 msgstr "Tirakan HuS"
-
-#: characters/templates/characters/_character_list_widget.html:60
-msgid "Remove from favorites"
-msgstr "Von Favoriten entfernen"
-
-#: characters/templates/characters/_character_list_widget.html:62
-msgid "Add to favorites"
-msgstr "Zu Favoriten hinzufügen"
 
 #: characters/templates/characters/_dice_display.html:14
 msgid "- no bonus dice -"
