@@ -1353,14 +1353,9 @@ class XhrToggleFavoriteView(View):
         character = get_object_or_404(Character, pk=kwargs["pk"])
         if not character.may_edit(request.user):
             raise PermissionDenied
+
         character.is_favorite = not character.is_favorite
         character.save()
-        if character.is_favorite:
-            t = DjangoTemplate('<i class="fas fa-star fa-2x text-warning"></i>').render(
-                Context({})
-            )
-        else:
-            t = DjangoTemplate('<i class="far fa-star fa-2x text-warning"></i>').render(
-                Context({})
-            )
-        return HttpResponse(t)
+
+        icon_class = "fas" if character.is_favorite else "far"
+        return HttpResponse(f'<i class="{icon_class} fa-star fa-2x text-warning"></i>')

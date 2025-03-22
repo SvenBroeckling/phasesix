@@ -2,25 +2,36 @@
 {% load i18n %}
 {% load thumbnail %}
 
-<a href="{{ campaign.get_absolute_url }}">
-  <div class="card campaign-list-item h-100">
-    <img src="{% backdrop_image_url campaign "800x800" %}" alt="{{ campaign }}" class="card-img-top object-fit-cover"
-         style="height:120px;">
-    <div class="d-flex align-items-center hover-pointer"
-         style="position:absolute; left:32px; top:32px">
-      <img class="img-fluid rounded float-start me-3 border-3 border-black"
-           src="{% image_url campaign "120x120" %}"
-           alt="{{ character.name }}">
-    </div>
-    <div class="card-body mt-5">
-      <h4>{{ campaign.name }}</h4>
-
-      <div class="d-flex justify-content-start flex-wrap mt-2">
-        {% for c in campaign.character_set.all %}
-          <img src="{% image_url c geometry="40x40" crop="center" %}" alt="{{ c }}">
-        {% endfor %}
+<div class="campaign-list-widget-container h-100 position-relative">
+  <a href="{{ campaign.get_absolute_url }}">
+    <div class="card campaign-list-item h-100 position-relative">
+      <img src="{% backdrop_image_url campaign "800x800" %}" alt="{{ campaign }}" class="card-img-top object-fit-cover"
+           style="height:120px;">
+      <div class="d-flex align-items-center hover-pointer"
+           style="position:absolute; left:32px; top:32px">
+        <img class="img-fluid rounded float-start me-3 border-3 border-black"
+             src="{% image_url campaign "120x120" %}"
+             alt="{{ character.name }}">
       </div>
+      <div class="card-body mt-5">
+        <h4>{{ campaign.name }}</h4>
 
+        <div class="d-flex justify-content-start flex-wrap mt-2">
+          {% for c in campaign.character_set.all %}
+            <img src="{% image_url c geometry="40x40" crop="center" %}" alt="{{ c }}">
+          {% endfor %}
+        </div>
+      </div>
     </div>
-  </div>
-</a>
+  </a>
+  <button class="btn position-absolute top-0 end-0 m-2"
+          hx-post="{% url "campaigns:xhr_toggle_favorite" pk=campaign.id %}"
+          hx-swap="innerHTML"
+          style="z-index: 1;">
+    {% if campaign.is_favorite %}
+      <i title="{% trans "Remove from favorites" %}" class="fas fa-star fa-2x text-warning"></i>
+    {% else %}
+      <i title="{% trans "Add to favorites" %}" class="far fa-star fa-2x text-warning"></i>
+    {% endif %}
+  </button>
+</div>

@@ -63,6 +63,7 @@ class Campaign(models.Model):
         "auth.User", verbose_name=_("created by"), on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    is_favorite = models.BooleanField(_("is favorite"), default=False)
 
     epoch = models.ForeignKey(
         "rules.Extension",
@@ -120,7 +121,10 @@ class Campaign(models.Model):
     class Meta:
         verbose_name = _("Campaign")
         verbose_name_plural = _("Campaigns")
-        ordering = ("-created_at",)
+        ordering = (
+            "-is_favorite",
+            "-created_at",
+        )
 
     def __str__(self):
         return self.name

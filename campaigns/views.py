@@ -1,5 +1,7 @@
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views import View
 from django.views.generic import (
     ListView,
@@ -255,3 +257,17 @@ class XhrCampaignStatisticsView(DetailView):
         mode = self.kwargs["mode"]
         context["object_list"] = self.object.roll_set.order_by(f"-{mode}")[:5]
         return context
+
+
+class XhrCampaignToggleFavoriteView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, pk=kwargs["pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied
+
+        campaign.is_favorite = not campaign.is_favorite
+        campaign.save()
+
+        icon_class = "fas" if campaign.is_favorite else "far"
+        template = f'<i class="{icon_class} fa-star fa-2x text-warning"></i>'
+        return HttpResponse(template)
