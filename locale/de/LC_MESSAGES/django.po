@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-22 15:58+0000\n"
-"PO-Revision-Date: 2025-03-22 16:59+0100\n"
+"POT-Creation-Date: 2025-03-22 21:28+0000\n"
+"PO-Revision-Date: 2025-03-22 22:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -2231,44 +2231,52 @@ msgstr ""
 "          %(t_possessive)s Geburtsdatum ist <b>%(t_birthday)s</b>.\n"
 "        "
 
-#: characters/templates/characters/fragments/description.html:41
+#: characters/templates/characters/fragments/description.html:34
+msgid "Character Image"
+msgstr "Charakterbild"
+
+#: characters/templates/characters/fragments/description.html:36
+msgid "This character has no description yet."
+msgstr "Dieser Charakter hat noch keine Beschreibung."
+
+#: characters/templates/characters/fragments/description.html:49
 msgid "Edit Description"
 msgstr "Beschreibung editieren"
 
-#: characters/templates/characters/fragments/description.html:53
+#: characters/templates/characters/fragments/description.html:61
 msgid "Add Language"
 msgstr "Sprache hinzufügen"
 
-#: characters/templates/characters/fragments/description.html:60
+#: characters/templates/characters/fragments/description.html:68
 msgid "No languages yet."
 msgstr "Noch keine Sprachen."
 
-#: characters/templates/characters/fragments/description.html:62
+#: characters/templates/characters/fragments/description.html:70
 msgid "Languages"
 msgstr "Sprachen"
 
-#: characters/templates/characters/fragments/description.html:65
+#: characters/templates/characters/fragments/description.html:73
 msgid "Click to add"
 msgstr "Zum Hinzufügen klicken"
 
-#: characters/templates/characters/fragments/description.html:76
+#: characters/templates/characters/fragments/description.html:85
 #, python-format
 msgid ""
 "\n"
-"                Spoken by %(t_amount)s individuals.<br>\n"
-"                Origin: %(t_country)s\n"
-"              "
+"                  Spoken by %(t_amount)s individuals.<br>\n"
+"                  Origin: %(t_country)s\n"
+"                "
 msgstr ""
 "\n"
-"        Wird von %(t_amount)s Individuen gesprochen.\n"
+"        Wird von %(t_amount)s Individuen gesprochen.<br>\n"
 "        Ursprung: %(t_country)s\n"
 "      "
 
-#: characters/templates/characters/fragments/description.html:97
+#: characters/templates/characters/fragments/description.html:108
 msgid "No contacts yet."
 msgstr "Noch keine Kontakte."
 
-#: characters/templates/characters/fragments/description.html:98
+#: characters/templates/characters/fragments/description.html:110
 msgid "Click to add a contact"
 msgstr "Klicke, um einen Kontakt hinzuzufügen"
 
@@ -6374,9 +6382,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "This character has no amor yet."
 #~ msgstr "Dieser Charakter hat noch keine Rüstung."
-
-#~ msgid "This character has no weapons yet."
-#~ msgstr "Dieser Charakter hat noch keine Waffen"
 
 #~ msgid "This character has no items yet."
 #~ msgstr "Dieser Charakter hat noch keine Gegenstände."
