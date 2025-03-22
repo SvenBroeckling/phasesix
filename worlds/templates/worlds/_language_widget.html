@@ -4,12 +4,16 @@
 <div class="card mb-3">
   <div class="card-body">
     <h3>{{ language }}</h3>
-    <div class="text-muted mb-3">
-      {% blocktrans with t_amount=language.amount_of_people_speaking|intword t_country=language.country_name %}
-        Spoken by {{ t_amount }} individuals.
+    <small class="text-muted mb-3">
+      {% if language.amount_of_people_speaking > 0 %}
+        {% blocktrans with t_amount=language.amount_of_people_speaking|intword %}
+          Spoken by {{ t_amount }} individuals.<br>
+        {% endblocktrans %}
+      {% endif %}
+      {% blocktrans with t_country=language.country_name %}
         Origin: {{ t_country }}
       {% endblocktrans %}
-    </div>
+    </small>
 
     {% if character %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="language" %}"
@@ -17,10 +21,12 @@
             class="float-end add-form">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ language.id }}">
-        <button type="submit" class="btn btn-primary btn-sm float-end"
-                data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
-          {% trans 'Add' %}
-        </button>
+        <div class="w-100 d-flex justify-end mt-3">
+          <button type="submit" class="btn btn-primary btn-sm"
+                  data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+            {% trans 'Add' %}
+          </button>
+        </div>
       </form>
     {% endif %}
   </div>

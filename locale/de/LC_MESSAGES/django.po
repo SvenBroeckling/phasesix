@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-22 21:28+0000\n"
-"PO-Revision-Date: 2025-03-22 22:29+0100\n"
+"POT-Creation-Date: 2025-03-22 22:14+0000\n"
+"PO-Revision-Date: 2025-03-22 23:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -501,7 +501,7 @@ msgstr "Ist Container"
 #: horror/templates/horror/_quirk_widget.html:20
 #: magic/templates/magic/_basespell_widget.html:42
 #: rules/templates/rules/_template_widget.html:71
-#: worlds/templates/worlds/_language_widget.html:21
+#: worlds/templates/worlds/_language_widget.html:25
 msgid "Not possible"
 msgstr "Nicht möglich"
 
@@ -514,7 +514,7 @@ msgstr "Nicht möglich"
 #: horror/templates/horror/_quirk_widget.html:21
 #: rules/templates/rules/_template_widget.html:72
 #: worlds/templates/worlds/_add_to_campaign.html:13
-#: worlds/templates/worlds/_language_widget.html:21
+#: worlds/templates/worlds/_language_widget.html:25
 msgid "Added"
 msgstr "Hinzugefügt"
 
@@ -527,7 +527,7 @@ msgstr "Hinzugefügt"
 #: characters/templates/characters/sidebar/item.html:14
 #: characters/templates/characters/sidebar/reputation.html:51
 #: rules/templates/rules/_template_widget.html:73
-#: worlds/templates/worlds/_language_widget.html:22
+#: worlds/templates/worlds/_language_widget.html:26
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -2259,26 +2259,27 @@ msgstr "Sprachen"
 msgid "Click to add"
 msgstr "Zum Hinzufügen klicken"
 
-#: characters/templates/characters/fragments/description.html:85
+#: characters/templates/characters/fragments/description.html:86
 #, python-format
 msgid ""
 "\n"
-"                  Spoken by %(t_amount)s individuals.<br>\n"
+"                    Spoken by %(t_amount)s individuals.<br>\n"
+"                  "
+msgstr ""
+"\n"
+"        Wird von %(t_amount)s Individuen gesprochen.<br>\n"
+"      "
+
+#: characters/templates/characters/fragments/description.html:90
+#, python-format
+msgid ""
+"\n"
 "                  Origin: %(t_country)s\n"
 "                "
 msgstr ""
 "\n"
-"        Wird von %(t_amount)s Individuen gesprochen.<br>\n"
-"        Ursprung: %(t_country)s\n"
-"      "
-
-#: characters/templates/characters/fragments/description.html:108
-msgid "No contacts yet."
-msgstr "Noch keine Kontakte."
-
-#: characters/templates/characters/fragments/description.html:110
-msgid "Click to add a contact"
-msgstr "Klicke, um einen Kontakt hinzuzufügen"
+"                  Ursprung: %(t_country)s\n"
+"                "
 
 #: characters/templates/characters/fragments/gear.html:14
 #: characters/templates/characters/includes/character_riot_gear_cards.html:36
@@ -5036,16 +5037,25 @@ msgstr "Widerstände"
 msgid "Weaknesses"
 msgstr "Schwächen"
 
-#: worlds/templates/worlds/_language_widget.html:8
+#: worlds/templates/worlds/_language_widget.html:9
 #, python-format
 msgid ""
 "\n"
-"        Spoken by %(t_amount)s individuals.\n"
+"          Spoken by %(t_amount)s individuals.<br>\n"
+"        "
+msgstr ""
+"\n"
+"        Wird von %(t_amount)s Individuen gesprochen.<br>\n"
+"      "
+
+#: worlds/templates/worlds/_language_widget.html:13
+#, python-format
+msgid ""
+"\n"
 "        Origin: %(t_country)s\n"
 "      "
 msgstr ""
 "\n"
-"        Wird von %(t_amount)s Individuen gesprochen.\n"
 "        Ursprung: %(t_country)s\n"
 "      "
 
@@ -5197,6 +5207,12 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
+#~ msgid "No contacts yet."
+#~ msgstr "Noch keine Kontakte."
+
+#~ msgid "Click to add a contact"
+#~ msgstr "Klicke, um einen Kontakt hinzuzufügen"
+
 #~ msgid "They"
 #~ msgstr "Dei"
 
@@ -5295,16 +5311,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "Actions to ready"
 #~ msgstr "Aktionen zum Bereitmachen"
-
-#, python-format
-#~ msgid ""
-#~ "\n"
-#~ "                A campaign by %(t_gm)s\n"
-#~ "            "
-#~ msgstr ""
-#~ "\n"
-#~ "                                Eine Kampagne von %(t_gm)s\n"
-#~ "                            "
 
 #~ msgid "Spell Points"
 #~ msgstr "Zauberpunkte"

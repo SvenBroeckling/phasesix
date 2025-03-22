@@ -82,11 +82,14 @@
             <div>
               <h5>{{ character_language.language }}</h5>
               <small class="text-muted">
-                {% blocktrans with t_amount=character_language.language.amount_of_people_speaking|intword t_country=character_language.language.country_name %}
-                  Spoken by {{ t_amount }} individuals.<br>
+                {% if character_language.language.amount_of_people_speaking > 0 %}
+                  {% blocktrans with t_amount=character_language.language.amount_of_people_speaking|intword %}
+                    Spoken by {{ t_amount }} individuals.<br>
+                  {% endblocktrans %}
+                {% endif %}
+                {% blocktrans with t_country=character_language.language.country_name %}
                   Origin: {{ t_country }}
                 {% endblocktrans %}
-
               </small>
             </div>
             {% if may_edit %}
@@ -101,6 +104,7 @@
       {% endfor %}
 
 
+      {% comment %}
       <div class="card mt-3">
         <div class="card-body p-4 d-flex align-items-center justify-content-start">
           <i class="fs-1 me-3 gi gi-darkzaitzev-hooded-figure"></i>
@@ -112,6 +116,8 @@
           </div>
         </div>
       </div>
+      {% endcomment %}
+
     </div>
   </div>
 {% endblock %}

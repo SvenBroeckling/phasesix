@@ -587,7 +587,7 @@ class Language(HomebrewModel, metaclass=TransMeta):
 
     class Meta:
         translate = ("name", "country_name")
-        ordering = ("amount_of_people_speaking",)
+        ordering = ("-amount_of_people_speaking",)
         verbose_name = _("language")
         verbose_name_plural = _("languages")
 
