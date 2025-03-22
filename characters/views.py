@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.mail import mail_admins
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse, Http404
+from django.shortcuts import get_object_or_404
 from django.template import Template as DjangoTemplate, Context
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -1345,3 +1346,21 @@ class XhrEditCharacterDescriptionView(UpdateView):
             "{% load rules_extras %}{{ object.description|urpg_markup }}"
         ).render(Context({"object": self.object}))
         return HttpResponse(result)
+
+
+class XhrToggleFavoriteView(View):
+    def post(self, request, *args, **kwargs):
+        character = get_object_or_404(Character, pk=kwargs["pk"])
+        if not character.may_edit(request.user):
+            raise PermissionDenied
+        character.is_favorite = not character.is_favorite
+        character.save()
+        if character.is_favorite:
+            t = DjangoTemplate('<i class="fas fa-star fa-2x text-warning"></i>').render(
+                Context({})
+            )
+        else:
+            t = DjangoTemplate('<i class="far fa-star fa-2x text-warning"></i>').render(
+                Context({})
+            )
+        return HttpResponse(t)

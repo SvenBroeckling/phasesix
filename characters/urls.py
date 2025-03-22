@@ -12,6 +12,11 @@ urlpatterns = [
     ),
     path("dice_log/<int:pk>", views.XhrDiceLogView.as_view(), name="xhr_dice_log"),
     path(
+        "toggle_favorite/<int:pk>",
+        views.XhrToggleFavoriteView.as_view(),
+        name="xhr_toggle_favorite",
+    ),
+    path(
         "edit_description/<int:pk>",
         views.XhrEditCharacterDescriptionView.as_view(),
         name="xhr_edit_description",

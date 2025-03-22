@@ -114,6 +114,10 @@ class Character(models.Model):
         null=True,
         help_text=_("Characters without user will be cleaned daily."),
     )
+    is_favorite = models.BooleanField(
+        _("is favorite"),
+        default=False,
+    )
 
     extensions = models.ManyToManyField(
         "rules.Extension", limit_choices_to={"is_mandatory": False}
@@ -174,7 +178,10 @@ class Character(models.Model):
         return self.name
 
     class Meta:
-        ordering = ("-created_at",)
+        ordering = (
+            "-is_favorite",
+            "-created_at",
+        )
 
     def may_edit(self, user):
         if self.created_by == user:
