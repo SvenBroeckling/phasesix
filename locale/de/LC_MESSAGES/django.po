@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-21 20:48+0000\n"
-"PO-Revision-Date: 2025-03-21 21:50+0100\n"
+"POT-Creation-Date: 2025-03-22 15:58+0000\n"
+"PO-Revision-Date: 2025-03-22 16:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -2198,20 +2198,29 @@ msgid ""
 "\n"
 "        <b>%(t_name)s</b> is a character created by <a "
 "href=\"%(t_created_by_url)s\">%(t_created_by)s</a>.\n"
-"        %(t_pronoun)s %(t_copula_verb)s <b>%(t_size)s</b> %(t_size_unit)s "
-"tall and weigh <b>%(t_weight)s</b>\n"
-"        %(t_weight_unit)s.\n"
 "      "
 msgstr ""
 "\n"
 "        <b>%(t_name)s</b> ist ein Charakter von <a "
 "href=\"%(t_created_by_url)s\">%(t_created_by)s</a>.\n"
-"        %(t_pronoun)s %(t_copula_verb)s <b>%(t_size)s</b> %(t_size_unit)s "
-"groß und wiegt <b>%(t_weight)s</b>\n"
-"        %(t_weight_unit)s.\n"
 "      "
 
-#: characters/templates/characters/fragments/description.html:17
+#: characters/templates/characters/fragments/description.html:16
+#, python-format
+msgid ""
+"\n"
+"          %(t_pronoun)s %(t_copula_verb)s <b>%(t_size)s</b>&nbsp;"
+"%(t_size_unit)s tall and weigh\n"
+"          <b>%(t_weight)s</b>&nbsp;%(t_weight_unit)s.\n"
+"        "
+msgstr ""
+"\n"
+"          %(t_pronoun)s %(t_copula_verb)s <b>%(t_size)s</b>&nbsp;"
+"%(t_size_unit)s groß und wiegt\n"
+"          <b>%(t_weight)s</b>&nbsp;%(t_weight_unit)s.\n"
+"        "
+
+#: characters/templates/characters/fragments/description.html:23
 #, python-format
 msgid ""
 "\n"
@@ -2222,27 +2231,27 @@ msgstr ""
 "          %(t_possessive)s Geburtsdatum ist <b>%(t_birthday)s</b>.\n"
 "        "
 
-#: characters/templates/characters/fragments/description.html:35
+#: characters/templates/characters/fragments/description.html:41
 msgid "Edit Description"
 msgstr "Beschreibung editieren"
 
-#: characters/templates/characters/fragments/description.html:47
+#: characters/templates/characters/fragments/description.html:53
 msgid "Add Language"
 msgstr "Sprache hinzufügen"
 
-#: characters/templates/characters/fragments/description.html:54
+#: characters/templates/characters/fragments/description.html:60
 msgid "No languages yet."
 msgstr "Noch keine Sprachen."
 
-#: characters/templates/characters/fragments/description.html:56
+#: characters/templates/characters/fragments/description.html:62
 msgid "Languages"
 msgstr "Sprachen"
 
-#: characters/templates/characters/fragments/description.html:59
+#: characters/templates/characters/fragments/description.html:65
 msgid "Click to add"
 msgstr "Zum Hinzufügen klicken"
 
-#: characters/templates/characters/fragments/description.html:70
+#: characters/templates/characters/fragments/description.html:76
 #, python-format
 msgid ""
 "\n"
@@ -2255,11 +2264,11 @@ msgstr ""
 "        Ursprung: %(t_country)s\n"
 "      "
 
-#: characters/templates/characters/fragments/description.html:91
+#: characters/templates/characters/fragments/description.html:97
 msgid "No contacts yet."
 msgstr "Noch keine Kontakte."
 
-#: characters/templates/characters/fragments/description.html:92
+#: characters/templates/characters/fragments/description.html:98
 msgid "Click to add a contact"
 msgstr "Klicke, um einen Kontakt hinzuzufügen"
 

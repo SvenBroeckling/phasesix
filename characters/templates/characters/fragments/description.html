@@ -8,11 +8,17 @@
     <div class="col-12 col-md-6">
 
       {% url "portal:profile" pk=object.created_by.id as created_by_url %}
-      {% blocktrans with t_name=object.name t_created_by=object.created_by|capfirst t_created_by_url=created_by_url t_size=object.size t_weight=object.weight t_size_unit=object.world.world_set.first.info_name_cm|default:"cm" t_weight_unit=object.world.world_set.first.info_name_kg|default:"kg" t_pronoun=object.pronoun.nominative|capfirst t_copula_verb=object.pronoun.copula_verb %}
+      {% blocktrans with t_name=object.name t_created_by=object.created_by|capfirst t_created_by_url=created_by_url t_pronoun=object.pronoun.nominative|capfirst t_copula_verb=object.pronoun.copula_verb %}
         <b>{{ t_name }}</b> is a character created by <a href="{{ t_created_by_url }}">{{ t_created_by }}</a>.
-        {{ t_pronoun }} {{ t_copula_verb }} <b>{{ t_size }}</b> {{ t_size_unit }} tall and weigh <b>{{ t_weight }}</b>
-        {{ t_weight_unit }}.
       {% endblocktrans %}
+
+      {% if object.weight and object.size %}
+        {% blocktrans with t_copula_verb=object.pronoun.copula_verb t_pronoun=object.pronoun.nominative|capfirst t_size=object.size t_weight=object.weight t_size_unit=object.world.world_set.first.info_name_cm|default:"cm" t_weight_unit=object.world.world_set.first.info_name_kg|default:"kg" %}
+          {{ t_pronoun }} {{ t_copula_verb }} <b>{{ t_size }}</b>&nbsp;{{ t_size_unit }} tall and weigh
+          <b>{{ t_weight }}</b>&nbsp;{{ t_weight_unit }}.
+        {% endblocktrans %}
+      {% endif %}
+
       {% if object.date_of_birth %}
         {% blocktrans with t_possessive=object.pronoun.possessive|capfirst t_birthday=object.date_of_birth %}
           {{ t_possessive }} birthdate is <b>{{ t_birthday }}</b>.
