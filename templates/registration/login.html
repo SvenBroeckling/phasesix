@@ -4,16 +4,19 @@
 {% block title %}{% trans 'Login' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="row mt-3">
-        <div class="col-md-6 offset-md-3">
-            <h1>Login</h1>
-            <form action="{% url 'login' %}" method="post">
-                <input type="hidden" name="next" value="{{ request.GET.next }}">
-                {% bootstrap_form form %}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary mt-2">{% trans 'Login' %}</button>
-                <a class="btn btn-secondary mt-2" href="{% url 'django_registration_register' %}">{% trans 'Create Account' %}</a>
-            </form>
-        </div>
+  <div class="row mt-3">
+    <div class="col-md-6 offset-md-3">
+      <h1>Login</h1>
+      <form action="{% url 'login' %}" method="post">
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% bootstrap_field form.username %}
+        {% bootstrap_field form.password %}
+        <div class="mb-3"><a href="{% url "password_reset" %}">{% trans "Forgot password?" %}</a></div>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary mt-2">{% trans 'Login' %}</button>
+        <a class="btn btn-secondary mt-2"
+           href="{% url 'django_registration_register' %}">{% trans 'Create Account' %}</a>
+      </form>
     </div>
+  </div>
 {% endblock %}
