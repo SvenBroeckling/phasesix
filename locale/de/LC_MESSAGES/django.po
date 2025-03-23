@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-22 23:42+0000\n"
-"PO-Revision-Date: 2025-03-23 00:06+0100\n"
+"POT-Creation-Date: 2025-03-23 00:44+0000\n"
+"PO-Revision-Date: 2025-03-23 01:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1727,7 +1727,7 @@ msgid "Logout"
 msgstr "Abmelden"
 
 #: characters/templates/_main_nav.html:198 templates/registration/login.html:4
-#: templates/registration/login.html:14
+#: templates/registration/login.html:16
 msgid "Login"
 msgstr "Anmelden"
 
@@ -4682,6 +4682,7 @@ msgid "Die"
 msgstr "Würfel"
 
 #: templates/django_registration/activation_email_body.txt:1
+#: templates/registration/password_reset_email.html:2
 msgid "Hello"
 msgstr "Hallo"
 
@@ -4767,9 +4768,95 @@ msgstr ""
 msgid "Register"
 msgstr "Registrieren"
 
-#: templates/registration/login.html:15
+#: templates/registration/login.html:14
+msgid "Forgot password?"
+msgstr "Passwort vergessen?"
+
+#: templates/registration/login.html:18
 msgid "Create Account"
 msgstr "Konto erstellen"
+
+#: templates/registration/password_reset_complete.html:4
+#: templates/registration/password_reset_complete.html:6
+msgid "Password reset complete"
+msgstr "Passwortreset vollständig"
+
+#: templates/registration/password_reset_complete.html:8
+msgid "Your password has been set. You may go ahead and log in now."
+msgstr "Dein neues Passwort wurde gespeichert. Du kannst dich jetzt einloggen."
+
+#: templates/registration/password_reset_complete.html:13
+msgid "Log in"
+msgstr "Anmelden"
+
+#: templates/registration/password_reset_confirm.html:5
+#: templates/registration/password_reset_form.html:5
+#: templates/registration/password_reset_form.html:6
+msgid "Password reset"
+msgstr "Passwort zurücksetzen"
+
+#: templates/registration/password_reset_confirm.html:6
+msgid "Enter a new password"
+msgstr "Gib ein neues Passwort ein"
+
+#: templates/registration/password_reset_confirm.html:7
+msgid "Enter your new password."
+msgstr "Gib dein neues Passwort ein."
+
+#: templates/registration/password_reset_confirm.html:15
+msgid "Save password"
+msgstr "Passwort speichern"
+
+#: templates/registration/password_reset_done.html:4
+#: templates/registration/password_reset_done.html:6
+msgid "Password reset mail sent"
+msgstr "Passwortreset E-Mail gesendet"
+
+#: templates/registration/password_reset_done.html:8
+msgid ""
+"We have sent you an email with instructions on how to reset your password."
+msgstr ""
+"Wir haben wir eine E-Mail mit Infos gesendet, wie du das neue Passwort "
+"erstellen kannst."
+
+#: templates/registration/password_reset_done.html:13
+msgid ""
+"If you do not receive an email, please make sure you have entered the "
+"address you registered with, and check your spam folder."
+msgstr ""
+"Wenn du die Mail nicht erhalten hast, stelle bitte sicher dass du die "
+"richtige E-Mail Adresse eingegeben hast und unsere Mail nicht im Spam Ordner "
+"gelandet ist."
+
+#: templates/registration/password_reset_email.html:4
+#, python-format
+msgid ""
+"\n"
+"  Someone asked for password reset for email %(t_email)s. If it was not you, "
+"please ignore this email. Otherwise,\n"
+"  follow the link below to reset your password.\n"
+msgstr ""
+"\n"
+"  Jemand hat das Zurücksetzen des Passworts für die E-Mail Adresse "
+"%(t_email)s angefordert. Ignoriere diese E-Mail, wenn du es nicht warst. "
+"Wenn doch,\n"
+"  folge dem folgenden Link, um dein Passwort zurückzusetzen.\n"
+
+#: templates/registration/password_reset_email.html:11
+msgid "Cheers"
+msgstr "Cheers"
+
+#: templates/registration/password_reset_form.html:7
+msgid "Enter your email address to reset your password."
+msgstr "Gib deine E-Mail Adresse ein, um dein Passwort zurückzusetzen."
+
+#: templates/registration/password_reset_form.html:15
+msgid "Reset password"
+msgstr "Passwort zurücksetzen"
+
+#: templates/registration/password_reset_subject.txt:1
+msgid "Password Reset"
+msgstr "Passwort zurücksetzen"
 
 #: worlds/context_processors.py:19
 msgid ""
