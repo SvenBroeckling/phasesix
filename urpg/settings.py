@@ -1,6 +1,7 @@
 import os
 
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,19 +59,20 @@ INSTALLED_APPS = [
     "django_htmx",
     "sorl.thumbnail",
     "compressor",
+    "characters",
+    "rulebook",
+    "forum",
     "portal",
     "gmtools",
     "armory",
     "worlds",
     "homebrew",
     "rules",
-    "characters",
-    "rulebook",
-    "forum",
     "magic",
     "horror",
-    "campaigns",
     "pantheon",
+    "body_modifications",
+    "campaigns",
 ]
 
 MIDDLEWARE = [
@@ -235,5 +237,134 @@ UNFOLD = {
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": True,
+        "navigation": [
+            {
+                "title": _("Characters and Campaigns"),
+                "separator": True,
+                "collapsible": False,
+                "items": [
+                    {
+                        "title": _("Users"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                    },
+                    {
+                        "title": _("Characters"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:characters_character_changelist"),
+                    },
+                    {
+                        "title": _("Campaigns"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:campaigns_campaign_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Armory"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Items"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:armory_item_changelist"),
+                    },
+                    {
+                        "title": _("Riot Gear"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:armory_riotgear_changelist"),
+                    },
+                    {
+                        "title": _("Currency Maps"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:armory_currencymap_changelist"),
+                    },
+                    {
+                        "title": _("Weapons"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:armory_weapon_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Extensions"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Body Modifications"),
+                        "icon": "people",
+                        "link": reverse_lazy(
+                            "admin:body_modifications_bodymodification_changelist"
+                        ),
+                    },
+                    {
+                        "title": _("Horror Quirks"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:horror_quirk_changelist"),
+                    },
+                    {
+                        "title": _("Spells"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:magic_basespell_changelist"),
+                    },
+                    {
+                        "title": _("Dieties"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:pantheon_entity_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Rules"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Extensions"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:rules_extension_changelist"),
+                    },
+                    {
+                        "title": _("Book Chapters"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:rulebook_chapter_changelist"),
+                    },
+                    {
+                        "title": _("Lineages"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:rules_lineage_changelist"),
+                    },
+                    {
+                        "title": _("Character templates"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:rules_template_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Worlds"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Languages"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:worlds_language_changelist"),
+                    },
+                    {
+                        "title": _("Worlds"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:worlds_world_changelist"),
+                    },
+                    {
+                        "title": _("Wiki Pages"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:worlds_wikipage_changelist"),
+                    },
+                ],
+            },
+        ],
     },
 }

@@ -63,6 +63,22 @@
     </div>
   </a>
 
+  {% if object.extension_enabled.bodymod %}
+    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+       data-bs-toggle="tab"
+       data-bs-target="#v-bodymod"
+       role="tab"
+       aria-current="false">
+      <div class="d-flex justify-content-center align-items-center">
+        <i class="gi gi-delapouite-cyber-eye"></i>
+        <span class="ms-3 d-block d-lg-block">{% trans "Body Modifications" %}</span>
+      </div>
+      {% if object.stress %}
+        <span class="badge bg-primary-subtle ms-2">{{ object.stress }}</span>
+      {% endif %}
+    </a>
+  {% endif %}
+
   {% if object.extension_enabled.magic and object.is_magical %}
     <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
        data-bs-toggle="tab"

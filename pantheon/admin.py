@@ -6,7 +6,6 @@ from pantheon.models import Entity, PriestAction, PriestActionRoll, EntityCatego
 
 class EntityAdmin(ModelAdmin):
     list_display = "name_de", "name_en", "wiki_page"
-    list_editable = ("wiki_page",)
 
 
 class PriestActionRollInline(TabularInline):

@@ -13,6 +13,14 @@ from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 from rules.models import ExtensionSelectQuerySet, Extension
 
+RARITY_CHOICES = (
+    ("c", _("Common")),
+    ("u", _("Uncommon")),
+    ("r", _("Rare")),
+    ("1", _("Unique")),
+    ("l", _("Legendary")),
+)
+
 
 class ItemTypeQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
@@ -59,8 +67,11 @@ class Item(HomebrewModel, metaclass=TransMeta):
 
     weight = models.DecimalField(_("weight"), decimal_places=2, max_digits=6)
     price = models.DecimalField(_("price"), decimal_places=2, max_digits=6)
+    rarity = models.CharField(
+        _("rarity"), max_length=1, default="c", choices=RARITY_CHOICES
+    )
     concealment = models.IntegerField(_("concealment"), default=0)
-    extensions = models.ManyToManyField("rules.Extension", blank=True)
+    extensions = models.ManyToManyField("rules.Extension")
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -194,7 +205,7 @@ class WeaponQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
 class Weapon(HomebrewModel, metaclass=TransMeta):
     objects = WeaponQuerySet.as_manager()
 
-    extensions = models.ManyToManyField("rules.Extension", blank=True)
+    extensions = models.ManyToManyField("rules.Extension")
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
@@ -315,7 +326,7 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
 class WeaponModification(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
-    extensions = models.ManyToManyField("rules.Extension", blank=True)
+    extensions = models.ManyToManyField("rules.Extension")
     available_for_weapon_types = models.ManyToManyField(WeaponType)
     name = models.CharField(_("name"), max_length=40)
     description = models.TextField(_("description"), blank=True, null=True)
@@ -408,7 +419,7 @@ class RiotGearQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
 class RiotGear(HomebrewModel, metaclass=TransMeta):
     objects = RiotGearQuerySet.as_manager()
 
-    extensions = models.ManyToManyField("rules.Extension", blank=True)
+    extensions = models.ManyToManyField("rules.Extension")
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

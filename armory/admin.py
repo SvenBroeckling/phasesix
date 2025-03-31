@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline
 
 from armory.models import (
@@ -57,9 +58,25 @@ class WeaponAdmin(ModelAdmin):
                         "description_de",
                         "description_en",
                     ),
-                    ("created_by", "is_homebrew", "homebrew_campaign"),
                     ("image", "image_copyright", "image_copyright_url"),
                 )
+            },
+        ),
+        (
+            _("Homebrew"),
+            {
+                "fields": (
+                    (
+                        "is_homebrew",
+                        "keep_as_homebrew",
+                    ),
+                    "created_by",
+                    (
+                        "homebrew_campaign",
+                        "homebrew_character",
+                    ),
+                ),
+                "classes": ("collapse",),
             },
         ),
     ]
@@ -100,13 +117,30 @@ class RiotGearAdmin(ModelAdmin):
             None,
             {
                 "fields": (
-                    ("name_en", "name_de", "extensions"),
+                    ("name_en", "name_de"),
+                    "extensions",
                     ("type", "price", "weight"),
-                    ("created_by", "is_homebrew", "homebrew_campaign"),
                     ("shield_cover",),
                     ("concealment", "encumbrance"),
                     ("description_en", "description_de"),
                 )
+            },
+        ),
+        (
+            _("Homebrew"),
+            {
+                "fields": (
+                    (
+                        "is_homebrew",
+                        "keep_as_homebrew",
+                    ),
+                    "created_by",
+                    (
+                        "homebrew_campaign",
+                        "homebrew_character",
+                    ),
+                ),
+                "classes": ("collapse",),
             },
         ),
     ]
@@ -123,15 +157,58 @@ class ItemAdmin(ModelAdmin):
         "name_en",
         "type",
         "weight",
+        "rarity",
         "price",
         "is_container",
         "skill",
         "concealment",
         "usable_in_combat",
     )
-    list_editable = ("concealment", "type", "is_container", "usable_in_combat", "skill")
+    list_editable = (
+        "concealment",
+        "type",
+        "rarity",
+        "is_container",
+        "usable_in_combat",
+        "skill",
+    )
     list_filter = ("type", "extensions")
     search_fields = ("name_de", "name_en", "description_de", "description_en")
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": (
+                    ("name_en", "name_de"),
+                    ("type", "rarity", "price"),
+                    ("weight", "concealment", "charges"),
+                    ("usable_in_combat", "is_container"),
+                    "extensions",
+                    ("description_en", "description_de"),
+                    ("skill", "attribute", "knowledge"),
+                    "dice_roll_string",
+                    ("image", "image_copyright", "image_copyright_url"),
+                ),
+            },
+        ),
+        (
+            _("Homebrew"),
+            {
+                "fields": (
+                    (
+                        "is_homebrew",
+                        "keep_as_homebrew",
+                    ),
+                    "created_by",
+                    (
+                        "homebrew_campaign",
+                        "homebrew_character",
+                    ),
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    ]
 
 
 class WeaponTypeAdmin(ModelAdmin):
