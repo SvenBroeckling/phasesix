@@ -28,6 +28,7 @@ class BodyModificationSocketLocationInline(TabularInline):
 @admin.register(BodyModification)
 class BodyModificationAdmin(ModelAdmin):
     inlines = [BodyModificationSocketLocationInline]
+    search_fields = ("name_en", "name_de")
     list_display = (
         "name",
         "type",
@@ -35,6 +36,14 @@ class BodyModificationAdmin(ModelAdmin):
         "price",
         "bio_strain",
         "energy_consumption_ma",
+        "activation",
+    )
+    list_filter = (
+        "type",
+        "rarity",
+        "bio_strain",
+        "energy_consumption_ma",
+        "activation",
     )
     list_editable = ("rarity", "price", "bio_strain", "energy_consumption_ma")
     fieldsets = [
@@ -43,16 +52,38 @@ class BodyModificationAdmin(ModelAdmin):
             {
                 "fields": (
                     ("name_en", "name_de"),
+                    ("description_en", "description_de"),
+                    ("rules_en", "rules_de"),
                     (
                         "type",
                         "rarity",
                         "price",
                     ),
+                    ("bio_strain", "energy_consumption_ma", "charges"),
+                    ("usable_in_combat",),
                     (
-                        "bio_strain",
-                        "energy_consumption_ma",
+                        "activation",
+                        "dice_roll_string",
                     ),
-                )
+                    (
+                        "attribute",
+                        "skill",
+                        "knowledge",
+                    ),
+                ),
+            },
+        ),
+        (
+            _("Image"),
+            {
+                "fields": (
+                    "image",
+                    (
+                        "image_copyright",
+                        "image_copyright_url",
+                    ),
+                ),
+                "classes": ("collapse",),
             },
         ),
         (

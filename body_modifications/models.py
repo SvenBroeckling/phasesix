@@ -16,6 +16,9 @@ class SocketLocation(models.Model, metaclass=TransMeta):
         verbose_name = _("socket location")
         verbose_name_plural = _("socket locations")
 
+    def __str__(self):
+        return self.name
+
 
 class BodyModificationType(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=30)
@@ -34,6 +37,9 @@ class BodyModificationType(models.Model, metaclass=TransMeta):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         ordering = ("id",)
         translate = ("name",)
@@ -42,11 +48,18 @@ class BodyModificationType(models.Model, metaclass=TransMeta):
 
 
 class BodyModification(HomebrewModel, metaclass=TransMeta):
+    ACTIVATION_TYPES = (
+        ("a", _("active")),
+        ("p", _("passive")),
+    )
     type = models.ForeignKey(
         BodyModificationType, verbose_name=_("type"), on_delete=models.CASCADE
     )
     extensions = models.ManyToManyField("rules.Extension")
 
+    activation = models.CharField(
+        _("activation"), max_length=1, default="p", choices=ACTIVATION_TYPES
+    )
     price = models.DecimalField(_("price"), decimal_places=2, max_digits=6)
     rarity = models.CharField(
         _("rarity"), max_length=1, default="c", choices=RARITY_CHOICES
@@ -99,8 +112,9 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
-    name = models.CharField(_("name"), max_length=30)
+    name = models.CharField(_("name"), max_length=80)
     description = models.TextField(_("description"))
+    rules = models.TextField(_("rules"), blank=True, null=True)
     quote = models.TextField(_("quote"), blank=True, null=True)
     quote_author = models.CharField(
         _("quote author"), max_length=50, null=True, blank=True
@@ -120,9 +134,13 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
         translate = (
             "name",
             "description",
+            "rules",
         )
         verbose_name = _("body modification")
         verbose_name_plural = _("body modifications")
+
+    def __str__(self):
+        return self.name
 
 
 class BodyModificationSocketLocation(models.Model):
