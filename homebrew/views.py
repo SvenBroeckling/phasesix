@@ -243,7 +243,6 @@ class XhrCreateBaseSpellView(XhrCreateBaseView):
                 "rules": _("Spell Rules"),
                 "spell_point_cost": 5,
                 "arcana_cost": 1,
-                "power": 1,
                 "range": 10,
                 "actions": 1,
             }
@@ -263,7 +262,6 @@ class CreateBaseSpellView(CreateBaseView):
                     rules_de=form.cleaned_data["rules"],
                     spell_point_cost=form.cleaned_data["spell_point_cost"],
                     arcana_cost=form.cleaned_data["arcana_cost"],
-                    power=form.cleaned_data["power"],
                     range=form.cleaned_data["range"],
                     actions=form.cleaned_data["actions"],
                     origin=form.cleaned_data["origin"],

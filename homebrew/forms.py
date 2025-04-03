@@ -102,7 +102,6 @@ class CreateBaseSpellForm(forms.Form):
     rules = forms.CharField(widget=forms.Textarea, label=_("Rules"))
     spell_point_cost = forms.DecimalField(label=_("Spell Point Cost"))
     arcana_cost = forms.DecimalField(label=_("Arcana Cost"))
-    power = forms.DecimalField(label=_("Power"))
     range = forms.DecimalField(label=_("Range"))
     actions = forms.DecimalField(label=_("Actions"))
     origin = forms.ModelChoiceField(
