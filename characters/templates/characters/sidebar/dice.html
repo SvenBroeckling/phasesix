@@ -1,86 +1,100 @@
 {% load i18n characters_extras %}
 
 {% if may_edit %}
-<div class="row">
+  <div class="row">
     <div class="col-12">
-        <div class="btn-group w-100 mb-1">
-            <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_bonus" %}" class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-six" title="{% trans 'Bonus Dice' %}"></i>{% trans '-Bonus' %}</a>
-            <a href="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}" class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-six" title="{% trans 'Bonus Dice' %}"></i>{% trans '+Bonus' %}</a>
-        </div>
-        <div class="btn-group w-100 mb-1">
-            <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_destiny" %}" class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-four" title="{% trans 'Destiny Dice' %}"></i>{% trans '-Destiny' %}</a>
-            <a href="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}" class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-four" title="{% trans 'Destiny Dice' %}"></i>{% trans '+Destiny' %}</a>
-        </div>
-        <div class="btn-group w-100 mb-3">
-            <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_reroll" %}" class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-one" title="{% trans 'Rerolls' %}"></i>{% trans '-Reroll' %}</a>
-            <a href="{% url 'characters:modify_dice' pk=object.id mode="add_reroll" %}" class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-one" title="{% trans 'Rerolls' %}"></i>{% trans '+Reroll' %}</a>
-        </div>
+      <div class="btn-group w-100 mb-1">
+        <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_bonus" %}"
+           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-six"
+                                                         title="{% trans 'Bonus Dice' %}"></i>{% trans '-Bonus' %}</a>
+        <a href="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}"
+           class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-six"
+                                                         title="{% trans 'Bonus Dice' %}"></i>{% trans '+Bonus' %}</a>
+      </div>
+      <div class="btn-group w-100 mb-1">
+        <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_destiny" %}"
+           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-four"
+                                                         title="{% trans 'Destiny Dice' %}"></i>{% trans '-Destiny' %}
+        </a>
+        <a href="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}"
+           class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-four"
+                                                         title="{% trans 'Destiny Dice' %}"></i>{% trans '+Destiny' %}
+        </a>
+      </div>
+      <div class="btn-group w-100 mb-3">
+        <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_reroll" %}"
+           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-one"
+                                                         title="{% trans 'Rerolls' %}"></i>{% trans '-Reroll' %}</a>
+        <a href="{% url 'characters:modify_dice' pk=object.id mode="add_reroll" %}"
+           class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-one"
+                                                         title="{% trans 'Rerolls' %}"></i>{% trans '+Reroll' %}</a>
+      </div>
     </div>
-</div>
+  </div>
 {% endif %}
 
 <div class="row">
-    <div class="col-12">
-        <div class="card mb-2">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
-                    {% trans 'Bonus Dice' %}
-                    <span class="float-end">{% color_value_span object.bonus_dice_free 3 %} / {% color_value_span object.bonus_dice 3 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
-                    {% trans 'Destiny Dice' %}
-                    <span class="float-end">{% color_value_span object.destiny_dice_free 3 %} / {% color_value_span object.destiny_dice 3 %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
-                    {% trans 'Rerolls' %}
-                    <span class="float-end">{% color_value_span object.rerolls_free 3 %} / {% color_value_span object.rerolls 3 %}</span>
-                </li>
-            </ul>
-        </div>
+  <div class="col-12">
+    <div class="card mb-2">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
+          {% trans 'Bonus Dice' %}
+          <span class="float-end">{% color_value_span object.bonus_dice_free 3 %} / {% color_value_span object.bonus_dice 3 %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
+          {% trans 'Destiny Dice' %}
+          <span class="float-end">{% color_value_span object.destiny_dice_free 3 %} / {% color_value_span object.destiny_dice 3 %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
+          {% trans 'Rerolls' %}
+          <span class="float-end">{% color_value_span object.rerolls_free 3 %} / {% color_value_span object.rerolls 3 %}</span>
+        </li>
+      </ul>
     </div>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-12 mb-3 mt-2">
-        {% blocktrans %}
-            Roll a custom amount of dice here, just klick on the button with
-            the amount you'd like to roll.
-        {% endblocktrans %}
-    </div>
-    {% with ""|center:12 as range %}
-        {% for _ in range %}
-            <div class="col-2 mb-2">
-                <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
-                        data-dice-roll="{{ forloop.counter }}d6"
-                        data-dice-header="{{ forloop.counter }}d6"
-                        data-dice-description="{% trans 'Custom Roll' %}"
-                        data-dice-character="{{ object.id }}">{{ forloop.counter }}
-                </button>
-            </div>
-        {% endfor %}
-    {% endwith %}
+  <div class="col-12 mb-3 mt-2">
+    {% blocktrans %}
+      Roll a custom amount of dice here, just klick on the button with
+      the amount you'd like to roll.
+    {% endblocktrans %}
+  </div>
+  {% with ""|center:36 as range %}
+    {% for _ in range %}
+      <div class="col-2 mb-2">
+        <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
+                data-dice-roll="{{ forloop.counter }}d6"
+                data-dice-header="{{ forloop.counter }}d6"
+                data-dice-description="{% trans 'Custom Roll' %}"
+                data-dice-character="{{ object.id }}">{{ forloop.counter }}
+        </button>
+      </div>
+    {% endfor %}
+  {% endwith %}
 </div>
 
 <div class="row mt-4 mb-2">
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'Add bonus dice to any roll in the game, or use them to create an additional action in combat at any time.<br><br>Bonus dice are expended on use and refresh at any rest.' %}
-    </div>
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at any rest.' %}
-    </div>
-    <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
-    </div>
-    <div class="col-10 mb-2">
-        {% trans 'Use a reroll to roll any complete roll.<br><br>Rerolls are expended on use and refresh at any rest.' %}
-    </div>
+  <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'Add bonus dice to any roll in the game, or use them to create an additional action in combat at any time.<br><br>Bonus dice are expended on use and refresh at any rest.' %}
+  </div>
+  <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'Destiny dice may be added to rolls just like bonus dice, but they always succeed on a 4+ roll. Additionally they may be used to steal an action in combat at any time.<br><br>Destiny dice are expended on use and refresh at any rest.' %}
+  </div>
+  <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'Use a reroll to roll any complete roll.<br><br>Rerolls are expended on use and refresh at any rest.' %}
+  </div>
 </div>
