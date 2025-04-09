@@ -44,7 +44,7 @@ WORKDIR /app
 COPY --from=builder /app/.venv/ /app/.venv/
 COPY --from=builder /app/uv.lock /app/
 COPY phasesix/ /app/
-COPY entrypoint.sh /app/
+COPY entrypoints/ /app/
 COPY --from=builder /app/git_commit_hash.txt /app/
 
 # Expose port
