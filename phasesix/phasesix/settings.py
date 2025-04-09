@@ -208,8 +208,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static_files")
+STATIC_URL = os.environ.get("STATIC_URL", "static/")
+STATIC_ROOT = BASE_DIR / os.environ.get("STATIC_ROOT_RELATIVE", "static_files")
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -220,8 +220,8 @@ COMPRESS_ENABLED = not DEBUG
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media_files")
+MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
+MEDIA_ROOT = BASE_DIR / os.environ.get("MEDIA_ROOT_RELATIVE", "media_files")
 
 RULEBOOK_ROOT = os.path.join(BASE_DIR, "rulebook", "static", "rulebook")
 
