@@ -1,176 +1,178 @@
 {% load i18n characters_extras characters_extras rules_extras thumbnail %}
 
 {% if may_edit %}
-    <div class="row">
-        <div class="col-12">
-            <div class="btn-group w-100">
-                <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove" %}"
-                   class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
-                                                                 title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
-                </a>
-                {% if not object.item.is_container %}
-                <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add" %}"
-                   class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
-                                                                 title="{% trans 'Add' %}"></i>{% trans 'Add' %}
-                </a>
-                {% endif %}
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove" %}"
+           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
+                                                         title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
+        </a>
+        {% if not object.item.is_container %}
+          <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add" %}"
+             class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
+                                                           title="{% trans 'Add' %}"></i>{% trans 'Add' %}
+          </a>
+        {% endif %}
+      </div>
     </div>
+  </div>
 
-    {% if object.item.charges is not None %}
-        <div class="row mt-2">
-            <div class="col-12">
-                <div class="btn-group w-100">
-                    <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add_charge" %}"
-                       class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
-                                                                     title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 mt-2">
-                <div class="btn-group w-100">
-                    <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove_charge" %}"
-                       class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
-                                                                     title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
-                    </a>
-                </div>
-            </div>
+  {% if object.item.charges is not None %}
+    <div class="row mt-2">
+      <div class="col-12">
+        <div class="btn-group w-100">
+          <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add_charge" %}"
+             class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
+                                                           title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
+          </a>
         </div>
+      </div>
+      <div class="col-12 mt-2">
+        <div class="btn-group w-100">
+          <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove_charge" %}"
+             class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
+                                                           title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row mt-2">
+    {% if object.item.dice_roll_string %}
+      <div class="col-12">
+        <div class="btn-group w-100">
+          <button class="btn btn-primary btn-sm dice-roll mb-2"
+                  data-dice-roll="{{ object.item.dice_roll_string }}"
+                  data-dice-header="{{ object.item }}"
+                  data-dice-description="{{ object.item.dice_roll_string }}"
+                  data-dice-character="{{ object.character.id }}"><i
+                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.dice_roll_string }}
+          </button>
+        </div>
+      </div>
     {% endif %}
 
-    <div class="row mt-2">
-        {% if object.item.dice_roll_string %}
-            <div class="col-12">
-                <div class="btn-group w-100">
-                    <button class="btn btn-primary btn-sm dice-roll mb-2"
-                            data-dice-roll="{{ object.item.dice_roll_string }}"
-                            data-dice-header="{{ object.item }}"
-                            data-dice-description="{{ object.item.dice_roll_string }}"
-                            data-dice-character="{{ object.character.id }}"><i
-                            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.dice_roll_string }}
-                    </button>
-                </div>
-            </div>
-        {% endif %}
+    {% if object.item.attribute %}
+      <div class="col-12">
+        <div class="btn-group w-100">
+          <button class="btn btn-primary btn-sm dice-roll mb-1"
+                  data-dice-roll="{% character_attribute_value object.character object.item.attribute %}d6"
+                  data-dice-header="{{ object.item }} - {{ object.item.attribute }}"
+                  data-dice-description="
+                          {% character_attribute_value object.character object.item.attribute %}{% trans 'd6' %}"
+                  data-dice-character="{{ object.character.id }}"><i
+                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.attribute }}</button>
+        </div>
+      </div>
+    {% endif %}
 
-        {% if object.item.attribute %}
-            <div class="col-12">
-                <div class="btn-group w-100">
-                    <button class="btn btn-primary btn-sm dice-roll mb-1"
-                            data-dice-roll="{% character_attribute_value object.character object.item.attribute %}d6"
-                            data-dice-header="{{ object.item }} - {{ object.item.attribute }}"
-                            data-dice-description="{% character_attribute_value object.character object.item.attribute %}{% trans 'd6' %}"
-                            data-dice-character="{{ object.character.id }}"><i
-                            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.attribute }}</button>
-                </div>
-            </div>
-        {% endif %}
+    {% if object.item.skill %}
+      <div class="col-12">
+        <div class="btn-group w-100">
+          <button class="btn btn-primary btn-sm dice-roll mb-1"
+                  data-dice-roll="{% character_skill_value object.character object.item.skill %}d6"
+                  data-dice-header="{{ object.item }} - {{ object.item.skill }}"
+                  data-dice-description="{% character_skill_value object.character object.item.skill %}{% trans 'd6' %}"
+                  data-dice-character="{{ object.character.id }}"><i
+                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.skill }}</button>
+        </div>
+      </div>
+    {% endif %}
 
-        {% if object.item.skill %}
-            <div class="col-12">
-                <div class="btn-group w-100">
-                    <button class="btn btn-primary btn-sm dice-roll mb-1"
-                            data-dice-roll="{% character_skill_value object.character object.item.skill %}d6"
-                            data-dice-header="{{ object.item }} - {{ object.item.skill }}"
-                            data-dice-description="{% character_skill_value object.character object.item.skill %}{% trans 'd6' %}"
-                            data-dice-character="{{ object.character.id }}"><i
-                            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.skill }}</button>
-                </div>
-            </div>
-        {% endif %}
+    {% if object.item.knowledge and object.character|has_knowledge:object.item.knowledge %}
+      <div class="col-12">
+        <div class="btn-group w-100">
+          <button class="btn btn-primary btn-sm dice-roll mb-1"
+                  data-dice-roll="{% character_knowledge_value object.character object.item.knowledge %}d6"
+                  data-dice-header="{{ object.item }} - {{ object.item.knowledge }}"
+                  data-dice-description="
+                          {% character_knowledge_value object.character object.item.knowledge %}{% trans 'd6' %}"
+                  data-dice-character="{{ object.character.id }}"><i
+                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.knowledge }}</button>
+        </div>
+      </div>
+    {% endif %}
 
-        {% if object.item.knowledge and object.character|has_knowledge:object.item.knowledge %}
-            <div class="col-12">
-                <div class="btn-group w-100">
-                    <button class="btn btn-primary btn-sm dice-roll mb-1"
-                            data-dice-roll="{% character_knowledge_value object.character object.item.knowledge %}d6"
-                            data-dice-header="{{ object.item }} - {{ object.item.knowledge }}"
-                            data-dice-description="{% character_knowledge_value object.character object.item.knowledge %}{% trans 'd6' %}"
-                            data-dice-character="{{ object.character.id }}"><i
-                            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.knowledge }}</button>
-                </div>
+    {% if not object.item.is_container %}
+      {% if object.in_container is not None or object.other_containers %}
+        <div class="col-12">
+          <div class="dropdown mt-1">
+            <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+              <i class="fas fa-arrow-right"></i>
+              {% trans 'Put into container' %}
+            </button>
+            <div class="dropdown-menu">
+              {% if object.in_container is not None %}
+                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
+                   class="dropdown-item action-link">{% trans 'On Body' %}</a>
+              {% endif %}
+              {% for container in object.other_containers %}
+                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
+                   class="dropdown-item action-link">{{ container.item }}</a>
+              {% endfor %}
             </div>
-        {% endif %}
-
-        {% if not object.item.is_container %}
-            {% if object.in_container is not None or object.other_containers %}
-                <div class="col-12">
-                    <div class="dropdown mt-1">
-                        <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-arrow-right"></i>
-                            {% trans 'Put into container' %}
-                        </button>
-                        <div class="dropdown-menu">
-                            {% if object.in_container is not None %}
-                                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
-                                   class="dropdown-item action-link">{% trans 'On Body' %}</a>
-                            {% endif %}
-                            {% for container in object.other_containers %}
-                                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
-                                   class="dropdown-item action-link">{{ container.item }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        {% endif %}
-    </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
 {% endif %}
 
 {% if object.item.image %}
-    {% thumbnail object.item.image "500" as thumb %}
-        <img src="{{ thumb.url }}" class="rounded img-fluid mt-4" alt="{{ object.item }}">
-    {% endthumbnail %}
+  {% thumbnail object.item.image "500" as thumb %}
+    <img src="{{ thumb.url }}" class="rounded img-fluid mt-4" alt="{{ object.item }}">
+  {% endthumbnail %}
 {% endif %}
 
 
 <div class="row mt-4">
-    <div class="col-12">
-        {{ object.item.description|urpg_markup }}
-    </div>
+  <div class="col-12">
+    {{ object.item.description|phasesix_markup }}
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <div class="card mb-2 mt-2">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <i class="fas fa-angle-double-right fa-fw"></i>
-                    {% trans 'Type' %}
-                    <span class="float-end">{{ object.item.type }}</span>
-                </li>
-                {% if object.item.charges is not None %}
-                    <li class="list-group-item">
-                        <i class="fas fa-bolt fa-fw"></i>
-                        {% trans 'Charges' %}
-                        <span class="float-end">{% color_value_span object.charges_available 100 invert=True %}/{{ object.item.charges }}</span>
-                    </li>
-                {% endif %}
-                <li class="list-group-item">
-                    <i class="fas fa-balance-scale fa-fw"></i>
-                    {% trans 'Weight' %}
-                    <span class="float-end">{% color_value_span object.item.weight 100 invert=True %}</span>
-                </li>
-                <li class="list-group-item">
-                    <i class="fas fa-eye-slash fa-fw"></i>
-                    {% trans 'Concealment' %}
-                    <span class="float-end">{% color_value_span object.item.concealment 5 invert=True %}</span>
-                </li>
-                {% if object.character.currency_map %}
-                    {% with cmu=object.character.currency_map.currencymapunit_set.earliest %}
-                        <li class="list-group-item">
-                            <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
-                            {% trans 'Price' %}
-                            <span class="float-end">{% color_value_span object.item.price 100 invert=True %}</span>
-                        </li>
-                    {% endwith %}
-                {% endif %}
-            </ul>
-        </div>
-        {% if user.is_superuser %}
-            <a href="{% url 'admin:armory_item_change' object.item.id %}"
-               style="font-size: xx-small">admin</a>
+  <div class="col-12">
+    <div class="card mb-2 mt-2">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <i class="fas fa-angle-double-right fa-fw"></i>
+          {% trans 'Type' %}
+          <span class="float-end">{{ object.item.type }}</span>
+        </li>
+        {% if object.item.charges is not None %}
+          <li class="list-group-item">
+            <i class="fas fa-bolt fa-fw"></i>
+            {% trans 'Charges' %}
+            <span class="float-end">{% color_value_span object.charges_available 100 invert=True %}/{{ object.item.charges }}</span>
+          </li>
         {% endif %}
+        <li class="list-group-item">
+          <i class="fas fa-balance-scale fa-fw"></i>
+          {% trans 'Weight' %}
+          <span class="float-end">{% color_value_span object.item.weight 100 invert=True %}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-eye-slash fa-fw"></i>
+          {% trans 'Concealment' %}
+          <span class="float-end">{% color_value_span object.item.concealment 5 invert=True %}</span>
+        </li>
+        {% if object.character.currency_map %}
+          {% with cmu=object.character.currency_map.currencymapunit_set.earliest %}
+            <li class="list-group-item">
+              <i class="{{ cmu.fa_icon_class }} {{ cmu.color_class }} fa-fw"></i>
+              {% trans 'Price' %}
+              <span class="float-end">{% color_value_span object.item.price 100 invert=True %}</span>
+            </li>
+          {% endwith %}
+        {% endif %}
+      </ul>
     </div>
+    {% if user.is_superuser %}
+      <a href="{% url 'admin:armory_item_change' object.item.id %}"
+         style="font-size: xx-small">admin</a>
+    {% endif %}
+  </div>
 </div>

@@ -77,7 +77,7 @@
         <div class="card-header">{{ q }}</div>
         <div class="card-body">
           <div class="text-muted">
-            {{ q.description|urpg_markup }}
+            {{ q.description|phasesix_markup }}
           </div>
           {{ q.get_modifier_summary_html|safe }}
           <a class="btn btn-danger btn-sm float-end mt-2 action-link"

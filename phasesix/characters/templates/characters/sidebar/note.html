@@ -1,34 +1,35 @@
 {% load i18n django_bootstrap5 rules_extras %}
 
 {% if may_edit %}
-    <div class="row">
-        <div class="col-12">
-            {{ object }}
-            <h1>{{ object.subject|default:"Note" }}</h1>
-            <form action="{% url 'characters:xhr_update_note' pk=object.character.id note_pk=object.id %}" method="post">
-                <input type="text" name="subject" class="form-control mb-2"
-                       value="{{ object.subject }}" placeholder="{% trans 'Subject (optional)' %}">
-                <textarea
-                        class="form-control mb-2"
-                        name="text"
-                        required
-                        placeholder="{% trans 'Note Text (Markdown allowed)' %}"
-                        rows="7">{{ object.text }}</textarea>
-                <div class="form-check form-switch mb-2">
-                    <input {% if object.is_private %}checked{% endif %} type="checkbox" name="private" id="create-note-private-switch" class="form-check-input">
-                    <label for="create-note-private-switch" class="form-check-label">{% trans 'Private Note' %}</label>
-                </div>
-                <button
-                        class="btn btn-primary btn-sm w-100 mb-2 submit-button close-sidebar">
-                    <i class="fas fa-feather fa-fw"></i> {% trans 'Save Note' %}</button>
-                <a
-                        href="{% url 'characters:xhr_delete_note' pk=object.character.id note_pk=object.id %}"
-                        class="btn btn-danger btn-sm w-100 action-link close-sidebar">
-                    <i class="fas fa-times fa-fw"></i> {% trans 'Delete Note' %}</a>
-            </form>
+  <div class="row">
+    <div class="col-12">
+      {{ object }}
+      <h1>{{ object.subject|default:"Note" }}</h1>
+      <form action="{% url 'characters:xhr_update_note' pk=object.character.id note_pk=object.id %}" method="post">
+        <input type="text" name="subject" class="form-control mb-2"
+               value="{{ object.subject }}" placeholder="{% trans 'Subject (optional)' %}">
+        <textarea
+                class="form-control mb-2"
+                name="text"
+                required
+                placeholder="{% trans 'Note Text (Markdown allowed)' %}"
+                rows="7">{{ object.text }}</textarea>
+        <div class="form-check form-switch mb-2">
+          <input {% if object.is_private %}checked{% endif %} type="checkbox" name="private"
+                 id="create-note-private-switch" class="form-check-input">
+          <label for="create-note-private-switch" class="form-check-label">{% trans 'Private Note' %}</label>
         </div>
+        <button
+                class="btn btn-primary btn-sm w-100 mb-2 submit-button close-sidebar">
+          <i class="fas fa-feather fa-fw"></i> {% trans 'Save Note' %}</button>
+        <a
+                href="{% url 'characters:xhr_delete_note' pk=object.character.id note_pk=object.id %}"
+                class="btn btn-danger btn-sm w-100 action-link close-sidebar">
+          <i class="fas fa-times fa-fw"></i> {% trans 'Delete Note' %}</a>
+      </form>
     </div>
+  </div>
 {% else %}
-    <h1>{{ object.subject }}</h1>
-    {{ object.text|urpg_markup }}
+  <h1>{{ object.subject }}</h1>
+  {{ object.text|phasesix_markup }}
 {% endif %}

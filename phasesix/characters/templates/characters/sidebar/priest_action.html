@@ -2,68 +2,68 @@
 {% load i18n characters_extras rules_extras thumbnail %}
 
 {% if may_edit and priest_action.priestactionroll_set.exists %}
-    <div class="row">
-        {% for roll in priest_action.priestactionroll_set.all %}
-            {% if roll.attribute %}
-                <div class="col-12">
-                    <div class="btn-group w-100">
-                        <button class="btn btn-primary btn-sm dice-roll mb-1"
-                                data-dice-roll="{% character_attribute_value object roll.attribute %}d6"
-                                data-dice-header="{{ priest_action }} - {{ roll.attribute }}"
-                                data-dice-description="{{ priest_action.rules }}"
-                                data-dice-character="{{ object.id }}"><i
-                            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ roll.attribute }}</button>
-                    </div>
-                </div>
-            {% endif %}
-            {% if roll.custom_roll_dice %}
-                <div class="col-12">
-                    <div class="btn-group w-100">
-                        <button class="btn btn-primary btn-sm dice-roll mb-2"
-                                data-dice-roll="{{ roll.custom_roll_dice }}"
-                                data-dice-header="{{ priest_action }} - {{ roll.custom_roll_name }}"
-                                data-dice-description="{{ priest_action.rules }}"
-                                data-dice-character="{{ object.id }}"><i
-                            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ roll.custom_roll_name }}
-                        </button>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+  <div class="row">
+    {% for roll in priest_action.priestactionroll_set.all %}
+      {% if roll.attribute %}
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <button class="btn btn-primary btn-sm dice-roll mb-1"
+                    data-dice-roll="{% character_attribute_value object roll.attribute %}d6"
+                    data-dice-header="{{ priest_action }} - {{ roll.attribute }}"
+                    data-dice-description="{{ priest_action.rules }}"
+                    data-dice-character="{{ object.id }}"><i
+                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ roll.attribute }}</button>
+          </div>
+        </div>
+      {% endif %}
+      {% if roll.custom_roll_dice %}
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <button class="btn btn-primary btn-sm dice-roll mb-2"
+                    data-dice-roll="{{ roll.custom_roll_dice }}"
+                    data-dice-header="{{ priest_action }} - {{ roll.custom_roll_name }}"
+                    data-dice-description="{{ priest_action.rules }}"
+                    data-dice-character="{{ object.id }}"><i
+                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ roll.custom_roll_name }}
+            </button>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endif %}
 
 <div class="row">
-    <div class="col-12">
-        <p class="mb-4">{{ priest_action.rules|urpg_markup }}</p>
-        {% if user.is_superuser %}
-            <a href="{% url 'admin:pantheon_priestaction_change' priest_action.id %}"
-               style="font-size: xx-small">admin</a>
-        {% endif %}
-    </div>
+  <div class="col-12">
+    <p class="mb-4">{{ priest_action.rules|phasesix_markup }}</p>
+    {% if user.is_superuser %}
+      <a href="{% url 'admin:pantheon_priestaction_change' priest_action.id %}"
+         style="font-size: xx-small">admin</a>
+    {% endif %}
+  </div>
 
-    {% entity_work object priest_action as entity_work_list %}
-    <div class="col-12">
-        {% for ew in entity_work_list %}
-            <div class="card mb-2">
-                <div class="card-header">
-                    <span class="badge bg-dark float-end">{{ ew.skill }} {% trans "Grace" %}</span>
-                    {{ ew.name }}
-                </div>
-                <div class="card-body">
-                    {% if ew.wiki_page.image %}
-                        <img src="{% thumbnail ew.wiki_page.image "80" as im %}{{ im.url }}{% endthumbnail %}"
-                             class="float-start px-2 py-1"
-                             alt="{{ ew.name }}">
-                    {% endif %}
-                    <div class="p-2">
-                        <p>
-                            {{ ew.effect }}
-                        </p>
-                        <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+  {% entity_work object priest_action as entity_work_list %}
+  <div class="col-12">
+    {% for ew in entity_work_list %}
+      <div class="card mb-2">
+        <div class="card-header">
+          <span class="badge bg-dark float-end">{{ ew.skill }} {% trans "Grace" %}</span>
+          {{ ew.name }}
+        </div>
+        <div class="card-body">
+          {% if ew.wiki_page.image %}
+            <img src="{% thumbnail ew.wiki_page.image "80" as im %}{{ im.url }}{% endthumbnail %}"
+                 class="float-start px-2 py-1"
+                 alt="{{ ew.name }}">
+          {% endif %}
+          <div class="p-2">
+            <p>
+              {{ ew.effect }}
+            </p>
+            <a href="{{ ew.wiki_page.get_absolute_url }}">{{ ew.wiki_page.name }}</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>

@@ -1,17 +1,17 @@
 {% load i18n rules_extras %}
 
 {% if object.templates_with_rules.exists %}
-    <div class="card-columns">
-        <h1>{% trans '// Shadows' %}</h1>
-        <div class="cards">
-            {% for template in object.templates_with_rules.all %}
-                <div class="box">
-                    <h2>{{ template.template.name }}</h2>
-                    <p>
-                        {{ template.template.rules|urpg_markup }}
-                    </p>
-                </div>
-            {% endfor %}
+  <div class="card-columns">
+    <h1>{% trans '// Shadows' %}</h1>
+    <div class="cards">
+      {% for template in object.templates_with_rules.all %}
+        <div class="box">
+          <h2>{{ template.template.name }}</h2>
+          <p>
+            {{ template.template.rules|phasesix_markup }}
+          </p>
         </div>
+      {% endfor %}
     </div>
+  </div>
 {% endif %}

@@ -24,7 +24,7 @@ ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 CSRF_TRUSTED_ORIGINS = [f"https://{a}" for a in ALLOWED_HOSTS]
 
 
-ASGI_APPLICATION = "urpg.asgi.application"
+ASGI_APPLICATION = "phasesix.asgi.application"
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -110,7 +110,7 @@ if DEBUG:
             "cachalot.panels.CachalotPanel",
         ]
 
-ROOT_URLCONF = "urpg.urls"
+ROOT_URLCONF = "phasesix.urls"
 
 TEMPLATES = [
     {
@@ -137,7 +137,7 @@ STATICFILE_FINDERS = [
     "compressor.finders.CompressorFinder",
 ]
 
-WSGI_APPLICATION = "urpg.wsgi.application"
+WSGI_APPLICATION = "phasesix.wsgi.application"
 
 if os.environ.get("DATABASE_ENGINE", None) is None:
     DATABASES = {
@@ -166,7 +166,7 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{os.environ['REDIS_HOST']}:{os.environ['REDIS_PORT']}",
-        "KEY_PREFIX": "urpg_cache",
+        "KEY_PREFIX": "phasesix_cache",
     }
 }
 

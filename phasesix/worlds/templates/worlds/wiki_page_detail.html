@@ -96,7 +96,7 @@
           </div>
         {% endif %}
 
-        {{ object.text|urpg_markup|replace_wiki_tags:object.world }}
+        {{ object.text|phasesix_markup|replace_wiki_tags:object.world }}
       </div>
 
       {% if object.wikipageembedding_set.exists %}
@@ -137,7 +137,7 @@
               {% endif %}
             </a>
             <div class="card-body">
-              {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:page.world }}
+              {{ page.text|to_first_linebreak|phasesix_markup|replace_wiki_tags:page.world }}
             </div>
             {% if user.is_superuser %}
               <a href="{% url 'admin:worlds_wikipage_change' page.id %}"

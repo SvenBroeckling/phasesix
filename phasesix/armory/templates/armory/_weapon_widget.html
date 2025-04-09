@@ -6,7 +6,7 @@
       <div class="col-12">
         <h4>{{ weapon }}</h4>
 
-        {{ weapon.description|urpg_markup }}
+        {{ weapon.description|phasesix_markup }}
 
         {% for kw in weapon.weaponkeyword_set.all %}
           <span class="fw-bold {% if kw.keyword.is_rare %}text-primary{% endif %}">{{ kw.keyword.name }}</span>

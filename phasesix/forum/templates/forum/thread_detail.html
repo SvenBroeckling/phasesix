@@ -40,7 +40,7 @@
           </div>
           <div class="card-body forum-post">
             <div class="forum-post-text">
-              {{ post.text|urpg_markup|urlize }}
+              {{ post.text|phasesix_markup|urlize }}
             </div>
             {% if user.is_authenticated %}
               <button data-raw-post-url="{% url 'forum:post_raw' post.id %}"

@@ -28,9 +28,9 @@
     </div>
 
     <div class="col-12 col-xl-9 wiki-page">
-      {{ world.description_1|urpg_markup|replace_wiki_tags:world }}
-      {{ world.description_2|urpg_markup|replace_wiki_tags:world }}
-      {{ world.description_3|urpg_markup|replace_wiki_tags:world }}
+      {{ world.description_1|phasesix_markup|replace_wiki_tags:world }}
+      {{ world.description_2|phasesix_markup|replace_wiki_tags:world }}
+      {{ world.description_3|phasesix_markup|replace_wiki_tags:world }}
 
       <div class="column-container column-layout-2">
         {% for page in world.wikipage_set.get_top_level %}
@@ -46,7 +46,7 @@
               {% endif %}
             </a>
             <div class="card-body">
-              {{ page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:world }}
+              {{ page.text|to_first_linebreak|phasesix_markup|replace_wiki_tags:world }}
             </div>
             {% if user.is_superuser %}
               <a href="{% url 'admin:worlds_wikipage_change' page.id %}"

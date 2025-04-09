@@ -168,7 +168,7 @@
                   <h4>{{ wiki_page }}</h4>
                   <span class="text-muted">{{ wiki_page.parent }}</span>
                   <p>
-                    {{ wiki_page.text|to_first_linebreak|urpg_markup|replace_wiki_tags:world }}
+                    {{ wiki_page.text|to_first_linebreak|phasesix_markup|replace_wiki_tags:world }}
                     <br>
                     <a href="{% url "worlds:wiki_page" world_slug=wiki_page.world.slug slug=wiki_page.slug %}"
                        class="btn btn-outline-primary stretched-link">{% trans "Discover" %}</a>

@@ -8,7 +8,7 @@
       <div class="box">
         <h2>{{ template.template }}</h2>
         <p>
-          {{ template.template.rules|urpg_markup }}
+          {{ template.template.rules|phasesix_markup }}
         </p>
         {% with all_modifiers=template.template.templatemodifier_set.all %}
           {% for mod in all_modifiers %}

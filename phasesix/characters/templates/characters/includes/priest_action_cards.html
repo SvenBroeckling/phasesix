@@ -18,7 +18,7 @@
     </div>
     <div class="card-body">
       <p>
-        {{ s.rules|urpg_markup }}
+        {{ s.rules|phasesix_markup }}
       </p>
       {% if user.is_superuser %}
         <a href="{% url 'admin:pantheon_priestaction_change' s.id %}"

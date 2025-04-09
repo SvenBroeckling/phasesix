@@ -1343,7 +1343,7 @@ class XhrEditCharacterDescriptionView(UpdateView):
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         result = DjangoTemplate(
-            "{% load rules_extras %}{{ object.description|urpg_markup }}"
+            "{% load rules_extras %}{{ object.description|phasesix_markup }}"
         ).render(Context({"object": self.object}))
         return HttpResponse(result)
 

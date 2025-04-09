@@ -20,7 +20,7 @@
     <div class="col-12 col-xl-9">
       <div class="rules">
         {% with world=request.world_configuration.world %}
-          {{ object.text|replace_book_variables:world|urpg_markup:False|resolve_rulebook_chapter_links }}
+          {{ object.text|replace_book_variables:world|phasesix_markup:False|resolve_rulebook_chapter_links }}
         {% endwith %}
       </div>
     </div>

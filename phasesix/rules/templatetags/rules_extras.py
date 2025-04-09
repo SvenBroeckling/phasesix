@@ -42,7 +42,7 @@ def to_first_linebreak(value):
 
 
 @register.filter
-def urpg_markup(value, safe_mode=True):
+def phasesix_markup(value, safe_mode=True):
     if value is None:
         return ""
 

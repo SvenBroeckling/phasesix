@@ -14,7 +14,7 @@
 
         <div class="row">
           <div class="col-12">
-            {{ character_weapon.weapon.description|urpg_markup }}
+            {{ character_weapon.weapon.description|phasesix_markup }}
 
             {% for identifier, kw in character_weapon.modified_keywords.items %}
               <span class="fw-bold {% if kw.is_rare %}text-primary{% endif %}">{{ kw.name }}</span>
@@ -26,7 +26,7 @@
               <hr>
               <h5 class="mt-4">{{ wm }}</h5>
               <p>
-                {{ wm.rules|urpg_markup }}
+                {{ wm.rules|phasesix_markup }}
               </p>
               {% for keyword in wm.weaponmodificationkeyword_set.all %}
                 <span class="fw-bold {% if keyword.keyword.is_rare %}text-primary{% endif %}">{{ keyword.keyword.name }}</span>

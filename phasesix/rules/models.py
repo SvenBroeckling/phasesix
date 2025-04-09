@@ -1,14 +1,13 @@
 import itertools
 
+from armory.choices import COLOR_CLASS_CHOICES
+from armory.mixins import SearchableCardListMixin
 from django.contrib import admin
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
-from transmeta import TransMeta
-
-from armory.choices import COLOR_CLASS_CHOICES
-from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from transmeta import TransMeta
 
 CHARACTER_ASPECT_CHOICES = (
     ("base_max_health", _("max health")),
@@ -60,7 +59,7 @@ class ExtensionQuerySet(models.QuerySet):
 
 class Extension(models.Model, metaclass=TransMeta):
     """
-    A URPG source book extension
+    A PhaseSix source book extension
     """
 
     EXTENSION_TYPE_CHOICES = (
