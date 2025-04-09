@@ -51,5 +51,5 @@ COPY --from=builder /app/git_commit_hash.txt /app/
 EXPOSE 4343
 
 # Run Django server
-CMD ["/app/.venv/bin/hypercorn", "-w", "5", "-b", "0.0.0.0:4343", "phasesix.asgi:application"]
+CMD ["/app/.venv/bin/hypercorn", "-w", "5", "-b", "0.0.0.0:4444", "phasesix.asgi:application"]
 
