@@ -1,11 +1,11 @@
 import os
-from pathlib import Path
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 BASE_URL = os.environ["BASE_URL"]
@@ -209,7 +209,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = os.environ.get("STATIC_URL", "static/")
-STATIC_ROOT = BASE_DIR / os.environ.get("STATIC_ROOT_RELATIVE", "static_files")
+STATIC_ROOT = os.path.join(
+    BASE_DIR, os.environ.get("STATIC_ROOT_RELATIVE", "static_files")
+)
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -221,7 +223,9 @@ COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
-MEDIA_ROOT = BASE_DIR / os.environ.get("MEDIA_ROOT_RELATIVE", "media_files")
+MEDIA_ROOT = os.path.join(
+    BASE_DIR, os.environ.get("MEDIA_ROOT_RELATIVE", "media_files")
+)
 
 RULEBOOK_ROOT = os.path.join(BASE_DIR, "rulebook", "static", "rulebook")
 
