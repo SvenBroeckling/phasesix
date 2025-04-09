@@ -29,25 +29,14 @@ You need a Linux (WSL2 works too), macOS (untested) or Windows (untested) machin
 
 Phase Six relies on a local [redis](https://redis.io/) server. The installation depends on your system. For linux, use your package manager (i.e. `apt install redis-server`). On macOS, use Homebrew to `brew install redis`.
 
-#### Python and virtualenv
+#### Python and uv
 
-The supported python versions are 3.8-3.11. A system-wide installed python interpreter is fine, but you want to create a virtualenv. This can be done with:
-
-```shell
-$ python -m venv venv
-```
-
-The second parameter is the venv folder, which *should not* be in the project directory. The virtualenv can be activated for a single shell with `source venv/bin/activate`. Every python/pip call after that will use the virtualenv.
-
-#### Requirements
-
-The requirements are listed in the file `requirements.txt`. They can be installed with pip:
+The supported python versions are 3.10-3.13. A system-wide installed python interpreter is fine, but you want to create a virtualenv. PhaseSix uses `uv` for requirements. This can be done with:
 
 ```shell
-(venv) $ pip install -r requirements.txt
+$ uv sync
+$ . .venv/bin/activate
 ```
-
-These will be installed into the virtualenv, so that nothing collides with your system-wide python.
 
 #### Environment, Database, Superuser
 

@@ -1,0 +1,21 @@
+stages:
+  - deploy
+
+deploy_job:
+  stage: deploy
+  variables:
+    SSH_OPTIONS: "-p 33161 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+  script:
+    - if [ -z "$SSH_LOGIN" ]; then echo "SSH_LOGIN is not set. Aborting pipeline."; exit 1; fi
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build --build-arg GIT_COMMIT_HASH=$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:latest
+    - |
+      if [[ "$CI_COMMIT_MESSAGE" =~ RESTART ]]; then
+        ssh ${SSH_OPTIONS} ${SSH_LOGIN} "./deploy.sh restart"
+      else
+        ssh ${SSH_OPTIONS} ${SSH_LOGIN} "./deploy.sh"
+      fi
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
