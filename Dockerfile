@@ -48,7 +48,7 @@ COPY entrypoints/ /app/
 COPY --from=builder /app/git_commit_hash.txt /app/
 
 # Expose port
-EXPOSE 4343
+EXPOSE 4444
 
 # Run Django server
 CMD ["/app/.venv/bin/hypercorn", "-w", "5", "-b", "0.0.0.0:4444", "phasesix.asgi:application"]
