@@ -75,7 +75,7 @@ $(function () {
         let form = $(this)
         let btn = form.find('button')
 
-        if (btn.closest('.dropdown')) {
+        if (btn.closest('.dropdown').length) {
             btn = btn.closest('.dropdown').find('.dropdown-toggle')
         }
 
