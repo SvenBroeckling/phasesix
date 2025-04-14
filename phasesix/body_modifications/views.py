@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from body_modifications.models import BodyModificationType
+
+
+class BodyModificationTypeListView(ListView):
+    model = BodyModificationType
