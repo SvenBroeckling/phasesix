@@ -1,3 +1,4 @@
+{% load armory_extras %}
 {% load i18n characters_extras characters_extras rules_extras thumbnail %}
 
 {% if may_edit %}
@@ -141,6 +142,11 @@
           <i class="fas fa-angle-double-right fa-fw"></i>
           {% trans 'Type' %}
           <span class="float-end">{{ object.item.type }}</span>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-angle-double-right fa-fw"></i>
+          {% trans 'Rarity' %}
+          <span class="float-end text-{% rarity_color_class object.item.rarity %}">{{ object.item.get_rarity_display }}</span>
         </li>
         {% if object.item.charges is not None %}
           <li class="list-group-item">
