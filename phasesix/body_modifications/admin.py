@@ -70,6 +70,7 @@ class BodyModificationAdmin(ModelAdmin):
                         "skill",
                         "knowledge",
                     ),
+                    ("extensions",),
                 ),
             },
         ),

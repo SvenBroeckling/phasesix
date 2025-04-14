@@ -37,6 +37,12 @@ from armory.models import (
     AttackMode,
     ProtectionType,
 )
+from body_modifications.models import (
+    BodyModification,
+    BodyModificationType,
+    SocketLocation,
+    BodyModificationSocketLocation,
+)
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign, Roll
 from characters.forms import (
@@ -57,6 +63,7 @@ from characters.models import (
     CharacterRiotGearProtectionUsed,
     CharacterTemplate,
     CharacterSkill,
+    CharacterBodyModification,
 )
 from characters.utils import crit_successes
 from horror.models import QuirkCategory, Quirk
@@ -118,6 +125,7 @@ class XhrSidebarView(DetailView):
     # Mapping from sidebar_template to model
     template_model_map = {
         "attribute": CharacterAttribute,
+        "body_modification": CharacterBodyModification,
         "character": Character,
         "combat": Character,
         "create_note": Character,
@@ -968,6 +976,24 @@ class XhrPutIntoView(View):
         return JsonResponse({"status": "ok"})
 
 
+class XhrModifyBodyModificationView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs["pk"])
+        if not character.may_edit(request.user):
+            return JsonResponse({"status": "forbidden"})
+        modification = CharacterBodyModification.objects.get(
+            id=kwargs["body_modification_pk"]
+        )
+
+        if self.kwargs["mode"] == "add_charge":
+            modification.charges_used -= 1
+        if self.kwargs["mode"] == "remove_charge":
+            modification.charges_used += 1
+        modification.save()
+
+        return JsonResponse({"status": "ok"})
+
+
 class XhrAddWeaponModView(TemplateView):
     template_name = "characters/modals/add_weapon_mod.html"
 
@@ -1205,6 +1231,7 @@ class XhrCharacterObjectsView(TemplateView):
             "template": (TemplateCategory, Template),
             "quirk": (QuirkCategory, Quirk),
             "language": (LanguageGroup, Language),
+            "body_modification": (BodyModificationType, BodyModification),
         }
         self.model, self.child_model = object_type_mapping.get(self.object_type)
         return super().dispatch(request, *args, **kwargs)
@@ -1267,6 +1294,24 @@ class XhrCharacterObjectsView(TemplateView):
 
     def delete_weapon(self, pk):
         self.character.characterweapon_set.filter(id=pk).delete()
+
+    def add_body_modification(self, pk):
+        obj = BodyModification.objects.get(id=pk)
+        socket_location = SocketLocation.objects.get(
+            id=self.request.POST.get("socket_location_pk")
+        )
+        bm_socket_location = BodyModificationSocketLocation.objects.get(
+            body_modification=obj, socket_location=socket_location
+        )
+
+        self.character.characterbodymodification_set.create(
+            body_modification=obj,
+            socket_location=socket_location,
+            socket_amount=bm_socket_location.socket_amount,
+        )
+
+    def delete_body_modification(self, pk):
+        self.character.characterbodymodification_set.filter(id=pk).delete()
 
     def add_item(self, pk):
         item = Item.objects.get(id=pk)

@@ -9,6 +9,7 @@ from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
 from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit, RiotGearProtection
+from body_modifications.models import BodyModificationSocketLocation
 from characters.utils import static_thumbnail
 from horror.models import QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
@@ -160,6 +161,7 @@ class Character(models.Model):
 
     latest_initiative = models.IntegerField(_("latest initiative"), default=0)
 
+    # Horror
     quirks = models.ManyToManyField(
         "horror.Quirk", verbose_name=_("quirks"), blank=True
     )
@@ -385,26 +387,7 @@ class Character(models.Model):
         )
         return self.lineage.template_points + campaign_points - spent_points
 
-    # Magic and Horror
-
-    @property
-    def spell_points(self):
-        return self.lineage.base_spell_points + self.get_aspect_modifier(
-            "base_spell_points"
-        )
-
-    @property
-    def unlocked_spell_origins(self):
-        return SpellOrigin.objects.filter(
-            id__in=[
-                t.unlocks_spell_origin.id
-                for t in TemplateModifier.objects.filter(
-                    unlocks_spell_origin__isnull=False,
-                    template__charactertemplate__character__id=self.id,
-                )
-            ]
-        )
-
+    # Horror
     @property
     def available_stress(self):
         return self.max_stress - self.stress
@@ -424,6 +407,25 @@ class Character(models.Model):
         qa = self.quirks_active - self.quirks.count()
         return qa if qa >= 0 else 0
 
+    # Magic
+    @property
+    def spell_points(self):
+        return self.lineage.base_spell_points + self.get_aspect_modifier(
+            "base_spell_points"
+        )
+
+    @property
+    def unlocked_spell_origins(self):
+        return SpellOrigin.objects.filter(
+            id__in=[
+                t.unlocks_spell_origin.id
+                for t in TemplateModifier.objects.filter(
+                    unlocks_spell_origin__isnull=False,
+                    template__charactertemplate__character__id=self.id,
+                )
+            ]
+        )
+
     @property
     def max_arcana(self):
         return self.lineage.base_max_arcana + self.get_aspect_modifier(
@@ -441,6 +443,93 @@ class Character(models.Model):
     @property
     def spell_points_available(self):
         return self.spell_points - self.spell_points_spent
+
+    # Body Modifications
+
+    @property
+    def bio_strain(self):
+        bm_sum = (
+            CharacterBodyModification.objects.filter(
+                character=self, body_modification__bio_strain__isnull=False
+            ).aggregate(Sum("body_modification__bio_strain"))[
+                "body_modification__bio_strain__sum"
+            ]
+            or 0
+        )
+        return (
+            self.lineage.base_bio_strain
+            + self.get_aspect_modifier("base_bio_strain")
+            + bm_sum
+        )
+
+    @property
+    def energy_produced(self):
+        bm_sum = (
+            CharacterBodyModification.objects.filter(
+                character=self,
+                body_modification__energy_consumption_ma__isnull=False,
+                body_modification__energy_consumption_ma__lt=0,
+            ).aggregate(Sum("body_modification__energy_consumption_ma"))[
+                "body_modification__energy_consumption_ma__sum"
+            ]
+            or 0
+        )
+        return (
+            self.lineage.base_energy
+            + self.get_aspect_modifier("base_energy")
+            + abs(bm_sum)
+        )
+
+    @property
+    def energy_consumed(self):
+        bm_sum = (
+            CharacterBodyModification.objects.filter(
+                character=self,
+                body_modification__energy_consumption_ma__isnull=False,
+                body_modification__energy_consumption_ma__gt=0,
+            ).aggregate(Sum("body_modification__energy_consumption_ma"))[
+                "body_modification__energy_consumption_ma__sum"
+            ]
+            or 0
+        )
+        return abs(bm_sum)
+
+    def sockets(self, location_identifier):
+        bm_sum = (
+            CharacterBodyModification.objects.filter(
+                character=self, socket_location__identifier=location_identifier
+            ).aggregate(Sum("socket_amount"))["socket_amount__sum"]
+            or 0
+        )
+        return (
+            getattr(self.lineage, f"base_sockets_{location_identifier}")
+            + self.get_aspect_modifier(f"base_sockets_{location_identifier}")
+            - bm_sum
+        )
+
+    @property
+    def sockets_head(self):
+        return self.sockets("head")
+
+    @property
+    def sockets_torso(self):
+        return self.sockets("torso")
+
+    @property
+    def sockets_left_arm(self):
+        return self.sockets("left_arm")
+
+    @property
+    def sockets_right_arm(self):
+        return self.sockets("right_arm")
+
+    @property
+    def sockets_left_leg(self):
+        return self.sockets("left_leg")
+
+    @property
+    def sockets_right_leg(self):
+        return self.sockets("right_leg")
 
     # Dice and Rolls
 
@@ -802,6 +891,56 @@ class CharacterTemplate(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+
+class CharacterBodyModificationQuerySet(models.QuerySet):
+    def head(self):
+        return self.filter(socket_location__identifier="head")
+
+    def torso(self):
+        return self.filter(socket_location__identifier="torso")
+
+    def right_arm(self):
+        return self.filter(socket_location__identifier="right_arm")
+
+    def left_arm(self):
+        return self.filter(socket_location__identifier="left_arm")
+
+    def right_leg(self):
+        return self.filter(socket_location__identifier="right_leg")
+
+    def left_leg(self):
+        return self.filter(socket_location__identifier="left_leg")
+
+
+class CharacterBodyModification(models.Model):
+    objects = CharacterBodyModificationQuerySet.as_manager()
+    character = models.ForeignKey(Character, models.CASCADE)
+    body_modification = models.ForeignKey(
+        "body_modifications.BodyModification", models.CASCADE
+    )
+    socket_location = models.ForeignKey(
+        "body_modifications.SocketLocation", models.CASCADE
+    )
+    socket_amount = models.IntegerField(_("socket amount"), default=1)
+    charges_used = models.IntegerField(_("charges used"), default=0)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+
+    class Meta:
+        ordering = ("body_modification__rarity",)
+
+    def __str__(self):
+        return self.body_modification.name
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+
+    @property
+    def charges_left(self):
+        try:
+            return self.body_modification.charges - self.charges_used
+        except TypeError:
+            return None
 
 
 class CharacterWeapon(models.Model):

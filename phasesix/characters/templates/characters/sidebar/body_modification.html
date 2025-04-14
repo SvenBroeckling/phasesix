@@ -1,0 +1,173 @@
+{% load armory_extras %}
+{% load thumbnail %}
+{% load body_modification_extras %}
+{% load rules_extras %}
+{% load characters_extras %}
+{% load i18n %}
+
+{% with body_modification=object.body_modification %}
+  {% if may_edit %}
+    {% if body_modification.charges is not None %}
+      <div class="row mt-2">
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <a href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="add_charge" %}"
+               class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
+                                                             title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
+            </a>
+          </div>
+        </div>
+        <div class="col-12 mt-2">
+          <div class="btn-group w-100">
+            <a href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="remove_charge" %}"
+               class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
+                                                             title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="row mt-2">
+      {% if body_modification.dice_roll_string %}
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <button class="btn btn-primary btn-sm dice-roll mb-2"
+                    data-dice-roll="{{ body_modification.dice_roll_string }}"
+                    data-dice-header="{{ body_modification }}"
+                    data-dice-description="{{ body_modification.dice_roll_string }}"
+                    data-dice-character="{{ object.character.id }}"><i
+                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.dice_roll_string }}
+            </button>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if body_modification.attribute %}
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <button class="btn btn-primary btn-sm dice-roll mb-2"
+                    data-dice-roll="{% character_attribute_value object.character body_modification.attribute %}d6"
+                    data-dice-header="{{ body_modification }} - {{ body_modification.attribute }}"
+                    data-dice-description="
+
+                          {% character_attribute_value object.character body_modification.attribute %}{% trans 'd6' %}"
+                    data-dice-character="{{ object.character.id }}"><i
+                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.attribute }}
+            </button>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if body_modification.skill %}
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <button class="btn btn-primary btn-sm dice-roll mb-2"
+                    data-dice-roll="{% character_skill_value object.character body_modification.skill %}d6"
+                    data-dice-header="{{ body_modification }} - {{ body_modification.skill }}"
+                    data-dice-description="
+                          {% character_skill_value object.character body_modification.skill %}{% trans 'd6' %}"
+                    data-dice-character="{{ object.character.id }}"><i
+                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.skill }}</button>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if body_modification.knowledge and object.character|has_knowledge:body_modification.knowledge %}
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <button class="btn btn-primary btn-sm dice-roll mb-2"
+                    data-dice-roll="{% character_knowledge_value object.character body_modification.knowledge %}d6"
+                    data-dice-header="{{ body_modification }} - {{ body_modification.knowledge }}"
+                    data-dice-description="
+
+                          {% character_knowledge_value object.character body_modification.knowledge %}{% trans 'd6' %}"
+                    data-dice-character="{{ object.character.id }}"><i
+                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.knowledge }}
+            </button>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="btn-group w-100">
+      <a href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="body_modification" %}?object_id={{ object.id }}"
+         data-method="DELETE"
+         class="btn btn-sm btn-danger action-link close-sidebar"><i class="fas fa-fw fa-trash"
+                                                                    title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
+      </a>
+    </div>
+
+  {% endif %}
+
+  {% if body_modification.image %}
+    {% thumbnail body_modification.image "500" as thumb %}
+      <img src="{{ thumb.url }}" class="rounded img-fluid mt-4" alt="{{ body_modification }}">
+    {% endthumbnail %}
+  {% endif %}
+
+
+  {% if body_modification.description %}
+    <div class="text-center my-3">
+      {{ body_modification.description|phasesix_markup }}
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-2 mt-2">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <span>
+            <i class="fas fa-angle-double-right fa-fw"></i>
+            {% trans 'Type' %}
+            </span>
+            <span>{{ body_modification.type }}</span>
+          </li>
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <span>
+            <i class="fas fa-angle-double-right fa-fw"></i>
+            {% trans 'Rarity' %}
+            </span>
+            <span class="text-{% rarity_color_class body_modification.rarity %}">{{ body_modification.get_rarity_display }}</span>
+          </li>
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <span>
+            <i class="gi gi-lorc-power-lightning"></i>
+            {% trans 'Energy' %}
+            </span>
+            <span>{% color_value_span body_modification.energy_consumption_ma 2 invert=True %}</span>
+          </li>
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <span>
+            <i class="gi gi-lorc-broken-heart"></i>
+            {% trans 'Biostrain' %}
+            </span>
+            <span>{% color_value_span body_modification.bio_strain 4 invert=True %}</span>
+          </li>
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <span>
+            <i class="gi gi-lorc-bolt-shield"></i>
+            {% trans 'Charges' %}
+            </span>
+            <span>{% color_value_span object.charges_left body_modification.charges %} / {% color_value_span body_modification.charges 4 %}</span>
+          </li>
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <span>
+            <i class="gi gi-guard13007-play-button"></i>
+            {% trans 'Activation' %}
+            </span>
+            <span>
+             {% if body_modification.activation == "a" %}
+               {% trans "Manual" %}
+             {% else %}
+               {% trans "Automatic" %}
+             {% endif %}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endwith %}

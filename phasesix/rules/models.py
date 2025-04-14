@@ -168,6 +168,16 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_max_stress = models.IntegerField(_("max stress"), default=6)
     template_points = models.IntegerField(_("template points"), default=20)
 
+    # Body Modifications
+    base_bio_strain = models.IntegerField(_("bio strain"), default=0)
+    base_energy = models.IntegerField(_("energy"), default=0)
+    base_sockets_head = models.IntegerField(_("sockets head"), default=1)
+    base_sockets_torso = models.IntegerField(_("sockets torso"), default=4)
+    base_sockets_left_arm = models.IntegerField(_("sockets left arm"), default=2)
+    base_sockets_right_arm = models.IntegerField(_("sockets right arm"), default=2)
+    base_sockets_left_leg = models.IntegerField(_("sockets left leg"), default=2)
+    base_sockets_right_leg = models.IntegerField(_("sockets right leg"), default=2)
+
     class Meta:
         translate = ("name", "description")
         verbose_name = _("lineage")

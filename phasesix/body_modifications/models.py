@@ -4,11 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
 from armory.models import RARITY_CHOICES
-from homebrew.models import HomebrewModel
+from homebrew.models import HomebrewModel, HomebrewQuerySet
 
 
 class SocketLocation(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=30)
+    identifier = models.CharField(_("identifier"), max_length=30)
+    gi_icon_class = models.CharField(_("gi icon class"), blank=True, null=True)
 
     class Meta:
         ordering = ("id",)
@@ -46,12 +48,20 @@ class BodyModificationType(models.Model, metaclass=TransMeta):
         verbose_name = _("body modification type")
         verbose_name_plural = _("body modification types")
 
+    def child_item_qs(self):
+        return self.bodymodification_set.all()
+
+
+class BodyModificationQuerySet(HomebrewQuerySet):
+    pass
+
 
 class BodyModification(HomebrewModel, metaclass=TransMeta):
     ACTIVATION_TYPES = (
         ("a", _("active")),
         ("p", _("passive")),
     )
+    objects = BodyModificationQuerySet.as_manager()
     type = models.ForeignKey(
         BodyModificationType, verbose_name=_("type"), on_delete=models.CASCADE
     )

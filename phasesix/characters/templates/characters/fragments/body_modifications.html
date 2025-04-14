@@ -1,0 +1,247 @@
+{% extends 'characters/fragments/fragment_base.html' %}
+{% load characters_extras rules_extras i18n %}
+
+{% block fragment %}
+
+  <div class="row mb-3">
+    <div class="col-12 col-md-6">
+      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="body_modifications" %}">
+        <div class="card-body">
+          <h5 class="card-title">{% trans "Biostrain" %}</h5>
+          <p>
+            {% blocktrans %}
+              Body modifications are permanent changes to your character's physique.
+              These modifications introduce bio-strain, which can be
+              dangerous.
+            {% endblocktrans %}
+          </p>
+          <div class="fs-3 d-flex align-items-center gap-2">
+            <i class="gi gi-lorc-broken-heart text-danger fs-2" title="{% trans 'Body Modifications' %}"></i>
+            {{ object.bio_strain }} {% trans "Biostrain" %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Body Modifications' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="body_modifications" %}">
+        <div class="card-body">
+          <h5 class="card-title">{% trans "Energy Consumption" %}</h5>
+          <p>
+            {% blocktrans %}
+              Energy is the amount of power your body modifications have available.
+              The energy-producing body modifications and the energy-consuming body modifications need to be balanced.
+            {% endblocktrans %}
+          </p>
+          <div class="fs-3 d-flex align-items-center gap-2">
+            <i class="gi gi-lorc-power-lightning text-warning fs-2" title="{% trans 'Biostrain' %}"></i>
+            +{{ object.energy_produced }} mA
+            <i class="gi gi-lorc-power-lightning text-danger fs-2" title="{% trans 'Biostrain' %}"></i>
+            -{{ object.energy_consumed }} mA
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-4 text-center">
+      <div class="card h-100">
+        <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+             data-bs-toggle="modal"
+             data-bs-target=".page-modal"
+             data-modal-title="{% trans 'Add Body Modification' %}"
+             class="card-body modal-trigger d-flex flex-column align-items-center">
+            <span title="{% trans "Sockets" %}"
+                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
+            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_head }}
+            </span>
+          <i class="gi gi-delapouite-vr-headset fs-2"></i>
+          {% trans "Head" %}
+        </div>
+        {% if object.characterbodymodification_set.head.exists %}
+          <ul class="list-group list-group-flush">
+            {% for cbm in object.characterbodymodification_set.head %}
+              <li data-sidebar-title="{{ cbm.body_modification.name }}"
+                  data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
+                  class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
+                {{ cbm.body_modification.name }}
+                <span class="badge bg-dark rounded-pill">
+                  <i class="gi gi-delapouite-plug me-1"></i>
+                  {{ cbm.socket_amount }}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-3">
+    <div class="col-12 col-md-4 text-center">
+      <div class="card h-100">
+        <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+             data-bs-toggle="modal"
+             data-bs-target=".page-modal"
+             data-modal-title="{% trans 'Add Body Modification' %}"
+             class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+            <span title="{% trans "Sockets" %}"
+                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
+            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_left_arm }}
+            </span>
+          <i class="gi gi-delapouite-forearm fs-2"></i>
+          {% trans "Left Arm" %}
+        </div>
+        {% if object.characterbodymodification_set.left_arm.exists %}
+          <ul class="list-group list-group-flush">
+            {% for cbm in object.characterbodymodification_set.left_arm %}
+              <li data-sidebar-title="{{ cbm.body_modification.name }}"
+                  data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
+                  class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
+                {{ cbm.body_modification.name }}
+                <span class="badge bg-dark rounded-pill">
+                  <i class="gi gi-delapouite-plug me-1"></i>
+                  {{ cbm.socket_amount }}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 text-center">
+      <div class="card h-100">
+        <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+             data-bs-toggle="modal"
+             data-bs-target=".page-modal"
+             data-modal-title="{% trans 'Add Body Modification' %}"
+             class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+            <span title="{% trans "Sockets" %}"
+                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
+            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_torso }}
+            </span>
+          <i class="gi gi-delapouite-muscular-torso fs-2"></i>
+          {% trans "Torso" %}
+        </div>
+        {% if object.characterbodymodification_set.torso.exists %}
+          <ul class="list-group list-group-flush">
+            {% for cbm in object.characterbodymodification_set.torso %}
+              <li data-sidebar-title="{{ cbm.body_modification.name }}"
+                  data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
+                  class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
+                {{ cbm.body_modification.name }}
+                <span class="badge bg-dark rounded-pill">
+                  <i class="gi gi-delapouite-plug me-1"></i>
+                  {{ cbm.socket_amount }}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 text-center">
+      <div class="card h-100">
+        <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+             data-bs-toggle="modal"
+             data-bs-target=".page-modal"
+             data-modal-title="{% trans 'Add Body Modification' %}"
+             class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+            <span title="{% trans "Sockets" %}"
+                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
+            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_right_arm }}
+            </span>
+          <i class="gi gi-delapouite-forearm mirrored fs-2"></i>
+          {% trans "Right Arm" %}
+        </div>
+        {% if object.characterbodymodification_set.right_arm.exists %}
+          <ul class="list-group list-group-flush">
+            {% for cbm in object.characterbodymodification_set.right_arm %}
+              <li data-sidebar-title="{{ cbm.body_modification.name }}"
+                  data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
+                  class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
+                {{ cbm.body_modification.name }}
+                <span class="badge bg-dark rounded-pill">
+                  <i class="gi gi-delapouite-plug me-1"></i>
+                  {{ cbm.socket_amount }}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-3">
+    <div class="col-12 col-md-4 text-center">
+      <div class="card h-100">
+        <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+             data-bs-toggle="modal"
+             data-bs-target=".page-modal"
+             data-modal-title="{% trans 'Add Body Modification' %}"
+             class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+            <span title="{% trans "Sockets" %}"
+                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
+            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_left_leg }}
+            </span>
+          <i class="gi gi-delapouite-leg mirrored fs-2"></i>
+          {% trans "Left Leg" %}
+        </div>
+        {% if object.characterbodymodification_set.left_leg.exists %}
+          <ul class="list-group list-group-flush">
+            {% for cbm in object.characterbodymodification_set.left_leg %}
+              <li data-sidebar-title="{{ cbm.body_modification.name }}"
+                  data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
+                  class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
+                {{ cbm.body_modification.name }}
+                <span class="badge bg-dark rounded-pill">
+                  <i class="gi gi-delapouite-plug me-1"></i>
+                  {{ cbm.socket_amount }}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 text-center">
+      <div class="card h-100">
+        <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+             data-bs-toggle="modal"
+             data-bs-target=".page-modal"
+             data-modal-title="{% trans 'Add Body Modification' %}"
+             class="card-body modal-trigger d-flex flex-column align-items-center position-relative justify-content-center">
+            <span title="{% trans "Sockets" %}"
+                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
+            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_right_leg }}
+            </span>
+          <i class="gi gi-delapouite-leg fs-2"></i>
+          {% trans "Right Leg" %}
+        </div>
+        {% if object.characterbodymodification_set.right_leg.exists %}
+          <ul class="list-group list-group-flush">
+            {% for cbm in object.characterbodymodification_set.right_leg %}
+              <li data-sidebar-title="{{ cbm.body_modification.name }}"
+                  data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
+                  class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
+                {{ cbm.body_modification.name }}
+                <span class="badge bg-dark rounded-pill">
+                  <i class="gi gi-delapouite-plug me-1"></i>
+                  {{ cbm.socket_amount }}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

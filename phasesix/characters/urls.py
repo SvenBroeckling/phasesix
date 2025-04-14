@@ -209,6 +209,12 @@ urlpatterns = [
         views.XhrRiotGearConditionView.as_view(),
         name="xhr_riot_gear_condition",
     ),
+    # body modifications
+    path(
+        "xhr_modify_body_modification/<int:pk>/<int:body_modification_pk>/<mode>",
+        views.XhrModifyBodyModificationView.as_view(),
+        name="xhr_modify_body_modification",
+    ),
     # items
     path(
         "xhr_modify_item/<int:pk>/<int:item_pk>/<mode>",

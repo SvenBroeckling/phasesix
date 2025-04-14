@@ -1,6 +1,7 @@
 from django.template import Library, Template, Context
 
 from armory.models import Item, RiotGear, Weapon
+from body_modifications.models import BodyModification
 from characters.templatetags.characters_extras import for_extensions
 from horror.models import Quirk
 from magic.models import BaseSpell
@@ -9,6 +10,19 @@ from rules.models import Template as PhaseSixTemplate
 from worlds.models import Language
 
 register = Library()
+
+
+@register.simple_tag
+def rarity_color_class(rarity):
+    rarity_colors = {
+        "c": "secondary",  # Common
+        "u": "success",  # Uncommon
+        "r": "primary",  # Rare
+        "1": "warning",  # Unique
+        "l": "danger",  # Legendary
+    }
+
+    return rarity_colors.get(rarity, "default")
 
 
 @register.inclusion_tag("armory/_riot_gear_protection_display.html")
@@ -67,6 +81,8 @@ def object_widget(context, obj, character=None, add_button=False):
         template_string = "{% load horror_extras %}{% quirk_widget obj character=character add_button=add_button %}"
     if isinstance(obj, Language):
         template_string = "{% load world_extras %}{% language_widget obj character=character add_button=add_button %}"
+    if isinstance(obj, BodyModification):
+        template_string = "{% load body_modification_extras %}{% body_modification_widget obj character=character add_button=add_button %}"
 
     return Template(template_string).render(
         Context(

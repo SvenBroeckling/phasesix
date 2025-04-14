@@ -74,6 +74,11 @@ $(function () {
     body.on('submit', '.add-form', function (e) {
         let form = $(this)
         let btn = form.find('button')
+
+        if (btn.closest('.dropdown')) {
+            btn = btn.closest('.dropdown').find('.dropdown-toggle')
+        }
+
         $.ajax(form.attr('action'),
             {
                 type: 'POST',

@@ -35,7 +35,7 @@
                     data-success="{% trans 'Added' %}">
               {% trans 'Add' %}
               <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
-              {% color_value_span item.price 500 invert=True %}
+              {{ item.price }}
             </button>
           </form>
         {% endwith %}
