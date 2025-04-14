@@ -135,6 +135,29 @@
             </tr>
           {% endfor %}
 
+          {% for cbm in object.characterbodymodification_set.usable_in_combat %}
+            <tr class="sidebar-trigger" data-sidebar-title="{{ cbm.body_modification }}"
+                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}">
+              <td>
+                <i class="gi gi-lorc-bolt-shield text-info"></i> <span class="text-muted"></span>{{ cbm.body_modification }}
+                <small class="text-muted">{{ cbm.body_modification.type }}</small>
+              </td>
+              <td class="text-end">
+                {% if cbm.body_modification.skill %}
+                  {% character_skill_value object cbm.body_modification.skill as skill_value %}
+                  {{ cbm.body_modification.skill.name }} {% color_value_span skill_value 5 %} <i
+                        class="fas text-muted fa-dice-five"></i>
+                {% endif %}
+              </td>
+              <td class="text-end">
+              </td>
+              <td class="text-end">
+              </td>
+              <td class="text-end">
+              </td>
+            </tr>
+          {% endfor %}
+
           {% for s in object.characterspell_set.all %}
             <tr class="sidebar-trigger" data-sidebar-title="{{ s }}"
                 data-sidebar-url="{% url 'characters:xhr_sidebar' pk=s.id sidebar_template="spell" %}">

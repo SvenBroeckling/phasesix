@@ -912,6 +912,9 @@ class CharacterBodyModificationQuerySet(models.QuerySet):
     def left_leg(self):
         return self.filter(socket_location__identifier="left_leg")
 
+    def usable_in_combat(self):
+        return self.filter(body_modification__usable_in_combat=True)
+
 
 class CharacterBodyModification(models.Model):
     objects = CharacterBodyModificationQuerySet.as_manager()
