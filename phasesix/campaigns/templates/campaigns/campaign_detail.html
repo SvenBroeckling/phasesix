@@ -18,6 +18,7 @@
 
 {% block content %}
   <div id="dice-log-toggle"
+       class="btn btn-outline-primary d-flex align-items-center"
        hx-get="{% url 'campaigns:xhr_dice_log' pk=object.id %}"
        hx-target="#dice-log-entries"
        onclick="toggleDiceLog()">
@@ -25,8 +26,8 @@
     {% trans "Dice Log" %}
   </div>
 
-  <div id="dice-log">
-    <div id="dice-log-entries"></div>
+  <div id="dice-log" class="card shadow-sm mb-4">
+    <div id="dice-log-entries" class="card-body"></div>
   </div>
 
   <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>

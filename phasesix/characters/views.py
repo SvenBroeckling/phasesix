@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.template import Template as DjangoTemplate, Context
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.translation import gettext, get_language
+from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import (
@@ -25,26 +25,17 @@ from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
 
 from armory.models import (
-    Weapon,
-    RiotGear,
-    ItemType,
-    Item,
     WeaponModificationType,
     WeaponModification,
-    WeaponType,
     CurrencyMapUnit,
-    RiotGearType,
     AttackMode,
     ProtectionType,
 )
-from body_modifications.models import (
-    BodyModification,
-    BodyModificationType,
-    SocketLocation,
-    BodyModificationSocketLocation,
-)
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign, Roll
+from characters.character_objects import (
+    get_character_object_class,
+)
 from characters.forms import (
     CharacterImageForm,
     CreateCharacterDataForm,
@@ -66,12 +57,9 @@ from characters.models import (
     CharacterBodyModification,
 )
 from characters.utils import crit_successes
-from horror.models import QuirkCategory, Quirk
 from magic.models import (
     SpellTemplateCategory,
     SpellTemplate,
-    BaseSpell,
-    SpellOrigin,
 )
 from pantheon.models import Entity, PriestAction
 from rules.models import (
@@ -84,7 +72,6 @@ from rules.models import (
     TemplateCategory,
     Knowledge,
 )
-from worlds.models import Language, LanguageGroup
 
 
 class CharacterDetailView(DetailView):
@@ -1212,166 +1199,51 @@ class XhrCharacterObjectsView(TemplateView):
 
     def __init__(self):
         super().__init__()
-        self.model = None
-        self.child_model = None
         self.character = None
-        self.object_type = None
+        self.campaign = None
+        self.character_object = None
 
     def dispatch(self, request, *args, **kwargs):
         self.character = Character.objects.get(id=kwargs["pk"])
         if not self.character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
 
-        self.object_type = self.kwargs["object_type"]
-        object_type_mapping = {
-            "weapon": (WeaponType, Weapon),
-            "item": (ItemType, Item),
-            "riot_gear": (RiotGearType, RiotGear),
-            "spell": (SpellOrigin, BaseSpell),
-            "template": (TemplateCategory, Template),
-            "quirk": (QuirkCategory, Quirk),
-            "language": (LanguageGroup, Language),
-            "body_modification": (BodyModificationType, BodyModification),
-        }
-        self.model, self.child_model = object_type_mapping.get(self.object_type)
-        return super().dispatch(request, *args, **kwargs)
+        if self.request.GET.get("campaign_pk", "") != "":
+            self.campaign = Campaign.objects.get(id=self.request.GET.get("campaign_pk"))
+        else:
+            self.campaign = self.character.pc_or_npc_campaign
 
-    def get_queryset(self):
-        try:
-            qs = self.model.objects.for_extensions(self.character.extensions)
-        except AttributeError:  # model without extensions
-            qs = self.model.objects.all()
-
-        func = getattr(self, f"filter_{self.object_type}", None)
-        if func is not None:
-            qs = func(qs)
-
-        return qs
-
-    def filter_spell(self, qs):
-        return self.character.unlocked_spell_origins
-
-    def filter_template(self, qs):
-        return qs.filter(allow_for_reputation=True)
-
-    def filter_language(self, qs):
-        """The world extension overides the epoch extensions, if present."""
-        world_extension = self.character.extensions.filter(type="w").first()
-        if world_extension and world_extension.exclusive_languages:
-            qs = qs.filter(language__extensions__type="w")
-        return qs.order_by(f"name_{get_language()}")
-
-    def get_homebrew_queryset(self):
-        return self.child_model.objects.homebrew(
-            character=self.character, campaign=self.character.campaign
+        character_object_class = get_character_object_class(self.kwargs["object_type"])
+        self.character_object = character_object_class(
+            self.request, self.character, self.campaign
         )
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["character"] = Character.objects.get(id=self.kwargs["pk"])
-        context["object_type"] = self.kwargs["object_type"]
-        context["object_list"] = self.get_queryset()
-        context["homebrew"] = self.get_homebrew_queryset()
+        context["character_object"] = self.character_object
         return context
 
     def post(self, request, *args, **kwargs):
-        try:
-            getattr(self, f"add_{self.object_type}")(request.POST.get("object_id"))
-        except ValueError:
-            return JsonResponse({"status": "error"})
+        if request.POST.get("action", "") == "create_homebrew":
+            return self.create_homebrew()
+        self.character_object.add(request.POST.get("object_id"))
         return JsonResponse({"status": "ok"})
 
     def delete(self, request, *args, **kwargs):
-        try:
-            getattr(self, f"delete_{self.object_type}")(request.GET.get("object_id"))
-        except ValueError:
-            return JsonResponse({"status": "error"})
+        self.character_object.remove(request.GET.get("object_id"))
         return JsonResponse({"status": "ok"})
 
-    def add_weapon(self, pk):
-        obj = Weapon.objects.get(id=pk)
-        self.character.characterweapon_set.create(weapon=obj)
-
-    def delete_weapon(self, pk):
-        self.character.characterweapon_set.filter(id=pk).delete()
-
-    def add_body_modification(self, pk):
-        obj = BodyModification.objects.get(id=pk)
-        socket_location = SocketLocation.objects.get(
-            id=self.request.POST.get("socket_location_pk")
+    def create_homebrew(self):
+        form = self.character_object.homebrew_form_class(
+            self.request.POST,
+            character=self.character,
+            campaign=self.campaign,
+            request=self.request,
         )
-        bm_socket_location = BodyModificationSocketLocation.objects.get(
-            body_modification=obj, socket_location=socket_location
-        )
-
-        self.character.characterbodymodification_set.create(
-            body_modification=obj,
-            socket_location=socket_location,
-            socket_amount=bm_socket_location.socket_amount,
-        )
-
-    def delete_body_modification(self, pk):
-        self.character.characterbodymodification_set.filter(id=pk).delete()
-
-    def add_item(self, pk):
-        item = Item.objects.get(id=pk)
-        if (
-            self.character.characteritem_set.filter(item=item).exists()
-            and not item.is_container
-        ):
-            ci = self.character.characteritem_set.filter(item=item).latest("id")
-            ci.quantity += 1
-            ci.save()
-        else:
-            self.character.characteritem_set.create(item=item)
-
-    def delete_item(self, pk):
-        item = Item.objects.get(id=pk)
-        if self.character.characteritem_set.filter(item=item).exists():
-            ci = self.character.characteritem_set.filter(item=item).latest("id")
-            if ci.quantity > 1:
-                ci.quantity -= 1
-                ci.save()
-            else:
-                ci.delete()
-
-    def add_riot_gear(self, pk):
-        obj = RiotGear.objects.get(id=pk)
-        self.character.characterriotgear_set.create(riot_gear=obj)
-
-    def delete_riot_gear(self, pk):
-        self.character.characterriotgear_set.filter(id=pk).delete()
-
-    def add_spell(self, pk):
-        obj = BaseSpell.objects.get(id=pk)
-        self.character.characterspell_set.create(spell=obj)
-
-    def delete_spell(self, pk):
-        self.character.characterspell_set.filter(id=pk).delete()
-
-    def add_template(self, pk):
-        template = Template.objects.get(id=pk)
-        if template.cost <= self.character.reputation_available:
-            self.character.add_template(template)
-        else:
-            raise ValueError()
-
-    def delete_template(self, pk):
-        self.character.charactertemplate_set.filter(id=pk).delete()
-
-    def add_quirk(self, pk):
-        obj = Quirk.objects.get(id=pk)
-        self.character.quirks.add(obj)
-
-    def delete_quirk(self, pk):
-        self.character.quirks.remove(pk)
-
-    def add_language(self, pk):
-        language = Language.objects.get(id=pk)
-        self.character.characterlanguage_set.get_or_create(language=language)
-
-    def delete_language(self, pk):
-        self.character.characterlanguage_set.filter(id=pk).delete()
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(self.character.get_absolute_url())
 
 
 class XhrEditCharacterDescriptionView(UpdateView):

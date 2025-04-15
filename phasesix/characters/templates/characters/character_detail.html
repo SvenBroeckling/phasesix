@@ -26,16 +26,19 @@
 {% endblock %}
 
 {% block content %}
-  <div id="dice-log-toggle"
-       hx-get="{% url 'characters:xhr_dice_log' pk=object.id %}"
-       hx-target="#dice-log-entries"
-       onclick="toggleDiceLog()">
-    <i class="gi gi-delapouite-dice-six-faces-five me-2"></i>
-    {% trans "Dice Log" %}
+  <div class="d-flex align-items-center mb-3">
+    <button id="dice-log-toggle"
+            class="btn btn-outline-primary d-flex align-items-center"
+            hx-get="{% url 'characters:xhr_dice_log' pk=object.id %}"
+            hx-target="#dice-log-entries"
+            onclick="toggleDiceLog()">
+      <i class="gi gi-delapouite-dice-six-faces-five me-2"></i>
+      {% trans "Dice Log" %}
+    </button>
   </div>
 
-  <div id="dice-log">
-    <div id="dice-log-entries"></div>
+  <div id="dice-log" class="card shadow-sm mb-4">
+    <div class="card-body" id="dice-log-entries"></div>
   </div>
 
   <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>

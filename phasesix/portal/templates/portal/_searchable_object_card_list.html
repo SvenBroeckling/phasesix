@@ -1,3 +1,4 @@
+{% load django_bootstrap5 %}
 {% load characters_extras %}
 {% load armory_extras %}
 {% load i18n static %}
@@ -15,7 +16,15 @@
 
     <div class="collapse dont-collapse-md" id="searchable-object-card-list-mobile-nav">
       <ul class="nav nav-pills flex-column" role="tablist">
-        {% for category in category_qs %}
+
+        {% if character_object.homebrew_form %}
+          <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-create">
+            <a class="nav-link text-warning" href="#create-homebrew" aria-controls="home" role="tab"
+               data-bs-toggle="tab">{% trans "Create Homebrew" %}</a>
+          </li>
+        {% endif %}
+
+        {% for category in character_object.get_category_qs %}
           <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-{{ category.id }}">
             <a class="nav-link {% if forloop.first %}active{% endif %}"
                href="#category-{{ category.id }}" aria-controls="home" role="tab"
@@ -23,7 +32,7 @@
           </li>
         {% endfor %}
 
-        {% if homebrew_qs and homebrew_qs.exists %}
+        {% if character_object.get_homebrew_qs.exists %}
           <li class="nav-item searchable-object-card-list-nav-item"
               id="nav-item-homebrew">
             <a class="nav-link" href="#category-homebrew" aria-controls="#i-homebrew" role="tab"
@@ -36,33 +45,51 @@
 
   <div class="col-12 col-md-8 col-lg-9">
     <div class="tab-content">
-      {% for category in category_qs %}
+      {% for category in character_object.get_category_qs %}
         <div role="tabpanel"
              data-rel="#nav-item-{{ category.id }}"
              class="tab-pane searchable-object-card-list-tab-pane {% if forloop.first %}active{% endif %}"
              id="category-{{ category.id }}">
           <div class="column-container column-layout-2">
-            {% for object in category.child_item_qs.distinct|for_extensions:extension_qs %}
+            {% for object in category.child_item_qs.distinct|for_extensions:character_object.get_extension_qs %}
               <div class="searchable-object-card">
-                {% object_widget object character=character add_button=add_button %}
+                {% object_widget object character=character_object.character add_button=add_button %}
               </div>
             {% endfor %}
           </div>
         </div>
       {% endfor %}
 
-      {% if homebrew_qs and homebrew_qs.exists %}
+      {% if character_object.get_homebrew_qs.exists %}
         <div role="tabpanel"
              data-rel="#nav-item-homebrew"
              class="tab-pane searchable-object-card-list-tab-pane"
              id="category-homebrew">
           <div class="column-container column-layout-2">
-            {% for object in homebrew_qs %}
+            {% for object in character_object.get_homebrew_qs %}
               <div class="searchable-object-card">
-                {% object_widget object character=character add_button=add_button %}
+                {% object_widget object character=character_object.character add_button=add_button %}
               </div>
             {% endfor %}
           </div>
+        </div>
+      {% endif %}
+
+      {% if character_object.homebrew_form %}
+        <div role="tabpanel"
+             data-rel="#nav-create-homebrew"
+             class="tab-pane searchable-object-card-list-tab-pane"
+             id="create-homebrew">
+          <form method="post" action="{% url 'characters:xhr_character_objects' pk=character_object.character.id object_type=character_object.object_type %}">
+            <input type="hidden" name="action" value="create_homebrew">
+            {% csrf_token %}
+            {% bootstrap_form character_object.homebrew_form %}
+            {% if character_object.homebrew_formset %}
+              {% bootstrap_formset character_object.homebrew_formset layout="horizontal" %}
+              {% bootstrap_formset_errors character_object.homebrew_formset %}
+            {% endif %}
+            <button type="submit" class="btn btn-primary w-100">{% trans "Create" %}</button>
+          </form>
         </div>
       {% endif %}
 
