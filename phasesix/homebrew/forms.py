@@ -184,7 +184,7 @@ CreateBodyModificationLocationFormSet = forms.inlineformset_factory(
 
 
 class CreateBodyModificationForm(CreateHomebrewForm):
-    location_formset = CreateBodyModificationLocationFormSet
+    formset_class = CreateBodyModificationLocationFormSet
 
     class Meta:
         model = BodyModification
@@ -206,8 +206,8 @@ class CreateBodyModificationForm(CreateHomebrewForm):
             bl = body_modification.bodymodificationsocketlocation_set.first()
             self.character.characterbodymodification_set.create(
                 body_modification=body_modification,
-                socket_location=bl.location,
-                socket_amount=bl.amount,
+                socket_location=bl.socket_location,
+                socket_amount=bl.socket_amount,
             )
         return body_modification
 
@@ -307,5 +307,5 @@ class CreateLanguageForm(CreateHomebrewForm):
     def save(self, commit=True):
         language = super().save(commit=commit)
         if self.character is not None and self.cleaned_data["add_to_character"]:
-            self.character.characterlanguage_set.add(language)
+            self.character.characterlanguage_set.create(language=language)
         return language
