@@ -19,6 +19,11 @@ from homebrew.forms import (
     CreateBaseSpellForm,
     CreateBodyModificationForm,
     CreateBodyModificationLocationFormSet,
+    CreateTemplateForm,
+    CreateTemplateModifierFormSet,
+    CreateQuirkForm,
+    CreateQuirkModifierFormSet,
+    CreateLanguageForm,
 )
 from horror.models import QuirkCategory, Quirk
 from magic.models import SpellOrigin, BaseSpell
@@ -44,9 +49,15 @@ class CharacterObject:
         self.campaign = campaign
         self.request = request
 
+    @property
+    def character_or_campaign(self):
+        return self.character or self.campaign
+
     def get_category_qs(self):
         try:
-            qs = self.model.objects.for_extensions(self.character.extensions)
+            qs = self.model.objects.for_extensions(
+                self.character_or_campaign.extensions
+            )
         except AttributeError:  # model without extensions
             qs = self.model.objects.all()
 
@@ -66,7 +77,7 @@ class CharacterObject:
         )
 
     def get_extension_qs(self):
-        if not self.character.extensions.exists():
+        if not self.character_or_campaign.extensions.exists():
             if (
                 self.request.world_configuration
                 and self.request.world_configuration.world
@@ -75,7 +86,7 @@ class CharacterObject:
                     self.request.world_configuration.world
                 )
             return Extension.objects.all()
-        return self.character.extensions.all()
+        return self.character_or_campaign.extensions.all()
 
     @abstractmethod
     def remove(self, pk):
@@ -170,7 +181,9 @@ class SpellObject(CharacterObject):
     homebrew_formset_class = None
 
     def get_category_qs(self):
-        return self.character.unlocked_spell_origins
+        if self.character:
+            return self.character.unlocked_spell_origins
+        return SpellOrigin.objects.all()
 
     def remove(self, pk):
         self.character.characterspell_set.filter(id=pk).delete()
@@ -184,8 +197,8 @@ class TemplateObject(CharacterObject):
     object_type = "template"
     model = TemplateCategory
     child_model = Template
-    homebrew_form_class = None
-    homebrew_formset_class = None
+    homebrew_form_class = CreateTemplateForm
+    homebrew_formset_class = CreateTemplateModifierFormSet
 
     def get_category_qs(self):
         return super().get_category_qs().filter(allow_for_reputation=True)
@@ -205,8 +218,8 @@ class QuirkObject(CharacterObject):
     object_type = "quirk"
     model = QuirkCategory
     child_model = Quirk
-    homebrew_form_class = None
-    homebrew_formset_class = None
+    homebrew_form_class = CreateQuirkForm
+    homebrew_formset_class = CreateQuirkModifierFormSet
 
     def remove(self, pk):
         self.character.quirks.remove(pk)
@@ -220,13 +233,13 @@ class LanguageObject(CharacterObject):
     object_type = "language"
     model = LanguageGroup
     child_model = Language
-    homebrew_form_class = None
+    homebrew_form_class = CreateLanguageForm
     homebrew_formset_class = None
 
     def get_category_qs(self):
         """The world extension overides the epoch extensions, if present."""
         qs = super().get_category_qs()
-        world_extension = self.character.extensions.filter(type="w").first()
+        world_extension = self.character_or_campaign.extensions.filter(type="w").first()
         if world_extension and world_extension.exclusive_languages:
             qs = qs.filter(language__extensions__type="w")
         return qs.order_by(f"name_{get_language()}")

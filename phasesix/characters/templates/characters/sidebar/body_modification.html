@@ -145,13 +145,15 @@
             </span>
             <span>{% color_value_span body_modification.bio_strain 4 invert=True %}</span>
           </li>
-          <li class="list-group-item d-flex align-items-center justify-content-between">
+          {% if body_modification.charges %}
+            <li class="list-group-item d-flex align-items-center justify-content-between">
             <span>
             <i class="gi gi-lorc-bolt-shield"></i>
             {% trans 'Charges' %}
             </span>
-            <span>{% color_value_span object.charges_left body_modification.charges %} / {% color_value_span body_modification.charges 4 %}</span>
-          </li>
+              <span>{% color_value_span object.charges_left body_modification.charges %} / {% color_value_span body_modification.charges 4 %}</span>
+            </li>
+          {% endif %}
           <li class="list-group-item d-flex align-items-center justify-content-between">
             <span>
             <i class="gi gi-guard13007-play-button"></i>

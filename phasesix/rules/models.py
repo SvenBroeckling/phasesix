@@ -1,13 +1,15 @@
 import itertools
 
-from armory.choices import COLOR_CLASS_CHOICES
-from armory.mixins import SearchableCardListMixin
+from django.conf import settings
 from django.contrib import admin
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
-from homebrew.models import HomebrewModel, HomebrewQuerySet
 from transmeta import TransMeta
+
+from armory.choices import COLOR_CLASS_CHOICES
+from armory.mixins import SearchableCardListMixin
+from homebrew.models import HomebrewModel, HomebrewQuerySet
 
 CHARACTER_ASPECT_CHOICES = (
     ("base_max_health", _("max health")),
@@ -334,6 +336,13 @@ class Template(HomebrewModel, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=120)
     extensions = models.ManyToManyField("rules.Extension")
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        verbose_name=_("created by"),
+        null=True,
+        blank=True,
+    )
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     category = models.ForeignKey(
         TemplateCategory, models.CASCADE, verbose_name=_("category")

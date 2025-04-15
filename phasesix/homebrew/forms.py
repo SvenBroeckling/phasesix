@@ -10,22 +10,42 @@ from armory.models import (
     AttackMode,
 )
 from body_modifications.models import BodyModification, BodyModificationSocketLocation
+from horror.models import Quirk, QuirkModifier
 from magic.models import BaseSpell
+from rules.models import Template, TemplateModifier
+from worlds.models import Language
 
 
 class CreateHomebrewForm(forms.ModelForm):
+    formset_class = None
+
+    add_to_character = forms.BooleanField(
+        label=_("Add to character"), initial=True, required=False
+    )
+
     def __init__(self, *args, **kwargs):
         self.character = kwargs.pop("character")
         self.campaign = kwargs.pop("campaign")
         self.request = kwargs.pop("request")
         super().__init__(*args, **kwargs)
 
+    def save(self, commit=True):
+        obj = super().save(commit=False)
+        obj.created_by = self.request.user
+        obj.is_homebrew = True
+        obj.homebrew_character = self.character
+        obj.homebrew_campaign = self.campaign
+        if commit:
+            obj.save()
+            self.save_m2m()
+            if self.formset_class:
+                formset = self.formset_class(self.request.POST, instance=obj)
+                if formset.is_valid():
+                    formset.save()
+        return obj
+
 
 class CreateItemForm(CreateHomebrewForm):
-    add_to_character = forms.BooleanField(
-        label=_("Add to character"), initial=True, required=False
-    )
-
     class Meta:
         model = Item
         fields = [
@@ -51,24 +71,24 @@ class CreateItemForm(CreateHomebrewForm):
         self.fields["concealment"].initial = 0
 
     def save(self, commit=True):
-        item = super().save(commit=False)
-        item.created_by = self.request.user
-        item.is_homebrew = True
-        item.homebrew_character = self.character
-        item.homebrew_campaign = self.campaign
-
-        if commit:
-            item.save()
+        item = super().save(commit=commit)
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characteritem_set.create(item=item)
-
         return item
 
 
+CreateRiotGearProtectionFormSet = forms.inlineformset_factory(
+    parent_model=RiotGear,
+    model=RiotGearProtection,
+    fields=["protection_type", "value"],
+    extra=3,
+    can_delete=False,
+    labels={"protection_type": _("Protection Type")},
+)
+
+
 class CreateRiotGearForm(CreateHomebrewForm):
-    add_to_character = forms.BooleanField(
-        label=_("Add to character"), initial=True, required=False
-    )
+    formset_class = CreateRiotGearProtectionFormSet
 
     class Meta:
         model = RiotGear
@@ -83,46 +103,24 @@ class CreateRiotGearForm(CreateHomebrewForm):
         ]
 
     def save(self, commit=True):
-        riot_gear = super().save(commit=False)
-        riot_gear.created_by = self.request.user
-        riot_gear.is_homebrew = True
-        riot_gear.homebrew_character = self.character
-        riot_gear.homebrew_campaign = self.campaign
-
-        if commit:
-            riot_gear.save()
-        formset = CreateRiotGearProtectionFormSet(self.request.POST, instance=riot_gear)
-        for formset_form in formset:
-            if formset_form.is_valid():
-                try:
-                    protection_type = formset_form.cleaned_data["protection_type"]
-                    value = formset_form.cleaned_data["value"]
-                    riot_gear.riotgearprotection_set.create(
-                        protection_type=protection_type, value=value
-                    )
-                except KeyError:  # Empty form
-                    pass
-
+        riot_gear = super().save(commit=commit)
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterriotgear_set.create(riot_gear=riot_gear)
-
         return riot_gear
 
 
-CreateRiotGearProtectionFormSet = forms.inlineformset_factory(
-    parent_model=RiotGear,
-    model=RiotGearProtection,
-    fields=["protection_type", "value"],
+CreateWeaponKeywordFormSet = forms.inlineformset_factory(
+    parent_model=Weapon,
+    model=WeaponKeyword,
+    fields=["keyword", "value"],
     extra=3,
     can_delete=False,
-    labels={"protection_type": _("Protection Type")},
+    labels={"keyword": _("Keyword")},
 )
 
 
 class CreateWeaponForm(CreateHomebrewForm):
-    add_to_character = forms.BooleanField(
-        label=_("Add to character"), initial=True, required=False
-    )
+    formset_class = CreateWeaponKeywordFormSet
 
     class Meta:
         model = Weapon
@@ -137,14 +135,7 @@ class CreateWeaponForm(CreateHomebrewForm):
         ]
 
     def save(self, commit=True):
-        weapon = super().save(commit=False)
-        weapon.created_by = self.request.user
-        weapon.is_homebrew = True
-        weapon.homebrew_character = self.character
-        weapon.homebrew_campaign = self.campaign
-
-        if commit:
-            weapon.save()
+        weapon = super().save(commit=commit)
         if weapon.is_hand_to_hand_weapon:
             weapon.attack_modes.add(AttackMode.objects.get(name_en="Hand to Hand"))
         elif weapon.is_throwing_weapon:
@@ -153,37 +144,13 @@ class CreateWeaponForm(CreateHomebrewForm):
             weapon.attack_modes.add(AttackMode.objects.get(name_en="Burst mode"))
             weapon.attack_modes.add(AttackMode.objects.get(name_en="Single shot"))
 
-        formset = CreateWeaponKeywordFormSet(self.request.POST, instance=weapon)
-        for formset_form in formset:
-            if formset_form.is_valid():
-                try:
-                    keyword = formset_form.cleaned_data["keyword"]
-                    value = formset_form.cleaned_data["value"]
-                    weapon.weaponkeyword_set.create(keyword=keyword, value=value)
-                except KeyError:  # Empty form
-                    pass
-
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterweapon_set.create(weapon=weapon)
 
         return weapon
 
 
-CreateWeaponKeywordFormSet = forms.inlineformset_factory(
-    parent_model=Weapon,
-    model=WeaponKeyword,
-    fields=["keyword", "value"],
-    extra=3,
-    can_delete=False,
-    labels={"keyword": _("Keyword")},
-)
-
-
 class CreateBaseSpellForm(CreateHomebrewForm):
-    add_to_character = forms.BooleanField(
-        label=_("Add to character"), initial=True, required=False
-    )
-
     class Meta:
         model = BaseSpell
         fields = [
@@ -201,24 +168,23 @@ class CreateBaseSpellForm(CreateHomebrewForm):
         ]
 
     def save(self, commit=True):
-        base_spell = super().save(commit=False)
-        base_spell.created_by = self.request.user
-        base_spell.is_homebrew = True
-        base_spell.homebrew_character = self.character
-        base_spell.homebrew_campaign = self.campaign
-
-        if commit:
-            base_spell.save()
+        base_spell = super().save(commit=commit)
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterspell_set.create(spell=base_spell)
-
         return base_spell
 
 
+CreateBodyModificationLocationFormSet = forms.inlineformset_factory(
+    parent_model=BodyModification,
+    model=BodyModificationSocketLocation,
+    fields=["socket_location", "socket_amount"],
+    extra=2,
+    can_delete=False,
+)
+
+
 class CreateBodyModificationForm(CreateHomebrewForm):
-    add_to_character = forms.BooleanField(
-        label=_("Add to character"), initial=True, required=False
-    )
+    location_formset = CreateBodyModificationLocationFormSet
 
     class Meta:
         model = BodyModification
@@ -235,45 +201,111 @@ class CreateBodyModificationForm(CreateHomebrewForm):
         ]
 
     def save(self, commit=True):
-        body_modification = super().save(commit=False)
-        body_modification.created_by = self.request.user
-        body_modification.is_homebrew = True
-        body_modification.homebrew_character = self.character
-        body_modification.homebrew_campaign = self.campaign
-
-        if commit:
-            body_modification.save()
-        formset = CreateBodyModificationLocationFormSet(
-            self.request.POST, instance=body_modification
-        )
-        for formset_form in formset:
-            if formset_form.is_valid():
-                try:
-                    location = formset_form.cleaned_data["socket_location"]
-                    amount = formset_form.cleaned_data["socket_amount"]
-                    body_modification.bodymodificationsocketlocation_set.create(
-                        socket_location=location, socket_amount=amount
-                    )
-                except KeyError:  # Empty form
-                    pass
-                else:
-                    if (
-                        self.character is not None
-                        and self.cleaned_data["add_to_character"]
-                    ):
-                        self.character.characterbodymodification_set.create(
-                            body_modification=body_modification,
-                            socket_location=location,
-                            socket_amount=amount,
-                        )
-
+        body_modification = super().save(commit=commit)
+        if self.character is not None and self.cleaned_data["add_to_character"]:
+            bl = body_modification.bodymodificationsocketlocation_set.first()
+            self.character.characterbodymodification_set.create(
+                body_modification=body_modification,
+                socket_location=bl.location,
+                socket_amount=bl.amount,
+            )
         return body_modification
 
 
-CreateBodyModificationLocationFormSet = forms.inlineformset_factory(
-    parent_model=BodyModification,
-    model=BodyModificationSocketLocation,
-    fields=["socket_location", "socket_amount"],
-    extra=1,
+CreateTemplateModifierFormSet = forms.inlineformset_factory(
+    parent_model=Template,
+    model=TemplateModifier,
+    fields=[
+        "aspect",
+        "aspect_modifier",
+        "attribute",
+        "attribute_modifier",
+        "skill",
+        "skill_modifier",
+        "knowledge",
+        "knowledge_modifier",
+        "unlocks_spell_origin",
+        "allows_priest_actions",
+    ],
+    extra=2,
     can_delete=False,
 )
+
+
+class CreateTemplateForm(CreateHomebrewForm):
+    formset_class = CreateTemplateModifierFormSet
+
+    class Meta:
+        model = Template
+        fields = [
+            "name_de",
+            "category",
+            "rules_de",
+            "cost",
+            "show_rules_in_combat",
+            "show_in_attack_dice_rolls",
+            "quote",
+            "quote_author",
+        ]
+
+    def save(self, commit=True):
+        template = super().save(commit=commit)
+        if self.character is not None and self.cleaned_data["add_to_character"]:
+            self.character.charactertemplate_set.create(template=template)
+        return template
+
+
+CreateQuirkModifierFormSet = forms.inlineformset_factory(
+    parent_model=Quirk,
+    model=QuirkModifier,
+    fields=[
+        "aspect",
+        "aspect_modifier",
+        "attribute",
+        "attribute_modifier",
+        "skill",
+        "skill_modifier",
+        "knowledge",
+        "knowledge_modifier",
+        "unlocks_spell_origin",
+        "allows_priest_actions",
+    ],
+    extra=2,
+    can_delete=False,
+)
+
+
+class CreateQuirkForm(CreateHomebrewForm):
+    formset_class = CreateQuirkModifierFormSet
+
+    class Meta:
+        model = Quirk
+        fields = [
+            "name_de",
+            "category",
+            "rules_de",
+            "description_de",
+        ]
+
+    def save(self, commit=True):
+        quirk = super().save(commit=commit)
+        if self.character is not None and self.cleaned_data["add_to_character"]:
+            self.character.quirks.add(quirk)
+        return quirk
+
+
+class CreateLanguageForm(CreateHomebrewForm):
+    class Meta:
+        model = Language
+        fields = [
+            "name_de",
+            "country_name_de",
+            "amount_of_people_speaking",
+            "group",
+        ]
+
+    def save(self, commit=True):
+        language = super().save(commit=commit)
+        if self.character is not None and self.cleaned_data["add_to_character"]:
+            self.character.characterlanguage_set.add(language)
+        return language

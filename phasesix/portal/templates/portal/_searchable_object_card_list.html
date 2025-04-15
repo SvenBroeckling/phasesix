@@ -24,6 +24,14 @@
           </li>
         {% endif %}
 
+        {% if character_object.get_homebrew_qs.exists %}
+          <li class="nav-item searchable-object-card-list-nav-item"
+              id="nav-item-homebrew">
+            <a class="nav-link text-warning" href="#category-homebrew" aria-controls="#i-homebrew" role="tab"
+               data-bs-toggle="tab">{% trans "Homebrew" %}</a>
+          </li>
+        {% endif %}
+
         {% for category in character_object.get_category_qs %}
           <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-{{ category.id }}">
             <a class="nav-link {% if forloop.first %}active{% endif %}"
@@ -32,13 +40,6 @@
           </li>
         {% endfor %}
 
-        {% if character_object.get_homebrew_qs.exists %}
-          <li class="nav-item searchable-object-card-list-nav-item"
-              id="nav-item-homebrew">
-            <a class="nav-link" href="#category-homebrew" aria-controls="#i-homebrew" role="tab"
-               data-bs-toggle="tab">{% trans "Custom" %}</a>
-          </li>
-        {% endif %}
       </ul>
     </div>
   </div>
@@ -80,7 +81,14 @@
              data-rel="#nav-create-homebrew"
              class="tab-pane searchable-object-card-list-tab-pane"
              id="create-homebrew">
-          <form method="post" action="{% url 'characters:xhr_character_objects' pk=character_object.character.id object_type=character_object.object_type %}">
+
+          {% if character_object.character %}
+            {% url 'characters:xhr_character_objects' pk=character_object.character.id object_type=character_object.object_type as the_url %}
+          {% else %}
+            {% url 'characters:xhr_character_objects' object_type=character_object.object_type as the_url %}
+          {% endif %}
+
+          <form method="post" action="{{ the_url }}{% if character_object.campaign %}?campaign_pk={{ character_object.campaign.id }}{% endif %}">
             <input type="hidden" name="action" value="create_homebrew">
             {% csrf_token %}
             {% bootstrap_form character_object.homebrew_form %}

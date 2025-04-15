@@ -1204,14 +1204,22 @@ class XhrCharacterObjectsView(TemplateView):
         self.character_object = None
 
     def dispatch(self, request, *args, **kwargs):
-        self.character = Character.objects.get(id=kwargs["pk"])
-        if not self.character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+        try:
+            self.character = Character.objects.get(id=kwargs["pk"])
+        except KeyError:
+            self.character = None
 
         if self.request.GET.get("campaign_pk", "") != "":
             self.campaign = Campaign.objects.get(id=self.request.GET.get("campaign_pk"))
         else:
             self.campaign = self.character.pc_or_npc_campaign
+
+        if self.character:
+            if not self.character.may_edit(request.user):
+                return JsonResponse({"status": "forbidden"})
+        else:
+            if not self.campaign.may_edit(request.user):
+                return JsonResponse({"status": "forbidden"})
 
         character_object_class = get_character_object_class(self.kwargs["object_type"])
         self.character_object = character_object_class(
@@ -1243,7 +1251,9 @@ class XhrCharacterObjectsView(TemplateView):
         )
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect(self.character.get_absolute_url())
+        if self.character:
+            return HttpResponseRedirect(self.character.get_absolute_url())
+        return HttpResponseRedirect(self.campaign.get_absolute_url())
 
 
 class XhrEditCharacterDescriptionView(UpdateView):

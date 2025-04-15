@@ -88,7 +88,7 @@ def object_widget(context, obj, character=None, add_button=False):
                 "obj": obj,
                 "character": character,
                 "add_button": add_button,
-                "world_configuration": context["world_configuration"],
+                "world_configuration": context.get("world_configuration", None),
                 "user": context["user"],
             }
         )

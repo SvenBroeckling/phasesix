@@ -188,6 +188,11 @@ urlpatterns = [
     ),
     # generic add and remove
     path(
+        "xhr_character_objects/<str:object_type>",
+        views.XhrCharacterObjectsView.as_view(),
+        name="xhr_character_objects",
+    ),
+    path(
         "xhr_character_objects/<int:pk>/<str:object_type>",
         views.XhrCharacterObjectsView.as_view(),
         name="xhr_character_objects",

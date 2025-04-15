@@ -5,7 +5,7 @@ from transmeta import TransMeta
 from armory.mixins import SearchableCardListMixin
 from characters.templatetags.characters_extras import color_value_span
 from homebrew.models import HomebrewModel, HomebrewQuerySet
-from rules.models import CHARACTER_ASPECT_CHOICES, Skill, Attribute
+from rules.models import CHARACTER_ASPECT_CHOICES, Skill, Attribute, Knowledge
 
 
 class QuirkCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
@@ -90,4 +90,24 @@ class QuirkModifier(models.Model, metaclass=TransMeta):
     )
     skill_modifier = models.IntegerField(
         verbose_name=_("skill modifier"), blank=True, null=True
+    )
+    knowledge = models.ForeignKey(
+        Knowledge,
+        on_delete=models.CASCADE,
+        verbose_name=_("knowledge"),
+        null=True,
+        blank=True,
+    )
+    knowledge_modifier = models.IntegerField(
+        verbose_name=_("knowledge modifier"), blank=True, null=True
+    )
+    unlocks_spell_origin = models.ForeignKey(
+        "magic.SpellOrigin",
+        verbose_name=_("unlocks spell origin"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    allows_priest_actions = models.BooleanField(
+        _("allows priest actions"), default=False
     )
