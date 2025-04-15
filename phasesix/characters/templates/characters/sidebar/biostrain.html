@@ -1,0 +1,46 @@
+{% load rules_extras %}
+{% load i18n %}
+{% load characters_extras %}
+
+<div class="row mb-3">
+  <div class="col-12 text-center">
+    <div class="fs-3">
+      <i class="gi gi-lorc-broken-heart text-danger fs-2" title="{% trans 'Body Modifications' %}"></i>
+      {{ object.bio_strain }} {% trans "Biostrain" %}
+    </div>
+    <div class="fs-3 d-flex align-items-center gap-2">
+      <i class="gi gi-lorc-power-lightning text-warning fs-2" title="{% trans 'Biostrain' %}"></i>
+      +{{ object.energy_produced }} mA
+      <i class="gi gi-lorc-power-lightning text-danger fs-2" title="{% trans 'Biostrain' %}"></i>
+      -{{ object.energy_consumed }} mA
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-2 mb-2">
+    <i class="fs-2 gi gi-lorc-power-lightning text-warning" title="{% trans 'Energy' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% blocktrans %}
+      Body modifications require energy to function. Some body modifications feed energy into the local power grid. However, functional body modifications usually require energy to function.
+      <br>
+      <br>
+      Energy is measured in milliamperes (mA).
+    {% endblocktrans %}
+  </div>
+
+  <div class="col-2 mb-2">
+    <i class="fs-2 gi gi-lorc-broken-heart text-danger" title="{% trans 'Biostrain' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% blocktrans %}
+      Each body modification affects the character's biological load. As a character integrates body modifications,
+      their biostrain increases.
+
+      Biostrain starts at 0; each character is initially unburdened by body modifications. Each body modification has a
+      biostrain value. This is added to the character's value.
+    {% endblocktrans %}
+  </div>
+</div>
+

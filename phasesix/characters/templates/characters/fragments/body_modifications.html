@@ -5,8 +5,8 @@
 
   <div class="row mb-3">
     <div class="col-12 col-md-6">
-      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain' %}"
-           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="body_modifications" %}">
+      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain and Energy' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
         <div class="card-body">
           <h5 class="card-title">{% trans "Biostrain" %}</h5>
           <p>
@@ -24,8 +24,8 @@
       </div>
     </div>
     <div class="col-12 col-md-6">
-      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Body Modifications' %}"
-           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="body_modifications" %}">
+      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain and Energy' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
         <div class="card-body">
           <h5 class="card-title">{% trans "Energy Consumption" %}</h5>
           <p>
@@ -66,7 +66,10 @@
               <li data-sidebar-title="{{ cbm.body_modification.name }}"
                   data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
                   class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-                {{ cbm.body_modification.name }}
+                <div class="d-flex align-items-center">
+                  <i title="{% trans "Is active" %}" class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
+                  {{ cbm.body_modification.name }}
+                </div>
                 <span class="badge bg-dark rounded-pill">
                   <i class="gi gi-delapouite-plug me-1"></i>
                   {{ cbm.socket_amount }}
@@ -100,7 +103,10 @@
               <li data-sidebar-title="{{ cbm.body_modification.name }}"
                   data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
                   class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-                {{ cbm.body_modification.name }}
+                <div class="d-flex align-items-center">
+                  <i title="{% trans "Is active" %}" class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
+                  {{ cbm.body_modification.name }}
+                </div>
                 <span class="badge bg-dark rounded-pill">
                   <i class="gi gi-delapouite-plug me-1"></i>
                   {{ cbm.socket_amount }}
@@ -132,7 +138,10 @@
               <li data-sidebar-title="{{ cbm.body_modification.name }}"
                   data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
                   class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-                {{ cbm.body_modification.name }}
+                <div class="d-flex align-items-center">
+                  <i title="{% trans "Is active" %}" class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
+                  {{ cbm.body_modification.name }}
+                </div>
                 <span class="badge bg-dark rounded-pill">
                   <i class="gi gi-delapouite-plug me-1"></i>
                   {{ cbm.socket_amount }}
@@ -164,7 +173,10 @@
               <li data-sidebar-title="{{ cbm.body_modification.name }}"
                   data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
                   class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-                {{ cbm.body_modification.name }}
+                <div class="d-flex align-items-center">
+                  <i title="{% trans "Is active" %}" class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
+                  {{ cbm.body_modification.name }}
+                </div>
                 <span class="badge bg-dark rounded-pill">
                   <i class="gi gi-delapouite-plug me-1"></i>
                   {{ cbm.socket_amount }}
@@ -198,7 +210,10 @@
               <li data-sidebar-title="{{ cbm.body_modification.name }}"
                   data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
                   class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-                {{ cbm.body_modification.name }}
+                <div class="d-flex align-items-center">
+                  <i title="{% trans "Is active" %}" class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
+                  {{ cbm.body_modification.name }}
+                </div>
                 <span class="badge bg-dark rounded-pill">
                   <i class="gi gi-delapouite-plug me-1"></i>
                   {{ cbm.socket_amount }}
@@ -230,7 +245,10 @@
               <li data-sidebar-title="{{ cbm.body_modification.name }}"
                   data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
                   class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-                {{ cbm.body_modification.name }}
+                <div class="d-flex align-items-center">
+                  <i title="{% trans "Is active" %}" class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
+                  {{ cbm.body_modification.name }}
+                </div>
                 <span class="badge bg-dark rounded-pill">
                   <i class="gi gi-delapouite-plug me-1"></i>
                   {{ cbm.socket_amount }}

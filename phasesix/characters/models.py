@@ -467,6 +467,7 @@ class Character(models.Model):
         bm_sum = (
             CharacterBodyModification.objects.filter(
                 character=self,
+                is_active=True,
                 body_modification__energy_consumption_ma__isnull=False,
                 body_modification__energy_consumption_ma__lt=0,
             ).aggregate(Sum("body_modification__energy_consumption_ma"))[
@@ -485,6 +486,7 @@ class Character(models.Model):
         bm_sum = (
             CharacterBodyModification.objects.filter(
                 character=self,
+                is_active=True,
                 body_modification__energy_consumption_ma__isnull=False,
                 body_modification__energy_consumption_ma__gt=0,
             ).aggregate(Sum("body_modification__energy_consumption_ma"))[
@@ -925,6 +927,7 @@ class CharacterBodyModification(models.Model):
     socket_location = models.ForeignKey(
         "body_modifications.SocketLocation", models.CASCADE
     )
+    is_active = models.BooleanField(_("is active"), default=True)
     socket_amount = models.IntegerField(_("socket amount"), default=1)
     charges_used = models.IntegerField(_("charges used"), default=0)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)

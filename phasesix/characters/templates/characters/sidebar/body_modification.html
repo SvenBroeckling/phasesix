@@ -29,6 +29,22 @@
     {% endif %}
 
     <div class="row mt-2">
+
+      {% if body_modification.activation == "p" %}
+        <div class="col-12">
+          <div class="btn-group w-100">
+            <a href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="switch_active" %}"
+               class="action-link btn btn-primary btn-sm dice-roll mb-2 d-flex align-items-center justify-content-center">
+              {% if object.is_active %}
+                <i class="gi gi-guard13007-play-button me-1"></i> {% trans 'Turn off' %}
+              {% else %}
+                <i class="gi gi-guard13007-play-button me-1"></i> {% trans 'Turn on' %}
+              {% endif %}
+            </a>
+          </div>
+        </div>
+      {% endif %}
+
       {% if body_modification.dice_roll_string %}
         <div class="col-12">
           <div class="btn-group w-100">

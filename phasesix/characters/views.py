@@ -113,6 +113,7 @@ class XhrSidebarView(DetailView):
     template_model_map = {
         "attribute": CharacterAttribute,
         "body_modification": CharacterBodyModification,
+        "biostrain": Character,
         "character": Character,
         "combat": Character,
         "create_note": Character,
@@ -976,6 +977,8 @@ class XhrModifyBodyModificationView(View):
             modification.charges_used -= 1
         if self.kwargs["mode"] == "remove_charge":
             modification.charges_used += 1
+        if self.kwargs["mode"] == "switch_active":
+            modification.is_active = not modification.is_active
         modification.save()
 
         return JsonResponse({"status": "ok"})
