@@ -2,9 +2,6 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import (
-    ItemType,
-    WeaponType,
-    RiotGearType,
     WeaponKeyword,
     Weapon,
     RiotGearProtection,
@@ -12,10 +9,11 @@ from armory.models import (
     Item,
     AttackMode,
 )
-from magic.models import SpellType, SpellVariant, SpellShape, SpellOrigin, BaseSpell
+from body_modifications.models import BodyModification, BodyModificationSocketLocation
+from magic.models import BaseSpell
 
 
-class CreateHomebrewForm(forms.Form):
+class CreateHomebrewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.character = kwargs.pop("character")
         self.campaign = kwargs.pop("campaign")
@@ -24,48 +22,43 @@ class CreateHomebrewForm(forms.Form):
 
 
 class CreateItemForm(CreateHomebrewForm):
-    name = forms.CharField(label=_("Name"))
-    description = forms.CharField(
-        widget=forms.Textarea, label=_("Description"), required=False
-    )
-    type = forms.ModelChoiceField(
-        queryset=ItemType.objects.all(), label=_("Category"), empty_label=None
-    )
-    weight = forms.DecimalField(label=_("Weight (kg)"), initial=1)
-    price = forms.DecimalField(label=_("Price"), initial=10)
-    concealment = forms.DecimalField(label=_("Concealment"), initial=0)
-    charges = forms.DecimalField(
-        label=_("Charges"),
-        help_text=_("Leave blank for non-chargeable items"),
-        required=False,
-    )
-    is_container = forms.BooleanField(
-        label=_("Is Container"),
-        help_text=_("Check if this item can hold other items"),
-        required=False,
-    )
     add_to_character = forms.BooleanField(
         label=_("Add to character"), initial=True, required=False
     )
 
-    def save(self):
-        item = Item.objects.create(
-            {
-                "name_de": self.cleaned_data["name"],
-                "description_de": self.cleaned_data["description"],
-                "type": self.cleaned_data["type"],
-                "weight": self.cleaned_data["weight"],
-                "price": self.cleaned_data["price"],
-                "concealment": self.cleaned_data["concealment"],
-                "charges": self.cleaned_data["charges"],
-                "is_container": self.cleaned_data["is_container"],
-                "created_by": self.request.user,
-                "is_homebrew": True,
-                "homebrew_character": self.character,
-                "homebrew_campaign": self.campaign,
-            }
-        )
+    class Meta:
+        model = Item
+        fields = [
+            "name_de",
+            "description_de",
+            "rarity",
+            "type",
+            "weight",
+            "price",
+            "concealment",
+            "charges",
+            "is_container",
+        ]
+        help_texts = {
+            "charges": _("Leave blank for non-chargeable items"),
+            "is_container": _("Check if this item can hold other items"),
+        }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["weight"].initial = 1
+        self.fields["price"].initial = 10
+        self.fields["concealment"].initial = 0
+
+    def save(self, commit=True):
+        item = super().save(commit=False)
+        item.created_by = self.request.user
+        item.is_homebrew = True
+        item.homebrew_character = self.character
+        item.homebrew_campaign = self.campaign
+
+        if commit:
+            item.save()
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characteritem_set.create(item=item)
 
@@ -73,35 +66,31 @@ class CreateItemForm(CreateHomebrewForm):
 
 
 class CreateRiotGearForm(CreateHomebrewForm):
-    name = forms.CharField(label=_("Name"))
-    type = forms.ModelChoiceField(
-        label=_("Type"), queryset=RiotGearType.objects.all(), required=True, initial=1
-    )
-    description = forms.CharField(
-        widget=forms.Textarea, label=_("Description"), required=False
-    )
-    encumbrance = forms.DecimalField(label=_("Encumbrance"), initial=1)
-    weight = forms.DecimalField(label=_("Weight (kg)"), initial=1)
-    price = forms.DecimalField(label=_("Price"), initial=100)
-    concealment = forms.DecimalField(label=_("Concealment"), initial=0)
     add_to_character = forms.BooleanField(
         label=_("Add to character"), initial=True, required=False
     )
 
-    def save(self):
-        riot_gear = RiotGear.objects.create(
-            type=self.cleaned_data["type"],
-            name_de=self.cleaned_data["name"],
-            description_de=self.cleaned_data["description"],
-            encumbrance=self.cleaned_data["encumbrance"],
-            weight=self.cleaned_data["weight"],
-            price=self.cleaned_data["price"],
-            concealment=self.cleaned_data["concealment"],
-            created_by=self.request.user,
-            is_homebrew=True,
-            homebrew_character=self.character,
-            homebrew_campaign=self.campaign,
-        )
+    class Meta:
+        model = RiotGear
+        fields = [
+            "name_de",
+            "type",
+            "description_de",
+            "encumbrance",
+            "weight",
+            "price",
+            "concealment",
+        ]
+
+    def save(self, commit=True):
+        riot_gear = super().save(commit=False)
+        riot_gear.created_by = self.request.user
+        riot_gear.is_homebrew = True
+        riot_gear.homebrew_character = self.character
+        riot_gear.homebrew_campaign = self.campaign
+
+        if commit:
+            riot_gear.save()
         formset = CreateRiotGearProtectionFormSet(self.request.POST, instance=riot_gear)
         for formset_form in formset:
             if formset_form.is_valid():
@@ -117,6 +106,8 @@ class CreateRiotGearForm(CreateHomebrewForm):
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterriotgear_set.create(riot_gear=riot_gear)
 
+        return riot_gear
+
 
 CreateRiotGearProtectionFormSet = forms.inlineformset_factory(
     parent_model=RiotGear,
@@ -129,39 +120,31 @@ CreateRiotGearProtectionFormSet = forms.inlineformset_factory(
 
 
 class CreateWeaponForm(CreateHomebrewForm):
-    name = forms.CharField(label=_("Name"))
-    description = forms.CharField(
-        widget=forms.Textarea, label=_("Description"), required=False
-    )
-    type = forms.ModelChoiceField(
-        queryset=WeaponType.objects.all(), label=_("Category"), empty_label=None
-    )
-    is_hand_to_hand_weapon = forms.BooleanField(
-        label=_("Is hand to hand weapon"), required=False
-    )
-    is_throwing_weapon = forms.BooleanField(
-        label=_("Is throwing weapon"), required=False
-    )
-    weight = forms.DecimalField(label=_("Weight (kg)"), initial=1)
-    price = forms.DecimalField(label=_("Price"), initial=100)
     add_to_character = forms.BooleanField(
         label=_("Add to character"), initial=True, required=False
     )
 
-    def save(self):
-        weapon = Weapon.objects.create(
-            name_de=self.cleaned_data["name"],
-            description_de=self.cleaned_data["description"],
-            type=self.cleaned_data["type"],
-            is_hand_to_hand_weapon=self.cleaned_data["is_hand_to_hand_weapon"],
-            is_throwing_weapon=self.cleaned_data["is_throwing_weapon"],
-            weight=self.cleaned_data["weight"],
-            price=self.cleaned_data["price"],
-            created_by=self.request.user,
-            is_homebrew=True,
-            homebrew_character=self.character,
-            homebrew_campaign=self.campaign,
-        )
+    class Meta:
+        model = Weapon
+        fields = [
+            "name_de",
+            "description_de",
+            "type",
+            "is_hand_to_hand_weapon",
+            "is_throwing_weapon",
+            "weight",
+            "price",
+        ]
+
+    def save(self, commit=True):
+        weapon = super().save(commit=False)
+        weapon.created_by = self.request.user
+        weapon.is_homebrew = True
+        weapon.homebrew_character = self.character
+        weapon.homebrew_campaign = self.campaign
+
+        if commit:
+            weapon.save()
         if weapon.is_hand_to_hand_weapon:
             weapon.attack_modes.add(AttackMode.objects.get(name_en="Hand to Hand"))
         elif weapon.is_throwing_weapon:
@@ -183,6 +166,8 @@ class CreateWeaponForm(CreateHomebrewForm):
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterweapon_set.create(weapon=weapon)
 
+        return weapon
+
 
 CreateWeaponKeywordFormSet = forms.inlineformset_factory(
     parent_model=Weapon,
@@ -195,46 +180,100 @@ CreateWeaponKeywordFormSet = forms.inlineformset_factory(
 
 
 class CreateBaseSpellForm(CreateHomebrewForm):
-    name = forms.CharField(label=_("Name"))
-    rules = forms.CharField(widget=forms.Textarea, label=_("Rules"))
-    spell_point_cost = forms.DecimalField(label=_("Spell Point Cost"), initial=5)
-    arcana_cost = forms.DecimalField(label=_("Arcana Cost"), initial=1)
-    range = forms.DecimalField(label=_("Range"), initial=10)
-    actions = forms.DecimalField(label=_("Actions"), initial=1)
-    origin = forms.ModelChoiceField(
-        queryset=SpellOrigin.objects.all(), label=_("Origin"), empty_label=None
-    )
-    type = forms.ModelChoiceField(
-        queryset=SpellType.objects.all(), label=_("Type"), empty_label=None
-    )
-    variant = forms.ModelChoiceField(
-        queryset=SpellVariant.objects.all(), label=_("Variant"), empty_label=None
-    )
-    shape = forms.ModelChoiceField(
-        queryset=SpellShape.objects.all(), label=_("Shape"), required=False
-    )
-    is_ritual = forms.BooleanField(label=_("Is ritual"), required=False)
     add_to_character = forms.BooleanField(
         label=_("Add to character"), initial=True, required=False
     )
 
-    def save(self):
-        base_spell = BaseSpell.objects.create(
-            name_de=self.cleaned_data["name"],
-            rules_de=self.cleaned_data["rules"],
-            spell_point_cost=self.cleaned_data["spell_point_cost"],
-            arcana_cost=self.cleaned_data["arcana_cost"],
-            range=self.cleaned_data["range"],
-            actions=self.cleaned_data["actions"],
-            origin=self.cleaned_data["origin"],
-            type=self.cleaned_data["type"],
-            variant=self.cleaned_data["variant"],
-            shape=self.cleaned_data["shape"],
-            is_ritual=self.cleaned_data["is_ritual"],
-            created_by=self.request.user,
-            is_homebrew=True,
-            homebrew_character=self.character,
-            homebrew_campaign=self.campaign,
-        )
+    class Meta:
+        model = BaseSpell
+        fields = [
+            "name_de",
+            "rules_de",
+            "spell_point_cost",
+            "arcana_cost",
+            "range",
+            "actions",
+            "origin",
+            "type",
+            "variant",
+            "shape",
+            "is_ritual",
+        ]
+
+    def save(self, commit=True):
+        base_spell = super().save(commit=False)
+        base_spell.created_by = self.request.user
+        base_spell.is_homebrew = True
+        base_spell.homebrew_character = self.character
+        base_spell.homebrew_campaign = self.campaign
+
+        if commit:
+            base_spell.save()
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterspell_set.create(spell=base_spell)
+
+        return base_spell
+
+
+class CreateBodyModificationForm(CreateHomebrewForm):
+    add_to_character = forms.BooleanField(
+        label=_("Add to character"), initial=True, required=False
+    )
+
+    class Meta:
+        model = BodyModification
+        fields = [
+            "name_de",
+            "type",
+            "description_de",
+            "rules_de",
+            "price",
+            "rarity",
+            "bio_strain",
+            "energy_consumption_ma",
+            "charges",
+        ]
+
+    def save(self, commit=True):
+        body_modification = super().save(commit=False)
+        body_modification.created_by = self.request.user
+        body_modification.is_homebrew = True
+        body_modification.homebrew_character = self.character
+        body_modification.homebrew_campaign = self.campaign
+
+        if commit:
+            body_modification.save()
+        formset = CreateBodyModificationLocationFormSet(
+            self.request.POST, instance=body_modification
+        )
+        for formset_form in formset:
+            if formset_form.is_valid():
+                try:
+                    location = formset_form.cleaned_data["socket_location"]
+                    amount = formset_form.cleaned_data["socket_amount"]
+                    body_modification.bodymodificationsocketlocation_set.create(
+                        socket_location=location, socket_amount=amount
+                    )
+                except KeyError:  # Empty form
+                    pass
+                else:
+                    if (
+                        self.character is not None
+                        and self.cleaned_data["add_to_character"]
+                    ):
+                        self.character.characterbodymodification_set.create(
+                            body_modification=body_modification,
+                            socket_location=location,
+                            socket_amount=amount,
+                        )
+
+        return body_modification
+
+
+CreateBodyModificationLocationFormSet = forms.inlineformset_factory(
+    parent_model=BodyModification,
+    model=BodyModificationSocketLocation,
+    fields=["socket_location", "socket_amount"],
+    extra=1,
+    can_delete=False,
+)

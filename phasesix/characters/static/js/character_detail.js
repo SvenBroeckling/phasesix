@@ -46,17 +46,5 @@ $(function () {
         })
     }
 
-    // save bootstrap tabs
-    $('a[data-bs-toggle="tab"]').on('click', function (e) {
-        window.localStorage.setItem('activeTab', $(e.target).attr('href'))
-    })
-
-    var activeTab = window.localStorage.getItem('activeTab')
-    if (activeTab) {
-        $('a[href="' + activeTab + '"]').tab('show')
-    }
-
-    $('[data-bs-toggle="popover"]').popover()
-    $('.template').tilt({glare: false, perspective: 1800})
 })
 

@@ -17,6 +17,8 @@ from homebrew.forms import (
     CreateRiotGearForm,
     CreateRiotGearProtectionFormSet,
     CreateBaseSpellForm,
+    CreateBodyModificationForm,
+    CreateBodyModificationLocationFormSet,
 )
 from horror.models import QuirkCategory, Quirk
 from magic.models import SpellOrigin, BaseSpell
@@ -241,8 +243,8 @@ class BodyModificationObject(CharacterObject):
     object_type = "body_modification"
     model = BodyModificationType
     child_model = BodyModification
-    homebrew_form_class = None
-    homebrew_formset_class = None
+    homebrew_form_class = CreateBodyModificationForm
+    homebrew_formset_class = CreateBodyModificationLocationFormSet
 
     def remove(self, pk):
         self.character.characterbodymodification_set.filter(id=pk).delete()
