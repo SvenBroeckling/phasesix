@@ -6,8 +6,12 @@
     {{ quirk }}
   </div>
   <div class="card-body">
-    <div class="text-muted">
+    <div class="text-muted mb-3">
       {{ quirk.description|phasesix_markup }}
+    </div>
+
+    <div class="mb-3">
+      {{ quirk.rules|phasesix_markup }}
     </div>
 
     {{ quirk.get_modifier_summary_html|safe }}

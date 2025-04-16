@@ -60,6 +60,12 @@
       {% endfor %}
     </div>
 
+    {% if body_modification.bodymodificationmodifier_set.exists %}
+      <div class="mb-3">
+        {% modifier_widget body_modification.bodymodificationmodifier_set.all %}
+      </div>
+    {% endif %}
+
     {% if character %}
       <div class="dropdown float-end mt-2">
         <button class="btn btn-sm btn-primary dropdown-toggle d-flex align-items-center"

@@ -129,6 +129,12 @@
     </div>
   {% endif %}
 
+  {% if body_modification.bodymodificationmodifier_set.exists %}
+    <div class="mb-3">
+      {% modifier_widget body_modification.bodymodificationmodifier_set.all %}
+    </div>
+  {% endif %}
+
   <div class="row">
     <div class="col-12">
       <div class="card mb-2 mt-2">

@@ -7,6 +7,7 @@ from body_modifications.models import (
     BodyModificationType,
     BodyModification,
     BodyModificationSocketLocation,
+    BodyModificationModifier,
 )
 
 
@@ -25,9 +26,14 @@ class BodyModificationSocketLocationInline(TabularInline):
     extra = 0
 
 
+class BodyModificationModifierInline(TabularInline):
+    model = BodyModificationModifier
+    extra = 0
+
+
 @admin.register(BodyModification)
 class BodyModificationAdmin(ModelAdmin):
-    inlines = [BodyModificationSocketLocationInline]
+    inlines = [BodyModificationSocketLocationInline, BodyModificationModifierInline]
     search_fields = ("name_en", "name_de")
     list_display = (
         "name",

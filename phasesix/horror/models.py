@@ -5,7 +5,8 @@ from transmeta import TransMeta
 from armory.mixins import SearchableCardListMixin
 from characters.templatetags.characters_extras import color_value_span
 from homebrew.models import HomebrewModel, HomebrewQuerySet
-from rules.models import CHARACTER_ASPECT_CHOICES, Skill, Attribute, Knowledge
+from rules.models import ModifierBase
+from rules.models import Skill, Attribute, Knowledge
 
 
 class QuirkCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
@@ -63,51 +64,5 @@ class Quirk(HomebrewModel, metaclass=TransMeta):
         return html
 
 
-class QuirkModifier(models.Model, metaclass=TransMeta):
+class QuirkModifier(ModifierBase):
     quirk = models.ForeignKey(Quirk, verbose_name=_("quirk"), on_delete=models.CASCADE)
-    aspect = models.CharField(
-        verbose_name=_("aspect"),
-        max_length=40,
-        choices=CHARACTER_ASPECT_CHOICES,
-        null=True,
-        blank=True,
-    )
-    aspect_modifier = models.IntegerField(
-        verbose_name=_("aspect modifier"), blank=True, null=True
-    )
-    attribute = models.ForeignKey(
-        Attribute,
-        on_delete=models.CASCADE,
-        verbose_name=_("attribute"),
-        null=True,
-        blank=True,
-    )
-    attribute_modifier = models.IntegerField(
-        verbose_name=_("attribute modifier"), blank=True, null=True
-    )
-    skill = models.ForeignKey(
-        Skill, on_delete=models.CASCADE, verbose_name=_("skill"), null=True, blank=True
-    )
-    skill_modifier = models.IntegerField(
-        verbose_name=_("skill modifier"), blank=True, null=True
-    )
-    knowledge = models.ForeignKey(
-        Knowledge,
-        on_delete=models.CASCADE,
-        verbose_name=_("knowledge"),
-        null=True,
-        blank=True,
-    )
-    knowledge_modifier = models.IntegerField(
-        verbose_name=_("knowledge modifier"), blank=True, null=True
-    )
-    unlocks_spell_origin = models.ForeignKey(
-        "magic.SpellOrigin",
-        verbose_name=_("unlocks spell origin"),
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-    allows_priest_actions = models.BooleanField(
-        _("allows priest actions"), default=False
-    )

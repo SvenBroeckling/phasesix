@@ -17,38 +17,7 @@
       </p>
     {% endif %}
 
-    {% with all_modifiers=template.templatemodifier_set.all %}
-      {% for mod in all_modifiers %}
-        {% if mod.aspect %}
-          <i class="fas fa-sun fa-fw" title="{% trans 'Aspect' %}"></i> {{ mod.get_aspect_display|capfirst }}
-          {% color_value_span mod.aspect_modifier 3 algebraic_sign=True %}<br>
-        {% endif %}
-      {% endfor %}
-      {% for mod in all_modifiers %}
-        {% if mod.attribute %}
-          <i class="fas fa-asterisk fa-fw" title="{% trans 'Attribute' %}"></i> {{ mod.attribute.name }}
-          {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
-        {% endif %}
-      {% endfor %}
-      {% for mod in all_modifiers %}
-        {% if mod.skill %}
-          <i class="fas fa-hand-scissors fa-fw" title="{% trans 'Skill' %}"></i> {{ mod.skill }}
-          {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
-        {% endif %}
-      {% endfor %}
-      {% for mod in all_modifiers %}
-        {% if mod.knowledge %}
-          <i class="fas fa-book fa-fw" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }}
-          {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
-        {% endif %}
-      {% endfor %}
-      {% for mod in all_modifiers %}
-        {% if mod.unlocks_spell_origin %}
-          <i class="gi-lorc-fairy-wand" title="{% trans 'Magic Origin' %}"></i> {% trans 'Magic Origin' %}:
-          <span class="text-warning">{{ mod.unlocks_spell_origin }}</span><br>
-        {% endif %}
-      {% endfor %}
-    {% endwith %}
+    {% modifier_widget template.templatemodifier_set.all %}
 
     {% if template.quote %}
       <p class="text-muted pt-3"><i>

@@ -5,6 +5,7 @@ from transmeta import TransMeta
 
 from armory.models import RARITY_CHOICES
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from rules.models import ModifierBase
 
 
 class SocketLocation(models.Model, metaclass=TransMeta):
@@ -164,3 +165,17 @@ class BodyModificationSocketLocation(models.Model):
         ordering = ("id",)
         verbose_name = _("body modification socket location")
         verbose_name_plural = _("body modification socket locations")
+
+
+class BodyModificationModifier(ModifierBase):
+    body_modification = models.ForeignKey(
+        BodyModification, verbose_name=_("body modification"), on_delete=models.CASCADE
+    )
+
+    class Meta:
+        ordering = ("id",)
+        verbose_name = _("body modification modifier")
+        verbose_name_plural = _("body modification modifiers")
+
+    def __str__(self):
+        return self.body_modification.name

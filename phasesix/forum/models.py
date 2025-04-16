@@ -105,3 +105,6 @@ class Post(models.Model):
 
     class Meta:
         ordering = ("created_at",)
+
+    def __str__(self):
+        return self.thread.name

@@ -82,6 +82,10 @@ class World(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL,
     )
 
+    show_in_worlds_overview = models.BooleanField(
+        _("show in worlds overview"), default=False
+    )
+
     image = models.ImageField(
         _("image"), upload_to="world_images", max_length=256, blank=True, null=True
     )

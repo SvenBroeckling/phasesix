@@ -1,3 +1,4 @@
+import itertools
 import math
 import random
 
@@ -9,7 +10,10 @@ from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
 from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit, RiotGearProtection
-from body_modifications.models import BodyModificationSocketLocation
+from body_modifications.models import (
+    BodyModificationModifier,
+    BodyModificationSocketLocation,
+)
 from characters.utils import static_thumbnail
 from horror.models import QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
@@ -231,15 +235,14 @@ class Character(models.Model):
         return warnings
 
     def get_aspect_modifier(self, aspect_name):
-        m = TemplateModifier.objects.filter(
-            template__charactertemplate__in=self.charactertemplate_set.all(),
-            aspect=aspect_name,
-        ).aggregate(Sum("aspect_modifier"))
-
-        q = QuirkModifier.objects.filter(
-            quirk__in=self.quirks.all(), aspect=aspect_name
-        ).aggregate(Sum("aspect_modifier"))
-        return (m["aspect_modifier__sum"] or 0) + (q["aspect_modifier__sum"] or 0)
+        m = TemplateModifier.objects.for_character(self).aspect_modifier_sum(
+            aspect_name
+        )
+        q = QuirkModifier.objects.for_character(self).aspect_modifier_sum(aspect_name)
+        bm = BodyModificationModifier.objects.for_character(self).aspect_modifier_sum(
+            aspect_name
+        )
+        return m + q + bm
 
     def get_attribute_value(self, attribute_identifier):
         return self.characterattribute_set.get(
@@ -289,9 +292,15 @@ class Character(models.Model):
 
     @property
     def is_priest(self):
-        return TemplateModifier.objects.filter(
-            template__charactertemplate__character=self, allows_priest_actions=True
-        ).exists()
+        return any(
+            [
+                TemplateModifier.objects.for_character(self).allows_priest_actions(),
+                QuirkModifier.objects.for_character(self).allows_priest_actions(),
+                BodyModificationModifier.objects.for_character(
+                    self
+                ).allows_priest_actions(),
+            ]
+        )
 
     @property
     def is_magical(self):
@@ -416,15 +425,12 @@ class Character(models.Model):
 
     @property
     def unlocked_spell_origins(self):
-        return SpellOrigin.objects.filter(
-            id__in=[
-                t.unlocks_spell_origin.id
-                for t in TemplateModifier.objects.filter(
-                    unlocks_spell_origin__isnull=False,
-                    template__charactertemplate__character__id=self.id,
-                )
-            ]
-        )
+        t = TemplateModifier.objects.for_character(self).unlocked_spell_origins()
+        q = QuirkModifier.objects.for_character(self).unlocked_spell_origins()
+        b = BodyModificationModifier.objects.for_character(
+            self
+        ).unlocked_spell_origins()
+        return SpellOrigin.objects.filter(id__in=itertools.chain(t, q, b))
 
     @property
     def max_arcana(self):
@@ -809,18 +815,16 @@ class CharacterAttribute(models.Model):
 
     @property
     def base_value(self):
-        s = TemplateModifier.objects.filter(
-            template__charactertemplate__in=self.character.charactertemplate_set.all(),
-            attribute=self.attribute,
-        ).aggregate(Sum("attribute_modifier"))
-        q = QuirkModifier.objects.filter(
-            quirk__in=self.character.quirks.all(), attribute=self.attribute
-        ).aggregate(Sum("attribute_modifier"))
-        return (
-            1
-            + (s["attribute_modifier__sum"] or 0)
-            + (q["attribute_modifier__sum"] or 0)
+        s = TemplateModifier.objects.for_character(
+            self.character
+        ).attribute_modifier_sum(self.attribute.identifier)
+        q = QuirkModifier.objects.for_character(self.character).attribute_modifier_sum(
+            self.attribute.identifier
         )
+        b = BodyModificationModifier.objects.for_character(
+            self.character
+        ).attribute_modifier_sum(self.attribute.identifier)
+        return 1 + s + q + b
 
     @property
     def value(self):
@@ -844,14 +848,16 @@ class CharacterSkill(models.Model):
 
     @property
     def base_value(self):
-        s = TemplateModifier.objects.filter(
-            template__charactertemplate__in=self.character.charactertemplate_set.all(),
-            skill=self.skill,
-        ).aggregate(Sum("skill_modifier"))
-        q = QuirkModifier.objects.filter(
-            quirk__in=self.character.quirks.all(), skill=self.skill
-        ).aggregate(Sum("skill_modifier"))
-        return (s["skill_modifier__sum"] or 0) + (q["skill_modifier__sum"] or 0)
+        s = TemplateModifier.objects.for_character(self.character).skill_modifier_sum(
+            self.skill
+        )
+        q = QuirkModifier.objects.for_character(self.character).skill_modifier_sum(
+            self.skill
+        )
+        b = BodyModificationModifier.objects.for_character(
+            self.character
+        ).skill_modifier_sum(self.skill)
+        return s + q + b
 
     @property
     def modifier(self):

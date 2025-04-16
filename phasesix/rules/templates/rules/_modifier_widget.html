@@ -1,0 +1,33 @@
+{% load characters_extras %}
+{% load i18n %}
+
+{% for mod in qs %}
+  {% if mod.aspect %}
+    <i class="fas fa-sun fa-fw" title="{% trans 'Aspect' %}"></i> {{ mod.get_aspect_display|capfirst }}
+    {% color_value_span mod.aspect_modifier 3 algebraic_sign=True %}<br>
+  {% endif %}
+{% endfor %}
+{% for mod in qs %}
+  {% if mod.attribute %}
+    <i class="fas fa-asterisk fa-fw" title="{% trans 'Attribute' %}"></i> {{ mod.attribute.name }}
+    {% color_value_span mod.attribute_modifier 3 algebraic_sign=True %}<br>
+  {% endif %}
+{% endfor %}
+{% for mod in qs %}
+  {% if mod.skill %}
+    <i class="fas fa-hand-scissors fa-fw" title="{% trans 'Skill' %}"></i> {{ mod.skill }}
+    {% color_value_span mod.skill_modifier 3 algebraic_sign=True %}<br>
+  {% endif %}
+{% endfor %}
+{% for mod in qs %}
+  {% if mod.knowledge %}
+    <i class="fas fa-book fa-fw" title="{% trans 'Knowledge' %}"></i> {{ mod.knowledge }}
+    {% color_value_span mod.knowledge_modifier 3 algebraic_sign=True %}<br>
+  {% endif %}
+{% endfor %}
+{% for mod in qs %}
+  {% if mod.unlocks_spell_origin %}
+    <i class="gi-lorc-fairy-wand" title="{% trans 'Magic Origin' %}"></i> {% trans 'Magic Origin' %}:
+    <span class="text-warning">{{ mod.unlocks_spell_origin }}</span><br>
+  {% endif %}
+{% endfor %}

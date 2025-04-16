@@ -14,6 +14,13 @@ from worlds.models import WikiPage, WikiPageImage
 register = Library()
 
 
+@register.inclusion_tag("rules/_modifier_widget.html")
+def modifier_widget(qs, character=None, add_button=False):
+    return {
+        "qs": qs,
+    }
+
+
 @register.inclusion_tag("rules/_template_widget.html", takes_context=True)
 def template_widget(context, template, character=None, add_button=False):
     context.update(

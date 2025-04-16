@@ -3,7 +3,7 @@ import itertools
 from django.conf import settings
 from django.contrib import admin
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
@@ -25,6 +25,115 @@ CHARACTER_ASPECT_CHOICES = (
     ("base_rerolls", _("rerolls")),
     ("base_max_stress", _("max stress")),
 )
+
+
+class ModifierBaseQuerySet(models.QuerySet):
+    def for_character(self, character):
+        if hasattr(self.model, "template"):
+            return self.filter(
+                template__charactertemplate__in=character.charactertemplate_set.all(),
+            )
+        if hasattr(self.model, "quirk"):
+            return self.filter(quirk__in=character.quirks.all())
+        if hasattr(self.model, "body_modification"):
+            return self.filter(
+                body_modification__in=character.characterbodymodification_set.filter(
+                    is_active=True
+                ).values_list("body_modification", flat=True)
+            )
+        return self.none()
+
+    def skill_modifier_sum(self, skill):
+        return (
+            self.filter(skill=skill).aggregate(Sum("skill_modifier"))[
+                "skill_modifier__sum"
+            ]
+            or 0
+        )
+
+    def aspect_modifier_sum(self, aspect):
+        return (
+            self.filter(aspect=aspect).aggregate(Sum("aspect_modifier"))[
+                "aspect_modifier__sum"
+            ]
+            or 0
+        )
+
+    def attribute_modifier_sum(self, attribute_identifier):
+        return (
+            self.filter(attribute__identifier=attribute_identifier).aggregate(
+                Sum("attribute_modifier")
+            )["attribute_modifier__sum"]
+            or 0
+        )
+
+    def allows_priest_actions(self):
+        return self.filter(allows_priest_actions=True).exists()
+
+    def unlocked_spell_origins(self):
+        return (
+            self.filter(unlocks_spell_origin__isnull=False)
+            .distinct()
+            .values_list("unlocks_spell_origin__id", flat=True)
+        )
+
+
+class ModifierBase(models.Model, metaclass=TransMeta):
+    objects = ModifierBaseQuerySet.as_manager()
+
+    aspect = models.CharField(
+        verbose_name=_("aspect"),
+        max_length=40,
+        choices=CHARACTER_ASPECT_CHOICES,
+        null=True,
+        blank=True,
+    )
+    aspect_modifier = models.IntegerField(
+        verbose_name=_("aspect modifier"), blank=True, null=True
+    )
+    attribute = models.ForeignKey(
+        "rules.Attribute",
+        on_delete=models.CASCADE,
+        verbose_name=_("attribute"),
+        null=True,
+        blank=True,
+    )
+    attribute_modifier = models.IntegerField(
+        verbose_name=_("attribute modifier"), blank=True, null=True
+    )
+    skill = models.ForeignKey(
+        "rules.Skill",
+        on_delete=models.CASCADE,
+        verbose_name=_("skill"),
+        null=True,
+        blank=True,
+    )
+    skill_modifier = models.IntegerField(
+        verbose_name=_("skill modifier"), blank=True, null=True
+    )
+    knowledge = models.ForeignKey(
+        "rules.Knowledge",
+        on_delete=models.CASCADE,
+        verbose_name=_("knowledge"),
+        null=True,
+        blank=True,
+    )
+    knowledge_modifier = models.IntegerField(
+        verbose_name=_("knowledge modifier"), blank=True, null=True
+    )
+    unlocks_spell_origin = models.ForeignKey(
+        "magic.SpellOrigin",
+        verbose_name=_("unlocks spell origin"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    allows_priest_actions = models.BooleanField(
+        _("allows priest actions"), default=False
+    )
+
+    class Meta:
+        abstract = True
 
 
 class ExtensionSelectQuerySet(models.QuerySet):
@@ -401,55 +510,9 @@ class Template(HomebrewModel, metaclass=TransMeta):
         ).exists()
 
 
-class TemplateModifier(models.Model, metaclass=TransMeta):
+class TemplateModifier(ModifierBase):
     template = models.ForeignKey(
         Template, verbose_name=_("template"), on_delete=models.CASCADE
-    )
-    aspect = models.CharField(
-        verbose_name=_("aspect"),
-        max_length=40,
-        choices=CHARACTER_ASPECT_CHOICES,
-        null=True,
-        blank=True,
-    )
-    aspect_modifier = models.IntegerField(
-        verbose_name=_("aspect modifier"), blank=True, null=True
-    )
-    attribute = models.ForeignKey(
-        Attribute,
-        on_delete=models.CASCADE,
-        verbose_name=_("attribute"),
-        null=True,
-        blank=True,
-    )
-    attribute_modifier = models.IntegerField(
-        verbose_name=_("attribute modifier"), blank=True, null=True
-    )
-    skill = models.ForeignKey(
-        Skill, on_delete=models.CASCADE, verbose_name=_("skill"), null=True, blank=True
-    )
-    skill_modifier = models.IntegerField(
-        verbose_name=_("skill modifier"), blank=True, null=True
-    )
-    knowledge = models.ForeignKey(
-        Knowledge,
-        on_delete=models.CASCADE,
-        verbose_name=_("knowledge"),
-        null=True,
-        blank=True,
-    )
-    knowledge_modifier = models.IntegerField(
-        verbose_name=_("knowledge modifier"), blank=True, null=True
-    )
-    unlocks_spell_origin = models.ForeignKey(
-        "magic.SpellOrigin",
-        verbose_name=_("unlocks spell origin"),
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-    allows_priest_actions = models.BooleanField(
-        _("allows priest actions"), default=False
     )
 
     def __str__(self):
