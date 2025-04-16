@@ -31,6 +31,12 @@
   </div>
 </div>
 
+{% if object.riot_gear.riotgearmodifier_set.exists %}
+  <div class="mb-3">
+    {% modifier_widget object.riot_gear.riotgearmodifier_set.all %}
+  </div>
+{% endif %}
+
 {% if object.riot_gear.shield_cover %}
   <div class="row">
     <div class="col-12 mb-3 mt-2">

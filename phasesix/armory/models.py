@@ -11,7 +11,7 @@ from armory.choices import (
 )
 from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
-from rules.models import ExtensionSelectQuerySet, Extension
+from rules.models import ExtensionSelectQuerySet, Extension, ModifierBase
 
 RARITY_CHOICES = (
     ("c", _("Common")),
@@ -454,6 +454,12 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
 
     def get_protection(self):
         return self.riotgearprotection_set.order_by("protection_type__ordering")
+
+
+class RiotGearModifier(ModifierBase):
+    riot_gear = models.ForeignKey(
+        RiotGear, verbose_name=_("riot_gear"), on_delete=models.CASCADE
+    )
 
 
 class RiotGearProtection(models.Model):

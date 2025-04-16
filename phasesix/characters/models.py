@@ -9,7 +9,14 @@ from django.utils.translation import gettext_lazy as _, get_language
 from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
-from armory.models import Item, RiotGear, Weapon, CurrencyMapUnit, RiotGearProtection
+from armory.models import (
+    Item,
+    RiotGear,
+    Weapon,
+    CurrencyMapUnit,
+    RiotGearProtection,
+    RiotGearModifier,
+)
 from body_modifications.models import (
     BodyModificationModifier,
     BodyModificationSocketLocation,
@@ -238,11 +245,14 @@ class Character(models.Model):
         m = TemplateModifier.objects.for_character(self).aspect_modifier_sum(
             aspect_name
         )
+        r = RiotGearModifier.objects.for_character(self).aspect_modifier_sum(
+            aspect_name
+        )
         q = QuirkModifier.objects.for_character(self).aspect_modifier_sum(aspect_name)
         bm = BodyModificationModifier.objects.for_character(self).aspect_modifier_sum(
             aspect_name
         )
-        return m + q + bm
+        return m + r + q + bm
 
     def get_attribute_value(self, attribute_identifier):
         return self.characterattribute_set.get(
@@ -295,6 +305,7 @@ class Character(models.Model):
         return any(
             [
                 TemplateModifier.objects.for_character(self).allows_priest_actions(),
+                RiotGearModifier.objects.for_character(self).allows_priest_actions(),
                 QuirkModifier.objects.for_character(self).allows_priest_actions(),
                 BodyModificationModifier.objects.for_character(
                     self
@@ -426,11 +437,12 @@ class Character(models.Model):
     @property
     def unlocked_spell_origins(self):
         t = TemplateModifier.objects.for_character(self).unlocked_spell_origins()
+        r = RiotGearModifier.objects.for_character(self).unlocked_spell_origins()
         q = QuirkModifier.objects.for_character(self).unlocked_spell_origins()
         b = BodyModificationModifier.objects.for_character(
             self
         ).unlocked_spell_origins()
-        return SpellOrigin.objects.filter(id__in=itertools.chain(t, q, b))
+        return SpellOrigin.objects.filter(id__in=itertools.chain(t, r, q, b))
 
     @property
     def max_arcana(self):
@@ -818,13 +830,16 @@ class CharacterAttribute(models.Model):
         s = TemplateModifier.objects.for_character(
             self.character
         ).attribute_modifier_sum(self.attribute.identifier)
+        r = RiotGearModifier.objects.for_character(
+            self.character
+        ).attribute_modifier_sum(self.attribute.identifier)
         q = QuirkModifier.objects.for_character(self.character).attribute_modifier_sum(
             self.attribute.identifier
         )
         b = BodyModificationModifier.objects.for_character(
             self.character
         ).attribute_modifier_sum(self.attribute.identifier)
-        return 1 + s + q + b
+        return 1 + s + q + b + r
 
     @property
     def value(self):
@@ -851,13 +866,16 @@ class CharacterSkill(models.Model):
         s = TemplateModifier.objects.for_character(self.character).skill_modifier_sum(
             self.skill
         )
+        r = RiotGearModifier.objects.for_character(self.character).skill_modifier_sum(
+            self.skill
+        )
         q = QuirkModifier.objects.for_character(self.character).skill_modifier_sum(
             self.skill
         )
         b = BodyModificationModifier.objects.for_character(
             self.character
         ).skill_modifier_sum(self.skill)
-        return s + q + b
+        return s + r + q + b
 
     @property
     def modifier(self):

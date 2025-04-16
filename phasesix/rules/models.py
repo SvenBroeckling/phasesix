@@ -33,6 +33,10 @@ class ModifierBaseQuerySet(models.QuerySet):
             return self.filter(
                 template__charactertemplate__in=character.charactertemplate_set.all(),
             )
+        if hasattr(self.model, "riot_gear"):
+            return self.filter(
+                riot_gear__characterriotgear__in=character.characterriotgear_set.all()
+            )
         if hasattr(self.model, "quirk"):
             return self.filter(quirk__in=character.quirks.all())
         if hasattr(self.model, "body_modification"):

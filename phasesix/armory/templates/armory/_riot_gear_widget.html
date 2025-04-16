@@ -12,7 +12,13 @@
       {{ riot_gear.description|phasesix_markup }}
     </p>
 
-    <div class="mb-2">
+    {% if riot_gear.riotgearmodifier_set.exists %}
+      <div class="mb-3">
+        {% modifier_widget riot_gear.riotgearmodifier_set.all %}
+      </div>
+    {% endif %}
+
+    <div class="mb-3">
       {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
     </div>
 

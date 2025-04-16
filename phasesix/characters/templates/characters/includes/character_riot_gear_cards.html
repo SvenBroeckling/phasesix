@@ -9,9 +9,15 @@
       <h4>{{ r.riot_gear }}</h4>
       <small class="text-muted">{{ r.riot_gear.type }}</small>
 
-      <p>
+      <div class="mb-3">
         {{ r.riot_gear.description|phasesix_markup }}
-      </p>
+      </div>
+
+      {% if r.riot_gear.riotgearmodifier_set.exists %}
+        <div class="mb-3">
+          {% modifier_widget r.riot_gear.riotgearmodifier_set.all %}
+        </div>
+      {% endif %}
 
       <div class="mb-2">
         {% trans 'Encumbrance' %}: {% color_value_span r.riot_gear.encumbrance 5 invert=True %}<br>

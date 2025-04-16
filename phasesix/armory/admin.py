@@ -19,6 +19,7 @@ from armory.models import (
     WeaponModificationKeyword,
     RiotGearProtection,
     ProtectionType,
+    RiotGearModifier,
 )
 
 
@@ -91,6 +92,10 @@ class RiotGearProtectionInline(TabularInline):
     model = RiotGearProtection
 
 
+class RiotGearModifierInline(TabularInline):
+    model = RiotGearModifier
+
+
 class RiotGearAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -109,7 +114,7 @@ class RiotGearAdmin(ModelAdmin):
         "shield_cover",
         "concealment",
     )
-    inlines = [RiotGearProtectionInline]
+    inlines = [RiotGearProtectionInline, RiotGearModifierInline]
     list_filter = ("extensions", "type")
     search_fields = "name_de", "name_en"
     fieldsets = [
