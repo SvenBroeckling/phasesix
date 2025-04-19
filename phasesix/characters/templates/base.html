@@ -56,7 +56,9 @@
   {# <script src="{% static 'js/theme_switcher.js' %}"></script> #}
 </head>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+      data-event-source-url="{{ event_source_url }}?user={{ user.id }}"
+      data-auth="true">
 
 {% include '_main_nav.html' %}
 
@@ -183,6 +185,7 @@
   <script src="{% static 'js/modals.js' %}"></script>
   <script src="{% static 'js/fragments.js' %}"></script>
   <script src="{% static 'js/actions.js' %}"></script>
+  <script src="{% static 'js/eventstream.js' %}"></script>
 {% endcompress %}
 
 <script>

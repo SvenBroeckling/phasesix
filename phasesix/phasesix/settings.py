@@ -25,11 +25,13 @@ CSRF_TRUSTED_ORIGINS = [f"https://{a}" for a in ALLOWED_HOSTS]
 
 
 ASGI_APPLICATION = "phasesix.asgi.application"
+REDIS_HOST = os.environ["REDIS_HOST"]
+REDIS_PORT = int(os.environ["REDIS_PORT"])
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(os.environ["REDIS_HOST"], int(os.environ["REDIS_PORT"]))],
+            "hosts": [REDIS_HOST, REDIS_PORT],
         },
     },
 }
@@ -59,6 +61,7 @@ INSTALLED_APPS = [
     "django_htmx",
     "sorl.thumbnail",
     "compressor",
+    "eventstream",
     "characters",
     "rulebook",
     "forum",
@@ -112,6 +115,8 @@ if DEBUG:
 
 ROOT_URLCONF = "phasesix.urls"
 
+EVENT_SOURCE_URL = os.environ.get("EVENT_SOURCE_URL", "/events/")
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -125,6 +130,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "eventstream.context_processors.event_source_url",
                 "worlds.context_processors.brand_information",
             ],
         },
@@ -165,7 +171,7 @@ SILENCED_SYSTEM_CHECKS = [
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"redis://{os.environ['REDIS_HOST']}:{os.environ['REDIS_PORT']}",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}",
         "KEY_PREFIX": "phasesix_cache",
     }
 }

@@ -46,11 +46,11 @@ wheels = [
 
 [[package]]
 name = "automat"
-version = "24.8.1"
+version = "25.4.16"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/8d/2d/ede4ad7fc34ab4482389fa3369d304f2fa22e50770af706678f6a332fa82/automat-24.8.1.tar.gz", hash = "sha256:b34227cf63f6325b8ad2399ede780675083e439b20c323d376373d8ee6306d88", size = 128679 }
+sdist = { url = "https://files.pythonhosted.org/packages/e3/0f/d40bbe294bbf004d436a8bcbcfaadca8b5140d39ad0ad3d73d1a8ba15f14/automat-25.4.16.tar.gz", hash = "sha256:0017591a5477066e90d26b0e696ddc143baafd87b588cfac8100bc6be9634de0", size = 129977 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/af/cc/55a32a2c98022d88812b5986d2a92c4ff3ee087e83b712ebc703bba452bf/Automat-24.8.1-py3-none-any.whl", hash = "sha256:bf029a7bc3da1e2c24da2343e7598affaa9f10bf0ab63ff808566ce90551e02a", size = 42585 },
+    { url = "https://files.pythonhosted.org/packages/02/ff/1175b0b7371e46244032d43a56862d0af455823b5280a50c63d99cc50f18/automat-25.4.16-py3-none-any.whl", hash = "sha256:04e9bce696a8d5671ee698005af6e5a9fa15354140a87f4870744604dcdd3ba1", size = 42842 },
 ]
 
 [[package]]
@@ -739,6 +739,81 @@ wheels = [
 ]
 
 [[package]]
+name = "phasesix"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "bleach" },
+    { name = "channels" },
+    { name = "channels-redis" },
+    { name = "daphne" },
+    { name = "django" },
+    { name = "django-bootstrap5" },
+    { name = "django-cachalot" },
+    { name = "django-compressor" },
+    { name = "django-extensions" },
+    { name = "django-htmx" },
+    { name = "django-libsass" },
+    { name = "django-registration" },
+    { name = "django-reversion" },
+    { name = "django-transmeta" },
+    { name = "django-unfold" },
+    { name = "hypercorn" },
+    { name = "markdown" },
+    { name = "pillow" },
+    { name = "psycopg" },
+    { name = "pymemcache" },
+    { name = "python-dotenv" },
+    { name = "requests" },
+    { name = "sorl-thumbnail" },
+    { name = "uvicorn" },
+    { name = "weasyprint" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "black" },
+    { name = "django-debug-toolbar" },
+    { name = "ipython" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "bleach", specifier = "==6.2.0" },
+    { name = "channels", specifier = "==4.2.0" },
+    { name = "channels-redis", specifier = "==4.2.1" },
+    { name = "daphne", specifier = "==4.1.2" },
+    { name = "django", specifier = "==5.1.7" },
+    { name = "django-bootstrap5", specifier = "==25.1" },
+    { name = "django-cachalot", specifier = "==2.7.0" },
+    { name = "django-compressor", specifier = "==4.5.1" },
+    { name = "django-extensions", specifier = "==3.2.3" },
+    { name = "django-htmx", specifier = "==1.23.0" },
+    { name = "django-libsass", specifier = "==0.9" },
+    { name = "django-registration", specifier = "==5.1.0" },
+    { name = "django-reversion", specifier = "==5.1.0" },
+    { name = "django-transmeta", git = "https://github.com/SvenBroeckling/django-transmeta.git" },
+    { name = "django-unfold", specifier = "==0.53.0" },
+    { name = "hypercorn", specifier = ">=0.17.3" },
+    { name = "markdown", specifier = "==3.7" },
+    { name = "pillow", specifier = "==11.1.0" },
+    { name = "psycopg", specifier = "==3.2.6" },
+    { name = "pymemcache", specifier = "==4.0.0" },
+    { name = "python-dotenv", specifier = "==1.0.1" },
+    { name = "requests", specifier = "==2.32.3" },
+    { name = "sorl-thumbnail", specifier = "==12.11.0" },
+    { name = "uvicorn", specifier = "==0.34.0" },
+    { name = "weasyprint", specifier = "==65.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "black", specifier = ">=25.1.0" },
+    { name = "django-debug-toolbar", specifier = ">=5.1.0" },
+    { name = "ipython", specifier = ">=9.1.0" },
+]
+
+[[package]]
 name = "pillow"
 version = "11.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -785,14 +860,14 @@ wheels = [
 
 [[package]]
 name = "prompt-toolkit"
-version = "3.0.50"
+version = "3.0.51"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "wcwidth" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a1/e1/bd15cb8ffdcfeeb2bdc215de3c3cffca11408d829e4b8416dcfe71ba8854/prompt_toolkit-3.0.50.tar.gz", hash = "sha256:544748f3860a2623ca5cd6d2795e7a14f3d0e1c3c9728359013f79877fc89bab", size = 429087 }
+sdist = { url = "https://files.pythonhosted.org/packages/bb/6e/9d084c929dfe9e3bfe0c6a47e31f78a25c54627d64a66e884a8bf5474f1c/prompt_toolkit-3.0.51.tar.gz", hash = "sha256:931a162e3b27fc90c86f1b48bb1fb2c528c2761475e57c9c06de13311c7b54ed", size = 428940 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e4/ea/d836f008d33151c7a1f62caf3d8dd782e4d15f6a43897f64480c2b8de2ad/prompt_toolkit-3.0.50-py3-none-any.whl", hash = "sha256:9b6427eb19e479d98acff65196a307c555eb567989e6d88ebbb1b509d9779198", size = 387816 },
+    { url = "https://files.pythonhosted.org/packages/ce/4f/5249960887b1fbe561d9ff265496d170b55a735b76724f10ef19f9e40716/prompt_toolkit-3.0.51-py3-none-any.whl", hash = "sha256:52742911fde84e2d423e2f9a4cf1de7d7ac4e51958f648d9540e0fb8db077b07", size = 387810 },
 ]
 
 [[package]]
@@ -1073,11 +1148,11 @@ wheels = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.13.1"
+version = "4.13.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/76/ad/cd3e3465232ec2416ae9b983f27b9e94dc8171d56ac99b345319a9475967/typing_extensions-4.13.1.tar.gz", hash = "sha256:98795af00fb9640edec5b8e31fc647597b4691f099ad75f469a2616be1a76dff", size = 106633 }
+sdist = { url = "https://files.pythonhosted.org/packages/f6/37/23083fcd6e35492953e8d2aaaa68b860eb422b34627b13f2ce3eb6106061/typing_extensions-4.13.2.tar.gz", hash = "sha256:e6c81219bd689f51865d9e372991c540bda33a0379d5573cddb9a3a23f7caaef", size = 106967 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/df/c5/e7a0b0f5ed69f94c8ab7379c599e6036886bffcde609969a5325f47f1332/typing_extensions-4.13.1-py3-none-any.whl", hash = "sha256:4b6cf02909eb5495cfbc3f6e8fd49217e6cc7944e145cdda8caa3734777f9e69", size = 45739 },
+    { url = "https://files.pythonhosted.org/packages/8b/54/b1ae86c0973cc6f0210b53d508ca3641fb6d0c56823f288d108bc7ab3cc8/typing_extensions-4.13.2-py3-none-any.whl", hash = "sha256:a439e7c04b49fec3e5d3e2beaa21755cadbbdc391694e28ccdd36ca4a1408f8c", size = 45806 },
 ]
 
 [[package]]
@@ -1091,86 +1166,11 @@ wheels = [
 
 [[package]]
 name = "urllib3"
-version = "2.3.0"
+version = "2.4.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/aa/63/e53da845320b757bf29ef6a9062f5c669fe997973f966045cb019c3f4b66/urllib3-2.3.0.tar.gz", hash = "sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d", size = 307268 }
+sdist = { url = "https://files.pythonhosted.org/packages/8a/78/16493d9c386d8e60e442a35feac5e00f0913c0f4b7c217c11e8ec2ff53e0/urllib3-2.4.0.tar.gz", hash = "sha256:414bc6535b787febd7567804cc015fee39daab8ad86268f1310a9250697de466", size = 390672 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/19/4ec628951a74043532ca2cf5d97b7b14863931476d117c471e8e2b1eb39f/urllib3-2.3.0-py3-none-any.whl", hash = "sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df", size = 128369 },
-]
-
-[[package]]
-name = "phasesix"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "bleach" },
-    { name = "channels" },
-    { name = "channels-redis" },
-    { name = "daphne" },
-    { name = "django" },
-    { name = "django-bootstrap5" },
-    { name = "django-cachalot" },
-    { name = "django-compressor" },
-    { name = "django-extensions" },
-    { name = "django-htmx" },
-    { name = "django-libsass" },
-    { name = "django-registration" },
-    { name = "django-reversion" },
-    { name = "django-transmeta" },
-    { name = "django-unfold" },
-    { name = "hypercorn" },
-    { name = "markdown" },
-    { name = "pillow" },
-    { name = "psycopg" },
-    { name = "pymemcache" },
-    { name = "python-dotenv" },
-    { name = "requests" },
-    { name = "sorl-thumbnail" },
-    { name = "uvicorn" },
-    { name = "weasyprint" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "black" },
-    { name = "django-debug-toolbar" },
-    { name = "ipython" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "bleach", specifier = "==6.2.0" },
-    { name = "channels", specifier = "==4.2.0" },
-    { name = "channels-redis", specifier = "==4.2.1" },
-    { name = "daphne", specifier = "==4.1.2" },
-    { name = "django", specifier = "==5.1.7" },
-    { name = "django-bootstrap5", specifier = "==25.1" },
-    { name = "django-cachalot", specifier = "==2.7.0" },
-    { name = "django-compressor", specifier = "==4.5.1" },
-    { name = "django-extensions", specifier = "==3.2.3" },
-    { name = "django-htmx", specifier = "==1.23.0" },
-    { name = "django-libsass", specifier = "==0.9" },
-    { name = "django-registration", specifier = "==5.1.0" },
-    { name = "django-reversion", specifier = "==5.1.0" },
-    { name = "django-transmeta", git = "https://github.com/SvenBroeckling/django-transmeta.git" },
-    { name = "django-unfold", specifier = "==0.53.0" },
-    { name = "hypercorn", specifier = ">=0.17.3" },
-    { name = "markdown", specifier = "==3.7" },
-    { name = "pillow", specifier = "==11.1.0" },
-    { name = "psycopg", specifier = "==3.2.6" },
-    { name = "pymemcache", specifier = "==4.0.0" },
-    { name = "python-dotenv", specifier = "==1.0.1" },
-    { name = "requests", specifier = "==2.32.3" },
-    { name = "sorl-thumbnail", specifier = "==12.11.0" },
-    { name = "uvicorn", specifier = "==0.34.0" },
-    { name = "weasyprint", specifier = "==65.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "black", specifier = ">=25.1.0" },
-    { name = "django-debug-toolbar", specifier = ">=5.1.0" },
-    { name = "ipython", specifier = ">=9.1.0" },
+    { url = "https://files.pythonhosted.org/packages/6b/11/cc635220681e93a0183390e26485430ca2c7b5f9d33b15c74c2861cb8091/urllib3-2.4.0-py3-none-any.whl", hash = "sha256:4e16665048960a0900c702d4a66415956a584919c03361cac9f1df5c5dd7e813", size = 128680 },
 ]
 
 [[package]]

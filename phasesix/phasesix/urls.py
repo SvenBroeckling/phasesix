@@ -20,6 +20,7 @@ urlpatterns = [
     path(
         "contact/", TemplateView.as_view(template_name="contact.html"), name="contact"
     ),
+    path("events/", include("eventstream.urls", namespace="eventstream")),
     path("campaigns/", include("campaigns.urls", namespace="campaigns")),
     path("magic/", include("magic.urls", namespace="magic")),
     path("forum/", include("forum.urls", namespace="forum")),
