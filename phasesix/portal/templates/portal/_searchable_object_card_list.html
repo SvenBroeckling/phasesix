@@ -17,14 +17,14 @@
     <div class="collapse dont-collapse-md" id="searchable-object-card-list-mobile-nav">
       <ul class="nav nav-pills flex-column" role="tablist">
 
-        {% if character_object.homebrew_form %}
+        {% if user.is_authenticated and character_object.homebrew_form %}
           <li class="nav-item searchable-object-card-list-nav-item" id="nav-item-create">
             <a class="nav-link text-warning" href="#create-homebrew" aria-controls="home" role="tab"
                data-bs-toggle="tab">{% trans "Create Homebrew" %}</a>
           </li>
         {% endif %}
 
-        {% if character_object.get_homebrew_qs.exists %}
+        {% if user.is_authenticated and character_object.get_homebrew_qs.exists %}
           <li class="nav-item searchable-object-card-list-nav-item"
               id="nav-item-homebrew">
             <a class="nav-link text-warning" href="#category-homebrew" aria-controls="#i-homebrew" role="tab"
@@ -61,7 +61,7 @@
         </div>
       {% endfor %}
 
-      {% if character_object.get_homebrew_qs.exists %}
+      {% if user.is_authenticated and character_object.get_homebrew_qs.exists %}
         <div role="tabpanel"
              data-rel="#nav-item-homebrew"
              class="tab-pane searchable-object-card-list-tab-pane"
@@ -76,7 +76,7 @@
         </div>
       {% endif %}
 
-      {% if character_object.homebrew_form %}
+      {% if user.is_authenticated and character_object.homebrew_form %}
         <div role="tabpanel"
              data-rel="#nav-create-homebrew"
              class="tab-pane searchable-object-card-list-tab-pane"

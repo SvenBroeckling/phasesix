@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load armory_extras %}
 {% load portal_extras %}
-{% load i18n %}
+{% load i18n static rules_extras characters_extras %}
 
-{% block title %}{% trans 'Body Modifications' %} - {{ block.super }}{% endblock %}
-{% block in_page_title %}{% trans "Body Modifications" %}{% endblock %}
-{% block in_page_subtitle %}{% endblock %}
+{% block title %}{{ title }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ title }}{% endblock %}
+{% block in_page_subtitle %}{{ sub_title }}{% endblock %}
 
 {% block bottom_nav %}
   {% bottom_navigation_button "armory/_navigation.html" %}
@@ -19,5 +19,5 @@
       </div>
     </div>
   </a>
-  {% searchable_object_card_list object_list %}
+  {% searchable_object_card_list character_object %}
 {% endblock %}

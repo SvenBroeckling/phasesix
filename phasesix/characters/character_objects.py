@@ -77,6 +77,9 @@ class CharacterObject:
         )
 
     def get_extension_qs(self):
+        if self.character is None:
+            return Extension.objects.all()
+
         if not self.character_or_campaign.extensions.exists():
             if (
                 self.request.world_configuration
@@ -99,6 +102,8 @@ class CharacterObject:
     @property
     def homebrew_form(self):
         if not self.homebrew_form_class:
+            return None
+        if self.character is None:
             return None
         return self.homebrew_form_class(
             character=self.character,
