@@ -5,22 +5,21 @@
 {% block title %}{% trans 'Foes' %} - {{ block.super }}{% endblock %}
 
 {% block in_page_title %}{% trans "Foes" %}{% endblock %}
-{% block in_page_subtitle %}{% endblock %}
+{% block in_page_subtitle %}{% trans "Animals, enemies, magical creatures to befriend or attack" %}{% endblock %}
 
 {% block bottom_nav %}
   {% bottom_navigation_button "armory/_navigation.html" %}
 {% endblock %}
 
 {% block content %}
+  <div class="mb-4">
+    <a href="{% url "armory:material_overview" %}"
+       class="btn btn-outline-secondary d-none d-md-inline-flex align-items-center">
+      <i class="fas fa-arrow-left me-2"></i>{% trans "Back to the material page" %}
+    </a>
+  </div>
   <div class="row">
     <div class="col-12">
-      <a href="{% url "armory:material_overview" %}">
-        <div class="card mb-4 d-none d-md-block">
-          <div class="card-body">
-            <i class="fas fa-arrow-left"></i> {% trans "Back to the material page" %}
-          </div>
-        </div>
-      </a>
       <div class="table-responsive">
         <table class="table table-sortable">
           <thead>
