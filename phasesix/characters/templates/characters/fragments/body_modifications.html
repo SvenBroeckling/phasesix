@@ -4,7 +4,8 @@
 {% block fragment %}
 
   <div class="row mb-3">
-    <div class="col-12 col-md-6">
+
+    <div class="col-12 col-md-6 mb-2">
       <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain and Energy' %}"
            data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
         <div class="card-body">
@@ -23,7 +24,8 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6">
+
+    <div class="col-12 col-md-6 mb-2">
       <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain and Energy' %}"
            data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
         <div class="card-body">
@@ -83,7 +85,7 @@
   </div>
 
   <div class="row justify-content-center mt-3">
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 text-center mb-2">
       <div class="card h-100">
         <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
              data-bs-toggle="modal"
@@ -118,7 +120,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 text-center mb-2">
       <div class="card h-100">
         <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
              data-bs-toggle="modal"
@@ -153,7 +155,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 text-center mb-2">
       <div class="card h-100">
         <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
              data-bs-toggle="modal"
@@ -190,7 +192,7 @@
   </div>
 
   <div class="row justify-content-center mt-3">
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 text-center mb-2">
       <div class="card h-100">
         <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
              data-bs-toggle="modal"
@@ -225,7 +227,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 text-center mb-2">
       <div class="card h-100">
         <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
              data-bs-toggle="modal"
