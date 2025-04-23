@@ -10,7 +10,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'World' %}</div>
-          <div class="text-muted small">The game world this campaign is set in</div>
+          <div class="text-muted small">{% trans "The game world this campaign is set in" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.world }}</div>
       </div>
@@ -19,7 +19,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Epoch' %}</div>
-          <div class="text-muted small">The time period of the campaign</div>
+          <div class="text-muted small">{% trans "The time period of the campaign" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.epoch }}</div>
       </div>
@@ -28,7 +28,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Extensions' %}</div>
-          <div class="text-muted small">Additional rule sets enabled for this campaign</div>
+          <div class="text-muted small">{% trans "Additional rule sets enabled for this campaign" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.extension_string }}</div>
       </div>
@@ -37,7 +37,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Currency Map' %}</div>
-          <div class="text-muted small">Defines the monetary system used</div>
+          <div class="text-muted small">{% trans "Defines the monetary system used" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.currency_map }}</div>
       </div>
@@ -46,7 +46,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Seed Money' %}</div>
-          <div class="text-muted small">Starting money for new characters</div>
+          <div class="text-muted small">{% trans "Starting money for new characters" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.seed_money }}</div>
       </div>
@@ -55,13 +55,23 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Additional starting career points' %}</div>
-          <div class="text-muted small">Extra points for character creation</div>
+          <div class="text-muted small">{% trans "Extra points for character creation" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.starting_template_points }}</div>
       </div>
       <hr>
 
+      {% if may_edit %}
+        <div class="d-flex justify-content-end">
+          <button data-bs-toggle="modal"
+                  data-bs-target=".page-modal"
+                  data-modal-title="{% trans 'Edit settings' %}"
+                  data-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='game' %}"
+                  class="btn btn-primary modal-trigger">{% trans 'Edit' %}</button>
+        </div>
+      {% endif %}
     </div>
+
     <div class="col-12 mt-2">
       <h3>{% trans "Visibility" %}</h3>
       <hr>
@@ -69,7 +79,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Character Visibility' %}</div>
-          <div class="text-muted small">Who can see player characters</div>
+          <div class="text-muted small">{% trans "Who can see player characters" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.get_character_visibility_display }}</div>
       </div>
@@ -78,7 +88,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'NPC Visibility' %}</div>
-          <div class="text-muted small">Who can see non-player characters</div>
+          <div class="text-muted small">{% trans "Who can see non-player characters" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.get_npc_visibility_display }}</div>
       </div>
@@ -87,7 +97,7 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Foe Visibility' %}</div>
-          <div class="text-muted small">Who can see enemies and opponents</div>
+          <div class="text-muted small">{% trans "Who can see enemies and opponents" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.get_foe_visibility_display }}</div>
       </div>
@@ -96,13 +106,24 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Game Log Visibility' %}</div>
-          <div class="text-muted small">Who can access the game history</div>
+          <div class="text-muted small">{% trans "Who can access the game history" %}</div>
         </div>
         <div class="flex-grow-1 text-end">{{ object.get_game_log_visibility_display }}</div>
       </div>
       <hr>
 
+      {% if may_edit %}
+        <div class="d-flex justify-content-end">
+          <button data-bs-toggle="modal"
+                  data-bs-target=".page-modal"
+                  data-modal-title="{% trans 'Edit settings' %}"
+                  data-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='visibility' %}"
+                  class="btn btn-primary modal-trigger">{% trans 'Edit' %}</button>
+        </div>
+      {% endif %}
     </div>
+
+
     <div class="col-12 mt-2">
       <h3>{% trans "Integrations" %}</h3>
       <hr>
@@ -110,37 +131,46 @@
       <div class="d-flex">
         <div>
           <div>{% trans 'Phase Six Rolls' %}</div>
-          <div class="text-muted small">Roll dice on this platform</div>
+          <div class="text-muted small">{% trans "Roll dice on this platform" %}</div>
         </div>
-        <div class="flex-grow-1 text-end">{% trans 'Yes' %}</div>
+        <div class="flex-grow-1 text-end">
+          {% if object.roll_on_site %}{% trans 'Yes' %}{% else %}{% trans 'Yes' %}{% endif %}
+        </div>
       </div>
       <hr>
 
       <div class="d-flex">
         <div>
           <div>{% trans 'TaleSpire Rolls' %}</div>
-          <div class="text-muted small">Integration with TaleSpire virtual tabletop</div>
+          <div class="text-muted small">{% trans "Integration with TaleSpire virtual tabletop" %}</div>
         </div>
-        <div class="flex-grow-1 text-end">{% trans 'No' %}</div>
+        <div class="flex-grow-1 text-end">
+          {% if object.tale_spire_integration %}{% trans 'Yes' %}{% else %}{% trans 'Yes' %}{% endif %}
+        </div>
       </div>
       <hr>
 
       <div class="d-flex">
         <div>
           <div>{% trans 'Discord Dice Rolls' %}</div>
-          <div class="text-muted small">Send dice roll results to Discord</div>
+          <div class="text-muted small">{% trans "Send dice roll results to Discord" %}</div>
         </div>
         <div class="flex-grow-1 text-end">
-          {% if object.discord_webhook_url %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</div>
+          {% if object.discord_integration %}{% trans 'Yes' %}{% else %}{% trans 'Yes' %}{% endif %}
+        </div>
       </div>
       <hr>
 
       {% if may_edit %}
-        <a href=""
-           data-sidebar-title="{% trans 'Edit settings' %}"
-           data-sidebar-url="{% url 'campaigns:xhr_settings_sidebar' pk=object.id sidebar_template='settings' %}"
-           class="btn btn-primary sidebar-trigger">{% trans 'Edit settings' %}</a>
+        <div class="d-flex justify-content-end">
+          <button data-bs-toggle="modal"
+                  data-bs-target=".page-modal"
+                  data-modal-title="{% trans 'Edit settings' %}"
+                  data-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='integration' %}"
+                  class="btn btn-primary modal-trigger">{% trans 'Edit' %}</button>
+        </div>
       {% endif %}
+
     </div>
   </div>
 {% endblock %}

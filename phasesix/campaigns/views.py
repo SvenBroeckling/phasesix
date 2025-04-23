@@ -1,6 +1,6 @@
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
 from django.views.generic import (
@@ -9,9 +9,14 @@ from django.views.generic import (
     DetailView,
     TemplateView,
     FormView,
+    UpdateView,
 )
 
-from campaigns.forms import SettingsForm
+from campaigns.forms import (
+    CampaignSettingsIntegrationForm,
+    CampaignSettingsGameForm,
+    CampaignSettingsVisibilityForm,
+)
 from campaigns.models import Campaign, Foe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
@@ -125,16 +130,6 @@ class XhrCampaignFragmentView(DetailView):
         return ["campaigns/fragments/" + self.kwargs["fragment_template"] + ".html"]
 
 
-class SaveSettingsView(View):
-    def post(self, request, *args, **kwargs):
-        campaign = Campaign.objects.get(id=kwargs["pk"])
-        if campaign.may_edit(request.user):
-            form = SettingsForm(request.POST, instance=campaign, files=request.FILES)
-            if form.is_valid():
-                form.save()
-        return HttpResponseRedirect(campaign.get_absolute_url())
-
-
 class XhrSwitchCharacterNPCView(View):
     def post(self, request, *args, **kwargs):
         campaign = Campaign.objects.get(id=kwargs["pk"])
@@ -170,6 +165,26 @@ class XhrRemoveFoeView(View):
         if campaign.may_edit(request.user):
             campaign.foe_set.filter(id=kwargs["foe_pk"]).delete()
         return JsonResponse({"status": "ok"})
+
+
+class XhrCampaignSettingsView(UpdateView):
+    model = Campaign
+    template_name = "campaigns/modals/settings.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["mode"] = self.kwargs["mode"]
+        return context
+
+    def get_form_class(self):
+        if self.kwargs["mode"] == "integration":
+            return CampaignSettingsIntegrationForm
+        elif self.kwargs["mode"] == "game":
+            return CampaignSettingsGameForm
+        elif self.kwargs["mode"] == "visibility":
+            return CampaignSettingsVisibilityForm
+        else:
+            raise Exception(f"Unknown mode: {self.kwargs['mode']}")
 
 
 class BaseSidebarView(DetailView):

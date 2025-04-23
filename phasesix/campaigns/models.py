@@ -89,6 +89,26 @@ class Campaign(models.Model):
         _("additional starting career points"), default=0
     )
 
+    # Integrations
+    roll_on_site = models.BooleanField(
+        _("roll on site"),
+        help_text=_("Shows dice results on this platform."),
+        default=True,
+    )
+    discord_integration = models.BooleanField(
+        _("discord integration"),
+        help_text=_(
+            "Enables the integration with the discord bot. Requires a webhook url."
+        ),
+        default=False,
+    )
+    tale_spire_integration = models.BooleanField(
+        _("tale spire integration"),
+        help_text=_(
+            "Enables TaleSpire integration. All roll links are generated so that the TaleSpire game is accessed."
+        ),
+        default=False,
+    )
     discord_webhook_url = models.URLField(
         _("discord webhook url"),
         max_length=256,

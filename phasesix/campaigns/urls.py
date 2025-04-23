@@ -34,9 +34,9 @@ urlpatterns = [
         name="detail",
     ),
     path(
-        "detail/settings/<int:pk>",
-        views.SaveSettingsView.as_view(),
-        name="save_settings",
+        "detail/settings/<int:pk>/<str:mode>",
+        views.XhrCampaignSettingsView.as_view(),
+        name="xhr_campaign_settings",
     ),
     path("dice_log/<int:pk>", views.XhrDiceLogView.as_view(), name="xhr_dice_log"),
     path(
@@ -73,11 +73,6 @@ urlpatterns = [
         "sidebar/<int:pk>/<sidebar_template>",
         views.XhrSidebarView.as_view(),
         name="xhr_sidebar",
-    ),
-    path(
-        "sidebar/settings/<int:pk>/<sidebar_template>",
-        views.XhrSettingsSidebarView.as_view(),
-        name="xhr_settings_sidebar",
     ),
     path(
         "sidebar/character/<int:pk>/<sidebar_template>",
