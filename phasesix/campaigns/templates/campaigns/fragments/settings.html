@@ -4,6 +4,9 @@
 {% block fragment %}
   <div class="row">
     <div class="col-12">
+      <h3>{% trans "Game Options" %}</h3>
+      <hr>
+
       {% trans 'World' %}
       <span class="float-end">{{ object.world }}</span>
       <hr>
@@ -28,6 +31,11 @@
       <span class="float-end">{{ object.starting_template_points }}</span>
       <hr>
 
+    </div>
+    <div class="col-12 mt-2">
+      <h3>{% trans "Visibility" %}</h3>
+      <hr>
+
       {% trans 'Character Visibility' %}
       <span class="float-end">{{ object.get_character_visibility_display }}</span>
       <hr>
@@ -42,6 +50,19 @@
 
       {% trans 'Game Log Visibility' %}
       <span class="float-end">{{ object.get_game_log_visibility_display }}</span>
+      <hr>
+
+    </div>
+    <div class="col-12 mt-2">
+      <h3>{% trans "Integrations" %}</h3>
+      <hr>
+
+      {% trans 'Phase Six Rolls' %}
+      <span class="float-end">{% trans 'No' %}</span>
+      <hr>
+
+      {% trans 'TaleSpire Rolls' %}
+      <span class="float-end">{% trans 'No' %}</span>
       <hr>
 
       {% trans 'Discord Dice Rolls' %}
