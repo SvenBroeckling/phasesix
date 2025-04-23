@@ -7,28 +7,58 @@
       <h3>{% trans "Game Options" %}</h3>
       <hr>
 
-      {% trans 'World' %}
-      <span class="float-end">{{ object.world }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'World' %}</div>
+          <div class="text-muted small">The game world this campaign is set in</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.world }}</div>
+      </div>
       <hr>
 
-      {% trans 'Epoch' %}
-      <span class="float-end">{{ object.epoch }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Epoch' %}</div>
+          <div class="text-muted small">The time period of the campaign</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.epoch }}</div>
+      </div>
       <hr>
 
-      {% trans 'Extensions' %}
-      <span class="float-end">{{ object.extension_string }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Extensions' %}</div>
+          <div class="text-muted small">Additional rule sets enabled for this campaign</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.extension_string }}</div>
+      </div>
       <hr>
 
-      {% trans 'Currency Map' %}
-      <span class="float-end">{{ object.currency_map }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Currency Map' %}</div>
+          <div class="text-muted small">Defines the monetary system used</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.currency_map }}</div>
+      </div>
       <hr>
 
-      {% trans 'Seed Money' %}
-      <span class="float-end">{{ object.seed_money }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Seed Money' %}</div>
+          <div class="text-muted small">Starting money for new characters</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.seed_money }}</div>
+      </div>
       <hr>
 
-      {% trans 'Additional starting career points' %}
-      <span class="float-end">{{ object.starting_template_points }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Additional starting career points' %}</div>
+          <div class="text-muted small">Extra points for character creation</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.starting_template_points }}</div>
+      </div>
       <hr>
 
     </div>
@@ -36,20 +66,40 @@
       <h3>{% trans "Visibility" %}</h3>
       <hr>
 
-      {% trans 'Character Visibility' %}
-      <span class="float-end">{{ object.get_character_visibility_display }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Character Visibility' %}</div>
+          <div class="text-muted small">Who can see player characters</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.get_character_visibility_display }}</div>
+      </div>
       <hr>
 
-      {% trans 'NPC Visibility' %}
-      <span class="float-end">{{ object.get_npc_visibility_display }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'NPC Visibility' %}</div>
+          <div class="text-muted small">Who can see non-player characters</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.get_npc_visibility_display }}</div>
+      </div>
       <hr>
 
-      {% trans 'Foe Visibility' %}
-      <span class="float-end">{{ object.get_foe_visibility_display }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Foe Visibility' %}</div>
+          <div class="text-muted small">Who can see enemies and opponents</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.get_foe_visibility_display }}</div>
+      </div>
       <hr>
 
-      {% trans 'Game Log Visibility' %}
-      <span class="float-end">{{ object.get_game_log_visibility_display }}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Game Log Visibility' %}</div>
+          <div class="text-muted small">Who can access the game history</div>
+        </div>
+        <div class="flex-grow-1 text-end">{{ object.get_game_log_visibility_display }}</div>
+      </div>
       <hr>
 
     </div>
@@ -57,17 +107,32 @@
       <h3>{% trans "Integrations" %}</h3>
       <hr>
 
-      {% trans 'Phase Six Rolls' %}
-      <span class="float-end">{% trans 'No' %}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Phase Six Rolls' %}</div>
+          <div class="text-muted small">Roll dice on this platform</div>
+        </div>
+        <div class="flex-grow-1 text-end">{% trans 'Yes' %}</div>
+      </div>
       <hr>
 
-      {% trans 'TaleSpire Rolls' %}
-      <span class="float-end">{% trans 'No' %}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'TaleSpire Rolls' %}</div>
+          <div class="text-muted small">Integration with TaleSpire virtual tabletop</div>
+        </div>
+        <div class="flex-grow-1 text-end">{% trans 'No' %}</div>
+      </div>
       <hr>
 
-      {% trans 'Discord Dice Rolls' %}
-      <span class="float-end">{% if object.discord_webhook_url %}{% trans 'Yes' %}{% else %}
-        {% trans 'No' %}{% endif %}</span>
+      <div class="d-flex">
+        <div>
+          <div>{% trans 'Discord Dice Rolls' %}</div>
+          <div class="text-muted small">Send dice roll results to Discord</div>
+        </div>
+        <div class="flex-grow-1 text-end">
+          {% if object.discord_webhook_url %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</div>
+      </div>
       <hr>
 
       {% if may_edit %}
