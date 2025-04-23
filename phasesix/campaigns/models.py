@@ -97,9 +97,7 @@ class Campaign(models.Model):
     )
     discord_integration = models.BooleanField(
         _("discord integration"),
-        help_text=_(
-            "Enables the integration with the discord bot. Requires a webhook url."
-        ),
+        help_text=_("Enables the integration with discord. Requires a webhook url."),
         default=False,
     )
     tale_spire_integration = models.BooleanField(

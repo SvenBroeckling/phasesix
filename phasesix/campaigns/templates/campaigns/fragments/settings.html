@@ -134,29 +134,29 @@
           <div class="text-muted small">{% trans "Roll dice on this platform" %}</div>
         </div>
         <div class="flex-grow-1 text-end">
-          {% if object.roll_on_site %}{% trans 'Yes' %}{% else %}{% trans 'Yes' %}{% endif %}
+          {% if object.roll_on_site %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}
         </div>
       </div>
       <hr>
 
       <div class="d-flex">
         <div>
-          <div>{% trans 'TaleSpire Rolls' %}</div>
+          <div>{% trans 'TaleSpire Integration' %}</div>
           <div class="text-muted small">{% trans "Integration with TaleSpire virtual tabletop" %}</div>
         </div>
         <div class="flex-grow-1 text-end">
-          {% if object.tale_spire_integration %}{% trans 'Yes' %}{% else %}{% trans 'Yes' %}{% endif %}
+          {% if object.tale_spire_integration %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}
         </div>
       </div>
       <hr>
 
       <div class="d-flex">
         <div>
-          <div>{% trans 'Discord Dice Rolls' %}</div>
+          <div>{% trans 'Discord Integration' %}</div>
           <div class="text-muted small">{% trans "Send dice roll results to Discord" %}</div>
         </div>
         <div class="flex-grow-1 text-end">
-          {% if object.discord_integration %}{% trans 'Yes' %}{% else %}{% trans 'Yes' %}{% endif %}
+          {% if object.discord_integration %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}
         </div>
       </div>
       <hr>

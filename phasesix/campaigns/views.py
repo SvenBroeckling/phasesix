@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import (
     ListView,
@@ -185,6 +187,10 @@ class XhrCampaignSettingsView(UpdateView):
             return CampaignSettingsVisibilityForm
         else:
             raise Exception(f"Unknown mode: {self.kwargs['mode']}")
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Settings saved."))
+        return super().form_valid(form)
 
 
 class BaseSidebarView(DetailView):

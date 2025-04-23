@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-20 22:49+0000\n"
-"PO-Revision-Date: 2025-04-21 00:56+0200\n"
+"POT-Creation-Date: 2025-04-23 23:46+0000\n"
+"PO-Revision-Date: 2025-04-24 01:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -178,7 +178,7 @@ msgstr "Legendär"
 #: armory/models.py:399 armory/models.py:434 armory/models.py:479
 #: armory/models.py:487 body_modifications/models.py:12
 #: body_modifications/models.py:27 body_modifications/models.py:126
-#: campaigns/models.py:28 campaigns/models.py:193 campaigns/models.py:201
+#: campaigns/models.py:28 campaigns/models.py:211 campaigns/models.py:219
 #: characters/models.py:63 forum/models.py:38 forum/models.py:60
 #: horror/models.py:13 horror/models.py:31 magic/models.py:18
 #: magic/models.py:31 magic/models.py:44 magic/models.py:75 magic/models.py:171
@@ -196,7 +196,7 @@ msgstr "Name"
 #: armory/models.py:218 armory/models.py:258 armory/models.py:308
 #: armory/models.py:332 armory/models.py:366 armory/models.py:401
 #: armory/models.py:435 body_modifications/models.py:127
-#: campaigns/models.py:222 characters/models.py:64 horror/models.py:36
+#: campaigns/models.py:240 characters/models.py:64 horror/models.py:36
 #: pantheon/models.py:23 pantheon/models.py:66 rules/models.py:195
 #: rules/models.py:256 rules/models.py:312 rules/models.py:331
 #: rules/models.py:365 rules/models.py:408
@@ -205,7 +205,7 @@ msgstr "Beschreibung"
 
 #: armory/models.py:38 armory/models.py:75 armory/models.py:157
 #: armory/models.py:209 armory/models.py:431 body_modifications/models.py:134
-#: campaigns/models.py:65 campaigns/models.py:220 characters/models.py:113
+#: campaigns/models.py:65 campaigns/models.py:238 characters/models.py:113
 #: characters/models.py:910 characters/models.py:957 characters/models.py:1272
 #: forum/models.py:21 forum/models.py:27 forum/models.py:31 forum/models.py:37
 #: forum/models.py:55 forum/models.py:99 magic/models.py:129
@@ -312,7 +312,7 @@ msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:119 armory/models.py:237 body_modifications/models.py:30
 #: body_modifications/models.py:113 campaigns/models.py:30
-#: campaigns/models.py:203 characters/models.py:90 forum/models.py:33
+#: campaigns/models.py:221 characters/models.py:90 forum/models.py:33
 #: magic/models.py:49 magic/models.py:80 pantheon/models.py:69
 #: portal/models.py:14 rules/models.py:203 worlds/models.py:90
 #: worlds/models.py:193 worlds/models.py:263 worlds/models.py:379
@@ -321,7 +321,7 @@ msgstr "Bild"
 
 #: armory/models.py:122 armory/models.py:240 body_modifications/models.py:37
 #: body_modifications/models.py:120 campaigns/models.py:33
-#: campaigns/models.py:55 campaigns/models.py:206 characters/models.py:93
+#: campaigns/models.py:55 campaigns/models.py:224 characters/models.py:93
 #: characters/models.py:107 magic/models.py:52 magic/models.py:87
 #: pantheon/models.py:72 portal/models.py:17 portal/models.py:31
 #: rules/models.py:206 worlds/models.py:93 worlds/models.py:266
@@ -331,7 +331,7 @@ msgstr "Bild Copyright"
 
 #: armory/models.py:125 armory/models.py:243 body_modifications/models.py:40
 #: body_modifications/models.py:123 campaigns/models.py:36
-#: campaigns/models.py:58 campaigns/models.py:209 characters/models.py:96
+#: campaigns/models.py:58 campaigns/models.py:227 characters/models.py:96
 #: characters/models.py:110 magic/models.py:55 magic/models.py:90
 #: pantheon/models.py:75 portal/models.py:20 portal/models.py:34
 #: rules/models.py:209 worlds/models.py:96 worlds/models.py:269
@@ -803,8 +803,8 @@ msgstr "Energieneutral"
 msgid "Things you can integrate into your body"
 msgstr "Dinge die du in deinen Körper integrieren kannst"
 
-#: campaigns/forms.py:11
-#: campaigns/templates/campaigns/fragments/settings.html:15
+#: campaigns/forms.py:13
+#: campaigns/templates/campaigns/fragments/settings.html:30
 #: characters/forms.py:29 characters/forms.py:66 phasesix/settings.py:301
 #: phasesix/settings.py:335
 msgid "Extensions"
@@ -843,13 +843,13 @@ msgid "is favorite"
 msgstr "Ist Favorit"
 
 #: campaigns/models.py:73
-#: campaigns/templates/campaigns/fragments/settings.html:11
+#: campaigns/templates/campaigns/fragments/settings.html:21
 #: characters/forms.py:54 characters/forms.py:59 rules/models.py:182
 msgid "Epoch"
 msgstr "Epoche"
 
 #: campaigns/models.py:80
-#: campaigns/templates/campaigns/fragments/settings.html:7
+#: campaigns/templates/campaigns/fragments/settings.html:12
 #: characters/templates/_main_nav.html:24 rules/models.py:183
 msgid "World"
 msgstr "Welt"
@@ -858,110 +858,138 @@ msgstr "Welt"
 msgid "additional starting career points"
 msgstr "Zusätzliche Werdegangspunkte"
 
-#: campaigns/models.py:93
+#: campaigns/models.py:94
+msgid "roll on site"
+msgstr "Auf dieser Plattform würfeln"
+
+#: campaigns/models.py:95
+msgid "Shows dice results on this platform."
+msgstr "Zeigt die Würfelergebnisse auf dieser Plattform an."
+
+#: campaigns/models.py:99
+msgid "discord integration"
+msgstr "Discord Integration"
+
+#: campaigns/models.py:100
+msgid "Enables the integration with discord. Requires a webhook url."
+msgstr "Aktiviert die Integration mit Discord. Benötigt eine Webhook URL."
+
+#: campaigns/models.py:104
+msgid "tale spire integration"
+msgstr "TaleSpire Integration"
+
+#: campaigns/models.py:106
+msgid ""
+"Enables TaleSpire integration. All roll links are generated so that the "
+"TaleSpire game is accessed."
+msgstr ""
+"Aktiviert die Integration mit TaleSpire. Alle Würfelllinks werden so "
+"generiert, dass das TaleSpire Spiel angesprochen wird."
+
+#: campaigns/models.py:111
 msgid "discord webhook url"
 msgstr "Discord Webhook URL"
 
-#: campaigns/models.py:96
+#: campaigns/models.py:114
 msgid ""
 "Create a discord webhook and paste it's url here to display dice results."
 msgstr ""
 "Lege einen Discord Webhook an und kopiere seine URL hier herein, um "
 "Würfelergebnisse anzuzeigen."
 
-#: campaigns/models.py:103
+#: campaigns/models.py:121
 msgid "seed money"
 msgstr "Startkapital"
 
-#: campaigns/models.py:106
+#: campaigns/models.py:124
 msgid "foe visibility"
 msgstr "Gegnersichtbarkeit"
 
-#: campaigns/models.py:110
+#: campaigns/models.py:128
 msgid "npc visibility"
 msgstr "NSC Sichtbarkeit"
 
-#: campaigns/models.py:114
+#: campaigns/models.py:132
 msgid "game log visibility"
 msgstr "Spielprotokollsichtbarkeit"
 
-#: campaigns/models.py:118
+#: campaigns/models.py:136
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:122 campaigns/templates/campaigns/_navigation.html:12
+#: campaigns/models.py:140 campaigns/templates/campaigns/_navigation.html:12
 #: characters/models.py:148 homebrew/templates/homebrew/index.html:15
 #: worlds/templates/worlds/_add_to_campaign.html:7
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: campaigns/models.py:123 characters/templates/_main_nav.html:157
+#: campaigns/models.py:141 characters/templates/_main_nav.html:157
 #: phasesix/settings.py:267 portal/templates/portal/_navigation.html:33
 msgid "Campaigns"
 msgstr "Kampagnen"
 
-#: campaigns/models.py:194 characters/models.py:1275 forum/models.py:104
+#: campaigns/models.py:212 characters/models.py:1275 forum/models.py:104
 #: worlds/models.py:256
 msgid "text"
 msgstr "Text"
 
-#: campaigns/models.py:221
+#: campaigns/models.py:239
 msgid "header"
 msgstr "Kopfzeile"
 
-#: campaigns/models.py:224
+#: campaigns/models.py:242
 msgid "roll string"
 msgstr "Würfelstring"
 
-#: campaigns/models.py:226
+#: campaigns/models.py:244
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
-#: campaigns/models.py:228
+#: campaigns/models.py:246
 msgid "modifier"
 msgstr "Modifikator"
 
-#: campaigns/models.py:229 rules/models.py:19 worlds/models.py:464
+#: campaigns/models.py:247 rules/models.py:19 worlds/models.py:464
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: campaigns/models.py:232
+#: campaigns/models.py:250
 msgid "crit count"
 msgstr "Anzahl kritischer Erfolge"
 
-#: campaigns/models.py:233
+#: campaigns/models.py:251
 msgid "crit sum"
 msgstr "Summe kritischer Erfolge"
 
-#: campaigns/models.py:234
+#: campaigns/models.py:252
 msgid "exploded dice count"
 msgstr "Anzahl Exploding Dice"
 
-#: campaigns/models.py:235
+#: campaigns/models.py:253
 msgid "exploded dice sum"
 msgstr "Summe Exploding Dice"
 
-#: campaigns/models.py:236
+#: campaigns/models.py:254
 msgid "highest single roll"
 msgstr "Höchster einzelner Wurf"
 
-#: campaigns/models.py:237
+#: campaigns/models.py:255
 msgid "successes count"
 msgstr "Anzahl Erfolge"
 
-#: campaigns/models.py:238
+#: campaigns/models.py:256
 msgid "successes sum"
 msgstr "Summe Erfolge"
 
-#: campaigns/models.py:239
+#: campaigns/models.py:257
 msgid "fails count"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:240
+#: campaigns/models.py:258
 msgid "fails sum"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:241
+#: campaigns/models.py:259
 msgid "total sum"
 msgstr "Gesamtsumme"
 
@@ -1382,52 +1410,136 @@ msgstr "Zufälligen NSC erstellen"
 msgid "Create npc"
 msgstr "NSC erstellen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:19
+#: campaigns/templates/campaigns/fragments/settings.html:7
+msgid "Game Options"
+msgstr "Spieleinstellungen"
+
+#: campaigns/templates/campaigns/fragments/settings.html:13
+msgid "The game world this campaign is set in"
+msgstr "Die Spielwelt, in der diese Kampagne spielt"
+
+#: campaigns/templates/campaigns/fragments/settings.html:22
+msgid "The time period of the campaign"
+msgstr "Der Zeitraum der Kampagne"
+
+#: campaigns/templates/campaigns/fragments/settings.html:31
+msgid "Additional rule sets enabled for this campaign"
+msgstr "Zusätzliche aktivierte Regelerweiterungen"
+
+#: campaigns/templates/campaigns/fragments/settings.html:39
 #: characters/forms.py:47 characters/views.py:714
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
-#: campaigns/templates/campaigns/fragments/settings.html:23
+#: campaigns/templates/campaigns/fragments/settings.html:40
+msgid "Defines the monetary system used"
+msgstr "Definiert das monetäre System, welches benutzt wird"
+
+#: campaigns/templates/campaigns/fragments/settings.html:48
 #: characters/forms.py:50 characters/views.py:685
 msgid "Seed Money"
 msgstr "Startkapital"
 
-#: campaigns/templates/campaigns/fragments/settings.html:27
+#: campaigns/templates/campaigns/fragments/settings.html:49
+msgid "Starting money for new characters"
+msgstr "Das Startguthaben für neue Charaktere"
+
+#: campaigns/templates/campaigns/fragments/settings.html:57
 msgid "Additional starting career points"
 msgstr "Zusätzliche Werdegangspunkte"
 
-#: campaigns/templates/campaigns/fragments/settings.html:31
+#: campaigns/templates/campaigns/fragments/settings.html:58
+msgid "Extra points for character creation"
+msgstr "Extrapunkte für die Charaktererschaffung"
+
+#: campaigns/templates/campaigns/fragments/settings.html:68
+#: campaigns/templates/campaigns/fragments/settings.html:119
+#: campaigns/templates/campaigns/fragments/settings.html:168
+msgid "Edit settings"
+msgstr "Einstellungen bearbeiten"
+
+#: campaigns/templates/campaigns/fragments/settings.html:70
+#: campaigns/templates/campaigns/fragments/settings.html:121
+#: campaigns/templates/campaigns/fragments/settings.html:170
+#: worlds/templates/worlds/_navigation.html:24
+msgid "Edit"
+msgstr "Editieren"
+
+#: campaigns/templates/campaigns/fragments/settings.html:76
+msgid "Visibility"
+msgstr "Sichtbarkeit"
+
+#: campaigns/templates/campaigns/fragments/settings.html:81
 msgid "Character Visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:35
+#: campaigns/templates/campaigns/fragments/settings.html:82
+msgid "Who can see player characters"
+msgstr "Wer kann Spielercharaktere sehen"
+
+#: campaigns/templates/campaigns/fragments/settings.html:90
 msgid "NPC Visibility"
 msgstr "NSC Sichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:39
+#: campaigns/templates/campaigns/fragments/settings.html:91
+msgid "Who can see non-player characters"
+msgstr "Wer kann NPC sehen"
+
+#: campaigns/templates/campaigns/fragments/settings.html:99
 msgid "Foe Visibility"
 msgstr "Gegnersichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:43
+#: campaigns/templates/campaigns/fragments/settings.html:100
+msgid "Who can see enemies and opponents"
+msgstr "Wer kann Gegner sehen"
+
+#: campaigns/templates/campaigns/fragments/settings.html:108
 msgid "Game Log Visibility"
 msgstr "Spielprotokollsichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:47
-msgid "Discord Dice Rolls"
-msgstr "Discord Würfelwürfe"
+#: campaigns/templates/campaigns/fragments/settings.html:109
+msgid "Who can access the game history"
+msgstr "Wer kann auf das Spielprotokoll zugreifen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:48
+#: campaigns/templates/campaigns/fragments/settings.html:128
+msgid "Integrations"
+msgstr "Integrationen"
+
+#: campaigns/templates/campaigns/fragments/settings.html:133
+msgid "Phase Six Rolls"
+msgstr "Phase Six Würfel"
+
+#: campaigns/templates/campaigns/fragments/settings.html:134
+msgid "Roll dice on this platform"
+msgstr "Würfe auf dieser Plattform anzeigen"
+
+#: campaigns/templates/campaigns/fragments/settings.html:137
+#: campaigns/templates/campaigns/fragments/settings.html:148
+#: campaigns/templates/campaigns/fragments/settings.html:159
 msgid "Yes"
 msgstr "Ja"
 
-#: campaigns/templates/campaigns/fragments/settings.html:49
+#: campaigns/templates/campaigns/fragments/settings.html:137
+#: campaigns/templates/campaigns/fragments/settings.html:148
+#: campaigns/templates/campaigns/fragments/settings.html:159
 msgid "No"
 msgstr "Nein"
 
-#: campaigns/templates/campaigns/fragments/settings.html:54
-#: campaigns/templates/campaigns/fragments/settings.html:56
-msgid "Edit settings"
-msgstr "Einstellungen bearbeiten"
+#: campaigns/templates/campaigns/fragments/settings.html:144
+msgid "TaleSpire Integration"
+msgstr "TaleSpire Integration"
+
+#: campaigns/templates/campaigns/fragments/settings.html:145
+msgid "Integration with TaleSpire virtual tabletop"
+msgstr "Integration für TaleSpire VTT"
+
+#: campaigns/templates/campaigns/fragments/settings.html:155
+msgid "Discord Integration"
+msgstr "Discord Integration"
+
+#: campaigns/templates/campaigns/fragments/settings.html:156
+msgid "Send dice roll results to Discord"
+msgstr "Sendet die Würfelergebnisse nach Discord"
 
 #: campaigns/templates/campaigns/fragments/statistics.html:8
 msgid "Crit Count"
@@ -1479,6 +1591,13 @@ msgstr "Charakter"
 #: campaigns/templates/campaigns/fragments/status.html:10
 msgid "Player"
 msgstr "Spieler"
+
+#: campaigns/templates/campaigns/modals/settings.html:8
+#: characters/templates/characters/modals/edit_description.html:11
+#: characters/templates/characters/sidebar/character.html:81
+#: worlds/templates/worlds/wiki_page_edit.html:58
+msgid "Save"
+msgstr "Speichern"
 
 #: campaigns/templates/campaigns/roll_list.html:30
 msgid "Show older rolls"
@@ -1612,12 +1731,9 @@ msgstr "Gegnernamen"
 msgid "Search"
 msgstr "Suchen"
 
-#: campaigns/templates/campaigns/sidebar/settings.html:8
-#: characters/templates/characters/modals/edit_description.html:11
-#: characters/templates/characters/sidebar/character.html:81
-#: worlds/templates/worlds/wiki_page_edit.html:58
-msgid "Save"
-msgstr "Speichern"
+#: campaigns/views.py:192
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
 
 #: characters/feeds.py:16
 msgid "Phase Six latest additions"
@@ -5528,10 +5644,6 @@ msgstr ""
 "        Ursprung: %(t_country)s\n"
 "      "
 
-#: worlds/templates/worlds/_navigation.html:24
-msgid "Edit"
-msgstr "Editieren"
-
 #: worlds/templates/worlds/_navigation.html:28
 #: worlds/templates/worlds/_navigation.html:30
 #: worlds/templates/worlds/_navigation.html:36
@@ -5668,7 +5780,7 @@ msgstr "Kopiere englischen Text ohne Links"
 msgid "Animals, enemies, magical creatures to befriend or attack"
 msgstr ""
 "Tiere, Gegner, magische Wesen, die man angreifen kann oder mit denen man "
-"Freundschaften schließen kann."
+"Freundschaften schließen kann"
 
 #: worlds/templates/worlds/wiki_page_with_game_values.html:34
 msgid "MR"
@@ -5681,6 +5793,9 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:187
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid "Discord Dice Rolls"
+#~ msgstr "Discord Würfelwürfe"
 
 #~ msgid "All Items"
 #~ msgstr "Alle Gegenstände"
@@ -5924,9 +6039,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 #~ msgid "Player 2"
 #~ msgstr "Spieler 2"
 
-#~ msgid "Iterations"
-#~ msgstr "Iterationen"
-
 #~ msgid "Fight!"
 #~ msgstr "Kämpft!"
 
@@ -6147,9 +6259,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "I prefer to roll my own dice"
 #~ msgstr "Ich würfle lieber selbst"
-
-#~ msgid "Phase Six Core Rulebook"
-#~ msgstr "Phase Six Core Regelbuch"
 
 #~ msgid "Template Suffix"
 #~ msgstr "Templatesuffix"
@@ -6471,9 +6580,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 
 #~ msgid "Penetration"
 #~ msgstr "Durchschlag"
-
-#~ msgid "Display dice roll results"
-#~ msgstr "Würfelergebnisse anzeigen"
 
 #~ msgid "Logic"
 #~ msgstr "Logik"
