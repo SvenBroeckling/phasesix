@@ -1,30 +1,26 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const body = document.querySelector('body');
-    const pageModal = document.querySelector('#page-modal');
+$(function () {
+    let body = $('body')
+    let pageModal = $('#page-modal')
 
-    body.addEventListener('click', function (e) {
-        if (e.target.matches('.modal-trigger')) {
-            const modalDialog = document.querySelector('#page-modal .modal-dialog');
-            document.querySelector('.modal-header h5').textContent = e.target.dataset.modalTitle;
-            pageModal.dataset.url = e.target.dataset.url;
-            if (e.target.classList.contains('small-modal')) {
-                modalDialog.classList.remove('modal-xl');
-            } else {
-                modalDialog.classList.add('modal-xl');
-            }
-            document.querySelector('#sidebar-right').style.width = '';
+    body.on('click', '.modal-trigger', function (e) {
+        let modalDialog = $('#page-modal .modal-dialog')
+        $('.modal-header h5').text($(this).data('modal-title'))
+        pageModal.data('url', $(this).data('url'))
+        if ($(this).hasClass('small-modal')) {
+            modalDialog.removeClass('modal-xl')
+        } else {
+            modalDialog.addClass('modal-xl')
         }
-    });
+        $('#sidebar-right').css('width', '');
+    })
 
-    pageModal.addEventListener('shown.bs.modal', function (e) {
-        fetch(this.dataset.url)
-            .then(response => response.text())
-            .then(html => {
-                document.querySelector('.page-modal-container').innerHTML = html;
-            });
-    });
+    pageModal.on('shown.bs.modal', function (e) {
+        $('.page-modal-container').load(
+            $(this).data('url')
+        )
+    })
 
-    pageModal.addEventListener('hidden.bs.modal', function (e) {
-        document.querySelector('.page-modal-container').innerHTML = '';
-    });
-});
+    pageModal.on('hidden.bs.modal', function (e) {
+        $('.page-modal-container').html('')
+    })
+})
