@@ -1,21 +1,5 @@
 {% load i18n django_bootstrap5 %}
 
-<script>
-    $(function () {
-        $('.create-item-button').on('click', function (e) {
-            let form = $(this).closest('form')
-            $.post(
-                form.attr('action'),
-                form.serialize(),
-                function (data) {
-                    window.location.reload()
-                })
-            e.preventDefault()
-            return false
-        })
-    })
-</script>
-
 {% if parent %}
     <form action="{% url 'world:xhr_create_wiki_page' world_pk=world.id parent_pk=parent.id %}" method="post" enctype="multipart/form-data">
 {% else %}
@@ -29,7 +13,7 @@
             {% bootstrap_field form.name_en %}
             {% bootstrap_field form.text_de %}
             {% bootstrap_field form.text_en %}
-            <button class="btn btn-primary mt-1 create-item-button w-100" data-bs-dismiss="modal">{% trans 'Create Page' %}</button>
+            <button type="submit" class="btn btn-primary mt-1 create-item-button w-100" data-bs-dismiss="modal">{% trans 'Create Page' %}</button>
         </div>
     </div>
 </form>

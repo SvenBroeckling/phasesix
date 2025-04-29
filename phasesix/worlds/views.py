@@ -1,12 +1,14 @@
 import re
 
 import reversion
+from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import DetailView, TemplateView, ListView
+from django.views.generic import DetailView, TemplateView, ListView, CreateView
 
 from worlds.forms import WikiPageForm, WikiPageTextForm
 from worlds.models import World, WikiPage
@@ -72,41 +74,41 @@ class WikiPageEditTextView(DetailView):
             return self.render_to_response(context)
 
 
-class XhrCreateWikiPageView(TemplateView):
+class XhrCreateWikiPageView(CreateView):
     template_name = "worlds/create_wiki_page.html"
+    model = WikiPage
+    form_class = WikiPageForm
+
+    def get_success_url(self):
+        world = get_object_or_404(World, id=self.kwargs["world_pk"])
+        return reverse_lazy(
+            "worlds:wiki_page",
+            kwargs={"world_slug": world.slug, "slug": self.object.slug},
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["world"] = get_object_or_404(World, id=self.kwargs["world_pk"])
         if "parent_pk" in self.kwargs:
             context["parent"] = get_object_or_404(WikiPage, id=self.kwargs["parent_pk"])
-        context["form"] = WikiPageForm()
         return context
 
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         world = get_object_or_404(World, id=self.kwargs["world_pk"])
-
-        if not world.may_edit(request.user):
-            return JsonResponse(
-                {
-                    "error": _("You do not have permission to edit this world."),
-                    "status": "error",
-                }
-            )
+        if not world.may_edit(self.request.user):
+            messages.error(_("You do not have permission to edit this world."))
+            return HttpResponseRedirect(world.get_absolute_url())
 
         parent = None
         if "parent_pk" in self.kwargs:
             parent = get_object_or_404(WikiPage, id=self.kwargs["parent_pk"])
 
-        form = WikiPageForm(request.POST)
-        if form.is_valid():
-            page = form.save(commit=False)
-            page.created_by = request.user
-            page.world = world
-            page.parent = parent
-            page.save()
-            return JsonResponse({"status": "ok"})
-        return JsonResponse({"status": "error", "error": form.errors})
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.world = world
+        self.object.parent = parent
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class XhrSidebarView(DetailView):
