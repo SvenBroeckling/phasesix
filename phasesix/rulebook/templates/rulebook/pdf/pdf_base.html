@@ -1,9 +1,8 @@
-{% load rules_extras i18n static rulebook_extras %}
 <html lang="de">
 <head>
   <title>{{ world_book.book_title }}</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Oxanium:wght@200;300;400;500;600;700;800&family=UnifrakturMaguntia&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oxanium:wght@200..800&family=UnifrakturMaguntia&display=swap"
         rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css"
         rel="stylesheet"/>
@@ -110,21 +109,11 @@
           color: skyblue;
       }
   </style>
+  {% block extra_style %}
+  {% endblock %}
 </head>
 
 <body>
-{% include 'rulebook/book_title.html' %}
-
-{% for chapter in world_book.book.chapter_set.all %}
-  <div class="chapter" id="{{ chapter.identifier }}">
-    <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
-      &nbsp;
-    </div>
-    <h2>{{ chapter.name }}</h2>
-    <div class="chapter-text">
-      {{ chapter.text|replace_book_variables:world_book.world|phasesix_markup:False|resolve_rulebook_chapter_links:"pdf" }}
-    </div>
-  </div>
-{% endfor %}
+  {% block content %}{% endblock %}
 </body>
 </html>

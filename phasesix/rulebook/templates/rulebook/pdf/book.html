@@ -1,0 +1,29 @@
+{% extends "rulebook/pdf/pdf_base.html" %}
+
+{% load rules_extras %}
+{% load rulebook_extras %}
+
+{% block extra_style %}
+  <style>
+      @page {
+          @bottom-right {
+              content: counter(page);
+              margin-right: -0.7cm;
+          }
+      }
+  </style>
+{% endblock %}
+
+{% block content %}
+  {% for chapter in world_book.book.chapter_set.all %}
+    <div class="chapter" id="{{ chapter.identifier }}">
+      <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
+        &nbsp;
+      </div>
+      <h2>{{ chapter.name }}</h2>
+      <div class="chapter-text">
+        {{ chapter.text|replace_book_variables:world_book.world|phasesix_markup:False|resolve_rulebook_chapter_links:"pdf" }}
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

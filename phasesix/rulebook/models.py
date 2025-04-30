@@ -32,7 +32,7 @@ class WorldBook(models.Model, metaclass=TransMeta):
     BOOK_FONT_CHOICES = (
         ("Oxanium", "Oxanium"),
         ("UnifrakturMaguntia", "UnifrakturMaguntia"),
-        ("Baskervville", "Baskervville"),
+        ("Baskervville", "Libre Baskerville"),
     )
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     book = models.ForeignKey("rulebook.Book", on_delete=models.CASCADE)
@@ -68,60 +68,73 @@ class WorldBook(models.Model, metaclass=TransMeta):
         translate = "book_title", "book_claim"
 
     def render_pdf(self):
-        def generate_outline_str(bookmarks, indent=-3):
-            outline_str = ""
-            for i, (label, (page, _, _), children, status) in enumerate(bookmarks, 1):
-                if indent >= 0:  # Skip root node
-                    outline_str += (
-                        '<span style="margin-left: %dmm">%s</span><span style="float: right">%d</span><br>'
-                        % (
-                            indent,
-                            label.lstrip("0123456789. "),
-                            page + 3,  # 2 pages toc + cover
-                        )
-                    )
-                outline_str += generate_outline_str(children, indent + 3)
-            return outline_str
-
         for language_code, language_description in settings.LANGUAGES:
             activate(language_code)
-            book_html = render_to_string(
-                "rulebook/book_pdf.html",
-                {
-                    "world_book": self,
-                    "base_dir": settings.BASE_DIR,
-                },
-            )
-            font_config = FontConfiguration()
 
-            with open(f"/tmp/last_book_render_{language_code}.html", "w") as of:
-                of.write(book_html)
+            title = self._render_pdf_title(language_code)
+            document = self._render_pdf_content(language_code)
+            toc = self._render_pdf_toc(document, language_code)
 
-            document = HTML(string=book_html, base_url="src/").render()
-
-            table_of_contents_string = generate_outline_str(
-                document.make_bookmark_tree()
-            )
-            table_of_contents_html = render_to_string(
-                "rulebook/book_toc.html",
-                {
-                    "world_book": self,
-                    "base_dir": settings.BASE_DIR,
-                    "toc": table_of_contents_string,
-                },
-            )
-            table_of_contents_document = HTML(string=table_of_contents_html).render()
-            for page in reversed(table_of_contents_document.pages):
-                document.pages.insert(1, page)
+            for page in reversed(toc.pages):
+                document.pages.insert(0, page)
+            document.pages.insert(0, title.pages[0])
 
             buf = io.BytesIO()
+            font_config = FontConfiguration()
             document.write_pdf(buf, font_config=font_config)
             buf.seek(0)
+
             getattr(self, f"pdf_{language_code}").save(
                 f"book_pdf_{language_code}.pdf", buf
             )
+
             if settings.DEBUG:
+                import webbrowser
+
+                webbrowser.open(f"file://{getattr(self, f'pdf_{language_code}').path}")
                 print(f"{self} {getattr(self, f'pdf_{language_code}').path}")
+
+    def _render_pdf_title(self, language_code: str = "en"):
+        title_html = render_to_string(
+            "rulebook/pdf/title.html",
+            {
+                "world_book": self,
+            },
+        )
+        if settings.DEBUG:
+            with open(f"/tmp/last_title_render_{language_code}.html", "w") as of:
+                of.write(title_html)
+
+        return HTML(string=title_html, base_url="src/").render()
+
+    def _render_pdf_content(self, language_code: str = "en"):
+        book_html = render_to_string(
+            "rulebook/pdf/book.html",
+            {
+                "world_book": self,
+            },
+        )
+
+        if settings.DEBUG:
+            with open(f"/tmp/last_book_render_{language_code}.html", "w") as of:
+                of.write(book_html)
+
+        return HTML(string=book_html, base_url="src/").render()
+
+    def _render_pdf_toc(self, document, language_code: str = "en"):
+        table_of_contents_html = render_to_string(
+            "rulebook/pdf/toc.html",
+            {
+                "world_book": self,
+                "bookmark_tree": document.make_bookmark_tree(),
+            },
+        )
+
+        if settings.DEBUG:
+            with open(f"/tmp/last_toc_render_{language_code}.html", "w") as of:
+                of.write(table_of_contents_html)
+
+        return HTML(string=table_of_contents_html).render()
 
 
 class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):

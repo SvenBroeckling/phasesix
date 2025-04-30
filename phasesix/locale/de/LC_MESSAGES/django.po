@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 23:46+0000\n"
+"POT-Creation-Date: 2025-04-30 20:13+0000\n"
 "PO-Revision-Date: 2025-04-24 01:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -4857,13 +4857,13 @@ msgstr ""
 msgid "Top rolls"
 msgstr "Toppwürfe"
 
-#: rulebook/templates/rulebook/book_toc.html:111
-msgid "Table of contents"
-msgstr "Inhaltsverzeichnis"
-
 #: rulebook/templates/rulebook/chapter_detail.html:5
 msgid "Rulebook"
 msgstr "Regelbuch"
+
+#: rulebook/templates/rulebook/pdf/toc.html:10
+msgid "Table of contents"
+msgstr "Inhaltsverzeichnis"
 
 #: rules/models.py:15 rules/models.py:266
 msgid "max health"
@@ -5652,7 +5652,7 @@ msgid "Create Wiki Page"
 msgstr "Wikiseite erstellen"
 
 #: worlds/templates/worlds/_navigation.html:32
-#: worlds/templates/worlds/create_wiki_page.html:32
+#: worlds/templates/worlds/create_wiki_page.html:16
 msgid "Create Page"
 msgstr "Seite erstellen"
 
@@ -5714,12 +5714,17 @@ msgstr "Lade ein zusätzliches Bild hoch"
 msgid "Page image"
 msgstr "Seitenbild"
 
-#: worlds/templates/worlds/sidebar/sort_sub_pages.html:31
+#: worlds/templates/worlds/sidebar/sort_sub_pages.html:34
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                Sort sub pages by dragging them. They will automatically "
+#| "be saved.\n"
+#| "            "
 msgid ""
 "\n"
-"                Sort sub pages by dragging them. They will automatically be "
-"saved.\n"
-"            "
+"        Sort sub pages by dragging them. They will automatically be saved.\n"
+"      "
 msgstr ""
 "\n"
 "Sortiere Unterseiten durch ziehen. Sie werden automatisch gespeichert.\n"
@@ -5786,11 +5791,11 @@ msgstr ""
 msgid "MR"
 msgstr "MW"
 
-#: worlds/views.py:92
+#: worlds/views.py:99
 msgid "You do not have permission to edit this world."
 msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
-#: worlds/views.py:187
+#: worlds/views.py:189
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 

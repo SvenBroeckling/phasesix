@@ -1,3 +1,9 @@
+{% extends "rulebook/pdf/pdf_base.html" %}
+
+{% load rules_extras %}
+{% load rulebook_extras %}
+
+{% block content %}
 <div class="page title-page">
     <span></span>
     <h1>{{ world_book.book_title }}</h1>
@@ -5,3 +11,4 @@
         {{ world_book.book_claim }}
     </p>
 </div>
+{% endblock %}
