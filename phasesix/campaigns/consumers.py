@@ -13,13 +13,13 @@ from characters.dice import roll
 
 
 def _send_roll_link_to_channel(ctx, roll_string, header):
-    header_urlencoded = header.replace(" ", "%20")
+    header_urlencoded = header.replace(" ", "%20").replace(":", "%3A")
     async_to_sync(get_channel_layer().group_send)(
         ctx["ws_room_name"],
         {
             "type": "tale_spire_roll_link",
             "message": {
-                "url": f"talespire://dice/{header_urlencoded}/{roll_string}",
+                "url": f"talespire://dice/{header_urlencoded}:{roll_string}",
                 "character": ctx["character_name"],
             },
         },
