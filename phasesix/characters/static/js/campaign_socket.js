@@ -21,29 +21,33 @@ $(function () {
 
     socket.onmessage = (e) => {
         const data = JSON.parse(e.data)
-        const audioElement = document.getElementById('room-audio')
+        if (data.type === 'tale_spire_roll_link') {
+            console.log(data.message.url)
+            window.location = data.message.url
+        } else {
+            const audioElement = document.getElementById('room-audio')
+            let diceLogVisible = document.querySelector("#dice-log.show")
 
-        let diceLogVisible = document.querySelector("#dice-log.show")
+            if (!diceLogVisible) {
+                Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT)
+                Toast.setMaxCount(5)
+                Toast.create({
+                    title: data.message.character,
+                    message: `${data.message.header} <small class="text-muted">${data.message.description}</small><br>${data.message.result_html}`,
+                    status: TOAST_STATUS.SUCCESS,
+                    timeout: 5000,
+                })
+            }
 
-        if (!diceLogVisible) {
-            Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT)
-            Toast.setMaxCount(5)
-            Toast.create({
-                title: data.message.character,
-                message: `${data.message.header} <small class="text-muted">${data.message.description}</small><br>${data.message.result_html}`,
-                status: TOAST_STATUS.SUCCESS,
-                timeout: 5000,
-            })
+            let diceLogEntries = document.querySelector("#dice-log-entries")
+            if (diceLogEntries) {
+                let html = `${data.message.character} - ${data.message.header} ${data.message.result_html}<hr>`
+                diceLogEntries.innerHTML = html + diceLogEntries.innerHTML;
+                diceLogEntries.scrollTop = 0
+            }
+
+            audioElement.play()
         }
-
-        let diceLogEntries = document.querySelector("#dice-log-entries")
-        if (diceLogEntries) {
-            let html = `${data.message.character} - ${data.message.header} ${data.message.result_html}<hr>`
-            diceLogEntries.innerHTML = html + diceLogEntries.innerHTML;
-            diceLogEntries.scrollTop = 0
-        }
-
-        audioElement.play()
     }
 
     $('body').on('click', '.dice-roll', function (e) {
@@ -59,4 +63,3 @@ $(function () {
         socket.send(JSON.stringify(data))
     })
 })
-

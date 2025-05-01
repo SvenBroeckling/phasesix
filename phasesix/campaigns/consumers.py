@@ -9,6 +9,91 @@ from django.template.loader import render_to_string
 
 from campaigns.models import Campaign, Roll
 from campaigns.templatetags.campaign_extras import int_with_sign
+from characters.dice import roll
+
+
+def _send_roll_link_to_channel(ctx, roll_string, header):
+    header_urlencoded = header.replace(" ", "%20")
+    async_to_sync(get_channel_layer().group_send)(
+        ctx["ws_room_name"],
+        {
+            "type": "tale_spire_roll_link",
+            "message": {
+                "url": f"talespire://dice/{header_urlencoded}/{roll_string}",
+                "character": ctx["character_name"],
+            },
+        },
+    )
+
+
+def _send_to_channel(ctx, roll_obj):
+    async_to_sync(get_channel_layer().group_send)(
+        ctx["ws_room_name"],
+        {
+            "type": "dice_roll",
+            "message": {
+                "roll": roll_obj.roll_string,
+                "result_list": roll_obj.get_dice_list(),
+                "result_html": render_to_string(
+                    "campaigns/_dice_socket_results.html", {"roll": roll_obj}
+                ),
+                "header": roll_obj.header,
+                "description": roll_obj.description,
+                "character": ctx["character_name"],
+            },
+        },
+    )
+
+
+def _send_to_discord(roll_obj, character_name, character=None, campaign=None):
+    if not campaign or not campaign.discord_integration:
+        return
+
+    url = campaign.discord_webhook_url if campaign else None
+    if not url:
+        return
+
+    dice_result = ", ".join(str(r) for r in roll_obj.get_dice_list())
+    if roll_obj.modifier:
+        dice_result += int_with_sign(roll_obj.modifier)
+    dice_result += f" = {roll_obj.get_sum()}"
+
+    json_data = {
+        "content": f"**{roll_obj.header}** {dice_result}",
+        "username": character_name,
+    }
+    if roll_obj.description:
+        json_data["embeds"] = [{"description": roll_obj.description}]
+
+    if character:
+        json_data["avatar_url"] = f"{settings.BASE_URL}{character.get_image_url()}"
+    elif campaign:
+        json_data["avatar_url"] = f"{settings.BASE_URL}{campaign.get_image_url()}"
+
+    requests.post(url, json=json_data)
+
+
+def _get_roll_context(character_id, campaign_id, minimum_roll):
+    from characters.models import Character
+
+    if character_id:
+        character = Character.objects.get(id=character_id)
+        return {
+            "character": character,
+            "campaign": character.pc_or_npc_campaign,
+            "ws_room_name": character.ws_room_name,
+            "character_name": character.name,
+            "minimum_roll": minimum_roll or character.minimum_roll,
+        }
+
+    campaign = Campaign.objects.get(id=campaign_id)
+    return {
+        "character": None,
+        "campaign": campaign,
+        "ws_room_name": campaign.ws_room_name,
+        "character_name": campaign.name,
+        "minimum_roll": minimum_roll or 5,
+    }
 
 
 def roll_and_send(
@@ -19,98 +104,46 @@ def roll_and_send(
     campaign_id=None,
     save_to=None,
     minimum_roll=None,
-):
-    from characters.dice import roll
-    from characters.models import Character
-
-    channel_layer = get_channel_layer()
+) -> list[int] | None:
 
     if not character_id and not campaign_id:
         return []
 
-    if character_id:
-        character = Character.objects.get(id=character_id)
-        campaign = character.pc_or_npc_campaign
-        ws_room_name = character.ws_room_name
-        character_name = character.name
-        minimum_roll = minimum_roll or character.minimum_roll
-    else:
-        character = None
-        campaign = Campaign.objects.get(id=campaign_id)
-        ws_room_name = campaign.ws_room_name
-        character_name = campaign.name
-        minimum_roll = minimum_roll or 5
+    ctx = _get_roll_context(character_id, campaign_id, minimum_roll)
 
-    result = roll(roll_string)
+    if not ctx["campaign"] or ctx["campaign"].roll_on_site:
+        result = roll(roll_string)
+        roll_obj = Roll.objects.create(
+            campaign=ctx["campaign"],
+            character=ctx["character"],
+            header=header,
+            description=description,
+            roll_string=roll_string,
+            results_csv=",".join(str(i) for i in result["list"]),
+            modifier=result["modifier"],
+            minimum_roll=ctx["minimum_roll"],
+        )
 
-    roll = Roll.objects.create(
-        campaign=campaign,
-        character=character,
-        header=header,
-        description=description,
-        roll_string=roll_string,
-        results_csv=",".join(str(i) for i in result["list"]),
-        modifier=result["modifier"],
-        minimum_roll=minimum_roll,
-    )
+        if save_to == "initiative" and ctx["character"]:
+            ctx["character"].latest_initiative = roll_obj.get_sum()
+            ctx["character"].save()
 
-    result_html = render_to_string(
-        "campaigns/_dice_socket_results.html",
-        {
-            "roll": roll,
-        },
-    )
+        _send_to_channel(ctx, roll_obj)
+        _send_to_discord(
+            roll_obj, ctx["character_name"], ctx["character"], ctx["campaign"]
+        )
+        return roll_obj.get_dice_list()
 
-    if save_to is not None and character is not None:
-        if save_to == "initiative":
-            character.latest_initiative = roll.get_sum()
-            character.save()
+    if ctx["campaign"] and ctx["campaign"].tale_spire_integration:
+        _send_roll_link_to_channel(ctx, roll_string, header)
 
-    async_to_sync(channel_layer.group_send)(
-        ws_room_name,
-        {
-            "type": "dice_roll",
-            "message": {
-                "roll": roll.roll_string,
-                "result_list": roll.get_dice_list(),
-                "result_html": result_html,
-                "header": roll.header,
-                "description": roll.description,
-                "character": character_name,
-            },
-        },
-    )
-
-    url = campaign.discord_webhook_url if campaign is not None else None
-    if url is not None:
-        dice_result = ", ".join(str(r) for r in roll.get_dice_list())
-        if roll.modifier:
-            dice_result += int_with_sign(roll.modifier)
-        dice_result += f" = {roll.get_sum()}"
-
-        json_data = {
-            "content": f"**{header}** {dice_result}",
-            "username": character_name,
-        }
-        if roll.description:
-            json_data["embeds"] = [{"description": roll.description}]
-
-        if character:
-            json_data["avatar_url"] = f"{settings.BASE_URL}{character.get_image_url()}"
-        elif campaign:
-            json_data["avatar_url"] = f"{settings.BASE_URL}{campaign.get_image_url()}"
-
-        requests.post(url, json=json_data)
-
-    return roll.get_dice_list()
+    return None
 
 
 class DiceConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-
         async_to_sync(self.channel_layer.group_add)(self.room_name, self.channel_name)
-
         self.accept()
 
     def disconnect(self, code):
@@ -132,4 +165,7 @@ class DiceConsumer(WebsocketConsumer):
 
     # group receive
     def dice_roll(self, event):
+        self.send(text_data=json.dumps(event))
+
+    def tale_spire_roll_link(self, event):
         self.send(text_data=json.dumps(event))
