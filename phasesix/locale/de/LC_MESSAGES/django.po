@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-30 20:13+0000\n"
-"PO-Revision-Date: 2025-04-24 01:50+0200\n"
+"POT-Creation-Date: 2025-05-07 17:16+0000\n"
+"PO-Revision-Date: 2025-05-07 19:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #: armory/admin.py:67 armory/admin.py:135 armory/admin.py:200
 #: body_modifications/admin.py:97 homebrew/templates/homebrew/index.html:6
@@ -5153,7 +5153,7 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"\t\t\tDein Konto ist jetzt aktiv.\\ "
+"\t\t\tDein Konto ist jetzt aktiv."
 
 #: templates/django_registration/activation_complete.html:21
 #: templates/django_registration/activation_failed.html:22
@@ -5207,6 +5207,11 @@ msgstr ""
 "\t\t\tVersuch dich noch einmal zu registrieren\n"
 " "
 
+#: templates/django_registration/activation_form.html:9
+#: templates/django_registration/activation_form.html:15
+msgid "Activate account"
+msgstr "Konto aktivieren"
+
 #: templates/django_registration/registration_complete.html:15
 msgid ""
 "\n"
@@ -5219,7 +5224,7 @@ msgstr ""
 "\t\t\t\tDeine Registrierung ist fast abgeschlossen. Schau in deinem Postfach "
 "nach einer \n"
 "\t\t\t\tAktivierungsmail und benutze den Link darin um dein Konto zu "
-"aktivieren.\\ "
+"aktivieren."
 
 #: templates/django_registration/registration_form.html:4
 #: templates/django_registration/registration_form.html:5
@@ -5715,12 +5720,6 @@ msgid "Page image"
 msgstr "Seitenbild"
 
 #: worlds/templates/worlds/sidebar/sort_sub_pages.html:34
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                Sort sub pages by dragging them. They will automatically "
-#| "be saved.\n"
-#| "            "
 msgid ""
 "\n"
 "        Sort sub pages by dragging them. They will automatically be saved.\n"
