@@ -1,90 +1,113 @@
 {% extends 'campaigns/fragments/fragment_base.html' %}
+{% load portal_extras %}
 {% load i18n thumbnail static characters_extras campaign_extras %}
 
 {% block fragment %}
-  <div class="table-responsive">
-    <table class="table campaign-status-sortable">
-      <thead>
-      <tr class="pointer">
-        <th>{% trans 'Character' %}</th>
-        <th class="data column-player">{% trans 'Player' %}</th>
-        <th class="data column-wounds">{% trans 'Latest Initiative' %}</th>
-        <th class="data column-wounds">{% trans 'Wounds' %}</th>
-        <th class="data column-status">{% trans 'Status' %}</th>
-        <th class="data column-arcana">{% trans 'Arcana' %}</th>
-        <th class="data column-stress">{% trans 'Stress' %}</th>
-        <th class="data column-dice">{% trans 'Dice' %}</th>
-      </tr>
-      </thead>
-      <tbody>
+  <div class="campaign-characters mb-3">
+    <h2>{% trans "Player characters" %}</h2>
+    <div class="d-flex justify-content-start flex-wrap">
       {% for c in object.character_set.all %}
-        <tr class="sidebar-trigger sidebar-spinner" data-sidebar-title="{{ c }}"
-            data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
-          <td class="column-dice">
-            {{ c }}
-          </td>
-          <td class="column-player">{{ c.created_by }}</td>
-          <td>{{ c.latest_initiative }}</td>
-
-          <td class="column-wounds">
-            <span class="sort-key d-none">{{ c.health|add:c.boost }}</span>
-            {% for i in c.health|to_range %}
-              <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
-            {% endfor %}
-            {% for i in c.wounds_taken|to_range %}
-              <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
-            {% endfor %}
-            {% for i in c.boost|to_range %}
-              <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
-            {% endfor %}
-          </td>
-
-          <td class="character-status">
-            <span class="sort-key d-none">{{ c.characterstatuseffect_set.count }}</span>
-            {% for cse in c.characterstatuseffect_set.all %}
-              {% for v in cse.value|to_range %}
-                <i title="{{ cse }}: {{ cse.value }}" class="{{ cse.status_effect.fa_icon_class }}"></i>
-              {% endfor %}
-            {% endfor %}
-          </td>
-
-          <td class="column-arcana">
-            <span class="sort-key d-none">{{ c.arcana }}</span>
-            {% for i in c.arcana|to_range %}
-              <i class="gi-lorc-fairy-wand text-warning"></i>
-            {% endfor %}
-            {% for i in c.arcana_used|to_range %}
-              <i class="gi-lorc-fairy-wand text-muted"></i>
-            {% endfor %}
-          </td>
-
-          <td class="column-stress">
-            <span class="sort-key d-none">{{ c.stress }}</span>
-            {% if c.extension_enabled.horror %}
-              {% for i in c.stress|to_range %}
-                <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
-              {% endfor %}
-              {% for i in c.available_stress|to_range %}
-                <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
-              {% endfor %}
-            {% endif %}
-          </td>
-
-          <td class="column-dice">
-            <span class="sort-key d-none">{{ c.bonus_dice_free|add:c.destiny_dice_free|add:c.rerolls_free }}</span>
-            {% for i in c.bonus_dice_free|to_range %}
-              <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Die' %}"></i>
-            {% endfor %}
-            {% for i in c.destiny_dice_free|to_range %}
-              <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Die' %}"></i>
-            {% endfor %}
-            {% for i in c.rerolls_free|to_range %}
-              <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Reroll' %}"></i>
-            {% endfor %}
-          </td>
-        </tr>
+        <a href=""
+           data-sidebar-title="{{ c }}"
+           data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
+           class="sidebar-trigger sidebar-spinner mb-2 me-2">
+          <div class="position-relative">
+            <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
+                 class="img-fluid object-fit-cover">
+            <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
+                 style="background: rgba(0,0,0,0.7);">
+              <span class="text-white">{{ c }}</span>
+            </div>
+          </div>
+        </a>
       {% endfor %}
-      </tbody>
-    </table>
+
+      {% if may_edit %}
+        <a href="{{ object.invite_link }}" class="campaign-link" data-msg="{% trans "Invite link copied" %}">
+          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+               style="width: 200px; height: 200px">
+            <i class="fas fa-plus fa-2x"></i>
+            <span class="invite-text">{% trans "Invite Player" %}</span>
+          </div>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="campaign-characters mb-3">
+    <h2 class="mt-4">{% trans "NPC" %}</h2>
+    <div class="d-flex justify-content-start flex-wrap">
+      {% for c in object.npc_set.all %}
+        <a href=""
+           data-sidebar-title="{{ c }}"
+           data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
+           class="sidebar-trigger sidebar-spinner mb-2 me-2">
+          <div class="position-relative">
+            <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
+                 class="img-fluid object-fit-cover">
+            <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
+                 style="background: rgba(0,0,0,0.7);">
+              <span class="text-white">{{ c }}</span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+
+      {% if may_edit %}
+        <a
+          href="{% url 'characters:create_random_npc' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
+          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+               style="width: 200px; height: 200px">
+            <i class="fas fa-plus fa-2x"></i>
+            <span class="invite-text">{% trans "Create random npc" %}</span>
+          </div>
+        </a>
+        <a
+          href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
+          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+               style="width: 200px; height: 200px">
+            <i class="fas fa-plus fa-2x"></i>
+            <span class="invite-text">{% trans "Create npc" %}</span>
+          </div>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="campaign-characters mb-3">
+    <h2 class="mt-4">{% trans "Foes" %}</h2>
+    <div class="d-flex justify-content-start flex-wrap">
+      {% for f in object.foe_set.all %}
+        {% with wiki_page=f.wiki_page %}
+          <a href=""
+             data-sidebar-title="{{ f.wiki_page }}"
+             data-sidebar-url="{% url 'campaigns:xhr_foe_sidebar' pk=f.id sidebar_template="foe" %}"
+             class="sidebar-trigger sidebar-spinner mb-2 me-2">
+            <div class="position-relative">
+              <img src="{% image_url wiki_page geometry="200x200" crop="center" %}" alt="{{ c }}"
+                   class="img-fluid object-fit-cover">
+              <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
+                   style="background: rgba(0,0,0,0.7);">
+                <span class="text-white">{{ f.wiki_page }}</span>
+              </div>
+            </div>
+          </a>
+        {% endwith %}
+      {% endfor %}
+
+      {% if may_edit %}
+        <a
+          href=""
+          class="sidebar-trigger"
+          data-sidebar-url="{% url 'campaigns:xhr_search_foe' pk=object.id %}"
+          data-sidebar-title="{% trans "Search foe" %}">
+          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+               style="width: 200px; height: 200px">
+            <i class="fas fa-plus fa-2x"></i>
+            <span class="invite-text">{% trans "Add foe" %}</span>
+          </div>
+        </a>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}

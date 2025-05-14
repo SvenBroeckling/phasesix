@@ -65,14 +65,14 @@ class Campaign(models.Model):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     is_favorite = models.BooleanField(_("is favorite"), default=False)
 
-    epoch = models.ForeignKey(
+    epoch_extension = models.ForeignKey(
         "rules.Extension",
         limit_choices_to={"type": "e", "is_mandatory": False},
         on_delete=models.CASCADE,
         related_name="campaign_epoch_set",
         verbose_name=_("Epoch"),
     )
-    world = models.ForeignKey(
+    world_extension = models.ForeignKey(
         "rules.Extension",
         limit_choices_to={"type": "w", "is_mandatory": False},
         on_delete=models.CASCADE,
@@ -184,9 +184,9 @@ class Campaign(models.Model):
         )
 
     def get_backdrop_image_url(self, geometry="600x160", crop="center"):
-        image = self.epoch.image
-        if self.world.image:
-            image = self.world.image
+        image = self.epoch_extension.image
+        if self.world_extension.image:
+            image = self.world_extension.image
         if self.backdrop_image:
             image = self.backdrop_image
 

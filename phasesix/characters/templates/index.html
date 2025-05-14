@@ -190,7 +190,7 @@
           </div>
 
           {% for world in worlds %}
-            <div class="col-12 col-md-6 col-xl-4 {% if forloop.last %}d-none d-xl-block{% endif %}">
+            <div class="col-12 col-md-6 col-xl-4 mb-2 {% if forloop.last %}d-none d-xl-block{% endif %}">
               <div class="card mb-2 mb-md-0">
                 <img src="{{ world.get_image.image.url }}" alt="{{ world }}" class="card-img-top">
                 <div class="card-body">

@@ -191,10 +191,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "de"
-
 gettext = lambda s: s  # dummy ugettext function, as django's docs say
 
+LANGUAGE_CODE = "de"
 LANGUAGES = (
     ("de", gettext("German")),
     ("en", gettext("English")),

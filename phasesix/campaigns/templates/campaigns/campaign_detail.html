@@ -40,40 +40,28 @@
 
     <div class="col-12 col-xl-9">
       <div class="tab-content">
-        <div class="tab-pane fade show active" id="v-characters" role="tabpanel">
-          {% campaign_fragment 'campaign' %}
-        </div>
-
-        <div class="tab-pane fade" id="v-settings" role="tabpanel">
-          {% campaign_fragment 'settings' %}
-        </div>
-
-        <div class="tab-pane fade show" id="v-status" role="tabpanel">
+        <div class="tab-pane fade active show" id="v-status" role="tabpanel">
           {% campaign_fragment 'status' %}
-        </div>
-
-        <div class="tab-pane fade show" id="v-npc" role="tabpanel">
-          {% campaign_fragment 'npc' %}
-        </div>
-
-        <div class="tab-pane fade show" id="v-foes" role="tabpanel">
-          {% campaign_fragment 'foes' %}
         </div>
 
         <div hx-get="{% url 'campaigns:xhr_game_log' campaign_pk=object.id %}"
              hx-trigger="click from:a.navigation-link"
              hx-target="this"
-             class="tab-pane fade show"
+             class="tab-pane fade"
              id="v-game-log"
              role="tabpanel">
         </div>
 
-        <div class="tab-pane fade show" id="v-homebrew" role="tabpanel">
+        <div class="tab-pane fade" id="v-homebrew" role="tabpanel">
           {% campaign_fragment 'homebrew' %}
         </div>
 
-        <div class="tab-pane fade show" id="v-statistics" role="tabpanel">
+        <div class="tab-pane fade" id="v-statistics" role="tabpanel">
           {% campaign_fragment 'statistics' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-settings" role="tabpanel">
+          {% campaign_fragment 'settings' %}
         </div>
       </div>
 

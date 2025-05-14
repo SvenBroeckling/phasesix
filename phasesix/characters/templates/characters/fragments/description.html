@@ -13,7 +13,7 @@
       {% endblocktrans %}
 
       {% if object.weight and object.size %}
-        {% blocktrans with t_copula_verb=object.pronoun.copula_verb t_pronoun=object.pronoun.nominative|capfirst t_size=object.size t_weight=object.weight t_size_unit=object.world.world_set.first.info_name_cm|default:"cm" t_weight_unit=object.world.world_set.first.info_name_kg|default:"kg" %}
+        {% blocktrans with t_copula_verb=object.pronoun.copula_verb t_pronoun=object.pronoun.nominative|capfirst t_size=object.size t_weight=object.weight t_size_unit=object.world_extension.world_set.first.info_name_cm|default:"cm" t_weight_unit=object.world.world_set.first.info_name_kg|default:"kg" %}
           {{ t_pronoun }} {{ t_copula_verb }} <b>{{ t_size }}</b>&nbsp;{{ t_size_unit }} tall and weigh
           <b>{{ t_weight }}</b>&nbsp;{{ t_weight_unit }}.
         {% endblocktrans %}

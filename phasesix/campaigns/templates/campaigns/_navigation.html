@@ -2,63 +2,15 @@
 {% load portal_extras %}
 <div class="list-group mb-3">
 
-  <a class="active navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-characters"
-     role="tab"
-     aria-current="true">
-    <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-image"></i>
-      <span class="ms-3 d-block d-lg-block">{% trans "Campaign" %}</span>
-    </div>
-  </a>
-
-  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-settings"
-     role="tab"
-     aria-current="true">
-    <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-edit"></i>
-      <span class="ms-3 d-block d-lg-block">{% trans "Settings" %}</span>
-    </div>
-  </a>
-
   {% if may_edit or object.character_visibility == 'A' %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    <a class="py-3 navigation-link active pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
        data-bs-toggle="tab"
        data-bs-target="#v-status"
        role="tab"
        aria-current="false">
       <div class="d-flex justify-content-center align-items-center">
         <i class="fas fa-user-alt"></i>
-        <span class="ms-3 d-block d-lg-block">{% trans "Status" %}</span>
-      </div>
-    </a>
-  {% endif %}
-
-  {% if may_edit or object.npc_visibility == 'A' %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       data-bs-toggle="tab"
-       data-bs-target="#v-npc"
-       role="tab"
-       aria-current="false">
-      <div class="d-flex justify-content-center align-items-center">
-        <i class="fas fa-user"></i>
-        <span class="ms-3 d-block d-lg-block">{% trans "NPC" %}</span>
-      </div>
-    </a>
-  {% endif %}
-
-  {% if may_edit or object.foe_visibility == 'A' %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       data-bs-toggle="tab"
-       data-bs-target="#v-foes"
-       role="tab"
-       aria-current="false">
-      <div class="d-flex justify-content-center align-items-center">
-        <i class="fas fa-bullseye"></i>
-        <span class="ms-3 d-block d-lg-block">{% trans "Foes" %}</span>
+        <span class="ms-3 d-block d-lg-block">{% trans "Dramatis Personae" %}</span>
       </div>
     </a>
   {% endif %}
@@ -97,6 +49,18 @@
       <span class="ms-3 d-block d-lg-block">{% trans "Statistics" %}</span>
     </div>
   </a>
+
+  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+     data-bs-toggle="tab"
+     data-bs-target="#v-settings"
+     role="tab"
+     aria-current="true">
+    <div class="d-flex justify-content-center align-items-center">
+      <i class="fas fa-edit"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Settings" %}</span>
+    </div>
+  </a>
+
 </div>
 
 {% if may_edit %}

@@ -1,3 +1,4 @@
+{% load portal_extras %}
 {% load i18n thumbnail static characters_extras %}
 
 {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
@@ -43,17 +44,60 @@
   <div class="tab-pane fade show active" id="cs-edit" role="tabpanel">
     <div class="row">
       <div class="col-12 mb-3 mt-2">
-        {% if object.image %}
-          {% thumbnail object.image "600x600" crop="center" as im %}
-            <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
-          {% endthumbnail %}
-        {% else %}
-          <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
-               alt="{{ object.name }}">
-        {% endif %}
+        <img src="{% image_url object geometry="600x600" crop="center" %}" alt="{{ c }}"
+             class="rounded img-fluid object-fit-cover">
       </div>
     </div>
 
+    <div class="row">
+
+      <div class="col-12">
+        <span class="sort-key d-none">{{ object.health|add:object.boost }}</span>
+        {% for i in object.health|to_range %}
+          <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
+        {% endfor %}
+        {% for i in object.wounds_taken|to_range %}
+          <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+        {% endfor %}
+        {% for i in object.boost|to_range %}
+          <i class="fas fa-heart text-info" title="{% trans 'Boost' %}"></i>
+        {% endfor %}
+      </div>
+
+      <div class="col-12">
+        <span class="sort-key d-none">{{ object.arcana }}</span>
+        {% for i in object.arcana|to_range %}
+          <i class="gi-lorc-fairy-wand text-warning"></i>
+        {% endfor %}
+        {% for i in object.arcana_used|to_range %}
+          <i class="gi-lorc-fairy-wand text-muted"></i>
+        {% endfor %}
+      </div>
+
+      <div class="col-12">
+        {% if object.extension_enabled.horror %}
+          {% for i in object.stress|to_range %}
+            <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
+          {% endfor %}
+          {% for i in object.available_stress|to_range %}
+            <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="col-12">
+        {% for i in object.bonus_dice_free|to_range %}
+          <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Die' %}"></i>
+        {% endfor %}
+        {% for i in object.destiny_dice_free|to_range %}
+          <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Die' %}"></i>
+        {% endfor %}
+        {% for i in object.rerolls_free|to_range %}
+          <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Reroll' %}"></i>
+        {% endfor %}
+      </div>
+
+    </div>
 
     <div class="row">
       {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
