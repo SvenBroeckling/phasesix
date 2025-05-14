@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-07 17:16+0000\n"
-"PO-Revision-Date: 2025-05-07 19:17+0200\n"
+"POT-Creation-Date: 2025-05-14 22:58+0000\n"
+"PO-Revision-Date: 2025-05-15 00:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -582,7 +582,7 @@ msgstr "Material"
 
 #: armory/templates/armory/_navigation.html:33
 #: armory/templates/armory/material_overview.html:12
-#: campaigns/templates/campaigns/_navigation.html:61
+#: campaigns/templates/campaigns/fragments/status.html:78
 #: characters/templates/base.html:147
 #: worlds/templates/worlds/wiki_page_with_game_values.html:5
 #: worlds/templates/worlds/wiki_page_with_game_values.html:7
@@ -600,7 +600,7 @@ msgstr "Schablonen"
 #: armory/templates/armory/material_overview.html:34 armory/views.py:38
 #: characters/templates/base.html:158
 #: characters/templates/characters/fragments/gear.html:48
-#: phasesix/settings.py:279
+#: phasesix/settings.py:278
 msgid "Items"
 msgstr "Gegenstände"
 
@@ -608,7 +608,7 @@ msgstr "Gegenstände"
 #: armory/templates/armory/material_overview.html:45 armory/views.py:14
 #: characters/templates/base.html:157
 #: characters/templates/characters/fragments/gear.html:31
-#: gmtools/templates/gmtools/roll_statistics.html:21 phasesix/settings.py:294
+#: gmtools/templates/gmtools/roll_statistics.html:21 phasesix/settings.py:293
 msgid "Weapons"
 msgstr "Waffen"
 
@@ -622,7 +622,7 @@ msgstr "Rüstung"
 #: armory/templates/armory/_navigation.html:78
 #: armory/templates/armory/material_overview.html:67
 #: characters/templates/base.html:159
-#: gmtools/templates/gmtools/roll_statistics.html:27 phasesix/settings.py:318
+#: gmtools/templates/gmtools/roll_statistics.html:27 phasesix/settings.py:317
 #: worlds/templates/worlds/wiki_page_detail.html:106
 msgid "Spells"
 msgstr "Zauber"
@@ -684,7 +684,7 @@ msgstr "Preis"
 #: characters/templates/characters/_navigation.html:78
 #: characters/templates/characters/fragments/body_modifications.html:21
 #: characters/templates/characters/sidebar/biostrain.html:8
-#: phasesix/settings.py:306
+#: phasesix/settings.py:305
 msgid "Body Modifications"
 msgstr "Körpermodifikationen"
 
@@ -805,8 +805,8 @@ msgstr "Dinge die du in deinen Körper integrieren kannst"
 
 #: campaigns/forms.py:13
 #: campaigns/templates/campaigns/fragments/settings.html:30
-#: characters/forms.py:29 characters/forms.py:66 phasesix/settings.py:301
-#: phasesix/settings.py:335
+#: characters/forms.py:29 characters/forms.py:66 phasesix/settings.py:300
+#: phasesix/settings.py:334
 msgid "Extensions"
 msgstr "Erweiterungen"
 
@@ -917,14 +917,14 @@ msgstr "Spielprotokollsichtbarkeit"
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:140 campaigns/templates/campaigns/_navigation.html:12
-#: characters/models.py:148 homebrew/templates/homebrew/index.html:15
+#: campaigns/models.py:140 characters/models.py:148
+#: homebrew/templates/homebrew/index.html:15
 #: worlds/templates/worlds/_add_to_campaign.html:7
 msgid "Campaign"
 msgstr "Kampagne"
 
 #: campaigns/models.py:141 characters/templates/_main_nav.html:157
-#: phasesix/settings.py:267 portal/templates/portal/_navigation.html:33
+#: phasesix/settings.py:266 portal/templates/portal/_navigation.html:33
 msgid "Campaigns"
 msgstr "Kampagnen"
 
@@ -1003,36 +1003,32 @@ msgstr "Von Favoriten entfernen"
 msgid "Add to favorites"
 msgstr "Zu Favoriten hinzufügen"
 
-#: campaigns/templates/campaigns/_navigation.html:23
-msgid "Settings"
-msgstr "Einstellungen"
+#: campaigns/templates/campaigns/_navigation.html:12
+msgid "Dramaturgy"
+msgstr "Dramaturgie"
 
-#: campaigns/templates/campaigns/_navigation.html:35
-#: campaigns/templates/campaigns/fragments/npc.html:12
-#: campaigns/templates/campaigns/fragments/status.html:13
-msgid "Status"
-msgstr "Status"
+#: campaigns/templates/campaigns/_navigation.html:24
+msgid "Dramatis Personae"
+msgstr "Dramatis Personae"
 
-#: campaigns/templates/campaigns/_navigation.html:48
-#: campaigns/templates/campaigns/fragments/npc.html:9
-#: portal/templates/portal/_navigation.html:22
-msgid "NPC"
-msgstr "NSC"
-
-#: campaigns/templates/campaigns/_navigation.html:74
-msgid "Game Log"
-msgstr "Spielprotokoll"
-
-#: campaigns/templates/campaigns/_navigation.html:86
+#: campaigns/templates/campaigns/_navigation.html:36
 msgid "Custom Items"
 msgstr "Individuelle Gegenstände"
 
-#: campaigns/templates/campaigns/_navigation.html:97
+#: campaigns/templates/campaigns/_navigation.html:48
+msgid "Dice log"
+msgstr "Würfelprotokoll"
+
+#: campaigns/templates/campaigns/_navigation.html:60
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: campaigns/templates/campaigns/_navigation.html:111
-#: campaigns/templates/campaigns/sidebar/foe.html:57
+#: campaigns/templates/campaigns/_navigation.html:71
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: campaigns/templates/campaigns/_navigation.html:86
+#: campaigns/templates/campaigns/sidebar/foe.html:101
 #: characters/templates/characters/sidebar/attribute.html:31
 #: characters/templates/characters/sidebar/body_modification.html:56
 #: characters/templates/characters/sidebar/body_modification.html:72
@@ -1138,277 +1134,6 @@ msgstr "Wähle Erweiterungen"
 #: characters/templates/characters/dice_log.html:4
 msgid "GM"
 msgstr "SL"
-
-#: campaigns/templates/campaigns/fragments/campaign.html:16
-msgid ""
-"You have been invited to join this campaign. Create a new character to join "
-"the campaign."
-msgstr ""
-"Du wurdest eingeladen, dieser Kampagne beizutreten. Erstelle einen neuen "
-"Charakter, um beizutreten."
-
-#: campaigns/templates/campaigns/fragments/campaign.html:18
-#: campaigns/templates/campaigns/fragments/campaign.html:21
-msgid "Join campaign"
-msgstr "Kampagne beitreten"
-
-#: campaigns/templates/campaigns/fragments/campaign.html:30
-msgid "Players"
-msgstr "Spieler"
-
-#: campaigns/templates/campaigns/fragments/campaign.html:43
-msgid "Invite link copied"
-msgstr "Einladungslink kopiert"
-
-#: campaigns/templates/campaigns/fragments/campaign.html:47
-msgid "Invite Player"
-msgstr "Spieler einladen"
-
-#: campaigns/templates/campaigns/fragments/foes.html:9
-#: worlds/templates/worlds/_game_values.html:5
-#: worlds/templates/worlds/wiki_page_with_game_values.html:27
-msgid "Foe"
-msgstr "Gegner"
-
-#: campaigns/templates/campaigns/fragments/foes.html:10
-#: campaigns/templates/campaigns/fragments/npc.html:11
-#: campaigns/templates/campaigns/fragments/status.html:12
-#: characters/templates/characters/fragments/status.html:7
-#: characters/templates/characters/fragments/status.html:10
-#: characters/templates/characters/modals/rest.html:18
-#: characters/templates/characters/pdf/boxes/overview/health.html:4
-#: worlds/templates/worlds/_game_values.html:10
-msgid "Wounds"
-msgstr "Wunden"
-
-#: campaigns/templates/campaigns/fragments/foes.html:11
-#: characters/templates/characters/fragments/status.html:17
-#: characters/templates/characters/fragments/status.html:20
-#: characters/templates/characters/pdf/boxes/gear/armour.html:12
-#: characters/templates/characters/pdf/boxes/overview/protection.html:4
-#: characters/templates/characters/sidebar/riot_gear.html:75
-#: worlds/templates/worlds/_game_values.html:14
-#: worlds/templates/worlds/wiki_page_with_game_values.html:31
-msgid "Protection"
-msgstr "Schutz"
-
-#: campaigns/templates/campaigns/fragments/foes.html:12
-#: campaigns/templates/campaigns/fragments/npc.html:13
-#: campaigns/templates/campaigns/fragments/status.html:14
-#: characters/templates/characters/fragments/magic.html:10
-#: characters/templates/characters/includes/character_spell_cards.html:27
-#: characters/templates/characters/modals/rest.html:33
-#: characters/templates/characters/pdf/boxes/magic/spells.html:22
-#: characters/templates/characters/pdf/boxes/overview/arcana.html:5
-#: characters/templates/characters/sidebar/magic.html:33
-#: characters/templates/characters/sidebar/spell.html:38
-#: magic/templates/magic/_basespell_widget.html:23
-#: magic/templates/magic/basespell_detail.html:39
-#: worlds/templates/worlds/_game_values.html:18
-#: worlds/templates/worlds/wiki_page_with_game_values.html:30
-msgid "Arcana"
-msgstr "Arkana"
-
-#: campaigns/templates/campaigns/fragments/foes.html:13
-#: characters/templates/characters/_navigation.html:12
-#: characters/templates/characters/fragments/combat.html:175
-#: characters/templates/characters/includes/character_spell_cards.html:32
-#: characters/templates/characters/pdf/boxes/magic/spells.html:39
-#: characters/templates/characters/pdf/boxes/overview/actions.html:3
-#: characters/templates/characters/pdf/boxes/overview/combat.html:94
-#: characters/templates/characters/sidebar/spell.html:76
-#: magic/templates/magic/_basespell_widget.html:27
-#: magic/templates/magic/basespell_detail.html:43
-#: worlds/templates/worlds/_game_values.html:22
-#: worlds/templates/worlds/wiki_page_with_game_values.html:32
-msgid "Actions"
-msgstr "Aktionen"
-
-#: campaigns/templates/campaigns/fragments/foes.html:14
-#: worlds/templates/worlds/_game_values.html:34
-msgid "Perception"
-msgstr "Wahrnehmung"
-
-#: campaigns/templates/campaigns/fragments/foes.html:15
-msgid "Walking Range"
-msgstr "Bewegungsreichweite"
-
-#: campaigns/templates/campaigns/fragments/foes.html:16
-#: characters/templates/characters/_navigation.html:18
-#: characters/templates/characters/_navigation.html:19
-#: characters/templates/characters/pdf/boxes/overview/dice.html:6
-#: worlds/templates/worlds/_game_values.html:26
-#: worlds/templates/worlds/wiki_page_with_game_values.html:34
-msgid "Minimum Roll"
-msgstr "Mindestwurf"
-
-#: campaigns/templates/campaigns/fragments/foes.html:43
-msgid "Search foe"
-msgstr "Gegner suchen"
-
-#: campaigns/templates/campaigns/fragments/foes.html:44
-msgid "Add foe"
-msgstr "Gegner hinzufügen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:14
-msgid "Create custom object"
-msgstr "Individuellen Gegenstand erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:22
-msgid "Create Item"
-msgstr "Gegenstand erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:23
-msgid "Create custom item"
-msgstr "Individuellen Gegenstand erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:30
-msgid "Create Weapon"
-msgstr "Waffe erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:31
-msgid "Create custom weapon"
-msgstr "Individuelle Waffe erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:38
-msgid "Create Armor"
-msgstr "Rüstung anlegen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:39
-msgid "Create custom armor"
-msgstr "Individuelle Rüstung erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:46
-msgid "Create Spell"
-msgstr "Zauber erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:47
-msgid "Create custom spell"
-msgstr "Individuellen Zauber erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:54
-msgid "Create Template"
-msgstr "Charakterschablone erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:55
-msgid "Create custom template"
-msgstr "Individuelle Charakterschablone erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:62
-msgid "Create Quirk"
-msgstr "Tick erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:63
-msgid "Create custom quirk"
-msgstr "Individuellen Tick erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:70
-msgid "Create Language"
-msgstr "Sprache erstellen"
-
-#: campaigns/templates/campaigns/fragments/homebrew.html:71
-msgid "Create custom language"
-msgstr "Individuelle Sprache erstellen"
-
-#: campaigns/templates/campaigns/fragments/npc.html:10
-#: campaigns/templates/campaigns/fragments/status.html:11
-msgid "Latest Initiative"
-msgstr "Letzte Initiative"
-
-#: campaigns/templates/campaigns/fragments/npc.html:14
-#: campaigns/templates/campaigns/fragments/npc.html:63
-#: campaigns/templates/campaigns/fragments/status.html:15
-#: campaigns/templates/campaigns/fragments/status.html:65
-#: characters/templates/characters/fragments/horror.html:7
-#: characters/templates/characters/fragments/horror.html:10
-#: characters/templates/characters/fragments/horror.html:19
-#: characters/templates/characters/modals/rest.html:25
-#: characters/templates/characters/pdf/boxes/overview/horror.html:8
-#: characters/templates/characters/sidebar/horror.html:27
-#: characters/templates/characters/sidebar/horror.html:37
-#: worlds/templates/worlds/_game_values.html:51
-msgid "Stress"
-msgstr "Stress"
-
-#: campaigns/templates/campaigns/fragments/npc.html:15
-#: campaigns/templates/campaigns/fragments/status.html:16
-#: characters/templates/characters/fragments/combat.html:27
-#: characters/templates/characters/fragments/status.html:27
-#: characters/templates/characters/fragments/status.html:30
-#: characters/templates/characters/includes/knowledge_table.html:8
-#: characters/templates/characters/includes/mind_skill_table.html:7
-#: characters/templates/characters/includes/persona_table.html:7
-#: characters/templates/characters/includes/physis_table.html:7
-#: characters/templates/characters/includes/practical_skill_table.html:7
-#: characters/templates/characters/modals/rest.html:20
-#: characters/templates/characters/modals/rest.html:35
-#: characters/templates/characters/pdf/boxes/overview/dice.html:3
-msgid "Dice"
-msgstr "Würfel"
-
-#: campaigns/templates/campaigns/fragments/npc.html:30
-#: campaigns/templates/campaigns/fragments/status.html:32
-#: characters/templates/characters/_wound_display.html:4
-#: characters/templates/characters/modals/rest.html:18
-#: characters/templates/characters/sidebar/wounds.html:33
-#: characters/templates/characters/sidebar/wounds.html:82 gmtools/forms.py:19
-#: worlds/templates/worlds/wiki_page_with_game_values.html:29
-msgid "Health"
-msgstr "Lebenspunkte"
-
-#: campaigns/templates/campaigns/fragments/npc.html:33
-#: campaigns/templates/campaigns/fragments/status.html:35
-#: characters/templates/characters/_wound_display.html:7
-#: characters/templates/characters/pdf/boxes/overview/health.html:7
-#: characters/templates/characters/pdf/boxes/overview/health.html:14
-#: characters/templates/characters/sidebar/wounds.html:36
-#: characters/templates/characters/sidebar/wounds.html:88
-msgid "Wound"
-msgstr "Wunde"
-
-#: campaigns/templates/campaigns/fragments/npc.html:36
-#: campaigns/templates/campaigns/fragments/status.html:38
-#: characters/templates/characters/_wound_display.html:10
-#: characters/templates/characters/pdf/boxes/overview/health.html:11
-#: characters/templates/characters/sidebar/wounds.html:15
-#: characters/templates/characters/sidebar/wounds.html:39
-#: characters/templates/characters/sidebar/wounds.html:94
-msgid "Boost"
-msgstr "Boost"
-
-#: campaigns/templates/campaigns/fragments/npc.html:66
-#: campaigns/templates/campaigns/fragments/status.html:68
-#: characters/templates/characters/fragments/horror.html:22
-#: characters/templates/characters/sidebar/horror.html:30
-#: characters/templates/characters/sidebar/horror.html:43
-msgid "Possible Stress"
-msgstr "Möglicher Stress"
-
-#: campaigns/templates/campaigns/fragments/npc.html:74
-#: campaigns/templates/campaigns/fragments/status.html:76
-#: characters/templates/characters/_dice_display.html:5
-msgid "Bonus Die"
-msgstr "Bonuswürfel"
-
-#: campaigns/templates/campaigns/fragments/npc.html:77
-#: campaigns/templates/campaigns/fragments/status.html:79
-#: characters/templates/characters/_dice_display.html:8
-msgid "Destiny Die"
-msgstr "Schicksalswürfel"
-
-#: campaigns/templates/campaigns/fragments/npc.html:80
-#: campaigns/templates/campaigns/fragments/status.html:82
-#: characters/templates/characters/_dice_display.html:11
-msgid "Reroll"
-msgstr "Wiederholungswurf"
-
-#: campaigns/templates/campaigns/fragments/npc.html:90
-msgid "Create random NPC"
-msgstr "Zufälligen NSC erstellen"
-
-#: campaigns/templates/campaigns/fragments/npc.html:92
-msgid "Create npc"
-msgstr "NSC erstellen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:7
 msgid "Game Options"
@@ -1581,16 +1306,38 @@ msgstr "Höchster einzelner Erfolg"
 msgid "Total Sum"
 msgstr "Gesamtsumme"
 
-#: campaigns/templates/campaigns/fragments/status.html:9
-#: characters/templates/characters/_navigation.html:44
-#: characters/templates/characters/_navigation.html:164
-#: homebrew/templates/homebrew/index.html:14
-msgid "Character"
-msgstr "Charakter"
+#: campaigns/templates/campaigns/fragments/status.html:7
+msgid "Player characters"
+msgstr "Spielercharaktere"
 
-#: campaigns/templates/campaigns/fragments/status.html:10
-msgid "Player"
-msgstr "Spieler"
+#: campaigns/templates/campaigns/fragments/status.html:26
+msgid "Invite link copied"
+msgstr "Einladungslink kopiert"
+
+#: campaigns/templates/campaigns/fragments/status.html:30
+msgid "Invite Player"
+msgstr "Spieler einladen"
+
+#: campaigns/templates/campaigns/fragments/status.html:38
+#: portal/templates/portal/_navigation.html:22
+msgid "NPC"
+msgstr "NSC"
+
+#: campaigns/templates/campaigns/fragments/status.html:62
+msgid "Create random npc"
+msgstr "Zufälligen NSC erstellen"
+
+#: campaigns/templates/campaigns/fragments/status.html:70
+msgid "Create npc"
+msgstr "NSC erstellen"
+
+#: campaigns/templates/campaigns/fragments/status.html:103
+msgid "Search foe"
+msgstr "Gegner suchen"
+
+#: campaigns/templates/campaigns/fragments/status.html:107
+msgid "Add foe"
+msgstr "Gegner hinzufügen"
 
 #: campaigns/templates/campaigns/modals/settings.html:8
 #: characters/templates/characters/modals/edit_description.html:11
@@ -1603,50 +1350,111 @@ msgstr "Speichern"
 msgid "Show older rolls"
 msgstr "Ältere Würfe anzeigen"
 
+#: campaigns/templates/campaigns/sidebar/character.html:57
+#: characters/templates/characters/_wound_display.html:4
+#: characters/templates/characters/modals/rest.html:18
+#: characters/templates/characters/sidebar/wounds.html:33
+#: characters/templates/characters/sidebar/wounds.html:82 gmtools/forms.py:19
+#: worlds/templates/worlds/wiki_page_with_game_values.html:29
+msgid "Health"
+msgstr "Lebenspunkte"
+
+#: campaigns/templates/campaigns/sidebar/character.html:60
+#: characters/templates/characters/_wound_display.html:7
+#: characters/templates/characters/pdf/boxes/overview/health.html:7
+#: characters/templates/characters/pdf/boxes/overview/health.html:14
+#: characters/templates/characters/sidebar/wounds.html:36
+#: characters/templates/characters/sidebar/wounds.html:88
+msgid "Wound"
+msgstr "Wunde"
+
 #: campaigns/templates/campaigns/sidebar/character.html:63
+#: characters/templates/characters/_wound_display.html:10
+#: characters/templates/characters/pdf/boxes/overview/health.html:11
+#: characters/templates/characters/sidebar/wounds.html:15
+#: characters/templates/characters/sidebar/wounds.html:39
+#: characters/templates/characters/sidebar/wounds.html:94
+msgid "Boost"
+msgstr "Boost"
+
+#: campaigns/templates/campaigns/sidebar/character.html:80
+#: characters/templates/characters/fragments/horror.html:7
+#: characters/templates/characters/fragments/horror.html:10
+#: characters/templates/characters/fragments/horror.html:19
+#: characters/templates/characters/modals/rest.html:25
+#: characters/templates/characters/pdf/boxes/overview/horror.html:8
+#: characters/templates/characters/sidebar/horror.html:27
+#: characters/templates/characters/sidebar/horror.html:37
+#: worlds/templates/worlds/_game_values.html:51
+msgid "Stress"
+msgstr "Stress"
+
+#: campaigns/templates/campaigns/sidebar/character.html:83
+#: characters/templates/characters/fragments/horror.html:22
+#: characters/templates/characters/sidebar/horror.html:30
+#: characters/templates/characters/sidebar/horror.html:43
+msgid "Possible Stress"
+msgstr "Möglicher Stress"
+
+#: campaigns/templates/campaigns/sidebar/character.html:90
+#: characters/templates/characters/_dice_display.html:5
+msgid "Bonus Die"
+msgstr "Bonuswürfel"
+
+#: campaigns/templates/campaigns/sidebar/character.html:93
+#: characters/templates/characters/_dice_display.html:8
+msgid "Destiny Die"
+msgstr "Schicksalswürfel"
+
+#: campaigns/templates/campaigns/sidebar/character.html:96
+#: characters/templates/characters/_dice_display.html:11
+msgid "Reroll"
+msgstr "Wiederholungswurf"
+
+#: campaigns/templates/campaigns/sidebar/character.html:107
 msgid "Go to character"
 msgstr "Gehe zum Charakter"
 
-#: campaigns/templates/campaigns/sidebar/character.html:70
+#: campaigns/templates/campaigns/sidebar/character.html:114
 msgid "Switch character NPC status?"
 msgstr "Charakter NSC Status ändern?"
 
-#: campaigns/templates/campaigns/sidebar/character.html:72
+#: campaigns/templates/campaigns/sidebar/character.html:116
 msgid "Switch NPC status"
 msgstr "NSC Status ändern"
 
-#: campaigns/templates/campaigns/sidebar/character.html:77
+#: campaigns/templates/campaigns/sidebar/character.html:121
 msgid "Remove character from campaign?"
 msgstr "Charakter aus der Kampagne entfernen?"
 
-#: campaigns/templates/campaigns/sidebar/character.html:79
-#: campaigns/templates/campaigns/sidebar/foe.html:35
+#: campaigns/templates/campaigns/sidebar/character.html:123
+#: campaigns/templates/campaigns/sidebar/foe.html:38
 msgid "Remove from campaign"
 msgstr "Aus der Kampagne entfernen"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:19
+#: campaigns/templates/campaigns/sidebar/foe.html:20
 msgid "Go to the wiki page"
 msgstr "Gehe zur Wikiseite"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:27
+#: campaigns/templates/campaigns/sidebar/foe.html:28
 #: characters/templates/characters/fragments/combat.html:10
 #: characters/templates/characters/sidebar/character.html:38
 #: characters/templates/characters/sidebar/character.html:43
 msgid "Initiative"
 msgstr "Initiative"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:28
+#: campaigns/templates/campaigns/sidebar/foe.html:29
 #: characters/templates/characters/fragments/combat.html:11
 msgid "Initiative (*Quickness*d6)"
 msgstr "Initiative (Schnelligkeit*w6)"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:29
+#: campaigns/templates/campaigns/sidebar/foe.html:30
 #: characters/templates/characters/fragments/combat.html:13
 msgid "Roll Initiative"
 msgstr "Initiative würfeln"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:29
-#: campaigns/templates/campaigns/sidebar/foe.html:57
+#: campaigns/templates/campaigns/sidebar/foe.html:31
+#: campaigns/templates/campaigns/sidebar/foe.html:101
 #: characters/templates/characters/fragments/combat.html:14
 #: characters/templates/characters/sidebar/body_modification.html:70
 #: characters/templates/characters/sidebar/body_modification.html:85
@@ -1658,9 +1466,72 @@ msgstr "Initiative würfeln"
 msgid "d6"
 msgstr "W6"
 
-#: campaigns/templates/campaigns/sidebar/foe.html:34
+#: campaigns/templates/campaigns/sidebar/foe.html:36
 msgid "Remove foe from campaign?"
 msgstr "Gegner aus der Kampagne entfernen?"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:50
+#: characters/templates/characters/fragments/status.html:7
+#: characters/templates/characters/fragments/status.html:10
+#: characters/templates/characters/modals/rest.html:18
+#: characters/templates/characters/pdf/boxes/overview/health.html:4
+#: worlds/templates/worlds/_game_values.html:10
+msgid "Wounds"
+msgstr "Wunden"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:54
+#: characters/templates/characters/fragments/status.html:17
+#: characters/templates/characters/fragments/status.html:20
+#: characters/templates/characters/pdf/boxes/gear/armour.html:12
+#: characters/templates/characters/pdf/boxes/overview/protection.html:4
+#: characters/templates/characters/sidebar/riot_gear.html:75
+#: worlds/templates/worlds/_game_values.html:14
+#: worlds/templates/worlds/wiki_page_with_game_values.html:31
+msgid "Protection"
+msgstr "Schutz"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:58
+#: characters/templates/characters/fragments/magic.html:10
+#: characters/templates/characters/includes/character_spell_cards.html:27
+#: characters/templates/characters/modals/rest.html:33
+#: characters/templates/characters/pdf/boxes/magic/spells.html:22
+#: characters/templates/characters/pdf/boxes/overview/arcana.html:5
+#: characters/templates/characters/sidebar/magic.html:33
+#: characters/templates/characters/sidebar/spell.html:38
+#: magic/templates/magic/_basespell_widget.html:23
+#: magic/templates/magic/basespell_detail.html:39
+#: worlds/templates/worlds/_game_values.html:18
+#: worlds/templates/worlds/wiki_page_with_game_values.html:30
+msgid "Arcana"
+msgstr "Arkana"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:62
+#: characters/templates/characters/_navigation.html:12
+#: characters/templates/characters/fragments/combat.html:175
+#: characters/templates/characters/includes/character_spell_cards.html:32
+#: characters/templates/characters/pdf/boxes/magic/spells.html:39
+#: characters/templates/characters/pdf/boxes/overview/actions.html:3
+#: characters/templates/characters/pdf/boxes/overview/combat.html:94
+#: characters/templates/characters/sidebar/spell.html:76
+#: magic/templates/magic/_basespell_widget.html:27
+#: magic/templates/magic/basespell_detail.html:43
+#: worlds/templates/worlds/_game_values.html:22
+#: worlds/templates/worlds/wiki_page_with_game_values.html:32
+msgid "Actions"
+msgstr "Aktionen"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:66
+#: worlds/templates/worlds/_game_values.html:34
+msgid "Perception"
+msgstr "Wahrnehmung"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:70
+msgid "Walking range"
+msgstr "Bewegungsreichweite"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:74
+msgid "Minimum roll"
+msgstr "Mindestwurf"
 
 #: campaigns/templates/campaigns/sidebar/join.html:5
 #, python-format
@@ -1976,14 +1847,14 @@ msgstr "Thema"
 msgid "Home"
 msgstr "Home"
 
-#: characters/templates/_main_nav.html:33 phasesix/settings.py:357
-#: phasesix/settings.py:367 worlds/templates/worlds/world_list.html:4
+#: characters/templates/_main_nav.html:33 phasesix/settings.py:356
+#: phasesix/settings.py:366 worlds/templates/worlds/world_list.html:4
 #: worlds/templates/worlds/world_list.html:5
 msgid "Worlds"
 msgstr "Welten"
 
 #: characters/templates/_main_nav.html:43 characters/templates/base.html:148
-#: phasesix/settings.py:330
+#: phasesix/settings.py:329
 msgid "Rules"
 msgstr "Regeln"
 
@@ -1999,7 +1870,7 @@ msgstr "Profil anzeigen"
 msgid "Create character"
 msgstr "Erstelle einen Charakter"
 
-#: characters/templates/_main_nav.html:137 phasesix/settings.py:262
+#: characters/templates/_main_nav.html:137 phasesix/settings.py:261
 #: portal/templates/portal/_navigation.html:11
 msgid "Characters"
 msgstr "Charaktere"
@@ -2071,9 +1942,23 @@ msgstr "Die Anzahl der Aktionen, die du im Kampf benutzen kannst."
 msgid "Combat Actions"
 msgstr "Kampfaktionen"
 
+#: characters/templates/characters/_navigation.html:18
+#: characters/templates/characters/_navigation.html:19
+#: characters/templates/characters/pdf/boxes/overview/dice.html:6
+#: worlds/templates/worlds/_game_values.html:26
+#: worlds/templates/worlds/wiki_page_with_game_values.html:34
+msgid "Minimum Roll"
+msgstr "Mindestwurf"
+
 #: characters/templates/characters/_navigation.html:33
 msgid "Description"
 msgstr "Beschreibung"
+
+#: characters/templates/characters/_navigation.html:44
+#: characters/templates/characters/_navigation.html:164
+#: homebrew/templates/homebrew/index.html:14
+msgid "Character"
+msgstr "Charakter"
 
 #: characters/templates/characters/_navigation.html:55
 msgid "Gear"
@@ -2429,6 +2314,20 @@ msgstr "Rechtes Bein"
 msgid "Action"
 msgstr "Aktion"
 
+#: characters/templates/characters/fragments/combat.html:27
+#: characters/templates/characters/fragments/status.html:27
+#: characters/templates/characters/fragments/status.html:30
+#: characters/templates/characters/includes/knowledge_table.html:8
+#: characters/templates/characters/includes/mind_skill_table.html:7
+#: characters/templates/characters/includes/persona_table.html:7
+#: characters/templates/characters/includes/physis_table.html:7
+#: characters/templates/characters/includes/practical_skill_table.html:7
+#: characters/templates/characters/modals/rest.html:20
+#: characters/templates/characters/modals/rest.html:35
+#: characters/templates/characters/pdf/boxes/overview/dice.html:3
+msgid "Dice"
+msgstr "Würfel"
+
 #: characters/templates/characters/fragments/combat.html:29
 msgid "Capacity"
 msgstr "Kapazität"
@@ -2669,7 +2568,7 @@ msgid "No languages yet."
 msgstr "Noch keine Sprachen."
 
 #: characters/templates/characters/fragments/description.html:70
-#: phasesix/settings.py:362
+#: phasesix/settings.py:361
 msgid "Languages"
 msgstr "Sprachen"
 
@@ -4127,13 +4026,13 @@ msgstr "Eventstream"
 msgid "Text"
 msgstr "Text"
 
-#: forum/models.py:9 phasesix/settings.py:199
+#: forum/models.py:9 phasesix/settings.py:198
 #: rulebook/templates/rulebook/_navigation.html:26
 #: worlds/templates/worlds/wiki_page_edit.html:103
 msgid "German"
 msgstr "Deutsch"
 
-#: forum/models.py:10 phasesix/settings.py:200
+#: forum/models.py:10 phasesix/settings.py:199
 #: rulebook/templates/rulebook/_navigation.html:29
 #: worlds/templates/worlds/wiki_page_edit.html:106
 msgid "English"
@@ -4627,47 +4526,47 @@ msgstr "Priesteraktion Wurf"
 msgid "priest action rolls"
 msgstr "Priesteraktion Würfe"
 
-#: phasesix/settings.py:252
+#: phasesix/settings.py:251
 msgid "Characters and Campaigns"
 msgstr "Charaktere und Kampagnen"
 
-#: phasesix/settings.py:257
+#: phasesix/settings.py:256
 msgid "Users"
 msgstr "Benutzer"
 
-#: phasesix/settings.py:274
+#: phasesix/settings.py:273
 msgid "Armory"
 msgstr "Rüstkammer"
 
-#: phasesix/settings.py:284
+#: phasesix/settings.py:283
 msgid "Riot Gear"
 msgstr "Rüstung"
 
-#: phasesix/settings.py:289
+#: phasesix/settings.py:288
 msgid "Currency Maps"
 msgstr "Währungstabellen"
 
-#: phasesix/settings.py:313
+#: phasesix/settings.py:312
 msgid "Horror Quirks"
 msgstr "Horror Eigenarten"
 
-#: phasesix/settings.py:323
+#: phasesix/settings.py:322
 msgid "Dieties"
 msgstr "Gottheiten"
 
-#: phasesix/settings.py:340
+#: phasesix/settings.py:339
 msgid "Book Chapters"
 msgstr "Buchkapitel"
 
-#: phasesix/settings.py:345
+#: phasesix/settings.py:344
 msgid "Lineages"
 msgstr "Abstammungen"
 
-#: phasesix/settings.py:350
+#: phasesix/settings.py:349
 msgid "Character templates"
 msgstr "Charakterschablonen"
 
-#: phasesix/settings.py:372
+#: phasesix/settings.py:371
 msgid "Wiki Pages"
 msgstr "Wikiseiten"
 
@@ -5153,7 +5052,8 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"\t\t\tDein Konto ist jetzt aktiv."
+"\t\t\tDein Konto ist jetzt aktiv.\n"
+"   "
 
 #: templates/django_registration/activation_complete.html:21
 #: templates/django_registration/activation_failed.html:22
@@ -5224,7 +5124,7 @@ msgstr ""
 "\t\t\t\tDeine Registrierung ist fast abgeschlossen. Schau in deinem Postfach "
 "nach einer \n"
 "\t\t\t\tAktivierungsmail und benutze den Link darin um dein Konto zu "
-"aktivieren."
+"aktivieren. "
 
 #: templates/django_registration/registration_form.html:4
 #: templates/django_registration/registration_form.html:5
@@ -5612,6 +5512,11 @@ msgstr "Sprachen"
 msgid "Toggle Dropdown"
 msgstr "Menü anzeigen"
 
+#: worlds/templates/worlds/_game_values.html:5
+#: worlds/templates/worlds/wiki_page_with_game_values.html:27
+msgid "Foe"
+msgstr "Gegner"
+
 #: worlds/templates/worlds/_game_values.html:38
 #: worlds/templates/worlds/wiki_page_with_game_values.html:33
 msgid "Quickness"
@@ -5797,6 +5702,79 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #: worlds/views.py:189
 msgid "You do not have permission to edit this wiki page."
 msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Game Log"
+#~ msgstr "Spielprotokoll"
+
+#~ msgid ""
+#~ "You have been invited to join this campaign. Create a new character to "
+#~ "join the campaign."
+#~ msgstr ""
+#~ "Du wurdest eingeladen, dieser Kampagne beizutreten. Erstelle einen neuen "
+#~ "Charakter, um beizutreten."
+
+#~ msgid "Join campaign"
+#~ msgstr "Kampagne beitreten"
+
+#~ msgid "Players"
+#~ msgstr "Spieler"
+
+#~ msgid "Walking Range"
+#~ msgstr "Bewegungsreichweite"
+
+#~ msgid "Create custom object"
+#~ msgstr "Individuellen Gegenstand erstellen"
+
+#~ msgid "Create Item"
+#~ msgstr "Gegenstand erstellen"
+
+#~ msgid "Create custom item"
+#~ msgstr "Individuellen Gegenstand erstellen"
+
+#~ msgid "Create Weapon"
+#~ msgstr "Waffe erstellen"
+
+#~ msgid "Create custom weapon"
+#~ msgstr "Individuelle Waffe erstellen"
+
+#~ msgid "Create Armor"
+#~ msgstr "Rüstung anlegen"
+
+#~ msgid "Create custom armor"
+#~ msgstr "Individuelle Rüstung erstellen"
+
+#~ msgid "Create Spell"
+#~ msgstr "Zauber erstellen"
+
+#~ msgid "Create custom spell"
+#~ msgstr "Individuellen Zauber erstellen"
+
+#~ msgid "Create Template"
+#~ msgstr "Charakterschablone erstellen"
+
+#~ msgid "Create custom template"
+#~ msgstr "Individuelle Charakterschablone erstellen"
+
+#~ msgid "Create Quirk"
+#~ msgstr "Tick erstellen"
+
+#~ msgid "Create custom quirk"
+#~ msgstr "Individuellen Tick erstellen"
+
+#~ msgid "Create Language"
+#~ msgstr "Sprache erstellen"
+
+#~ msgid "Create custom language"
+#~ msgstr "Individuelle Sprache erstellen"
+
+#~ msgid "Latest Initiative"
+#~ msgstr "Letzte Initiative"
+
+#~ msgid "Player"
+#~ msgstr "Spieler"
 
 #~ msgid "Discord Dice Rolls"
 #~ msgstr "Discord Würfelwürfe"
@@ -6302,9 +6280,6 @@ msgstr "Du hast nicht die Berechtigung, diese Wikiseite zu editieren."
 #~ msgstr "Zauber Kosten zuweisen"
 
 #~ msgid "My Charactes"
-#~ msgstr "Meine Charaktere"
-
-#~ msgid "My characters"
 #~ msgstr "Meine Charaktere"
 
 #~ msgid "Other peoples characters"

@@ -2,8 +2,19 @@
 {% load portal_extras %}
 <div class="list-group mb-3">
 
+  <a class="py-3 navigation-link active pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+     data-bs-toggle="tab"
+     data-bs-target="#v-overview"
+     role="tab"
+     aria-current="false">
+    <div class="d-flex justify-content-center align-items-center">
+      <i class="fas fa-user-alt"></i>
+      <span class="ms-3 d-block d-lg-block">{% trans "Dramaturgy" %}</span>
+    </div>
+  </a>
+
   {% if may_edit or object.character_visibility == 'A' %}
-    <a class="py-3 navigation-link active pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
        data-bs-toggle="tab"
        data-bs-target="#v-status"
        role="tab"
@@ -11,19 +22,6 @@
       <div class="d-flex justify-content-center align-items-center">
         <i class="fas fa-user-alt"></i>
         <span class="ms-3 d-block d-lg-block">{% trans "Dramatis Personae" %}</span>
-      </div>
-    </a>
-  {% endif %}
-
-  {% if may_edit or object.game_log_visibility == 'A' %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       data-bs-toggle="tab"
-       data-bs-target="#v-game-log"
-       role="tab"
-       aria-current="false">
-      <div class="d-flex justify-content-center align-items-center">
-        <i class="fas fa-hourglass"></i>
-        <span class="ms-3 d-block d-lg-block">{% trans "Game Log" %}</span>
       </div>
     </a>
   {% endif %}
@@ -38,6 +36,19 @@
       <span class="ms-3 d-block d-lg-block">{% trans "Custom Items" %}</span>
     </div>
   </a>
+
+  {% if may_edit or object.game_log_visibility == 'A' %}
+    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+       data-bs-toggle="tab"
+       data-bs-target="#v-game-log"
+       role="tab"
+       aria-current="false">
+      <div class="d-flex justify-content-center align-items-center">
+        <i class="fas fa-hourglass"></i>
+        <span class="ms-3 d-block d-lg-block">{% trans "Dice log" %}</span>
+      </div>
+    </a>
+  {% endif %}
 
   <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
      data-bs-toggle="tab"

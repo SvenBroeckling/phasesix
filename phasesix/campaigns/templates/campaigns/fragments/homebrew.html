@@ -4,6 +4,7 @@
   <div class="column-container column-layout-3">
 
     {% if may_edit %}
+      {% comment %}
       <div class="pb-3">
         <div class="card hover-cta pointer" data-bs-toggle="dropdown">
           <div class="card-body p-3 d-flex flex-column align-items-center justify-content-center">
@@ -75,6 +76,7 @@
           </div>
         </div>
       </div>
+      {% endcomment %}
     {% endif %}
 
     {% for item in object.homebrew_armory_item_set.all %}

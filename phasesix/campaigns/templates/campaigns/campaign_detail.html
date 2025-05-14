@@ -40,7 +40,11 @@
 
     <div class="col-12 col-xl-9">
       <div class="tab-content">
-        <div class="tab-pane fade active show" id="v-status" role="tabpanel">
+        <div class="tab-pane fade active show" id="v-overview" role="tabpanel">
+          {% campaign_fragment 'dramaturgy' %}
+        </div>
+
+        <div class="tab-pane fade" id="v-status" role="tabpanel">
           {% campaign_fragment 'status' %}
         </div>
 
