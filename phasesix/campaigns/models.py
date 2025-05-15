@@ -26,7 +26,7 @@ class Campaign(models.Model):
 
     objects = CampaignQuerySet.as_manager()
 
-    slug = models.SlugField(_("slug"), max_length=220, unique=True)
+    slug = models.SlugField(_("slug"), max_length=220)
     name = models.CharField(_("name"), max_length=80)
     image = models.ImageField(
         _("image"), upload_to="campaign_images", max_length=200, blank=True, null=True

@@ -61,7 +61,7 @@ class Pronoun(models.Model, metaclass=TransMeta):
 class Character(models.Model):
     objects = CharacterQuerySet.as_manager()
 
-    slug = models.SlugField(_("slug"), max_length=220, unique=True)
+    slug = models.SlugField(_("slug"), max_length=220)
     name = models.CharField(_("name"), max_length=80)
     description = models.TextField(_("description"), blank=True, null=True)
 
