@@ -11,10 +11,26 @@
                     {% endif %}
                     <div class="card-body">
                         {{ character }}
+                        <span class="text-muted">{% trans "Character" %}</span>
                     </div>
                 </div>
             </a>
         {% endfor %}
+
+      {% for campaign in campaigns %}
+        <a href="{% url 'campaigns:detail' pk=campaign.id %}">
+          <div class="card flex-row mb-2">
+            {% if campaign.image %}
+              <img src="{% thumbnail campaign.image "100" as im %}{{ im.url }}{% endthumbnail %}"
+                   alt="{{ campaign }}">
+            {% endif %}
+            <div class="card-body">
+              {{ campaign }}
+              <span class="text-muted">{% trans "Campaign" %}</span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
 
         {% for wiki_page in wiki_pages %}
             <a href="{{ wiki_page.get_absolute_url }}">

@@ -105,8 +105,15 @@ class XhrSearchResultsView(TemplateView):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get("q", "")
         search_descriptions = self.request.GET.get("search_descriptions", "off")
+
         if query:
             if search_descriptions == "on":
+                characters = Character.objects.filter(
+                    Q(name__icontains=query) | Q(description__icontains=query)
+                )
+                campaigns = Campaign.objects.filter(
+                    Q(name__icontains=query) | Q(abstract__icontains=query)
+                )
                 wiki_pages = WikiPage.objects.filter(
                     Q(name_en__icontains=query)
                     | Q(name_de__icontains=query)
@@ -114,6 +121,8 @@ class XhrSearchResultsView(TemplateView):
                     | Q(text_de__icontains=query)
                 )
             else:
+                characters = Character.objects.filter(Q(name__icontains=query))
+                campaigns = Campaign.objects.filter(Q(name__icontains=query))
                 wiki_pages = WikiPage.objects.filter(
                     Q(name_de__icontains=query) | Q(name_en__icontains=query)
                 )
@@ -125,12 +134,17 @@ class XhrSearchResultsView(TemplateView):
                 wiki_pages = wiki_pages.filter(
                     Q(world=self.request.world_configuration.world)
                 )
-            context["wiki_pages"] = wiki_pages
+                characters = characters.filter(
+                    extensions=self.request.world_configuration.world.extension
+                )
+                campaigns = campaigns.filter(
+                    world_extension=self.request.world_configuration.world.extension
+                )
 
-            if self.request.user.is_authenticated:
-                context["characters"] = Character.objects.filter(
-                    Q(created_by=self.request.user) | Q(created_by__isnull=True)
-                ).filter(name__icontains=query)
+            context["wiki_pages"] = wiki_pages
+            context["characters"] = characters
+            context["campaigns"] = campaigns
+
         return context
 
 
