@@ -21,10 +21,6 @@
               </div>
             </div>
           </a>
-        {% empty %}
-          <div class="py-5 px-2">
-            {% trans "No characters in this campaign." %}
-          </div>
         {% endfor %}
 
         {% if may_edit %}
@@ -58,10 +54,6 @@
               </div>
             </div>
           </a>
-        {% empty %}
-          <div class="py-5 px-2">
-            {% trans "No npc in this campaign." %}
-          </div>
         {% endfor %}
 
         {% if may_edit %}
@@ -106,10 +98,6 @@
               </div>
             </a>
           {% endwith %}
-        {% empty %}
-          <div class="py-5 px-2">
-            {% trans "No foes in this campaign." %}
-          </div>
         {% endfor %}
 
         {% if may_edit %}
