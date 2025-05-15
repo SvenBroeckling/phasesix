@@ -1,6 +1,18 @@
 {% load i18n %}
 {% load rules_extras %}
-<h2>{% trans "Abstract" %}</h2>
+
+<div class="d-flex align-items-center justify-content-between">
+  <h2>{% trans "Abstract" %}</h2>
+  {% if may_edit %}
+    <a data-bs-toggle="modal"
+       data-bs-target=".page-modal"
+       data-modal-title="{% trans 'Edit settings' %}"
+       data-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='game' %}"
+       class="modal-trigger text-white">
+      <i class="fas fa-2x fa-pencil-alt"></i>
+    </a>
+  {% endif %}
+</div>
 <p>
   {{ object.abstract|phasesix_markup }}
 </p>
