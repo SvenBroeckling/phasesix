@@ -13,7 +13,7 @@
     </div>
   </a>
 
-  {% if may_edit or object.character_visibility == 'A' %}
+  {% if may_edit or object.character_visibility == 'A' or object.npc_visibility == "A" or object.foe_visibility == "A" %}
     <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
        data-bs-toggle="tab"
        data-bs-target="#v-status"

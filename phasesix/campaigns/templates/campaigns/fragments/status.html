@@ -21,6 +21,10 @@
               </div>
             </div>
           </a>
+        {% empty %}
+          <div class="py-5 px-2">
+            {% trans "No characters in this campaign." %}
+          </div>
         {% endfor %}
 
         {% if may_edit %}
@@ -36,80 +40,92 @@
     </div>
   {% endif %}
 
-  <div class="campaign-characters mb-3">
-    <h2 class="mt-4">{% trans "NPC" %}</h2>
-    <div class="d-flex justify-content-start flex-wrap">
-      {% for c in object.npc_set.all %}
-        <a href=""
-           data-sidebar-title="{{ c }}"
-           data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
-           class="sidebar-trigger sidebar-spinner mb-2 me-2">
-          <div class="position-relative">
-            <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
-                 class="img-fluid object-fit-cover">
-            <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
-                 style="background: rgba(0,0,0,0.7);">
-              <span class="text-white">{{ c }}</span>
-            </div>
-          </div>
-        </a>
-      {% endfor %}
-
-      {% if may_edit %}
-        <a
-          href="{% url 'characters:create_random_npc' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
-          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
-               style="width: 200px; height: 200px">
-            <i class="fas fa-plus fa-2x"></i>
-            <span class="invite-text">{% trans "Create random npc" %}</span>
-          </div>
-        </a>
-        <a
-          href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
-          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
-               style="width: 200px; height: 200px">
-            <i class="fas fa-plus fa-2x"></i>
-            <span class="invite-text">{% trans "Create npc" %}</span>
-          </div>
-        </a>
-      {% endif %}
-    </div>
-  </div>
-
-  <div class="campaign-characters mb-3">
-    <h2 class="mt-4">{% trans "Foes" %}</h2>
-    <div class="d-flex justify-content-start flex-wrap">
-      {% for f in object.foe_set.all %}
-        {% with wiki_page=f.wiki_page %}
+  {% if may_edit or object.npc_visibility == "A" %}
+    <div class="campaign-characters mb-3">
+      <h2 class="mt-4">{% trans "NPC" %}</h2>
+      <div class="d-flex justify-content-start flex-wrap">
+        {% for c in object.npc_set.all %}
           <a href=""
-             data-sidebar-title="{{ f.wiki_page }}"
-             data-sidebar-url="{% url 'campaigns:xhr_foe_sidebar' pk=f.id sidebar_template="foe" %}"
+             data-sidebar-title="{{ c }}"
+             data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
              class="sidebar-trigger sidebar-spinner mb-2 me-2">
             <div class="position-relative">
-              <img src="{% image_url wiki_page geometry="200x200" crop="center" %}" alt="{{ c }}"
+              <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
                    class="img-fluid object-fit-cover">
               <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
                    style="background: rgba(0,0,0,0.7);">
-                <span class="text-white">{{ f.wiki_page }}</span>
+                <span class="text-white">{{ c }}</span>
               </div>
             </div>
           </a>
-        {% endwith %}
-      {% endfor %}
-
-      {% if may_edit %}
-        <a
-          href=""
-          class="sidebar-trigger"
-          data-sidebar-url="{% url 'campaigns:xhr_search_foe' pk=object.id %}"
-          data-sidebar-title="{% trans "Search foe" %}">
-          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
-               style="width: 200px; height: 200px">
-            <i class="fas fa-plus fa-2x"></i>
-            <span class="invite-text">{% trans "Add foe" %}</span>
+        {% empty %}
+          <div class="py-5 px-2">
+            {% trans "No npc in this campaign." %}
           </div>
-        </a>
-      {% endif %}
+        {% endfor %}
+
+        {% if may_edit %}
+          <a
+            href="{% url 'characters:create_random_npc' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
+            <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+                 style="width: 200px; height: 200px">
+              <i class="fas fa-plus fa-2x"></i>
+              <span class="invite-text">{% trans "Create random npc" %}</span>
+            </div>
+          </a>
+          <a
+            href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
+            <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+                 style="width: 200px; height: 200px">
+              <i class="fas fa-plus fa-2x"></i>
+              <span class="invite-text">{% trans "Create npc" %}</span>
+            </div>
+          </a>
+        {% endif %}
+      </div>
     </div>
-  </div>
+  {% endif %}
+
+  {% if may_edit or object.foe_visibility == "A" %}
+    <div class="campaign-characters mb-3">
+      <h2 class="mt-4">{% trans "Foes" %}</h2>
+      <div class="d-flex justify-content-start flex-wrap">
+        {% for f in object.foe_set.all %}
+          {% with wiki_page=f.wiki_page %}
+            <a href=""
+               data-sidebar-title="{{ f.wiki_page }}"
+               data-sidebar-url="{% url 'campaigns:xhr_foe_sidebar' pk=f.id sidebar_template="foe" %}"
+               class="sidebar-trigger sidebar-spinner mb-2 me-2">
+              <div class="position-relative">
+                <img src="{% image_url wiki_page geometry="200x200" crop="center" %}" alt="{{ c }}"
+                     class="img-fluid object-fit-cover">
+                <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
+                     style="background: rgba(0,0,0,0.7);">
+                  <span class="text-white">{{ f.wiki_page }}</span>
+                </div>
+              </div>
+            </a>
+          {% endwith %}
+        {% empty %}
+          <div class="py-5 px-2">
+            {% trans "No foes in this campaign." %}
+          </div>
+        {% endfor %}
+
+        {% if may_edit %}
+          <a
+            href=""
+            class="sidebar-trigger"
+            data-sidebar-url="{% url 'campaigns:xhr_search_foe' pk=object.id %}"
+            data-sidebar-title="{% trans "Search foe" %}">
+            <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+                 style="width: 200px; height: 200px">
+              <i class="fas fa-plus fa-2x"></i>
+              <span class="invite-text">{% trans "Add foe" %}</span>
+            </div>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
