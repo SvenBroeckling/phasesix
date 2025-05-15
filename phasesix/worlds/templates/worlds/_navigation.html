@@ -5,9 +5,10 @@
 {% load portal_extras %}
 <div class="list-group mb-3">
   {% for page in object.world.wikipage_set.get_top_level %}
-    <a class="{% if object|is_subpage_of:page %}active{% endif %} navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       href="{% url "world:wiki_page" world_slug=object.world.slug slug=page.slug %}"
-       aria-current="true">
+    <a
+      class="{% if object|is_subpage_of:page %}active{% endif %} navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+      href="{% url "world:wiki_page" world_slug=object.world.slug slug=page.slug %}"
+      aria-current="true">
       <div class="d-flex justify-content-center align-items-center">
         <i class="fas fa-fw fa-book"></i>
         <span class="ms-3 d-block d-lg-block">{{ page }}</span>
@@ -18,10 +19,12 @@
 
 {% if may_edit %}
   <div class="list-group mb-3">
-    <a class="list-group-item py-3"
-       href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
-       role="button"><i class="fas fa-pen"></i><span
-            class="d-none d-md-inline"> {% trans 'Edit' %}</span></a>
+    {% if not object.is_world %}
+      <a class="list-group-item py-3"
+         href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
+         role="button"><i class="fas fa-pen"></i><span
+        class="d-none d-md-inline"> {% trans 'Edit' %}</span></a>
+    {% endif %}
     {% if object.is_world %}
       <a class="list-group-item py-3 modal-trigger"
          data-url="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}"
@@ -46,13 +49,14 @@
         <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
       </a>
     {% else %}
-      <a data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-         data-sidebar-title="{% trans 'Sort Subpages' %}"
-         class="list-group-item sidebar-trigger py-3">
+      <a
+        data-sidebar-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+        data-sidebar-title="{% trans 'Sort Subpages' %}"
+        class="list-group-item sidebar-trigger py-3">
         <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
         {% if user.is_superuser %}
           <a class="list-group-item py-3" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
-                  class="fas fa-lock"></i> {% trans 'Admin' %}</a>
+            class="fas fa-lock"></i> {% trans 'Admin' %}</a>
         {% endif %}
       </a>
     {% endif %}
