@@ -47,7 +47,7 @@ class IndexView(TemplateView):
         campaigns = Campaign.objects.filter(image__isnull=False)
         if self.request.world_configuration is not None:
             campaigns = campaigns.filter(
-                world=self.request.world_configuration.world.extension
+                world_extension=self.request.world_configuration.world.extension
             )
 
         if self.request.user.is_authenticated:

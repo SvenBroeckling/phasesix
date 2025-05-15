@@ -3,36 +3,38 @@
 {% load i18n thumbnail static characters_extras campaign_extras %}
 
 {% block fragment %}
-  <div class="campaign-characters mb-3">
-    <h2>{% trans "Player characters" %}</h2>
-    <div class="d-flex justify-content-start flex-wrap">
-      {% for c in object.character_set.all %}
-        <a href=""
-           data-sidebar-title="{{ c }}"
-           data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
-           class="sidebar-trigger sidebar-spinner mb-2 me-2">
-          <div class="position-relative">
-            <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
-                 class="img-fluid object-fit-cover">
-            <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
-                 style="background: rgba(0,0,0,0.7);">
-              <span class="text-white">{{ c }}</span>
+  {% if may_edit or object.character_visibility == "A" %}
+    <div class="campaign-characters mb-3">
+      <h2>{% trans "Player characters" %}</h2>
+      <div class="d-flex justify-content-start flex-wrap">
+        {% for c in object.character_set.all %}
+          <a href=""
+             data-sidebar-title="{{ c }}"
+             data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
+             class="sidebar-trigger sidebar-spinner mb-2 me-2">
+            <div class="position-relative">
+              <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
+                   class="img-fluid object-fit-cover">
+              <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center"
+                   style="background: rgba(0,0,0,0.7);">
+                <span class="text-white">{{ c }}</span>
+              </div>
             </div>
-          </div>
-        </a>
-      {% endfor %}
+          </a>
+        {% endfor %}
 
-      {% if may_edit %}
-        <a href="{{ object.invite_link }}" class="campaign-link" data-msg="{% trans "Invite link copied" %}">
-          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
-               style="width: 200px; height: 200px">
-            <i class="fas fa-plus fa-2x"></i>
-            <span class="invite-text">{% trans "Invite Player" %}</span>
-          </div>
-        </a>
-      {% endif %}
+        {% if may_edit %}
+          <a href="{{ object.invite_link }}" class="campaign-link" data-msg="{% trans "Invite link copied" %}">
+            <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+                 style="width: 200px; height: 200px">
+              <i class="fas fa-plus fa-2x"></i>
+              <span class="invite-text">{% trans "Invite Player" %}</span>
+            </div>
+          </a>
+        {% endif %}
+      </div>
     </div>
-  </div>
+  {% endif %}
 
   <div class="campaign-characters mb-3">
     <h2 class="mt-4">{% trans "NPC" %}</h2>
