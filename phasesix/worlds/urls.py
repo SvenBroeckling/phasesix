@@ -11,14 +11,14 @@ urlpatterns = [
         name="wiki_page_with_game_values",
     ),
     path("", views.WorldListView.as_view(), name="list"),
-    path("<str:slug>", views.WorldDetailView.as_view(), name="detail"),
+    path("<slug:slug>", views.WorldDetailView.as_view(), name="detail"),
     path(
-        "<str:world_slug>/<str:slug>",
+        "<slug:world_slug>/<str:slug>",
         views.WikiPageDetailView.as_view(),
         name="wiki_page",
     ),
     path(
-        "<str:world_slug>/<str:slug>/edit",
+        "<slug:world_slug>/<str:slug>/edit",
         views.WikiPageEditTextView.as_view(),
         name="edit_text",
     ),

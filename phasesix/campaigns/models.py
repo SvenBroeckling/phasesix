@@ -8,6 +8,7 @@ from sorl.thumbnail import get_thumbnail
 
 from characters.utils import static_thumbnail
 from rules.models import Extension
+from worlds.unique_slugify import unique_slugify
 
 
 class CampaignQuerySet(models.QuerySet):
@@ -25,6 +26,7 @@ class Campaign(models.Model):
 
     objects = CampaignQuerySet.as_manager()
 
+    slug = models.SlugField(_("slug"), max_length=220, unique=True)
     name = models.CharField(_("name"), max_length=80)
     image = models.ImageField(
         _("image"), upload_to="campaign_images", max_length=200, blank=True, null=True
@@ -144,11 +146,16 @@ class Campaign(models.Model):
             "-created_at",
         )
 
+    def save(self, **kwargs):
+        if not self.slug:
+            unique_slugify(self, str(self.name))
+        super().save(**kwargs)
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("campaigns:detail", kwargs={"pk": self.id})
+        return reverse("campaigns:detail", kwargs={"slug": self.slug})
 
     def may_edit(self, user):
         if self.created_by == user:
@@ -170,7 +177,7 @@ class Campaign(models.Model):
     @property
     def invite_link(self):
         return settings.BASE_URL + reverse(
-            "campaigns:detail", kwargs={"pk": self.id, "hash": self.campaign_hash}
+            "campaigns:detail", kwargs={"slug": self.slug, "hash": self.campaign_hash}
         )
 
     def get_image_url(self, geometry="180", crop="center"):

@@ -7,7 +7,7 @@
 {% block in_page_subtitle %}
   {{ object.lineage }} - {% template_category_string object 3 %}
   {% if object.pc_or_npc_campaign %}
-    <a href="{% url 'campaigns:detail' pk=object.pc_or_npc_campaign.id %}">{{ object.pc_or_npc_campaign }}</a>
+    <a href="{{ object.pc_or_npc_campaign.get_absolute_url }}">{{ object.pc_or_npc_campaign }}</a>
   {% endif %}
 {% endblock %}
 

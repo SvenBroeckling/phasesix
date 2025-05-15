@@ -27,9 +27,9 @@ urlpatterns = [
         views.CreateCampaignDataView.as_view(),
         name="create_data",
     ),
-    path("detail/<int:pk>", views.CampaignDetailView.as_view(), name="detail"),
+    path("<slug:slug>", views.CampaignDetailView.as_view(), name="detail"),
     path(
-        "detail/<int:pk>/invite/<hash>",
+        "<slug:slug>/invite/<hash>",
         views.CampaignDetailView.as_view(),
         name="detail",
     ),

@@ -5,8 +5,8 @@ from characters import views
 app_name = "characters"
 
 urlpatterns = [
-    path("detail/<int:pk>", views.CharacterDetailView.as_view(), name="detail"),
-    path("pdf/<int:pk>", views.CharacterPDFView.as_view(), name="pdf"),
+    path("character/<slug:slug>", views.CharacterDetailView.as_view(), name="detail"),
+    path("character/<slug:slug>/pdf", views.CharacterPDFView.as_view(), name="pdf"),
     path(
         "xhr_delete/<int:pk>", views.XhrDeleteCharacterView.as_view(), name="xhr_delete"
     ),

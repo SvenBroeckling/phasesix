@@ -26,6 +26,7 @@ from horror.models import QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
 from pantheon.models import PriestAction
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
+from worlds.unique_slugify import unique_slugify
 
 
 class CharacterQuerySet(models.QuerySet):
@@ -60,6 +61,7 @@ class Pronoun(models.Model, metaclass=TransMeta):
 class Character(models.Model):
     objects = CharacterQuerySet.as_manager()
 
+    slug = models.SlugField(_("slug"), max_length=220, unique=True)
     name = models.CharField(_("name"), max_length=80)
     description = models.TextField(_("description"), blank=True, null=True)
 
@@ -196,6 +198,11 @@ class Character(models.Model):
             "-created_at",
         )
 
+    def save(self, **kwargs):
+        if not self.slug:
+            unique_slugify(self, str(self.name))
+        super().save(**kwargs)
+
     def may_edit(self, user):
         if self.created_by == user:
             return True
@@ -206,7 +213,7 @@ class Character(models.Model):
         return False
 
     def get_absolute_url(self):
-        return reverse("characters:detail", kwargs={"pk": self.id})
+        return reverse("characters:detail", kwargs={"slug": self.slug})
 
     def get_image_url(self, geometry="180", crop="center"):
         if self.image:

@@ -18,7 +18,7 @@
         {% if request.world_configuration %}
           <li class="nav-item">
             {% active_if_url_name_matches "worlds:detail,worlds:wiki_page,worlds:edit_text" as active %}
-            <a href="{% url "worlds:detail" slug=request.world_configuration.world.slug %}"
+            <a href="{{ request.world_configuration.world.get_absolute_url }}"
                class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
               <i class="fas fa-spa mb-0"></i>
               <span class="d-none d-md-inline">{% trans "World" %}</span>
@@ -139,7 +139,7 @@
               {% for character in user.character_set.pc|slice:":4" %}
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-3"
-                     href="{% url 'characters:detail' pk=character.id %}">
+                     href="{{ character.get_absolute_url }}">
                     {% image_url character "50x50" as image %}
                     <img width="25" height="25" class="rounded"
                          src="{{ image }}"
@@ -159,7 +159,7 @@
               {% for campaign in user.campaign_set.all|slice:":4" %}
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-3"
-                     href="{% url 'campaigns:detail' pk=campaign.id %}">
+                     href="{{ campaign.get_absolute_url }}">
                     {% image_url campaign "50x50" as image %}
                     <img width="25" height="25" class="rounded"
                          src="{{ image }}"

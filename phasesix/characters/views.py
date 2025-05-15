@@ -732,7 +732,7 @@ class CreateRandomNPCView(CreateCharacterDataView):
         return result
 
     def get_success_url(self):
-        return reverse("campaigns:detail", kwargs={"pk": self.campaign_to_join.id})
+        return self.campaign_to_join.get_absolute_url()
 
 
 class XhrCreateCharacterPreviewView(DetailView):

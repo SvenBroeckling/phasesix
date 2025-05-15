@@ -33,7 +33,7 @@
         <div class="d-flex justify-content-center flex-wrap">
           {% for mp in most_played %}
             <div class="text-center my-2 mx-1">
-              <a href="{% url "characters:detail" pk=mp.0.id %}" class="no-decoration no-link-colors">
+              <a href="{{ mp.0.get_absolute_url }}" class="no-decoration no-link-colors">
                 {% if mp.0.image %}
                   {% thumbnail mp.0.image "400x400" crop="center" as im %}
                     <img class="img-fluid rounded float-start me-3"
