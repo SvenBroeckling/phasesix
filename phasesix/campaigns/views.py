@@ -75,6 +75,7 @@ class CreateCampaignDataView(CreateView):
         "name",
         "abstract",
         "character_visibility",
+        "npc_visibility",
         "foe_visibility",
         "currency_map",
         "seed_money",
@@ -84,15 +85,15 @@ class CreateCampaignDataView(CreateView):
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.created_by = self.request.user
-        obj.epoch = Extension.objects.get(pk=self.kwargs["epoch_pk"])
-        obj.world = Extension.objects.get(pk=self.kwargs["world_pk"])
+        obj.epoch_extension = Extension.objects.get(pk=self.kwargs["epoch_pk"])
+        obj.world_extension = Extension.objects.get(pk=self.kwargs["world_pk"])
         obj.save()
 
         extensions = Extension.objects.filter(
             pk__in=self.request.GET.getlist("extensions")
         )
-        if obj.world.fixed_extensions.exists():
-            extensions = obj.world.fixed_extensions.all()
+        if obj.world_extension.fixed_extensions.exists():
+            extensions = obj.world_extension.fixed_extensions.all()
         obj.extensions.set(extensions)
         return super().form_valid(form)
 
