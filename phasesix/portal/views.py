@@ -150,7 +150,7 @@ class XhrSearchResultsView(TemplateView):
 
 class ProfileView(DetailView):
     template_name = "portal/profile.html"
-    model = User
+    model = Profile
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

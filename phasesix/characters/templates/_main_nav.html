@@ -104,7 +104,7 @@
                 class="dropdown-menu dropdown-menu-end shadow">
               <li>
                 <a class="dropdown-item d-flex w-100 flex-column gap-2 pb-2"
-                   href="{% url "portal:profile" pk=user.id %}">
+                   href="{{ user.profile.get_absolute_url }}">
                   <span
                     class="d-flex justify-content-center fw-semibold p-1 border rounded-pill">{% trans "Show profile" %}</span>
                 </a>

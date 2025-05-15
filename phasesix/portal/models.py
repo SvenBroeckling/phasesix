@@ -1,11 +1,14 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import get_thumbnail
 
 from characters.utils import static_thumbnail
+from worlds.unique_slugify import unique_slugify
 
 
 class Profile(models.Model):
+    slug = models.SlugField(_("slug"), max_length=220)
     user = models.OneToOneField("auth.User", on_delete=models.CASCADE)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("updated at"), auto_now=True)
@@ -39,9 +42,17 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def save(self, **kwargs):
+        if not self.slug:
+            unique_slugify(self, str(self.user.username))
+        super().save(**kwargs)
+
     class Meta:
         verbose_name = _("Profile")
         verbose_name_plural = _("Profiles")
+
+    def get_absolute_url(self):
+        return reverse("portal:profile", kwargs={"slug": self.slug})
 
     def get_image_url(self, geometry="180", crop="center"):
         if self.image:

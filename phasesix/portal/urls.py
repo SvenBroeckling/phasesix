@@ -6,7 +6,7 @@ from portal import views
 app_name = "portal"
 
 urlpatterns = [
-    path("profile/<int:pk>", views.ProfileView.as_view(), name="profile"),
+    path("profile/<slug:slug>", views.ProfileView.as_view(), name="profile"),
     path(
         "profile/upload_image",
         views.ProfileUploadImageView.as_view(),

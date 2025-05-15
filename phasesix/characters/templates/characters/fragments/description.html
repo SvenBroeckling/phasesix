@@ -7,8 +7,7 @@
   <div class="row">
     <div class="col-12 col-md-6">
 
-      {% url "portal:profile" pk=object.created_by.id as created_by_url %}
-      {% blocktrans with t_name=object.name t_created_by=object.created_by|capfirst t_created_by_url=created_by_url t_pronoun=object.pronoun.nominative|capfirst t_copula_verb=object.pronoun.copula_verb %}
+      {% blocktrans with t_name=object.name t_created_by=object.created_by|capfirst t_created_by_url=object.created_by.profile.get_absolute_url t_pronoun=object.pronoun.nominative|capfirst t_copula_verb=object.pronoun.copula_verb %}
         <b>{{ t_name }}</b> is a character created by <a href="{{ t_created_by_url }}">{{ t_created_by }}</a>.
       {% endblocktrans %}
 
