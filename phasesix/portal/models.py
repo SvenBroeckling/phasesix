@@ -23,6 +23,13 @@ class Profile(models.Model):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
+    last_wiki_image_copyright = models.CharField(
+        _("last wiki image copyright"), max_length=40, blank=True, null=True
+    )
+    last_wiki_image_copyright_url = models.CharField(
+        _("last wiki image copyright url"), max_length=150, blank=True, null=True
+    )
+
     backdrop_image = models.ImageField(
         _("backdrop image"),
         upload_to="profile_backdrop_images",

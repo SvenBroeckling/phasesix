@@ -121,6 +121,12 @@ class XhrSidebarView(DetailView):
             context["may_edit"] = self.object.may_edit(self.request.user)
         except AttributeError:
             context["may_edit"] = False
+        context["image_copyright_default"] = (
+            self.request.user.profile.last_wiki_image_copyright
+        )
+        context["image_copyright_url_default"] = (
+            self.request.user.profile.last_wiki_image_copyright_url
+        )
         return context
 
     def get_template_names(self):
@@ -206,6 +212,11 @@ class XhrUploadImageView(View):
             wiki_page.image.save(
                 request.FILES.get("file").name, request.FILES.get("file")
             )
+        request.user.profile.last_wiki_image_copyright = request.POST.get("copyright")
+        request.user.profile.last_wiki_image_copyright_url = request.POST.get(
+            "copyright-url"
+        )
+        request.user.profile.save()
         return JsonResponse({"status": "ok"})
 
 
