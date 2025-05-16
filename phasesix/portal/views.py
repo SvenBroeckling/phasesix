@@ -29,9 +29,9 @@ class IndexView(TemplateView):
                 world=self.request.world_configuration.world
             )
         if self.request.user.is_authenticated:
-            characters = characters.filter(created_by=self.request.user).order_by(
-                "-modified_at"
-            )
+            characters = characters.filter(
+                created_by=self.request.user, npc_campaign__isnull=True
+            ).order_by("-is_favorite", "modified_at")
         else:
             characters = characters.filter(may_appear_on_start_page=True).order_by("?")
 

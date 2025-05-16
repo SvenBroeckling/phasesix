@@ -44,14 +44,21 @@ class CharacterObject:
     homebrew_form_class = None
     homebrew_formset_class = None
 
-    def __init__(self, request, character, campaign=None):
+    def __init__(self, request, character, campaign=None, omit_category_qs=False):
         self.character = character
         self.campaign = campaign
         self.request = request
+        self.omit_category_qs = omit_category_qs
 
     @property
     def character_or_campaign(self):
         return self.character or self.campaign
+
+    @property
+    def category_qs(self):
+        if self.omit_category_qs:
+            return self.model.objects.none()
+        return self.get_category_qs()
 
     def get_category_qs(self):
         try:
@@ -103,7 +110,7 @@ class CharacterObject:
     def homebrew_form(self):
         if not self.homebrew_form_class:
             return None
-        if self.character is None:
+        if self.character is None and self.campaign is None:
             return None
         return self.homebrew_form_class(
             character=self.character,

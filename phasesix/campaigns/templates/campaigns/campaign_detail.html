@@ -48,14 +48,6 @@
           {% campaign_fragment 'status' %}
         </div>
 
-        <div hx-get="{% url 'campaigns:xhr_game_log' campaign_pk=object.id %}"
-             hx-trigger="click from:a.navigation-link"
-             hx-target="this"
-             class="tab-pane fade"
-             id="v-game-log"
-             role="tabpanel">
-        </div>
-
         <div class="tab-pane fade" id="v-homebrew" role="tabpanel">
           {% campaign_fragment 'homebrew' %}
         </div>

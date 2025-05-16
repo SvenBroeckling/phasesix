@@ -1226,7 +1226,10 @@ class XhrCharacterObjectsView(TemplateView):
 
         character_object_class = get_character_object_class(self.kwargs["object_type"])
         self.character_object = character_object_class(
-            self.request, self.character, self.campaign
+            self.request,
+            self.character,
+            campaign=self.campaign,
+            omit_category_qs=request.GET.get("omit_category_list", "false") == "true",
         )
         return super().dispatch(request, *args, **kwargs)
 

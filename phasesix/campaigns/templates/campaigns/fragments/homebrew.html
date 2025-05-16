@@ -4,79 +4,75 @@
   <div class="column-container column-layout-3">
 
     {% if may_edit %}
-      {% comment %}
-      <div class="pb-3">
-        <div class="card hover-cta pointer" data-bs-toggle="dropdown">
-          <div class="card-body p-3 d-flex flex-column align-items-center justify-content-center">
-            <i class="fas fa-plus fa-2x"></i><br>
-            <div class="dropdown mt-2">
-              <button class="btn" type="button" data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                {% trans "Create custom object" %}
-              </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item modal-trigger"
-                     data-url="{% url 'characters:xhr_character_objects' object_type="item" %}?campaign_pk={{ object.id }}"
-                     data-bs-toggle="modal"
-                     data-bs-target=".page-modal"
-                     data-modal-title="{% trans 'Create Item' %}"
-                     href="">{% trans "Create custom item" %}</a>
-                </li>
-                <li>
-                  <a class="dropdown-item modal-trigger"
-                     data-url="{% url 'characters:xhr_character_objects' object_type="weapon" %}?campaign_pk={{ object.id }}"
-                     data-bs-toggle="modal"
-                     data-bs-target=".page-modal"
-                     data-modal-title="{% trans 'Create Weapon' %}"
-                     href="">{% trans "Create custom weapon" %}</a>
-                </li>
-                <li>
-                  <a class="dropdown-item modal-trigger"
-                     data-url="{% url 'characters:xhr_character_objects' object_type="riot_gear" %}?campaign_pk={{ object.id }}"
-                     data-bs-toggle="modal"
-                     data-bs-target=".page-modal"
-                     data-modal-title="{% trans 'Create Armor' %}"
-                     href="">{% trans "Create custom armor" %}</a>
-                </li>
-                <li>
-                  <a class="dropdown-item modal-trigger"
-                     data-url="{% url 'characters:xhr_character_objects' object_type="spell" %}?campaign_pk={{ object.id }}"
-                     data-bs-toggle="modal"
-                     data-bs-target=".page-modal"
-                     data-modal-title="{% trans 'Create Spell' %}"
-                     href="">{% trans "Create custom spell" %}</a>
-                </li>
-                <li>
-                  <a class="dropdown-item modal-trigger"
-                     data-url="{% url 'characters:xhr_character_objects' object_type="template" %}?campaign_pk={{ object.id }}"
-                     data-bs-toggle="modal"
-                     data-bs-target=".page-modal"
-                     data-modal-title="{% trans 'Create Template' %}"
-                     href="">{% trans "Create custom template" %}</a>
-                </li>
-                <li>
-                  <a class="dropdown-item modal-trigger"
-                     data-url="{% url 'characters:xhr_character_objects' object_type="quirk" %}?campaign_pk={{ object.id }}"
-                     data-bs-toggle="modal"
-                     data-bs-target=".page-modal"
-                     data-modal-title="{% trans 'Create Quirk' %}"
-                     href="">{% trans "Create custom quirk" %}</a>
-                </li>
-                <li>
-                  <a class="dropdown-item modal-trigger"
-                     data-url="{% url 'characters:xhr_character_objects' object_type="language" %}?campaign_pk={{ object.id }}"
-                     data-bs-toggle="modal"
-                     data-bs-target=".page-modal"
-                     data-modal-title="{% trans 'Create Language' %}"
-                     href="">{% trans "Create custom language" %}</a>
-                </li>
-              </ul>
-            </div>
+      <div class="dropdown">
+        <div class="card hover-cta pointer"
+             data-bs-popper-config='{"strategy":"fixed"}'
+             data-bs-toggle="dropdown">
+          <div class="card-body p-5 d-flex gap-3 flex-column align-items-center justify-content-center">
+            <i class="fas fa-plus fa-2x"></i>
+            <span>{% trans "Create custom object" %}</span>
           </div>
         </div>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="item" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Item' %}"
+               href="">{% trans "Create custom item" %}</a>
+          </li>
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="weapon" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Weapon' %}"
+               href="">{% trans "Create custom weapon" %}</a>
+          </li>
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="riot_gear" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Armor' %}"
+               href="">{% trans "Create custom armor" %}</a>
+          </li>
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="spell" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Spell' %}"
+               href="">{% trans "Create custom spell" %}</a>
+          </li>
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="template" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Template' %}"
+               href="">{% trans "Create custom template" %}</a>
+          </li>
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="quirk" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Quirk' %}"
+               href="">{% trans "Create custom quirk" %}</a>
+          </li>
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="language" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Language' %}"
+               href="">{% trans "Create custom language" %}</a>
+          </li>
+        </ul>
+
       </div>
-      {% endcomment %}
     {% endif %}
 
     {% for item in object.homebrew_armory_item_set.all %}

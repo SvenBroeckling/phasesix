@@ -74,6 +74,7 @@ class CreateCampaignDataView(CreateView):
     fields = (
         "name",
         "abstract",
+        "ingame_act_date",
         "character_visibility",
         "npc_visibility",
         "foe_visibility",

@@ -14,7 +14,7 @@ $(function () {
             } else {
                 elem.removeClass('d-none')
                 $(elem.data('rel')).removeClass('d-none')
-                $('li.searchable-object-card-list-nav-item:not(.d-none):first').find('a').tab('show')
+                $('li.searchable-object-card-list-nav-item.category-item:not(.d-none):first').find('a').tab('show')
             }
         })
     }
