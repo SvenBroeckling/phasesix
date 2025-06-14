@@ -249,18 +249,35 @@ class Character(models.Model):
             )
         return warnings
 
+    def _load_all_aspect_modifiers(self):
+        """Load all aspect modifiers at once to prevent N+1 queries"""
+        if not hasattr(self, '_aspect_modifiers_cache'):
+            template_modifiers = TemplateModifier.objects.for_character(self) \
+                .values('aspect').annotate(total=Sum('aspect_modifier'))
+            riotgear_modifiers = RiotGearModifier.objects.for_character(self) \
+                .values('aspect').annotate(total=Sum('aspect_modifier'))
+            quirk_modifiers = QuirkModifier.objects.for_character(self) \
+                .values('aspect').annotate(total=Sum('aspect_modifier'))
+            body_modifiers = BodyModificationModifier.objects.for_character(self) \
+                .values('aspect').annotate(total=Sum('aspect_modifier'))
+
+            self._aspect_modifiers_cache = {}
+
+            for modifier_list in [template_modifiers, riotgear_modifiers,
+                                  quirk_modifiers, body_modifiers]:
+                for item in modifier_list:
+                    aspect = item['aspect']
+                    value = item['total'] or 0
+                    if aspect not in self._aspect_modifiers_cache:
+                        self._aspect_modifiers_cache[aspect] = 0
+                    self._aspect_modifiers_cache[aspect] += value
+
+        return self._aspect_modifiers_cache
+
     def get_aspect_modifier(self, aspect_name):
-        m = TemplateModifier.objects.for_character(self).aspect_modifier_sum(
-            aspect_name
-        )
-        r = RiotGearModifier.objects.for_character(self).aspect_modifier_sum(
-            aspect_name
-        )
-        q = QuirkModifier.objects.for_character(self).aspect_modifier_sum(aspect_name)
-        bm = BodyModificationModifier.objects.for_character(self).aspect_modifier_sum(
-            aspect_name
-        )
-        return m + r + q + bm
+        """Get the combined aspect modifier value with caching to reduce queries"""
+        modifiers = self._load_all_aspect_modifiers()
+        return modifiers.get(aspect_name, 0)
 
     def get_attribute_value(self, attribute_identifier):
         return self.characterattribute_set.get(
@@ -352,9 +369,20 @@ class Character(models.Model):
     def add_template(self, template):
         if not self.charactertemplate_set.filter(template=template).exists():
             self.charactertemplate_set.create(template=template)
+            # Clear cached modifiers when templates change
+            if hasattr(self, '_aspect_modifiers_cache'):
+                del self._aspect_modifiers_cache
 
     def remove_template(self, template):
         self.charactertemplate_set.filter(template=template).delete()
+        # Clear cached modifiers when templates change
+        if hasattr(self, '_aspect_modifiers_cache'):
+            del self._aspect_modifiers_cache
+
+    def clear_aspect_modifiers_cache(self):
+        """Clear the aspect modifiers cache to force recalculation"""
+        if hasattr(self, '_aspect_modifiers_cache'):
+            del self._aspect_modifiers_cache
 
     def get_epoch(self) -> Extension:
         return self.extensions.filter(is_mandatory=False, type="e").earliest("id")
