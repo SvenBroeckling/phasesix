@@ -289,16 +289,18 @@ class Character(models.Model):
             a.attribute.identifier: a.value for a in self.characterattribute_set.all()
         }
 
-    def knowledge_dict(self):  # TODO: 230 Queries
+    def knowledge_dict(self):
         kd = {}
-        for t in self.charactertemplate_set.all():
-            for m in t.template.templatemodifier_set.exclude(knowledge__isnull=True):
-                if m.knowledge in kd.keys():
-                    kd[m.knowledge] += (
-                        m.knowledge_modifier if m.knowledge_modifier is not None else 0
-                    )
-                else:
-                    kd[m.knowledge] = m.knowledge_modifier
+        knowledge_modifiers = TemplateModifier.objects.filter(
+            template__charactertemplate__character=self,
+            knowledge__isnull=False
+        ).annotate(
+            total=Sum('knowledge_modifier')
+        )
+
+        for km in knowledge_modifiers:
+            kd[km.knowledge] = km.total or 0
+
         return kd
 
     def switch_pc_npc_campaign(self):
