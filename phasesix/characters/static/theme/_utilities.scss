@@ -1,90 +1,123 @@
 .pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .mirrored {
-  transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
 .hover-cta:hover {
-  background-color: $body-tertiary-bg-dark;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: $body-tertiary-bg-dark;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .text-tiny {
-  font-size: 0.7rem;
+    font-size: 0.7rem;
 }
 
 .no-decoration {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .no-decoration:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .no-link-colors {
-  color: $white;
+    color: $white;
 }
 
 .no-link-colors:hover {
-  color: $white;
+    color: $white;
 }
 
 /* Fixed head table */
 
 .tableFixHead {
-  overflow-y: auto;
-  height: 100px;
+    overflow-y: auto;
+    height: 100px;
 }
 
 .tableFixHead thead th {
-  position: sticky;
-  top: 60px;
+    position: sticky;
+    top: 60px;
 }
 
 .table-hover-tr tr:hover td {
-  background-color: $gray-800 !important;
+    background-color: $gray-800 !important;
 }
 
 a.invisible-link {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Circle buttons */
 
 .btn-circle {
-  width: 45px;
-  height: 45px;
-  line-height: 45px;
-  text-align: center;
-  padding: 0;
-  border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    padding: 0;
+    border-radius: 50%;
 }
 
 .btn-circle i {
-  position: relative;
-  top: -1px;
+    position: relative;
+    top: -1px;
 }
 
 .btn-circle-sm {
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
-  font-size: 0.9rem;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 0.9rem;
 }
 
 .btn-circle-lg {
-  width: 55px;
-  height: 55px;
-  line-height: 55px;
-  font-size: 1.1rem;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    font-size: 1.1rem;
 }
 
 .btn-circle-xl {
-  width: 70px;
-  height: 70px;
-  line-height: 70px;
-  font-size: 1.3rem;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 1.3rem;
+}
+
+.loader {
+    display: inline-flex;
+    gap: 10px;
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    height: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, #000 95%, #0000) 35% 35%/6px 6px no-repeat #fff;
+    animation: l5 5s infinite;
+}
+
+@keyframes l5 {
+    0%, 11% {
+        background-position: 35% 35%
+    }
+    14%, 36% {
+        background-position: 65% 35%
+    }
+    38%, 61% {
+        background-position: 65% 65%
+    }
+    64%, 86% {
+        background-position: 35% 65%
+    }
+    88%, 100% {
+        background-position: 35% 35%
+    }
 }

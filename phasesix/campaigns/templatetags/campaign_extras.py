@@ -8,13 +8,11 @@ from campaigns.models import Campaign
 register = Library()
 
 
-@register.simple_tag(takes_context=True)
+@register.inclusion_tag("campaigns/fragments/fragment_base.html", takes_context=True)
 def campaign_fragment(context, fragment_template):
     context = context.flatten()
     context["fragment_template"] = fragment_template
-    return render_to_string(
-        "campaigns/fragments/" + fragment_template + ".html", context=context
-    )
+    return context
 
 
 @register.simple_tag(takes_context=True)

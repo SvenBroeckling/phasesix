@@ -83,13 +83,11 @@ def display_modifications(character_weapon, identifier):
     return mark_safe(res)
 
 
-@register.simple_tag(takes_context=True)
+@register.inclusion_tag("characters/fragments/fragment_base.html", takes_context=True)
 def detail_fragment(context, fragment_template):
     context = context.flatten()
     context["fragment_template"] = fragment_template
-    return render_to_string(
-        "characters/fragments/" + fragment_template + ".html", context=context
-    )
+    return context
 
 
 @register.simple_tag

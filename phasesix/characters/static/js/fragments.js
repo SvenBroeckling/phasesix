@@ -1,22 +1,31 @@
 let timeout = null;
 
+let fragmentsVisible = ["description", "dramaturgy"];
+
 function refresh_fragments() {
     function refresh() {
         $(".fragment").each(function (index) {
-            let active_href = $(".character-main-nav")
+            const fragmentTemplate = $(this).data("fragment-template");
+            const navHref = $(".character-main-nav")
                 .find(".active")
                 .attr("href");
+
+            if (
+                !fragmentsVisible.includes(fragmentTemplate) &&
+                fragmentTemplate !== "status"
+            )
+                return;
 
             $(this).load(
                 $(this).data("fragment-url"),
                 function (response, status, xhr) {
                     $(this).children(":first").unwrap(); // keep the original fragment container
                     $('[data-bs-toggle="popover"]').popover();
-                    if (active_href !== undefined) {
-                        // set the prior active tab in the character nav
-                        $(
-                            '.character-main-nav a[href="' + active_href + '"]',
-                        ).tab("show");
+                    // set the prior active tab in the character nav
+                    if (navHref) {
+                        $(`.character-main-nav a[href="${navHref}"]`).tab(
+                            "show",
+                        );
                     }
                 },
             );
@@ -35,3 +44,11 @@ function refresh_fragments() {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(refresh, 500);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    refresh_fragments();
+    document.addEventListener("refresh-fragment", (e) => {
+        fragmentsVisible = [e.detail.fragment_template];
+        refresh_fragments();
+    });
+});

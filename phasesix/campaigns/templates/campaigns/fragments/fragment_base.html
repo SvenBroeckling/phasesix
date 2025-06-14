@@ -1,5 +1,10 @@
 <div class="fragment"
+     data-fragment-template="{{ fragment_template }}"
      data-fragment-url="{% url 'campaigns:xhr_campaign_fragment' pk=object.id fragment_template=fragment_template %}">
-  {% block fragment %}{% endblock %}
+  {% block fragment %}
+    <div class="p-5 d-flex justify-content-center align-items-center">
+      <div class="loader"></div>
+    </div>
+  {% endblock %}
 </div>
 

@@ -21,46 +21,56 @@
   </li>
 </ul>
 
-<div class="list-group mb-3">
+<div
+  x-data="{}"
+  class="list-group mb-3">
 
-  <a class="active py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-description"
-     role="tab"
-     aria-current="false">
+  <a
+    class="active py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    data-bs-toggle="tab"
+    data-bs-target="#v-description"
+    @click="$dispatch('refresh-fragment', {fragment_template: 'description'})"
+    role="tab"
+    aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
       <i class="gi gi-lorc-bookmark"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Description" %}</span>
     </div>
   </a>
 
-  <a class="navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-character"
-     role="tab"
-     aria-current="true">
+  <a
+    class="navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    data-bs-toggle="tab"
+    data-bs-target="#v-character"
+    @click="$dispatch('refresh-fragment', {fragment_template: 'character'})"
+    role="tab"
+    aria-current="true">
     <div class="d-flex justify-content-center align-items-center">
       <i class="gi gi-delapouite-person"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Character" %}</span>
     </div>
   </a>
 
-  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-gear"
-     role="tab"
-     aria-current="false">
+  <a
+    class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    data-bs-toggle="tab"
+    data-bs-target="#v-gear"
+    @click="$dispatch('refresh-fragment', {fragment_template: 'gear'})"
+    role="tab"
+    aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
       <i class="gi gi-lorc-battle-gear"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Gear" %}</span>
     </div>
   </a>
 
-  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-combat"
-     role="tab"
-     aria-current="false">
+  <a
+    class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    data-bs-toggle="tab"
+    data-bs-target="#v-combat"
+    @click="$dispatch('refresh-fragment', {fragment_template: 'combat'})"
+    role="tab"
+    aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
       <i class="gi gi-lorc-crossed-swords"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Combat" %}</span>
@@ -68,11 +78,13 @@
   </a>
 
   {% if object.extension_enabled.bodymod %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       data-bs-toggle="tab"
-       data-bs-target="#v-body-modifications"
-       role="tab"
-       aria-current="false">
+    <a
+      class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+      data-bs-toggle="tab"
+      data-bs-target="#v-body-modifications"
+      @click="$dispatch('refresh-fragment', {fragment_template: 'body_modifications'})"
+      role="tab"
+      aria-current="false">
       <div class="d-flex justify-content-center align-items-center">
         <i class="gi gi-delapouite-cyber-eye"></i>
         <span class="ms-3 d-block d-lg-block">{% trans "Body Modifications" %}</span>
@@ -81,11 +93,13 @@
   {% endif %}
 
   {% if object.extension_enabled.magic and object.is_magical %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       data-bs-toggle="tab"
-       data-bs-target="#v-magic"
-       role="tab"
-       aria-current="false">
+    <a
+      class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+      data-bs-toggle="tab"
+      data-bs-target="#v-magic"
+      @click="$dispatch('refresh-fragment', {fragment_template: 'magic'})"
+      role="tab"
+      aria-current="false">
       <div class="d-flex justify-content-center align-items-center">
         <i class="gi-lorc-fairy-wand"></i>
         <span class="ms-3 d-block d-lg-block">{% trans "Magic" %}</span>
@@ -97,11 +111,13 @@
   {% endif %}
 
   {% if object.extension_enabled.pantheon %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       data-bs-toggle="tab"
-       data-bs-target="#v-pantheon"
-       role="tab"
-       aria-current="false">
+    <a
+      class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+      data-bs-toggle="tab"
+      data-bs-target="#v-pantheon"
+      @click="$dispatch('refresh-fragment', {fragment_template: 'pantheon'})"
+      role="tab"
+      aria-current="false">
       <div class="d-flex justify-content-center align-items-center">
         <i class="gi gi-lorc-ankh"></i>
         <span class="ms-3 d-block d-lg-block">{% trans "Belief" %}</span>
@@ -113,11 +129,13 @@
   {% endif %}
 
   {% if object.extension_enabled.horror %}
-    <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-       data-bs-toggle="tab"
-       data-bs-target="#v-horror"
-       role="tab"
-       aria-current="false">
+    <a
+      class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+      data-bs-toggle="tab"
+      data-bs-target="#v-horror"
+      @click="$dispatch('refresh-fragment', {fragment_template: 'horror'})"
+      role="tab"
+      aria-current="false">
       <div class="d-flex justify-content-center align-items-center">
         <i class="gi gi-lorc-monster-grasp"></i>
         <span class="ms-3 d-block d-lg-block">{% trans "Horror" %}</span>
@@ -128,22 +146,26 @@
     </a>
   {% endif %}
 
-  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-background"
-     role="tab"
-     aria-current="false">
+  <a
+    class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    data-bs-toggle="tab"
+    data-bs-target="#v-background"
+    @click="$dispatch('refresh-fragment', {fragment_template: 'advancement'})"
+    role="tab"
+    aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
       <i class="gi gi-delapouite-graduate-cap"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Background" %}</span>
     </div>
   </a>
 
-  <a class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-     data-bs-toggle="tab"
-     data-bs-target="#v-notes"
-     role="tab"
-     aria-current="false">
+  <a
+    class="py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+    data-bs-toggle="tab"
+    data-bs-target="#v-notes"
+    @click="$dispatch('refresh-fragment', {fragment_template: 'notes'})"
+    role="tab"
+    aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
       <i class="gi gi-delapouite-bookshelf"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Notes" %}</span>
