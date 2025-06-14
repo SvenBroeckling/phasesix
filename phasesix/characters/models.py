@@ -286,7 +286,8 @@ class Character(models.Model):
 
     def attributes(self) -> dict:
         return {
-            a.attribute.identifier: a.value for a in self.characterattribute_set.all()
+            a.attribute.identifier: a.value for a in
+            self.characterattribute_set.prefetch_related('attribute')
         }
 
     def knowledge_dict(self):
@@ -374,17 +375,23 @@ class Character(models.Model):
             # Clear cached modifiers when templates change
             if hasattr(self, '_aspect_modifiers_cache'):
                 del self._aspect_modifiers_cache
+            if hasattr(self, '_attribute_modifiers_cache'):
+                del self._attribute_modifiers_cache
 
     def remove_template(self, template):
         self.charactertemplate_set.filter(template=template).delete()
         # Clear cached modifiers when templates change
         if hasattr(self, '_aspect_modifiers_cache'):
             del self._aspect_modifiers_cache
+        if hasattr(self, '_attribute_modifiers_cache'):
+            del self._attribute_modifiers_cache
 
     def clear_aspect_modifiers_cache(self):
         """Clear the aspect modifiers cache to force recalculation"""
         if hasattr(self, '_aspect_modifiers_cache'):
             del self._aspect_modifiers_cache
+        if hasattr(self, '_attribute_modifiers_cache'):
+            del self._attribute_modifiers_cache
 
     def get_epoch(self) -> Extension:
         return self.extensions.filter(is_mandatory=False, type="e").earliest("id")
@@ -808,18 +815,6 @@ class Character(models.Model):
             )
 
 
-class CharacterAttributeQuerySet(models.QuerySet):
-    def physis_attributes(self):
-        return self.filter(attribute__kind="phy").order_by(
-            f"attribute__name_{get_language()}"
-        )
-
-    def persona_attributes(self):
-        return self.filter(attribute__kind="per").order_by(
-            f"attribute__name_{get_language()}"
-        )
-
-
 class CharacterSkillQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
         return self.filter(
@@ -855,6 +850,18 @@ class CharacterLanguage(models.Model):
     modifier = models.IntegerField(_("Modifier"), default=0)
 
 
+class CharacterAttributeQuerySet(models.QuerySet):
+    def physis_attributes(self):
+        return self.filter(attribute__kind="phy").order_by(
+            f"attribute__name_{get_language()}"
+        ).prefetch_related("attribute")
+
+    def persona_attributes(self):
+        return self.filter(attribute__kind="per").order_by(
+            f"attribute__name_{get_language()}"
+        ).prefetch_related("attribute")
+
+
 class CharacterAttribute(models.Model):
     objects = CharacterAttributeQuerySet.as_manager()
     character = models.ForeignKey(Character, models.CASCADE)
@@ -872,19 +879,40 @@ class CharacterAttribute(models.Model):
 
     @property
     def base_value(self):
-        s = TemplateModifier.objects.for_character(
-            self.character
-        ).attribute_modifier_sum(self.attribute.identifier)
-        r = RiotGearModifier.objects.for_character(
-            self.character
-        ).attribute_modifier_sum(self.attribute.identifier)
-        q = QuirkModifier.objects.for_character(self.character).attribute_modifier_sum(
-            self.attribute.identifier
-        )
-        b = BodyModificationModifier.objects.for_character(
-            self.character
-        ).attribute_modifier_sum(self.attribute.identifier)
-        return 1 + s + q + b + r
+        if not hasattr(self.character, '_attribute_modifiers_cache'):
+            self._load_attribute_modifiers()
+
+        attribute_id = self.attribute.identifier
+        return 1 + self.character._attribute_modifiers_cache.get(attribute_id, 0)
+
+    def _load_attribute_modifiers(self):
+        """Load all attribute modifiers at once to prevent N+1 queries"""
+        character = self.character
+        if not hasattr(character, '_attribute_modifiers_cache'):
+            template_modifiers = TemplateModifier.objects.for_character(character) \
+                .values('attribute__identifier').annotate(
+                total=Sum('attribute_modifier'))
+            riotgear_modifiers = RiotGearModifier.objects.for_character(character) \
+                .values('attribute__identifier').annotate(
+                total=Sum('attribute_modifier'))
+            quirk_modifiers = QuirkModifier.objects.for_character(character) \
+                .values('attribute__identifier').annotate(
+                total=Sum('attribute_modifier'))
+            body_modifiers = BodyModificationModifier.objects.for_character(character) \
+                .values('attribute__identifier').annotate(
+                total=Sum('attribute_modifier'))
+
+            character._attribute_modifiers_cache = {}
+
+            for modifier_list in [template_modifiers, riotgear_modifiers,
+                                  quirk_modifiers, body_modifiers]:
+                for item in modifier_list:
+                    attribute_id = item['attribute__identifier']
+                    if attribute_id is not None:  # Skip None values
+                        value = item['total'] or 0
+                        if attribute_id not in character._attribute_modifiers_cache:
+                            character._attribute_modifiers_cache[attribute_id] = 0
+                        character._attribute_modifiers_cache[attribute_id] += value
 
     @property
     def value(self):
