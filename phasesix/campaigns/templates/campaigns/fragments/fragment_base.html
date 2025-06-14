@@ -1,3 +1,5 @@
-<div class="fragment" data-fragment-url="{% url 'campaigns:xhr_campaign_fragment' pk=object.id fragment_template=fragment_template %}">
-    {% block fragment %}{% endblock %}
+<div class="fragment"
+     data-fragment-url="{% url 'campaigns:xhr_campaign_fragment' pk=object.id fragment_template=fragment_template %}">
+  {% block fragment %}{% endblock %}
 </div>
+

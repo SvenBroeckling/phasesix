@@ -2,50 +2,54 @@
 
 <script src="{% static 'js/clipboard.js' %}"></script>
 <script>
-    $(function(){
-        $('#search-wiki-pages').on('keyup', function(){
-            let search = $(this).val();
-            let url = $(this).data('url');
+  $(function () {
+    $('#search-wiki-pages').on('keyup', function () {
+      let search = $(this).val();
+      let url = $(this).data('url');
 
-            $.ajax({
-                url: url,
-                type: 'GET',
-                data: {q: search},
-                success: function(data){
-                    $('.wiki-links-search-target').html(data);
-                }
-            });
-        });
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: {q: search},
+        success: function (data) {
+          $('.wiki-links-search-target').html(data);
+        }
+      });
+    });
 
-        $('.wiki-links-search-target').on('click', '.suggested-wiki-link', function(e){
-            const elem = $(this);
+    $('.wiki-links-search-target').on('click', '.suggested-wiki-link', function (e) {
+      const elem = $(this);
 
-            let orig_text = elem.find('.card-header').text()
-            copyTextToClipboard(elem.data('wiki-link'))
+      let orig_text = elem.find('.card-header').text()
+      copyTextToClipboard(elem.data('wiki-link'))
 
-            elem.find('.card-header').text(elem.data('msg'))
-            setTimeout(() => elem.find('.card-header').text(orig_text), 2000)
+      elem.find('.card-header').text(elem.data('msg'))
+      setTimeout(() => elem.find('.card-header').text(orig_text), 2000)
 
-            e.preventDefault()
-            return false
-        })
+      e.preventDefault()
+      return false
     })
+  })
 </script>
 
 <div class="row">
-    <div class="col-12">
-        <div class="input-group">
-            <input id="search-wiki-pages"
-                   type="text"
-                   data-url="{% url 'worlds:xhr_search_links' world_slug=object.world.slug %}"
-                   class="w-100 mb-2"
-                   placeholder="{% trans 'Search' %}">
-        </div>
+  <div class="col-12">
+    <div class="input-group">
+      <div class="form-floating mb-3">
+        <input id="search-wiki-pages"
+               type="text"
+               data-url="{% url 'worlds:xhr_search_links' world_slug=object.world.slug %}"
+               autocomplete="off"
+               class="form-control"
+               placeholder="{% trans 'Search' %}">
+        <label for="search-wiki-pages">{% trans 'Search' %}</label>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-12 wiki-links-search-target">
-        {% include 'worlds/sidebar/_search_links.html' with pages=object.world.wikipage_set.all %}
-    </div>
+  <div class="col-12 wiki-links-search-target">
+    {% include 'worlds/sidebar/_search_links.html' with pages=object.world.wikipage_set.all %}
+  </div>
 </div>
