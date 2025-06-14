@@ -3,7 +3,8 @@ import math
 import random
 
 from django.db import models
-from django.db.models import Sum, Max, Q
+from django.db.models import Sum, Max, Q, Value
+from django.db.models.functions import Coalesce
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _, get_language
 from sorl.thumbnail import get_thumbnail
@@ -442,6 +443,21 @@ class Character(models.Model):
         )
 
     @property
+    def spell_points_spent(self):
+        base_cost = self.characterspell_set.aggregate(
+            total=Coalesce(Sum('spell__spell_point_cost'), Value(0)))
+        template_cost = self.characterspell_set.annotate(
+            template_sum=Coalesce(
+                Sum('characterspelltemplate__spell_template__spell_point_cost'),
+                Value(0))
+        ).aggregate(total=Coalesce(Sum('template_sum'), Value(0)))
+        return base_cost['total'] + template_cost['total']
+
+    @property
+    def spell_points_available(self):
+        return self.spell_points - self.spell_points_spent
+
+    @property
     def unlocked_spell_origins(self):
         t = TemplateModifier.objects.for_character(self).unlocked_spell_origins()
         r = RiotGearModifier.objects.for_character(self).unlocked_spell_origins()
@@ -460,14 +476,6 @@ class Character(models.Model):
     @property
     def arcana_used(self):
         return self.max_arcana - self.arcana
-
-    @property
-    def spell_points_spent(self):
-        return sum([s.spell_point_cost for s in self.characterspell_set.all()])
-
-    @property
-    def spell_points_available(self):
-        return self.spell_points - self.spell_points_spent
 
     # Body Modifications
 
@@ -643,9 +651,9 @@ class Character(models.Model):
             available_protection = (
                 r.value
                 - CharacterRiotGearProtectionUsed.objects.filter(
-                    character_riot_gear=character_riot_gear,
-                    protection_type=r.protection_type,
-                ).aggregate(Sum("value", default=0))["value__sum"]
+                character_riot_gear=character_riot_gear,
+                protection_type=r.protection_type,
+            ).aggregate(Sum("value", default=0))["value__sum"]
             )
 
             if available_protection:
@@ -1247,12 +1255,14 @@ class CharacterSpell(models.Model):
 
     @property
     def spell_point_cost(self):
-        template_value = sum(
-            [
-                s.spell_template.spell_point_cost
-                for s in self.characterspelltemplate_set.all()
-            ]
-        )
+        from django.db.models import Sum, F, Value
+        from django.db.models.functions import Coalesce
+
+        # Prefetch template costs in a single query
+        template_value = self.characterspelltemplate_set.aggregate(
+            total=Coalesce(Sum('spell_template__spell_point_cost'), Value(0))
+        )['total']
+
         return template_value + self.spell.spell_point_cost
 
 
