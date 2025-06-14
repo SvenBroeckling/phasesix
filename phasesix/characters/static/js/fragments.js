@@ -1,37 +1,17 @@
-let timeout = null;
-
 let fragmentsVisible = ["description", "dramaturgy"];
 
 function refresh_fragments() {
-    function refresh() {
-        $(".fragment").each(function (index) {
-            const fragmentTemplate = $(this).data("fragment-template");
-            const navHref = $(".character-main-nav")
-                .find(".active")
-                .attr("href");
+    $(".fragment").each(function (index) {
+        const fragmentTemplate = $(this).data("fragment-template");
+        const navHref = $(".character-main-nav").find(".active").attr("href");
 
-            if (
-                !fragmentsVisible.includes(fragmentTemplate) &&
-                fragmentTemplate !== "status"
-            )
-                return;
+        if (
+            !fragmentsVisible.includes(fragmentTemplate) &&
+            fragmentTemplate !== "status"
+        )
+            return;
 
-            $(this).load(
-                $(this).data("fragment-url"),
-                function (response, status, xhr) {
-                    $(this).children(":first").unwrap(); // keep the original fragment container
-                    $('[data-bs-toggle="popover"]').popover();
-                    // set the prior active tab in the character nav
-                    if (navHref) {
-                        $(`.character-main-nav a[href="${navHref}"]`).tab(
-                            "show",
-                        );
-                    }
-                },
-            );
-        });
-
-        let sc = $(".sidebar-content");
+        const sc = $(".sidebar-content");
         if (sc.data("sidebar-url") !== undefined) {
             sc.load(sc.data("sidebar-url"), (response, status, xhr) => {
                 if (xhr.status === 404) {
@@ -39,10 +19,19 @@ function refresh_fragments() {
                 }
             });
         }
-    }
 
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(refresh, 500);
+        $(this).load(
+            $(this).data("fragment-url"),
+            function (response, status, xhr) {
+                $(this).children(":first").unwrap(); // keep the original fragment container
+                $('[data-bs-toggle="popover"]').popover();
+                // set the prior active tab in the character nav
+                if (navHref) {
+                    $(`.character-main-nav a[href="${navHref}"]`).tab("show");
+                }
+            },
+        );
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -84,9 +84,10 @@ def display_modifications(character_weapon, identifier):
 
 
 @register.inclusion_tag("characters/fragments/fragment_base.html", takes_context=True)
-def detail_fragment(context, fragment_template):
+def detail_fragment(context, fragment_template, show_loader=True):
     context = context.flatten()
     context["fragment_template"] = fragment_template
+    context["show_loader"] = show_loader
     return context
 
 

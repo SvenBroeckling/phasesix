@@ -15,9 +15,9 @@
   <script src="{% static 'js/character_detail.js' %}"></script>
   <script src="{% static 'js/campaign_socket.js' %}"></script>
   <script>
-      $(function () {
-          $('.character-main-nav a[href]:first').tab('show')
-      })
+    $(function () {
+      $('.character-main-nav a[href]:first').tab('show')
+    })
   </script>
 {% endblock %}
 
@@ -61,7 +61,7 @@
 
       <div class="tab-content">
         <div class="tab-pane fade show active" id="v-description" role="tabpanel">
-          {% detail_fragment 'description' %}
+          {% detail_fragment 'description' show_loader=False %}
         </div>
 
         <div class="tab-pane fade" id="v-character" role="tabpanel">

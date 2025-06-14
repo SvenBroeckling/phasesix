@@ -9,9 +9,10 @@ register = Library()
 
 
 @register.inclusion_tag("campaigns/fragments/fragment_base.html", takes_context=True)
-def campaign_fragment(context, fragment_template):
+def campaign_fragment(context, fragment_template, show_loader=True):
     context = context.flatten()
     context["fragment_template"] = fragment_template
+    context["show_loader"] = show_loader
     return context
 
 

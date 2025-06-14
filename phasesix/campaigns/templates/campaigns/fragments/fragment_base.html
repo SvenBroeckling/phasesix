@@ -3,7 +3,9 @@
      data-fragment-url="{% url 'campaigns:xhr_campaign_fragment' pk=object.id fragment_template=fragment_template %}">
   {% block fragment %}
     <div class="p-5 d-flex justify-content-center align-items-center">
-      <div class="loader"></div>
+      {% if show_loader %}
+        <div class="loader"></div>
+      {% endif %}
     </div>
   {% endblock %}
 </div>
