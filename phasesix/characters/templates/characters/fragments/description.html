@@ -53,6 +53,7 @@
     </div>
 
     <div class="col-12 col-md-6">
+
       <div class="list-group">
         <div class="list-group-item d-flex align-items-center {% if may_edit %}modal-trigger{% endif %}"
           {% if may_edit %}
@@ -77,10 +78,10 @@
         {% endif %}
 
         {% for character_language in object.characterlanguage_set.all %}
-          <div class="list-group-item d-flex align-items-center py-2">
+          <div class="list-group-item d-flex align-items-center py-3">
             <div class="flex-grow-1">
               <div class="d-flex align-items-center">
-                <h6 class="mb-0">{{ character_language.language }}</h6>
+                <h5 class="mb-0">{{ character_language.language }}</h5>
                 <span class="badge bg-secondary ms-2">{{ character_language.language.country_name }}</span>
               </div>
               {% if character_language.language.amount_of_people_speaking > 0 %}
@@ -102,21 +103,54 @@
         {% endfor %}
       </div>
 
-
-      {% comment %}
-      <div class="card mt-3">
-        <div class="card-body p-4 d-flex align-items-center justify-content-start">
-          <i class="fs-1 me-3 gi gi-darkzaitzev-hooded-figure"></i>
-          <div>
-            <span class="fs-4">{% trans "No contacts yet." %}</span><br>
+      <div class="list-group mt-3">
+        <div class="list-group-item d-flex align-items-center {% if may_edit %}modal-trigger small-modal{% endif %}"
+          {% if may_edit %}
+             data-url="{% url "characters:xhr_contact" pk=object.id %}"
+             data-bs-toggle="modal"
+             data-bs-target=".page-modal"
+             data-modal-title="{% trans 'Add Contact' %}"
+          {% endif %}>
+          <i class="fs-4 me-3 gi gi-delapouite-three-friends"></i>
+          <div class="flex-grow-1">
+            <h5 class="mb-0">{% trans "Contacts" %}</h5>
             {% if may_edit %}
-              <small class="text-muted">{% trans "Click to add a contact" %}</small>
+              <small class="text-muted">{% trans "Click to add" %}</small>
             {% endif %}
           </div>
         </div>
-      </div>
-      {% endcomment %}
 
+        {% if not object.contact_set.exists %}
+          <div class="list-group-item text-center text-muted">
+            {% trans "No contacts yet." %}
+          </div>
+        {% endif %}
+
+        {% for contact in object.contact_set.all %}
+          <div class="list-group-item d-flex align-items-start py-3">
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-center">
+                <h5 class="mb-0">{{ contact.name }}</h5>
+                {% if contact.occupation %}
+                  <span class="badge bg-secondary ms-2">{{ contact.occupation }}</span>
+                {% endif %}
+              </div>
+              {% if contact.description %}
+                <p>
+                  {{ contact.description|phasesix_markup }}
+                </p>
+              {% endif %}
+            </div>
+            {% if may_edit %}
+              <a class="btn btn-outline-danger btn-sm ms-2 action-link"
+                 data-method="DELETE"
+                 href="{% url "characters:xhr_contact" pk=object.id %}?contact_id={{ contact.id }}">
+                <i class="far fa-trash-alt fa-fw"></i>
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 {% endblock %}

@@ -186,6 +186,13 @@ urlpatterns = [
         views.XhrCharacterStatusEffectsChangeView.as_view(),
         name="xhr_status_effects_change",
     ),
+    # contacts
+    path(
+        "xhr_contact/<int:pk>",
+        views.XhrContactView.as_view(),
+        name="xhr_contact",
+    ),
+
     # generic add and remove
     path(
         "xhr_character_objects/<str:object_type>",

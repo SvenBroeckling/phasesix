@@ -40,7 +40,7 @@ from characters.forms import (
     CharacterImageForm,
     CreateCharacterDataForm,
     CreateRandomNPCForm,
-    CreateCharacterExtensionsForm,
+    CreateCharacterExtensionsForm, ContactForm,
 )
 from characters.models import (
     Character,
@@ -54,7 +54,7 @@ from characters.models import (
     CharacterRiotGearProtectionUsed,
     CharacterTemplate,
     CharacterSkill,
-    CharacterBodyModification,
+    CharacterBodyModification, Contact,
 )
 from characters.utils import crit_successes
 from magic.models import (
@@ -1292,3 +1292,29 @@ class XhrToggleFavoriteView(View):
 
         icon_class = "fas" if character.is_favorite else "far"
         return HttpResponse(f'<i class="{icon_class} fa-star fa-2x text-warning"></i>')
+
+
+class XhrContactView(DetailView):
+    model = Character
+    template_name = "characters/modals/contacts.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = ContactForm(character=self.object)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        character = self.get_object()
+        if not character.may_edit(request.user):
+            return JsonResponse({"status": "forbidden"})
+        form = ContactForm(request.POST, character=character)
+        if form.is_valid:
+            form.save()
+        return JsonResponse({"status": "ok"})
+
+    def delete(self, request, *args, **kwargs):
+        character = self.get_object()
+        if not character.may_edit(request.user):
+            return JsonResponse({"status": "forbidden"})
+        Contact.objects.get(id=request.GET.get("contact_id")).delete()
+        return JsonResponse({"status": "ok"})

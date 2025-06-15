@@ -2,9 +2,32 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import CurrencyMap
-from characters.models import Character, Pronoun
+from characters.models import Character, Pronoun, Contact
 from pantheon.models import Entity
+from portal.widgets import BootstrapTextarea
 from rules.models import Lineage, Extension
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ("name", "occupation", "description")
+        widgets = {
+            "description": BootstrapTextarea({"rows": 5})
+        }
+
+    def __init__(self, *args, **kwargs):
+        character = kwargs.pop("character")
+        self.character = character
+        super().__init__(*args, **kwargs)
+        self.fields["occupation"].queryset = self.fields[
+            'occupation'].queryset.for_extensions(character.extensions)
+
+    def save(self, *args, **kwargs):
+        obj = super().save(commit=False)
+        obj.character = self.character
+        obj.save()
+        return obj
 
 
 class CharacterImageForm(forms.ModelForm):

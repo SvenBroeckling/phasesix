@@ -30,6 +30,37 @@ from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Ex
 from worlds.unique_slugify import unique_slugify
 
 
+class Pronoun(models.Model, metaclass=TransMeta):
+    nominative = models.CharField(_("nominative"), max_length=12)
+    dative = models.CharField(_("dative"), max_length=12)
+    possessive = models.CharField(_("possessive"), max_length=12)
+    copula_verb = models.CharField(_("copula verb"), max_length=12)
+
+    class Meta:
+        translate = ("nominative", "dative", "possessive", "copula_verb")
+
+    def __str__(self):
+        return f"{self.nominative}/{self.dative}"
+
+
+class Contact(models.Model):
+    character = models.ForeignKey("characters.Character", on_delete=models.CASCADE)
+    name = models.CharField(_("name"), max_length=80)
+    occupation = models.ForeignKey(
+        "rules.Template",
+        limit_choices_to={"category__name_en": "Occupation"},
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    description = models.TextField(_("description"), blank=True, null=True)
+
+    class Meta:
+        ordering = ("name",)
+        verbose_name = _("Contact")
+        verbose_name_plural = _("Contacts")
+
+
 class CharacterQuerySet(models.QuerySet):
     def for_world_configuration(self, world_configuration):
         if world_configuration is not None:
@@ -44,19 +75,6 @@ class CharacterQuerySet(models.QuerySet):
 
     def pc(self):
         return self.filter(npc_campaign__isnull=True)
-
-
-class Pronoun(models.Model, metaclass=TransMeta):
-    nominative = models.CharField(_("nominative"), max_length=12)
-    dative = models.CharField(_("dative"), max_length=12)
-    possessive = models.CharField(_("possessive"), max_length=12)
-    copula_verb = models.CharField(_("copula verb"), max_length=12)
-
-    class Meta:
-        translate = ("nominative", "dative", "possessive", "copula_verb")
-
-    def __str__(self):
-        return f"{self.nominative}/{self.dative}"
 
 
 class Character(models.Model):
