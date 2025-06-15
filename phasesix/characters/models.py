@@ -290,7 +290,7 @@ class Character(models.Model):
             self.characterattribute_set.prefetch_related('attribute')
         }
 
-    def knowledge_dict(self):
+    def _load_knowledge_dict(self):
         kd = {}
         knowledge_modifiers = TemplateModifier.objects.filter(
             template__charactertemplate__character=self,
@@ -303,6 +303,12 @@ class Character(models.Model):
             kd[km.knowledge] = km.total or 0
 
         return kd
+
+    def knowledge_dict(self):
+        """Return a dict of knowledge modifiers"""
+        if not hasattr(self, '_knowledge_dict'):
+            self._knowledge_dict_cache = self._load_knowledge_dict()
+        return self._knowledge_dict_cache
 
     def switch_pc_npc_campaign(self):
         if self.campaign is not None:
