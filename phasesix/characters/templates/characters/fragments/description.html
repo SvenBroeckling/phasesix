@@ -55,20 +55,27 @@
     <div class="col-12 col-md-6">
 
       <div class="list-group">
-        <div class="list-group-item d-flex align-items-center {% if may_edit %}modal-trigger{% endif %}"
-          {% if may_edit %}
-             data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}"
-             data-bs-toggle="modal"
-             data-bs-target=".page-modal"
-             data-modal-title="{% trans 'Add Language' %}"
-          {% endif %}>
+        <div class="list-group-item d-flex align-items-center">
+
           <i class="fs-4 me-3 gi gi-delapouite-hieroglyph-y"></i>
+
           <div class="flex-grow-1">
             <h5 class="mb-0">{% trans "Languages" %}</h5>
-            {% if may_edit %}
-              <small class="text-muted">{% trans "Click to add" %}</small>
-            {% endif %}
           </div>
+
+          {% if may_edit %}
+            <button
+              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger"
+              title="{% trans "Add contact" %}"
+              data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}"
+              data-bs-toggle="modal"
+              data-bs-target=".page-modal"
+              data-modal-title="{% trans 'Add Language' %}"
+              style="width: 2rem; height: 2rem;">
+              <i class="fas fa-plus"></i>
+            </button>
+          {% endif %}
+
         </div>
 
         {% if not object.characterlanguage_set.exists %}
@@ -93,9 +100,11 @@
               {% endif %}
             </div>
             {% if may_edit %}
-              <a class="btn btn-outline-danger btn-sm ms-2 action-link"
-                 data-method="DELETE"
-                 href="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}?object_id={{ character_language.id }}">
+              <a
+                class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center action-link"
+                style="width: 2rem; height: 2rem;"
+                data-method="DELETE"
+                href="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}?object_id={{ character_language.id }}">
                 <i class="far fa-trash-alt fa-fw"></i>
               </a>
             {% endif %}
@@ -104,20 +113,25 @@
       </div>
 
       <div class="list-group mt-3">
-        <div class="list-group-item d-flex align-items-center {% if may_edit %}modal-trigger small-modal{% endif %}"
-          {% if may_edit %}
-             data-url="{% url "characters:xhr_contact" pk=object.id %}"
-             data-bs-toggle="modal"
-             data-bs-target=".page-modal"
-             data-modal-title="{% trans 'Add Contact' %}"
-          {% endif %}>
+        <div class="list-group-item d-flex align-items-center">
           <i class="fs-4 me-3 gi gi-delapouite-three-friends"></i>
+
           <div class="flex-grow-1">
-            <h5 class="mb-0">{% trans "Contacts" %}</h5>
-            {% if may_edit %}
-              <small class="text-muted">{% trans "Click to add" %}</small>
-            {% endif %}
+            <h4 class="mb-0">{% trans "Contacts" %}</h4>
           </div>
+
+          {% if may_edit %}
+            <button
+              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger small-modal"
+              title="{% trans "Add contact" %}"
+              data-url="{% url "characters:xhr_contact" pk=object.id %}"
+              data-bs-toggle="modal"
+              data-bs-target=".page-modal"
+              data-modal-title="{% trans 'Add Contact' %}"
+              style="width: 2rem; height: 2rem;">
+              <i class="fas fa-plus"></i>
+            </button>
+          {% endif %}
         </div>
 
         {% if not object.contact_set.exists %}
@@ -142,9 +156,11 @@
               {% endif %}
             </div>
             {% if may_edit %}
-              <a class="btn btn-outline-danger btn-sm ms-2 action-link"
-                 data-method="DELETE"
-                 href="{% url "characters:xhr_contact" pk=object.id %}?contact_id={{ contact.id }}">
+              <a
+                class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center action-link"
+                style="width: 2rem; height: 2rem;"
+                data-method="DELETE"
+                href="{% url "characters:xhr_contact" pk=object.id %}?contact_id={{ contact.id }}">
                 <i class="far fa-trash-alt fa-fw"></i>
               </a>
             {% endif %}
