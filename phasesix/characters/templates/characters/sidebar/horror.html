@@ -6,10 +6,10 @@
       <div class="btn-group mb-1 w-100">
         <a class="btn btn-warning btn-sm action-link"
            href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
-                class="fas fa-meh fa-fw"></i> {% trans 'Gain Stress' %}</a>
+          class="fas fa-meh fa-fw"></i> {% trans 'Gain Stress' %}</a>
         <a class="btn btn-success btn-sm action-link"
            href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
-                class="far fa-meh fa-fw"></i> {% trans 'Remove Stress' %}</a>
+          class="far fa-meh fa-fw"></i> {% trans 'Remove Stress' %}</a>
       </div>
       <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
               data-dice-roll="{{ object.stress_test_dice }}d6"
@@ -81,8 +81,10 @@
           </div>
           {{ q.get_modifier_summary_html|safe }}
           <a class="btn btn-danger btn-sm float-end mt-2 action-link"
-             href="{% url 'characters:remove_quirk' pk=object.id quirk_pk=q.id %}"><i
-                  class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
+             data-method="DELETE"
+             href="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}?object_id={{ q.id }}">
+            <i class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}
+          </a>
         </div>
       </div>
     </div>
