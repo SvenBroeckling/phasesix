@@ -1,0 +1,38 @@
+{% extends "rulebook/pdf/appendix/appendix_base.html" %}
+{% load characters_extras %}
+{% load i18n %}
+{% load rules_extras %}
+
+{% block content %}
+  {% regroup object_list by type as type_list %}
+
+  {% for type in type_list %}
+    <h3>{{ type.grouper }}</h3>
+    {% for riot_gear in type.list %}
+      <h4>{{ riot_gear }}</h4>
+      <p>
+        {{ riot_gear.description|phasesix_markup }}
+      </p>
+      <i class="fas fa-running fa-fw"></i> {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 3 %}<br>
+      <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}:
+      {% color_value_span riot_gear.weight 100 invert=True %}<br>
+      <i class="fas fa-eye-slash fa-fw"></i> {% trans 'Concealment' %}:
+      {% color_value_span riot_gear.concealment 5 invert=True %}<br>
+      <i class="fas fa-coins fa-fw"></i> {% trans 'Price' %}: {% color_value_span riot_gear.price 1000 invert=True %}
+
+      <h5>{% trans "Protection" %}</h5>
+
+      {% for riot_gear_protection in riot_gear.get_protection %}
+        {% with protection_type=riot_gear_protection.protection_type %}
+          {% for i in riot_gear_protection.value|to_range %}
+            <i style="font-size: 18pt"
+               class="{{ protection_type.icon_class }} {{ protection_type.color_class }}"></i>
+          {% endfor %}
+          {{ protection_type }}<br>
+        {% endwith %}
+      {% endfor %}
+      <br>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+

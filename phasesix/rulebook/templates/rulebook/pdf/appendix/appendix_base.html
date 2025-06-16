@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="chapter" id="appendix-{{ kind }}">
+  <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
+    &nbsp;
+  </div>
+  <h2>{% trans "Appendix" %} - {{ title }}</h2>
+  <div class="chapter-text">
+    {% block content %}{% endblock %}
+  </div>
+</div>
