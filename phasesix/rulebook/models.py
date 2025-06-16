@@ -11,6 +11,7 @@ from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
 
 from homebrew.models import HomebrewModel
+from rulebook.font_utils import get_font_choices
 
 
 class ModelWithCreationInfo(models.Model):
@@ -29,11 +30,6 @@ class ModelWithCreationInfo(models.Model):
 
 
 class WorldBook(models.Model, metaclass=TransMeta):
-    BOOK_FONT_CHOICES = (
-        ("Oxanium", "Oxanium"),
-        ("UnifrakturMaguntia", "UnifrakturMaguntia"),
-        ("Baskervville", "Libre Baskerville"),
-    )
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     book = models.ForeignKey("rulebook.Book", on_delete=models.CASCADE)
     pdf_de = models.FileField(
@@ -52,13 +48,13 @@ class WorldBook(models.Model, metaclass=TransMeta):
         gt("book heading font"),
         max_length=20,
         default="Oxanium",
-        choices=BOOK_FONT_CHOICES,
+        choices=get_font_choices(),
     )
     book_body_font = models.CharField(
         gt("book body font"),
         max_length=20,
         default="Baskervville",
-        choices=BOOK_FONT_CHOICES,
+        choices=get_font_choices(),
     )
 
     def __str__(self):

@@ -1,6 +1,7 @@
 from django.contrib.staticfiles import finders
 from django.template import Library, Template, Context
 
+from rulebook.font_utils import get_accumulated_fonts_css
 from rulebook.models import WorldBook
 from worlds.models import World
 
@@ -50,3 +51,8 @@ def local_static(path):
         return file_path
     else:
         raise ValueError(f"Static file '{path}' could not be found.")
+
+
+@register.simple_tag
+def font_kits():
+    return get_accumulated_fonts_css()
