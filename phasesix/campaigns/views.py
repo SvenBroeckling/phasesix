@@ -271,17 +271,6 @@ class XhrCampaignGameLogView(ListView):
         return context
 
 
-class XhrCampaignStatisticsView(DetailView):
-    template_name = "campaigns/statistics/roll_list.html"
-    model = Campaign
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        mode = self.kwargs["mode"]
-        context["object_list"] = self.object.roll_set.order_by(f"-{mode}")[:5]
-        return context
-
-
 class XhrCampaignToggleFavoriteView(View):
     def post(self, request, *args, **kwargs):
         campaign = get_object_or_404(Campaign, pk=kwargs["pk"])

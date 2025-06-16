@@ -59,3 +59,8 @@ def create_campaign_url(context):
             )
         return reverse("campaigns:create_epoch", kwargs={"world_pk": extension.id})
     return reverse("campaigns:create")
+
+
+@register.inclusion_tag("campaigns/statistics/roll_list.html")
+def roll_list(campaign, mode):
+    return {"object_list": campaign.roll_set.order_by(f"-{mode}")[:5]}

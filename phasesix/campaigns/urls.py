@@ -89,10 +89,4 @@ urlpatterns = [
         views.XhrCampaignGameLogView.as_view(),
         name="xhr_game_log",
     ),
-    # Statistics
-    path(
-        "statistics/<int:pk>/<str:mode>",
-        views.XhrCampaignStatisticsView.as_view(),
-        name="xhr_statistics",
-    ),
 ]
