@@ -61,7 +61,7 @@
           <i class="fs-4 me-3 gi gi-delapouite-hieroglyph-y"></i>
 
           <div class="flex-grow-1 d-flex gap-2 align-items-center">
-            <h5 class="mb-0">{% trans "Languages" %}</h5>
+            <h4 class="mb-0">{% trans "Languages" %}</h4>
             {% with language_count=object.characterlanguage_set.count %}
               {{ language_count }}/{{ object.max_languages }}
             {% endwith %}

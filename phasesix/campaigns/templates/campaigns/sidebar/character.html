@@ -98,12 +98,6 @@
       </div>
     </div>
 
-    {% if object.description %}
-      <p>
-        {{ object.description|phasesix_markup }}
-      </p>
-    {% endif %}
-
     <div class="row">
       {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
         <div class="col-12">
@@ -129,6 +123,12 @@
         </div>
       {% endif %}
     </div>
+
+    {% if object.description %}
+      <p>
+        {{ object.description|phasesix_markup }}
+      </p>
+    {% endif %}
   </div>
 
   {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
