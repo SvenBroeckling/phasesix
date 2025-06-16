@@ -476,6 +476,23 @@ class Character(models.Model):
         )
         return self.lineage.template_points + campaign_points - spent_points
 
+    # Languages and Contacts
+    @property
+    def max_languages(self):
+        base = self.lineage.base_languages + self.get_aspect_modifier(
+            "base_languages"
+        )
+        return base + self.get_attribute_value("education") + self.get_attribute_value(
+            'logic')
+
+    @property
+    def max_contacts(self):
+        base = self.lineage.base_contacts + self.get_aspect_modifier(
+            "base_contacts"
+        )
+        return base + self.get_attribute_value("charm") + self.get_attribute_value(
+            'attractiveness')
+
     # Horror
     @property
     def available_stress(self):

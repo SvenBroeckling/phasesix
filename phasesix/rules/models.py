@@ -12,6 +12,8 @@ from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 
 CHARACTER_ASPECT_CHOICES = (
+    ("base_languages", _("languages")),
+    ("base_contacts", _("contacts")),
     ("base_max_health", _("max health")),
     ("base_max_arcana", _("max arcana")),
     ("base_spell_points", _("spell points")),
@@ -262,6 +264,9 @@ class Lineage(models.Model, metaclass=TransMeta):
 
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+
+    base_languages = models.IntegerField(_("languages"), default=0)
+    base_contacts = models.IntegerField(_("contacts"), default=0)
 
     base_max_health = models.IntegerField(_("max health"), default=6)
 

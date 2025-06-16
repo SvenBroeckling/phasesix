@@ -25,31 +25,32 @@
       {% endif %}
 
       <div id="character-description" class="mt-3">
-        {% if object.description %}
-          {{ object.description|phasesix_markup }}
-        {% else %}
-          <div class="card mt-3">
-            {% image_url object "800x800" as image %}
-            <img src="{{ image }}" class="card-img-top img-fluid" alt="{% trans "Character Image" %}">
-            <div class="card-body text-center">
+        <div class="card mt-3">
+          {% image_url object "800x800" as image %}
+          <img src="{{ image }}" class="card-img-top img-fluid" alt="{% trans "Character Image" %}">
+          <div class="card-body position-relative">
+            {% if may_edit %}
+              <div class="top-0 end-0 mt-2 me-2 z-1 position-absolute d-flex gap-2 justify-content-end">
+                <button
+                  class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger small-modal"
+                  data-url="{% url "characters:xhr_edit_description" pk=object.id %}"
+                  data-modal-title="{% trans 'Edit Description' %}"
+                  data-bs-toggle="modal"
+                  data-bs-target=".page-modal"
+                  style="width: 2rem; height: 2rem"
+                  title="{% trans "Edit" %}">
+                  <i class="fas fa-pen"></i>
+                </button>
+              </div>
+            {% endif %}
+            {% if object.description %}
+              {{ object.description|phasesix_markup }}
+            {% else %}
               {% trans "This character has no description yet." %}
-            </div>
-          </div>
-        {% endif %}
-      </div>
-
-      {% if may_edit %}
-        <div class="mt-3 card pointer hover-cta"
-             hx-target="#character-description"
-             hx-get="{% url "characters:xhr_edit_description" pk=object.id %}">
-          <div class="card-body p-4 d-flex align-items-center justify-content-start">
-            <i class="fs-1 me-3 gi gi-lorc-fountain-pen"></i>
-            <div>
-              <span class="fs-4">{% trans "Edit Description" %}</span><br>
-            </div>
+            {% endif %}
           </div>
         </div>
-      {% endif %}
+      </div>
     </div>
 
     <div class="col-12 col-md-6">
@@ -59,8 +60,11 @@
 
           <i class="fs-4 me-3 gi gi-delapouite-hieroglyph-y"></i>
 
-          <div class="flex-grow-1">
+          <div class="flex-grow-1 d-flex gap-2 align-items-center">
             <h5 class="mb-0">{% trans "Languages" %}</h5>
+            {% with language_count=object.characterlanguage_set.count %}
+              {{ language_count }}/{{ object.max_languages }}
+            {% endwith %}
           </div>
 
           {% if may_edit %}
@@ -116,8 +120,11 @@
         <div class="list-group-item d-flex align-items-center">
           <i class="fs-4 me-3 gi gi-delapouite-three-friends"></i>
 
-          <div class="flex-grow-1">
+          <div class="flex-grow-1 d-flex gap-2 align-items-center">
             <h4 class="mb-0">{% trans "Contacts" %}</h4>
+            {% with contact_count=object.contact_set.count %}
+              {{ contact_count }}/{{ object.max_contacts }}
+            {% endwith %}
           </div>
 
           {% if may_edit %}

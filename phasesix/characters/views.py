@@ -1267,18 +1267,9 @@ class XhrEditCharacterDescriptionView(UpdateView):
     fields = ["description"]
     model = Character
 
-    def dispatch(self, request, *args, **kwargs):
-        character = Character.objects.get(id=kwargs["pk"])
-        if not character.may_edit(request.user):
-            raise PermissionDenied()
-        return super().dispatch(request, *args, **kwargs)
-
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
-        result = DjangoTemplate(
-            "{% load rules_extras %}{{ object.description|phasesix_markup }}"
-        ).render(Context({"object": self.object}))
-        return HttpResponse(result)
+        return JsonResponse({"status": "ok"})
 
 
 class XhrToggleFavoriteView(View):
