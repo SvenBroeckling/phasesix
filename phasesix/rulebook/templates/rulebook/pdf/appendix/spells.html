@@ -7,25 +7,31 @@
   {% regroup object_list by origin as origin_list %}
 
   {% for origin in origin_list %}
-    <h3>{{ origin.grouper }}</h3>
+    <div class="column-image-caption" style="background-image: url({{ origin.grouper.image.path }})">
+      <h3>{{ origin.grouper }}</h3>
+    </div>
+
     {% for spell in origin.list %}
-      <h4>{{ spell }}</h4>
-      <p>
-        {{ spell.rules|phasesix_markup }}
-      </p>
-      <i
-        class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ spell.type.reference_attribute.name }}<br>
-      <i class="fas fa-magic"></i> {% trans 'Arcana' %}: {{ spell.arcana_cost }}<br>
-      <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span spell.range 4 %}<br>
-      <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ spell.shape|default:"-" }}<br>
-      <i
-        class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span spell.actions 3 invert=True %}
-      <br>
-      {% trans "Instant" as t_duration %}
-      <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ spell.duration|default:t_duration }}
-      {% if spell.duration %}{{ spell.get_duration_unit_display }}{% endif %}
-      {% if spell.needs_concentration %}
-        <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+      <div class="avoid-page-break">
+        <h4>{{ spell }}</h4>
+        <p class="allow-page-break">
+          {{ spell.rules|phasesix_markup }}
+        </p>
+        <i
+          class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ spell.type.reference_attribute.name }}<br>
+        <i class="fas fa-magic"></i> {% trans 'Arcana' %}: {{ spell.arcana_cost }}<br>
+        <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span spell.range 4 %}<br>
+        <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ spell.shape|default:"-" }}<br>
+        <i
+          class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span spell.actions 3 invert=True %}
+        <br>
+        {% trans "Instant" as t_duration %}
+        <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ spell.duration|default:t_duration }}
+        {% if spell.duration %}{{ spell.get_duration_unit_display }}{% endif %}
+        <i class="fas fa-magic"></i> {% trans 'Spell Point Cost' %}: {{ spell.spell_point_cost }}<br>
+        {% if spell.needs_concentration %}
+          <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
+      </div>
     {% endfor %}
   {% endfor %}
 {% endblock %}

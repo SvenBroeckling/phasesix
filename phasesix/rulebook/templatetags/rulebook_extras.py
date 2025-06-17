@@ -3,10 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.template import Library, Template, Context
 from django.template.loader import render_to_string
 
-from armory.models import Weapon, RiotGear
+from armory.models import Weapon, RiotGear, WeaponModification
 from body_modifications.models import BodyModification
 from horror.models import Quirk
-from magic.models import BaseSpell
+from magic.models import BaseSpell, SpellTemplate
 from rulebook.font_utils import get_accumulated_fonts_css
 from rulebook.models import WorldBook
 from worlds.models import World
@@ -25,24 +25,31 @@ def create_toc_entries(bookmark_tree, indent=0):
             yield from create_toc_entries(children, indent + 3)
 
 
+@register.filter
+def chapter_label_to_id(label):
+    return label.replace(".", "-").replace(" ", "-").lower()
+
+
 @register.simple_tag
 def appendix(world_book, kind):
     template_name = f"rulebook/pdf/appendix/{kind}.html"
     object_list_map = {
         "templates": CharacterTemplate.objects.for_world(world_book.world),
         "weapons": Weapon.objects.for_world(world_book.world).order_by("type"),
+        "weapon_modifications": WeaponModification.objects.for_world(
+            world_book.world).order_by("type"),
         "riot_gear": RiotGear.objects.for_world(world_book.world).order_by("type"),
-        "spells": BaseSpell.objects.order_by("origin"),
-        "quirks": Quirk.objects.all(),
+        "spells": BaseSpell.objects.order_by("origin"), "quirks": Quirk.objects.all(),
+        "spell_templates": SpellTemplate.objects.order_by("category"),
         "body_modifications": BodyModification.objects.all(), }
     title_map = {"templates": _("Character Templates"), "weapons": _("Weapons"),
+                 "weapon_modifications": _("Weapon Modifications"),
                  "riot_gear": _("Armor"), "spells": _("Spells"),
-                 "quirks": _("Quirks"),
+                 "spell_templates": _("Spell Templates"), "quirks": _("Quirks"),
                  "body_modifications": _("Body Modifications"), }
-    return render_to_string(template_name,
-                            {"world_book": world_book,
-                             "object_list": object_list_map.get(kind),
-                             "title": title_map.get(kind), "kind": kind})
+    return render_to_string(template_name, {"world_book": world_book,
+                                            "object_list": object_list_map.get(kind),
+                                            "title": title_map.get(kind), "kind": kind})
 
 
 @register.simple_tag

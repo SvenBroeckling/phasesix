@@ -23,15 +23,13 @@
       <h5>{% trans "Protection" %}</h5>
 
       {% for riot_gear_protection in riot_gear.get_protection %}
-        <div class="protection-types" style="position: relative; height: 60px;">
+        <div class="protection-types">
           {% with protection_type=riot_gear_protection.protection_type %}
-            <div style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%;">
-              {% for i in riot_gear_protection.value|to_range %}
-                <i style="font-size: 18pt"
-                   class="{{ protection_type.icon_class }} {{ protection_type.color_class }}"></i>
-              {% endfor %}
-              {{ protection_type }}<br>
-            </div>
+            {% for i in riot_gear_protection.value|to_range %}
+              <i style="font-size: 18pt"
+                 class="{{ protection_type.icon_class }} {{ protection_type.color_class }}"></i>
+            {% endfor %}
+            {{ protection_type }}<br>
           {% endwith %}
         </div>
       {% endfor %}

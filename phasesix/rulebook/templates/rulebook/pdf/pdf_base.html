@@ -24,6 +24,14 @@
       font-family: '{{ world_book.book_heading_font }}';
     }
 
+    .title-page p.claim {
+      font-family: '{{ world_book.book_heading_font }}';
+      font-size: 18pt;
+      text-shadow: 8px 8px #0a0a0a;
+      color: white;
+      text-align: center;
+    }
+
     h2 {
       margin-bottom: 0.3cm;
     }
@@ -36,7 +44,6 @@
     .chapter-text p {
       margin-top: 3mm;
     }
-
 
     blockquote {
       margin-right: 0;
@@ -57,12 +64,12 @@
       margin: 0;
     }
 
-    .title-page {
-      background-image: url({{ world_book.book_title_image.path }});
-      background-size: cover;
-      margin: -2cm -1.4cm;
-      width: 21.0cm;
-      height: 30.7cm;
+    .avoid-page-break {
+      page-break-inside: avoid;
+    }
+
+    .allow-page-break {
+      page-break-inside: auto !important;
     }
 
     .title-page h1 {
@@ -70,14 +77,6 @@
       text-shadow: 8px 8px #0a0a0a;
       margin-top: 8cm;
       font-size: 42pt;
-      text-align: center;
-    }
-
-    .title-page p.claim {
-      font-family: '{{ world_book.book_heading_font }}';
-      font-size: 18pt;
-      text-shadow: 8px 8px #0a0a0a;
-      color: white;
       text-align: center;
     }
 
@@ -109,9 +108,44 @@
     .text-info {
       color: skyblue;
     }
+
+    .text-primary {
+      color: teal;
+    }
+
+    .text-warning {
+      color: darkgoldenrod;
+    }
+
+    .text-white {
+      color: black;
+    }
+
+    .text-success {
+      color: green;
+    }
+
+    .column-image-caption {
+      page-break-before: always;
+      width: 100%;
+      height: 12cm;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+
+    .column-image-caption h3 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      color: white;
+      padding: 0.5cm;
+      font-size: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
   </style>
-  {% block extra_style %}
-  {% endblock %}
+  {% block extra_style %}{% endblock %}
 </head>
 
 <body>

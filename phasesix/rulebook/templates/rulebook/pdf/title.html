@@ -2,6 +2,18 @@
 {% load rules_extras %}
 {% load rulebook_extras %}
 
+{% block extra_style %}
+  <style>
+    .title-page {
+      background-image: url({{ world_book.book_title_image.path }});
+      background-size: cover;
+      margin: -2cm -1.4cm;
+      width: 21.0cm;
+      height: 30.7cm;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
   <div class="page title-page">
     <span></span>

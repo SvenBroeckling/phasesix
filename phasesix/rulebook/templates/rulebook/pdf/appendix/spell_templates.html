@@ -1,0 +1,22 @@
+{% extends "rulebook/pdf/appendix/appendix_base.html" %}
+{% load characters_extras %}
+{% load i18n %}
+{% load rules_extras %}
+
+{% block content %}
+  {% regroup object_list by type as category_list %}
+
+  {% for category in category_list %}
+    <h3>{{ category.grouper }}</h3>
+    {% for template in category.list %}
+      <div class="avoid-page-break">
+        <h4>{{ template }}</h4>
+        <p>
+          {{ template.rules|phasesix_markup }}
+        </p>
+        <i
+          class="fas fa-magic fa-fw"></i> {% trans 'Spell Point Cost' %}: {% color_value_span template.spell_point_cost 10 invert=True %}<br>
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}

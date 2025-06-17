@@ -8,16 +8,17 @@
 
   {% for type in type_list %}
     <h3>{{ type.grouper }}</h3>
-    {% for weapon in type.list %}
+    {% for weapon_modification in type.list %}
       <div class="avoid-page-break">
-        <h4>{{ weapon }}</h4>
+        <h4>{{ weapon_modification }}</h4>
         <p>
-          {{ weapon.description|phasesix_markup }}
+          {{ weapon_modification.description|phasesix_markup }}
         </p>
-        {% for keyword in weapon.weaponkeyword_set.all %}
-          {{ keyword.keyword }}: {{ keyword.value }}<br>
-        {% endfor %}
-        <i class="fas fa-euro fa-fw"></i> {% trans 'Price' %}: {% color_value_span weapon.price 1000 invert=True %}<br>
+        <p>
+          {{ weapon_modification.rules|phasesix_markup }}
+        </p>
+        <i
+          class="fas fa-euro fa-fw"></i> {% trans 'Price' %}: {% color_value_span weapon_modification.price 500 invert=True %}<br>
       </div>
     {% endfor %}
   {% endfor %}

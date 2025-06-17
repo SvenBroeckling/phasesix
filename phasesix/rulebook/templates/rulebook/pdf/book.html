@@ -19,7 +19,7 @@
       <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
         &nbsp;
       </div>
-      <h2>{{ chapter.name }}</h2>
+      <h2 id="chapter-toc-identifier-{{ chapter.name|chapter_label_to_id }}">{{ chapter.name }}</h2>
       <div class="chapter-text">
         {{ chapter.text|replace_book_variables:world_book.world|phasesix_markup:False|resolve_rulebook_chapter_links:"pdf" }}
       </div>
@@ -28,8 +28,10 @@
 
   {% appendix world_book "templates" %}
   {% appendix world_book "weapons" %}
+  {% appendix world_book "weapon_modifications" %}
   {% appendix world_book "riot_gear" %}
   {% appendix world_book "spells" %}
+  {% appendix world_book "spell_templates" %}
   {% appendix world_book "quirks" %}
   {% appendix world_book "body_modifications" %}
 {% endblock %}
