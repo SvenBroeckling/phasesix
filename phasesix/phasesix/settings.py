@@ -23,7 +23,6 @@ DEBUG_DISCORD = False
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 CSRF_TRUSTED_ORIGINS = [f"https://{a}" for a in ALLOWED_HOSTS]
 
-
 ASGI_APPLICATION = "phasesix.asgi.application"
 REDIS_HOST = os.environ["REDIS_HOST"]
 REDIS_PORT = int(os.environ["REDIS_PORT"])
@@ -75,6 +74,7 @@ INSTALLED_APPS = [
     "horror",
     "pantheon",
     "body_modifications",
+    "vehicles",
     "campaigns",
 ]
 
