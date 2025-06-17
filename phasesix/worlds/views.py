@@ -271,11 +271,9 @@ class WikiPageWithGameValuesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        object_list = WikiPage.objects.filter(wikipagegamevalues__id__isnull=False)
+        object_list = WikiPage.objects.with_game_values()
         if self.request.world_configuration is not None:
-            object_list = object_list.filter(
-                world=self.request.world_configuration.world
-            )
+            object_list = object_list.for_world(self.request.world_configuration.world)
         context["object_list"] = object_list
         context["navigation"] = "wiki_page_with_game_values"
         return context

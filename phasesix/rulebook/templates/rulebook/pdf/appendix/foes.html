@@ -1,0 +1,23 @@
+{% extends "rulebook/pdf/appendix/appendix_base.html" %}
+{% load rules_extras %}
+
+{% block content %}
+  {% regroup object_list by parent as parent_list %}
+
+  {% for parent in parent_list %}
+    <div class="column-image-caption" style="background-image: url({{ parent.grouper.image.path }})">
+      <h3>{{ parent.grouper }}</h3>
+    </div>
+
+    {% for wiki_page in parent.list %}
+      <div class="avoid-page-break">
+        <div class="column-image-caption-small" style="background-image: url({{ wiki_page.image.path }})">
+          <h3>{{ wiki_page }}</h3>
+        </div>
+        <p class="allow-page-break">
+          {{ wiki_page.text|phasesix_markup }}
+        </p>
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}

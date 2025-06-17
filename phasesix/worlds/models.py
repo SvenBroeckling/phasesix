@@ -208,6 +208,14 @@ class WikiPageQuerySet(models.QuerySet):
     def get_top_level(self):
         return self.filter(parent=None)
 
+    def with_game_values(self):
+        return self.filter(wikipagegamevalues__id__isnull=False)
+
+    def for_world(self, world):
+        if world is None:
+            return self.all()
+        return self.filter(world=world)
+
 
 @reversion.register
 class WikiPage(models.Model, metaclass=TransMeta):
