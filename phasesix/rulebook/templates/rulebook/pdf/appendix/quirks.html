@@ -1,4 +1,20 @@
 {% extends "rulebook/pdf/appendix/appendix_base.html" %}
+{% load rules_extras %}
 
 {% block content %}
+  {% regroup object_list by category as category_list %}
+
+  {% for category in category_list %}
+    <h3>{{ category.grouper }}</h3>
+
+    {% for quirk in category.list %}
+      <div class="avoid-page-break">
+        <h4>{{ quirk }}</h4>
+        <p class="allow-page-break">
+          {{ quirk.rules|phasesix_markup }}
+        </p>
+        {% modifier_widget quirk.quirkmodifier_set.all %}
+      </div>
+    {% endfor %}
+  {% endfor %}
 {% endblock %}

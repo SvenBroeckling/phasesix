@@ -34,7 +34,8 @@ def chapter_label_to_id(label):
 def appendix(world_book, kind):
     template_name = f"rulebook/pdf/appendix/{kind}.html"
     object_list_map = {
-        "templates": CharacterTemplate.objects.for_world(world_book.world),
+        "templates": CharacterTemplate.objects.for_world(world_book.world).order_by(
+            "category"),
         "weapons": Weapon.objects.for_world(world_book.world).order_by("type"),
         "weapon_modifications": WeaponModification.objects.for_world(
             world_book.world).order_by("type"),

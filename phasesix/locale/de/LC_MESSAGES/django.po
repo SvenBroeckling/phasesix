@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-16 19:02+0000\n"
-"PO-Revision-Date: 2025-06-16 21:11+0200\n"
+"POT-Creation-Date: 2025-06-17 03:25+0000\n"
+"PO-Revision-Date: 2025-06-17 05:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -540,7 +540,7 @@ msgstr "Ist dies die übliche Einheit, mit der Menschen bezahlen?"
 #: characters/templates/characters/modals/add_spell_template.html:73
 #: characters/templates/characters/modals/add_weapon_mod.html:67
 #: characters/templates/characters/sidebar/reputation.html:50
-#: horror/templates/horror/_quirk_widget.html:25
+#: horror/templates/horror/_quirk_widget.html:27
 #: magic/templates/magic/_basespell_widget.html:42
 #: rules/templates/rules/_template_widget.html:40
 #: worlds/templates/worlds/_language_widget.html:26
@@ -554,7 +554,7 @@ msgstr "Nicht möglich"
 #: characters/templates/characters/modals/add_spell_template.html:74
 #: characters/templates/characters/modals/add_weapon_mod.html:68
 #: characters/templates/characters/sidebar/reputation.html:50
-#: horror/templates/horror/_quirk_widget.html:26
+#: horror/templates/horror/_quirk_widget.html:28
 #: rules/templates/rules/_template_widget.html:41
 #: worlds/templates/worlds/_add_to_campaign.html:13
 #: worlds/templates/worlds/_language_widget.html:26
@@ -609,7 +609,7 @@ msgstr "Gegenstände"
 #: characters/templates/base.html:154
 #: characters/templates/characters/fragments/gear.html:31
 #: gmtools/templates/gmtools/roll_statistics.html:21 phasesix/settings.py:293
-#: rulebook/templatetags/rulebook_extras.py:38
+#: rulebook/templatetags/rulebook_extras.py:46
 msgid "Weapons"
 msgstr "Waffen"
 
@@ -624,7 +624,7 @@ msgstr "Rüstung"
 #: armory/templates/armory/material_overview.html:67
 #: characters/templates/base.html:156
 #: gmtools/templates/gmtools/roll_statistics.html:27 phasesix/settings.py:317
-#: rulebook/templatetags/rulebook_extras.py:39
+#: rulebook/templatetags/rulebook_extras.py:48
 #: worlds/templates/worlds/wiki_page_detail.html:106
 msgid "Spells"
 msgstr "Zauber"
@@ -681,6 +681,8 @@ msgstr "Verborgenheit"
 #: characters/templates/characters/sidebar/riot_gear.html:106
 #: characters/templates/characters/sidebar/weapon.html:93
 #: rulebook/templates/rulebook/pdf/appendix/riot_gear.html:21
+#: rulebook/templates/rulebook/pdf/appendix/weapon_modifications.html:21
+#: rulebook/templates/rulebook/pdf/appendix/weapons.html:20
 msgid "Price"
 msgstr "Preis"
 
@@ -690,7 +692,7 @@ msgstr "Preis"
 #: characters/templates/characters/_navigation.html:90
 #: characters/templates/characters/fragments/body_modifications.html:21
 #: characters/templates/characters/sidebar/biostrain.html:8
-#: phasesix/settings.py:305 rulebook/templatetags/rulebook_extras.py:41
+#: phasesix/settings.py:305 rulebook/templatetags/rulebook_extras.py:50
 msgid "Body Modifications"
 msgstr "Körpermodifikationen"
 
@@ -699,7 +701,7 @@ msgid "Weapons and their properties"
 msgstr "Waffen und ihre Eigenschaften"
 
 #: armory/views.py:26 characters/templates/characters/fragments/gear.html:17
-#: gmtools/forms.py:16 rulebook/templatetags/rulebook_extras.py:39
+#: gmtools/forms.py:16 rulebook/templatetags/rulebook_extras.py:48
 msgid "Armor"
 msgstr "Rüstung"
 
@@ -1581,8 +1583,8 @@ msgstr "Schutz"
 #: characters/templates/characters/sidebar/magic.html:33
 #: characters/templates/characters/sidebar/spell.html:38
 #: magic/templates/magic/_basespell_widget.html:23
-#: magic/templates/magic/basespell_detail.html:39
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:18
+#: magic/templates/magic/basespell_detail.html:40
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:22
 #: worlds/templates/worlds/_game_values.html:18
 #: worlds/templates/worlds/wiki_page_with_game_values.html:30
 msgid "Arcana"
@@ -1597,8 +1599,8 @@ msgstr "Arkana"
 #: characters/templates/characters/pdf/boxes/overview/combat.html:94
 #: characters/templates/characters/sidebar/spell.html:76
 #: magic/templates/magic/_basespell_widget.html:27
-#: magic/templates/magic/basespell_detail.html:43
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:22
+#: magic/templates/magic/basespell_detail.html:45
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:26
 #: worlds/templates/worlds/_game_values.html:22
 #: worlds/templates/worlds/wiki_page_with_game_values.html:32
 msgid "Actions"
@@ -2437,8 +2439,8 @@ msgstr "Kap."
 #: characters/templates/characters/pdf/boxes/magic/spells.html:31
 #: characters/templates/characters/sidebar/spell.html:66
 #: magic/templates/magic/_basespell_widget.html:25
-#: magic/templates/magic/basespell_detail.html:41
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:19
+#: magic/templates/magic/basespell_detail.html:42
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:23
 msgid "Range"
 msgstr "Reichweite"
 
@@ -2879,32 +2881,34 @@ msgstr "Ritual"
 #: characters/templates/characters/pdf/boxes/magic/spells.html:35
 #: characters/templates/characters/sidebar/spell.html:71
 #: magic/templates/magic/_basespell_widget.html:26
-#: magic/templates/magic/basespell_detail.html:42
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:20
+#: magic/templates/magic/basespell_detail.html:43
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:45
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:46
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:24
 msgid "Shape"
 msgstr "Form"
 
 #: characters/templates/characters/includes/character_spell_cards.html:34
 #: characters/templates/characters/sidebar/spell.html:82
 #: magic/templates/magic/_basespell_widget.html:29
-#: magic/templates/magic/basespell_detail.html:44
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:24
+#: magic/templates/magic/basespell_detail.html:46
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:28
 msgid "Instant"
 msgstr "Sofort"
 
 #: characters/templates/characters/includes/character_spell_cards.html:35
 #: characters/templates/characters/sidebar/spell.html:81
 #: magic/templates/magic/_basespell_widget.html:30
-#: magic/templates/magic/basespell_detail.html:45
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:25
+#: magic/templates/magic/basespell_detail.html:47
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:29
 msgid "Duration"
 msgstr "Dauer"
 
 #: characters/templates/characters/includes/character_spell_cards.html:38
 #: characters/templates/characters/sidebar/spell.html:85
 #: magic/templates/magic/_basespell_widget.html:33
-#: magic/templates/magic/basespell_detail.html:48
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:28
+#: magic/templates/magic/basespell_detail.html:50
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:33
 msgid "Needs concentration"
 msgstr "Benötigt Konzentration"
 
@@ -2982,17 +2986,22 @@ msgstr "Eigenart"
 #: characters/templates/characters/pdf/boxes/background/background.html:22
 #: characters/templates/characters/sidebar/skill.html:31
 #: characters/templates/characters/sidebar/template.html:39
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:23
 #: rules/templates/rules/_modifier_widget.html:12
 msgid "Attribute"
 msgstr "Attribut"
 
 #: characters/templates/characters/modals/add_spell_template.html:49
 #: characters/templates/characters/modals/add_spell_template.html:50
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:31
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:32
 msgid "Affinity"
 msgstr "Affinität"
 
 #: characters/templates/characters/modals/add_spell_template.html:56
 #: characters/templates/characters/modals/add_spell_template.html:57
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:38
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:39
 msgid "School"
 msgstr "Schule"
 
@@ -3773,12 +3782,13 @@ msgstr "Zauber Kosten"
 
 #: characters/templates/characters/sidebar/spell.html:55
 #: magic/templates/magic/_basespell_widget.html:22
-#: magic/templates/magic/basespell_detail.html:38
-#: rulebook/templates/rulebook/pdf/appendix/spells.html:17
+#: magic/templates/magic/basespell_detail.html:39
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:21
 msgid "Spell Casting"
 msgstr "Zaubern"
 
 #: characters/templates/characters/sidebar/template.html:26
+#: rulebook/templates/rulebook/pdf/appendix/templates.html:20
 #: rules/templates/rules/_template_widget.html:16
 msgid "Allows to perform the acts of a priest."
 msgstr "Erlaubt es, die Handlungen eines Priesters auszuführen."
@@ -4383,7 +4393,7 @@ msgstr "Kategorie"
 msgid "quirk"
 msgstr "Eigenart"
 
-#: horror/templates/horror/_quirk_widget.html:26
+#: horror/templates/horror/_quirk_widget.html:28
 msgid "Add Quirk"
 msgstr "Eigenart hinzufügen"
 
@@ -4566,6 +4576,8 @@ msgid "Learn"
 msgstr "Lernen"
 
 #: magic/templates/magic/basespell_detail.html:33
+#: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:18
+#: rulebook/templates/rulebook/pdf/appendix/spells.html:31
 msgid "Spell Point Cost"
 msgstr "Zauberpunkte Kosten"
 
@@ -4883,14 +4895,22 @@ msgstr "Anhang"
 msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 
-#: rulebook/templatetags/rulebook_extras.py:38
+#: rulebook/templatetags/rulebook_extras.py:46
 #: rules/templates/rules/templatecategory_list.html:7
 msgid "Character Templates"
 msgstr "Charakterschablonen"
 
-#: rulebook/templatetags/rulebook_extras.py:40
+#: rulebook/templatetags/rulebook_extras.py:47
+msgid "Weapon Modifications"
+msgstr "Waffenmodifikationen"
+
+#: rulebook/templatetags/rulebook_extras.py:49
+msgid "Spell Templates"
+msgstr "Zauberschablonen"
+
+#: rulebook/templatetags/rulebook_extras.py:49
 msgid "Quirks"
-msgstr "Eenigenart"
+msgstr "Eigenarten"
 
 #: rules/models.py:15 rules/models.py:268 worlds/models.py:596
 msgid "languages"

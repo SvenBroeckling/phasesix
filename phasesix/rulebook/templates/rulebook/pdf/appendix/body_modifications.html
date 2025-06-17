@@ -1,4 +1,62 @@
 {% extends "rulebook/pdf/appendix/appendix_base.html" %}
+{% load characters_extras %}
+{% load body_modification_extras %}
+{% load i18n %}
+{% load rules_extras %}
 
 {% block content %}
+  {% regroup object_list by type as type_list %}
+
+  {% for type in type_list %}
+    <h3>{{ type.grouper }}</h3>
+
+    {% for body_modification in type.list %}
+      <div class="avoid-page-break">
+        <h4>{{ body_modification }}</h4>
+
+        <i
+          class="fas fa-coins fa-fw"></i> {% trans 'Price' %}: {% color_value_span body_modification.price 1000 invert=True %}<br>
+
+        {% if body_modification.activation == "a" %}
+          <div class="mt-1 d-flex align-items-center">
+            <i class="gi gi-guard13007-play-button text-success me-1"></i>
+            {% trans 'Must be activated' %}
+          </div>
+        {% endif %}
+        <p class="allow-page-break">
+          {{ body_modification.description|phasesix_markup }}
+        </p>
+        <p class="allow-page-break">
+          {{ body_modification.rules|phasesix_markup }}
+        </p>
+
+        <div class="mt-1 d-flex align-items-center">
+          <i class="gi gi-lorc-power-lightning text-warning me-1"></i>
+          {% energy_display body_modification.energy_consumption_ma %}
+        </div>
+
+        <div class="mt-1 d-flex align-items-center">
+          <i class="gi gi-lorc-broken-heart text-danger me-1"></i>
+          {% bio_strain_display body_modification.bio_strain %}
+        </div>
+
+        {% if body_modification.charges %}
+          <div class="mt-1 d-flex align-items-center">
+            <i class="gi gi-lorc-bolt-shield text-info me-1"></i>
+            {{ body_modification.charges }} {% trans 'charges' %}
+          </div>
+        {% endif %}
+
+        {% for sl in body_modification.bodymodificationsocketlocation_set.all %}
+          <span class="badge bg-dark">
+            <i class="gi gi-delapouite-plug"></i>
+              {{ sl.socket_location }}
+               {{ sl.socket_amount }}
+          </span>
+        {% endfor %}
+
+        {% modifier_widget body_modification.bodymodificationmodifier_set.all %}
+      </div>
+    {% endfor %}
+  {% endfor %}
 {% endblock %}

@@ -16,6 +16,8 @@
 
     {{ quirk.get_modifier_summary_html|safe }}
 
+    {% modifier_widget quirk.quirkmodifier_set.all %}
+
     {% if character and add_button %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="quirk" %}"
             class="float-end add-form" method="post">

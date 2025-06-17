@@ -27,7 +27,7 @@
         <br>
         {% trans "Instant" as t_duration %}
         <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ spell.duration|default:t_duration }}
-        {% if spell.duration %}{{ spell.get_duration_unit_display }}{% endif %}
+        {% if spell.duration %}{{ spell.get_duration_unit_display }}{% endif %}<br>
         <i class="fas fa-magic"></i> {% trans 'Spell Point Cost' %}: {{ spell.spell_point_cost }}<br>
         {% if spell.needs_concentration %}
           <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
