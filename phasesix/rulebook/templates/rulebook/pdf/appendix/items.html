@@ -1,0 +1,23 @@
+{% extends "rulebook/pdf/appendix/appendix_base.html" %}
+{% load characters_extras %}
+{% load i18n %}
+{% load rules_extras %}
+
+{% block content %}
+  {% regroup object_list by type as type_list %}
+
+  {% for type in type_list %}
+    <h3>{{ type.grouper }}</h3>
+    {% for item in type.list %}
+      <h4>{{ item }}</h4>
+      <p>
+        {{ item.description|phasesix_markup }}
+      </p>
+
+      <i class="fas fa-balance-scale fa-fw"></i> {% trans 'Weight' %}:
+      {% color_value_span item.weight 100 invert=True %}<br>
+      <i class="fas fa-coins fa-fw"></i> {% trans 'Price' %}: {% color_value_span item.price 500 invert=True %}
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+

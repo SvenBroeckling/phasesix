@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from armory.models import Weapon, RiotGear, WeaponModification
+from armory.models import Weapon, RiotGear, WeaponModification, Item
 from body_modifications.models import BodyModification
 from characters.models import CharacterTemplate
 from horror.models import Quirk
@@ -39,7 +39,7 @@ class Appendix:
 class TemplatesAppendix(Appendix):
     name = "templates"
     title = _("Character Templates")
-    chapter_id = "chapter-create-a-character"
+    chapter_id = "chapter-create"
 
     def get_queryset(self):
         return CharacterTemplate.objects.for_world(self.world_book.world).order_by(
@@ -72,6 +72,15 @@ class RiotGearAppendix(Appendix):
 
     def get_queryset(self):
         return RiotGear.objects.for_world(self.world_book.world).order_by("type")
+
+
+class ItemsAppendix(Appendix):
+    name = "items"
+    title = _("Items")
+    chapter_id = "chapter-gear"
+
+    def get_queryset(self):
+        return Item.objects.for_world(self.world_book.world).order_by("type")
 
 
 class SpellsAppendix(Appendix):
