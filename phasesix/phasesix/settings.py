@@ -336,11 +336,6 @@ UNFOLD = {
                         "link": reverse_lazy("admin:rules_extension_changelist"),
                     },
                     {
-                        "title": _("Book Chapters"),
-                        "icon": "people",
-                        "link": reverse_lazy("admin:rulebook_chapter_changelist"),
-                    },
-                    {
                         "title": _("Lineages"),
                         "icon": "people",
                         "link": reverse_lazy("admin:rules_lineage_changelist"),
@@ -349,6 +344,16 @@ UNFOLD = {
                         "title": _("Character templates"),
                         "icon": "people",
                         "link": reverse_lazy("admin:rules_template_changelist"),
+                    },
+                    {
+                        "title": _("Book Chapters"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:rulebook_chapter_changelist"),
+                    },
+                    {
+                        "title": _("World Books"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:rulebook_worldbook_changelist"),
                     },
                 ],
             },

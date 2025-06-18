@@ -1,16 +1,11 @@
 from django.contrib.staticfiles import finders
-from django.utils.translation import gettext_lazy as _
 from django.template import Library, Template, Context
 from django.template.loader import render_to_string
 
-from armory.models import Weapon, RiotGear, WeaponModification
-from body_modifications.models import BodyModification
-from horror.models import Quirk
-from magic.models import BaseSpell, SpellTemplate
+from rulebook.appendixes import get_appendix_class
 from rulebook.font_utils import get_accumulated_fonts_css
 from rulebook.models import WorldBook
-from worlds.models import World, WikiPage
-from rules.models import Template as CharacterTemplate
+from worlds.models import World
 
 register = Library()
 
@@ -33,28 +28,19 @@ def chapter_label_to_id(label):
 @register.simple_tag
 def appendix(world_book, kind):
     template_name = f"rulebook/pdf/appendix/{kind}.html"
-    object_list_map = {
-        "templates": CharacterTemplate.objects.for_world(world_book.world).order_by(
-            "category"),
-        "weapons": Weapon.objects.for_world(world_book.world).order_by("type"),
-        "weapon_modifications": WeaponModification.objects.for_world(
-            world_book.world).order_by("type"),
-        "riot_gear": RiotGear.objects.for_world(world_book.world).order_by("type"),
-        "spells": BaseSpell.objects.order_by("origin"), "quirks": Quirk.objects.all(),
-        "spell_templates": SpellTemplate.objects.order_by("category"),
-        "body_modifications": BodyModification.objects.all(),
-        "foes": WikiPage.objects.with_game_values().exclude(
-            exclude_from_foe_search=True).for_world(
-            world_book.world).order_by("parent").order_by("parent"),
-    }
-    title_map = {"templates": _("Character Templates"), "weapons": _("Weapons"),
-                 "weapon_modifications": _("Weapon Modifications"),
-                 "riot_gear": _("Armor"), "spells": _("Spells"),
-                 "spell_templates": _("Spell Templates"), "quirks": _("Quirks"),
-                 "body_modifications": _("Body Modifications"), "foes": _("Foes")}
-    return render_to_string(template_name, {"world_book": world_book,
-                                            "object_list": object_list_map.get(kind),
-                                            "title": title_map.get(kind), "kind": kind})
+    appendix_class = get_appendix_class(kind)
+
+    if appendix_class:
+        appendix_instance = appendix_class(world_book)
+        return render_to_string(template_name, {
+            "world_book": world_book,
+            "object_list": appendix_instance.get_queryset(),
+            "appendix_image": appendix_instance.get_image(),
+            "title": appendix_instance.title,
+            "kind": kind
+        })
+
+    return ""
 
 
 @register.simple_tag
