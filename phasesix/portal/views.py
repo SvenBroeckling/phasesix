@@ -154,7 +154,7 @@ class ProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["may_edit"] = self.request.user == self.object
+        context["may_edit"] = self.request.user == self.object.user
         return context
 
 
@@ -173,8 +173,8 @@ class YearlyWrapUpView(TemplateView):
         res = []
         for mp in (
             qs.values("character")
-            .annotate(total=Count("character"))
-            .order_by("-total")[:3]
+                .annotate(total=Count("character"))
+                .order_by("-total")[:3]
         ):
             character = Character.objects.get(id=mp["character"])
             days = self._get_days(qs, character)

@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
 
 from armory.models import (
     Item,
@@ -8,6 +10,7 @@ from armory.models import (
     WeaponModification,
     RiotGear,
 )
+from gmtools.forms import UploadRulebookForm
 from gmtools.utils import get_models_with_translations
 from magic.models import BaseSpell
 from rules.models import (
@@ -18,6 +21,17 @@ from rules.models import (
     CHARACTER_ASPECT_CHOICES,
     Attribute,
 )
+
+
+class UploadRulebookView(FormView):
+    template_name = "gmtools/upload_rulebook.html"
+    form_class = UploadRulebookForm
+    success_url = reverse_lazy("gmtools:upload_rulebook")
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "Rulebook uploaded successfully.")
+        return super().form_valid(form)
 
 
 class RollStatisticsView(TemplateView):

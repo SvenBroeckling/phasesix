@@ -130,6 +130,19 @@
               </div>
             {% endif %}
 
+            {% if request.user.is_staff and may_edit %}
+              <div class="col-12 col-md-6 mb-3">
+                <a href="{% url 'gmtools:upload_rulebook' %}" class="no-decoration">
+                  <div class="position-relative profile-cta">
+                    <img src="{% static "img/profile_cta_images/profile_extension_grid.png" %}"
+                         alt="admin"
+                         class="img img-fluid rounded">
+                    <div class="profile-cta-text w-100 p-2">{% trans "Upload Rulebook" %}</div>
+                  </div>
+                </a>
+              </div>
+            {% endif %}
+
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url 'gmtools:template_statistics' %}" class="no-decoration">
                 <div class="position-relative profile-cta">

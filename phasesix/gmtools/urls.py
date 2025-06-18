@@ -26,4 +26,9 @@ urlpatterns = [
         staff_member_required(views.ExtensionGrid.as_view()),
         name="extension_grid",
     ),
+    path(
+        "upload_rulebook",
+        staff_member_required(views.UploadRulebookView.as_view()),
+        name="upload_rulebook",
+    ),
 ]
