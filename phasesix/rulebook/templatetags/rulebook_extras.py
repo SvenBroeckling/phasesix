@@ -60,7 +60,7 @@ def render_book_as_template(book_text, world):
         world = World.objects.get(is_default=True)
 
     template = Template(book_text)
-    return template.render(Context({"world": world}))
+    return template.render(Context({"world_book": world.worldbook_set.first()}))
 
 
 @register.simple_tag

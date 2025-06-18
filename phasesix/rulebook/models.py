@@ -67,6 +67,10 @@ class WorldBook(models.Model, metaclass=TransMeta):
         translate = "book_title", "book_claim"
 
     @property
+    def identifier(self):
+        return self.world.identifier
+
+    @property
     def chapters(self):
         return self.book.chapter_set.exclude(id__in=self.disabled_chapters.all())
 
