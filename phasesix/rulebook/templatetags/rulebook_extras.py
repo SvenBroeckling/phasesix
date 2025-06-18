@@ -32,10 +32,12 @@ def appendix(world_book, kind):
 
     if appendix_class:
         appendix_instance = appendix_class(world_book)
+        if not appendix_instance.included_in_world_book:
+            return ""
         return render_to_string(template_name, {
             "world_book": world_book,
             "object_list": appendix_instance.get_queryset(),
-            "appendix_image": appendix_instance.get_image(),
+            "appendix_image": appendix_instance.get_linked_chapter().image,
             "title": appendix_instance.title,
             "kind": kind
         })
@@ -53,7 +55,7 @@ def rulebook_pdf_link(world, book, language):
 
 
 @register.filter
-def replace_book_variables(book_text, world):
+def render_book_as_template(book_text, world):
     if not world:
         world = World.objects.get(is_default=True)
 

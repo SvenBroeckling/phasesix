@@ -14,14 +14,14 @@
 {% endblock %}
 
 {% block content %}
-  {% for chapter in world_book.book.chapter_set.all %}
+  {% for chapter in world_book.chapters %}
     <div class="chapter" id="{{ chapter.identifier }}">
       <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
         &nbsp;
       </div>
       <h2 id="chapter-toc-identifier-{{ chapter.name|chapter_label_to_id }}">{{ chapter.name }}</h2>
       <div class="chapter-text">
-        {{ chapter.text|replace_book_variables:world_book.world|phasesix_markup:False|resolve_rulebook_chapter_links:"pdf" }}
+        {{ chapter.text|render_book_as_template:world_book.world|phasesix_markup:False|resolve_rulebook_chapter_links:"pdf" }}
       </div>
     </div>
   {% endfor %}

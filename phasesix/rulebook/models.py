@@ -39,11 +39,14 @@ class WorldBook(models.Model, metaclass=TransMeta):
         gt("PDF english"), upload_to="rulebook_pdf", blank=True, null=True
     )
 
+    disabled_chapters = models.ManyToManyField("rulebook.Chapter", blank=True)
+
     book_title = models.CharField(gt("book title"), max_length=80)
     book_claim = models.CharField(gt("book claim"), max_length=80)
     book_title_image = models.ImageField(
         gt("book title image"), upload_to="rulebook_title_images", max_length=256
     )
+    book_website = models.URLField(gt("book website"), blank=True, null=True)
     book_heading_font = models.CharField(
         gt("book heading font"),
         max_length=20,
@@ -62,6 +65,10 @@ class WorldBook(models.Model, metaclass=TransMeta):
 
     class Meta:
         translate = "book_title", "book_claim"
+
+    @property
+    def chapters(self):
+        return self.book.chapter_set.exclude(id__in=self.disabled_chapters.all())
 
     def render_pdf(self):
         for language_code, language_description in settings.LANGUAGES:

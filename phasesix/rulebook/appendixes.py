@@ -20,115 +20,102 @@ def get_appendix_class(name):
 class Appendix:
     name = ""
     title = ""
+    chapter_id = ""
 
     def __init__(self, world_book):
         self.world_book = world_book
 
+    @property
+    def included_in_world_book(self):
+        return self.get_linked_chapter() in self.world_book.chapters
+
+    def get_linked_chapter(self):
+        return Chapter.objects.get(identifier=self.chapter_id)
+
     def get_queryset(self):
         pass
-
-    def get_image(self):
-        return None
 
 
 class TemplatesAppendix(Appendix):
     name = "templates"
     title = _("Character Templates")
+    chapter_id = "chapter-create-a-character"
 
     def get_queryset(self):
         return CharacterTemplate.objects.for_world(self.world_book.world).order_by(
             "category")
 
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-create-a-character").image
-
 
 class WeaponsAppendix(Appendix):
     name = "weapons"
     title = _("Weapons")
+    chapter_id = "chapter-gear"
 
     def get_queryset(self):
         return Weapon.objects.for_world(self.world_book.world).order_by("type")
-
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-gear").image
 
 
 class WeaponModificationsAppendix(Appendix):
     name = "weapon_modifications"
     title = _("Weapon Modifications")
+    chapter_id = "chapter-gear"
 
     def get_queryset(self):
         return WeaponModification.objects.for_world(self.world_book.world).order_by(
             "type")
 
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-gear").image
-
 
 class RiotGearAppendix(Appendix):
     name = "riot_gear"
     title = _("Armor")
+    chapter_id = "chapter-gear"
 
     def get_queryset(self):
         return RiotGear.objects.for_world(self.world_book.world).order_by("type")
-
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-gear").image
 
 
 class SpellsAppendix(Appendix):
     name = "spells"
     title = _("Spells")
+    chapter_id = "chapter-magic"
 
     def get_queryset(self):
         return BaseSpell.objects.order_by("origin")
-
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-magic").image
 
 
 class SpellTemplatesAppendix(Appendix):
     name = "spell_templates"
     title = _("Spell Templates")
+    chapter_id = "chapter-magic"
 
     def get_queryset(self):
         return SpellTemplate.objects.order_by("category")
-
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-magic").image
 
 
 class QuirksAppendix(Appendix):
     name = "quirks"
     title = _("Quirks")
+    chapter_id = "chapter-horror"
 
     def get_queryset(self):
         return Quirk.objects.all()
-
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-horror").image
 
 
 class BodyModificationsAppendix(Appendix):
     name = "body_modifications"
     title = _("Body Modifications")
+    chapter_id = "chapter-body_modifications"
 
     def get_queryset(self):
         return BodyModification.objects.all()
-
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-body_modifications").image
 
 
 class FoesAppendix(Appendix):
     name = "foes"
     title = _("Foes")
+    chapter_id = "chapter-combat"
 
     def get_queryset(self):
         return WikiPage.objects.with_game_values().exclude(
             exclude_from_foe_search=True).for_world(
             self.world_book.world).order_by("parent")
-
-    def get_image(self):
-        return Chapter.objects.get(identifier="chapter-horror").image
