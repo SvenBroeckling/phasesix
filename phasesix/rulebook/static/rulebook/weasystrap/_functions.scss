@@ -1,0 +1,40 @@
+// WeasyStrap Functions
+
+// Replace `$search` with `$replace` in `$string`
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// Color contrast
+@function color-contrast($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+  @if ($yiq >= 150) {
+    @return #000;
+  } @else {
+    @return #fff;
+  }
+}
+
+// Return valid calc
+@function add($value1, $value2) {
+  @if $value1 == null {
+    @return $value2;
+  }
+
+  @if $value2 == null {
+    @return $value1;
+  }
+
+  @return $value1 + $value2;
+}

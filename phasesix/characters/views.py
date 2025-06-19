@@ -8,70 +8,34 @@ from django.core.mail import mail_admins
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_object_or_404
-from django.template import Template as DjangoTemplate, Context
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import (
-    TemplateView,
-    DetailView,
-    FormView,
-    ListView,
-    UpdateView,
-)
+from django.views.generic import (TemplateView, DetailView, FormView, ListView,
+                                  UpdateView, )
 from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
 
-from armory.models import (
-    WeaponModificationType,
-    WeaponModification,
-    CurrencyMapUnit,
-    AttackMode,
-    ProtectionType,
-)
+from armory.models import (WeaponModificationType, WeaponModification, CurrencyMapUnit,
+                           AttackMode, ProtectionType, )
 from campaigns.consumers import roll_and_send
 from campaigns.models import Campaign, Roll
-from characters.character_objects import (
-    get_character_object_class,
-)
-from characters.forms import (
-    CharacterImageForm,
-    CreateCharacterDataForm,
-    CreateRandomNPCForm,
-    CreateCharacterExtensionsForm, ContactForm,
-)
-from characters.models import (
-    Character,
-    CharacterWeapon,
-    CharacterRiotGear,
-    CharacterItem,
-    CharacterStatusEffect,
-    CharacterSpell,
-    CharacterAttribute,
-    CharacterNote,
-    CharacterRiotGearProtectionUsed,
-    CharacterTemplate,
-    CharacterSkill,
-    CharacterBodyModification, Contact,
-)
+from characters.character_objects import (get_character_object_class, )
+from characters.forms import (CharacterImageForm, CreateCharacterDataForm,
+                              CreateRandomNPCForm, CreateCharacterExtensionsForm,
+                              ContactForm, )
+from characters.models import (Character, CharacterWeapon, CharacterRiotGear,
+                               CharacterItem, CharacterStatusEffect, CharacterSpell,
+                               CharacterAttribute, CharacterNote,
+                               CharacterRiotGearProtectionUsed, CharacterTemplate,
+                               CharacterSkill, CharacterBodyModification, Contact, )
 from characters.utils import crit_successes
-from magic.models import (
-    SpellTemplateCategory,
-    SpellTemplate,
-)
+from magic.models import (SpellTemplateCategory, SpellTemplate, )
 from pantheon.models import Entity, PriestAction
-from rules.models import (
-    Extension,
-    Template,
-    Lineage,
-    StatusEffect,
-    Skill,
-    Attribute,
-    TemplateCategory,
-    Knowledge,
-)
+from rules.models import (Extension, Template, Lineage, StatusEffect, Skill, Attribute,
+                          TemplateCategory, Knowledge, )
 
 
 class CharacterDetailView(DetailView):
@@ -100,43 +64,28 @@ class XhrDeleteCharacterView(View):
         if obj.created_by == self.request.user:
             messages.info(request, _("Character deleted."))
             obj.delete()
-        return JsonResponse(
-            {
-                "status": "ok",
-                "url": "/",
-            }
-        )
+        return JsonResponse({"status": "ok", "url": "/", })
 
 
 class XhrSidebarView(DetailView):
     # Mapping from sidebar_template to model
-    template_model_map = {
-        "attribute": CharacterAttribute,
-        "body_modification": CharacterBodyModification,
-        "biostrain": Character,
-        "character": Character,
-        "combat": Character,
-        "create_note": Character,
-        "currency": Character,
-        "dice": Character,
-        "magic": Character,
-        "grace": Character,
-        "horror": Character,
-        "item": CharacterItem,
-        "knowledge": Character,  # Context depends on knowledge_pk
-        "note": CharacterNote,
-        "priest_action": Character,  # Context depends on priest_action_pk
-        "protection": Character,
-        "reputation": Character,
-        "riot_gear": CharacterRiotGear,
-        "skill": CharacterSkill,
-        "spell": CharacterSpell,
-        "template": CharacterTemplate,
-        "template_shadow": Template,
-        "weapon": CharacterWeapon,
-        "weaponless": Character,
-        "wounds": Character,
-    }
+    template_model_map = {"attribute": CharacterAttribute,
+                          "body_modification": CharacterBodyModification,
+                          "biostrain": Character,
+                          "character": Character, "combat": Character,
+                          "create_note": Character,
+                          "currency": Character, "dice": Character, "magic": Character,
+                          "grace": Character, "horror": Character,
+                          "item": CharacterItem,
+                          "knowledge": Character,  # Context depends on knowledge_pk
+                          "note": CharacterNote, "priest_action": Character,
+                          # Context depends on priest_action_pk
+                          "protection": Character, "reputation": Character,
+                          "riot_gear": CharacterRiotGear, "skill": CharacterSkill,
+                          "spell": CharacterSpell, "template": CharacterTemplate,
+                          "template_shadow": Template, "weapon": CharacterWeapon,
+                          "weaponless": Character,
+                          "wounds": Character, }
 
     def get_model(self):
         sidebar_template = self.kwargs.get("sidebar_template")
@@ -163,16 +112,14 @@ class XhrSidebarView(DetailView):
             context["character_form"] = CharacterImageForm(instance=self.object)
         elif sidebar_template == "wounds":
             context["status_effects"] = StatusEffect.objects.filter(
-                is_active=True
-            ).order_by("ordering")
+                is_active=True).order_by("ordering")
         elif sidebar_template == "protection":
             context["protection_types"] = ProtectionType.objects.all()
         elif sidebar_template == "knowledge":
             context["knowledge"] = Knowledge.objects.get(id=self.kwargs["knowledge_pk"])
         elif sidebar_template == "priest_action":
             context["priest_action"] = PriestAction.objects.get(
-                id=self.kwargs["priest_action_pk"]
-            )
+                id=self.kwargs["priest_action_pk"])
 
         return context
 
@@ -206,8 +153,7 @@ class XhrCharacterRestView(TemplateView):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         minimum_roll = character.minimum_roll + character.get_aspect_modifier(
-            "base_rest_minimum_roll"
-        )
+            "base_rest_minimum_roll")
         mode = request.POST.get("mode", "manual")
 
         if not character.may_edit(request.user):
@@ -218,13 +164,11 @@ class XhrCharacterRestView(TemplateView):
             character.destiny_dice_used = 0
             character.rerolls_used = 0
 
-            rest_wound_roll = roll_and_send(
-                character.id,
-                f"{character.rest_wound_dice}d6",
-                gettext("Rest"),
-                gettext("Wound Roll"),
-                minimum_roll=minimum_roll,
-            )
+            rest_wound_roll = roll_and_send(character.id,
+                                            f"{character.rest_wound_dice}d6",
+                                            gettext("Rest"),
+                                            gettext("Wound Roll"),
+                                            minimum_roll=minimum_roll, )
 
             for d in filter(lambda x: x >= minimum_roll, rest_wound_roll):
                 for n in range(crit_successes(d) + 1):
@@ -234,13 +178,11 @@ class XhrCharacterRestView(TemplateView):
             character.boost = 0
 
             if "magic" in character.extension_enabled:
-                rest_arcana_roll = roll_and_send(
-                    character.id,
-                    f"{character.rest_arcana_dice}d6",
-                    gettext("Rest"),
-                    gettext("Arcana Roll"),
-                    minimum_roll=minimum_roll,
-                )
+                rest_arcana_roll = roll_and_send(character.id,
+                                                 f"{character.rest_arcana_dice}d6",
+                                                 gettext("Rest"),
+                                                 gettext("Arcana Roll"),
+                                                 minimum_roll=minimum_roll, )
 
                 for d in filter(lambda x: x >= minimum_roll, rest_arcana_roll):
                     for n in range(crit_successes(d) + 1):
@@ -248,13 +190,11 @@ class XhrCharacterRestView(TemplateView):
                             character.arcana += 1
 
             if "horror" in character.extension_enabled:
-                rest_stress_roll = roll_and_send(
-                    character.id,
-                    f"{character.rest_stress_dice}d6",
-                    gettext("Rest"),
-                    gettext("Stress Roll"),
-                    minimum_roll=minimum_roll,
-                )
+                rest_stress_roll = roll_and_send(character.id,
+                                                 f"{character.rest_stress_dice}d6",
+                                                 gettext("Rest"),
+                                                 gettext("Stress Roll"),
+                                                 minimum_roll=minimum_roll, )
 
                 if len(list(filter(lambda x: x >= minimum_roll, rest_stress_roll))):
                     if character.stress > 0:
@@ -274,8 +214,7 @@ class XhrCharacterStatusEffectsChangeView(View):
 
         if character.may_edit(request.user):
             obj, created = CharacterStatusEffect.objects.get_or_create(
-                character=character, status_effect=status_effect
-            )
+                character=character, status_effect=status_effect)
 
             if kwargs["mode"] == "decrease":
                 if obj.base_value > 0:
@@ -294,8 +233,7 @@ class XhrCharacterStatusEffectsChangeView(View):
 class CharacterModifyAttributeView(View):
     def post(self, request, *args, **kwargs):
         character_attribute = CharacterAttribute.objects.get(
-            id=kwargs["character_attribute_pk"]
-        )
+            id=kwargs["character_attribute_pk"])
         if character_attribute.character.may_edit(request.user):
             if self.kwargs["mode"] == "bonus":
                 character_attribute.modifier += 1
@@ -375,26 +313,21 @@ class CharacterSpendProtectionView(View):
         character = Character.objects.get(id=kwargs["pk"])
         if character.may_edit(request.user):
             protection_type = ProtectionType.objects.get(
-                id=kwargs["protection_type_pk"]
-            )
+                id=kwargs["protection_type_pk"])
             qs = CharacterRiotGearProtectionUsed.objects.filter(
                 character_riot_gear__riot_gear=kwargs["riot_gear_pk"],
                 character_riot_gear__character=character,
-                protection_type=protection_type,
-            )
+                protection_type=protection_type, )
             if qs.exists():
                 obj = qs.first()
                 obj.value += 1
                 obj.save()
             else:
                 character_riot_gear = character.characterriotgear_set.filter(
-                    riot_gear=kwargs["riot_gear_pk"]
-                ).first()
+                    riot_gear=kwargs["riot_gear_pk"]).first()
                 CharacterRiotGearProtectionUsed.objects.create(
                     character_riot_gear=character_riot_gear,
-                    protection_type=protection_type,
-                    value=1,
-                )
+                    protection_type=protection_type, value=1, )
         return JsonResponse({"status": "ok"})
 
 
@@ -403,8 +336,7 @@ class CharacterRestoreAllProtectionView(View):
         character = Character.objects.get(id=kwargs["pk"])
         if character.may_edit(request.user):
             CharacterRiotGearProtectionUsed.objects.filter(
-                character_riot_gear__character=character
-            ).delete()
+                character_riot_gear__character=character).delete()
         return JsonResponse({"status": "ok"})
 
 
@@ -431,11 +363,8 @@ class CreateCharacterView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["extensions"] = (
-            Extension.objects.exclude(is_mandatory=True)
-            .exclude(type__in=["e", "x"])
-            .exclude(is_active=False)
-        )
+        context["extensions"] = (Extension.objects.exclude(is_mandatory=True).exclude(
+            type__in=["e", "x"]).exclude(is_active=False))
         return context
 
 
@@ -445,11 +374,8 @@ class CreateCharacterEpochView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["world_pk"] = self.kwargs["world_pk"]
-        context["extensions"] = (
-            Extension.objects.exclude(is_mandatory=True)
-            .exclude(type__in=["x", "w"])
-            .exclude(is_active=False)
-        )
+        context["extensions"] = (Extension.objects.exclude(is_mandatory=True).exclude(
+            type__in=["x", "w"]).exclude(is_active=False))
         return context
 
 
@@ -461,11 +387,8 @@ class CreateCharacterExtensionsView(FormView):
         context = super().get_context_data(**kwargs)
         context["world_pk"] = self.kwargs["world_pk"]
         context["epoch_pk"] = self.kwargs["epoch_pk"]
-        context["extensions"] = (
-            Extension.objects.exclude(is_mandatory=True)
-            .exclude(type__in=["e", "w"])
-            .exclude(is_active=False)
-        )
+        context["extensions"] = (Extension.objects.exclude(is_mandatory=True).exclude(
+            type__in=["e", "w"]).exclude(is_active=False))
         return context
 
 
@@ -484,29 +407,17 @@ class CreateCharacterDataView(FormView):
 
     @property
     def lineages(self):
-        return Lineage.objects.filter(
-            Q(extensions__id=self.kwargs["epoch_pk"])
-            | Q(extensions__id=self.kwargs["world_pk"])
-            | Q(
-                extensions__id__in=Extension.objects.filter(
-                    Q(is_mandatory=True)
-                    | Q(id__in=self.request.GET.getlist("extensions"))
-                )
-            )
-        )
+        return Lineage.objects.filter(Q(extensions__id=self.kwargs["epoch_pk"]) | Q(
+            extensions__id=self.kwargs["world_pk"]) | Q(
+            extensions__id__in=Extension.objects.filter(Q(is_mandatory=True) | Q(
+                id__in=self.request.GET.getlist("extensions")))))
 
     @property
     def entities(self):
-        return Entity.objects.filter(
-            Q(extensions__id=self.kwargs["epoch_pk"])
-            | Q(extensions__id=self.kwargs["world_pk"])
-            | Q(
-                extensions__id__in=Extension.objects.filter(
-                    Q(is_mandatory=True)
-                    | Q(id__in=self.request.GET.getlist("extensions"))
-                )
-            )
-        )
+        return Entity.objects.filter(Q(extensions__id=self.kwargs["epoch_pk"]) | Q(
+            extensions__id=self.kwargs["world_pk"]) | Q(
+            extensions__id__in=Extension.objects.filter(Q(is_mandatory=True) | Q(
+                id__in=self.request.GET.getlist("extensions")))))
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -519,39 +430,34 @@ class CreateCharacterDataView(FormView):
         if self.campaign_to_join:
             form.fields["currency_map"].widget = forms.HiddenInput()
             form.fields["seed_money"].widget = forms.HiddenInput()
-        qs = Extension.objects.filter(
-            id__in=self.request.GET.getlist("extensions"), identifier="pantheon"
-        )
-        if (
-            not qs.exists()
-            and not world.fixed_extensions.filter(identifier="pantheon").exists()
-        ):
+        qs = Extension.objects.filter(id__in=self.request.GET.getlist("extensions"),
+                                      identifier="pantheon")
+        if (not qs.exists() and not world.fixed_extensions.filter(
+            identifier="pantheon").exists()):
             form.fields["entity"].widget = forms.HiddenInput()
             form.fields["attitude"].widget = forms.HiddenInput()
 
         return form
 
     def form_valid(self, form):
-        self.object = Character.objects.create(
-            name=form.cleaned_data["name"],
-            currency_map=form.cleaned_data["currency_map"],
-            date_of_birth=form.cleaned_data["date_of_birth"],
-            lineage=form.cleaned_data["lineage"],
-            size=form.cleaned_data["size"],
-            weight=form.cleaned_data["weight"],
-            entity=form.cleaned_data["entity"],
-            attitude=form.cleaned_data["attitude"],
-            pronoun=form.cleaned_data["pronoun"],
-        )
+        self.object = Character.objects.create(name=form.cleaned_data["name"],
+                                               currency_map=form.cleaned_data[
+                                                   "currency_map"],
+                                               date_of_birth=form.cleaned_data[
+                                                   "date_of_birth"],
+                                               lineage=form.cleaned_data["lineage"],
+                                               size=form.cleaned_data["size"],
+                                               weight=form.cleaned_data["weight"],
+                                               entity=form.cleaned_data["entity"],
+                                               attitude=form.cleaned_data["attitude"],
+                                               pronoun=form.cleaned_data["pronoun"], )
         self.object.extensions.add(form.cleaned_data["epoch"])
         self.object.extensions.add(form.cleaned_data["world"])
 
         self.object.charactercurrency_set.create(
             currency_map_unit=CurrencyMapUnit.objects.get(
-                currency_map=form.cleaned_data["currency_map"], is_common=True
-            ),
-            quantity=form.cleaned_data["seed_money"],
-        )
+                currency_map=form.cleaned_data["currency_map"], is_common=True),
+            quantity=form.cleaned_data["seed_money"], )
 
         for e in form.cleaned_data["extensions"]:
             self.object.extensions.add(e)
@@ -572,8 +478,7 @@ class CreateCharacterDataView(FormView):
                 self.object.npc_campaign = self.campaign_to_join
 
         self.object.created_by = (
-            self.request.user if self.request.user.is_authenticated else None
-        )
+            self.request.user if self.request.user.is_authenticated else None)
         self.object.save()
 
         return super().form_valid(form)
@@ -582,17 +487,12 @@ class CreateCharacterDataView(FormView):
         world = Extension.objects.get(id=self.kwargs["world_pk"])
 
         extensions = Extension.objects.filter(
-            id__in=self.request.GET.getlist("extensions")
-        )
+            id__in=self.request.GET.getlist("extensions"))
         if world.fixed_extensions.exists():
             extensions = world.fixed_extensions.all()
 
-        initial = {
-            "epoch": self.kwargs["epoch_pk"],
-            "world": self.kwargs["world_pk"],
-            "lineage": self.lineages.earliest("id"),
-            "extensions": extensions,
-        }
+        initial = {"epoch": self.kwargs["epoch_pk"], "world": self.kwargs["world_pk"],
+                   "lineage": self.lineages.earliest("id"), "extensions": extensions, }
 
         if world.currency_map is not None:
             initial["currency_map"] = world.currency_map
@@ -605,18 +505,17 @@ class CreateCharacterDataView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["extensions"] = Extension.objects.filter(
-            type__in=["x", "w"], is_mandatory=False, is_active=True
-        )
+        context["extensions"] = Extension.objects.filter(type__in=["x", "w"],
+                                                         is_mandatory=False,
+                                                         is_active=True)
         context["campaign"] = self.campaign_to_join
         context["world_pk"] = self.kwargs["world_pk"]
         context["epoch_pk"] = self.kwargs["epoch_pk"]
         return context
 
     def get_success_url(self):
-        return reverse(
-            "characters:create_character_constructed", kwargs={"pk": self.object.id}
-        )
+        return reverse("characters:create_character_constructed",
+                       kwargs={"pk": self.object.id})
 
 
 class CreateCharacterInfoView(TemplateView):
@@ -635,88 +534,51 @@ class CreateCharacterInfoView(TemplateView):
             entity = Entity.objects.get(id=value)
         except ValueError:
             return {}
-        return {
-            "title": entity.name,
-            "description": entity.description,
-            "image": entity.image,
-        }
+        return {"title": entity.name, "description": entity.description,
+                "image": entity.image, }
 
     def name_info(self, value):
-        return {
-            "title": gettext("Name"),
-            "description": gettext("Choose a suitable name for your character."),
-        }
+        return {"title": gettext("Name"),
+                "description": gettext("Choose a suitable name for your character."), }
 
     def size_info(self, value):
         world = Extension.objects.get(id=self.kwargs["world_pk"]).world_set.latest("id")
-        return {
-            "title": gettext("Size"),
-            "description": gettext(
-                f"Enter the size of your character in {world.info_name_cm}."
-            ),
-        }
+        return {"title": gettext("Size"), "description": gettext(
+            f"Enter the size of your character in {world.info_name_cm}."), }
 
     def weight_info(self, value):
         world = Extension.objects.get(id=self.kwargs["world_pk"]).world_set.latest("id")
-        return {
-            "title": gettext("Weight"),
-            "description": gettext(
-                f"Enter the weight of your character in {world.info_name_kg}."
-            ),
-        }
+        return {"title": gettext("Weight"), "description": gettext(
+            f"Enter the weight of your character in {world.info_name_kg}."), }
 
     def pronouns_info(self, value):
-        return {
-            "title": gettext("Pronouns"),
-            "description": gettext(
-                f"At several places in the interface, your character will be referred to using their"
-                " pronouns. Choose the pronouns that best describe your character."
-            ),
-        }
+        return {"title": gettext("Pronouns"), "description": gettext(
+            f"At several places in the interface, your character will be referred to using their"
+            " pronouns. Choose the pronouns that best describe your character."), }
 
     def date_of_birth_info(self, value):
-        return {
-            "title": gettext("Date of birth"),
-            "description": gettext("Enter the birthdate of your character."),
-        }
+        return {"title": gettext("Date of birth"),
+                "description": gettext("Enter the birthdate of your character."), }
 
     def seed_money_info(self, value):
-        return {
-            "title": gettext("Seed Money"),
-            "description": gettext(
-                """Specify a starting capital for your character. The seed money is usually
+        return {"title": gettext("Seed Money"), "description": gettext("""Specify a starting capital for your character. The seed money is usually
             defined by the game master and determines how much equipment the character can have at the
-            beginning of the game."""
-            ),
-        }
+            beginning of the game."""), }
 
     def lineage_info(self, value):
         lineage = Lineage.objects.get(id=value)
-        return {
-            "title": lineage.name,
-            "description": lineage.description,
-            "lineage": lineage,
-        }
+        return {"title": lineage.name, "description": lineage.description,
+                "lineage": lineage, }
 
     def attitude_info(self, value):
-        return {
-            "title": gettext("Attitude"),
-            "description": gettext(
-                """The attitude indicates the morality of the character. The value ranges
+        return {"title": gettext("Attitude"), "description": gettext("""The attitude indicates the morality of the character. The value ranges
             from 0 to 100, with an attitude of 0 corresponding to a deeply evil character and a value of 100
             corresponding to a good character. The value is freely selectable and can be changed by actions in the game.
-            """
-            ),
-        }
+            """), }
 
     def currency_map_info(self, value):
-        return {
-            "title": gettext("Currency Map"),
-            "description": gettext(
-                """The currency map specifies which currency units are available to the character.
-            It is usually set by the campaign or the world."""
-            ),
-        }
+        return {"title": gettext("Currency Map"), "description": gettext("""The currency map specifies which currency units are available to the character.
+            It is usually set by the campaign or the world."""), }
 
 
 class CreateRandomNPCView(CreateCharacterDataView):
@@ -727,8 +589,7 @@ class CreateRandomNPCView(CreateCharacterDataView):
         result = super().form_valid(form)
         self.object.randomize(form.cleaned_data["starting_reputation"])
         self.object.set_initial_reputation(
-            self.object.reputation_spent + self.object.remaining_template_points
-        )
+            self.object.reputation_spent + self.object.remaining_template_points)
         return result
 
     def get_success_url(self):
@@ -752,12 +613,10 @@ class CreateCharacterConstructedView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["template_categories"] = TemplateCategory.objects.filter(
-            allow_at_character_creation=True
-        )
+            allow_at_character_creation=True)
         context["warnings"] = self.object.warnings(self.request.world_configuration)
-        context["character_template_ids"] = [
-            ct.template.id for ct in self.object.charactertemplate_set.all()
-        ]
+        context["character_template_ids"] = [ct.template.id for ct in
+                                             self.object.charactertemplate_set.all()]
         return context
 
     def post(self, request, *args, **kwargs):
@@ -767,13 +626,9 @@ class CreateCharacterConstructedView(DetailView):
         obj.arcana = obj.max_arcana
         obj.save()
         if not settings.DEBUG:
-            mail_admins(
-                "PhaseSix: New Character",
-                render_to_string(
-                    "characters/mail/character_created_admin_notification.html",
-                    {"character": obj, "base_url": settings.BASE_URL},
-                ),
-            )
+            mail_admins("PhaseSix: New Character", render_to_string(
+                "characters/mail/character_created_admin_notification.html",
+                {"character": obj, "base_url": settings.BASE_URL}, ), )
         return HttpResponseRedirect(obj.get_absolute_url())
 
 
@@ -787,13 +642,10 @@ class XhrConstructedAddTemplateView(View):
             if template.cost > remaining_points:
                 return JsonResponse({"status": "notenoughpoints"})
             character.add_template(template)
-            return JsonResponse(
-                {
-                    "status": "ok",
-                    "warnings": character.warnings(self.request.world_configuration),
-                    "remaining_points": remaining_points - template.cost,
-                }
-            )
+            return JsonResponse({"status": "ok",
+                                 "warnings": character.warnings(
+                                     self.request.world_configuration),
+                                 "remaining_points": remaining_points - template.cost, })
 
         return JsonResponse({"status": "noop"})
 
@@ -805,13 +657,10 @@ class XhrConstructedRemoveTemplateView(View):
         if character.may_edit(request.user):
             template = Template.objects.get(id=request.POST.get("template_id"))
             character.remove_template(template)
-            return JsonResponse(
-                {
-                    "status": "ok",
-                    "warnings": character.warnings(self.request.world_configuration),
-                    "remaining_points": character.remaining_template_points,
-                }
-            )
+            return JsonResponse({"status": "ok",
+                                 "warnings": character.warnings(
+                                     self.request.world_configuration),
+                                 "remaining_points": character.remaining_template_points, })
 
         return JsonResponse({"status": "noop"})
 
@@ -846,8 +695,7 @@ class XhrCharacterModifyReputationView(View):
             except ValueError:
                 pass
         return JsonResponse(
-            {"status": "ok", "remaining_reputation": character.reputation_available}
-        )
+            {"status": "ok", "remaining_reputation": character.reputation_available})
 
 
 # gear
@@ -970,8 +818,7 @@ class XhrModifyBodyModificationView(View):
         if not character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
         modification = CharacterBodyModification.objects.get(
-            id=kwargs["body_modification_pk"]
-        )
+            id=kwargs["body_modification_pk"])
 
         if self.kwargs["mode"] == "add_charge":
             modification.charges_used -= 1
@@ -990,19 +837,16 @@ class XhrAddWeaponModView(TemplateView):
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         character_weapon = CharacterWeapon.objects.get(
-            id=self.request.GET.get("character_weapon_id")
-        )
+            id=self.request.GET.get("character_weapon_id"))
 
         context = super().get_context_data(**kwargs)
         context["character"] = character
         context["character_weapon"] = character_weapon
         context[
-            "weapon_modification_types"
-        ] = WeaponModificationType.objects.for_extensions(character.extensions).filter(
+            "weapon_modification_types"] = WeaponModificationType.objects.for_extensions(
+            character.extensions).filter(
             weaponmodification__in=WeaponModification.objects.for_extensions(
-                character.extensions
-            )
-        )
+                character.extensions))
         return context
 
 
@@ -1010,21 +854,17 @@ class AddWeaponModificationView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         weapon_modification = WeaponModification.objects.get(
-            id=kwargs["weapon_modification_pk"]
-        )
+            id=kwargs["weapon_modification_pk"])
         character_weapon = CharacterWeapon.objects.get(id=kwargs["character_weapon_pk"])
 
         if not character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
 
         if (
-            character_weapon.weapon.type
-            in weapon_modification.available_for_weapon_types.all()
-        ):
+            character_weapon.weapon.type in weapon_modification.available_for_weapon_types.all()):
             if weapon_modification.type.unique_equip:
                 for active_weapon_mod in character_weapon.modifications.filter(
-                    type=weapon_modification.type
-                ):
+                    type=weapon_modification.type):
                     character_weapon.modifications.remove(active_weapon_mod)
             character_weapon.modifications.add(weapon_modification)
         return JsonResponse({"status": "ok"})
@@ -1100,8 +940,7 @@ class XhrModifyCurrencyView(View):
             else:
                 character.charactercurrency_set.create(
                     currency_map_unit=CurrencyMapUnit.objects.get(id=unit_id),
-                    quantity=v,
-                )
+                    quantity=v, )
         return JsonResponse({"status": "ok"})
 
 
@@ -1115,8 +954,7 @@ class XhrCreateNoteView(View):
         character.characternote_set.create(
             is_private=request.POST.get("private", "off") == "on",
             subject=request.POST.get("subject", None),
-            text=request.POST.get("text", None),
-        )
+            text=request.POST.get("text", None), )
 
         return JsonResponse({"status": "ok"})
 
@@ -1146,24 +984,17 @@ class XhrDeleteNoteView(View):
         return JsonResponse({"status": "ok"})
 
 
-class CharacterPDFView(View):
+class CharacterPDFView(DetailView):
+    model = Character
+
     def get(self, request, *args, **kwargs):
         font_config = FontConfiguration()
-        html = HTML(
-            file_obj=io.BytesIO(
-                bytes(
-                    render_to_string(
-                        "characters/pdf/character_pdf.html",
-                        {
-                            "object": Character.objects.get(id=kwargs["pk"]),
-                        },
-                    ),
-                    encoding="utf-8",
-                )
-            ),
+        html = HTML(file_obj=io.BytesIO(bytes(
+            render_to_string(
+                "characters/pdf/character_pdf.html",
+                {"object": self.get_object()}, ), encoding="utf-8", )),
             base_url="src/",
-            encoding="utf-8",
-        )
+            encoding="utf-8", )
         response = HttpResponse(content_type="application/pdf")
         response.headers["Content-Disposition"] = "inline"
         html.write_pdf(response, font_config=font_config)
@@ -1225,12 +1056,11 @@ class XhrCharacterObjectsView(TemplateView):
                 return JsonResponse({"status": "forbidden"})
 
         character_object_class = get_character_object_class(self.kwargs["object_type"])
-        self.character_object = character_object_class(
-            self.request,
-            self.character,
-            campaign=self.campaign,
-            omit_category_qs=request.GET.get("omit_category_list", "false") == "true",
-        )
+        self.character_object = character_object_class(self.request, self.character,
+                                                       campaign=self.campaign,
+                                                       omit_category_qs=request.GET.get(
+                                                           "omit_category_list",
+                                                           "false") == "true", )
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -1249,12 +1079,10 @@ class XhrCharacterObjectsView(TemplateView):
         return JsonResponse({"status": "ok"})
 
     def create_homebrew(self):
-        form = self.character_object.homebrew_form_class(
-            self.request.POST,
-            character=self.character,
-            campaign=self.campaign,
-            request=self.request,
-        )
+        form = self.character_object.homebrew_form_class(self.request.POST,
+                                                         character=self.character,
+                                                         campaign=self.campaign,
+                                                         request=self.request, )
         if form.is_valid():
             form.save()
         if self.character:

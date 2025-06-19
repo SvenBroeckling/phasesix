@@ -1,0 +1,122 @@
+// WeasyStrap Grid
+
+// Container
+.container,
+.container-fluid {
+  width: 100%;
+  padding-right: ($grid-gutter-width * .5);
+  padding-left: ($grid-gutter-width * .5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Responsive containers
+@each $breakpoint, $container-max-width in $container-max-widths {
+  .container-#{$breakpoint} {
+    @extend .container-fluid;
+  }
+
+  @include media-breakpoint-up($breakpoint) {
+    %responsive-container-#{$breakpoint} {
+      max-width: $container-max-width;
+    }
+
+    // Extend each breakpoint which is smaller or equal to the current breakpoint
+    .container {
+      @extend %responsive-container-#{$breakpoint};
+    }
+
+    // Extend current breakpoint and down
+    @each $name, $width in $grid-breakpoints {
+      @if ($name != $breakpoint) {
+        .container-#{$name} {
+          @extend %responsive-container-#{$breakpoint};
+        }
+      }
+    }
+  }
+}
+
+// Row
+.row {
+  @include make-row();
+}
+
+// No gutters
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+// Columns
+@include make-grid-columns();
+
+@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+  // Common properties for all breakpoints
+  %grid-column {
+    position: relative;
+    width: 100%;
+    padding-right: $gutter * .5;
+    padding-left: $gutter * .5;
+  }
+
+  .col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    @extend %grid-column;
+  }
+
+  @for $i from 1 through $columns {
+    .col-#{$i} {
+      @include make-col($i, $columns);
+      @extend %grid-column;
+    }
+  }
+
+  .col-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    @extend %grid-column;
+  }
+
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      .col#{$infix} {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+      }
+
+      .col#{$infix}-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+      }
+
+      @for $i from 1 through $columns {
+        .col#{$infix}-#{$i} {
+          @include make-col($i, $columns);
+        }
+      }
+    }
+  }
+}
+
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}

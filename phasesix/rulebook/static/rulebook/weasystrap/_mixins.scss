@@ -1,0 +1,79 @@
+// WeasyStrap Mixins
+
+// Breakpoint viewport sizes and media queries
+@mixin media-breakpoint-up($name) {
+  $min: map-get($grid-breakpoints, $name);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name) {
+  $max: map-get($grid-breakpoints, $name);
+  @if $max {
+    @media (max-width: $max - .02) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+// Grid system
+@mixin make-row($gutter: $grid-gutter-width) {
+  --#{$prefix}gutter-x: #{$gutter};
+  --#{$prefix}gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--#{$prefix}gutter-y) * -1);
+  margin-right: calc(var(--#{$prefix}gutter-x) * -.5);
+  margin-left: calc(var(--#{$prefix}gutter-x) * -.5);
+}
+
+@mixin make-col-ready($gutter: $grid-gutter-width) {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--#{$prefix}gutter-x) * .5);
+  padding-left: calc(var(--#{$prefix}gutter-x) * .5);
+  margin-top: var(--#{$prefix}gutter-y);
+}
+
+@mixin make-col($size, $columns: $grid-columns) {
+  flex: 0 0 auto;
+  width: percentage(divide($size, $columns));
+}
+
+// Clearfix
+@mixin clearfix() {
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+}
+
+// Typography
+@mixin font-size($size, $line-height: null) {
+  font-size: $size;
+  @if $line-height {
+    line-height: $line-height;
+  }
+}
+
+// Variables
+$prefix: ws- !default;
+
+// Utilities
+@mixin generate-utility($property, $values, $prefix: "") {
+  @each $name, $value in $values {
+    .#{$prefix}#{$name} {
+      #{$property}: $value !important;
+    }
+  }
+}
