@@ -1,10 +1,10 @@
 {% load characters_extras %}
 <header>
-  <small class="text-muted">{{ object.lineage }}</small><br>
-  <small class="text-muted">{% template_category_string object 3 '' %}</small><br>
-  <small class="text-muted">{% template_category_string object 2 '' %}</small>
+  <span class="text-muted">{{ object.lineage }}</span><br>
+  <span class="text-muted">{% template_category_string object 3 '' %}</span><br>
+  <span class="text-muted">{% template_category_string object 2 '' %}</span>
 </header>
 
 {% if object.image %}
-  <img src="{{ object.image.path }}" alt="{{ object }}" class="w-full mb-1">
+  <img src="{{ object.image.path }}" alt="{{ object }}" class="img-fluid">
 {% endif %}

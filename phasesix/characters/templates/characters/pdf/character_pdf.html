@@ -11,6 +11,7 @@
 
   <style>
     {% font_kits %}
+
     @page {
       size: A4;
       margin: 3mm 3mm 3mm 2mm;
@@ -38,22 +39,6 @@
       border: 1px solid blue;
     }
 
-    .text-end {
-      text-align: end;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    .text-muted {
-      color: #333;
-    }
-
-    .text-light {
-      color: gray;
-    }
-
     small {
       font-size: 8px;
     }
@@ -65,26 +50,6 @@
 
     .page-break {
       page-break-before: always;
-    }
-
-    .w-full {
-      width: 100%;
-    }
-
-    .mb-1 {
-      margin-bottom: 0.3cm;
-    }
-
-    .w-half {
-      width: 50%;
-    }
-
-    .pr-1 {
-      padding-right: 1rem;
-    }
-
-    .vertical-top {
-      vertical-align: top;
     }
 
     .bordered-box {
@@ -104,14 +69,6 @@
       width: 100%;
     }
 
-    .page header {
-      margin-bottom: 5mm;
-    }
-
-    .page header h3 {
-      margin: 0;
-    }
-
     /* Boxes */
 
     .page .box {
@@ -129,29 +86,6 @@
       padding: 0 2mm;
       top: -5mm;
       left: 2mm;
-    }
-
-    .page .box table {
-      width: 100%;
-    }
-
-    .page .box table td {
-      border-bottom: 1px solid silver;
-    }
-
-    /* Specific Boxes */
-
-    .page .box.combat-box table tr td:first-child {
-      width: 35mm;
-      vertical-align: top;
-    }
-
-    .page .box.weapon-box table tr td:first-child {
-      width: 45mm;
-    }
-
-    .page .box.armour-box table tr td:first-child {
-      width: 35mm;
     }
 
     /* Card Columns */
@@ -175,7 +109,22 @@
     <h2>{{ object.player }}</h2>
   </div>
 
-  <div class="d-flex justify-content-center mb-3"></div>
+  <div class="d-flex justify-content-start mb-3">
+    <div class="d-flex flex-column w-25">
+      {% include 'characters/pdf/boxes/overview/basics.html' %}
+      {% include 'characters/pdf/boxes/overview/dice.html' %}
+      {% comment %}
+      {% include 'characters/pdf/boxes/overview/health.html' %}
+      {% include 'characters/pdf/boxes/overview/arcana.html' %}
+      {% include 'characters/pdf/boxes/overview/horror.html' %}
+      {% endcomment %}
+    </div>
+
+    <div class="d-flex flex-column">
+      Hello
+    </div>
+
+  </div>
 
 
   {% comment %}
