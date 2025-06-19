@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     "django_htmx",
     "sorl.thumbnail",
     "compressor",
-    "weasystrap",
     "eventstream",
     "characters",
     "rulebook",

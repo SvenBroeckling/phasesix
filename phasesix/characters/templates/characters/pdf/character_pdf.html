@@ -7,46 +7,19 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css"
         rel="stylesheet"/>
 
-  {% include_weasystrap %}
+  <style>
+    {% font_kits %}
+    :root {
+      /* Custom variables for this template */
+      --primary: #3f51b5;
+      --secondary: #2196f3;
+      --font-size-base: 12px;
+      --font-family-headings: 'Oxanium';
+    }
+  </style>
 
   <style>
     {% font_kits %}
-
-    @page {
-      size: A4;
-      margin: 3mm 3mm 3mm 2mm;
-    }
-
-    :root {
-      font-size: 12px;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      box-sizing: border-box;
-      padding: 3mm;
-      margin: 0;
-    }
-
-    /* Utilities */
-
-    .debug {
-      border: 1px solid red;
-    }
-
-    .debug2 {
-      border: 1px solid blue;
-    }
-
-    small {
-      font-size: 8px;
-    }
-
-    p {
-      margin: 0;
-      padding: 0;
-    }
 
     .page-break {
       page-break-before: always;
