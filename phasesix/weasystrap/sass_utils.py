@@ -14,7 +14,6 @@ def compile_scss_file(scss_path):
     Returns:
         Compiled CSS as string
     """
-    # If it's a static path reference, find the actual file path
     if not os.path.isfile(scss_path):
         found_path = finders.find(scss_path)
         if found_path:
@@ -22,10 +21,7 @@ def compile_scss_file(scss_path):
         else:
             raise ValueError(f"SCSS file not found: {scss_path}")
 
-    # Compile the SCSS to CSS
     return sass.compile(filename=scss_path)
-    compiler = SassCompiler()
-    return compiler.compile(scss_path)
 
 
 def get_weasystrap_css():

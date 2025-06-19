@@ -1,4 +1,6 @@
 from django import template
+from django.utils.safestring import mark_safe
+
 from weasystrap.sass_utils import get_weasystrap_css
 
 register = template.Library()
@@ -9,4 +11,4 @@ def include_weasystrap():
     """Compile and include WeasyStrap SCSS for PDF templates"""
     compiled_css = get_weasystrap_css()
 
-    return f"<style>{compiled_css}</style>"
+    return mark_safe(f"<style>{compiled_css}</style>")
