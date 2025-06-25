@@ -1,0 +1,8 @@
+{% load characters_extras %}
+{% load i18n %}
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans 'Protection' %}</h5>
+  <div class="card-body">
+    {% protection_display object %}
+  </div>
+</div>

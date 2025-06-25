@@ -1,0 +1,12 @@
+{% load i18n rules_extras %}
+
+{% for template in object.templates_with_rules.all %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{{ template.template.name }}</h5>
+    <div class="card-body">
+      <p>
+        {{ template.template.rules|phasesix_markup }}
+      </p>
+    </div>
+  </div>
+{% endfor %}

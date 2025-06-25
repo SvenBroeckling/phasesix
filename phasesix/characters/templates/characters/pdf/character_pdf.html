@@ -1,196 +1,166 @@
-{% load weasystrap %}
+{% load i18n %}
+{% load characters_extras %}
 {% load rulebook_extras %}
 {% load static %}
+{% load bootyprint %}
 <html lang="de">
 <head>
   <title>{{ object.name }}</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css"
         rel="stylesheet"/>
 
+  {% bootyprint_css %}
   <style>
     {% font_kits %}
     :root {
       /* Custom variables for this template */
+      --page-margin: 10mm;
       --primary: #3f51b5;
       --secondary: #2196f3;
       --font-size-base: 12px;
       --font-family-headings: 'Oxanium';
+      --font-family-base: 'Oxanium';
     }
-  </style>
-
-  <style>
-    {% font_kits %}
-
-    .page-break {
-      page-break-before: always;
-    }
-
-    .bordered-box {
-      border: 1px solid black;
-      border-radius: 2px;
-      padding: 2mm;
-      margin: 6mm 2mm 2mm 2mm;
-      width: 90%;
-      text-align: center;
-    }
-
-    /* Pages */
 
     .page {
       page-break-inside: avoid;
-      height: 100%;
+      page-break-after: always;
+      height: 100vh;
       width: 100%;
     }
-
-    /* Boxes */
-
-    .page .box {
-      border: 1px solid black;
-      position: relative;
-      margin-bottom: 4mm;
-      padding: 2mm;
-      border-radius: 1mm;
-    }
-
-    .page .box h2 {
-      position: absolute;
-      font-size: 12px;
-      background-color: white;
-      padding: 0 2mm;
-      top: -5mm;
-      left: 2mm;
-    }
-
-    /* Card Columns */
-
-    div.card-columns .cards {
-      columns: 2;
-    }
-
-    div.card-columns .cards > * {
-      break-inside: avoid;
-    }
-
   </style>
 </head>
 
 <body>
-<div class="page">
 
-  <div class="page-header">
+<div class="page">
+  <header>
     <h1>{{ object.name }}</h1>
-    <h2>{{ object.player }}</h2>
-  </div>
+    <h2 class="mb-2">{{ object.player }}</h2>
 
-  <div class="d-flex justify-content-start mb-3">
-    <div class="d-flex flex-column w-25">
-      {% include 'characters/pdf/boxes/overview/basics.html' %}
-      {% include 'characters/pdf/boxes/overview/dice.html' %}
-      {% comment %}
-      {% include 'characters/pdf/boxes/overview/health.html' %}
-      {% include 'characters/pdf/boxes/overview/arcana.html' %}
-      {% include 'characters/pdf/boxes/overview/horror.html' %}
-      {% endcomment %}
+    <div class="container">
+      <div class="row mb-3">
+
+        <div class="col-3">
+          <div class="card card-inlay">
+            <div class="card-body">
+              <h5 class="card-title">{% trans 'Lineage' %}</h5>
+              {{ object.lineage }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="card card-inlay">
+            <div class="card-body">
+              <h5 class="card-title">{% trans 'Occupation' %}</h5>
+              {% template_category_string object 3 '' %}&nbsp;
+            </div>
+          </div>
+        </div>
+
+        <div class="col-5">
+          <div class="card card-inlay">
+            <div class="card-body">
+              <h5 class="card-title">{% trans 'Education' %}</h5>
+              {% template_category_string object 2 '' %}&nbsp;
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="row">
+    <!-- Base values column -->
+    <div class="col-3">
+      {% if object.image %}
+        <img src="{{ object.image.path }}" alt="{{ object }}" class="img-fluid">
+      {% endif %}
+
+      {% include "characters/pdf/cards/overview/dice.html" %}
+      {% include 'characters/pdf/cards/gear/currency.html' %}
+      {% include "characters/pdf/cards/overview/game_values.html" %}
+      {% include "characters/pdf/cards/overview/wounds.html" %}
+      {% include "characters/pdf/cards/overview/protection.html" %}
+
+      {% if object.is_magical %}
+        {% include "characters/pdf/cards/overview/arcana.html" %}
+      {% endif %}
+
+      {% if object.extension_enabled.horror %}
+        {% include "characters/pdf/cards/overview/horror.html" %}
+      {% endif %}
     </div>
 
-    <div class="d-flex flex-column">
-      Hello
+    <!-- Main column -->
+    <div class="col-9">
+      <div class="row mb-3">
+        <div class="col-6">
+          {% include "characters/pdf/cards/overview/persona.html" %}
+        </div>
+        <div class="col-6">
+          {% include "characters/pdf/cards/overview/physis.html" %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-6">
+          {% include 'characters/pdf/cards/overview/practical_skills.html' %}
+        </div>
+        <div class="col-6">
+          {% include 'characters/pdf/cards/overview/mind_skills.html' %}
+        </div>
+      </div>
+
+      {% with kd=object.knowledge_dict %}
+        {% if kd %}
+          <div class="row">
+            {% include "characters/pdf/cards/overview/knowledge.html" %}
+          </div>
+        {% endif %}
+      {% endwith %}
     </div>
-
   </div>
-
-
-  {% comment %}
-  <table>
-    <tr>
-      <td class="vertical-top debug" style="width: 4cm; padding-right: 0.4cm">
-        {% include 'characters/pdf/boxes/overview/basics.html' %}
-        {% include 'characters/pdf/boxes/overview/dice.html' %}
-        {% include 'characters/pdf/boxes/overview/health.html' %}
-        {% include 'characters/pdf/boxes/overview/arcana.html' %}
-        {% include 'characters/pdf/boxes/overview/horror.html' %}
-      </td>
-
-      <td class="vertical-top debug2" style="width: 100%">
-
-        <table class="w-full">
-          <tr>
-            <td>
-              {% include 'characters/pdf/boxes/overview/actions.html' %}
-            </td>
-            <td>
-              {% include 'characters/pdf/boxes/overview/protection.html' %}
-            </td>
-            <td>
-              {% include 'characters/pdf/boxes/overview/evasion.html' %}
-            </td>
-            <td>
-              {% include 'characters/pdf/boxes/overview/shadows_short.html' %}
-            </td>
-          </tr>
-        </table>
-
-        <table class="w-full">
-          <tr>
-            <td>
-              {% include 'characters/pdf/boxes/overview/persona.html' %}
-            </td>
-            <td>
-              {% include 'characters/pdf/boxes/overview/physis.html' %}
-            </td>
-            <td>
-              {% include 'characters/pdf/boxes/overview/knowledge.html' %}
-            </td>
-          </tr>
-        </table>
-
-        <table class="w-full">
-          <tr>
-            <td>
-              {% include 'characters/pdf/boxes/overview/practical_skills.html' %}
-            </td>
-            <td>
-              {% include 'characters/pdf/boxes/overview/theoretical_skills.html' %}
-            </td>
-          </tr>
-        </table>
-
-      </td>
-    </tr>
-  </table>
 </div>
 
 <div class="page">
-  {% include 'characters/pdf/boxes/overview/combat.html' %}
+  {% include 'characters/pdf/cards/combat/combat.html' %}
 </div>
 
 <div class="page">
-  <table class="w-full">
-    <tr>
-      <td class="vertical-top w-half pr-1">
-        {% include 'characters/pdf/boxes/gear/weapons.html' %}
-      </td>
-      <td class="vertical-top w-full">
-        {% include 'characters/pdf/boxes/gear/armour.html' %}
-        {% include 'characters/pdf/boxes/gear/currency.html' %}
-        {% include 'characters/pdf/boxes/gear/items.html' %}
-      </td>
-    </tr>
-  </table>
+  <div class="columns-2">
+    {% include 'characters/pdf/cards/gear/weapons.html' %}
+    {% include 'characters/pdf/cards/gear/armour.html' %}
+    {% include 'characters/pdf/cards/gear/items.html' %}
+  </div>
 </div>
 
-{% if object.extension_enabled.magic or object.templates_with_rules.exists %}
+
+{% if object.extension_enabled.magic and object.characterspell_set.exists %}
   <div class="page">
-    {% include 'characters/pdf/boxes/magic/spells.html' %}
-    {% include 'characters/pdf/boxes/magic/shadows.html' %}
+    <div class="columns-3">
+      {% include 'characters/pdf/cards/magic/spells.html' %}
+    </div>
   </div>
 {% endif %}
 
-<div class="page">
-  {% include 'characters/pdf/boxes/background/background.html' %}
-</div>
-
+{% comment %} {# already in the background template list #}
+{% if object.templates_with_rules.exists and object.templates_with_rules.exists %}
+  <div class="page">
+    <div class="columns-3">
+      {% include 'characters/pdf/cards/magic/shadows.html' %}
+    </div>
+  </div>
+{% endif %}
 {% endcomment %}
+
+<div class="page">
+  <div class="columns-3">
+    {% include 'characters/pdf/cards/background/background.html' %}
+  </div>
+</div>
 
 </body>
 </html>

@@ -1,0 +1,48 @@
+{% load characters_extras i18n rules_extras %}
+
+{% for s in object.characterspell_set.all %}
+  {% spell_type_attribute_dice_value object s.spell_type as dice %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{{ s }}</h5>
+    <div class="card-body">
+      <p>
+        {{ s.spell.rules|phasesix_markup }}
+      </p>
+      <br>
+      <table class="table table-underline">
+        <tr>
+          <td>{{ object.characterskill_set.spell_casting_skill.skill.name }}</td>
+          <td><span class="text-muted">{{ dice }} {{ s.spell_type.reference_attribute.name }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans 'Arcana' %}</td>
+          <td>{% for a in s.arcana_cost|to_range %}<i class="gi-lorc-fairy-wand text-muted"></i>{% endfor %}
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans 'Power' %}</td>
+          <td><span class="text-muted">{{ s.power }}</span></td>
+        </tr>
+        <tr>
+          <td>{% trans 'Range' %}</td>
+          <td><span class="text-muted">{{ s.range }}</span></td>
+        </tr>
+        <tr>
+          <td>{% trans 'Shape' %}</td>
+          <td><span class="text-muted">{{ s.shape|default:"-" }}</span></td>
+        </tr>
+        <tr>
+          <td>{% trans 'Actions' %}</td>
+          <td><span class="text-muted">{{ s.actions }}</span></td>
+        </tr>
+        {% for st in s.characterspelltemplate_set.all %}
+          <tr>
+            <td>{% if forloop.first %}{% trans 'Modifications' %}{% endif %}</td>
+            <td><span class="text-muted">{{ st }}</span></td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endfor %}

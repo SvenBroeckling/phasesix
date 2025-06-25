@@ -1,0 +1,31 @@
+{% load characters_extras i18n %}
+
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans 'Items on body' %}</h5>
+  <div class="card-body">
+    <table class="table">
+      {% for item in object.characteritem_set.not_in_container.without_containers %}
+        <tr>
+          <td class="width-5mm">{{ item.quantity }}x</td>
+          <td>{{ item.item }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% for container in object.characteritem_set.containers %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{{ container.item }}</h5>
+    <div class="card-body">
+      <table class="table">
+        {% for item in container.characteritem_set.without_containers %}
+          <tr>
+            <td class="width-5mm">{{ item.quantity }}x</td>
+            <td>{{ item.item }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endfor %}

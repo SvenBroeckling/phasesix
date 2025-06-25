@@ -1,0 +1,11 @@
+{% load i18n rules_extras %}
+
+<div class="card card-inlay">
+  <h5 class="card-title">{% trans 'Shadows' %}</h5>
+  <div class="card-body">
+    {% for template in object.templates_with_rules.all %}
+      <h4>{{ template.template.name }}</h4>
+      <small>{{ template.template.rules|phasesix_markup }}</small>
+    {% endfor %}
+  </div>
+</div>

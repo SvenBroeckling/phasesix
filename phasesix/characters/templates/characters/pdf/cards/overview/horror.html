@@ -1,0 +1,19 @@
+{% load characters_extras %}
+{% load i18n %}
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans 'Stress' %}</h5>
+  <div class="card-body">
+    <div>
+      {% for i in object.max_stress|to_range %}
+        <i class="fas fa-meh text-danger" title="{% trans 'Stress' %}"></i>
+      {% endfor %}
+    </div>
+    <div class="list-group">
+      {% for q in object.quirks.all %}
+        <div class="list-group-item">
+          {{ q }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

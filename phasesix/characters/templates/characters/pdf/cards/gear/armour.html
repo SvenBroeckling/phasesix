@@ -1,0 +1,13 @@
+{% load armory_extras %}
+{% load i18n characters_extras %}
+{% for r in object.characterriotgear_set.all %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{% trans 'Armour' %}</h5>
+    <div class="card-body">
+      <h4>{{ r.riot_gear }}</h4>
+      <b>{% trans "Protection" %}</b>: {% riot_gear_protection_display r.riot_gear %}<br>
+      <b>{% trans "Encumbrance" %}</b>: {{ r.riot_gear.encumbrance }}<br>
+      <b>{% trans "Concealment" %}</b>: {{ r.riot_gear.concealment }}<br>
+    </div>
+  </div>
+{% endfor %}

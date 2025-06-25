@@ -1,0 +1,16 @@
+{% load characters_extras %}
+{% load i18n %}
+{% for knowledge in kd.items %}
+  {% character_knowledge_skill_value object knowledge.0 as cs %}
+  <div class="col-4 mb-3">
+    <div class="card card-inlay h-100">
+      <h5 class="card-title">{{ knowledge.0 }}</h5>
+      <div class="card-body">
+        <div class=" d-flex justify-content-between">
+          <div>{{ knowledge.0.skill }}</div>
+          <div>{{ knowledge.1 }}+{{ cs }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

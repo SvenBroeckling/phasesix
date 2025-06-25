@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_bootstrap5",
     "cachalot",
+    "bootyprint",
     "reversion",
     "django_htmx",
     "sorl.thumbnail",
@@ -142,6 +143,28 @@ STATICFILE_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
+
+BOOTYPRINT = {
+    'DEFAULT_TEMPLATE': 'bootyprint/default.html',
+    'PDF_OPTIONS': {
+        'media_type': 'print',
+        'pdf_identifier': None,
+        'pdf_variant': None,
+        'pdf_version': None,
+        'pdf_forms': False,
+        'uncompressed_pdf': False,
+        'custom_metadata': False,
+        'srgb': True,
+        'optimize_images': True,
+        'jpeg_quality': 95,
+        'presentational_hints': False,
+        'dpi': 96,
+        'full_fonts': True,
+        'hinting': True,
+    },
+    'CACHE_ENABLED': False,
+    'CACHE_TIMEOUT': 60 * 60 * 24,  # 24 hours
+}
 
 WSGI_APPLICATION = "phasesix.wsgi.application"
 

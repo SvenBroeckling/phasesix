@@ -1,0 +1,22 @@
+{% load i18n %}
+<div class="card card-inlay my-3">
+  <h5 class="card-title">{% trans 'Dice' %}</h5>
+  <table class="table table-underline table-compact">
+    <tr>
+      <td>{% trans 'Minimum Roll' %}</td>
+      <td class="text-end">{{ object.minimum_roll }}+</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Bonus Dice' %}</td>
+      <td class="text-end">{{ object.bonus_dice }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Destiny Dice' %}</td>
+      <td class="text-end">{{ object.destiny_dice }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Rerolls' %}</td>
+      <td class="text-end">{{ object.rerolls }}</td>
+    </tr>
+  </table>
+</div>

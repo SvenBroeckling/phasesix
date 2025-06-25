@@ -1,5 +1,6 @@
 import io
 
+from bootyprint.views import PDFTemplateResponse
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -986,19 +987,8 @@ class XhrDeleteNoteView(View):
 
 class CharacterPDFView(DetailView):
     model = Character
-
-    def get(self, request, *args, **kwargs):
-        font_config = FontConfiguration()
-        html = HTML(file_obj=io.BytesIO(bytes(
-            render_to_string(
-                "characters/pdf/character_pdf.html",
-                {"object": self.get_object()}, ), encoding="utf-8", )),
-            base_url="src/",
-            encoding="utf-8", )
-        response = HttpResponse(content_type="application/pdf")
-        response.headers["Content-Disposition"] = "inline"
-        html.write_pdf(response, font_config=font_config)
-        return response
+    response_class = PDFTemplateResponse
+    template_name = "characters/pdf/character_pdf.html"
 
 
 # Pantheon

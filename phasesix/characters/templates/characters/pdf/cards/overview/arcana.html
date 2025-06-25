@@ -1,0 +1,10 @@
+{% load characters_extras %}
+{% load i18n %}
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans 'Arcana' %}</h5>
+  <div class="card-body">
+    {% for i in object.max_arcana|to_range %}
+      <i class="gi-lorc-fairy-wand text-muted"></i>
+    {% endfor %}
+  </div>
+</div>

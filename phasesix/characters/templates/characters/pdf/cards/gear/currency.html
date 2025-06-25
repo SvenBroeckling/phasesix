@@ -1,0 +1,16 @@
+{% load characters_extras i18n %}
+
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans 'Currency' %}</h5>
+  <div class="card-body">
+    <table class="table table-condensed table-underline">
+      {% for unit in object.currency_map.currencymapunit_set.all %}
+        <tr>
+          <td>{{ unit }}</td>
+          <td class="text-end"><span class="text-muted">{{ object|currency_quantity:unit }}</span></td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  </div>
+</div>

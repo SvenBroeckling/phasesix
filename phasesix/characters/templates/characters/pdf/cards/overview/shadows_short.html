@@ -1,0 +1,14 @@
+{% load i18n rules_extras characters_extras %}
+
+<div class="card card-inlay h-100">
+  <h5 class="card-title">{% trans 'Shadows' %}</h5>
+  <div class="card-body">
+    <div class="list-group">
+      {% for template in object.templates_with_rules.all|fill_queryset_to:4 %}
+        <div class="list-group-item d-flex justify-content-between">
+          {{ template.template.name }}&nbsp;
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -167,7 +167,7 @@ def character_knowledge_skill_value(character, knowledge):
 
     try:
         return character.characterskill_set.get(skill=knowledge.skill).value
-    except CharacterSkill.DoesNotExist:
+    except (CharacterSkill.DoesNotExist, AttributeError):
         return 0
 
 

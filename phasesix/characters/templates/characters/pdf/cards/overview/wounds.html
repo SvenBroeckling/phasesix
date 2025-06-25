@@ -1,0 +1,13 @@
+{% load characters_extras %}
+{% load i18n %}
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans 'Wounds' %}</h5>
+  <div class="card-body">
+    <div>
+      {% for i in object.max_health|to_range %}
+        <i class="far fa-heart text-danger" title="{% trans 'Wound' %}"></i>
+      {% endfor %}
+    </div>
+    {% trans 'Boost' %}
+  </div>
+</div>
