@@ -1,24 +1,63 @@
-{% extends 'rulebook/pdf/pdf_base.html' %}
+{% load bootyprint %}
 {% load rulebook_extras %}
 {% load i18n %}
+<html lang="de">
+<head>
+  <title>{{ world_book.book_title }}</title>
 
-{% block content %}
-  <div class="chapter" id="toc">
-    <div class="chapter-image" style="background-image: url(file://{% local_static "rulebook/toc_cover.png" %})">
-      &nbsp;
-    </div>
-    <h2>{% trans 'Table of contents' %}</h2>
-    <div class="chapter-text">
-      {% create_toc_entries bookmark_tree as toc_entries %}
-      {% for toc_entry in toc_entries %}
-        <span style="margin-left: {{ toc_entry.indent }}mm">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css"
+        rel="stylesheet"/>
+
+  {% bootyprint_css %}
+  <style>
+    {% font_kits %}
+    :root {
+      --page-margin: 10mm;
+      --font-size-base: 12px;
+      --font-family-headings: '{{ world_book.book_heading_font }}';
+      --font-family-base: '{{ world_book.book_body_font }}';
+    }
+
+    @page :left {
+      margin-left: 2cm;
+      margin-right: 2.5cm;
+    }
+
+    @page :right {
+      margin-left: 2.5cm;
+      margin-right: 2cm;
+    }
+
+    .chapter-image {
+      position: relative;
+      height: 10cm;
+      width: 21cm;
+      margin: -2cm -2cm 1cm -2.5cm; /* Chapters start always on the right page */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+
+<body>
+<div class="chapter" id="toc">
+  <div class="chapter-image" style="background-image: url(file://{% local_static "rulebook/toc_cover.png" %})">
+    &nbsp;
+  </div>
+  <h2>{% trans 'Table of contents' %}</h2>
+  <div class="columns-2 gap-4">
+    {% create_toc_entries bookmark_tree as toc_entries %}
+    {% for toc_entry in toc_entries %}
+      <span style="margin-left: {{ toc_entry.indent }}mm">
           {{ toc_entry.label }}
         </span>
-        <span style="float: right">
+      <span style="float: right">
           {{ toc_entry.page }}
         </span>
-        <br>
-      {% endfor %}
-    </div>
+      <br>
+    {% endfor %}
   </div>
-{% endblock %}
+</div>
+
+</body>

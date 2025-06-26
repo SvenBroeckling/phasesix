@@ -1,25 +1,56 @@
-{% extends "rulebook/pdf/pdf_base.html" %}
+{% load bootyprint %}
 {% load rules_extras %}
 {% load rulebook_extras %}
+<html lang="de">
+<head>
+  <title>{{ world_book.book_title }}</title>
 
-{% block extra_style %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css"
+        rel="stylesheet"/>
+
+  {% bootyprint_css %}
   <style>
+    {% font_kits %}
+    :root {
+      --page-margin: 10mm;
+      --font-size-base: 12px;
+      --font-family-headings: '{{ world_book.book_heading_font }}';
+      --font-family-base: '{{ world_book.book_body_font }}';
+    }
+
+
     .title-page {
       background-image: url({{ world_book.book_title_image.path }});
       background-size: cover;
-      margin: -2cm -1.4cm;
+      margin: -1cm;
       width: 21.0cm;
       height: 30.7cm;
     }
-  </style>
-{% endblock %}
 
-{% block content %}
-  <div class="page title-page">
-    <span></span>
-    <h1>{{ world_book.book_title }}</h1>
-    <p class="claim">
-      {{ world_book.book_claim }}
-    </p>
-  </div>
-{% endblock %}
+    .title-page h1 {
+      color: white;
+      text-shadow: 8px 8px #0a0a0a;
+      margin-top: 8cm;
+      font-size: 42pt;
+      text-align: center;
+    }
+
+    .title-page p.claim {
+      font-family: '{{ world_book.book_heading_font }}';
+      font-size: 18pt;
+      text-shadow: 8px 8px #0a0a0a;
+      color: white;
+      text-align: center;
+    }
+
+  </style>
+
+<body>
+<div class="page title-page">
+  <span></span>
+  <h1>{{ world_book.book_title }}</h1>
+  <p class="claim">
+    {{ world_book.book_claim }}
+  </p>
+</div>
+</body>

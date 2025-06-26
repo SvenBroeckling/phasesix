@@ -1,39 +1,90 @@
-{% extends "rulebook/pdf/pdf_base.html" %}
+{% load bootyprint %}
 {% load rules_extras %}
 {% load rulebook_extras %}
+<html lang="de">
+<head>
+  <title>{{ world_book.book_title }}</title>
 
-{% block extra_style %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" type="text/css"
+        rel="stylesheet"/>
+
+  {% bootyprint_css %}
   <style>
+    {% font_kits %}
+
+    :root {
+      --page-margin: 10mm;
+      --font-size-base: 12px;
+      --font-family-headings: '{{ world_book.book_heading_font }}';
+      --font-family-base: '{{ world_book.book_body_font }}';
+    }
+
     @page {
       @bottom-right {
         content: counter(page);
         margin-right: -0.7cm;
       }
     }
+
+    .chapter-image {
+      position: relative;
+      height: 10cm;
+      width: 21cm;
+      margin: -1.4cm -1.4cm 1cm -1.4cm;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    @page {
+      margin: 2cm;
+    }
+
+    @page :left {
+      margin-left: 2cm;
+      margin-right: 2.5cm;
+    }
+
+    @page :right {
+      margin-left: 2.5cm;
+      margin-right: 2cm;
+    }
+
+    .chapter-image {
+      position: relative;
+      height: 10cm;
+      width: 21cm;
+      margin: -2cm -2cm 1cm -2.5cm; /* Chapters start always on the right page */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
   </style>
-{% endblock %}
+</head>
 
-{% block content %}
-  {% for chapter in world_book.chapters %}
-    <div class="chapter" id="{{ chapter.identifier }}">
-      <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
-        &nbsp;
-      </div>
-      <h2 id="chapter-toc-identifier-{{ chapter.name|chapter_label_to_id }}">{{ chapter.name }}</h2>
-      <div class="chapter-text">
-        {{ chapter.text|render_book_as_template:world_book.world|phasesix_markup:False|resolve_rulebook_chapter_links:"pdf" }}
-      </div>
+<body>
+{% for chapter in world_book.chapters %}
+  <div class="chapter" id="{{ chapter.identifier }}">
+    <div class="chapter-image" style="background-image: url({{ chapter.image.path }})">
+      &nbsp;
     </div>
-  {% endfor %}
+    <h2 id="chapter-toc-identifier-{{ chapter.name|chapter_label_to_id }}">{{ chapter.name }}</h2>
+    <div class="columns-2 gap-4 text-justify text-hyphenate">
+      {{ chapter.text|render_book_as_template:world_book.world|phasesix_markup:False|resolve_rulebook_chapter_links:"pdf" }}
+    </div>
+  </div>
+{% endfor %}
 
-  {% appendix world_book "templates" %}
-  {% appendix world_book "weapons" %}
-  {% appendix world_book "weapon_modifications" %}
-  {% appendix world_book "riot_gear" %}
-  {% appendix world_book "items" %}
-  {% appendix world_book "spells" %}
-  {% appendix world_book "spell_templates" %}
-  {% appendix world_book "quirks" %}
-  {% appendix world_book "body_modifications" %}
-  {% appendix world_book "foes" %}
-{% endblock %}
+{% appendix world_book "templates" %}
+{% appendix world_book "weapons" %}
+{% appendix world_book "weapon_modifications" %}
+{% appendix world_book "riot_gear" %}
+{% appendix world_book "items" %}
+{% appendix world_book "spells" %}
+{% appendix world_book "spell_templates" %}
+{% appendix world_book "quirks" %}
+{% appendix world_book "body_modifications" %}
+{% appendix world_book "foes" %}
+
+</body>

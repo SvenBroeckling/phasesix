@@ -1,6 +1,7 @@
 import io
 
 from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -29,14 +30,21 @@ class ModelWithCreationInfo(models.Model):
         abstract = True
 
 
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        return name
+
+
 class WorldBook(models.Model, metaclass=TransMeta):
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     book = models.ForeignKey("rulebook.Book", on_delete=models.CASCADE)
     pdf_de = models.FileField(
-        gt("PDF german"), upload_to="rulebook_pdf", blank=True, null=True
+        gt("PDF german"), upload_to="rulebook_pdf", blank=True, null=True,
+        storage=OverwriteStorage()
     )
     pdf_en = models.FileField(
-        gt("PDF english"), upload_to="rulebook_pdf", blank=True, null=True
+        gt("PDF english"), upload_to="rulebook_pdf", blank=True, null=True,
+        storage=OverwriteStorage()
     )
 
     disabled_chapters = models.ManyToManyField("rulebook.Chapter", blank=True)
@@ -92,7 +100,7 @@ class WorldBook(models.Model, metaclass=TransMeta):
             buf.seek(0)
 
             getattr(self, f"pdf_{language_code}").save(
-                f"book_pdf_{language_code}.pdf", buf
+                f"{self.book_title}_{language_code}.pdf", buf
             )
 
             if settings.DEBUG:
