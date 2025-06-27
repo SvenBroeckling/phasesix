@@ -10,21 +10,25 @@
     <h3>{{ category.grouper }}</h3>
 
     {% for template in category.list %}
-      <div class="page-break-avoid">
-        <h4>{{ template }}</h4>
-        <p class="page-break-allow">
+      <div style="break-inside: avoid"
+              class="card card-inlay mt-3
+           {% if template.is_mastery %}border-danger{% endif %}
+           {% if template.is_magic_template %}border-warning{% endif %}
+           {% if template.has_allows_priest_action %}border-success{% endif %}">
+        <h5 class="card-title">{{ template }}</h5>
+        <div class="card-body">
           {{ template.rules|phasesix_markup }}
-        </p>
-        {% if template.has_allows_priest_action %}
-          <p class="text-success">
-            {% trans "Allows to perform the acts of a priest." %}
-          </p>
-        {% endif %}
-        {% if template.quote %}
-          <p class="text-muted pt-3"><i>
-            {{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>
-        {% endif %}
-        {% modifier_widget template.templatemodifier_set.all %}
+          {% if template.has_allows_priest_action %}
+            <p class="text-success">
+              {% trans "Allows to perform the acts of a priest." %}
+            </p>
+          {% endif %}
+          {% if template.quote %}
+            <p class="text-muted pt-3"><i>
+              {{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>
+          {% endif %}
+          {% modifier_widget template.templatemodifier_set.all %}
+        </div>
       </div>
     {% endfor %}
   {% endfor %}
