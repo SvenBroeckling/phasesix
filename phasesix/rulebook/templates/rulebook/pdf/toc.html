@@ -12,31 +12,36 @@
   <style>
     {% font_kits %}
     :root {
-      --page-margin: 10mm;
+      --page-size: A4;
+      --page-margin: 14mm;
       --font-size-base: 12px;
       --font-family-headings: '{{ world_book.book_heading_font }}';
       --font-family-base: '{{ world_book.book_body_font }}';
-    }
-
-    @page :left {
-      margin-left: 2cm;
-      margin-right: 2.5cm;
-    }
-
-    @page :right {
-      margin-left: 2.5cm;
-      margin-right: 2cm;
     }
 
     .chapter-image {
       position: relative;
       height: 10cm;
       width: 21cm;
-      margin: -2cm -2cm 1cm -2.5cm; /* Chapters start always on the right page */
+      margin: -14mm -14mm 1cm -14mm; /* Chapters start always on the right page */
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
     }
+
+    {% if variant == 'print' %}
+      @page :left {
+        margin: 20mm 30mm 20mm 20mm;
+      }
+
+      @page :right {
+        margin: 20mm 20mm 20mm 30mm;
+      }
+
+      .chapter-image {
+        margin: -2cm -2cm 1cm -3cm !important; /* Chapters start always on the right page */
+      }
+    {% endif %}
   </style>
 </head>
 
