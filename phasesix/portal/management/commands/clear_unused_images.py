@@ -2,19 +2,36 @@ import os
 
 from django.apps import apps
 from django.conf import settings
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.db.models import FileField, ImageField
+
+from worlds.models import WikiPage, WikiPageImage
+
+MODEL_BLACKLIST = [
+    WikiPage,  # Shares an upload_to with WikiPageImage
+    WikiPageImage,  # Shares an upload_to with WikiPage
+]
 
 
 class Command(BaseCommand):
     help = "Deletes unused files from FileField and ImageField upload directories"
 
     def handle(self, *args, **options):
+        self.stderr.write("This command is disabled for now. See MODEL_BLACKLIST")
+        self.stderr.write("It falsely deletes files from fields with shared upload_to")
+        self.stderr.write("See [WikiPage.image, WikiPageImage.image]")
+        self.stderr.write("See [WorldBook.pdf_{variant}_{language}")
+        self.stderr.write("See [WorldBook.preview_image_{language}")
+        raise CommandError("This command is disabled for now.")
+
         total_bytes_freed = 0
         files_deleted = 0
         deletion_stats = {}
 
         for model in apps.get_models():
+            if model in MODEL_BLACKLIST:
+                continue
+
             file_fields = [
                 (f.name, f)
                 for f in model._meta.fields
