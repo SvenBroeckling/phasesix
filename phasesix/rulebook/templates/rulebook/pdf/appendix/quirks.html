@@ -8,9 +8,9 @@
     <h3>{{ category.grouper }}</h3>
 
     {% for quirk in category.list %}
-      <div class="avoid-page-break">
+      <div class="page-break-avoid">
         <h4>{{ quirk }}</h4>
-        <p class="allow-page-break">
+        <p class="page-break-allow">
           {{ quirk.rules|phasesix_markup }}
         </p>
         {% modifier_widget quirk.quirkmodifier_set.all %}

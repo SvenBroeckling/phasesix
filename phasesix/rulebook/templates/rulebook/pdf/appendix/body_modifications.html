@@ -11,7 +11,7 @@
     <h3>{{ type.grouper }}</h3>
 
     {% for body_modification in type.list %}
-      <div class="avoid-page-break">
+      <div class="page-break-avoid">
         <h4>{{ body_modification }}</h4>
 
         {% if body_modification.activation == "a" %}
@@ -20,10 +20,10 @@
             {% trans 'Must be activated' %}
           </div>
         {% endif %}
-        <p class="allow-page-break">
+        <p class="page-break-allow">
           {{ body_modification.description|phasesix_markup }}
         </p>
-        <p class="allow-page-break">
+        <p class="page-break-allow">
           {{ body_modification.rules|phasesix_markup }}
         </p>
 

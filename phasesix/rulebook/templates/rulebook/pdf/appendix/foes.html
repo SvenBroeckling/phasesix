@@ -10,11 +10,11 @@
     </div>
 
     {% for wiki_page in parent.list %}
-      <div class="avoid-page-break">
+      <div class="page-break-avoid">
         <div class="column-image-caption-small" style="background-image: url({{ wiki_page.image.path }})">
           <h3>{{ wiki_page }}</h3>
         </div>
-        <p class="allow-page-break">
+        <p class="page-break-allow">
           {{ wiki_page.text|phasesix_markup }}
         </p>
       </div>

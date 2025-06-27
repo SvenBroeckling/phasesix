@@ -9,7 +9,7 @@
   {% for type in type_list %}
     <h3>{{ type.grouper }}</h3>
     {% for weapon_modification in type.list %}
-      <div class="avoid-page-break">
+      <div class="page-break-avoid">
         <h4>{{ weapon_modification }}</h4>
         <p>
           {{ weapon_modification.description|phasesix_markup }}

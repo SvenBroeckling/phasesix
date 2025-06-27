@@ -9,7 +9,7 @@
   {% for category in category_list %}
     <h3>{{ category.grouper }}</h3>
     {% for template in category.list %}
-      <div class="avoid-page-break">
+      <div class="page-break-avoid">
         <h4>{{ template }}</h4>
         <p>
           {{ template.rules|phasesix_markup }}

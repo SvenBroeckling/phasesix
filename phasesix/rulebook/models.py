@@ -83,10 +83,13 @@ class WorldBook(models.Model, metaclass=TransMeta):
         for language_code, language_description in settings.LANGUAGES:
             pdf = getattr(self, f"pdf_online_{language_code}")
             if pdf:
+                buf = io.BytesIO()
+                image = convert_from_path(pdf.path, last_page=1, dpi=96)[0]
+                image.save(buf, format="PNG")
+                buf.seek(0)
                 getattr(self, f'preview_image_{language_code}').save(
                     f"{self.book_title}_{language_code}.png",
-                    convert_from_path(pdf.path, last_page=1, dpi=96)[0]
-                )
+                    buf)
 
     def render_pdf(self, language=None, variant=None):
         languages = [(language, language)] if language else settings.LANGUAGES
