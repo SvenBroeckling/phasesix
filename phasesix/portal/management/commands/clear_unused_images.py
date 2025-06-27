@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         total_bytes_freed = 0
         files_deleted = 0
+        deletion_stats = {}
 
         for model in apps.get_models():
             file_fields = [
@@ -45,10 +46,32 @@ class Command(BaseCommand):
                             os.remove(file_path)
                             total_bytes_freed += file_size
                             files_deleted += 1
+                            model_name = model.__name__
+                            if model_name not in deletion_stats:
+                                deletion_stats[model_name] = {}
+                            if field_name not in deletion_stats[model_name]:
+                                deletion_stats[model_name][field_name] = {'count': 0,
+                                                                          'size': 0}
+                            deletion_stats[model_name][field_name]['count'] += 1
+                            deletion_stats[model_name][field_name]['size'] += file_size
                             self.stdout.write(f"Deleted: {relative_path}")
+
+        if deletion_stats:
+            self.stdout.write("\nDeletion Summary:")
+            self.stdout.write("-" * 60)
+            self.stdout.write(
+                f"{'Model':<20} {'Field':<15} {'Count':>8} {'Size (MB)':>12}")
+            self.stdout.write("-" * 60)
+            for model_name in sorted(deletion_stats.keys()):
+                for field_name, stats in deletion_stats[model_name].items():
+                    self.stdout.write(
+                        f"{model_name:<20} {field_name:<15} {stats['count']:>8} "
+                        f"{stats['size'] / 1024 / 1024:>12.2f}"
+                    )
+            self.stdout.write("-" * 60)
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Deleted {files_deleted} files, freed {total_bytes_freed/1024/1024:.2f} MB"
+                f"Total: Deleted {files_deleted} files, freed {total_bytes_freed / 1024 / 1024:.2f} MB"
             )
         )
