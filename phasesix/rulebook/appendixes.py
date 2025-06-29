@@ -43,7 +43,8 @@ class TemplatesAppendix(Appendix):
 
     def get_queryset(self):
         return CharacterTemplate.objects.for_world(self.world_book.world).order_by(
-            "category")
+            "category"
+        )
 
 
 class WeaponsAppendix(Appendix):
@@ -62,7 +63,8 @@ class WeaponModificationsAppendix(Appendix):
 
     def get_queryset(self):
         return WeaponModification.objects.for_world(self.world_book.world).order_by(
-            "type")
+            "type"
+        )
 
 
 class RiotGearAppendix(Appendix):
@@ -125,6 +127,9 @@ class FoesAppendix(Appendix):
     chapter_id = "chapter-combat"
 
     def get_queryset(self):
-        return WikiPage.objects.with_game_values().exclude(
-            exclude_from_foe_search=True).for_world(
-            self.world_book.world).order_by("parent")
+        return (
+            WikiPage.objects.with_game_values()
+            .exclude(exclude_from_foe_search=True)
+            .for_world(self.world_book.world)
+            .order_by("parent")
+        )

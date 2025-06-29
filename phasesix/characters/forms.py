@@ -12,16 +12,15 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ("name", "occupation", "description")
-        widgets = {
-            "description": BootstrapTextarea({"rows": 5})
-        }
+        widgets = {"description": BootstrapTextarea({"rows": 5})}
 
     def __init__(self, *args, **kwargs):
         character = kwargs.pop("character")
         self.character = character
         super().__init__(*args, **kwargs)
         self.fields["occupation"].queryset = self.fields[
-            'occupation'].queryset.for_extensions(character.extensions)
+            "occupation"
+        ].queryset.for_extensions(character.extensions)
 
     def save(self, *args, **kwargs):
         obj = super().save(commit=False)

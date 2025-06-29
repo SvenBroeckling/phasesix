@@ -26,6 +26,7 @@ class WorldLeadImageInline(TabularInline):
     raw_id_fields = ("character",)
 
 
+@admin.register(World)
 class WorldAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "is_active", "ordering")
     list_filter = ("is_active",)
@@ -54,6 +55,7 @@ class WikiPageEmbeddingInline(TabularInline):
     extra = 0
 
 
+@admin.register(WikiPage)
 class WikiPageAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -95,6 +97,7 @@ class WikiPageAdmin(ModelAdmin):
     )
 
 
+@admin.register(WikiPageGameValues)
 class WikiPageGameValuesAdmin(ModelAdmin):
     list_display = (
         "wiki_page",
@@ -117,6 +120,7 @@ class WikiPageGameValuesAdmin(ModelAdmin):
     search_fields = ("wiki_page__name_de", "wiki_page__name_en")
 
 
+@admin.register(WikiPageGameAction)
 class WikiPageGameActionAdmin(ModelAdmin):
     list_display = (
         "wiki_page",
@@ -132,6 +136,7 @@ class WikiPageGameActionAdmin(ModelAdmin):
     search_fields = ("name_de", "name_en", "wiki_page__name_de", "wiki_page__name_en")
 
 
+@admin.register(Language)
 class LanguageAdmin(ModelAdmin):
     list_display = (
         "name_en",
@@ -148,11 +153,6 @@ class LanguageAdmin(ModelAdmin):
         return ", ".join(e.name for e in obj.extensions.all())
 
 
-admin.site.register(World, WorldAdmin)
-admin.site.register(WikiPage, WikiPageAdmin)
 admin.site.register(WikiPageFoeType, ModelAdmin)
 admin.site.register(WikiPageFoeResistanceOrWeakness)
-admin.site.register(WikiPageGameValues, WikiPageGameValuesAdmin)
-admin.site.register(WikiPageGameAction, WikiPageGameActionAdmin)
-admin.site.register(Language, LanguageAdmin)
 admin.site.register(LanguageGroup, ModelAdmin)

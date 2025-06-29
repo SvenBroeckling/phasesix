@@ -192,7 +192,6 @@ urlpatterns = [
         views.XhrContactView.as_view(),
         name="xhr_contact",
     ),
-
     # generic add and remove
     path(
         "xhr_character_objects/<str:object_type>",

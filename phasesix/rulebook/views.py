@@ -4,7 +4,7 @@ from rulebook.models import Chapter, WorldBook
 
 
 class DownloadView(ListView):
-    template_name = 'rulebook/download.html'
+    template_name = "rulebook/download.html"
     model = WorldBook
 
 

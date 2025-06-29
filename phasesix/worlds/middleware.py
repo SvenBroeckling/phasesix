@@ -8,10 +8,14 @@ class WorldFromDomainNameMiddleware:
     @staticmethod
     def _get_world_configuration(request):
         try:
-            return WorldSiteConfiguration.objects.get(dns_domain_name=request.META['HTTP_X_FORWARDED_HOST'])
+            return WorldSiteConfiguration.objects.get(
+                dns_domain_name=request.headers["x-forwarded-host"]
+            )
         except (WorldSiteConfiguration.DoesNotExist, KeyError):
             try:
-                return WorldSiteConfiguration.objects.get(dns_domain_name=request.META['HTTP_HOST'])
+                return WorldSiteConfiguration.objects.get(
+                    dns_domain_name=request.headers["host"]
+                )
             except (WorldSiteConfiguration.DoesNotExist, KeyError):
                 return None
 

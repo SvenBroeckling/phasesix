@@ -10,34 +10,34 @@ from rules.models import Knowledge, Extension, Template, Lineage
 
 
 class LatestNewAdmin(Feed):
-    link = '/'
+    link = "/"
 
     def title(self):
-        return _('Phase Six latest additions')
+        return _("Phase Six latest additions")
 
     def description(self):
-        return _('New Items, Templates and other things from Phase Six')
+        return _("New Items, Templates and other things from Phase Six")
 
     def items(self):
         return itertools.chain(
-            Lineage.objects.order_by('-created_at')[:30],
-            Knowledge.objects.order_by('-created_at')[:30],
-            Extension.objects.order_by('-created_at')[:30],
-            Template.objects.order_by('-created_at')[:30],
-            ItemType.objects.order_by('-created_at')[:30],
-            Item.objects.order_by('-created_at')[:30],
-            BaseSpell.objects.order_by('-created_at')[:30],
-            WeaponType.objects.order_by('-created_at')[:30],
-            Weapon.objects.order_by('-created_at')[:30],
-            RiotGear.objects.order_by('-created_at')[:30],
+            Lineage.objects.order_by("-created_at")[:30],
+            Knowledge.objects.order_by("-created_at")[:30],
+            Extension.objects.order_by("-created_at")[:30],
+            Template.objects.order_by("-created_at")[:30],
+            ItemType.objects.order_by("-created_at")[:30],
+            Item.objects.order_by("-created_at")[:30],
+            BaseSpell.objects.order_by("-created_at")[:30],
+            WeaponType.objects.order_by("-created_at")[:30],
+            Weapon.objects.order_by("-created_at")[:30],
+            RiotGear.objects.order_by("-created_at")[:30],
         )
 
     def item_link(self, item):
         url = reverse(
-            "admin:{}_{}_change".format(
-                item._meta.app_label,
-                item._meta.model_name), args=(item.id,))
-        return 'http://phasesix.org' + url
+            "admin:{}_{}_change".format(item._meta.app_label, item._meta.model_name),
+            args=(item.id,),
+        )
+        return "http://phasesix.org" + url
 
     def item_title(self, item):
         return "{}: {}".format(item.__class__.__name__, item)
@@ -47,22 +47,21 @@ class LatestNewAdmin(Feed):
 
 
 class LatestModifiedAdmin(LatestNewAdmin):
-
     def title(self):
-        return _('Phase Six latest updates')
+        return _("Phase Six latest updates")
 
     def items(self):
         return itertools.chain(
-            Lineage.objects.order_by('-modified_at')[:30],
-            Knowledge.objects.order_by('-modified_at')[:30],
-            Extension.objects.order_by('-modified_at')[:30],
-            Template.objects.order_by('-modified_at')[:30],
-            BaseSpell.objects.order_by('-modified_at')[:30],
-            ItemType.objects.order_by('-modified_at')[:30],
-            Item.objects.order_by('-modified_at')[:30],
-            WeaponType.objects.order_by('-modified_at')[:30],
-            Weapon.objects.order_by('-modified_at')[:30],
-            RiotGear.objects.order_by('-modified_at')[:30],
+            Lineage.objects.order_by("-modified_at")[:30],
+            Knowledge.objects.order_by("-modified_at")[:30],
+            Extension.objects.order_by("-modified_at")[:30],
+            Template.objects.order_by("-modified_at")[:30],
+            BaseSpell.objects.order_by("-modified_at")[:30],
+            ItemType.objects.order_by("-modified_at")[:30],
+            Item.objects.order_by("-modified_at")[:30],
+            WeaponType.objects.order_by("-modified_at")[:30],
+            Weapon.objects.order_by("-modified_at")[:30],
+            RiotGear.objects.order_by("-modified_at")[:30],
         )
 
     def item_pubdate(self, item):

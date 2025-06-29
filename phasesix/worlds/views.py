@@ -121,12 +121,12 @@ class XhrSidebarView(DetailView):
             context["may_edit"] = self.object.may_edit(self.request.user)
         except AttributeError:
             context["may_edit"] = False
-        context["image_copyright_default"] = (
-            self.request.user.profile.last_wiki_image_copyright
-        )
-        context["image_copyright_url_default"] = (
-            self.request.user.profile.last_wiki_image_copyright_url
-        )
+        context[
+            "image_copyright_default"
+        ] = self.request.user.profile.last_wiki_image_copyright
+        context[
+            "image_copyright_url_default"
+        ] = self.request.user.profile.last_wiki_image_copyright_url
         return context
 
     def get_template_names(self):

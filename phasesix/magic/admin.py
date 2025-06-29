@@ -13,6 +13,7 @@ from magic.models import (
 )
 
 
+@admin.register(BaseSpell)
 class BaseSpellAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -66,6 +67,7 @@ class SpellTemplateModifierInline(TabularInline):
     model = SpellTemplateModifier
 
 
+@admin.register(SpellTemplate)
 class SpellTemplateAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "category", "spell_point_cost")
     list_editable = "category", "spell_point_cost"
@@ -79,6 +81,7 @@ class SpellTemplateAdmin(ModelAdmin):
     )
 
 
+@admin.register(SpellType)
 class SpellTypeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "image", "reference_attribute")
     list_editable = ("reference_attribute",)
@@ -90,16 +93,13 @@ class BaseSpellInline(TabularInline):
     show_change_link = True
 
 
+@admin.register(SpellOrigin)
 class SpellOriginAdmin(ModelAdmin):
     list_display = ("name_de", "name_en")
     inlines = [BaseSpellInline]
 
 
-admin.site.register(SpellOrigin, SpellOriginAdmin)
-admin.site.register(BaseSpell, BaseSpellAdmin)
 admin.site.register(SpellTemplateCategory, ModelAdmin)
-admin.site.register(SpellTemplate, SpellTemplateAdmin)
 admin.site.register(SpellTemplateModifier, ModelAdmin)
 admin.site.register(SpellShape, ModelAdmin)
-admin.site.register(SpellType, SpellTypeAdmin)
 admin.site.register(SpellVariant, ModelAdmin)

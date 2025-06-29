@@ -16,9 +16,13 @@ from rulebook.font_utils import get_font_choices
 
 
 class ModelWithCreationInfo(models.Model):
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
-                                   null=True, blank=True,
-                                   verbose_name=gt("created by"), )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=gt("created by"),
+    )
     created_at = models.DateTimeField(gt("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(gt("modified at"), auto_now=True)
 
@@ -26,41 +30,57 @@ class ModelWithCreationInfo(models.Model):
         abstract = True
 
 
-BOOK_VARIANTS = ['online', 'print']
+BOOK_VARIANTS = ["online", "print"]
 
 
 class WorldBook(models.Model, metaclass=TransMeta):
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     book = models.ForeignKey("rulebook.Book", on_delete=models.CASCADE)
-    pdf_online_de = models.FileField(gt("PDF german online"), upload_to="rulebook_pdf",
-                                     blank=True, null=True)
-    pdf_online_en = models.FileField(gt("PDF english online"), upload_to="rulebook_pdf",
-                                     blank=True, null=True)
-    pdf_print_de = models.FileField(gt("PDF german print"), upload_to="rulebook_pdf",
-                                    blank=True, null=True)
-    pdf_print_en = models.FileField(gt("PDF english print"), upload_to="rulebook_pdf",
-                                    blank=True, null=True)
-    preview_image_de = models.ImageField(gt("preview image german"),
-                                         upload_to="rulebook_preview_images",
-                                         blank=True, null=True)
-    preview_image_en = models.ImageField(gt("preview image english"),
-                                         upload_to="rulebook_preview_images",
-                                         blank=True, null=True)
+    pdf_online_de = models.FileField(
+        gt("PDF german online"), upload_to="rulebook_pdf", blank=True, null=True
+    )
+    pdf_online_en = models.FileField(
+        gt("PDF english online"), upload_to="rulebook_pdf", blank=True, null=True
+    )
+    pdf_print_de = models.FileField(
+        gt("PDF german print"), upload_to="rulebook_pdf", blank=True, null=True
+    )
+    pdf_print_en = models.FileField(
+        gt("PDF english print"), upload_to="rulebook_pdf", blank=True, null=True
+    )
+    preview_image_de = models.ImageField(
+        gt("preview image german"),
+        upload_to="rulebook_preview_images",
+        blank=True,
+        null=True,
+    )
+    preview_image_en = models.ImageField(
+        gt("preview image english"),
+        upload_to="rulebook_preview_images",
+        blank=True,
+        null=True,
+    )
 
     disabled_chapters = models.ManyToManyField("rulebook.Chapter", blank=True)
 
     book_title = models.CharField(gt("book title"), max_length=80)
     book_claim = models.CharField(gt("book claim"), max_length=80)
-    book_title_image = models.ImageField(gt("book title image"),
-                                         upload_to="rulebook_title_images",
-                                         max_length=256)
+    book_title_image = models.ImageField(
+        gt("book title image"), upload_to="rulebook_title_images", max_length=256
+    )
     book_website = models.URLField(gt("book website"), blank=True, null=True)
-    book_heading_font = models.CharField(gt("book heading font"), max_length=20,
-                                         default="Oxanium",
-                                         choices=get_font_choices(), )
-    book_body_font = models.CharField(gt("book body font"), max_length=20,
-                                      default="Playfair Display",
-                                      choices=get_font_choices(), )
+    book_heading_font = models.CharField(
+        gt("book heading font"),
+        max_length=20,
+        default="Oxanium",
+        choices=get_font_choices(),
+    )
+    book_body_font = models.CharField(
+        gt("book body font"),
+        max_length=20,
+        default="Playfair Display",
+        choices=get_font_choices(),
+    )
 
     def __str__(self):
         return f"{self.world} - {self.book}"
@@ -87,9 +107,9 @@ class WorldBook(models.Model, metaclass=TransMeta):
                 image = convert_from_path(pdf.path, last_page=1, dpi=96)[0]
                 image.save(buf, format="PNG")
                 buf.seek(0)
-                getattr(self, f'preview_image_{language_code}').save(
-                    f"{self.book_title}_{language_code}.png",
-                    buf)
+                getattr(self, f"preview_image_{language_code}").save(
+                    f"{self.book_title}_{language_code}.png", buf
+                )
 
     def render_pdf(self, language=None, variant=None):
         languages = [(language, language)] if language else settings.LANGUAGES
@@ -115,17 +135,24 @@ class WorldBook(models.Model, metaclass=TransMeta):
                 buf.seek(0)
 
                 getattr(self, f"pdf_{variant}_{language_code}").save(
-                    f"{self.book_title}_{variant}_{language_code}.pdf", buf)
+                    f"{self.book_title}_{variant}_{language_code}.pdf", buf
+                )
 
                 if settings.DEBUG:
                     import webbrowser
 
                     webbrowser.open(
-                        f"file://{getattr(self, f'pdf_{variant}_{language_code}').path}")
+                        f"file://{getattr(self, f'pdf_{variant}_{language_code}').path}"
+                    )
 
     def _render_pdf_title(self, variant: str = "online", language_code: str = "en"):
-        title_html = render_to_string("rulebook/pdf/title.html",
-                                      {"world_book": self, "variant": variant, }, )
+        title_html = render_to_string(
+            "rulebook/pdf/title.html",
+            {
+                "world_book": self,
+                "variant": variant,
+            },
+        )
         if settings.DEBUG:
             with open(f"/tmp/last_title_render_{language_code}.html", "w") as of:
                 of.write(title_html)
@@ -133,8 +160,13 @@ class WorldBook(models.Model, metaclass=TransMeta):
         return HTML(string=title_html, base_url="src/").render()
 
     def _render_pdf_content(self, variant: str = "online", language_code: str = "en"):
-        book_html = render_to_string("rulebook/pdf/book.html",
-                                     {"world_book": self, "variant": variant, }, )
+        book_html = render_to_string(
+            "rulebook/pdf/book.html",
+            {
+                "world_book": self,
+                "variant": variant,
+            },
+        )
 
         if settings.DEBUG:
             with open(f"/tmp/last_book_render_{language_code}.html", "w") as of:
@@ -142,12 +174,17 @@ class WorldBook(models.Model, metaclass=TransMeta):
 
         return HTML(string=book_html, base_url="src/").render()
 
-    def _render_pdf_toc(self, variant: str = "online", document=None,
-                        language_code: str = "en"):
-        table_of_contents_html = render_to_string("rulebook/pdf/toc.html",
-                                                  {"world_book": self,
-                                                   "variant": variant,
-                                                   "bookmark_tree": document.make_bookmark_tree(), }, )
+    def _render_pdf_toc(
+        self, variant: str = "online", document=None, language_code: str = "en"
+    ):
+        table_of_contents_html = render_to_string(
+            "rulebook/pdf/toc.html",
+            {
+                "world_book": self,
+                "variant": variant,
+                "bookmark_tree": document.make_bookmark_tree(),
+            },
+        )
 
         if settings.DEBUG:
             with open(f"/tmp/last_toc_render_{language_code}.html", "w") as of:
@@ -160,12 +197,15 @@ class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
     name = models.CharField(gt("name"), max_length=40)
     ordering = models.IntegerField(gt("ordering"), default=0)
 
-    image = models.ImageField(gt("image"), upload_to="book_images", max_length=256,
-                              blank=True, null=True)
-    image_copyright = models.CharField(gt("image copyright"), max_length=40, blank=True,
-                                       null=True)
-    image_copyright_url = models.CharField(gt("image copyright url"), max_length=150,
-                                           blank=True, null=True)
+    image = models.ImageField(
+        gt("image"), upload_to="book_images", max_length=256, blank=True, null=True
+    )
+    image_copyright = models.CharField(
+        gt("image copyright"), max_length=40, blank=True, null=True
+    )
+    image_copyright_url = models.CharField(
+        gt("image copyright url"), max_length=150, blank=True, null=True
+    )
 
     def __str__(self):
         return self.name
@@ -184,15 +224,19 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
     identifier = models.CharField(gt("identifier"), max_length=40, unique=True)
     fa_icon_class = models.CharField(gt("fa icon class"), max_length=32)
 
-    rules_file = models.FileField(gt("rules file"), upload_to="rulebook/", blank=True,
-                                  null=True)
+    rules_file = models.FileField(
+        gt("rules file"), upload_to="rulebook/", blank=True, null=True
+    )
 
-    image = models.ImageField(gt("image"), upload_to="chapter_images", max_length=256,
-                              blank=True, null=True)
-    image_copyright = models.CharField(gt("image copyright"), max_length=40, blank=True,
-                                       null=True)
-    image_copyright_url = models.CharField(gt("image copyright url"), max_length=150,
-                                           blank=True, null=True)
+    image = models.ImageField(
+        gt("image"), upload_to="chapter_images", max_length=256, blank=True, null=True
+    )
+    image_copyright = models.CharField(
+        gt("image copyright"), max_length=40, blank=True, null=True
+    )
+    image_copyright_url = models.CharField(
+        gt("image copyright url"), max_length=150, blank=True, null=True
+    )
 
     def __str__(self):
         return self.name

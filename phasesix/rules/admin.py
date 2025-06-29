@@ -15,6 +15,7 @@ from rules.models import (
 )
 
 
+@admin.register(Extension)
 class ExtensionAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -40,6 +41,7 @@ class TemplateRequirementInline(TabularInline):
     fk_name = "template"
 
 
+@admin.register(TemplateCategory)
 class TemplateCategoryAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -51,6 +53,7 @@ class TemplateCategoryAdmin(ModelAdmin):
     list_editable = ("bg_color_class", "fg_color_class", "sort_order")
 
 
+@admin.register(Template)
 class TemplateAdmin(ModelAdmin):
     inlines = [TemplateModifierInline, TemplateRequirementInline]
     search_fields = ("name_de", "name_en", "rules_de", "rules_en")
@@ -68,11 +71,13 @@ class TemplateAdmin(ModelAdmin):
     save_as = True
 
 
+@admin.register(Attribute)
 class AttributeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "kind")
     list_editable = ("kind",)
 
 
+@admin.register(Skill)
 class SkillAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -84,11 +89,13 @@ class SkillAdmin(ModelAdmin):
     list_editable = ("kind", "reference_attribute_1", "reference_attribute_2")
 
 
+@admin.register(Knowledge)
 class KnowledgeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "skill")
     list_editable = ("skill",)
 
 
+@admin.register(Lineage)
 class LineageAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -100,16 +107,9 @@ class LineageAdmin(ModelAdmin):
     list_editable = ("base_max_health",)
 
 
+@admin.register(StatusEffect)
 class StatusEffectAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "fa_icon_class", "is_active")
     list_editable = ("is_active",)
 
 
-admin.site.register(Extension, ExtensionAdmin)
-admin.site.register(Attribute, AttributeAdmin)
-admin.site.register(Skill, SkillAdmin)
-admin.site.register(Knowledge, KnowledgeAdmin)
-admin.site.register(TemplateCategory, TemplateCategoryAdmin)
-admin.site.register(Template, TemplateAdmin)
-admin.site.register(Lineage, LineageAdmin)
-admin.site.register(StatusEffect, StatusEffectAdmin)
