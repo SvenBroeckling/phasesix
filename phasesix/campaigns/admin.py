@@ -4,6 +4,7 @@ from unfold.admin import ModelAdmin
 from campaigns.models import Campaign, Roll
 
 
+@admin.register(Roll)
 class RollAdmin(ModelAdmin):
     list_display = (
         "campaign",
@@ -18,4 +19,3 @@ class RollAdmin(ModelAdmin):
 
 
 admin.site.register(Campaign, ModelAdmin)
-admin.site.register(Roll, RollAdmin)

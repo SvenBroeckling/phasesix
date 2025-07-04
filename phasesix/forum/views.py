@@ -64,11 +64,11 @@ class ThreadDetailView(FormMixin, DetailView):
             context["is_subscribed"] = self.object.threadsubscription_set.filter(
                 user=self.request.user
             ).exists()
-            context["is_subscribed_to_board"] = (
-                self.object.board.boardsubscription_set.filter(
-                    user=self.request.user
-                ).exists()
-            )
+            context[
+                "is_subscribed_to_board"
+            ] = self.object.board.boardsubscription_set.filter(
+                user=self.request.user
+            ).exists()
         return context
 
     def get(self, request, *args, **kwargs):

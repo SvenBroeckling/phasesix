@@ -145,25 +145,25 @@ STATICFILE_FINDERS = [
 ]
 
 BOOTYPRINT = {
-    'DEFAULT_TEMPLATE': 'bootyprint/default.html',
-    'PDF_OPTIONS': {
-        'media_type': 'print',
-        'pdf_identifier': None,
-        'pdf_variant': None,
-        'pdf_version': None,
-        'pdf_forms': False,
-        'uncompressed_pdf': False,
-        'custom_metadata': False,
-        'srgb': True,
-        'optimize_images': True,
-        'jpeg_quality': 95,
-        'presentational_hints': False,
-        'dpi': 96,
-        'full_fonts': True,
-        'hinting': True,
+    "DEFAULT_TEMPLATE": "bootyprint/default.html",
+    "PDF_OPTIONS": {
+        "media_type": "print",
+        "pdf_identifier": None,
+        "pdf_variant": None,
+        "pdf_version": None,
+        "pdf_forms": False,
+        "uncompressed_pdf": False,
+        "custom_metadata": False,
+        "srgb": True,
+        "optimize_images": True,
+        "jpeg_quality": 95,
+        "presentational_hints": False,
+        "dpi": 96,
+        "full_fonts": True,
+        "hinting": True,
     },
-    'CACHE_ENABLED': False,
-    'CACHE_TIMEOUT': 60 * 60 * 24,  # 24 hours
+    "CACHE_ENABLED": False,
+    "CACHE_TIMEOUT": 60 * 60 * 24,  # 24 hours
 }
 
 WSGI_APPLICATION = "phasesix.wsgi.application"
@@ -233,7 +233,6 @@ EMAIL_USE_TLS = os.environ["EMAIL_USE_TLS"] == "True"
 
 TIME_ZONE = "UTC"
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = os.environ.get("STATIC_URL", "static/")

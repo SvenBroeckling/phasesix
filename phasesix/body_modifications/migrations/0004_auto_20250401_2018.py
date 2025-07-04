@@ -630,7 +630,7 @@ def get_consumers():
     "locations": [
      ["left_leg", 1],
      ["right_leg", 1]
-    ]   
+    ]
   },
   {
     "price": 2000,

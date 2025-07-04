@@ -51,7 +51,7 @@ class Contact(models.Model):
         limit_choices_to={"category__name_en": "Occupation"},
         on_delete=models.SET_NULL,
         blank=True,
-        null=True
+        null=True,
     )
     description = models.TextField(_("description"), blank=True, null=True)
 
@@ -269,23 +269,39 @@ class Character(models.Model):
 
     def _load_all_aspect_modifiers(self):
         """Load all aspect modifiers at once to prevent N+1 queries"""
-        if not hasattr(self, '_aspect_modifiers_cache'):
-            template_modifiers = TemplateModifier.objects.for_character(self) \
-                .values('aspect').annotate(total=Sum('aspect_modifier'))
-            riotgear_modifiers = RiotGearModifier.objects.for_character(self) \
-                .values('aspect').annotate(total=Sum('aspect_modifier'))
-            quirk_modifiers = QuirkModifier.objects.for_character(self) \
-                .values('aspect').annotate(total=Sum('aspect_modifier'))
-            body_modifiers = BodyModificationModifier.objects.for_character(self) \
-                .values('aspect').annotate(total=Sum('aspect_modifier'))
+        if not hasattr(self, "_aspect_modifiers_cache"):
+            template_modifiers = (
+                TemplateModifier.objects.for_character(self)
+                .values("aspect")
+                .annotate(total=Sum("aspect_modifier"))
+            )
+            riotgear_modifiers = (
+                RiotGearModifier.objects.for_character(self)
+                .values("aspect")
+                .annotate(total=Sum("aspect_modifier"))
+            )
+            quirk_modifiers = (
+                QuirkModifier.objects.for_character(self)
+                .values("aspect")
+                .annotate(total=Sum("aspect_modifier"))
+            )
+            body_modifiers = (
+                BodyModificationModifier.objects.for_character(self)
+                .values("aspect")
+                .annotate(total=Sum("aspect_modifier"))
+            )
 
             self._aspect_modifiers_cache = {}
 
-            for modifier_list in [template_modifiers, riotgear_modifiers,
-                                  quirk_modifiers, body_modifiers]:
+            for modifier_list in [
+                template_modifiers,
+                riotgear_modifiers,
+                quirk_modifiers,
+                body_modifiers,
+            ]:
                 for item in modifier_list:
-                    aspect = item['aspect']
-                    value = item['total'] or 0
+                    aspect = item["aspect"]
+                    value = item["total"] or 0
                     if aspect not in self._aspect_modifiers_cache:
                         self._aspect_modifiers_cache[aspect] = 0
                     self._aspect_modifiers_cache[aspect] += value
@@ -304,18 +320,15 @@ class Character(models.Model):
 
     def attributes(self) -> dict:
         return {
-            a.attribute.identifier: a.value for a in
-            self.characterattribute_set.prefetch_related('attribute')
+            a.attribute.identifier: a.value
+            for a in self.characterattribute_set.prefetch_related("attribute")
         }
 
     def _load_knowledge_dict(self):
         kd = {}
         knowledge_modifiers = TemplateModifier.objects.filter(
-            template__charactertemplate__character=self,
-            knowledge__isnull=False
-        ).annotate(
-            total=Sum('knowledge_modifier')
-        )
+            template__charactertemplate__character=self, knowledge__isnull=False
+        ).annotate(total=Sum("knowledge_modifier"))
 
         for km in knowledge_modifiers:
             kd[km.knowledge] = km.total or 0
@@ -324,7 +337,7 @@ class Character(models.Model):
 
     def knowledge_dict(self):
         """Return a dict of knowledge modifiers"""
-        if not hasattr(self, '_knowledge_dict'):
+        if not hasattr(self, "_knowledge_dict"):
             self._knowledge_dict_cache = self._load_knowledge_dict()
         return self._knowledge_dict_cache
 
@@ -397,24 +410,24 @@ class Character(models.Model):
         if not self.charactertemplate_set.filter(template=template).exists():
             self.charactertemplate_set.create(template=template)
             # Clear cached modifiers when templates change
-            if hasattr(self, '_aspect_modifiers_cache'):
+            if hasattr(self, "_aspect_modifiers_cache"):
                 del self._aspect_modifiers_cache
-            if hasattr(self, '_attribute_modifiers_cache'):
+            if hasattr(self, "_attribute_modifiers_cache"):
                 del self._attribute_modifiers_cache
 
     def remove_template(self, template):
         self.charactertemplate_set.filter(template=template).delete()
         # Clear cached modifiers when templates change
-        if hasattr(self, '_aspect_modifiers_cache'):
+        if hasattr(self, "_aspect_modifiers_cache"):
             del self._aspect_modifiers_cache
-        if hasattr(self, '_attribute_modifiers_cache'):
+        if hasattr(self, "_attribute_modifiers_cache"):
             del self._attribute_modifiers_cache
 
     def clear_aspect_modifiers_cache(self):
         """Clear the aspect modifiers cache to force recalculation"""
-        if hasattr(self, '_aspect_modifiers_cache'):
+        if hasattr(self, "_aspect_modifiers_cache"):
             del self._aspect_modifiers_cache
-        if hasattr(self, '_attribute_modifiers_cache'):
+        if hasattr(self, "_attribute_modifiers_cache"):
             del self._attribute_modifiers_cache
 
     def get_epoch(self) -> Extension:
@@ -479,19 +492,21 @@ class Character(models.Model):
     # Languages and Contacts
     @property
     def max_languages(self):
-        base = self.lineage.base_languages + self.get_aspect_modifier(
-            "base_languages"
+        base = self.lineage.base_languages + self.get_aspect_modifier("base_languages")
+        return (
+            base
+            + self.get_attribute_value("education")
+            + self.get_attribute_value("logic")
         )
-        return base + self.get_attribute_value("education") + self.get_attribute_value(
-            'logic')
 
     @property
     def max_contacts(self):
-        base = self.lineage.base_contacts + self.get_aspect_modifier(
-            "base_contacts"
+        base = self.lineage.base_contacts + self.get_aspect_modifier("base_contacts")
+        return (
+            base
+            + self.get_attribute_value("charm")
+            + self.get_attribute_value("attractiveness")
         )
-        return base + self.get_attribute_value("charm") + self.get_attribute_value(
-            'attractiveness')
 
     # Horror
     @property
@@ -523,13 +538,15 @@ class Character(models.Model):
     @property
     def spell_points_spent(self):
         base_cost = self.characterspell_set.aggregate(
-            total=Coalesce(Sum('spell__spell_point_cost'), Value(0)))
+            total=Coalesce(Sum("spell__spell_point_cost"), Value(0))
+        )
         template_cost = self.characterspell_set.annotate(
             template_sum=Coalesce(
-                Sum('characterspelltemplate__spell_template__spell_point_cost'),
-                Value(0))
-        ).aggregate(total=Coalesce(Sum('template_sum'), Value(0)))
-        return base_cost['total'] + template_cost['total']
+                Sum("characterspelltemplate__spell_template__spell_point_cost"),
+                Value(0),
+            )
+        ).aggregate(total=Coalesce(Sum("template_sum"), Value(0)))
+        return base_cost["total"] + template_cost["total"]
 
     @property
     def spell_points_available(self):
@@ -729,9 +746,9 @@ class Character(models.Model):
             available_protection = (
                 r.value
                 - CharacterRiotGearProtectionUsed.objects.filter(
-                character_riot_gear=character_riot_gear,
-                protection_type=r.protection_type,
-            ).aggregate(Sum("value", default=0))["value__sum"]
+                    character_riot_gear=character_riot_gear,
+                    protection_type=r.protection_type,
+                ).aggregate(Sum("value", default=0))["value__sum"]
             )
 
             if available_protection:
@@ -893,14 +910,18 @@ class CharacterLanguage(models.Model):
 
 class CharacterAttributeQuerySet(models.QuerySet):
     def physis_attributes(self):
-        return self.filter(attribute__kind="phy").order_by(
-            f"attribute__name_{get_language()}"
-        ).prefetch_related("attribute")
+        return (
+            self.filter(attribute__kind="phy")
+            .order_by(f"attribute__name_{get_language()}")
+            .prefetch_related("attribute")
+        )
 
     def persona_attributes(self):
-        return self.filter(attribute__kind="per").order_by(
-            f"attribute__name_{get_language()}"
-        ).prefetch_related("attribute")
+        return (
+            self.filter(attribute__kind="per")
+            .order_by(f"attribute__name_{get_language()}")
+            .prefetch_related("attribute")
+        )
 
 
 class CharacterAttribute(models.Model):
@@ -920,7 +941,7 @@ class CharacterAttribute(models.Model):
 
     @property
     def base_value(self):
-        if not hasattr(self.character, '_attribute_modifiers_cache'):
+        if not hasattr(self.character, "_attribute_modifiers_cache"):
             self._load_attribute_modifiers()
 
         attribute_id = self.attribute.identifier
@@ -929,28 +950,40 @@ class CharacterAttribute(models.Model):
     def _load_attribute_modifiers(self):
         """Load all attribute modifiers at once to prevent N+1 queries"""
         character = self.character
-        if not hasattr(character, '_attribute_modifiers_cache'):
-            template_modifiers = TemplateModifier.objects.for_character(character) \
-                .values('attribute__identifier').annotate(
-                total=Sum('attribute_modifier'))
-            riotgear_modifiers = RiotGearModifier.objects.for_character(character) \
-                .values('attribute__identifier').annotate(
-                total=Sum('attribute_modifier'))
-            quirk_modifiers = QuirkModifier.objects.for_character(character) \
-                .values('attribute__identifier').annotate(
-                total=Sum('attribute_modifier'))
-            body_modifiers = BodyModificationModifier.objects.for_character(character) \
-                .values('attribute__identifier').annotate(
-                total=Sum('attribute_modifier'))
+        if not hasattr(character, "_attribute_modifiers_cache"):
+            template_modifiers = (
+                TemplateModifier.objects.for_character(character)
+                .values("attribute__identifier")
+                .annotate(total=Sum("attribute_modifier"))
+            )
+            riotgear_modifiers = (
+                RiotGearModifier.objects.for_character(character)
+                .values("attribute__identifier")
+                .annotate(total=Sum("attribute_modifier"))
+            )
+            quirk_modifiers = (
+                QuirkModifier.objects.for_character(character)
+                .values("attribute__identifier")
+                .annotate(total=Sum("attribute_modifier"))
+            )
+            body_modifiers = (
+                BodyModificationModifier.objects.for_character(character)
+                .values("attribute__identifier")
+                .annotate(total=Sum("attribute_modifier"))
+            )
 
             character._attribute_modifiers_cache = {}
 
-            for modifier_list in [template_modifiers, riotgear_modifiers,
-                                  quirk_modifiers, body_modifiers]:
+            for modifier_list in [
+                template_modifiers,
+                riotgear_modifiers,
+                quirk_modifiers,
+                body_modifiers,
+            ]:
                 for item in modifier_list:
-                    attribute_id = item['attribute__identifier']
+                    attribute_id = item["attribute__identifier"]
                     if attribute_id is not None:  # Skip None values
-                        value = item['total'] or 0
+                        value = item["total"] or 0
                         if attribute_id not in character._attribute_modifiers_cache:
                             character._attribute_modifiers_cache[attribute_id] = 0
                         character._attribute_modifiers_cache[attribute_id] += value
@@ -1120,7 +1153,7 @@ class CharacterWeapon(models.Model):
     @property
     def roll_info_display(self):
         traits = [
-            "{%s}: {%s}" % (k["name"], k["value"])
+            "{{{}}}: {{{}}}".format(k["name"], k["value"])
             for k in self.modified_keywords.values()
             if k["show_in_dice_rolls"]
         ]
@@ -1359,8 +1392,8 @@ class CharacterSpell(models.Model):
 
         # Prefetch template costs in a single query
         template_value = self.characterspelltemplate_set.aggregate(
-            total=Coalesce(Sum('spell_template__spell_point_cost'), Value(0))
-        )['total']
+            total=Coalesce(Sum("spell_template__spell_point_cost"), Value(0))
+        )["total"]
 
         return template_value + self.spell.spell_point_cost
 

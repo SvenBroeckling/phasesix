@@ -8,11 +8,11 @@ class QuirkModifierInline(TabularInline):
     model = QuirkModifier
 
 
+@admin.register(Quirk)
 class QuirkAdmin(ModelAdmin):
     inlines = [QuirkModifierInline]
     list_display = ("name_de", "name_en", "category")
     list_filter = ("category",)
 
 
-admin.site.register(Quirk, QuirkAdmin)
 admin.site.register(QuirkCategory, ModelAdmin)

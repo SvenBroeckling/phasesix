@@ -67,17 +67,20 @@ class Command(BaseCommand):
                             if model_name not in deletion_stats:
                                 deletion_stats[model_name] = {}
                             if field_name not in deletion_stats[model_name]:
-                                deletion_stats[model_name][field_name] = {'count': 0,
-                                                                          'size': 0}
-                            deletion_stats[model_name][field_name]['count'] += 1
-                            deletion_stats[model_name][field_name]['size'] += file_size
+                                deletion_stats[model_name][field_name] = {
+                                    "count": 0,
+                                    "size": 0,
+                                }
+                            deletion_stats[model_name][field_name]["count"] += 1
+                            deletion_stats[model_name][field_name]["size"] += file_size
                             self.stdout.write(f"Deleted: {relative_path}")
 
         if deletion_stats:
             self.stdout.write("\nDeletion Summary:")
             self.stdout.write("-" * 60)
             self.stdout.write(
-                f"{'Model':<20} {'Field':<15} {'Count':>8} {'Size (MB)':>12}")
+                f"{'Model':<20} {'Field':<15} {'Count':>8} {'Size (MB)':>12}"
+            )
             self.stdout.write("-" * 60)
             for model_name in sorted(deletion_stats.keys()):
                 for field_name, stats in deletion_stats[model_name].items():

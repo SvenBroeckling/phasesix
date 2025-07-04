@@ -4,6 +4,7 @@ from unfold.admin import ModelAdmin
 from rulebook.models import Book, Chapter, WorldBook
 
 
+@admin.register(Chapter)
 class ChapterAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -18,4 +19,3 @@ class ChapterAdmin(ModelAdmin):
 
 admin.site.register(WorldBook, ModelAdmin)
 admin.site.register(Book, ModelAdmin)
-admin.site.register(Chapter, ChapterAdmin)

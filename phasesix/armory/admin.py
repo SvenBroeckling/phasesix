@@ -27,6 +27,7 @@ class WeaponKeywordInline(TabularInline):
     model = WeaponKeyword
 
 
+@admin.register(Weapon)
 class WeaponAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -83,6 +84,7 @@ class WeaponAdmin(ModelAdmin):
     ]
 
 
+@admin.register(ProtectionType)
 class ProtectionTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering", "color_class", "icon_class")
     list_editable = ("ordering", "color_class", "icon_class")
@@ -96,6 +98,7 @@ class RiotGearModifierInline(TabularInline):
     model = RiotGearModifier
 
 
+@admin.register(RiotGear)
 class RiotGearAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -151,11 +154,13 @@ class RiotGearAdmin(ModelAdmin):
     ]
 
 
+@admin.register(ItemType)
 class ItemTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
 
 
+@admin.register(Item)
 class ItemAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -216,16 +221,19 @@ class ItemAdmin(ModelAdmin):
     ]
 
 
+@admin.register(WeaponType)
 class WeaponTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
 
 
+@admin.register(RiotGearType)
 class RiotGearTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
 
 
+@admin.register(WeaponModificationType)
 class WeaponModificationTypeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "unique_equip")
 
@@ -234,6 +242,7 @@ class WeapomModificationKeywordInline(TabularInline):
     model = WeaponModificationKeyword
 
 
+@admin.register(WeaponModification)
 class WeaponModificationAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "type", "extension_string", "price")
     list_filter = ("type",)
@@ -257,6 +266,7 @@ class WeaponModificationAdmin(ModelAdmin):
     ]
 
 
+@admin.register(AttackMode)
 class AttackModeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "dice_bonus")
     list_editable = ("dice_bonus",)
@@ -266,10 +276,12 @@ class CurrencyMapUnitInline(TabularInline):
     model = CurrencyMapUnit
 
 
+@admin.register(CurrencyMap)
 class CurrencyMapAdmin(ModelAdmin):
     inlines = [CurrencyMapUnitInline]
 
 
+@admin.register(CurrencyMapUnit)
 class CurrencyMapUnitAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -283,6 +295,7 @@ class CurrencyMapUnitAdmin(ModelAdmin):
     list_filter = ("currency_map", "is_common")
 
 
+@admin.register(Keyword)
 class KeywordAdmin(ModelAdmin):
     list_display = (
         "name_de",
@@ -295,16 +308,3 @@ class KeywordAdmin(ModelAdmin):
     list_editable = ("ordering", "is_rare", "is_evergreen", "show_in_summary")
 
 
-admin.site.register(AttackMode, AttackModeAdmin)
-admin.site.register(WeaponType, WeaponTypeAdmin)
-admin.site.register(Keyword, KeywordAdmin)
-admin.site.register(Weapon, WeaponAdmin)
-admin.site.register(WeaponModificationType, WeaponModificationTypeAdmin)
-admin.site.register(WeaponModification, WeaponModificationAdmin)
-admin.site.register(ProtectionType, ProtectionTypeAdmin)
-admin.site.register(RiotGearType, RiotGearTypeAdmin)
-admin.site.register(RiotGear, RiotGearAdmin)
-admin.site.register(ItemType, ItemTypeAdmin)
-admin.site.register(Item, ItemAdmin)
-admin.site.register(CurrencyMap, CurrencyMapAdmin)
-admin.site.register(CurrencyMapUnit, CurrencyMapUnitAdmin)

@@ -4,12 +4,12 @@ from django.db import migrations
 
 
 def forward(apps, schema_editor):
-    WikiPageGameAction = apps.get_model('worlds', 'WikiPageGameAction')
+    WikiPageGameAction = apps.get_model("worlds", "WikiPageGameAction")
     for wpga in WikiPageGameAction.objects.all():
-        if wpga.name_en is not None and wpga.name_en.startswith('Higher'):
+        if wpga.name_en is not None and wpga.name_en.startswith("Higher"):
             wpga.entity_work_type = "higher"
             wpga.save()
-        if wpga.name_en is not None and wpga.name_en.startswith('Lesser'):
+        if wpga.name_en is not None and wpga.name_en.startswith("Lesser"):
             wpga.entity_work_type = "lesser"
             wpga.save()
 
@@ -17,9 +17,9 @@ def forward(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('worlds', '0015_wikipagegameaction_entity_work_type'),
+        ("worlds", "0015_wikipagegameaction_entity_work_type"),
     ]
 
     operations = [
-            migrations.RunPython(forward),
+        migrations.RunPython(forward),
     ]

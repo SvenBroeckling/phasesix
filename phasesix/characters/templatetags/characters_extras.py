@@ -74,7 +74,7 @@ def display_modifications(character_weapon, identifier):
     res = ""
     try:
         keyword = character_weapon.modified_keywords[identifier]
-        res += "<span title='%s' class='text-success'>%s</span>" % (
+        res += "<span title='{}' class='text-success'>{}</span>".format(
             keyword["name"],
             keyword["value"],
         )

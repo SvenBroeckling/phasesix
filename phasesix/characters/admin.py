@@ -8,6 +8,7 @@ class CharacterTemplateInline(TabularInline):
     model = CharacterTemplate
 
 
+@admin.register(Pronoun)
 class PronounAdmin(ModelAdmin):
     list_display = (
         "nominative_de",
@@ -21,6 +22,7 @@ class PronounAdmin(ModelAdmin):
     )
 
 
+@admin.register(Character)
 class CharacterAdmin(ModelAdmin):
     list_display = (
         "name",
@@ -41,5 +43,3 @@ class CharacterAdmin(ModelAdmin):
     inlines = [CharacterTemplateInline]
 
 
-admin.site.register(Character, CharacterAdmin)
-admin.site.register(Pronoun, PronounAdmin)

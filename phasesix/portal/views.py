@@ -173,8 +173,8 @@ class YearlyWrapUpView(TemplateView):
         res = []
         for mp in (
             qs.values("character")
-                .annotate(total=Count("character"))
-                .order_by("-total")[:3]
+            .annotate(total=Count("character"))
+            .order_by("-total")[:3]
         ):
             character = Character.objects.get(id=mp["character"])
             days = self._get_days(qs, character)

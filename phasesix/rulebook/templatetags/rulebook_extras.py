@@ -14,8 +14,13 @@ register = Library()
 def create_toc_entries(bookmark_tree, indent=0):
     for i, (label, (page, _, _), children, status) in enumerate(bookmark_tree, 1):
         is_appendix = label.startswith("Appendix") or label.startswith("Anhang")
-        yield {"id": f"toc-{i}", "label": label.lstrip("0123456789."), "page": page + 1,
-               "status": status, "indent": indent, }
+        yield {
+            "id": f"toc-{i}",
+            "label": label.lstrip("0123456789."),
+            "page": page + 1,
+            "status": status,
+            "indent": indent,
+        }
         if children and not is_appendix:
             yield from create_toc_entries(children, indent + 3)
 
@@ -34,13 +39,16 @@ def appendix(world_book, kind):
         appendix_instance = appendix_class(world_book)
         if not appendix_instance.included_in_world_book:
             return ""
-        return render_to_string(template_name, {
-            "world_book": world_book,
-            "object_list": appendix_instance.get_queryset(),
-            "appendix_image": appendix_instance.get_linked_chapter().image,
-            "title": appendix_instance.title,
-            "kind": kind
-        })
+        return render_to_string(
+            template_name,
+            {
+                "world_book": world_book,
+                "object_list": appendix_instance.get_queryset(),
+                "appendix_image": appendix_instance.get_linked_chapter().image,
+                "title": appendix_instance.title,
+                "kind": kind,
+            },
+        )
 
     return ""
 

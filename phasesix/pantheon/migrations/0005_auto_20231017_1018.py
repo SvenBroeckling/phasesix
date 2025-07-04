@@ -4,17 +4,17 @@ from django.db import migrations
 
 
 def forward(apps, schema_editor):
-    PriestAction = apps.get_model('pantheon', 'PriestAction')
-    PriestAction.objects.filter(id=3).update(work_type='lesser')
-    PriestAction.objects.filter(id=4).update(work_type='higher')
+    PriestAction = apps.get_model("pantheon", "PriestAction")
+    PriestAction.objects.filter(id=3).update(work_type="lesser")
+    PriestAction.objects.filter(id=4).update(work_type="higher")
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pantheon', '0004_priestaction_work_type'),
+        ("pantheon", "0004_priestaction_work_type"),
     ]
 
     operations = [
-            migrations.RunPython(forward),
+        migrations.RunPython(forward),
     ]
