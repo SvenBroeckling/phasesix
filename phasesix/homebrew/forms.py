@@ -283,8 +283,9 @@ class CreateQuirkForm(CreateHomebrewForm):
         fields = [
             "name_de",
             "category",
-            "rules_de",
             "description_de",
+            "positive_effects_de",
+            "negative_effects_de",
         ]
 
     def save(self, commit=True):

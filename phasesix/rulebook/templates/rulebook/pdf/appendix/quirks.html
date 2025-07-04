@@ -10,9 +10,12 @@
     {% for quirk in category.list %}
       <div class="page-break-avoid">
         <h4>{{ quirk }}</h4>
-        <p class="page-break-allow">
-          {{ quirk.rules|phasesix_markup }}
-        </p>
+        <div class="mb-3 text-success">
+          {{ quirk.positive_effects|phasesix_markup }}
+        </div>
+        <div class="mb-3 text-danger">
+          {{ quirk.negative_effects|phasesix_markup }}
+        </div>
         {% modifier_widget quirk.quirkmodifier_set.all %}
       </div>
     {% endfor %}

@@ -57,8 +57,16 @@
           <div class="card-header">{{ q }}</div>
           <div class="card-body">
             <div class="text-muted">
-              {{ q.description|phasesix_markup }}
+              <i>{{ q.description|phasesix_markup }}</i>
             </div>
+
+            <div class="mb-3 text-success">
+              {{ q.positive_effects|phasesix_markup }}
+            </div>
+            <div class="mb-3 text-danger">
+              {{ q.negative_effects|phasesix_markup }}
+            </div>
+
             {{ q.get_modifier_summary_html|safe }}
             <a class="btn btn-danger btn-sm float-end mt-2 action-link"
                data-method="DELETE"

@@ -7,11 +7,14 @@
   </div>
   <div class="card-body">
     <div class="text-muted mb-3">
-      {{ quirk.description|phasesix_markup }}
+      <i>{{ quirk.description|phasesix_markup }}</i>
     </div>
 
-    <div class="mb-3">
-      {{ quirk.rules|phasesix_markup }}
+    <div class="mb-3 text-success">
+      {{ quirk.positive_effects|phasesix_markup }}
+    </div>
+    <div class="mb-3 text-danger">
+      {{ quirk.negative_effects|phasesix_markup }}
     </div>
 
     {{ quirk.get_modifier_summary_html|safe }}
