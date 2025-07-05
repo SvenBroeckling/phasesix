@@ -101,7 +101,6 @@ def searchable_object_card_list(
     character_object,
     add_button=False,
 ):
-
     return {
         "world_configuration": context["request"].world_configuration,
         "character_object": character_object,

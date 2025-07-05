@@ -17,8 +17,6 @@
       {{ quirk.negative_effects|phasesix_markup }}
     </div>
 
-    {{ quirk.get_modifier_summary_html|safe }}
-
     {% modifier_widget quirk.quirkmodifier_set.all %}
 
     {% if character and add_button %}

@@ -14,7 +14,11 @@ register = Library()
 
 
 @register.inclusion_tag("rules/_modifier_widget.html")
-def modifier_widget(qs, character=None, add_button=False):
+def modifier_widget(qs):
+    print("***")
+    for q in qs:
+        print(q)
+    print("***")
     return {
         "qs": qs,
     }

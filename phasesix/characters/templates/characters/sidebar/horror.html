@@ -87,7 +87,8 @@
             {{ q.negative_effects|phasesix_markup }}
           </div>
 
-          {{ q.get_modifier_summary_html|safe }}
+          {% modifier_widget q.quirkmodifier_set.all %}
+
           <a class="btn btn-danger btn-sm float-end mt-2 action-link"
              data-method="DELETE"
              href="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}?object_id={{ q.id }}">
