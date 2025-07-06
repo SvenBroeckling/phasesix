@@ -44,6 +44,10 @@
   </div>
 </div>
 
+{% if object.is_consumed_by_dread %}
+  <div class="mb-3 text-center h4 consumed-by-dread-effect">{% trans "You are consumed by dread" %}</div>
+{% endif %}
+
 <div class="row">
   <div class="col-2 mb-2">
     <i class="fas fa-2x fa-frown text-danger" title="{% trans 'Base stress' %}"></i>
@@ -60,7 +64,7 @@
   <div class="col-10 mb-2">
     {% blocktrans %}
       Your current stress level. If it reaches your stress maximum,
-      you will gain the condition <i>Overcome by dread</i>.
+      you will gain the condition <i>Consumed by dread</i>.
     {% endblocktrans %}
   </div>
   <div class="col-2 mb-2">

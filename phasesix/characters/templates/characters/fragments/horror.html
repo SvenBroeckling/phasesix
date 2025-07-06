@@ -13,7 +13,7 @@
           <p>
             {% blocktrans %}
               Your stress level is a measure of how much you have been exposed to the horrors of the world.
-              If it reaches your stress maximum, you will gain the condition <i>Overcome by dread</i>.
+              If it reaches your stress maximum, you will gain the condition <i>Consumed by dread</i>.
             {% endblocktrans %}
           </p>
           <p>
@@ -38,14 +38,14 @@
           <h5 class="card-title">{% trans "Dread" %}</h5>
           <p>
             {% blocktrans %}
-              If your stress level reaches your stress maximum, you will gain the condition <i>Overcome by dread</i>.
+              If your stress level reaches your stress maximum, you will gain the condition <i>Consumed by dread</i>.
               This condition will resolve at a rest and may result in base stress or a quirk.
             {% endblocktrans %}
           </p>
-          {% if object.is_overcome_by_dread %}
-            <span class="h4">{% trans "You are overcome by dread" %}</span>
+          {% if object.is_consumed_by_dread %}
+            <span class="h4 consumed-by-dread-effect">{% trans "You are consumed by dread" %}</span>
           {% else %}
-            <span class="h4 overcome-by-dread-effect">{% trans "You are not overcome by dread" %}</span>
+            <span class="h4">{% trans "You are not consumed by dread" %}</span>
           {% endif %}
         </div>
       </div>
@@ -78,7 +78,8 @@
 
     {% for q in object.quirks.all %}
       <div class="col-12 col-md-6 mb-2">
-        <div class="card mb-3">
+        <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ q }}"
+             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=q.id sidebar_template="quirk" %}">
           <div class="card-header">{{ q }}</div>
           <div class="card-body">
             <div class="text-muted">

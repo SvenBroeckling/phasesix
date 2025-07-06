@@ -1,78 +1,96 @@
 .character-list a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .character-list-item {
-  color: white;
-  text-shadow: 2px 2px #000;
-  background-position: center;
-  background-size: cover;
+    color: white;
+    text-shadow: 2px 2px #000;
+    background-position: center;
+    background-size: cover;
 }
 
 .character-list-item:hover {
-  filter: drop-shadow(0 0 10px black);
+    filter: drop-shadow(0 0 10px black);
 }
 
 .character-list-item img {
-  border: 2px solid black;
-  filter: drop-shadow(0 0 10px black);
+    border: 2px solid black;
+    filter: drop-shadow(0 0 10px black);
 }
 
 /* dice log */
 
 #dice-log-toggle {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  padding: 10px 20px;
-  background-color: $body-bg-dark;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    background-color: $body-bg-dark;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
 }
 
 #dice-log-toggle:hover {
-  background-color: $body-secondary-bg-dark;
+    background-color: $body-secondary-bg-dark;
 }
 
 /* Dice Log Panel */
 #dice-log {
-  position: fixed;
-  bottom: 60px;
-  left: 10px;
-  width: 400px;
-  max-height: 300px;
-  overflow: hidden;
-  background-color: $body-bg-dark;
-  border-radius: 5px;
-  display: none;
-  flex-direction: column;
-  z-index: 999;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    bottom: 60px;
+    left: 10px;
+    width: 400px;
+    max-height: 300px;
+    overflow: hidden;
+    background-color: $body-bg-dark;
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 #dice-log.show {
-  display: flex;
+    display: flex;
 }
 
 #dice-log-entries {
-  padding: 10px;
-  overflow-y: auto;
-  flex: 1;
-  font-size: 0.9em;
+    padding: 10px;
+    overflow-y: auto;
+    flex: 1;
+    font-size: 0.9em;
 }
 
 /* Scrollbar Styling */
 #dice-log-entries::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 #dice-log-entries::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 5px;
+    background-color: #555;
+    border-radius: 5px;
+}
+
+.consumed-by-dread-effect {
+    color: red;
+    text-shadow: 0 0 5px red, 2px 2px 3px rgba(255, 0, 0, 0.5);
+    animation: bleed 2s infinite;
+}
+
+@keyframes bleed {
+    0% {
+        text-shadow: 0 0 5px red, 2px 2px 3px rgba(255, 0, 0, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 15px red, 2px 2px 8px rgba(255, 0, 0, 0.8);
+    }
+    100% {
+        text-shadow: 0 0 5px red, 2px 2px 3px rgba(255, 0, 0, 0.5);
+    }
 }

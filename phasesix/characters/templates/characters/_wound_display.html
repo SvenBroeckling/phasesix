@@ -16,3 +16,7 @@
        class="fas fa-fw {{ cse.status_effect.fa_icon_class }} {{ cse.status_effect.color_class }}"></i>
   {% endfor %}
 {% endfor %}
+
+{% if character.is_consumed_by_dread %}
+  <span class="consumed-by-dread-effect">{% trans "Dread" %}</span>
+{% endif %}

@@ -76,14 +76,24 @@
 
       <div class="col-12">
         {% if object.extension_enabled.horror %}
-          {% for i in object.stress|to_range %}
-            <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
-          {% endfor %}
-          {% for i in object.available_stress|to_range %}
-            <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
-          {% endfor %}
+          <div class="d-flex align-items-center justify-content-start gap-1">
+            {% for i in object.base_stress|to_range %}
+              <i class="fas fa-frown text-danger" title="{% trans 'Base stress' %}"></i>
+            {% endfor %}
+            {% for i in object.stress|subtract:object.base_stress|to_range %}
+              <i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i>
+            {% endfor %}
+            {% for i in object.available_stress|to_range %}
+              <i class="far fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
+            {% endfor %}
+
+            {% if object.is_consumed_by_dread %}
+              <span class="h6 ms-2 mb-0 consumed-by-dread-effect">{% trans "Dread" %}</span>
+            {% endif %}
+          </div>
         {% endif %}
       </div>
+
 
       <div class="col-12">
         {% for i in object.bonus_dice_free|to_range %}

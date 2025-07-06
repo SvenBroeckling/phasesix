@@ -530,7 +530,7 @@ class Character(models.Model):
         return qa if qa >= 0 else 0
 
     @property
-    def is_overcome_by_dread(self):
+    def is_consumed_by_dread(self):
         return self.stress >= self.max_stress
 
     # Magic

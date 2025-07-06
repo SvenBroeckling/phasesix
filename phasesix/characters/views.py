@@ -59,6 +59,7 @@ from characters.models import (
     Contact,
 )
 from characters.utils import crit_successes
+from horror.models import Quirk
 from magic.models import (
     SpellTemplateCategory,
     SpellTemplate,
@@ -124,6 +125,7 @@ class XhrSidebarView(DetailView):
         "magic": Character,
         "grace": Character,
         "horror": Character,
+        "quirk": Quirk,
         "item": CharacterItem,
         "knowledge": Character,  # Context depends on knowledge_pk
         "note": CharacterNote,
