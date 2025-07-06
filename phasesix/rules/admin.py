@@ -102,14 +102,12 @@ class LineageAdmin(ModelAdmin):
         "name_en",
         "template_points",
         "template",
-        "base_max_health",
+        "base_max_stress",
     )
-    list_editable = ("base_max_health",)
+    list_editable = ("base_max_stress",)
 
 
 @admin.register(StatusEffect)
 class StatusEffectAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "fa_icon_class", "is_active")
     list_editable = ("is_active",)
-
-

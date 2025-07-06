@@ -116,7 +116,7 @@ urlpatterns = [
     ),
     # horror
     path(
-        "stress/<int:pk>/<mode>/",
+        "stress/<int:pk>/<str:kind>/<str:mode>/",
         views.CharacterModifyStressView.as_view(),
         name="modify_stress",
     ),

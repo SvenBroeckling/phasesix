@@ -1,15 +1,24 @@
+{% load portal_extras %}
 {% load characters_extras i18n rules_extras %}
 
 {% if may_edit %}
   <div class="row mb-2">
     <div class="col-12">
       <div class="btn-group mb-1 w-100">
-        <a class="btn btn-warning btn-sm action-link"
-           href="{% url 'characters:modify_stress' pk=object.id mode='gain' %}"><i
-          class="fas fa-meh fa-fw"></i> {% trans 'Gain Stress' %}</a>
         <a class="btn btn-success btn-sm action-link"
-           href="{% url 'characters:modify_stress' pk=object.id mode='remove' %}"><i
-          class="far fa-meh fa-fw"></i> {% trans 'Remove Stress' %}</a>
+           href="{% url 'characters:modify_stress' pk=object.id kind="stress" mode='remove' %}"><i
+          class="fas fa-minus fa-fw"></i> {% trans 'Stress' %}</a>
+        <a class="btn btn-warning btn-sm action-link"
+           href="{% url 'characters:modify_stress' pk=object.id kind="stress" mode='gain' %}"><i
+          class="fas fa-plus fa-fw"></i> {% trans 'Stress' %}</a>
+      </div>
+      <div class="btn-group mb-1 w-100">
+        <a class="btn btn-success btn-sm action-link"
+           href="{% url 'characters:modify_stress' pk=object.id kind="base_stress" mode='remove' %}"><i
+          class="fas fa-minus fa-fw"></i> {% trans 'Base Stress' %}</a>
+        <a class="btn btn-warning btn-sm action-link"
+           href="{% url 'characters:modify_stress' pk=object.id kind="base_stress" mode='gain' %}"><i
+          class="fas fa-plus fa-fw"></i> {% trans 'Base Stress' %}</a>
       </div>
       <button class="btn btn-primary btn-sm w-100 dice-roll mb-1"
               data-dice-roll="{{ object.stress_test_dice }}d6"
@@ -23,27 +32,44 @@
 
 <div class="row">
   <div class="col-12 text-center mt-1 mb-3">
-    {% for i in object.stress|to_range %}
-      <i class="fas fa-meh fa-2x text-warning" title="{% trans 'Stress' %}"></i>
+    {% for i in object.base_stress|to_range %}
+      <i class="fas fa-2x fa-frown text-danger mb-1" title="{% trans 'Base stress' %}"></i>
+    {% endfor %}
+    {% for i in object.stress|subtract:object.base_stress|to_range %}
+      <i class="fas fa-2x fa-meh text-warning mb-1" title="{% trans 'Stress' %}"></i>
     {% endfor %}
     {% for i in object.available_stress|to_range %}
-      <i class="far fa-meh fa-2x text-warning" title="{% trans 'Possible Stress' %}"></i>
+      <i class="far fa-2x fa-meh text-warning mb-1" title="{% trans 'Possible Stress' %}"></i>
     {% endfor %}
   </div>
 </div>
 
 <div class="row">
   <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-frown text-danger" title="{% trans 'Base stress' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% blocktrans %}
+      Your base stress level is a measure of how much exposure you have had to the horrors of the world.
+      Your stress level cannot fall below your base stress level.
+    {% endblocktrans %}
+  </div>
+  <div class="col-2 mb-2">
     <i class="fas fa-2x fa-meh text-warning" title="{% trans 'Stress' %}"></i>
   </div>
   <div class="col-10 mb-2">
-    {% trans 'This is your stress level. You will geht a quirk if it reaches your stress maximum.' %}
+    {% blocktrans %}
+      Your current stress level. If it reaches your stress maximum,
+      you will gain the condition <i>Overcome by dread</i>.
+    {% endblocktrans %}
   </div>
   <div class="col-2 mb-2">
     <i class="far fa-2x fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
   </div>
   <div class="col-10 mb-2">
-    {% trans 'This is possible stress your can cope with. You will get a quirk if all slots are filled.' %}
+    {% blocktrans %}
+      This is the possible stress you can cope with.
+    {% endblocktrans %}
   </div>
 </div>
 

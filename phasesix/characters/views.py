@@ -314,16 +314,29 @@ class CharacterModifyStressView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         if character.may_edit(request.user):
-            if self.kwargs["mode"] == "gain":
-                character.stress += 1
-                if character.stress >= character.max_stress:
-                    character.quirks_gained += 1
-                    character.stress = 0
-            elif self.kwargs["mode"] == "remove":
-                if character.stress > 0:
-                    character.stress -= 1
-            character.save()
+            func = getattr(self, f"modify_{self.kwargs['kind']}")
+            func(character, kwargs["mode"])
         return JsonResponse({"status": "ok"})
+
+    def modify_stress(self, character, mode):
+        if mode == "gain":
+            if character.stress < character.max_stress:
+                character.stress += 1
+        elif mode == "remove":
+            if character.stress > character.base_stress:
+                character.stress -= 1
+        character.save()
+
+    def modify_base_stress(self, character, mode):
+        if mode == "gain":
+            if character.base_stress < character.max_stress:
+                character.base_stress += 1
+                if character.stress < character.base_stress:
+                    character.stress = character.base_stress
+        elif mode == "remove":
+            if character.base_stress > 0:
+                character.base_stress -= 1
+        character.save()
 
 
 class CharacterAttackView(View):

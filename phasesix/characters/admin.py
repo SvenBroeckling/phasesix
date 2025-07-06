@@ -41,5 +41,3 @@ class CharacterAdmin(ModelAdmin):
     list_filter = "campaign", "extensions", "npc_campaign", "created_by"
     search_fields = ("name",)
     inlines = [CharacterTemplateInline]
-
-

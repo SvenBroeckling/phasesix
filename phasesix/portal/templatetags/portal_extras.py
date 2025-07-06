@@ -83,3 +83,8 @@ def create_character_url(context):
 def bottom_navigation_button(context, template_include):
     context.update({"template_include": template_include})
     return render_to_string("portal/_bottom_navigation_button.html", context.flatten())
+
+
+@register.filter
+def subtract(value, arg):
+    return value - arg

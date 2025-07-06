@@ -25,6 +25,7 @@ CHARACTER_ASPECT_CHOICES = (
     ("base_bonus_dice", _("bonus dice")),
     ("base_destiny_dice", _("destiny dice")),
     ("base_rerolls", _("rerolls")),
+    ("base_base_stress", _("base stress")),
     ("base_max_stress", _("max stress")),
 )
 
@@ -285,7 +286,8 @@ class Lineage(models.Model, metaclass=TransMeta):
     base_protection = models.IntegerField(_("base armor"), default=0)
 
     # horror
-    base_max_stress = models.IntegerField(_("max stress"), default=6)
+    base_base_stress = models.IntegerField(_("max stress"), default=0)  # Yes, base_base
+    base_max_stress = models.IntegerField(_("max stress"), default=10)
     template_points = models.IntegerField(_("template points"), default=20)
 
     # Body Modifications

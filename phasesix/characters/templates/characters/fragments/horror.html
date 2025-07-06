@@ -1,27 +1,52 @@
 {% extends 'characters/fragments/fragment_base.html' %}
+{% load portal_extras %}
 {% load characters_extras rules_extras i18n thumbnail %}
 
 {% block fragment %}
   <div class="row">
-    <div class="col-12 col-md-6">
-      <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
+
+    <div class="col-12 col-md-6 mb-3">
+      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
            data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
         <div class="card-body">
           <h5 class="card-title">{% trans "Stress" %}</h5>
           <p>
             {% blocktrans %}
               Your stress level is a measure of how much you have been exposed to the horrors of the world.
-              If it reaches your stress maximum, you will gain a quirk.
+              If it reaches your stress maximum, you will gain the condition <i>Overcome by dread</i>.
             {% endblocktrans %}
           </p>
           <p>
-            {% for i in object.stress|to_range %}
+            {% for i in object.base_stress|to_range %}
+              <i class="fas fa-2x fa-frown text-danger" title="{% trans 'Base stress' %}"></i>
+            {% endfor %}
+            {% for i in object.stress|subtract:object.base_stress|to_range %}
               <i class="fas fa-2x fa-meh text-warning" title="{% trans 'Stress' %}"></i>
             {% endfor %}
             {% for i in object.available_stress|to_range %}
               <i class="far fa-2x fa-meh text-warning" title="{% trans 'Possible Stress' %}"></i>
             {% endfor %}
           </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 mb-3">
+      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
+        <div class="card-body">
+          <h5 class="card-title">{% trans "Dread" %}</h5>
+          <p>
+            {% blocktrans %}
+              If your stress level reaches your stress maximum, you will gain the condition <i>Overcome by dread</i>.
+              This condition will resolve at a rest and may result in base stress or a quirk.
+            {% endblocktrans %}
+          </p>
+          {% if object.is_overcome_by_dread %}
+            <span class="h4">{% trans "You are overcome by dread" %}</span>
+          {% else %}
+            <span class="h4 overcome-by-dread-effect">{% trans "You are not overcome by dread" %}</span>
+          {% endif %}
         </div>
       </div>
     </div>

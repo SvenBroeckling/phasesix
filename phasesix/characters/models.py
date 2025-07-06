@@ -185,6 +185,7 @@ class Character(models.Model):
     health = models.IntegerField(_("health"), default=6)
     boost = models.IntegerField(_("boost"), default=0)
     arcana = models.IntegerField(_("arcana"), default=3)
+    base_stress = models.IntegerField(_("base stress"), default=0)
     stress = models.IntegerField(_("stress"), default=0)
 
     bonus_dice_used = models.IntegerField(_("Bonus dice used"), default=0)
@@ -527,6 +528,10 @@ class Character(models.Model):
     def quirks_need_to_be_chosen(self):
         qa = self.quirks_active - self.quirks.count()
         return qa if qa >= 0 else 0
+
+    @property
+    def is_overcome_by_dread(self):
+        return self.stress >= self.max_stress
 
     # Magic
     @property
