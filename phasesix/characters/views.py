@@ -1,5 +1,3 @@
-import io
-
 from bootyprint.views import PDFTemplateResponse
 from django import forms
 from django.conf import settings
@@ -21,8 +19,6 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
-from weasyprint import HTML
-from weasyprint.text.fonts import FontConfiguration
 
 from armory.models import (
     WeaponModificationType,
