@@ -1,5 +1,5 @@
 from django.contrib import admin
-from unfold.admin import ModelAdmin, TabularInline
+from unfold.admin import ModelAdmin, TabularInline, StackedInline
 
 from rules.models import (
     Skill,
@@ -12,6 +12,9 @@ from rules.models import (
     Lineage,
     StatusEffect,
     Attribute,
+    Foe,
+    FoeType,
+    FoeAction,
 )
 
 
@@ -111,3 +114,18 @@ class LineageAdmin(ModelAdmin):
 class StatusEffectAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "fa_icon_class", "is_active")
     list_editable = ("is_active",)
+
+
+@admin.register(FoeType)
+class FoeAdmin(ModelAdmin):
+    pass
+
+
+class FoeActionInline(StackedInline):
+    model = FoeAction
+    extra = 0
+
+
+@admin.register(Foe)
+class FoeAdmin(ModelAdmin):
+    inlines = [FoeActionInline]

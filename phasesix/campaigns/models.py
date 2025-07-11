@@ -210,7 +210,9 @@ class Campaign(models.Model):
 
 class Foe(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
-    wiki_page = models.ForeignKey("worlds.WikiPage", on_delete=models.CASCADE)
+    wiki_page = models.ForeignKey(
+        "worlds.WikiPage", on_delete=models.CASCADE, related_name="campaign_foe_set"
+    )
 
     def may_edit(self, user):
         return self.campaign.may_edit(user)

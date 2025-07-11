@@ -10,6 +10,7 @@ from transmeta import TransMeta
 from armory.choices import COLOR_CLASS_CHOICES
 from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from worlds.unique_slugify import unique_slugify
 
 CHARACTER_ASPECT_CHOICES = (
     ("base_languages", _("languages")),
@@ -571,3 +572,113 @@ class StatusEffect(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+
+class FoeType(models.Model, metaclass=TransMeta):
+    name = models.CharField(_("name"), max_length=100)
+
+    class Meta:
+        translate = ("name",)
+        verbose_name = _("foe type")
+        verbose_name_plural = _("foe types")
+
+    def __str__(self):
+        return self.name
+
+
+class FoeResistanceOrWeakness(models.Model, metaclass=TransMeta):
+    name = models.CharField(_("name"), max_length=100)
+
+    class Meta:
+        translate = ("name",)
+        verbose_name = _("foe resistance or weakness")
+        verbose_name_plural = _("foe resistances or weaknesses")
+
+    def __str__(self):
+        return self.name
+
+
+class FoeQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
+    pass
+
+
+class Foe(HomebrewModel, metaclass=TransMeta):
+    objects = FoeQuerySet.as_manager()
+    name = models.CharField(_("name"), max_length=120)
+    short_description = models.TextField(_("short description"), blank=True, null=True)
+    slug = models.SlugField(_("slug"), max_length=120, unique=True)
+
+    type = models.ForeignKey(FoeType, verbose_name=_("type"), on_delete=models.CASCADE)
+    wiki_page = models.OneToOneField(
+        "worlds.WikiPage", blank=True, null=True, on_delete=models.SET_NULL
+    )
+
+    # Always present values
+    health = models.IntegerField(_("health"), default=6)
+    movement = models.IntegerField(_("movement"), default=4)
+
+    strength = models.IntegerField(_("strength"), default=2)
+    dexterity = models.IntegerField(_("dexterity"), default=2)
+    mind = models.IntegerField(_("mind"), default=2)
+
+    # Values only displayed if other than default
+
+    actions = models.IntegerField(_("actions"), default=2)
+
+    stress_test_succeeded_stress = models.IntegerField(
+        _("stress test succeeded stress"), default=0
+    )
+    stress_test_failed_stress = models.IntegerField(
+        _("stress test failed stress"), default=0
+    )
+
+    resistances = models.ManyToManyField(
+        FoeResistanceOrWeakness,
+        blank=True,
+        related_name="wiki_page_game_values_resistance_set",
+        verbose_name=_("resistances"),
+    )
+    weaknesses = models.ManyToManyField(
+        FoeResistanceOrWeakness,
+        blank=True,
+        related_name="wiki_page_game_values_weakness_set",
+        verbose_name=_("weaknesses"),
+    )
+
+    image = models.ImageField(
+        _("image"), upload_to="foe_images", max_length=256, blank=True, null=True
+    )
+    image_copyright = models.CharField(
+        _("image copyright"), max_length=40, blank=True, null=True
+    )
+    image_copyright_url = models.CharField(
+        _("image copyright url"), max_length=150, blank=True, null=True
+    )
+
+    class Meta:
+        translate = ("name",)
+        verbose_name = _("foe")
+        verbose_name_plural = _("foes")
+
+    def __str__(self):
+        return self.name
+
+    def save(self, **kwargs):
+        if not self.slug:
+            unique_slugify(self, str(self.name_de))
+        super().save(**kwargs)
+
+    def may_edit(self, user):
+        return user.is_superuser or user == self.created_by
+
+
+class FoeAction(HomebrewModel, metaclass=TransMeta):
+    foe = models.ForeignKey(Foe, verbose_name=_("foe"), on_delete=models.CASCADE)
+    name = models.CharField(_("name"), max_length=256)
+    skill = models.IntegerField(_("skill"), default=6)
+    effect = models.TextField(_("effect"))
+
+    class Meta:
+        translate = ("name", "effect")
+        verbose_name = _("foe action")
+        verbose_name_plural = _("foe actions")
