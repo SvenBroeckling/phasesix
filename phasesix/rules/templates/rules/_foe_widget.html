@@ -16,12 +16,7 @@
   {% endif %}
 
   <div class="card-body position-relative">
-    {% if foe.short_description %}
-      <p class="small text-muted mb-3">{{ foe.short_description }}</p>
-    {% endif %}
-
     <div class="foe-stats mb-3">
-
       <div class="d-flex justify-content-start mb-2 gap-2">
         <div class="me-2">
           <i class="fas fa-heartbeat text-danger"></i>
@@ -44,68 +39,45 @@
         {% endif %}
       </div>
 
-      <!-- Attributes -->
-      <div class="d-flex justify-content-between mb-3">
-        <div class="stat-bar">
-          <span class="badge bg-primary">{% trans "STR" %}</span>
-          <div class="progress" style="height: 15px;">
-            <div class="progress-bar bg-primary" style="width: {{ foe.strength|multiply:20 }}%">{{ foe.strength }}</div>
-          </div>
+      {% if foe.short_description %}
+        <p class="text-muted">
+          {{ foe.short_description }}
+        </p>
+      {% endif %}
+
+
+      <div class="d-flex justify-content-start mb-3 gap-3">
+        <div>
+          <span class="badge bg-primary me-1">{% trans "Strength" %}</span>
+          <span class="fw-bold">{{ foe.strength }}</span>
         </div>
 
-        <div class="stat-bar mx-1">
-          <span class="badge bg-success">{% trans "DEX" %}</span>
-          <div class="progress" style="height: 15px;">
-            <div class="progress-bar bg-success"
-                 style="width: {{ foe.dexterity|multiply:20 }}%">{{ foe.dexterity }}</div>
-          </div>
+        <div>
+          <span class="badge bg-success me-1">{% trans "Dexterity" %}</span>
+          <span class="fw-bold">{{ foe.dexterity }}</span>
         </div>
 
-        <div class="stat-bar">
-          <span class="badge bg-info">{% trans "MIND" %}</span>
-          <div class="progress" style="height: 15px;">
-            <div class="progress-bar bg-info" style="width: {{ foe.mind|multiply:20 }}%">{{ foe.mind }}</div>
-          </div>
+        <div>
+          <span class="badge bg-info me-1">{% trans "Mind" %}</span>
+          <span class="fw-bold">{{ foe.mind }}</span>
         </div>
+
+        {% if foe.stress_test_succeeded_stress > 0 or foe.stress_test_failed_stress > 0 %}
+          <div>
+            <span class="badge bg-secondary">{% trans "Stress" %}</span>
+            <span class="fw-bold">{{ foe.stress_test_succeeded_stress }}/{{ foe.stress_test_failed_stress }}</span>
+          </div>
+        {% endif %}
       </div>
-
-      <!-- Resistances and Weaknesses -->
-      {% if foe.resistances.exists or foe.weaknesses.exists %}
-        <div class="special-traits small">
-          {% if foe.resistances.exists %}
-            <div class="mb-1">
-              <span class="badge bg-success">{% trans "Resistances" %}</span>
-              {% for resistance in foe.resistances.all %}
-                <span class="badge bg-light text-dark">{{ resistance }}</span>
-              {% endfor %}
-            </div>
-          {% endif %}
-
-          {% if foe.weaknesses.exists %}
-            <div>
-              <span class="badge bg-danger">{% trans "Weaknesses" %}</span>
-              {% for weakness in foe.weaknesses.all %}
-                <span class="badge bg-light text-dark">{{ weakness }}</span>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-      {% endif %}
-
-      <!-- Stress effects if not zero -->
-      {% if foe.stress_test_succeeded_stress > 0 or foe.stress_test_failed_stress > 0 %}
-        <div class="stress-info small mt-2">
-          <div class="d-flex justify-content-between">
-            <span>{% trans "Stress Test Succeeded" %}</span>
-            <span class="badge bg-secondary">{{ foe.stress_test_succeeded_stress }}</span>
-          </div>
-          <div class="d-flex justify-content-between">
-            <span>{% trans "Stress Test Failed" %}</span>
-            <span class="badge bg-secondary">{{ foe.stress_test_failed_stress }}</span>
-          </div>
-        </div>
-      {% endif %}
     </div>
+
+    <hr>
+    {% for action in foe.foeaction_set.all %}
+      <div class="mb-2">
+        <h5>{{ action.name }} ({% color_value_span action.skill 10 %})</h5>
+        {{ action.effect|phasesix_markup }}
+      </div>
+    {% endfor %}
 
     {% if character and add_button %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="foe" %}"
