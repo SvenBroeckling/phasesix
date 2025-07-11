@@ -176,8 +176,6 @@ class FoeAdmin(ModelAdmin):
                     ("health", "movement", "actions"),
                     ("strength", "dexterity", "mind"),
                     ("stress_test_succeeded_stress", "stress_test_failed_stress"),
-                    "resistances",
-                    "weaknesses",
                 )
             },
         ),
