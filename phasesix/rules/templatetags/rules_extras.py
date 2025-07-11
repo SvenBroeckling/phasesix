@@ -201,3 +201,8 @@ def templates_for_world_configuration(qs, world_configuration):
     if world_configuration:
         qs = qs.for_world(world_configuration.world)
     return qs
+
+
+@register.filter
+def multiply(value, arg):
+    return value * arg
