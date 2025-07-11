@@ -58,33 +58,19 @@ def riot_gear_widget(context, riot_gear, character=None):
 
 @register.simple_tag(takes_context=True)
 def object_widget(context, obj, character=None, add_button=False):
-    template_string = ""
-    if isinstance(obj, Weapon):
-        template_string = "{% load armory_extras %}{% weapon_widget obj character=character add_button=add_button %}"
-    if isinstance(obj, RiotGear):
-        template_string = (
-            "{% load armory_extras %}{% riot_gear_widget obj character=character %}"
-        )
-    if isinstance(obj, Item):
-        template_string = (
-            "{% load armory_extras %}{% item_widget obj character=character %}"
-        )
-    if isinstance(obj, BaseSpell):
-        template_string = (
-            "{% load rules_extras %}{% basespell_widget obj character=character %}"
-        )
-    if isinstance(obj, PhaseSixTemplate):
-        template_string = "{% load rules_extras %}{% template_widget obj character=character add_button=add_button %}"
-    if isinstance(obj, Foe):
-        template_string = "{% load rules_extras %}{% foe_widget obj character=character add_button=add_button %}"
-    if isinstance(obj, Quirk):
-        template_string = "{% load horror_extras %}{% quirk_widget obj character=character add_button=add_button %}"
-    if isinstance(obj, Language):
-        template_string = "{% load world_extras %}{% language_widget obj character=character add_button=add_button %}"
-    if isinstance(obj, BodyModification):
-        template_string = "{% load body_modification_extras %}{% body_modification_widget obj character=character add_button=add_button %}"
+    mapping = {
+        Weapon: "{% load armory_extras %}{% weapon_widget obj character=character add_button=add_button %}",
+        RiotGear: "{% load armory_extras %}{% riot_gear_widget obj character=character %}",
+        Item: "{% load armory_extras %}{% item_widget obj character=character %}",
+        BaseSpell: "{% load rules_extras %}{% basespell_widget obj character=character %}",
+        PhaseSixTemplate: "{% load rules_extras %}{% template_widget obj character=character add_button=add_button %}",
+        Foe: "{% load rules_extras %}{% foe_widget obj character=character add_button=add_button %}",
+        Quirk: "{% load horror_extras %}{% quirk_widget obj character=character add_button=add_button %}",
+        Language: "{% load world_extras %}{% language_widget obj character=character add_button=add_button %}",
+        BodyModification: "{% load body_modification_extras %}{% body_modification_widget obj character=character add_button=add_button %}",
+    }
 
-    return Template(template_string).render(
+    return Template(mapping.get(type(obj), "")).render(
         Context(
             {
                 "obj": obj,
