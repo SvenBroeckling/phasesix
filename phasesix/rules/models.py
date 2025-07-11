@@ -585,6 +585,9 @@ class FoeType(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def child_item_qs(self):
+        return self.foe_set.all()
+
 
 class FoeResistanceOrWeakness(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=100)

@@ -28,6 +28,12 @@ def template_widget(context, template, character=None, add_button=False):
     return context
 
 
+@register.inclusion_tag("rules/_foe_widget.html", takes_context=True)
+def foe_widget(context, foe, character=None, add_button=False):
+    context.update({"foe": foe, "character": character, "add_button": add_button})
+    return context
+
+
 @register.inclusion_tag("magic/_basespell_widget.html", takes_context=True)
 def basespell_widget(context, basespell, character=None):
     context.update(

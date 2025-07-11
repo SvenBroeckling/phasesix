@@ -24,10 +24,12 @@ from homebrew.forms import (
     CreateQuirkForm,
     CreateQuirkModifierFormSet,
     CreateLanguageForm,
+    CreateFoeForm,
+    CreateFoeActionFormSet,
 )
 from horror.models import QuirkCategory, Quirk
 from magic.models import SpellOrigin, BaseSpell
-from rules.models import TemplateCategory, Template, Extension
+from rules.models import TemplateCategory, Template, Extension, FoeType, Foe
 from worlds.models import LanguageGroup, Language
 
 
@@ -288,3 +290,17 @@ class BodyModificationObject(CharacterObject):
             socket_location=socket_location,
             socket_amount=bm_socket_location.socket_amount,
         )
+
+
+class FoeObject(CharacterObject):
+    object_type = "foe"
+    model = FoeType
+    child_model = Foe
+    homebrew_form_class = CreateFoeForm
+    homebrew_formset_class = CreateFoeActionFormSet
+
+    def remove(self, pk):
+        pass  # TODO: Add Familiars
+
+    def add(self, pk):
+        pass  # TODO: Add Familiars

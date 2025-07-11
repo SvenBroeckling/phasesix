@@ -12,7 +12,7 @@ from armory.models import (
 from body_modifications.models import BodyModification, BodyModificationSocketLocation
 from horror.models import Quirk, QuirkModifier
 from magic.models import BaseSpell
-from rules.models import Template, TemplateModifier
+from rules.models import Template, TemplateModifier, FoeAction, Foe
 from worlds.models import Language
 
 
@@ -310,3 +310,45 @@ class CreateLanguageForm(CreateHomebrewForm):
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterlanguage_set.create(language=language)
         return language
+
+
+CreateFoeActionFormSet = forms.inlineformset_factory(
+    parent_model=Foe,
+    model=FoeAction,
+    fields=[
+        "name_de",
+        "skill",
+        "effect_de",
+    ],
+    extra=2,
+    can_delete=False,
+)
+
+
+class CreateFoeForm(CreateHomebrewForm):
+    formset_class = CreateFoeActionFormSet
+
+    class Meta:
+        model = Foe
+        fields = [
+            "name_de",
+            "type",
+            "short_description_de",
+            "health",
+            "movement",
+            "strength",
+            "dexterity",
+            "mind",
+            "actions",
+            "stress_test_succeeded_stress",
+            "stress_test_failed_stress",
+            "resistances",
+            "weaknesses",
+            "image",
+        ]
+
+    def save(self, commit=True):
+        foe = super().save(commit=commit)
+        if self.character is not None and self.cleaned_data["add_to_character"]:
+            pass  # TODO: Add familiars
+        return foe
