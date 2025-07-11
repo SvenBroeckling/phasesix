@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
 
 from rules.models import (
@@ -117,15 +118,88 @@ class StatusEffectAdmin(ModelAdmin):
 
 
 @admin.register(FoeType)
-class FoeAdmin(ModelAdmin):
-    pass
+class FoeTypeAdmin(ModelAdmin):
+    list_display = ("name_de", "name_en")
+    search_fields = ("name_de", "name_en")
 
 
 class FoeActionInline(StackedInline):
     model = FoeAction
     extra = 0
+    fields = ("name_de", "name_en", "skill", "effect_de", "effect_en")
+    classes = ("collapse",)
 
 
 @admin.register(Foe)
 class FoeAdmin(ModelAdmin):
     inlines = [FoeActionInline]
+    list_display = (
+        "name_de",
+        "name_en",
+        "type",
+        "health",
+        "actions",
+        "movement",
+        "strength",
+        "dexterity",
+        "mind",
+    )
+    list_filter = ("type", "extensions", "is_homebrew")
+    search_fields = (
+        "name_de",
+        "name_en",
+        "short_description_de",
+        "short_description_en",
+    )
+    prepopulated_fields = {"slug": ("name_de",)}
+    filter_horizontal = ("extensions", "resistances", "weaknesses")
+
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": (
+                    ("name_de", "name_en"),
+                    "slug",
+                    "short_description_de",
+                    "short_description_en",
+                    "type",
+                    "wiki_page",
+                    "extensions",
+                )
+            },
+        ),
+        (
+            _("Stats"),
+            {
+                "fields": (
+                    ("health", "movement", "actions"),
+                    ("strength", "dexterity", "mind"),
+                    ("stress_test_succeeded_stress", "stress_test_failed_stress"),
+                    "resistances",
+                    "weaknesses",
+                )
+            },
+        ),
+        (
+            _("Image"),
+            {
+                "fields": (
+                    "image",
+                    ("image_copyright", "image_copyright_url"),
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            _("Homebrew"),
+            {
+                "fields": (
+                    ("is_homebrew", "keep_as_homebrew"),
+                    "created_by",
+                    ("homebrew_campaign", "homebrew_character"),
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    ]

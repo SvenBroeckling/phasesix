@@ -377,6 +377,11 @@ UNFOLD = {
                         "icon": "people",
                         "link": reverse_lazy("admin:rulebook_worldbook_changelist"),
                     },
+                    {
+                        "title": _("Foes"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:rules_foe_changelist"),
+                    },
                 ],
             },
             {

@@ -604,6 +604,18 @@ class FoeQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
 
 class Foe(HomebrewModel, metaclass=TransMeta):
     objects = FoeQuerySet.as_manager()
+
+    extensions = models.ManyToManyField("rules.Extension")
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        verbose_name=_("created by"),
+        null=True,
+        blank=True,
+    )
+    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+
     name = models.CharField(_("name"), max_length=120)
     short_description = models.TextField(_("short description"), blank=True, null=True)
     slug = models.SlugField(_("slug"), max_length=120, unique=True)
@@ -635,13 +647,13 @@ class Foe(HomebrewModel, metaclass=TransMeta):
     resistances = models.ManyToManyField(
         FoeResistanceOrWeakness,
         blank=True,
-        related_name="wiki_page_game_values_resistance_set",
+        related_name="foe_resistance_set",
         verbose_name=_("resistances"),
     )
     weaknesses = models.ManyToManyField(
         FoeResistanceOrWeakness,
         blank=True,
-        related_name="wiki_page_game_values_weakness_set",
+        related_name="foe_weakness_set",
         verbose_name=_("weaknesses"),
     )
 
@@ -656,7 +668,7 @@ class Foe(HomebrewModel, metaclass=TransMeta):
     )
 
     class Meta:
-        translate = ("name",)
+        translate = ("name", "short_description")
         verbose_name = _("foe")
         verbose_name_plural = _("foes")
 
