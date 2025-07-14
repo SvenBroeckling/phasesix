@@ -208,6 +208,15 @@ class Campaign(models.Model):
         return f"campaign-{self.id}"
 
 
+class CampaignFoe(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    foe = models.ForeignKey("rules.Foe", on_delete=models.CASCADE)
+    health = models.IntegerField(_("health"), default=6)
+
+    def may_edit(self, user):
+        return self.campaign.may_edit(user)
+
+
 class Foe(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     wiki_page = models.ForeignKey(

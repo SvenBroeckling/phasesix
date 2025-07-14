@@ -19,7 +19,7 @@ from campaigns.forms import (
     CampaignSettingsGameForm,
     CampaignSettingsVisibilityForm,
 )
-from campaigns.models import Campaign, Foe, Roll
+from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
 from rules.models import Extension
@@ -167,7 +167,7 @@ class XhrRemoveFoeView(View):
     def post(self, request, *args, **kwargs):
         campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
-            campaign.foe_set.filter(id=kwargs["foe_pk"]).delete()
+            campaign.campaignfoe_set.filter(id=kwargs["foe_pk"]).delete()
         return JsonResponse({"status": "ok"})
 
 
@@ -233,7 +233,7 @@ class XhrCharacterSidebarView(BaseSidebarView):
 
 
 class XhrFoeSidebarView(BaseSidebarView):
-    model = Foe
+    model = CampaignFoe
 
 
 class XhrSearchFoeSidebarView(DetailView):

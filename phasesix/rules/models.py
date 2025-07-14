@@ -5,10 +5,12 @@ from django.contrib import admin
 from django.db import models
 from django.db.models import Q, Sum
 from django.utils.translation import gettext_lazy as _
+from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
 from armory.choices import COLOR_CLASS_CHOICES
 from armory.mixins import SearchableCardListMixin
+from characters.utils import static_thumbnail
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 from worlds.unique_slugify import unique_slugify
 
@@ -685,6 +687,16 @@ class Foe(HomebrewModel, metaclass=TransMeta):
 
     def may_edit(self, user):
         return user.is_superuser or user == self.created_by
+
+    def get_image_url(self, geometry="180", crop="center"):
+        if self.image:
+            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+
+        return static_thumbnail(
+            f"img/silhouette.png",
+            geometry_string=geometry,
+            crop=crop,
+        )
 
 
 class FoeAction(HomebrewModel, metaclass=TransMeta):

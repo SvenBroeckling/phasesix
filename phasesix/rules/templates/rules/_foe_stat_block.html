@@ -1,0 +1,52 @@
+{% load i18n %}
+<div class="mb-3">
+  <div class="d-flex justify-content-start mb-2 gap-1">
+
+    <div class="me-2 fs-4 d-flex align-items-center gap-2" title="{% trans "Wounds" %}">
+      <i class="gi gi-skoll-hearts text-danger"></i>
+      {{ foe.health }}
+    </div>
+
+    <div class="me-2 fs-4 d-flex align-items-center gap-1" title="{% trans "Movement" %}">
+      <i class="gi gi-lorc-run text-success"></i>
+      {{ foe.movement }}
+    </div>
+
+    {% if foe.actions != 2 %}
+      <div class="me-2 fs-4 d-flex align-items-center gap-1" title="{% trans "Actions" %}">
+        <i class="gi gi-lorc-hourglass text-warning"></i>
+        {{ foe.actions }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if foe.short_description %}
+    <p class="text-muted">
+      {{ foe.short_description }}
+    </p>
+  {% endif %}
+
+  <div class="d-flex justify-content-start mb-3 gap-3">
+    <div>
+      <span class="badge bg-primary me-1">{% trans "Strength" %}</span>
+      <span class="fw-bold">{{ foe.strength }}</span>
+    </div>
+
+    <div>
+      <span class="badge bg-success me-1">{% trans "Dexterity" %}</span>
+      <span class="fw-bold">{{ foe.dexterity }}</span>
+    </div>
+
+    <div>
+      <span class="badge bg-info me-1">{% trans "Mind" %}</span>
+      <span class="fw-bold">{{ foe.mind }}</span>
+    </div>
+
+    {% if foe.stress_test_succeeded_stress > 0 or foe.stress_test_failed_stress > 0 %}
+      <div>
+        <span class="badge bg-secondary">{% trans "Stress" %}</span>
+        <span class="fw-bold">{{ foe.stress_test_succeeded_stress }}/{{ foe.stress_test_failed_stress }}</span>
+      </div>
+    {% endif %}
+  </div>
+</div>

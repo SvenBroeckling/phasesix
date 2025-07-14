@@ -1,34 +1,32 @@
+{% load portal_extras %}
 {% load i18n thumbnail static characters_extras %}
 <div class="row">
   <div class="col-12 mb-3 mt-2">
-    {% if object.wiki_page.image %}
-      {% thumbnail object.wiki_page.image "600x600" crop="center" as im %}
-        <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
-      {% endthumbnail %}
-    {% else %}
-      <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
-           alt="{{ object.name }}">
-    {% endif %}
+    <img class="rounded img-fluid" width="600" height="600"
+         src="{% image_url object.foe geometry="200x200" crop="center" %}"
+         alt="{{ object.foe.name }}">
   </div>
 </div>
 
 <div class="row">
-  {% if may_edit or object.pc_or_npc_campaign.character_visibility == 'A' %}
-    <div class="col-12">
-      <a class="btn btn-primary w-100 btn-sm mb-2"
-         href="{% url "worlds:wiki_page" slug=foe.wiki_page.slug world_slug=foe.wiki_page.world.slug %}"><i
-        class="fas fa-link fa-fw"></i> {% trans 'Go to the wiki page' %}</a>
-    </div>
+  {% if may_edit or object.campaign.character_visibility == 'A' %}
+    {% if object.foe.wiki_page %}
+      <div class="col-12">
+        <a class="btn btn-primary w-100 btn-sm mb-2"
+           href="{% url "worlds:wiki_page" slug=object.foe.wiki_page.slug world_slug=object.foe.wiki_page.world.slug %}"><i
+          class="fas fa-link fa-fw"></i> {% trans 'Go to the wiki page' %}</a>
+      </div>
+    {% endif %}
   {% endif %}
 
   {% if may_edit %}
     <div class="col-12">
       <button class="btn btn-primary btn-sm mb-2 w-100 dice-roll mb-1"
-              data-dice-roll="{{ object.wiki_page.wikipagegamevalues_set.latest.quickness }}d6"
-              data-dice-header="{% trans 'Initiative' %}"
-              data-dice-description="{% trans 'Initiative (*Quickness*d6)' %}"
+              data-dice-roll="{{ object.foe.dexterity }}d6"
+              data-dice-header="{{ object.foe.name }}: {% trans 'Initiative' %}"
+              data-dice-description="{% trans 'Initiative (*Dexterity*d6)' %}"
               data-dice-campaign="{{ object.campaign.id }}">{% trans "Roll Initiative" %}
-        ({{ object.wiki_page.wikipagegamevalues_set.latest.quickness }}{% trans 'd6' %})
+        ({{ object.foe.dexterity }}{% trans 'd6' %})
       </button>
     </div>
     <div class="col-12">
@@ -42,47 +40,12 @@
 
 <div class="row">
   <div class="col-12">
-    <div class="table-responsive">
-      {% with game_values=object.wiki_page.wikipagegamevalues_set.latest %}
-        <table class="table table-sm table-hover">
-          <tbody>
-          <tr>
-            <td>{% trans 'Wounds' %}</td>
-            <td>{% color_value_span game_values.health 6 %}</td>
-          </tr>
-          <tr>
-            <td>{% trans 'Protection' %}</td>
-            <td>{% color_value_span game_values.protection 3 %}</td>
-          </tr>
-          <tr>
-            <td>{% trans 'Arcana' %}</td>
-            <td>{% color_value_span game_values.arcana 6 %}</td>
-          </tr>
-          <tr>
-            <td>{% trans 'Actions' %}</td>
-            <td>{% color_value_span game_values.actions 3 %}</td>
-          </tr>
-          <tr>
-            <td>{% trans 'Perception' %}</td>
-            <td>{% color_value_span game_values.perception 3 %}</td>
-          </tr>
-          <tr>
-            <td>{% trans 'Walking range' %}</td>
-            <td>{% color_value_span game_values.walking_range 5 %}</td>
-          </tr>
-          <tr>
-            <td>{% trans 'Minimum roll' %}</td>
-            <td>{% color_value_span game_values.minimum_roll 5 invert=True %}</td>
-          </tr>
-          </tbody>
-        </table>
-      {% endwith %}
-    </div>
+    {% include "rules/_foe_stat_block.html" with foe=object.foe %}
   </div>
 </div>
 
 <div class="row">
-  {% for action in object.wiki_page.wikipagegameaction_set.all %}
+  {% for action in object.foe.foeaction_set.all %}
     <div class="col-12">
       <div class="card mb-2">
         <div class="card-header">{{ action.name }}</div>
@@ -91,7 +54,7 @@
           <br>
           <button
             data-dice-roll="{{ action.skill }}d6"
-            data-dice-header="{{ object.wiki_page }}: {{ action.name }}"
+            data-dice-header="{{ object.foe.name }}: {{ action.name }}"
             {% if object.campaign.foe_visibility == "A" %}
             data-dice-description="{{ action.effect }}"
             {% else %}
@@ -104,10 +67,4 @@
       </div>
     </div>
   {% endfor %}
-</div>
-
-<div class="row">
-  {% with game_values=object.wiki_page.wikipagegamevalues_set.latest %}
-    {% include 'worlds/_game_values.html' %}
-  {% endwith %}
 </div>
