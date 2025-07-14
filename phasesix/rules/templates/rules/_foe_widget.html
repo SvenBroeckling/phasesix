@@ -1,3 +1,4 @@
+{% load portal_extras %}
 {% load i18n characters_extras rules_extras %}
 <div class="card mb-3 foe-card">
   <div class="card-header bg-dark text-white">
@@ -8,7 +9,7 @@
   </div>
 
   {% if foe.image %}
-    <img src="{{ foe.image.url }}" alt="{{ foe.name }}" class="card-img-top">
+    <img src="{% image_url foe "400x400" crop="center" %}" alt="{{ foe.name }}" class="card-img-top">
   {% else %}
     <div class="card-img-placeholder bg-light d-flex justify-content-center align-items-center" style="height: 200px;">
       <i class="fas fa-question-circle fa-3x text-muted"></i>

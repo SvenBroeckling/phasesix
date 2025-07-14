@@ -55,7 +55,7 @@ urlpatterns = [
         name="xhr_switch_npc",
     ),
     path(
-        "add_foe/<int:pk>/<int:wiki_page_pk>",
+        "add_foe/<int:pk>/<int:foe_pk>",
         views.XhrAddFoeToCampaignView.as_view(),
         name="xhr_add_foe",
     ),

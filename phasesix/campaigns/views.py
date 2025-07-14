@@ -22,7 +22,7 @@ from campaigns.forms import (
 from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
-from rules.models import Extension
+from rules.models import Extension, Foe
 from worlds.models import WikiPage
 
 
@@ -158,8 +158,8 @@ class XhrAddFoeToCampaignView(View):
     def post(self, request, *args, **kwargs):
         campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
-            wiki_page = WikiPage.objects.get(id=kwargs["wiki_page_pk"])
-            campaign.foe_set.create(wiki_page=wiki_page)
+            foe = Foe.objects.get(id=kwargs["foe_pk"])
+            campaign.campaignfoe_set.create(foe=foe)
         return JsonResponse({"status": "ok"})
 
 
@@ -243,19 +243,14 @@ class XhrSearchFoeSidebarView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["may_edit"] = self.object.may_edit(self.request.user)
-        wiki_pages = (
-            WikiPage.objects.filter(
-                Q(wikipagegamevalues__id__isnull=False)
-                | Q(wikipagegameaction__id__isnull=False)
-            )
-            .filter(exclude_from_foe_search=False)
-            .distinct()
-        )
+        foes = Foe.objects.all()
 
         if self.request.world_configuration is not None:
-            wiki_pages = wiki_pages.filter(world=self.request.world_configuration.world)
+            foes = foes.filter(
+                extension__in=self.request.world_configuration.world.extension
+            )
 
-        context["wiki_pages"] = wiki_pages
+        context["foes"] = foes.order_by("name_de")
         return context
 
 
