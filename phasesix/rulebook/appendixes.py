@@ -6,7 +6,7 @@ from characters.models import CharacterTemplate
 from horror.models import Quirk
 from magic.models import BaseSpell, SpellTemplate
 from rulebook.models import Chapter
-from rules.models import Template as CharacterTemplate
+from rules.models import Template as CharacterTemplate, Foe
 from worlds.models import WikiPage
 
 
@@ -127,9 +127,6 @@ class FoesAppendix(Appendix):
     chapter_id = "chapter-combat"
 
     def get_queryset(self):
-        return (
-            WikiPage.objects.with_game_values()
-            .exclude(exclude_from_foe_search=True)
-            .for_world(self.world_book.world)
-            .order_by("parent")
+        return Foe.objects.for_extensions(self.world_book.world.extension).order_by(
+            "type"
         )

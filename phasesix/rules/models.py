@@ -148,6 +148,8 @@ class ModifierBase(models.Model, metaclass=TransMeta):
 
 class ExtensionSelectQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
+        if isinstance(extension_rm, Extension):
+            extension_rm = Extension.objects.filter(pk=extension_rm.pk)
         return self.filter(
             Q(extensions__id__in=extension_rm.all())
             | Q(extensions__id__in=Extension.objects.filter(is_mandatory=True))

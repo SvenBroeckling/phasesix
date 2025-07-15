@@ -60,7 +60,6 @@ class WikiPageAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
-        "exclude_from_foe_search",
         "short_name_de",
         "short_name_en",
         "is_active",
@@ -72,13 +71,11 @@ class WikiPageAdmin(ModelAdmin):
         "ordering",
         "short_name_de",
         "short_name_en",
-        "exclude_from_foe_search",
     )
     save_as = True
     list_filter = (
         "is_active",
         "world",
-        "exclude_from_foe_search",
         "wikipagegamevalues__type",
     )
     search_fields = (

@@ -100,13 +100,6 @@ class World(models.Model, metaclass=TransMeta):
         _("Name for centimeter"), max_length=20, default="cm"
     )
     info_name_kg = models.CharField(_("Name for kilogram"), max_length=20, default="kg")
-    foe_overview_wiki_page = models.ForeignKey(
-        "worlds.WikiPage",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="foe_overview_world_set",
-    )
 
     scss_file = models.CharField(
         _("SCSS File"),
@@ -208,9 +201,6 @@ class WikiPageQuerySet(models.QuerySet):
     def get_top_level(self):
         return self.filter(parent=None)
 
-    def with_game_values(self):
-        return self.filter(wikipagegamevalues__id__isnull=False)
-
     def for_world(self, world):
         if world is None:
             return self.all()
@@ -247,10 +237,6 @@ class WikiPage(models.Model, metaclass=TransMeta):
         on_delete=models.CASCADE,
     )
 
-    exclude_from_foe_search = models.BooleanField(
-        _("excelude from foe search"), default=False
-    )
-
     parent = models.ForeignKey(
         "self",
         verbose_name=_("parent"),
@@ -277,15 +263,12 @@ class WikiPage(models.Model, metaclass=TransMeta):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
-    actions_heading = models.CharField(
-        _("actions heading"), max_length=40, null=True, blank=True
-    )
     is_active = models.BooleanField(_("is active"), default=True)
     ordering = models.IntegerField(_("ordering"), default=100)
 
     class Meta:
         ordering = ("ordering",)
-        translate = ("name", "short_name", "text", "actions_heading")
+        translate = ("name", "short_name", "text")
         verbose_name = _("wiki page")
         verbose_name_plural = _("wiki pages")
 
@@ -310,15 +293,6 @@ class WikiPage(models.Model, metaclass=TransMeta):
         if self.short_name:
             return self.short_name
         return self.name
-
-    def may_be_added_to_campaign(self):
-        if self.exclude_from_foe_search:
-            return False
-        if self.wikipagegameaction_set.exists():
-            return True
-        if self.wikipagegamevalues_set.exists():
-            return True
-        return False
 
     def get_image_url(self, geometry="180", crop="center"):
         image = self.get_image()
@@ -357,11 +331,6 @@ class WikiPage(models.Model, metaclass=TransMeta):
         if self.parent:
             return self.parent.is_subpage_of(parent)
         return False
-
-    def has_values_or_actions(self):
-        return (
-            self.wikipagegamevalues_set.exists() or self.wikipagegameaction_set.exists()
-        )
 
 
 @reversion.register
