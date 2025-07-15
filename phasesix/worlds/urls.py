@@ -5,11 +5,6 @@ from worlds import views
 app_name = "worlds"
 
 urlpatterns = [
-    path(
-        "foe_list",
-        views.WikiPageWithGameValuesView.as_view(),
-        name="wiki_page_with_game_values",
-    ),
     path("", views.WorldListView.as_view(), name="list"),
     path("<slug:slug>", views.WorldDetailView.as_view(), name="detail"),
     path(

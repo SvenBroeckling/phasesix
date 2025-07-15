@@ -264,16 +264,3 @@ class XhrAutoTagView(View):
                 "text_en": _tag_text(request.POST["text_en"], "en"),
             }
         )
-
-
-class WikiPageWithGameValuesView(TemplateView):
-    template_name = "worlds/wiki_page_with_game_values.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        object_list = WikiPage.objects.with_game_values()
-        if self.request.world_configuration is not None:
-            object_list = object_list.for_world(self.request.world_configuration.world)
-        context["object_list"] = object_list
-        context["navigation"] = "wiki_page_with_game_values"
-        return context

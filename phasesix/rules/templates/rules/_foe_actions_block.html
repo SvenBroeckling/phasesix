@@ -1,0 +1,19 @@
+{% load rules_extras %}
+{% load characters_extras %}
+{% load i18n %}
+{% if foe.foeaction_set.exists %}
+  <a class="text-muted text-decoration-none small mb-2 d-block" data-bs-toggle="collapse"
+     href="#foeActions-{{ foe.id }}"
+     role="button" aria-expanded="false" aria-controls="foeActions-{{ foe.id }}">
+    {% trans "Show actions" %} <i class="fas fa-chevron-down"></i>
+  </a>
+  <div class="collapse" id="foeActions-{{ foe.id }}">
+    {% for action in foe.foeaction_set.all %}
+      <hr>
+      <div class="mb-2">
+        <h5>{{ action.name }} ({% color_value_span action.skill 10 %})</h5>
+        {{ action.effect|phasesix_markup }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

@@ -141,7 +141,7 @@
           <h5>{{ brand_name }}</h5>
           <ul class="list-unstyled">
             <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
-            <li><a href="{% url 'worlds:wiki_page_with_game_values' %}">{% trans 'Foes' %}</a></li>
+            <li><a href="{% url 'rules:foe_list' %}">{% trans 'Foes' %}</a></li>
             <li><a href="{% url 'rulebook:detail' pk=1 %}">{% trans 'Rules' %}</a></li>
             <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>
             <li><a href="https://hus.tirakans-reiche.de">{% trans 'Tirakan HuS' %}</a></li>

@@ -20,7 +20,7 @@
     {% endif %}
   </div>
 
-  {% if foe.short_description %}
+  {% if foe.short_description and show_description %}
     <p class="text-muted">
       {{ foe.short_description }}
     </p>
