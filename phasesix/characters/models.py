@@ -1434,3 +1434,14 @@ class CharacterNote(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+
+class CharacterFoe(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    foe = models.ForeignKey("rules.Foe", on_delete=models.CASCADE)
+    health = models.IntegerField(_("health"), default=0)
+    name = models.CharField(_("name"), max_length=30, null=True, blank=True)
+    is_familiar = models.BooleanField(_("is familiar"), default=False)
+
+    def __str__(self):
+        return self.name or self.foe.name

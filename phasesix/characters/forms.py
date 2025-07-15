@@ -2,10 +2,16 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import CurrencyMap
-from characters.models import Character, Pronoun, Contact
+from characters.models import Character, Pronoun, Contact, CharacterFoe
 from pantheon.models import Entity
 from portal.widgets import BootstrapTextarea
 from rules.models import Lineage, Extension
+
+
+class CharacterFoeForm(forms.ModelForm):
+    class Meta:
+        model = CharacterFoe
+        fields = ("name", "health")
 
 
 class ContactForm(forms.ModelForm):

@@ -300,7 +300,11 @@ class FoeObject(CharacterObject):
     homebrew_formset_class = CreateFoeActionFormSet
 
     def remove(self, pk):
-        pass  # TODO: Add Familiars
+        self.character.characterfoe_set.filter(id=pk).delete()
 
     def add(self, pk):
-        pass  # TODO: Add Familiars
+        foe = Foe.objects.get(id=pk)
+        self.character.characterfoe_set.create(
+            foe=foe,
+            health=foe.health,
+        )

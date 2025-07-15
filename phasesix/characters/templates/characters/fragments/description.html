@@ -62,9 +62,7 @@
 
           <div class="flex-grow-1 d-flex gap-2 align-items-center">
             <h4 class="mb-0">{% trans "Languages" %}</h4>
-            {% with language_count=object.characterlanguage_set.count %}
-              {{ language_count }}/{{ object.max_languages }}
-            {% endwith %}
+            {{ object.characterlanguage_set.count }}/{{ object.max_languages }}
           </div>
 
           {% if may_edit %}
@@ -79,7 +77,6 @@
               <i class="fas fa-plus"></i>
             </button>
           {% endif %}
-
         </div>
 
         {% if not object.characterlanguage_set.exists %}
@@ -122,9 +119,7 @@
 
           <div class="flex-grow-1 d-flex gap-2 align-items-center">
             <h4 class="mb-0">{% trans "Contacts" %}</h4>
-            {% with contact_count=object.contact_set.count %}
-              {{ contact_count }}/{{ object.max_contacts }}
-            {% endwith %}
+            {{ object.contact_set.count }}/{{ object.max_contacts }}
           </div>
 
           {% if may_edit %}
@@ -174,6 +169,68 @@
           </div>
         {% endfor %}
       </div>
+
+      <div class="list-group mt-3">
+        <div class="list-group-item d-flex align-items-center">
+          <i class="fs-4 me-3 gi gi-delapouite-three-friends"></i>
+
+          <div class="flex-grow-1 d-flex gap-2 align-items-center">
+            <h4 class="mb-0">{% trans "Pets" %}</h4>
+          </div>
+
+          {% if may_edit %}
+            <button
+              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger"
+              title="{% trans "Add pet" %}"
+              data-url="{% url "characters:xhr_character_objects" pk=object.id object_type="foe" %}"
+              data-bs-toggle="modal"
+              data-bs-target=".page-modal"
+              data-modal-title="{% trans 'Add pet' %}"
+              style="width: 2rem; height: 2rem;">
+              <i class="fas fa-plus"></i>
+            </button>
+          {% endif %}
+        </div>
+
+        {% if not object.characterfoe_set.exists %}
+          <div class="list-group-item text-center text-muted">
+            {% trans "No pets yet." %}
+          </div>
+        {% endif %}
+
+        {% for foe in object.characterfoe_set.all %}
+          <div class="list-group-item d-flex align-items-start py-3">
+            <div class="flex-grow-1 d-flex gap-2 align-items-start">
+              <img class="rounded" src="{% image_url foe.foe geometry="80x80" %}" alt="img-fluid">
+              <div>
+                {{ foe }}<br>
+                {% for h in foe.foe.health|to_range %}
+                  <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
+                {% endfor %}
+              </div>
+            </div>
+            {% if may_edit %}
+              <button
+                class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center me-2 modal-trigger small-modal"
+                style="width: 2rem; height: 2rem;"
+                data-url="{% url "characters:xhr_edit_foe" pk=foe.id %}"
+                data-bs-toggle="modal"
+                data-bs-target=".page-modal"
+                data-modal-title="{% trans 'Edit pet' %}">
+                <i class="fas fa-pencil-alt fa-fw"></i>
+              </button>
+              <a
+                class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center action-link"
+                style="width: 2rem; height: 2rem;"
+                data-method="DELETE"
+                href="{% url "characters:xhr_character_objects" pk=object.id object_type="foe" %}?object_id={{ foe.id }}">
+                <i class="far fa-trash-alt fa-fw"></i>
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
     </div>
   </div>
 {% endblock %}

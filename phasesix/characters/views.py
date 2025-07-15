@@ -38,6 +38,7 @@ from characters.forms import (
     CreateRandomNPCForm,
     CreateCharacterExtensionsForm,
     ContactForm,
+    CharacterFoeForm,
 )
 from characters.models import (
     Character,
@@ -53,6 +54,7 @@ from characters.models import (
     CharacterSkill,
     CharacterBodyModification,
     Contact,
+    CharacterFoe,
 )
 from characters.utils import crit_successes
 from horror.models import Quirk
@@ -1278,6 +1280,16 @@ class XhrToggleFavoriteView(View):
 
         icon_class = "fas" if character.is_favorite else "far"
         return HttpResponse(f'<i class="{icon_class} fa-star fa-2x text-warning"></i>')
+
+
+class XhrEditFoeView(UpdateView):
+    form_class = CharacterFoeForm
+    template_name = "characters/modals/edit_foe.html"
+    model = CharacterFoe
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({"status": "ok"})
 
 
 class XhrContactView(DetailView):

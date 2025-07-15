@@ -186,6 +186,12 @@ urlpatterns = [
         views.XhrCharacterStatusEffectsChangeView.as_view(),
         name="xhr_status_effects_change",
     ),
+    # pets
+    path(
+        "xhr_edit_foe/<int:pk>",
+        views.XhrEditFoeView.as_view(),
+        name="xhr_edit_foe",
+    ),
     # contacts
     path(
         "xhr_contact/<int:pk>",
