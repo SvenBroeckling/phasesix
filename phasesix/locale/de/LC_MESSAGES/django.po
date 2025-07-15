@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-15 19:58+0000\n"
-"PO-Revision-Date: 2025-07-15 22:01+0200\n"
+"POT-Creation-Date: 2025-07-15 20:02+0000\n"
+"PO-Revision-Date: 2025-07-15 22:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -675,7 +675,7 @@ msgstr "Ladungen"
 #: armory/templates/armory/item_detail.html:57 characters/forms.py:99
 #: characters/templates/characters/sidebar/item.html:160
 #: characters/templates/characters/sidebar/riot_gear.html:89
-#: characters/views.py:676
+#: characters/views.py:678
 #: rulebook/templates/rulebook/pdf/appendix/items.html:17
 #: rulebook/templates/rulebook/pdf/appendix/riot_gear.html:17
 msgid "Weight"
@@ -1298,7 +1298,7 @@ msgid "Additional rule sets enabled for this campaign"
 msgstr "Zusätzliche aktivierte Regelerweiterungen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:39
-#: characters/forms.py:75 characters/views.py:728
+#: characters/forms.py:75 characters/views.py:730
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
@@ -1307,7 +1307,7 @@ msgid "Defines the monetary system used"
 msgstr "Definiert das monetäre System, welches benutzt wird"
 
 #: campaigns/templates/campaigns/fragments/settings.html:48
-#: characters/forms.py:78 characters/views.py:699
+#: characters/forms.py:78 characters/views.py:701
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1684,11 +1684,11 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:64 characters/views.py:660 forum/forms.py:6
+#: characters/forms.py:64 characters/views.py:662 forum/forms.py:6
 msgid "Name"
 msgstr "Name"
 
-#: characters/forms.py:66 characters/views.py:684
+#: characters/forms.py:66 characters/views.py:686
 msgid "Pronouns"
 msgstr "Pronomen"
 
@@ -1697,11 +1697,11 @@ msgstr "Pronomen"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:98 characters/views.py:667
+#: characters/forms.py:98 characters/views.py:669
 msgid "Size"
 msgstr "Größe"
 
-#: characters/forms.py:100 characters/views.py:693
+#: characters/forms.py:100 characters/views.py:695
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1716,7 +1716,7 @@ msgstr "Gottheit"
 #: characters/forms.py:107 characters/forms.py:113
 #: characters/templates/characters/fragments/pantheon.html:12
 #: characters/templates/characters/sidebar/grace.html:57
-#: characters/views.py:717
+#: characters/views.py:719
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -2704,7 +2704,11 @@ msgstr "Haustier hinzufügen"
 msgid "No pets yet."
 msgstr "Noch keine Haustüre."
 
-#: characters/templates/characters/fragments/description.html:219
+#: characters/templates/characters/fragments/description.html:211
+msgid "Is familiar"
+msgstr "Ist Vertrauter"
+
+#: characters/templates/characters/fragments/description.html:222
 msgid "Edit pet"
 msgstr "Haustier editieren"
 
@@ -3143,7 +3147,7 @@ msgstr "Wiederholungswürfe"
 #: characters/templates/characters/modals/rest.html:56
 #: characters/templates/characters/sidebar/wounds.html:24
 #: characters/templates/characters/sidebar/wounds.html:25
-#: characters/views.py:225 characters/views.py:241 characters/views.py:255
+#: characters/views.py:227 characters/views.py:243 characters/views.py:257
 msgid "Rest"
 msgstr "Rast"
 
@@ -4145,27 +4149,27 @@ msgstr ""
 "href=\"%(t_contact_url)s\">Kontaktseite</a>.\n"
 "      "
 
-#: characters/views.py:100
+#: characters/views.py:102
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:226
+#: characters/views.py:228
 msgid "Wound Roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:242
+#: characters/views.py:244
 msgid "Arcana Roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:256
+#: characters/views.py:258
 msgid "Stress Roll"
 msgstr "Stresswurf"
 
-#: characters/views.py:661
+#: characters/views.py:663
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:686
+#: characters/views.py:688
 msgid ""
 "At several places in the interface, your character will be referred to using "
 "their pronouns. Choose the pronouns that best describe your character."
@@ -4173,11 +4177,11 @@ msgstr ""
 "An verschiedenen Stellen wird dein Charakter mit Pronomen angesprochen. "
 "Wähle die Pronomen, die am besten passen."
 
-#: characters/views.py:694
+#: characters/views.py:696
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:701
+#: characters/views.py:703
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -4190,7 +4194,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:719
+#: characters/views.py:721
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -4207,7 +4211,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:730
+#: characters/views.py:732
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"

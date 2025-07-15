@@ -207,6 +207,9 @@
                 {% for h in foe.foe.health|to_range %}
                   <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
                 {% endfor %}
+                {% if foe.is_familiar %}
+                  <br>{% trans "Is familiar" %}
+                {% endif %}
               </div>
             </div>
             {% if may_edit %}
