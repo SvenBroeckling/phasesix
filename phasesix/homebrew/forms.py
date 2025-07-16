@@ -342,9 +342,6 @@ class CreateFoeForm(CreateHomebrewForm):
             "actions",
             "stress_test_succeeded_stress",
             "stress_test_failed_stress",
-            "resistances",
-            "weaknesses",
-            "image",
         ]
 
     def save(self, commit=True):
