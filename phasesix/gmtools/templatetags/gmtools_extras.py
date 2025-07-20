@@ -92,3 +92,14 @@ def admin_url_for_qs_model(value: QuerySet, pk: int):
 @register.simple_tag
 def roll_amount_for_object(obj):
     return Roll.objects.filter(Q(header=obj.name_de) | Q(header=obj.name_en)).count()
+
+
+@register.simple_tag
+def roll_amount_color_class(roll_amount):
+    if roll_amount < 1:
+        return "text-muted"
+    if roll_amount < 30:
+        return "text-danger"
+    if roll_amount < 100:
+        return "text-warning"
+    return "text-success"

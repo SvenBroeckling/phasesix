@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load rules_extras %}
 {% load django_bootstrap5 %}
 {% load characters_extras %}
 {% load campaign_extras %}
@@ -8,7 +9,12 @@
 
 {% block title %}{{ object.user.username|capfirst }} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{{ object.user.username|capfirst }}{% endblock %}
-{% block in_page_subtitle %}{% trans "Member since" %} {{ object.user.date_joined|date:"Y" }}{% endblock %}
+{% block in_page_subtitle %}
+  {% if object.bio %}{{ object.bio|phasesix_markup }}{% endif %}
+  <small>
+    {% trans "Member since" %} {{ object.user.date_joined|date:"Y" }}
+  </small>
+{% endblock %}
 
 {% block bottom_nav %}
   {% bottom_navigation_button "portal/_navigation.html" %}

@@ -1,33 +1,46 @@
 {% extends 'base.html' %}
-{% load i18n rules_extras gmtools_extras %}
+{% load gmtools_extras %}
+{% load i18n %}
 
 {% block title %}{% trans 'Roll Statistics' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <h3>{% trans "Attributes" %}</h3>
-            {% for attribute in attributes %}
-                {{ attribute }} {% roll_amount_for_object attribute %}<br>
-            {% endfor %}
+  <div class="row">
+    <div class="col">
+      <h3>{% trans "Attributes" %}</h3>
+      {% for attribute in attributes %}
+        {% roll_amount_for_object attribute as ra %}
+        <div class="{% roll_amount_color_class ra %}">
+          {{ attribute }} {{ ra }}
         </div>
-        <div class="col">
-            <h3>{% trans "Skills" %}</h3>
-            {% for skill in skills %}
-                {{ skill }} {% roll_amount_for_object skill %}<br>
-            {% endfor %}
-        </div>
-        <div class="col">
-            <h3>{% trans "Weapons" %}</h3>
-            {% for weapon in weapons %}
-                {{ weapon }} {% roll_amount_for_object weapon %}<br>
-            {% endfor %}
-        </div>
-        <div class="col">
-            <h3>{% trans "Spells" %}</h3>
-            {% for base_spell in base_spells %}
-                {{ base_spell }} {% roll_amount_for_object base_spell %}<br>
-            {% endfor %}
-        </div>
+      {% endfor %}
     </div>
+    <div class="col">
+      <h3>{% trans "Skills" %}</h3>
+      {% for skill in skills %}
+        {% roll_amount_for_object skill as ra %}
+        <div class="{% roll_amount_color_class ra %}">
+          {{ skill }} {{ ra }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col">
+      <h3>{% trans "Weapons" %}</h3>
+      {% for weapon in weapons %}
+        {% roll_amount_for_object weapon as ra %}
+        <div class="{% roll_amount_color_class ra %}">
+          {{ weapon }} {{ ra }}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col">
+      <h3>{% trans "Spells" %}</h3>
+      {% for base_spell in base_spells %}
+        {% roll_amount_for_object base_spell as ra %}
+        <div class="{% roll_amount_color_class ra %}">
+          {{ base_spell }} {{ ra }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

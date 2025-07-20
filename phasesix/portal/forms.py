@@ -12,6 +12,7 @@ class ProfileSettingsForm(forms.ModelForm):
             "settings_language_preference",
             "bio",
             "image",
+            "backdrop_image",
         )
         model = Profile
         widgets = {"bio": forms.Textarea(attrs={"style": "height: 25vh"})}
