@@ -347,5 +347,7 @@ class CreateFoeForm(CreateHomebrewForm):
     def save(self, commit=True):
         foe = super().save(commit=commit)
         if self.character is not None and self.cleaned_data["add_to_character"]:
-            pass  # TODO: Add familiars
+            self.character.characterfoe_set.create(
+                foe=foe, health=foe.health, name=foe.name_de
+            )
         return foe
