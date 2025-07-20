@@ -13,6 +13,7 @@
              src="{% image_url character "120x120" %}"
              alt="{{ character.name }}">
       </div>
+
       <div class="card-body mt-5">
         <h4>{{ character.name }}</h4>
         {% template_category_string character 3 %}
@@ -23,7 +24,6 @@
         {% if character.npc_campaign %}
           <small>{% trans "NPC" %}: {{ character.npc_campaign }}</small>
         {% endif %}
-
       </div>
     </div>
   </a>

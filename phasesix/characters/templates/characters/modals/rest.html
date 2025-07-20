@@ -1,14 +1,14 @@
 {% load i18n characters_extras %}
 
 <script>
-    $(function () {
-        $('.btn-rest').on('click', function (e) {
-            let btn = $(this)
-            $.post(btn.data('url'), {mode: btn.data('mode')}, function (data) {
-                $('#page-modal').find('.btn-close').click()
-            })
-        })
+  $(function () {
+    $('.btn-rest').on('click', function (e) {
+      let btn = $(this)
+      $.post(btn.data('url'), {mode: btn.data('mode')}, function (data) {
+        $('#page-modal').find('.btn-close').click()
+      })
     })
+  })
 </script>
 
 <div class="row">
@@ -24,7 +24,11 @@
         <tr>
           <th><i class="fas fa-meh text-warning" title="{% trans 'Stress' %}"></i> {% trans 'Stress' %}</th>
           <td>
-            {% trans 'Stress Test' %} ({% color_value_span object.rest_stress_dice 6 %})
+            {% trans "Remove Stress" %}
+            {% if object.is_consumed_by_dread %}
+              <br><span class="consumed-by-dread-effect">{% trans "Resolve Dread" %}</span>
+              ({% color_value_span object.rest_stress_dice 6 %} {% trans "Dice" %})
+            {% endif %}
           </td>
         </tr>
       {% endif %}
@@ -58,6 +62,6 @@
 </div>
 
 <script>
-    $(function () {
-    })
+  $(function () {
+  })
 </script>

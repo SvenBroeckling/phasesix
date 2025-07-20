@@ -223,8 +223,8 @@ class XhrCharacterRestView(TemplateView):
             rest_wound_roll = roll_and_send(
                 character.id,
                 f"{character.rest_wound_dice}d6",
-                gettext("Rest"),
-                gettext("Wound Roll"),
+                gettext("Rest wound roll"),
+                gettext("Wound roll"),
                 minimum_roll=minimum_roll,
             )
 
@@ -239,8 +239,8 @@ class XhrCharacterRestView(TemplateView):
                 rest_arcana_roll = roll_and_send(
                     character.id,
                     f"{character.rest_arcana_dice}d6",
-                    gettext("Rest"),
-                    gettext("Arcana Roll"),
+                    gettext("Rest arcana roll"),
+                    gettext("Arcana roll"),
                     minimum_roll=minimum_roll,
                 )
 
@@ -250,17 +250,22 @@ class XhrCharacterRestView(TemplateView):
                             character.arcana += 1
 
             if "horror" in character.extension_enabled:
-                rest_stress_roll = roll_and_send(
-                    character.id,
-                    f"{character.rest_stress_dice}d6",
-                    gettext("Rest"),
-                    gettext("Stress Roll"),
-                    minimum_roll=minimum_roll,
-                )
+                if character.is_consumed_by_dread:
+                    rest_stress_roll = roll_and_send(
+                        character.id,
+                        f"{character.rest_stress_dice}d6",
+                        gettext("Rest resolve dread"),
+                        gettext("Resolve dread roll"),
+                        minimum_roll=minimum_roll,
+                    )
 
-                if len(list(filter(lambda x: x >= minimum_roll, rest_stress_roll))):
-                    if character.stress > 0:
-                        character.stress -= 1
+                    if not len(
+                        list(filter(lambda x: x >= minimum_roll, rest_stress_roll))
+                    ):
+                        character.base_stress += 1
+                        character.quirks_gained += 1
+
+                character.stress = character.get_aspect_modifier("base_base_stress")
 
             character.save()
 
