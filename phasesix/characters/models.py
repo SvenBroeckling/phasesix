@@ -1440,8 +1440,22 @@ class CharacterFoe(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     foe = models.ForeignKey("rules.Foe", on_delete=models.CASCADE)
     health = models.IntegerField(_("health"), default=0)
+    max_health = models.IntegerField(_("max health"), default=0)
+    boost = models.IntegerField(_("boost"), default=0)
     name = models.CharField(_("name"), max_length=30, null=True, blank=True)
     is_familiar = models.BooleanField(_("is familiar"), default=False)
 
+    class Meta:
+        ordering = ("name", "foe__name_de")
+        verbose_name = _("character foe")
+        verbose_name_plural = _("character foes")
+
     def __str__(self):
         return self.name or self.foe.name
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)
+
+    @property
+    def wounds_taken(self):
+        return self.max_health - self.health

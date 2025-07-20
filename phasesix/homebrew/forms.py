@@ -348,6 +348,6 @@ class CreateFoeForm(CreateHomebrewForm):
         foe = super().save(commit=commit)
         if self.character is not None and self.cleaned_data["add_to_character"]:
             self.character.characterfoe_set.create(
-                foe=foe, health=foe.health, name=foe.name_de
+                foe=foe, health=foe.health, max_health=foe.health, name=foe.name_de
             )
         return foe

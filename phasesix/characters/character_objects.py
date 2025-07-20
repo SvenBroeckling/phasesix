@@ -305,6 +305,5 @@ class FoeObject(CharacterObject):
     def add(self, pk):
         foe = Foe.objects.get(id=pk)
         self.character.characterfoe_set.create(
-            foe=foe,
-            health=foe.health,
+            foe=foe, health=foe.health, max_health=foe.health
         )

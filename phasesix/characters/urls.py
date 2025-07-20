@@ -192,6 +192,11 @@ urlpatterns = [
         views.XhrEditFoeView.as_view(),
         name="xhr_edit_foe",
     ),
+    path(
+        "foe/health/<int:pk>/<mode>/",
+        views.CharacterFoeModifyHealthView.as_view(),
+        name="foe_modify_health",
+    ),
     # contacts
     path(
         "xhr_contact/<int:pk>",

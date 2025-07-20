@@ -172,7 +172,7 @@
 
       <div class="list-group mt-3">
         <div class="list-group-item d-flex align-items-center">
-          <i class="fs-4 me-3 gi gi-delapouite-three-friends"></i>
+          <i class="fs-4 me-3 fas fa-cat"></i>
 
           <div class="flex-grow-1 d-flex gap-2 align-items-center">
             <h4 class="mb-0">{% trans "Pets" %}</h4>
@@ -200,18 +200,19 @@
 
         {% for foe in object.characterfoe_set.all %}
           <div class="list-group-item d-flex align-items-start py-3">
-            <div class="flex-grow-1 d-flex gap-2 align-items-start">
+            <div class="flex-grow-1 d-flex gap-2 align-items-start sidebar-trigger"
+                 data-sidebar-title="{{ foe.foe }}"
+                 data-sidebar-url="{% url "characters:xhr_sidebar" pk=foe.id sidebar_template="foe" %}">
               <img class="rounded" src="{% image_url foe.foe geometry="80x80" %}" alt="img-fluid">
               <div>
                 {{ foe }}<br>
-                {% for h in foe.foe.health|to_range %}
-                  <i class="fas fa-heart text-danger" title="{% trans 'Health' %}"></i>
-                {% endfor %}
+                {% include "characters/_wound_display.html" with character=foe %}
                 {% if foe.is_familiar %}
                   <br>{% trans "Is familiar" %}
                 {% endif %}
               </div>
             </div>
+
             {% if may_edit %}
               <button
                 class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center me-2 modal-trigger small-modal"

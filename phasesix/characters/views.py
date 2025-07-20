@@ -127,10 +127,10 @@ class XhrSidebarView(DetailView):
         "item": CharacterItem,
         "knowledge": Character,  # Context depends on knowledge_pk
         "note": CharacterNote,
-        "priest_action": Character,
-        # Context depends on priest_action_pk
+        "priest_action": Character,  # Context depends on priest_action_pk
         "protection": Character,
         "reputation": Character,
+        "foe": CharacterFoe,
         "riot_gear": CharacterRiotGear,
         "skill": CharacterSkill,
         "spell": CharacterSpell,
@@ -176,7 +176,6 @@ class XhrSidebarView(DetailView):
             context["priest_action"] = PriestAction.objects.get(
                 id=self.kwargs["priest_action_pk"]
             )
-
         return context
 
     def get_template_names(self):
@@ -1315,4 +1314,22 @@ class XhrContactView(DetailView):
         if not character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
         Contact.objects.get(id=request.GET.get("contact_id")).delete()
+        return JsonResponse({"status": "ok"})
+
+
+class CharacterFoeModifyHealthView(View):
+    def post(self, request, *args, **kwargs):
+        foe = CharacterFoe.objects.get(id=kwargs["pk"])
+        if foe.may_edit(request.user):
+            if self.kwargs["mode"] == "heal":
+                if foe.health < foe.max_health:
+                    foe.health += 1
+            elif self.kwargs["mode"] == "wound":
+                if foe.boost > 0:
+                    foe.boost -= 1
+                elif foe.health > 0:
+                    foe.health -= 1
+            elif self.kwargs["mode"] == "boost":
+                foe.boost += 1
+            foe.save()
         return JsonResponse({"status": "ok"})

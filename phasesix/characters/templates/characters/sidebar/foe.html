@@ -1,0 +1,70 @@
+{% load portal_extras %}
+{% load armory_extras %}
+{% load i18n characters_extras characters_extras rules_extras %}
+
+{% if may_edit %}
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <a class="btn btn-danger btn-sm action-link"
+           href="{% url 'characters:foe_modify_health' pk=object.id mode='wound' %}"><i
+          class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</a>
+        <a class="btn btn-primary btn-sm action-link"
+           href="{% url 'characters:foe_modify_health' pk=object.id mode='heal' %}"><i
+          class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</a>
+        <a class="btn btn-warning btn-sm action-link"
+           href="{% url 'characters:foe_modify_health' pk=object.id mode='boost' %}"><i
+          class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</a>
+      </div>
+    </div>
+
+    <div class="col-12 mt-2">
+      <button class="btn btn-primary btn-sm w-100 dice-roll"
+              data-dice-roll="{{ object.foe.dexterity }}d6"
+              data-dice-header="{{ object }}: {% trans 'Initiative' %}"
+              data-dice-description="{% trans 'Initiative (*Dexterity*d6)' %}"
+              data-dice-campaign="{{ object.campaign.id }}">{% trans "Roll Initiative" %}
+        ({{ object.foe.dexterity }}{% trans 'd6' %})
+      </button>
+    </div>
+  </div>
+{% endif %}
+
+<div class="row">
+  <div class="col-12 mb-3 mt-2">
+    <img class="rounded img-fluid" width="600" height="600"
+         src="{% image_url object.foe geometry="600x600" crop="center" %}"
+         alt="{{ object }}">
+  </div>
+  <div class="col-12 mt-2">
+    {% include "rules/_foe_stat_block.html" with foe=object.foe show_description=True %}
+  </div>
+  {% if object.foe.wiki_page %}
+    <div class="col-12">
+      <a class="btn btn-primary w-100 btn-sm mt-2"
+         href="{% url "worlds:wiki_page" slug=object.foe.wiki_page.slug world_slug=object.foe.wiki_page.world.slug %}"><i
+        class="fas fa-link fa-fw"></i> {% trans 'Go to the wiki page' %}</a>
+    </div>
+  {% endif %}
+</div>
+
+<div class="row">
+  {% for action in object.foe.foeaction_set.all %}
+    <div class="col-12">
+      <div class="card mt-2">
+        <div class="card-header">{{ action.name }}</div>
+        <div class="card-body">
+          {{ action.effect }}
+          <br>
+          <button
+            data-dice-roll="{{ action.skill }}d6"
+            data-dice-header="{{ object }}: {{ action.name }}"
+            data-dice-description="{{ action.effect }}"
+            data-dice-character="{{ object.character.id }}"
+            class="btn btn-sm dice-roll btn-primary mt-2">{% trans "Roll" %} ({{ action.skill }}{% trans "d6" %})
+          </button>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
