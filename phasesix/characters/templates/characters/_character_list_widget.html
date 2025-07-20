@@ -16,20 +16,27 @@
       <div class="card-body mt-5">
         <h4>{{ character.name }}</h4>
         {% template_category_string character 3 %}
-        {% if character.created_by != request.user %}
-          <small>{{ character.created_by|default:"" }}</small>
+
+        {% if character.campaign %}
+          <small>{{ character.campaign }}</small>
         {% endif %}
+        {% if character.npc_campaign %}
+          <small>{% trans "NPC" %}: {{ character.npc_campaign }}</small>
+        {% endif %}
+
       </div>
     </div>
   </a>
-  <button class="btn position-absolute top-0 end-0 m-2"
-          hx-post="{% url "characters:xhr_toggle_favorite" pk=character.id %}"
-          hx-swap="innerHTML"
-          style="z-index: 1;">
-    {% if character.is_favorite %}
-      <i title="{% trans "Remove from favorites" %}" class="fas fa-star fa-2x text-warning"></i>
-    {% else %}
-      <i title="{% trans "Add to favorites" %}" class="far fa-star fa-2x text-warning"></i>
-    {% endif %}
-  </button>
+  {% if may_edit %}
+    <button class="btn position-absolute top-0 end-0 m-2"
+            hx-post="{% url "characters:xhr_toggle_favorite" pk=character.id %}"
+            hx-swap="innerHTML"
+            style="z-index: 1;">
+      {% if character.is_favorite %}
+        <i title="{% trans "Remove from favorites" %}" class="fas fa-star fa-2x text-warning"></i>
+      {% else %}
+        <i title="{% trans "Add to favorites" %}" class="far fa-star fa-2x text-warning"></i>
+      {% endif %}
+    </button>
+  {% endif %}
 </div>

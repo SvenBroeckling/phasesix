@@ -24,14 +24,17 @@
       </div>
     </div>
   </a>
-  <button class="btn position-absolute top-0 end-0 m-2"
-          hx-post="{% url "campaigns:xhr_toggle_favorite" pk=campaign.id %}"
-          hx-swap="innerHTML"
-          style="z-index: 1;">
-    {% if campaign.is_favorite %}
-      <i title="{% trans "Remove from favorites" %}" class="fas fa-star fa-2x text-warning"></i>
-    {% else %}
-      <i title="{% trans "Add to favorites" %}" class="far fa-star fa-2x text-warning"></i>
-    {% endif %}
-  </button>
+
+  {% if may_edit %}
+    <button class="btn position-absolute top-0 end-0 m-2"
+            hx-post="{% url "campaigns:xhr_toggle_favorite" pk=campaign.id %}"
+            hx-swap="innerHTML"
+            style="z-index: 1;">
+      {% if campaign.is_favorite %}
+        <i title="{% trans "Remove from favorites" %}" class="fas fa-star fa-2x text-warning"></i>
+      {% else %}
+        <i title="{% trans "Add to favorites" %}" class="far fa-star fa-2x text-warning"></i>
+      {% endif %}
+    </button>
+  {% endif %}
 </div>
