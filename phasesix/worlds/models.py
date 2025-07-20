@@ -31,6 +31,17 @@ class WorldSiteConfiguration(models.Model):
         verbose_name = _("world site configuration")
         verbose_name_plural = _("world site configurations")
 
+    def has_extension(self, identifier):
+        if self.world is None:
+            return False
+        if self.world.extension is None:
+            return False
+        if self.world.extension.identifier == identifier:
+            return True
+        return self.world.extension.fixed_extensions.filter(
+            identifier=identifier
+        ).exists()
+
 
 @reversion.register
 class World(models.Model, metaclass=TransMeta):

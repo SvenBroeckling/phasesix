@@ -9,6 +9,7 @@ class BodyModificationTypeListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["navigation"] = "body_modification_type_list"
         context["title"] = _("Body Modifications")
         context["sub_title"] = _("Things you can integrate into your body")
         context["character_object"] = BodyModificationObject(

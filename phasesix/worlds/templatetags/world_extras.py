@@ -4,6 +4,13 @@ register = Library()
 
 
 @register.filter
+def world_has_extension(world_configuration, extension_identifier):
+    if world_configuration is None:
+        return True  # No world configuration - base site
+    return world_configuration.has_extension(extension_identifier)
+
+
+@register.filter
 def is_subpage_of(page, parent):
     return page.is_subpage_of(parent)
 

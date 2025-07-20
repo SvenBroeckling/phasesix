@@ -86,18 +86,14 @@ class CharacterObject:
         )
 
     def get_extension_qs(self):
-        if self.character is None:
-            return Extension.objects.all()
-
-        if not self.character_or_campaign.extensions.exists():
-            if (
+        if self.character_or_campaign is None:
+            return Extension.objects.for_world_configuration(
                 self.request.world_configuration
-                and self.request.world_configuration.world
-            ):
-                return Extension.objects.for_world(
-                    self.request.world_configuration.world
-                )
-            return Extension.objects.all()
+            )
+        if not self.character_or_campaign.extensions.exists():
+            return Extension.objects.for_world_configuration(
+                self.request.world_configuration
+            )
         return self.character_or_campaign.extensions.all()
 
     @abstractmethod

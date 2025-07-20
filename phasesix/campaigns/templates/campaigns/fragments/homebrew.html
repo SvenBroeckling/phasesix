@@ -4,7 +4,7 @@
   <div class="column-container column-layout-3">
 
     {% if may_edit %}
-      <div class="dropdown">
+      <div class="dropdown mb-2">
         <div class="card hover-cta pointer"
              data-bs-popper-config='{"strategy":"fixed"}'
              data-bs-toggle="dropdown">
@@ -70,8 +70,15 @@
                data-modal-title="{% trans 'Create Language' %}"
                href="">{% trans "Create custom language" %}</a>
           </li>
+          <li>
+            <a class="dropdown-item modal-trigger"
+               data-url="{% url 'characters:xhr_character_objects' object_type="foe" %}?campaign_pk={{ object.id }}&omit_category_list=true"
+               data-bs-toggle="modal"
+               data-bs-target=".page-modal"
+               data-modal-title="{% trans 'Create Foe' %}"
+               href="">{% trans "Create custom foe" %}</a>
+          </li>
         </ul>
-
       </div>
     {% endif %}
 
@@ -95,6 +102,9 @@
     {% endfor %}
     {% for template in object.homebrew_rules_template_set.all %}
       {% object_widget template %}
+    {% endfor %}
+    {% for foe in object.homebrew_rules_foe_set.all %}
+      {% object_widget foe %}
     {% endfor %}
   </div>
 {% endblock %}

@@ -167,6 +167,9 @@ class ExtensionSelectQuerySet(models.QuerySet):
 
 
 class ExtensionQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(is_active=True)
+
     def for_world(self, world):
         q = Q(is_mandatory=True)
         if world.extension:
@@ -174,7 +177,14 @@ class ExtensionQuerySet(models.QuerySet):
         if world.extension.fixed_epoch:
             q |= Q(pk=world.extension.fixed_epoch.pk)
         q |= Q(pk__in=world.extension.fixed_extensions.all())
-        return self.filter(q)
+        return self.active().filter(q)
+
+    def for_world_configuration(self, world_configuration):
+        if not world_configuration:
+            return self.active()
+        if not world_configuration.world:
+            return self.active()
+        return self.for_world(world_configuration.world)
 
     def first_class_extensions(self):
         return self.filter(Q(type="e") | Q(is_mandatory=True)).filter(is_active=True)
@@ -226,7 +236,12 @@ class Extension(models.Model, metaclass=TransMeta):
         "armory.CurrencyMap", blank=True, null=True, on_delete=models.SET_NULL
     )
     fixed_extensions = models.ManyToManyField(
-        "self", blank=True, limit_choices_to={"type": "x"}
+        "self",
+        blank=True,
+        limit_choices_to={"type": "x"},
+        help_text=_(
+            "Mandatory extensions for a world. Only applies if this object is a world"
+        ),
     )
     fixed_epoch = models.ForeignKey(
         "self",
