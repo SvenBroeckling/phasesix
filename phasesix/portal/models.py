@@ -46,6 +46,32 @@ class Profile(models.Model):
 
     bio = models.TextField(_("bio"), blank=True, null=True)
 
+    settings_protection_display = models.CharField(
+        _("protection display"),
+        max_length=1,
+        default="I",
+        choices=(
+            ("I", _("Shield icons")),
+            ("G", _("Letters")),
+        ),
+    )
+
+    settings_reduce_images = models.BooleanField(
+        _("reduce images"),
+        help_text=_("Reduce the amount of images displayed on the site."),
+        default=False,
+    )
+
+    settings_language_preference = models.CharField(
+        _("language preference"),
+        max_length=2,
+        default="EN",
+        choices=(
+            ("en", _("English")),
+            ("de", _("German")),
+        ),
+    )
+
     def __str__(self):
         return self.user.username
 

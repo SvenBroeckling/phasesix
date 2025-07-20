@@ -2,6 +2,20 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django_registration.forms import RegistrationForm
 
+from portal.models import Profile
+
+
+class ProfileSettingsForm(forms.ModelForm):
+    class Meta:
+        fields = (
+            "settings_protection_display",
+            "settings_language_preference",
+            "bio",
+            "image",
+        )
+        model = Profile
+        widgets = {"bio": forms.Textarea(attrs={"style": "height: 25vh"})}
+
 
 class CustomRegistrationForm(RegistrationForm):
     email2 = forms.CharField(label=_("E-Mail"), max_length=100, required=False)

@@ -1,13 +1,15 @@
+from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q, Count
 from django.db.models.functions import Trunc, Length
 from django.shortcuts import redirect
 from django.templatetags.static import static
-from django.views import View
 from django.views.generic import TemplateView, DetailView
 
 from campaigns.models import Roll, Campaign
 from characters.models import Character
+from portal.forms import ProfileSettingsForm
 from portal.models import Profile
 from worlds.models import WikiPage, WorldLeadImage, World
 
@@ -155,15 +157,22 @@ class ProfileView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["may_edit"] = self.request.user == self.object.user
+        context["form"] = ProfileSettingsForm(instance=self.object)
         return context
 
-
-class ProfileUploadImageView(View):
     def post(self, request, *args, **kwargs):
-        profile = Profile.objects.get(user=request.user)
-        profile.image = request.FILES["image"]
-        profile.save()
-        return redirect("portal:profile", pk=request.user.id)
+        self.object = self.get_object()
+        if not self.object.user == request.user:
+            raise PermissionDenied("You are not the owner of this profile.")
+        form = ProfileSettingsForm(request.POST, request.FILES, instance=self.object)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile settings saved.")
+            return redirect(self.object.get_absolute_url())
+        else:
+            context = self.get_context_data(form=form)
+            return self.render_to_response(context)
 
 
 class YearlyWrapUpView(TemplateView):

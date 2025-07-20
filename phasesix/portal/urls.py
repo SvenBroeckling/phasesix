@@ -7,11 +7,6 @@ app_name = "portal"
 
 urlpatterns = [
     path("profile/<slug:slug>", views.ProfileView.as_view(), name="profile"),
-    path(
-        "profile/upload_image",
-        views.ProfileUploadImageView.as_view(),
-        name="upload_image",
-    ),
     path("sidebar/search", views.SidebarSearchView.as_view(), name="search"),
     path(
         "wrapup/<int:pk>/<int:year>",
