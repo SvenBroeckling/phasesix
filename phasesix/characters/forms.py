@@ -11,7 +11,7 @@ from rules.models import Lineage, Extension
 class CharacterFoeForm(forms.ModelForm):
     class Meta:
         model = CharacterFoe
-        fields = ("name", "health", "is_familiar")
+        fields = ("name", "max_health", "is_familiar")
 
 
 class ContactForm(forms.ModelForm):

@@ -1281,16 +1281,6 @@ class XhrToggleFavoriteView(View):
         return HttpResponse(f'<i class="{icon_class} fa-star fa-2x text-warning"></i>')
 
 
-class XhrEditFoeView(UpdateView):
-    form_class = CharacterFoeForm
-    template_name = "characters/modals/edit_foe.html"
-    model = CharacterFoe
-
-    def form_valid(self, form):
-        form.save()
-        return JsonResponse({"status": "ok"})
-
-
 class XhrContactView(DetailView):
     model = Character
     template_name = "characters/modals/contacts.html"
@@ -1314,6 +1304,16 @@ class XhrContactView(DetailView):
         if not character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
         Contact.objects.get(id=request.GET.get("contact_id")).delete()
+        return JsonResponse({"status": "ok"})
+
+
+class XhrEditFoeView(UpdateView):
+    form_class = CharacterFoeForm
+    template_name = "characters/modals/edit_foe.html"
+    model = CharacterFoe
+
+    def form_valid(self, form):
+        form.save()
         return JsonResponse({"status": "ok"})
 
 

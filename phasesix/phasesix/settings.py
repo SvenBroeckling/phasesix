@@ -307,14 +307,19 @@ UNFOLD = {
                         "link": reverse_lazy("admin:armory_riotgear_changelist"),
                     },
                     {
+                        "title": _("Weapons"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:armory_weapon_changelist"),
+                    },
+                    {
                         "title": _("Currency Maps"),
                         "icon": "people",
                         "link": reverse_lazy("admin:armory_currencymap_changelist"),
                     },
                     {
-                        "title": _("Weapons"),
+                        "title": _("Protection Types"),
                         "icon": "people",
-                        "link": reverse_lazy("admin:armory_weapon_changelist"),
+                        "link": reverse_lazy("admin:armory_protectiontype_changelist"),
                     },
                 ],
             },

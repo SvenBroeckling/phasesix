@@ -100,6 +100,7 @@
                 </small>
               {% endif %}
             </div>
+
             {% if may_edit %}
               <a
                 class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center action-link"
@@ -201,7 +202,7 @@
         {% for foe in object.characterfoe_set.all %}
           <div class="list-group-item d-flex align-items-start py-3">
             <div class="flex-grow-1 d-flex gap-2 align-items-start sidebar-trigger"
-                 data-sidebar-title="{{ foe.foe }}"
+                 data-sidebar-title="{{ foe }}"
                  data-sidebar-url="{% url "characters:xhr_sidebar" pk=foe.id sidebar_template="foe" %}">
               <img class="rounded" src="{% image_url foe.foe geometry="80x80" %}" alt="img-fluid">
               <div>

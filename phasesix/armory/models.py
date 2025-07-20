@@ -368,6 +368,7 @@ class ProtectionType(models.Model, metaclass=TransMeta):
     color_class = models.CharField(
         max_length=30, default="text-primary", choices=COLOR_CLASS_CHOICES
     )
+    letter = models.CharField(_("letter"), max_length=1, blank=True, null=True)
     icon_class = models.CharField(
         _("FA Icon Class"),
         choices=PROTECTION_FA_ICON_CLASS_CHOICES,
@@ -376,7 +377,9 @@ class ProtectionType(models.Model, metaclass=TransMeta):
     )
 
     class Meta:
-        translate = ("name", "description")
+        translate = ("name", "description", "letter")
+        verbose_name = _("protection type")
+        verbose_name_plural = _("protection types")
         ordering = ("-ordering",)
 
     def __str__(self):

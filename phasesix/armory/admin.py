@@ -86,8 +86,16 @@ class WeaponAdmin(ModelAdmin):
 
 @admin.register(ProtectionType)
 class ProtectionTypeAdmin(ModelAdmin):
-    list_display = ("name_en", "name_de", "ordering", "color_class", "icon_class")
-    list_editable = ("ordering", "color_class", "icon_class")
+    list_display = (
+        "name_en",
+        "name_de",
+        "ordering",
+        "letter_de",
+        "letter_en",
+        "color_class",
+        "icon_class",
+    )
+    list_editable = ("ordering", "color_class", "icon_class", "letter_de", "letter_en")
 
 
 class RiotGearProtectionInline(TabularInline):
@@ -306,5 +314,3 @@ class KeywordAdmin(ModelAdmin):
         "show_in_summary",
     )
     list_editable = ("ordering", "is_rare", "is_evergreen", "show_in_summary")
-
-
