@@ -125,7 +125,7 @@
 
       <div class="column-container column-layout-2 mt-4">
         {% for page in object.wikipage_set.all %}
-          <div class="card pointer my-3">
+          <div class="card pointer mb-3">
             <a href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
               <div class="card-header no-decoration no-link-colors">
                 {{ page }}
