@@ -247,7 +247,7 @@ class XhrSearchFoeSidebarView(DetailView):
 
         if self.request.world_configuration is not None:
             foes = foes.filter(
-                extension__in=self.request.world_configuration.world.extension
+                extensions=self.request.world_configuration.world.extension
             )
 
         context["foes"] = foes.order_by("name_de")
