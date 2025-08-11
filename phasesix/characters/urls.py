@@ -227,9 +227,14 @@ urlpatterns = [
     ),
     # riot gear
     path(
-        "xhr_riot_gear_condition/<int:pk>/<int:riot_gear_pk><mode>/",
+        "xhr_riot_gear_condition/<int:pk>/<int:riot_gear_pk>/<mode>/",
         views.XhrRiotGearConditionView.as_view(),
         name="xhr_riot_gear_condition",
+    ),
+    path(
+        "xhr_toggle_riot_gear_equipped/<int:pk>/<int:riot_gear_pk>",
+        views.XhrToggleRiotGearEquippedView.as_view(),
+        name="xhr_toggle_riot_gear_equipped",
     ),
     # body modifications
     path(

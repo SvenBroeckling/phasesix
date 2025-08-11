@@ -915,6 +915,17 @@ class XhrRiotGearConditionView(View):
         return JsonResponse({"status": "ok"})
 
 
+class XhrToggleRiotGearEquippedView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs["pk"])
+        character_riot_gear = CharacterRiotGear.objects.get(id=kwargs["riot_gear_pk"])
+        if not character.may_edit(request.user):
+            return JsonResponse({"status": "forbidden"})
+        character_riot_gear.is_equipped = not character_riot_gear.is_equipped
+        character_riot_gear.save()
+        return JsonResponse({"status": "ok"})
+
+
 class XhrUpdateItemSortOrderView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])

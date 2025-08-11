@@ -7,10 +7,10 @@
       <div class="btn-group w-100">
         <a class="btn btn-warning btn-sm action-link"
            href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="damage" %}"><i
-                class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
+          class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
         <a class="btn btn-success btn-sm action-link"
            href="{% url 'characters:xhr_riot_gear_condition' pk=object.character.id riot_gear_pk=object.id mode="repair" %}"><i
-                class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
+          class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
       </div>
     </div>
 
@@ -19,8 +19,16 @@
         <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
            data-method="DELETE"
            href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="riot_gear" %}?object_id={{ object.id }}"><i
-                class="fas fa-trash"></i> {% trans 'Remove' %}</a>
+          class="fas fa-trash"></i> {% trans 'Remove' %}</a>
       </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-check form-switch mt-2">
+      <input class="form-check-input action-switch" type="checkbox"
+             id="equip-switch-{{ object.id }}" {% if object.is_equipped %}checked{% endif %}
+             data-url="{% url 'characters:xhr_toggle_riot_gear_equipped' pk=object.character.id riot_gear_pk=object.id %}">
+      <label class="form-check-label" for="equip-switch-{{ r.id }}">{% trans 'Is equipped' %}</label>
     </div>
   </div>
 {% endif %}

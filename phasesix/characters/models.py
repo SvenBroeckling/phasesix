@@ -842,14 +842,16 @@ class Character(models.Model):
           "riot_gear_protection": riot_gear_protection_object,
           "available_protection": available_protection,
         },]
+        Only considers equipped riot gear.
         """
         rgp = RiotGearProtection.objects.filter(
-            riot_gear__characterriotgear__character=self
+            riot_gear__characterriotgear__character=self,
+            riot_gear__characterriotgear__is_equipped=True,
         ).order_by("protection_type__ordering")
         res = []
         for r in rgp:
             character_riot_gear = CharacterRiotGear.objects.filter(
-                character=self, riot_gear=r.riot_gear
+                character=self, riot_gear=r.riot_gear, is_equipped=True
             ).first()
 
             available_protection = (
@@ -872,9 +874,9 @@ class Character(models.Model):
     @property
     def total_encumbrance(self):
         return (
-            self.characterriotgear_set.aggregate(Sum("riot_gear__encumbrance"))[
-                "riot_gear__encumbrance__sum"
-            ]
+            self.characterriotgear_set.filter(is_equipped=True).aggregate(
+                Sum("riot_gear__encumbrance")
+            )["riot_gear__encumbrance__sum"]
             or 0
         )
 
@@ -1336,6 +1338,7 @@ class CharacterRiotGear(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     riot_gear = models.ForeignKey("armory.RiotGear", on_delete=models.CASCADE)
     condition = models.IntegerField(_("condition"), default=100)
+    is_equipped = models.BooleanField(_("is equipped"), default=True)
 
     def may_edit(self, user):
         return self.character.may_edit(user)

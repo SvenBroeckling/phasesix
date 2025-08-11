@@ -18,6 +18,15 @@ $(function () {
     }
 
     // interactions / events
+    body.on("change", ".action-switch", function () {
+        const url = $(this).data("url");
+        $.post(url, function (data) {
+            if (data.status === "ok") {
+                refresh_fragments();
+            }
+        });
+    });
+
     body.on("click", ".action-link", function (e) {
         let method = $(this).data("method") || "POST";
         let url = $(this).attr("href");
