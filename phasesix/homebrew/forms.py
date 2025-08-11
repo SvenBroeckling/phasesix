@@ -355,4 +355,6 @@ class CreateFoeForm(CreateHomebrewForm):
             self.character.characterfoe_set.create(
                 foe=foe, health=foe.health, max_health=foe.health, name=foe.name_de
             )
+        if self.campaign is not None:
+            self.campaign.campaignfoe_set.create(foe=foe, health=foe.health)
         return foe
