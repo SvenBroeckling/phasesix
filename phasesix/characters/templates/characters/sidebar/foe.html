@@ -67,4 +67,8 @@
       </div>
     </div>
   {% endfor %}
+  {% if user.is_superuser %}
+    <a href="{% url 'admin:rules_foe_change' object.foe.id %}"
+       style="font-size: xx-small">admin</a>
+  {% endif %}
 </div>

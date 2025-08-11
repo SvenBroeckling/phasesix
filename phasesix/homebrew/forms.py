@@ -37,6 +37,11 @@ class CreateHomebrewForm(forms.ModelForm):
         obj.homebrew_campaign = self.campaign
         if commit:
             obj.save()
+            if hasattr(obj, "extensions"):
+                if self.character is not None:
+                    obj.extensions.set(self.character.extensions.all())
+                elif self.campaign is not None:
+                    obj.extensions.set(self.campaign.extensions.all())
             self.save_m2m()
             if self.formset_class:
                 formset = self.formset_class(self.request.POST, instance=obj)
