@@ -1,6 +1,7 @@
 import itertools
 import math
 import random
+from decimal import Decimal, ROUND_FLOOR
 
 from django.db import models
 from django.db.models import Sum, Max, Q, Value
@@ -405,14 +406,11 @@ class Character(models.Model):
           or no more higher units remain.
         - Returns True if the subtraction succeeded, False otherwise. Persists changes.
         """
-        from decimal import Decimal, ROUND_FLOOR
 
-        # Normalize amount as Decimal with 2 places (values are stored with 2 decimal places)
         amount = Decimal(str(amount)).quantize(Decimal("0.01"))
         if amount <= 0:
             return True
 
-        # Fetch all units in this currency map, highest value first
         units = list(
             CurrencyMapUnit.objects.filter(currency_map=self.currency_map).order_by(
                 "-value"
@@ -421,7 +419,6 @@ class Character(models.Model):
         if not units:
             return False
 
-        # Build current quantities per unit
         qty_by_unit = {}
         for u in units:
             cc = (
@@ -431,13 +428,11 @@ class Character(models.Model):
             )
             qty_by_unit[u.id] = cc.quantity if cc else 0
 
-        # Identify common unit
         common_unit = next((u for u in units if u.is_common), None)
         if common_unit is None:
             return False
 
-        # Helper: get current common quantity as Decimal
-        def current_common_qty_dec():
+        def current_common_qty_decimal():
             total = Decimal("0.00")
             for u in units:
                 q = qty_by_unit.get(u.id, 0)
@@ -445,28 +440,18 @@ class Character(models.Model):
                     total += Decimal(q) * Decimal(u.value)
             return total
 
-        # Try to ensure enough common by breaking higher units
-        common_available = current_common_qty_dec()
+        common_available = current_common_qty_decimal()
         if common_available < amount:
             for u in units:
                 if u.id == common_unit.id:
                     continue
-                # While we still need more and have some of this higher unit, break it down
                 while qty_by_unit.get(u.id, 0) > 0 and common_available < amount:
                     qty_by_unit[u.id] -= 1
                     common_available += Decimal(u.value)
-            # Re-check after conversions
+
         if common_available < amount:
             return False
 
-        # Now subtract from common pool, prioritizing the common unit quantity first.
-        # Compute how many common units we need to reduce on the common unit itself.
-        # We will first ensure the common unit quantity is increased by any conversions we computed.
-        # Reconstruct target quantities per unit based on conversions above:
-        # - The common unit's quantity becomes whatever was originally there plus the amount converted in terms of common units, then subtract amount.
-        # To do this precisely, compute the needed change in common units and then distribute on common unit only.
-
-        # Calculate original common unit quantity
         original_common_qty = (
             self.charactercurrency_set.filter(currency_map_unit=common_unit)
             .latest("id")
@@ -474,15 +459,7 @@ class Character(models.Model):
             if self.charactercurrency_set.filter(currency_map_unit=common_unit).exists()
             else 0
         )
-        original_common_total_dec = Decimal(original_common_qty) * Decimal(
-            common_unit.value
-        )
 
-        # common_available currently equals sum over all units after our virtual conversions
-        # The increase on the common side is delta_common_dec = common_available - sum_non_common_converted_back_to_common_without_common_part
-        # Simpler: we will materialize conversions by updating CharacterCurrency rows now based on qty_by_unit we computed.
-
-        # Persist non-common unit updated quantities (after conversions)
         for u in units:
             if u.id == common_unit.id:
                 continue
@@ -499,29 +476,20 @@ class Character(models.Model):
                         currency_map_unit=u, quantity=new_q
                     )
 
-        # Recompute how much we have in common unit after persisting non-common conversions.
-        # The amount in common units we can hold must be updated by adding the converted value to the existing common quantity.
-        # Compute how many common units we need now as integer steps of the common unit's value (usually 1.00).
-        # Convert decimals of common_available/common_unit.value to number of common units we should have.
-        # Since quantities are integers, floor the count.
         common_unit_value = Decimal(common_unit.value)
-        # Compute desired total common units count across all value now in 'common_available'
         desired_common_units_total = (common_available / common_unit_value).quantize(
             Decimal("1"), rounding=ROUND_FLOOR
         )
-        # Compute how many of those should be reserved to subtract 'amount'
         units_to_subtract = (amount / common_unit_value).quantize(
             Decimal("1"), rounding=ROUND_FLOOR
         )
-        # If amount is not divisible, we still need to cover the remainder -> require one more common unit
+
         if (amount % common_unit_value) != 0:
             units_to_subtract += 1
-        # Guard: if we rounded up too much, ensure we don't subtract more than available units
         if units_to_subtract > desired_common_units_total:
             return False
         remaining_common_units = int(desired_common_units_total - units_to_subtract)
 
-        # Persist common unit quantity
         qs_common = self.charactercurrency_set.filter(currency_map_unit=common_unit)
         if qs_common.exists():
             obj = qs_common.latest("id")
@@ -1528,7 +1496,7 @@ class CharacterSpell(models.Model):
 
     @property
     def spell_point_cost(self):
-        from django.db.models import Sum, F, Value
+        from django.db.models import Sum, Value
         from django.db.models.functions import Coalesce
 
         # Prefetch template costs in a single query
