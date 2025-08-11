@@ -25,6 +25,7 @@
             class="float-end add-form" method="post">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ foe.id }}">
+        <input type="hidden" name="action" value="add">
         <button class="btn btn-sm btn-primary m-2"
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}">

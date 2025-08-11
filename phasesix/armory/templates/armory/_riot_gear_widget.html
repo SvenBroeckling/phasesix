@@ -6,7 +6,7 @@
   <div class="card-body">
     <h4>{{ riot_gear }}</h4>
     <span class="fs-5 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0"><i
-            class="fas fa-coins"></i> {{ riot_gear.price|floatformat:0 }}</span>
+      class="fas fa-coins"></i> {{ riot_gear.price|floatformat:0 }}</span>
 
     <p>
       {{ riot_gear.description|phasesix_markup }}
@@ -33,16 +33,45 @@
     {% endif %}
 
     {% if character %}
-      <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
-            method="post"
-            class="float-end add-form">
-        {% csrf_token %}
-        <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
-        <button type="submit" class="btn btn-primary btn-sm float-end"
-                data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
-          {% trans 'Add' %}
-        </button>
-      </form>
+      {% with currency_unit=character.common_currency_unit %}
+        <div class="dropdown float-end">
+          <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+            {% trans 'Add' %}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item">
+              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
+                    method="post"
+                    class="add-form px-3 py-1">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
+                <input type="hidden" name="action" value="add">
+                <button type="submit" class="dropdown-item"
+                        data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                  {% trans 'Add' %}
+                </button>
+              </form>
+            </li>
+            <li class="dropdown-item">
+              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
+                    method="post"
+                    class="add-form px-3 py-1">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
+                <input type="hidden" name="action" value="buy">
+                <button type="submit" class="dropdown-item"
+                        data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                  {% trans 'Buy' %}
+                  <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+                  {{ riot_gear.price|floatformat:0 }}
+                </button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      {% endwith %}
     {% else %}
       {% if not world_configuration %}
         {% for extension in riot_gear.extensions.all %}

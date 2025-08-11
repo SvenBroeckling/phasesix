@@ -1242,7 +1242,25 @@ class XhrCharacterObjectsView(TemplateView):
     def post(self, request, *args, **kwargs):
         if request.POST.get("action", "") == "create_homebrew":
             return self.create_homebrew()
-        self.character_object.add(request.POST.get("object_id"))
+
+        object_id = request.POST.get("object_id")
+        action = request.POST.get("action", "add")
+
+        if action == "buy" and self.character is not None:
+            # Determine price via character_object and attempt to subtract
+            try:
+                price = self.character_object.get_price(object_id)
+            except Exception:
+                price = 0
+            if price:
+                if not self.character.subtract_currency(price):
+                    return JsonResponse({"status": "notenoughcurrency"})
+            # If price is 0 or subtraction succeeded, proceed to add
+            self.character_object.add(object_id)
+            return JsonResponse({"status": "ok"})
+
+        # Default behavior: just add
+        self.character_object.add(object_id)
         return JsonResponse({"status": "ok"})
 
     def delete(self, request, *args, **kwargs):

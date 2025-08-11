@@ -5,7 +5,8 @@
   {% if template.has_allows_priest_action %}border-success{% endif %}">
   <div class="card-body position-relative">
     <h4>{{ template }}</h4>
-    <span class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ template.cost }}</span>
+    <span
+      class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ template.cost }}</span>
 
     {% if template.rules %}
       <p>{{ template.rules|phasesix_markup }}</p>
@@ -36,6 +37,7 @@
             class="float-end add-form" method="post">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ template.id }}">
+        <input type="hidden" name="action" value="add">
         <button class="btn btn-sm btn-primary m-2"
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}">

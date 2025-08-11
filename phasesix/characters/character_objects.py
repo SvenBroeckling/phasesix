@@ -46,6 +46,10 @@ class CharacterObject:
     homebrew_form_class = None
     homebrew_formset_class = None
 
+    def get_price(self, pk):
+        """Default price for non-priced objects is 0."""
+        return 0
+
     def __init__(self, request, character, campaign=None, omit_category_qs=False):
         self.character = character
         self.campaign = campaign
@@ -130,6 +134,9 @@ class WeaponObject(CharacterObject):
     homebrew_form_class = CreateWeaponForm
     homebrew_formset_class = CreateWeaponKeywordFormSet
 
+    def get_price(self, pk):
+        return Weapon.objects.get(id=pk).price
+
     def remove(self, pk):
         self.character.characterweapon_set.filter(id=pk).delete()
 
@@ -144,6 +151,9 @@ class ItemObject(CharacterObject):
     child_model = Item
     homebrew_form_class = CreateItemForm
     homebrew_formset_class = None
+
+    def get_price(self, pk):
+        return Item.objects.get(id=pk).price
 
     def remove(self, pk):
         item = Item.objects.get(id=pk)
@@ -174,6 +184,9 @@ class RiotGearObject(CharacterObject):
     child_model = RiotGear
     homebrew_form_class = CreateRiotGearForm
     homebrew_formset_class = CreateRiotGearProtectionFormSet
+
+    def get_price(self, pk):
+        return RiotGear.objects.get(id=pk).price
 
     def remove(self, pk):
         self.character.characterriotgear_set.filter(id=pk).delete()
