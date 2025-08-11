@@ -1252,6 +1252,7 @@ class XhrCharacterObjectsView(TemplateView):
     def create_homebrew(self):
         form = self.character_object.homebrew_form_class(
             self.request.POST,
+            self.request.FILES,
             character=self.character,
             campaign=self.campaign,
             request=self.request,

@@ -63,6 +63,7 @@ class CreateItemForm(CreateHomebrewForm):
             "concealment",
             "charges",
             "is_container",
+            "image",
         ]
         help_texts = {
             "charges": _("Leave blank for non-chargeable items"),
@@ -137,6 +138,7 @@ class CreateWeaponForm(CreateHomebrewForm):
             "is_throwing_weapon",
             "weight",
             "price",
+            "image",
         ]
 
     def save(self, commit=True):
@@ -203,6 +205,7 @@ class CreateBodyModificationForm(CreateHomebrewForm):
             "bio_strain",
             "energy_consumption_ma",
             "charges",
+            "image",
         ]
 
     def save(self, commit=True):
@@ -347,6 +350,7 @@ class CreateFoeForm(CreateHomebrewForm):
             "actions",
             "stress_test_succeeded_stress",
             "stress_test_failed_stress",
+            "image",
         ]
 
     def save(self, commit=True):

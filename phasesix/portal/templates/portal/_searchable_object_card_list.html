@@ -62,7 +62,7 @@
               {% url 'characters:xhr_character_objects' object_type=character_object.object_type as the_url %}
             {% endif %}
 
-            <form method="post" action="
+            <form method="post" enctype="multipart/form-data" action="
             {{ the_url }}{% if character_object.campaign %}?campaign_pk={{ character_object.campaign.id }}{% endif %}">
               <input type="hidden" name="action" value="create_homebrew">
               {% csrf_token %}
