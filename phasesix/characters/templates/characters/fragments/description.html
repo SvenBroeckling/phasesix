@@ -204,12 +204,12 @@
             <div class="flex-grow-1 d-flex gap-2 align-items-start sidebar-trigger"
                  data-sidebar-title="{{ foe }}"
                  data-sidebar-url="{% url "characters:xhr_sidebar" pk=foe.id sidebar_template="foe" %}">
-              <img class="rounded" src="{% image_url foe.foe geometry="80x80" %}" alt="img-fluid">
+              <img class="rounded" src="{% image_url foe geometry="80x80" %}" alt="img-fluid">
               <div>
                 {{ foe }}<br>
                 {% include "characters/_wound_display.html" with character=foe %}
                 {% if foe.is_familiar %}
-                  <br>{% trans "Is familiar" %}
+                  {% trans "Is familiar" %}
                 {% endif %}
               </div>
             </div>

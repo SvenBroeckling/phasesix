@@ -1318,6 +1318,12 @@ class XhrEditFoeView(UpdateView):
     template_name = "characters/modals/edit_foe.html"
     model = CharacterFoe
 
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        print(request.FILES)
+        super().post(request, *args, **kwargs)
+        return JsonResponse({"status": "ok"})
+
     def form_valid(self, form):
         form.save()
         return JsonResponse({"status": "ok"})

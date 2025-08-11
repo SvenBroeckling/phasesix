@@ -1444,6 +1444,13 @@ class CharacterFoe(models.Model):
     boost = models.IntegerField(_("boost"), default=0)
     name = models.CharField(_("name"), max_length=30, null=True, blank=True)
     is_familiar = models.BooleanField(_("is familiar"), default=False)
+    image = models.ImageField(
+        _("image"),
+        upload_to="character_foe_images",
+        max_length=256,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         ordering = ("name", "foe__name_de")
@@ -1455,6 +1462,12 @@ class CharacterFoe(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+    def get_image_url(self, geometry="180", crop="center"):
+        # Prefer custom image if available; otherwise fall back to the base Foe image
+        if self.image:
+            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+        return self.foe.get_image_url(geometry, crop)
 
     @property
     def wounds_taken(self):

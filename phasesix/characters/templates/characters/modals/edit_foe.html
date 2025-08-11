@@ -2,7 +2,7 @@
 
 <form action="{% url "characters:xhr_edit_foe" pk=object.id %}"
       class="add-form"
-      method="post">
+      method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form form layout="floating" %}
   <button
