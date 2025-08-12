@@ -6,37 +6,30 @@
 {% block header %}{% endblock %}
 
 {% block raw_content %}
-
-  {#  {% if user.is_authenticated %}#}
-  {#    <a href="{% url "portal:wrapup" pk=user.id year=2024 %}" class="no-decoration no-link-colors">#}
-  {#      <header class="d-flex flex-column justify-content-center align-items-center"#}
-  {#              style="height: 20vh; background: url({% static "img/wrapup_2024.png" %}) no-repeat; background-size: cover; background-position: 0% 80%">#}
-  {#        <h3 class="display-4">{% blocktrans with t_year=2024 %}{{ t_year }} in Review{% endblocktrans %}</h3>#}
-  {#        <h4>{% trans "Click here" %}</h4>#}
-  {#      </header>#}
-  {#    </a>#}
-  {#  {% endif %}#}
-
-  <div class="container-fluid pt-0 pt-md-2">
-    <div class="container pt-0 pt-md-2">
-      <div class="row">
-
-        <div class="d-flex align-items-center justify-content-center col-12 col-md-6 pt-4 pb-0 pt-md-5">
-          <div class="text-center fs-5 px-md-5">
-            <img class="w-25 mb-2"
-                 src="{{ brand_logo }}"
-                 alt="{% trans "Logo" %}">
-            <h2>{{ brand_name }}</h2>
-            {{ brand_description }}
+  <header class="container-fluid hero py-5">
+    <div class="container py-3">
+      <div class="row align-items-center">
+        <div class="col-12 col-lg-6 text-center text-lg-start">
+          <img class="display-logo mb-3" src="{{ brand_logo }}" alt="{% trans "Logo" %}">
+          <h1 class="display-5 mb-2">{{ brand_name }}</h1>
+          <div class="lead mb-4">{{ brand_description }}</div>
+          <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start">
+            {% create_character_url as create_char_url %}
+            <a href="{{ create_char_url }}" class="btn btn-primary">
+              <i class="fas fa-user-plus me-1"></i> {% trans "Create Character" %}
+            </a>
+            {% create_campaign_url as create_camp_url %}
+            <a href="{{ create_camp_url }}" class="btn btn-outline-primary">
+              <i class="fas fa-flag me-1"></i> {% trans "Create Campaign" %}
+            </a>
           </div>
         </div>
-
         {% if lead_image %}
-          <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+          <div class="col-12 col-lg-6 mt-4 mt-lg-0 d-flex align-items-center justify-content-center">
             {% if lead_image.character %}
-              <a href="{{ lead_image.character.get_absolute_url }}">
+              <a href="{{ lead_image.character.get_absolute_url }}" class="d-inline-block">
             {% endif %}
-            <img class="img-fluid" src="{{ lead_image.image.url }}" alt="{% trans "Lead Image" %}">
+            <img class="img-fluid rounded" src="{{ lead_image.image.url }}" alt="{% trans "Lead Image" %}">
             {% if lead_image.character %}
               </a>
             {% endif %}
@@ -44,101 +37,77 @@
         {% endif %}
       </div>
     </div>
-  </div>
+  </header>
 
   <div class="container-fluid pt-0 bg-body-tertiary">
-    <div class="container py-0 py-md-5">
-      <div class="row">
+    <div class="container py-5">
+      <div class="text-center mb-4">
+        <h2 class="section-title">{% trans "Create Characters" %}</h2>
+        <p class="section-subtitle mb-0">
+          {% blocktrans %}
+            This website lets you create and manage your characters as well as their equipment
+            and possessions. This makes it really easy to use a platform like
+            <a href="https://roll20.net">Roll20</a> for your sessions.
+          {% endblocktrans %}
+        </p>
+      </div>
 
-        {# mobile - display above #}
-        <div class="d-flex d-md-none col-md-6 align-items-center justify-content-center">
-          <div class="text-center fs-5 mt-5 mt-md-0">
-            <h2>{% trans "Create Characters" %}</h2>
-            {% blocktrans %}
-              This website lets you create and manage your characters as well as their equipment
-              and possessions. This makes it really easy to use a platform like
-              <a href="https://roll20.net">Roll20</a> for your sessions.
-            {% endblocktrans %}
+      <div class="d-flex justify-content-center flex-wrap gap-2 avatar-grid">
+        {% for c in characters %}
+          {% if c.image %}
+            <a href="{{ c.get_absolute_url }}" class="mb-2 me-2 card-hover">
+              {% thumbnail c.image "250x250" crop="center" as im %}
+                <img src="{{ im.url }}" class="img-fluid rounded character-image"
+                     alt="">
+              {% endthumbnail %}
+            </a>{% if forloop.last %}<br>{% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% create_character_url as create_url %}
+        <a href="{{ create_url }}">
+          <div class="card create-card card-hover d-flex justify-content-center align-items-center me-2 mb-2"
+               style="width: 250px; height: 250px">
+            <i class="fas fa-plus fa-2x"></i>
+            <span class="invite-text">{% trans "Create Character" %}</span>
           </div>
-        </div>
-
-        <div class="col-12 col-md-6 pt-4 pb-0 pt-md-5 h-100">
-          <div class="d-flex justify-content-center flex-wrap">
-            {% for c in characters %}
-              {% if c.image %}
-                <a href="{{ c.get_absolute_url }}" class="mb-2 me-2">
-                  {% thumbnail c.image "250x250" crop="center" as im %}
-                    <img src="{{ im.url }}" class="img-fluid rounded character-image"
-                         alt="">
-                  {% endthumbnail %}
-                </a>{% if forloop.last %}<br>{% endif %}
-              {% endif %}
-            {% endfor %}
-
-            {% create_character_url as create_url %}
-            <a href="{{ create_url }}">
-              <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
-                   style="width: 250px; height: 250px">
-                <i class="fas fa-plus fa-2x"></i>
-                <span class="invite-text">{% trans "Create Character" %}</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        {# desktop - display right #}
-        <div class="d-none d-md-flex col-md-6 align-items-center justify-content-center">
-          <div class="text-center fs-5">
-            <h2>{% trans "Create Characters" %}</h2>
-            {% blocktrans %}
-              This website lets you create and manage your characters as well as their equipment
-              and possessions. This makes it really easy to use a platform like
-              <a href="https://roll20.net">Roll20</a> for your sessions.
-            {% endblocktrans %}
-          </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
 
   <div class="container-fluid pt-0">
-    <div class="container py-0 py-md-5">
-      <div class="row">
+    <div class="container py-5">
+      <div class="text-center mb-4">
+        <h2 class="section-title">{% trans "Manage Campaigns" %}</h2>
+        <p class="section-subtitle mb-0">
+          {% blocktrans %}
+            Create and manage your campaigns. Invite your friends to join and play with you.
+            You can also add enemies and foes to your campaign to keep track of them. Dice rolls
+            may be sent to discord.
+          {% endblocktrans %}
+        </p>
+      </div>
 
-        <div class="d-flex col-md-6 align-items-center justify-content-center">
-          <div class="text-center fs-5 mt-5 mt-md-0">
-            <h2>{% trans "Manage Campaigns" %}</h2>
-            {% blocktrans %}
-              Create and manage your campaigns. Invite your friends to join and play with you.
-              You can also add enemies and foes to your campaign to keep track of them. Dice rolls
-              may be sent to discord.
-            {% endblocktrans %}
+      <div class="d-flex justify-content-center flex-wrap gap-2 avatar-grid">
+        {% for c in campaigns %}
+          {% if c.image %}
+            <a href="{{ c.get_absolute_url }}" class="mb-2 me-2 card-hover">
+              {% thumbnail c.image "250x250" crop="center" as im %}
+                <img src="{{ im.url }}" class="img-fluid rounded character-image" alt="">
+              {% endthumbnail %}
+            </a>{% if forloop.last %}<br>{% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% create_campaign_url as create_url %}
+        <a href="{{ create_url }}">
+          <div class="card create-card card-hover d-flex justify-content-center align-items-center me-2 mb-2"
+               style="width: 250px; height: 250px">
+            <i class="fas fa-plus fa-2x"></i>
+            <span class="invite-text">{% trans "Create Campaign" %}</span>
           </div>
-        </div>
-
-        <div class="col-12 col-md-6 pt-4 pb-0 pt-md-5 h-100">
-          <div class="d-flex justify-content-center flex-wrap">
-            {% for c in campaigns %}
-              {% if c.image %}
-                <a href="{{ c.get_absolute_url }}" class="mb-2 me-2">
-                  {% thumbnail c.image "250x250" crop="center" as im %}
-                    <img src="{{ im.url }}" class="img-fluid rounded character-image"
-                         alt="">
-                  {% endthumbnail %}
-                </a>{% if forloop.last %}<br>{% endif %}
-              {% endif %}
-            {% endfor %}
-
-            {% create_campaign_url as create_url %}
-            <a href="{{ create_url }}">
-              <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
-                   style="width: 250px; height: 250px">
-                <i class="fas fa-plus fa-2x"></i>
-                <span class="invite-text">{% trans "Create Campaign" %}</span>
-              </div>
-            </a>
-          </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -158,7 +127,7 @@
 
           {% for wiki_page in wiki_pages %}
             <div class="col-12 col-md-6 col-xl-4 {% if forloop.last %}d-none d-xl-block{% endif %}">
-              <div class="card mb-2 mb-xl-0">
+              <div class="card mb-2 mb-xl-0 card-hover">
                 {% if wiki_page.image %}
                   {% thumbnail wiki_page.image "1024" as im %}
                     <img src="{{ im.url }}" alt="{{ world }}" class="card-img-top">
@@ -191,7 +160,7 @@
 
           {% for world in worlds %}
             <div class="col-12 col-md-6 col-xl-4 mb-2 {% if forloop.last %}d-none d-xl-block{% endif %}">
-              <div class="card mb-2 mb-md-0">
+              <div class="card mb-2 mb-md-0 card-hover">
                 <img src="{{ world.get_image.image.url }}" alt="{{ world }}" class="card-img-top">
                 <div class="card-body">
                   <h4>{{ world }}</h4>
@@ -211,37 +180,21 @@
   </div>
 
   <div class="container-fluid pt-0">
-    <div class="container py-0 py-md-5">
-      <div class="row">
-
-        {# mobile - display above #}
-        <div class="d-flex d-md-none col-md-6 align-items-center justify-content-center">
-          <div class="text-center fs-5 mt-5 mt-md-0">
-            <h2>{% trans "Open Source Role Playing Game" %}</h2>
-            {% url "contact" as contact_url %}
+    <div class="container py-5">
+      <div class="row align-items-center">
+        <div class="col-12 col-md-7 text-center text-md-start">
+          <h2 class="section-title">{% trans "Open Source Role Playing Game" %}</h2>
+          {% url "contact" as contact_url %}
+          <p class="lead">
             {% blocktrans with t_brand_name=brand_name t_contact_url=contact_url %}
               <em>{{ t_brand_name }}</em> is an open source role playing game that is free to use, copy and modify.
               The content, rules and code are all available, licensed under CC-BY-NC-SA, GPL and CC0 license.
               Find out more on the <a href="{{ t_contact_url }}">contact page</a>.
             {% endblocktrans %}
-          </div>
+          </p>
         </div>
-
-        <div class="col-12 col-md-6 pt-4 pb-0 pt-md-5 h-100 d-flex align-items-center justify-content-center">
+        <div class="col-12 col-md-5 text-center mt-4 mt-md-0">
           <span style="font-size: 128pt">🄯</span>
-        </div>
-
-        {# desktop - display right #}
-        <div class="d-none d-md-flex col-md-6 align-items-center justify-content-center">
-          <div class="text-center fs-5">
-            <h2>{% trans "Open Source Role Playing Game" %}</h2>
-            {% url "contact" as contact_url %}
-            {% blocktrans with t_brand_name=brand_name t_contact_url=contact_url %}
-              <em>{{ t_brand_name }}</em> is an open source role playing game that is free to use, copy and modify.
-              The content, rules and code are all available, licensed under CC-BY-NC-SA, GPL and CC0 license.
-              Find out more on the <a href="{{ t_contact_url }}">contact page</a>.
-            {% endblocktrans %}
-          </div>
         </div>
       </div>
     </div>

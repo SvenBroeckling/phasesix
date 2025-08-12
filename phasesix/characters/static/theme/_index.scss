@@ -1,0 +1,39 @@
+.hero {
+    background: linear-gradient(135deg, var(--bs-body-bg) 0%, rgba(var(--bs-primary-rgb), 0.08) 35%, rgba(var(--bs-primary-rgb), 0.18) 100%);
+}
+
+.hero .display-logo {
+    max-width: 120px;
+}
+
+.section-title {
+    font-weight: 600;
+}
+
+.section-subtitle {
+    color: var(--bs-secondary-color, #6c757d);
+}
+
+.card-hover {
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--bs-box-shadow-lg);
+}
+
+.create-card {
+    border: 2px dashed var(--bs-primary);
+    color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), .03);
+}
+
+.create-card:hover {
+    background-color: rgba(var(--bs-primary-rgb), .06);
+}
+
+.avatar-grid img {
+    border-radius: .5rem;
+    box-shadow: var(--bs-box-shadow-sm);
+}
