@@ -10,8 +10,7 @@
     <h3>{{ category.grouper }}</h3>
 
     {% for template in category.list %}
-      <div style="break-inside: avoid"
-              class="card card-inlay mt-3
+      <div class="card card-inlay mt-3
            {% if template.is_mastery %}border-danger{% endif %}
            {% if template.is_magic_template %}border-warning{% endif %}
            {% if template.has_allows_priest_action %}border-success{% endif %}">

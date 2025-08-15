@@ -26,30 +26,51 @@
       margin: -1cm;
       width: 21.0cm;
       height: 30.7cm;
+      position: relative;
+      /* Reserve vertical space so the claim below doesn't overlap the absolutely positioned title */
+      padding-top: 10cm;
     }
 
-    .title-page h1 {
-      color: white;
-      text-shadow: 8px 8px #0a0a0a;
-      margin-top: 8cm;
-      font-size: 42pt;
+    /* Stack two H1s absolutely to simulate an outline effect without text-shadow */
+    .title-page .title-outline,
+    .title-page .title-fill {
+      position: absolute;
+      top: 6cm;
+      left: 50%;
+      margin: 0;
       text-align: center;
+      font-family: '{{ world_book.book_heading_font }}';
+      line-height: 1.1;
+      white-space: normal;
+    }
+
+    .title-page .title-outline {
+      color: #0a0a0a; /* outline color */
+      font-size: 50pt; /* slightly larger to peek around the fill */
+      transform: translateX(-49%);
+      z-index: 1;
+    }
+
+    .title-page .title-fill {
+      color: white; /* fill color */
+      transform: translateX(-50%);
+      font-size: 50pt;
+      z-index: 2;
     }
 
     .title-page p.claim {
       font-family: '{{ world_book.book_heading_font }}';
       font-size: 18pt;
-      text-shadow: 8px 8px #0a0a0a;
       color: white;
       text-align: center;
     }
-
   </style>
 
 <body>
 <div class="page title-page">
   <span></span>
-  <h1>{{ world_book.book_title }}</h1>
+  <h1 class="title-outline">{{ world_book.book_title }}</h1>
+  <h1 class="title-fill">{{ world_book.book_title }}</h1>
   <p class="claim">
     {{ world_book.book_claim }}
   </p>
