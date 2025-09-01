@@ -1,6 +1,6 @@
 {
   "include": [
-    "."
+    "phasesix/"
   ],
   "exclude": [
     "**/node_modules",
@@ -11,13 +11,27 @@
   "defineConstant": {
     "DEBUG": true
   },
-  "stubPath": "src/stubs",
-  "reportMissingImports": true,
-  "reportMissingTypeStubs": false,
-  "reportAttributeAccessIssue": false,
-  "reportUnknownArgumentType": false,
-  "reportIncompatibleMethodOverride": false,
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "extraPaths": [
+        "phasesix"
+      ]
+    }
+  ],
+  "venv": ".venv",
+  "reportAny": false,
   "analyzeUnannotatedFunctions": false,
-  "pythonVersion": "3.11",
+  "reportAttributeAccessIssue": false,
+  "reportImplicitOverride": false,
+  "reportIncompatibleMethodOverride": false,
+  "reportMissingImports": true,
+  "reportMissingParameterType": false,
+  "reportMissingTypeStubs": false,
+  "reportUnannotatedClassAttribute": false,
+  "reportUnknownArgumentType": false,
+  "reportUnknownParameterType": false,
+  "reportUnknownVariableType": false,
+  "pythonVersion": "3.13",
   "pythonPlatform": "Linux"
 }
