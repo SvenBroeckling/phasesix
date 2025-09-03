@@ -1,7 +1,13 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import path
 
-from .views import PlotEditorView, PlotListView, XhrCreatePlotView
+from .views import (
+    PlotEditorView,
+    PlotListView,
+    XhrCreatePlotView,
+    XhrUpdatePlotView,
+    XhrCreatePlotElementView,
+)
 
 app_name = "plots"
 
@@ -11,8 +17,19 @@ urlpatterns = [
         "create", staff_member_required(XhrCreatePlotView.as_view()), name="create_plot"
     ),
     path(
-        "editor/<int:pk>",
+        "<int:pk>/edit",
+        staff_member_required(XhrUpdatePlotView.as_view()),
+        name="update_plot",
+    ),
+    path(
+        "<int:pk>/editor",
         staff_member_required(PlotEditorView.as_view()),
         name="plot_editor",
+    ),
+    # PlotElement
+    path(
+        "<int:plot_pk>/plot_element/create",
+        staff_member_required(XhrCreatePlotElementView.as_view()),
+        name="create_plot_element",
     ),
 ]

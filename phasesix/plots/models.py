@@ -1,10 +1,14 @@
-from django.utils.translation import gettext as _
+from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext as _
 from transmeta import TransMeta
 
 
 class Plot(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=128)
+    language = models.CharField(
+        _("language"), max_length=4, default="en", choices=settings.LANGUAGES
+    )
     player_abstract = models.TextField(_("abstract for players"))
     gm_description = models.TextField(_("gm description"))
     image = models.ImageField(
@@ -33,6 +37,14 @@ class Plot(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    @property
+    def root_elements(self):
+        return (
+            self.plotelement_set.filter(parent__isnull=True)
+            .prefetch_related("children")
+            .all()
+        )
+
 
 class Location(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=128)
@@ -58,7 +70,6 @@ class Handout(models.Model, metaclass=TransMeta):
 
 class PlotElement(models.Model, metaclass=TransMeta):
     class ElementType(models.TextChoices):
-        ROOT = "r", _("Plot Root")
         ACT = "a", _("Act")
         SCENE = "s", _("Scene")
         ENCOUNTER = "e", _("Encounter")

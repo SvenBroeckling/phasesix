@@ -1,4 +1,4 @@
-from plots.models import Plot
+from plots.models import Plot, PlotElement
 from django import forms
 
 from portal.widgets import BootstrapTextarea
@@ -15,8 +15,19 @@ class PlotForm(forms.ModelForm):
             "gm_description",
             "player_abstract",
             "image",
+            "language",
         )
         widgets = {
             "gm_description": BootstrapTextarea({"rows": 5}),
             "player_abstract": BootstrapTextarea({"rows": 5}),
+        }
+
+
+class PlotElementForm(forms.ModelForm):
+    class Meta:
+        model = PlotElement
+        fields = ("name", "type", "gm_notes", "player_summary")
+        widgets = {
+            "gm_notes": BootstrapTextarea({"rows": 5}),
+            "player_summary": BootstrapTextarea({"rows": 5}),
         }

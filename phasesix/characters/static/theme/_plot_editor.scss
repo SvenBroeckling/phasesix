@@ -1,3 +1,4 @@
+/* Plot grid */
 .plot-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -10,4 +11,26 @@
 
 .plot-card:hover {
     transform: scale(1.05);
+}
+
+/* Plot editor */
+
+.plot-bar {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.plot-element-container {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+.sortable-placeholder {
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: .5rem;
+    height: 3rem;
+    margin: .5rem 0;
 }
