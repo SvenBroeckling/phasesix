@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "compressor",
     "eventstream",
+    "modals_sidebars",
     "characters",
     "rulebook",
     "forum",
@@ -77,6 +78,7 @@ INSTALLED_APPS = [
     "body_modifications",
     "vehicles",
     "campaigns",
+    "plots",
 ]
 
 MIDDLEWARE = [

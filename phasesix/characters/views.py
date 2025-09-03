@@ -1348,8 +1348,6 @@ class XhrEditFoeView(UpdateView):
     model = CharacterFoe
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
-        print(request.FILES)
         super().post(request, *args, **kwargs)
         return JsonResponse({"status": "ok"})
 

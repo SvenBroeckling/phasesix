@@ -1,0 +1,14 @@
+{% load django_bootstrap5 i18n %}
+
+<form action="{% url "plots:create_plot" %}"
+      data-fetch-form="true"
+      data-fetch-form-close="all"
+      method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form layout="floating" %}
+  <button
+    type="submit"
+    data-success="{% trans 'Saved' %}"
+    data-danger="{% trans 'Could not create plot' %}"
+    class="btn btn-primary">{% trans "Save" %}</button>
+</form>

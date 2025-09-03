@@ -1,0 +1,13 @@
+.plot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.plot-card {
+    aspect-ratio: 2/3;
+}
+
+.plot-card:hover {
+    transform: scale(1.05);
+}

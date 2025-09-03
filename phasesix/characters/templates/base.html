@@ -1,3 +1,4 @@
+{% load modals_sidebars %}
 {% load static i18n django_bootstrap5 compress portal_extras %}<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#" data-bs-theme="dark">
 <head>
@@ -73,6 +74,9 @@
   <div class="sidebar-content px-3 pt-2 pb-5">
   </div>
 </div>
+
+{% site_modal %}
+{# sidebar_right #}
 
 <div id="page-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
      aria-labelledby="page-modal">
@@ -184,6 +188,8 @@
   <script src="{% static 'js/modals.js' %}"></script>
   <script src="{% static 'js/fragments.js' %}"></script>
   <script src="{% static 'js/actions.js' %}"></script>
+
+  {% modals_sidebars_javascript %}
 {% endcompress %}
 
 {% block javascript %}{% endblock %}

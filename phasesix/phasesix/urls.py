@@ -34,6 +34,7 @@ urlpatterns = [
     ),
     path("world/", include("worlds.urls", namespace="world")),
     path("gmtools/", include("gmtools.urls", namespace="gmtools")),
+    path("plots/", include("plots.urls", namespace="plots")),
     path("accounts/", include("django.contrib.auth.urls")),
     path(
         "accounts/register/",

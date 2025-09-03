@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+  <div class="plot-grid p-4">
+    {% for plot in object_list %}
+      <div class="plot-card rounded shadow-sm overflow-hidden transition">
+        {% if plot.image %}
+          {% thumbnail plot.image "600x400" crop="center" as im %}
+            <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+          {% endthumbnail %}
+        {% else %}
+          <div class="h-100 bg-light"></div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div
+      class="plot-card pointer border border-2 border-dashed d-flex align-items-center justify-content-center modal-trigger small-modal"
+      title="{% trans "Create plot" %}"
+      data-modal-url="{% url "plots:create_plot" %}"
+      data-modal-refresh-after="true"
+      data-modal-title="{% trans "Create plot" %}">
+      {% trans "Create plot" %}
+    </div>
+  </div>
+{% endblock %}
