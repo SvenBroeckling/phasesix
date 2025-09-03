@@ -5,10 +5,13 @@
 {% block content %}
   <div class="plot-grid p-4">
     {% for plot in object_list %}
-      <div class="plot-card rounded shadow-sm overflow-hidden transition">
+      <div class="plot-card rounded shadow-sm overflow-hidden transition position-relative">
         {% if plot.image %}
           {% thumbnail plot.image "600x400" crop="center" as im %}
             <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+            <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
+              <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
+            </div>
           {% endthumbnail %}
         {% else %}
           <div class="h-100 bg-light"></div>

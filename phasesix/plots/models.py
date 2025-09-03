@@ -10,6 +10,25 @@ class Plot(models.Model, metaclass=TransMeta):
     image = models.ImageField(
         _("image"), upload_to="plot_images", blank=True, null=True
     )
+    epoch_extension = models.ForeignKey(
+        "rules.Extension",
+        limit_choices_to={"type": "e", "is_mandatory": False},
+        on_delete=models.CASCADE,
+        related_name="plot_epoch_set",
+        verbose_name=_("Epoch"),
+    )
+    world_extension = models.ForeignKey(
+        "rules.Extension",
+        limit_choices_to={"type": "w", "is_mandatory": False},
+        on_delete=models.CASCADE,
+        related_name="plot_world_set",
+        verbose_name=_("World"),
+    )
+    extensions = models.ManyToManyField(
+        "rules.Extension",
+        limit_choices_to={"is_mandatory": False, "type": "x"},
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
