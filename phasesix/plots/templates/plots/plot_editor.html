@@ -9,12 +9,6 @@
     <div class="col-12 col-lg-8">
       <div class="plot-bar d-flex align-items-center justify-content-between mb-3">
         <div class="d-flex align-items-center gap-2">
-          <button class="btn btn-sm btn-outline-light toggle-children" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#plot-children"
-                  aria-expanded="true" aria-controls="plot-children"
-                  title="{% trans 'Collapse/Expand' %}">
-            <i class="fa fa-chevron-down"></i>
-          </button>
           <span class="badge text-bg-secondary">{% trans 'Plot' %}</span>
           <span class="fw-bold">{{ object.name }}</span>
         </div>
@@ -28,15 +22,13 @@
         </div>
       </div>
 
-      <div id="plot-children" class="collapse show">
-        <div class="sortable" data-parent-id="root">
-          {% for element in object.root_elements %}
-            {% include 'plots/_plot_element.html' with element=element depth=2 %}
-          {% empty %}
-            <div
-              class="text-muted fst-italic">{% trans 'No plot elements yet. Use "Root element" to get started.' %}</div>
-          {% endfor %}
-        </div>
+      <div class="sortable" data-parent-id="root">
+        {% for element in object.root_elements %}
+          {% include 'plots/_plot_element.html' with element=element depth=2 %}
+        {% empty %}
+          <div
+            class="text-muted fst-italic">{% trans 'No plot elements yet. Use "Root element" to get started.' %}</div>
+        {% endfor %}
       </div>
 
       <div class="text-muted small mt-2"><i
@@ -71,6 +63,14 @@
                 <span class="text-muted">{% trans 'None' %}</span>
               {% endfor %}
             </div>
+          </div>
+          <div class="mb-3">
+            <div class="fw-semibold">{% trans 'Player abstract' %}</div>
+            <div>{{ object.player_abstract|linebreaksbr }}</div>
+          </div>
+          <div class="mb-3">
+            <div class="fw-semibold">{% trans 'GM Description' %}</div>
+            <div>{{ object.gm_description|linebreaksbr }}</div>
           </div>
           <div class="d-flex gap-2">
             <button

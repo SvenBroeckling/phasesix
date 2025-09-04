@@ -87,9 +87,9 @@ class PlotElement(models.Model, metaclass=TransMeta):
     gm_notes = models.TextField(_("GM notes"), blank=True, null=True)
     player_summary = models.TextField(_("player summary"), blank=True, null=True)
 
-    npc = models.ManyToManyField("characters.Character")
-    handouts = models.ManyToManyField(Handout)
-    locations = models.ManyToManyField(Location)
+    npc = models.ManyToManyField("characters.Character", blank=True)
+    handouts = models.ManyToManyField(Handout, blank=True)
+    locations = models.ManyToManyField(Location, blank=True)
 
     def __str__(self):
         return self.name

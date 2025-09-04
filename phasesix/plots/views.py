@@ -69,3 +69,19 @@ class XhrCreatePlotElementView(CreateView):
 
     def get_success_url(self):
         return reverse("plots:plot_editor", kwargs={"pk": self.kwargs["plot_pk"]})
+
+
+class XhrUpdatePlotElementView(UpdateView):
+    model = PlotElement
+    template_name = "plots/create_plot.html"
+    form_class = PlotElementForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["post_url"] = reverse(
+            "plots:update_plot_element", kwargs={"pk": self.object.pk}
+        )
+        return context
+
+    def get_success_url(self):
+        return reverse("plots:plot_editor", kwargs={"pk": self.kwargs["pk"]})
