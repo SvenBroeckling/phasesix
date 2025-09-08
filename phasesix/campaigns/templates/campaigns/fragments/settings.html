@@ -1,146 +1,143 @@
-{% extends 'campaigns/fragments/fragment_base.html' %}
-{% load i18n thumbnail static characters_extras campaign_extras %}
+{% load i18n %}
+<div class="row">
+  <div class="col-12">
+    <h3>{% trans "Game Options" %}</h3>
+    <hr>
 
-{% block fragment %}
-  <div class="row">
-    <div class="col-12">
-      <h3>{% trans "Game Options" %}</h3>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'World' %}</div>
-          <div class="text-muted small">{% trans "The game world this campaign is set in" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.world_extension }}</div>
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'World' %}</div>
+        <div class="text-muted small">{% trans "The game world this campaign is set in" %}</div>
       </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Epoch' %}</div>
-          <div class="text-muted small">{% trans "The time period of the campaign" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.epoch_extension }}</div>
-      </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Extensions' %}</div>
-          <div class="text-muted small">{% trans "Additional rule sets enabled for this campaign" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.extension_string }}</div>
-      </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Currency Map' %}</div>
-          <div class="text-muted small">{% trans "Defines the monetary system used" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.currency_map }}</div>
-      </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Seed Money' %}</div>
-          <div class="text-muted small">{% trans "Starting money for new characters" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.seed_money }}</div>
-      </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Additional starting career points' %}</div>
-          <div class="text-muted small">{% trans "Extra points for character creation" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.starting_template_points }}</div>
-      </div>
-      <hr>
-
-      {% if may_edit %}
-        <div class="d-flex justify-content-end">
-          <button
-            data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='game' %}"
-            data-modal-size-class="modal-lg"
-            data-modal-event-after="refresh-fragments"
-            data-modal-title="{% trans 'Edit settings' %}"
-            class="btn btn-primary">{% trans 'Edit' %}</button>
-        </div>
-      {% endif %}
+      <div class="flex-grow-1 text-end">{{ object.world_extension }}</div>
     </div>
+    <hr>
 
-    <div class="col-12 mt-2">
-      <h3>{% trans "Visibility" %}</h3>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Character Visibility' %}</div>
-          <div class="text-muted small">{% trans "Who can see player characters" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.get_character_visibility_display }}</div>
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Epoch' %}</div>
+        <div class="text-muted small">{% trans "The time period of the campaign" %}</div>
       </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'NPC Visibility' %}</div>
-          <div class="text-muted small">{% trans "Who can see non-player characters" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.get_npc_visibility_display }}</div>
-      </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Foe Visibility' %}</div>
-          <div class="text-muted small">{% trans "Who can see enemies and opponents" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.get_foe_visibility_display }}</div>
-      </div>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Game Log Visibility' %}</div>
-          <div class="text-muted small">{% trans "Who can access the game history" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">{{ object.get_game_log_visibility_display }}</div>
-      </div>
-      <hr>
-
-      {% if may_edit %}
-        <div class="d-flex justify-content-end">
-          <button
-            data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='visibility' %}"
-            data-modal-title="{% trans 'Edit settings' %}"
-            data-modal-event-after="refresh-fragments"
-            class="btn btn-primary">{% trans 'Edit' %}</button>
-        </div>
-      {% endif %}
+      <div class="flex-grow-1 text-end">{{ object.epoch_extension }}</div>
     </div>
+    <hr>
 
-
-    <div class="col-12 mt-2">
-      <h3>{% trans "Integrations" %}</h3>
-      <hr>
-
-      <div class="d-flex">
-        <div>
-          <div>{% trans 'Phase Six Rolls' %}</div>
-          <div class="text-muted small">{% trans "Roll dice on this platform" %}</div>
-        </div>
-        <div class="flex-grow-1 text-end">
-          {% if object.roll_on_site %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}
-        </div>
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Extensions' %}</div>
+        <div class="text-muted small">{% trans "Additional rule sets enabled for this campaign" %}</div>
       </div>
-      <hr>
+      <div class="flex-grow-1 text-end">{{ object.extension_string }}</div>
+    </div>
+    <hr>
 
-      {% comment %}
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Currency Map' %}</div>
+        <div class="text-muted small">{% trans "Defines the monetary system used" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">{{ object.currency_map }}</div>
+    </div>
+    <hr>
+
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Seed Money' %}</div>
+        <div class="text-muted small">{% trans "Starting money for new characters" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">{{ object.seed_money }}</div>
+    </div>
+    <hr>
+
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Additional starting career points' %}</div>
+        <div class="text-muted small">{% trans "Extra points for character creation" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">{{ object.starting_template_points }}</div>
+    </div>
+    <hr>
+
+    {% if may_edit %}
+      <div class="d-flex justify-content-end">
+        <button
+          data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='game' %}"
+          data-modal-size-class="modal-lg"
+          data-modal-event-after="refresh-fragments"
+          data-modal-title="{% trans 'Edit settings' %}"
+          class="btn btn-primary">{% trans 'Edit' %}</button>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="col-12 mt-2">
+    <h3>{% trans "Visibility" %}</h3>
+    <hr>
+
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Character Visibility' %}</div>
+        <div class="text-muted small">{% trans "Who can see player characters" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">{{ object.get_character_visibility_display }}</div>
+    </div>
+    <hr>
+
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'NPC Visibility' %}</div>
+        <div class="text-muted small">{% trans "Who can see non-player characters" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">{{ object.get_npc_visibility_display }}</div>
+    </div>
+    <hr>
+
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Foe Visibility' %}</div>
+        <div class="text-muted small">{% trans "Who can see enemies and opponents" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">{{ object.get_foe_visibility_display }}</div>
+    </div>
+    <hr>
+
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Game Log Visibility' %}</div>
+        <div class="text-muted small">{% trans "Who can access the game history" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">{{ object.get_game_log_visibility_display }}</div>
+    </div>
+    <hr>
+
+    {% if may_edit %}
+      <div class="d-flex justify-content-end">
+        <button
+          data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='visibility' %}"
+          data-modal-title="{% trans 'Edit settings' %}"
+          data-modal-event-after="refresh-fragments"
+          class="btn btn-primary">{% trans 'Edit' %}</button>
+      </div>
+    {% endif %}
+  </div>
+
+
+  <div class="col-12 mt-2">
+    <h3>{% trans "Integrations" %}</h3>
+    <hr>
+
+    <div class="d-flex">
+      <div>
+        <div>{% trans 'Phase Six Rolls' %}</div>
+        <div class="text-muted small">{% trans "Roll dice on this platform" %}</div>
+      </div>
+      <div class="flex-grow-1 text-end">
+        {% if object.roll_on_site %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}
+      </div>
+    </div>
+    <hr>
+
+    {% comment %}
       <div class="d-flex">
         <div>
           <div>{% trans 'TaleSpire Integration' %}</div>
@@ -164,16 +161,15 @@
       <hr>
       {% endcomment %}
 
-      {% if may_edit %}
-        <div class="d-flex justify-content-end">
-          <button
-            data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='integration' %}"
-            data-modal-title="{% trans 'Edit settings' %}"
-            data-modal-event-after="refresh-fragments"
-            class="btn btn-primary">{% trans 'Edit' %}</button>
-        </div>
-      {% endif %}
+    {% if may_edit %}
+      <div class="d-flex justify-content-end">
+        <button
+          data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='integration' %}"
+          data-modal-title="{% trans 'Edit settings' %}"
+          data-modal-event-after="refresh-fragments"
+          class="btn btn-primary">{% trans 'Edit' %}</button>
+      </div>
+    {% endif %}
 
-    </div>
   </div>
-{% endblock %}
+</div>

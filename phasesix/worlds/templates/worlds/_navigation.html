@@ -26,20 +26,16 @@
         class="d-none d-md-inline"> {% trans 'Edit' %}</span></a>
     {% endif %}
     {% if object.is_world %}
-      <a class="list-group-item py-3 modal-trigger"
-         data-url="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}"
-         title="{% trans 'Create Wiki Page' %}"
-         data-bs-toggle="modal"
+      <a class="list-group-item py-3"
+         data-modal-url="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}"
+         data-modal-refresh-after="true"
          data-modal-title="{% trans 'Create Wiki Page' %}"
-         data-bs-target=".page-modal"
          href=""><i class="fa fa-plus"></i> {% trans 'Create Page' %}</a>
     {% else %}
-      <a class="list-group-item modal-trigger py-3"
-         data-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
-         title="{% trans 'Create Wiki Page' %}"
-         data-bs-toggle="modal"
+      <a class="list-group-item py-3"
+         data-modal-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
+         data-modal-refresh-after="true"
          data-modal-title="{% trans 'Create Wiki Page' %}"
-         data-bs-target=".page-modal"
          href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
     {% endif %}
     {% if object.is_world %}

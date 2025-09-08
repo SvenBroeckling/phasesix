@@ -45,7 +45,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
 
-            fetch(form.action, {
+            fetch(form.getAttribute("action"), {
                 method: "POST",
                 body: formData,
                 redirect: "manual",

@@ -62,8 +62,15 @@
               {% url 'characters:xhr_character_objects' object_type=character_object.object_type as the_url %}
             {% endif %}
 
-            <form method="post" enctype="multipart/form-data" action="
-            {{ the_url }}{% if character_object.campaign %}?campaign_pk={{ character_object.campaign.id }}{% endif %}">
+            <form method="post"
+                  enctype="multipart/form-data"
+                  data-fetch-form="true"
+                  data-fetch-form-close="all"
+              {% if character_object.campaign %}
+                  action="{{ the_url }}?campaign_pk={{ character_object.campaign.id }}"
+              {% else %}
+                  action="{{ the_url }}"
+              {% endif %}>
               <input type="hidden" name="action" value="create_homebrew">
               {% csrf_token %}
               {% bootstrap_form character_object.homebrew_form %}

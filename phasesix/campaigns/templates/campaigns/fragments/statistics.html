@@ -1,87 +1,84 @@
-{% extends 'campaigns/fragments/fragment_base.html' %}
-{% load i18n thumbnail static characters_extras campaign_extras %}
-
-{% block fragment %}
-  <div class="row">
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Crit Count" %}</div>
-        <div class="card-body">
-          {% roll_list object "crit_count" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Crit Sum" %}</div>
-        <div class="card-body">
-          {% roll_list object "crit_sum" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Exploding Dice Count" %}</div>
-        <div class="card-body">
-          {% roll_list object "exploded_dice_count" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Exploding Dice Sum" %}</div>
-        <div class="card-body">
-          {% roll_list object "exploded_dice_sum" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Successes Count" %}</div>
-        <div class="card-body">
-          {% roll_list object "successes_count" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Successes Sum" %}</div>
-        <div class="card-body">
-          {% roll_list object "successes_sum" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Fails Count" %}</div>
-        <div class="card-body">
-          {% roll_list object "fails_count" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Fails Sum" %}</div>
-        <div class="card-body">
-          {% roll_list object "fails_sum" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Highest single dice roll" %}</div>
-        <div class="card-body">
-          {% roll_list object "highest_single_roll" %}
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="card mb-3">
-        <div class="card-header">{% trans "Total Sum" %}</div>
-        <div class="card-body">
-          {% roll_list object "total_sum" %}
-        </div>
+{% load campaign_extras %}
+{% load i18n %}
+<div class="row">
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Crit Count" %}</div>
+      <div class="card-body">
+        {% roll_list object "crit_count" %}
       </div>
     </div>
   </div>
-{% endblock %}
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Crit Sum" %}</div>
+      <div class="card-body">
+        {% roll_list object "crit_sum" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Exploding Dice Count" %}</div>
+      <div class="card-body">
+        {% roll_list object "exploded_dice_count" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Exploding Dice Sum" %}</div>
+      <div class="card-body">
+        {% roll_list object "exploded_dice_sum" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Successes Count" %}</div>
+      <div class="card-body">
+        {% roll_list object "successes_count" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Successes Sum" %}</div>
+      <div class="card-body">
+        {% roll_list object "successes_sum" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Fails Count" %}</div>
+      <div class="card-body">
+        {% roll_list object "fails_count" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Fails Sum" %}</div>
+      <div class="card-body">
+        {% roll_list object "fails_sum" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Highest single dice roll" %}</div>
+      <div class="card-body">
+        {% roll_list object "highest_single_roll" %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mb-3">
+      <div class="card-header">{% trans "Total Sum" %}</div>
+      <div class="card-body">
+        {% roll_list object "total_sum" %}
+      </div>
+    </div>
+  </div>
+</div>

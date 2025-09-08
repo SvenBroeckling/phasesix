@@ -1,19 +1,22 @@
 {% load i18n django_bootstrap5 %}
 
-{% if parent %}
-    <form action="{% url 'world:xhr_create_wiki_page' world_pk=world.id parent_pk=parent.id %}" method="post" enctype="multipart/form-data">
-{% else %}
-    <form action="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}" method="post" enctype="multipart/form-data">
-{% endif %}
-    <div class="row">
-        <div class="col-12 col-md-8 offset-md-2">
-            {{ world }}
-            {% csrf_token %}
-            {% bootstrap_field form.name_de %}
-            {% bootstrap_field form.name_en %}
-            {% bootstrap_field form.text_de %}
-            {% bootstrap_field form.text_en %}
-            <button type="submit" class="btn btn-primary mt-1 create-item-button w-100" data-bs-dismiss="modal">{% trans 'Create Page' %}</button>
-        </div>
-    </div>
+<form
+  {% if parent %}
+    action="{% url 'world:xhr_create_wiki_page' world_pk=world.id parent_pk=parent.id %}"
+  {% else %}
+    action="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}"
+  {% endif %}
+    data-fetch-form="true"
+    data-fetch-form-close="all"
+    method="post"
+    enctype="multipart/form-data">
+  {{ world }}
+  {% csrf_token %}
+  {% bootstrap_field form.name_de %}
+  {% bootstrap_field form.name_en %}
+  {% bootstrap_field form.text_de %}
+  {% bootstrap_field form.text_en %}
+  <button type="submit" class="btn btn-primary mt-1 w-100">
+    {% trans 'Create Page' %}
+  </button>
 </form>
