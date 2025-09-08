@@ -1,150 +1,165 @@
 {% load i18n %}
-<div class="plot-element-container" data-element-id="{{ element.id }}"
-     style="margin-left: {{ depth|default:0|add:0 }}rem;">
-  <div class="plot-bar d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center gap-2">
-      <span type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#details-{{ element.id }}"
-            aria-expanded="false"
-            aria-controls="details-{{ element.id }}"
-            title="{% trans 'Show details' %}">
-      <span class="badge text-bg-secondary">{{ element.get_type_display }}</span>
-      <span class="fw-semibold">{{ element.name }}</span>
-      </span>
+<div class="plot-element-container"
+     data-element-id="{{ element.id }}"
+     style="margin-left: {{ depth|default:0|add:0 }}rem">
+    <div class="plot-bar d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+            <span type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#details-{{ element.id }}"
+                  aria-expanded="false"
+                  aria-controls="details-{{ element.id }}"
+                  title="{% trans 'Show details' %}">
+                <span class="badge text-bg-secondary">{{ element.get_type_display }}</span>
+                <span class="fw-semibold">{{ element.name }}</span>
+            </span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button data-modal-url="{% url "plots:create_plot_element" plot_pk=object.id %}?parent_pk={{ element.id }}"
+                    data-modal-refresh-after="true"
+                    data-modal-title="{% trans 'Create plot element' %}"
+                    class="btn btn-sm btn-success"
+                    type="button"
+                    title="{% trans 'Create child element' %}">
+                <i class="fa fa-plus"></i> {% trans 'Child' %}
+            </button>
+        </div>
     </div>
-    <div class="d-flex align-items-center gap-2">
-      <button
-        data-modal-url="{% url "plots:create_plot_element" plot_pk=object.id %}?parent_pk={{ element.id }}"
-        data-modal-refresh-after="true"
-        data-modal-title="{% trans 'Create plot element' %}"
-        class="btn btn-sm btn-success" type="button" title="{% trans 'Create child element' %}"><i
-        class="fa fa-plus"></i> {% trans 'Child' %}</button>
-    </div>
-  </div>
-
-  {# Details panel #}
-  <div id="details-{{ element.id }}" class="collapse">
-    <div class="rounded p-3 my-2 small border">
-      {# Player summary #}
-      <div class="mb-3">
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
-          <button
-            data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
-            data-modal-refresh-after="true"
-            data-modal-title="{% trans 'Edit plot element' %}"
-            type="button" class="btn btn-sm btn-outline-primary"
-            title="{% trans 'Edit summary' %}"><i class="fa fa-pen"></i> {% trans 'Edit' %}</button>
-        </div>
-        {% trans "None" as none_text %}
-        <div class="text-body">{{ element.player_summary|linebreaksbr|default:none_text }}</div>
-      </div>
-
-      {# GM notes #}
-      <div class="mb-3">
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
-          <button
-            data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
-            data-modal-refresh-after="true"
-            data-modal-title="{% trans 'Edit plot element' %}"
-            type="button" class="btn btn-sm btn-outline-primary"
-            title="{% trans 'Edit notes' %}"><i class="fa fa-pen"></i> {% trans 'Edit' %}</button>
-        </div>
-        <div class="text-body">{{ element.gm_notes|linebreaksbr|default:none_text }}</div>
-      </div>
-
-      {# Handouts #}
-      <div class="mb-3">
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Handouts' %}</div>
-          <button
-            data-modal-url="{% url "plots:create_handout" plot_element_pk=element.id %}"
-            data-modal-refresh-after="true"
-            data-modal-title="{% trans 'Create handout' %}"
-            type="button" class="btn btn-sm btn-outline-primary"
-            title="{% trans 'Add handout' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
-        </div>
-
-        <div class="d-flex flex-wrap gap-2">
-          {% for handout in element.handouts.all %}
-            <div class="text-center">
-              {% if handout.image %}
-                <img src="{{ handout.image.url }}" alt="{{ handout.name }}" class="img-thumbnail"
-                     style="max-height: 80px;">
-              {% else %}
-                <div class="border rounded d-flex align-items-center justify-content-center bg-light"
-                     style="width: 120px; height: 80px;">
-                  <span class="text-muted small">{{ handout.name }}</span>
+    {# Details panel #}
+    <div id="details-{{ element.id }}" class="collapse">
+        <div class="rounded p-3 my-2 small border">
+            {# Player summary #}
+            <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
+                    <button data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
+                            data-modal-refresh-after="true"
+                            data-modal-title="{% trans 'Edit plot element' %}"
+                            type="button"
+                            class="btn btn-sm btn-outline-primary"
+                            title="{% trans 'Edit summary' %}">
+                        <i class="fa fa-pen"></i> {% trans 'Edit' %}
+                    </button>
                 </div>
-              {% endif %}
-              <div class="small mt-1">{{ handout.name }}</div>
+                {% trans "None" as none_text %}
+                <div class="text-body">{{ element.player_summary|linebreaksbr|default:none_text }}</div>
             </div>
-          {% empty %}
-            <div class="text-muted fst-italic">{% trans 'No handouts yet.' %}</div>
-          {% endfor %}
-        </div>
-      </div>
-
-      {# NPC #}
-      <div class="mb-3">
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
-          <a class="btn btn-sm btn-outline-primary"
-             target="_blank"
-             href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id %}?plot_element_pk={{ object.id }}"
-             title="{% trans 'Add npc' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
-        </div>
-
-        <div class="d-flex flex-wrap gap-3">
-          {% for character in element.npc.all %}
-            <a href="{{ character.get_absolute_url }}" class="text-decoration-none text-body">
-              <div class="d-flex align-items-center gap-2">
-                {% if character.image %}
-                  <img src="{{ character.image.url }}" alt="{{ character.name }}" class="rounded"
-                       style="width: 32px; height: 32px; object-fit: cover;">
-                {% endif %}
-                <span>{{ character.name }}</span>
-              </div>
-            </a>
-          {% empty %}
-            <div class="text-muted fst-italic">{% trans 'No NPC assigned.' %}</div>
-          {% endfor %}
-        </div>
-      </div>
-
-      {# Locations #}
-      <div>
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Locations' %}</div>
-          <button
-            data-modal-url="{% url "plots:create_location" plot_element_pk=element.id %}"
-            data-modal-refresh-after="true"
-            data-modal-title="{% trans 'Create location' %}"
-            type="button" class="btn btn-sm btn-outline-primary"
-            title="{% trans 'Add location' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
-        </div>
-        <div class="d-flex flex-wrap gap-3">
-          {% for loc in element.locations.all %}
-            <div class="d-flex align-items-center gap-2">
-              {% if loc.image %}
-                <img src="{{ loc.image.url }}" alt="{{ loc.name }}" class="rounded"
-                     style="width: 28px; height: 28px; object-fit: cover;">
-              {% endif %}
-              <span>{{ loc.name }}</span>
+            {# GM notes #}
+            <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
+                    <button data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
+                            data-modal-refresh-after="true"
+                            data-modal-title="{% trans 'Edit plot element' %}"
+                            type="button"
+                            class="btn btn-sm btn-outline-primary"
+                            title="{% trans 'Edit notes' %}">
+                        <i class="fa fa-pen"></i> {% trans 'Edit' %}
+                    </button>
+                </div>
+                <div class="text-body">{{ element.gm_notes|linebreaksbr|default:none_text }}</div>
             </div>
-          {% empty %}
-            <div class="text-muted fst-italic">{% trans 'No locations assigned.' %}</div>
-          {% endfor %}
+            {# Handouts #}
+            <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Handouts' %}</div>
+                    <button data-modal-url="{% url "plots:create_handout" plot_element_pk=element.id %}"
+                            data-modal-refresh-after="true"
+                            data-modal-title="{% trans 'Create handout' %}"
+                            type="button"
+                            class="btn btn-sm btn-outline-primary"
+                            title="{% trans 'Add handout' %}">
+                        <i class="fa fa-plus"></i> {% trans 'Add' %}
+                    </button>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for handout in element.handouts.all %}
+                        <div class="text-center">
+                            {% if handout.image %}
+                                <img src="{{ handout.image.url }}"
+                                     alt="{{ handout.name }}"
+                                     class="img-thumbnail"
+                                     style="max-height: 80px">
+                            {% else %}
+                                <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                                     style="width: 120px;
+                                            height: 80px">
+                                    <span class="text-muted small">{{ handout.name }}</span>
+                                </div>
+                            {% endif %}
+                            <div class="small mt-1">{{ handout.name }}</div>
+                        </div>
+                    {% empty %}
+                        <div class="text-muted fst-italic">{% trans 'No handouts yet.' %}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {# NPC #}
+            <div class="mb-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
+                    <a class="btn btn-sm btn-outline-primary"
+                       target="_blank"
+                       href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id %}?plot_element_pk={{ object.id }}"
+                       title="{% trans 'Add npc' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                    {% for character in element.npc.all %}
+                        <a href="{{ character.get_absolute_url }}"
+                           class="text-decoration-none text-body">
+                            <div class="d-flex align-items-center gap-2">
+                                {% if character.image %}
+                                    <img src="{{ character.image.url }}"
+                                         alt="{{ character.name }}"
+                                         class="rounded"
+                                         style="width: 32px;
+                                                height: 32px;
+                                                object-fit: cover">
+                                {% endif %}
+                                <span>{{ character.name }}</span>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <div class="text-muted fst-italic">{% trans 'No NPC assigned.' %}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {# Locations #}
+            <div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Locations' %}</div>
+                    <button data-modal-url="{% url "plots:create_location" plot_element_pk=element.id %}"
+                            data-modal-refresh-after="true"
+                            data-modal-title="{% trans 'Create location' %}"
+                            type="button"
+                            class="btn btn-sm btn-outline-primary"
+                            title="{% trans 'Add location' %}">
+                        <i class="fa fa-plus"></i> {% trans 'Add' %}
+                    </button>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                    {% for loc in element.locations.all %}
+                        <div class="d-flex align-items-center gap-2">
+                            {% if loc.image %}
+                                <img src="{{ loc.image.url }}"
+                                     alt="{{ loc.name }}"
+                                     class="rounded"
+                                     style="width: 28px;
+                                            height: 28px;
+                                            object-fit: cover">
+                            {% endif %}
+                            <span>{{ loc.name }}</span>
+                        </div>
+                    {% empty %}
+                        <div class="text-muted fst-italic">{% trans 'No locations assigned.' %}</div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-
-  <div class="sortable" data-parent-id="{{ element.id }}">
-    {% for child in element.children.all %}
-      {% include 'plots/_plot_element.html' with element=child depth=depth|add:2 %}
-    {% endfor %}
-  </div>
+    <div class="sortable" data-parent-id="{{ element.id }}">
+        {% for child in element.children.all %}
+            {% include 'plots/_plot_element.html' with element=child depth=depth|add:2 %}
+        {% endfor %}
+    </div>
 </div>

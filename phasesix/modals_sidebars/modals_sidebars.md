@@ -45,9 +45,7 @@ success case, where the call specified by `success_url` is inserted.
 
 ## Modals
 
-A central modal is added to the base template, which can be triggered via `data-` attributes. To open the modal on a
-link
-or button, it is sufficient to specify `data-modal-url="url"`. Additionally, some options are available.
+A central modal is added to the base template, which can be triggered via `data-` attributes. To open the modal on a link or button, it is sufficient to specify `data-modal-url="url"`. Additionally, some options are available.
 
 To add the modal to the base template, the template tag `{% site_modal %}` can be used.
 
@@ -58,59 +56,47 @@ To add the modal to the base template, the template tag `{% site_modal %}` can b
 
 ### Data Attribute
 
-* `data-modal-title` gibt einen Titel an, der im Modal verwendet wird.
-* Wenn `data-modal-body` gesetzt ist, wird der angegebene Inhalt als erstes in das Modal kopiert.
-* Wenn `data-modal-body-from-id` mit einem HTML ID gefüllt ist (`#meintemplate`), wird der Inhalt dieses Elements in das
-  Modal kopiert.
-* Ist eine `data-modal-url` angegeben, wird als letztes diese URL via `fetch()` mit der methode GET abgerufen.
-* `data-modal-refresh-after` wenn auf "true" gesetzt wird die aktuelle Seite nach dem Schließen des Modals neu geladen.
-* `data-modal-event-after` wenn auf einen Namen gesetzt wird ein CustomEvent mit dem angegebenen Namen von `document`
-  dispatched, sobald das Modal geschlossen wird.
-* `data-modal-event-show` wenn auf einen Namen gesetzt wird ein CustomEvent mit dem angegebenen Namen von `document`
-  dispatched, sobald das Modal angezeigt wird.
-* Ist `data-modal-iframe="true"` angegeben, so wird der Inhalt des Modals in ein `iframe` geladen, und **nicht** via
-  `fetch()` abgerufen.
-* Ist `data-modal-size-class` angegeben, wird die CSS Klasse in das Modal übernommen. Hier kann `modal-fullscreen`
-  verwendet werden, um ein Vollbild Modal zu erreichen.
-* Ist `data-modal-confirm-close` angegeben, wird das Modal erst nach einer Bestätigung via `confirm()` geschlossen,
-  wobei der Inhalt des Data Attributs den Prompt enthält.
-* `modal-auto-show-query-string`: Ist hier ein QueryString Parameter angegeben, wird das Modal automatisch geöffnet,
-  wenn der QueryString Parameter in der URL vorhanden ist.
-
-Diese Mechanik kann genutzt werden, um mit -body eine Anzeige zu schaffen, die während des `fetch()` Ladevorgangs zu
-sehen ist.
+* `data-modal-url`: **Required** This URL is fetched via `fetch()` with the method GET.
+* `data-modal-title`: Gives a title to the modal.
+* `data-modal-body`: If set, the given content is copied as the first content in the modal.
+* `data-modal-body-from-id`: If set to an HTML ID (`#mytemplate`), the content of this element is copied into the modal.
+* `data-modal-refresh-after`: If set to "true", the current page is reloaded after closing the modal.
+* `data-modal-event-after`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the modal is closed.
+* `data-modal-event-show`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the modal is shown.
+* `data-modal-iframe="true"`: If set, the content of the modal is loaded into an `iframe` and **not** via `fetch()`.
+* `data-modal-size-class`: Set the Bootstrap CSS class to the modal. Options are `modal-sm`, `modal-lg`, `modal-xl` and `modal-fullscreen`
+* `data-modal-confirm-close`: If set to "true", the modal is closed only after a confirmation prompt is accepted via `confirm()`.
+* `modal-auto-show-query-string`: If this query string parameter is present, the modal is automatically opened when the query string parameter is present in the URL.
 
 ### Events
 
-Folgende Events können im Javascript dispatched werden, um das Modal zu beeinflussen:
+The following events can be dispatched via Javascript to influence the modal:
 
-* `modal-hide`: Das Modal wird ausgeblendet und geleert.
-* `modal-show`: Das Modal wird mit aktuellem Inhalt angezeigt
-* `modal-fetch-and-show`: Es wird eine URL per GET abgerufen und danach im Modal angezeigt. Das Event muss ein
-  `CustomEvent` sein, das `detail` Object enthält die selben Elemente wie das DataSet im HTML (data-modal-url wird zu
-  modalUrl)
+* `modal-hide`: The modal is hidden and cleared.
+* `modal-show`: The modal is shown with the current content.
+* `modal-fetch-and-show`: A URL is fetched via GET and shown in the modal. The event must be a `CustomEvent` with the same `detail` object as the data set in the HTML (data-modal-url is mapped to modalUrl).
 
-### Beispiele
+### Examples
 
-Modal im HTML triggern
+Trigger a modal via HTML
 
 ```html
 
 <button
     class="btn btn-outline-primary"
     type="button"
-    data-modal-url="{% url 'property_management:residential_object_update' pk=object.id %}"
-    data-modal-title="{% trans 'PDF Vorschau - Objekt' %}"
+    data-modal-url="{% url 'my_app:object_update' pk=object.id %}"
+    data-modal-title="{% trans 'PDF Preview - Object' %}"
     data-modal-body-from-id="#modal-pdf-loading-body">
 
     <template id="modal-pdf-loading-body">
         <div class="flex-centered h-100 w-100">
-            {% svg_symbol 'filetype-pdf' 128 128 color="#999" %}
+            <i class="fa fa-file-pdf"></i>
         </div>
     </template>
 ```
 
-Modal im JavaScript triggern
+Trigger a modal via JavaScript
 
 ```javascript
     document.dispatchEvent(

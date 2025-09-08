@@ -92,7 +92,7 @@ class SiteModal {
             }
 
             this.modalElement.innerHTML = "";
-            let temp = document.querySelector("[data-modal-template]");
+            let temp = document.querySelector("[data-site-modal-template]");
             if (temp) {
                 let clon = temp.content.cloneNode(true);
                 this.modalElement.appendChild(clon);
@@ -204,7 +204,6 @@ class SiteModal {
         keyValuePairs.forEach((pair) => {
             const [key, value] = pair.split("=").map((part) => part.trim());
             if (key) {
-                // Prüfe, ob der Wert eine Zahl ist und konvertiere sie entsprechend
                 if (!isNaN(value)) {
                     jsonObject[key] = value.includes(".")
                         ? parseFloat(value)
@@ -214,7 +213,6 @@ class SiteModal {
                 }
             }
         });
-
         return jsonObject;
     }
 }

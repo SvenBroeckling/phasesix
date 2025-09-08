@@ -36,6 +36,9 @@ function refresh_fragments() {
 
 document.addEventListener("DOMContentLoaded", () => {
     refresh_fragments();
+    document.addEventListener("refresh-fragments", (e) => {
+        refresh_fragments();
+    });
     document.addEventListener("refresh-fragment", (e) => {
         fragmentsVisible = [e.detail.fragment_template];
         refresh_fragments();

@@ -8,27 +8,27 @@ window.addEventListener("DOMContentLoaded", (event) => {
         const eventAfterDetail = form.dataset.fetchFormEventAfterDetail;
         const eventOnRender = form.dataset.fetchFormEventOnRender;
 
+        function add_class(selector, className) {
+            let elem = form.querySelector(selector);
+            if (elem) {
+                elem.classList.add(className);
+            }
+        }
+
+        function remove_class(selector, className) {
+            let elem = form.querySelector(selector);
+            if (elem) {
+                elem.classList.remove(className);
+            }
+        }
+
         function setButtonState(state = "enabled") {
             if (state === "enabled") {
-                try {
-                    form.querySelector(".form-submit-spinner").classList.add(
-                        "d-none",
-                    );
-                } catch {
-                    // no spinner present
-                }
-                form.querySelector('[type="submit"]').classList.remove(
-                    "disabled",
-                );
+                add_class(".form-submit-spinner", "d-none");
+                add_class('[type="submit"]', "disabled");
             } else {
-                try {
-                    form.querySelector(".form-submit-spinner").classList.remove(
-                        "d-none",
-                    );
-                } catch {
-                    // no spinner present
-                }
-                form.querySelector('[type="submit"]').classList.add("disabled");
+                remove_class(".form-submit-spinner", "d-none");
+                remove_class('[type="submit"]', "disabled");
             }
         }
 

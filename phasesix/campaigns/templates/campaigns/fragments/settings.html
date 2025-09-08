@@ -63,11 +63,12 @@
 
       {% if may_edit %}
         <div class="d-flex justify-content-end">
-          <button data-bs-toggle="modal"
-                  data-bs-target=".page-modal"
-                  data-modal-title="{% trans 'Edit settings' %}"
-                  data-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='game' %}"
-                  class="btn btn-primary modal-trigger">{% trans 'Edit' %}</button>
+          <button
+            data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='game' %}"
+            data-modal-size-class="modal-lg"
+            data-modal-event-after="refresh-fragments"
+            data-modal-title="{% trans 'Edit settings' %}"
+            class="btn btn-primary">{% trans 'Edit' %}</button>
         </div>
       {% endif %}
     </div>
@@ -114,11 +115,11 @@
 
       {% if may_edit %}
         <div class="d-flex justify-content-end">
-          <button data-bs-toggle="modal"
-                  data-bs-target=".page-modal"
-                  data-modal-title="{% trans 'Edit settings' %}"
-                  data-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='visibility' %}"
-                  class="btn btn-primary modal-trigger">{% trans 'Edit' %}</button>
+          <button
+            data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='visibility' %}"
+            data-modal-title="{% trans 'Edit settings' %}"
+            data-modal-event-after="refresh-fragments"
+            class="btn btn-primary">{% trans 'Edit' %}</button>
         </div>
       {% endif %}
     </div>
@@ -139,6 +140,7 @@
       </div>
       <hr>
 
+      {% comment %}
       <div class="d-flex">
         <div>
           <div>{% trans 'TaleSpire Integration' %}</div>
@@ -160,14 +162,15 @@
         </div>
       </div>
       <hr>
+      {% endcomment %}
 
       {% if may_edit %}
         <div class="d-flex justify-content-end">
-          <button data-bs-toggle="modal"
-                  data-bs-target=".page-modal"
-                  data-modal-title="{% trans 'Edit settings' %}"
-                  data-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='integration' %}"
-                  class="btn btn-primary modal-trigger">{% trans 'Edit' %}</button>
+          <button
+            data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='integration' %}"
+            data-modal-title="{% trans 'Edit settings' %}"
+            data-modal-event-after="refresh-fragments"
+            class="btn btn-primary">{% trans 'Edit' %}</button>
         </div>
       {% endif %}
 

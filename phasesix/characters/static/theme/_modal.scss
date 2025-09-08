@@ -1,10 +1,10 @@
 /* Scroll only modal body */
 
-.modal-trigger {
+[data-modal-url] {
   cursor: pointer;
 }
 
-.modal-trigger:not(.btn):not(.nav-link):not(.dropdown-item):not(.list-group-item):hover {
+[data-modal-url]:not(.btn):not(.nav-link):not(.dropdown-item):not(.list-group-item):hover {
   background-color: $body-tertiary-bg-dark;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

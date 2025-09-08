@@ -190,10 +190,6 @@ class XhrCampaignSettingsView(UpdateView):
         else:
             raise Exception(f"Unknown mode: {self.kwargs['mode']}")
 
-    def form_valid(self, form):
-        messages.success(self.request, _("Settings saved."))
-        return super().form_valid(form)
-
 
 class BaseSidebarView(DetailView):
     def get_template_names(self):
