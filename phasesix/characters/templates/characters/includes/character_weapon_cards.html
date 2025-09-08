@@ -29,7 +29,8 @@
                 {{ wm.rules|phasesix_markup }}
               </p>
               {% for keyword in wm.weaponmodificationkeyword_set.all %}
-                <span class="fw-bold {% if keyword.keyword.is_rare %}text-primary{% endif %}">{{ keyword.keyword.name }}</span>
+                <span
+                  class="fw-bold {% if keyword.keyword.is_rare %}text-primary{% endif %}">{{ keyword.keyword.name }}</span>
                 {% color_value_span keyword.value 6 %}<br>
               {% endfor %}
             {% endfor %}
@@ -51,12 +52,12 @@
   </div>
 {% empty %}
   <div {% if may_edit %}
-    data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
-    data-bs-toggle="modal"
-    data-bs-target=".page-modal"
+    data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
+    data-modal-size-class="modal-xl"
+    data-modal-event-after="refresh-character-gear"
     data-modal-title="{% trans 'Add Weapons' %}"
   {% endif %}
-    class="card mb-4 pointer {% if may_edit %}modal-trigger{% endif %}">
+    class="card mb-4">
     <div class="card-body p-4 d-flex align-items-center justify-content-start">
       <i class="fs-1 me-3 gi-delapouite-axe-sword"></i>
       <div>

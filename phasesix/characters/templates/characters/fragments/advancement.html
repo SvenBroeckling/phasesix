@@ -22,13 +22,14 @@
     </div>
   </div>
 
-
   <div class="col-12 col-md-6 mb-3">
-    <div class="card h-100 modal-trigger pointer"
+    <div class="card h-100"
+      {% if may_edit %}
          data-modal-title="{% trans 'Add character templates' %}"
-         data-bs-toggle="modal"
-         data-bs-target=".page-modal"
-         data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}">
+         data-modal-size-class="modal-xl"
+         data-modal-event-after="refresh-character-advancement"
+         data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}"
+      {% endif %}>
       <div class="card-body">
         <h4 class="card-title">{% trans "Reputation available" %}</h4>
         <p>

@@ -213,63 +213,58 @@ class XhrCharacterRestView(TemplateView):
         mode = request.POST.get("mode", "manual")
 
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
 
-        if mode == "auto":
-            character.bonus_dice_used = 0
-            character.destiny_dice_used = 0
-            character.rerolls_used = 0
+        character.bonus_dice_used = 0
+        character.destiny_dice_used = 0
+        character.rerolls_used = 0
 
-            rest_wound_roll = roll_and_send(
+        rest_wound_roll = roll_and_send(
+            character.id,
+            f"{character.rest_wound_dice}d6",
+            gettext("Rest wound roll"),
+            gettext("Wound roll"),
+            minimum_roll=minimum_roll,
+        )
+
+        for d in filter(lambda x: x >= minimum_roll, rest_wound_roll):
+            for n in range(crit_successes(d) + 1):
+                if character.health < character.max_health:
+                    character.health += 1
+
+        character.boost = 0
+
+        if "magic" in character.extension_enabled:
+            rest_arcana_roll = roll_and_send(
                 character.id,
-                f"{character.rest_wound_dice}d6",
-                gettext("Rest wound roll"),
-                gettext("Wound roll"),
+                f"{character.rest_arcana_dice}d6",
+                gettext("Rest arcana roll"),
+                gettext("Arcana roll"),
                 minimum_roll=minimum_roll,
             )
 
-            for d in filter(lambda x: x >= minimum_roll, rest_wound_roll):
+            for d in filter(lambda x: x >= minimum_roll, rest_arcana_roll):
                 for n in range(crit_successes(d) + 1):
-                    if character.health < character.max_health:
-                        character.health += 1
+                    if character.arcana < character.max_arcana:
+                        character.arcana += 1
 
-            character.boost = 0
-
-            if "magic" in character.extension_enabled:
-                rest_arcana_roll = roll_and_send(
+        if "horror" in character.extension_enabled:
+            if character.is_consumed_by_dread:
+                rest_stress_roll = roll_and_send(
                     character.id,
-                    f"{character.rest_arcana_dice}d6",
-                    gettext("Rest arcana roll"),
-                    gettext("Arcana roll"),
+                    f"{character.rest_stress_dice}d6",
+                    gettext("Rest resolve dread"),
+                    gettext("Resolve dread roll"),
                     minimum_roll=minimum_roll,
                 )
 
-                for d in filter(lambda x: x >= minimum_roll, rest_arcana_roll):
-                    for n in range(crit_successes(d) + 1):
-                        if character.arcana < character.max_arcana:
-                            character.arcana += 1
+                if not len(list(filter(lambda x: x >= minimum_roll, rest_stress_roll))):
+                    character.base_stress += 1
+                    character.quirks_gained += 1
 
-            if "horror" in character.extension_enabled:
-                if character.is_consumed_by_dread:
-                    rest_stress_roll = roll_and_send(
-                        character.id,
-                        f"{character.rest_stress_dice}d6",
-                        gettext("Rest resolve dread"),
-                        gettext("Resolve dread roll"),
-                        minimum_roll=minimum_roll,
-                    )
-
-                    if not len(
-                        list(filter(lambda x: x >= minimum_roll, rest_stress_roll))
-                    ):
-                        character.base_stress += 1
-                        character.quirks_gained += 1
-
-                character.stress = character.get_aspect_modifier("base_base_stress")
-
+            character.stress = character.get_aspect_modifier("base_base_stress")
             character.save()
-
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrCharacterStatusEffectsChangeView(View):
@@ -1014,8 +1009,8 @@ class XhrModifyBodyModificationView(View):
         return JsonResponse({"status": "ok"})
 
 
-class XhrAddWeaponModView(TemplateView):
-    template_name = "characters/modals/add_weapon_mod.html"
+class XhrAddWeaponModificationView(TemplateView):
+    template_name = "characters/modals/add_weapon_modification.html"
 
     def get_context_data(self, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
@@ -1035,17 +1030,17 @@ class XhrAddWeaponModView(TemplateView):
         )
         return context
 
-
-class AddWeaponModificationView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         weapon_modification = WeaponModification.objects.get(
-            id=kwargs["weapon_modification_pk"]
+            id=request.POST.get("weapon_modification_pk")
         )
-        character_weapon = CharacterWeapon.objects.get(id=kwargs["character_weapon_pk"])
+        character_weapon = CharacterWeapon.objects.get(
+            id=request.POST.get("character_weapon_pk")
+        )
 
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
 
         if (
             character_weapon.weapon.type
@@ -1057,7 +1052,7 @@ class AddWeaponModificationView(View):
                 ):
                     character_weapon.modifications.remove(active_weapon_mod)
             character_weapon.modifications.add(weapon_modification)
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 # Magic
@@ -1101,18 +1096,18 @@ class XhrAddSpellTemplateView(TemplateView):
         context["spell_template_categories"] = SpellTemplateCategory.objects.all()
         return context
 
-
-class AddSpellTemplateView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
-        spell_template = SpellTemplate.objects.get(id=kwargs["spell_template_pk"])
-        character_spell = CharacterSpell.objects.get(id=kwargs["character_spell_pk"])
+        spell_template = SpellTemplate.objects.get(id=request.POST["spell_template_pk"])
+        character_spell = CharacterSpell.objects.get(
+            id=request.POST["character_spell_pk"]
+        )
 
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
 
         character_spell.characterspelltemplate_set.create(spell_template=spell_template)
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrModifyCurrencyView(View):
@@ -1298,10 +1293,6 @@ class XhrEditCharacterDescriptionView(UpdateView):
     fields = ["description"]
     model = Character
 
-    def post(self, request, *args, **kwargs):
-        super().post(request, *args, **kwargs)
-        return JsonResponse({"status": "ok"})
-
 
 class XhrToggleFavoriteView(View):
     def post(self, request, *args, **kwargs):
@@ -1332,14 +1323,14 @@ class XhrContactView(DetailView):
         form = ContactForm(request.POST, character=character)
         if form.is_valid:
             form.save()
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
     def delete(self, request, *args, **kwargs):
         character = self.get_object()
         if not character.may_edit(request.user):
             return JsonResponse({"status": "forbidden"})
         Contact.objects.get(id=request.GET.get("contact_id")).delete()
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrEditFoeView(UpdateView):
@@ -1347,13 +1338,8 @@ class XhrEditFoeView(UpdateView):
     template_name = "characters/modals/edit_foe.html"
     model = CharacterFoe
 
-    def post(self, request, *args, **kwargs):
-        super().post(request, *args, **kwargs)
-        return JsonResponse({"status": "ok"})
-
-    def form_valid(self, form):
-        form.save()
-        return JsonResponse({"status": "ok"})
+    def get_success_url(self):
+        return self.get_object().character.get_absolute_url()
 
 
 class CharacterFoeModifyHealthView(View):

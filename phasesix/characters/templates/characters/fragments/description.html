@@ -29,11 +29,10 @@
           {% if may_edit %}
             <div class="top-0 end-0 mt-2 me-2 z-1 position-absolute d-flex gap-2 justify-content-end">
               <button
-                class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger small-modal"
-                data-url="{% url "characters:xhr_edit_description" pk=object.id %}"
+                class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center"
+                data-modal-event-after="refresh-character-description"
+                data-modal-url="{% url "characters:xhr_edit_description" pk=object.id %}"
                 data-modal-title="{% trans 'Edit Description' %}"
-                data-bs-toggle="modal"
-                data-bs-target=".page-modal"
                 style="width: 2rem; height: 2rem"
                 title="{% trans "Edit" %}">
                 <i class="fas fa-pen"></i>
@@ -64,11 +63,11 @@
 
         {% if may_edit %}
           <button
-            class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger"
+            class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center"
             title="{% trans "Add contact" %}"
-            data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}"
-            data-bs-toggle="modal"
-            data-bs-target=".page-modal"
+            data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}"
+            data-modal-size-class="modal-xl"
+            data-modal-event-after="refresh-character-description"
             data-modal-title="{% trans 'Add Language' %}"
             style="width: 2rem; height: 2rem;">
             <i class="fas fa-plus"></i>
@@ -122,11 +121,10 @@
 
         {% if may_edit %}
           <button
-            class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger small-modal"
+            class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center"
             title="{% trans "Add contact" %}"
-            data-url="{% url "characters:xhr_contact" pk=object.id %}"
-            data-bs-toggle="modal"
-            data-bs-target=".page-modal"
+            data-modal-event-after="refresh-character-description"
+            data-modal-url="{% url "characters:xhr_contact" pk=object.id %}"
             data-modal-title="{% trans 'Add Contact' %}"
             style="width: 2rem; height: 2rem;">
             <i class="fas fa-plus"></i>
@@ -178,11 +176,11 @@
 
         {% if may_edit %}
           <button
-            class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center modal-trigger"
+            class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center"
             title="{% trans "Add pet" %}"
-            data-url="{% url "characters:xhr_character_objects" pk=object.id object_type="foe" %}"
-            data-bs-toggle="modal"
-            data-bs-target=".page-modal"
+            data-modal-url="{% url "characters:xhr_character_objects" pk=object.id object_type="foe" %}"
+            data-modal-size-class="modal-xl"
+            data-modal-event-after="refresh-character-description"
             data-modal-title="{% trans 'Add pet' %}"
             style="width: 2rem; height: 2rem;">
             <i class="fas fa-plus"></i>
@@ -213,12 +211,11 @@
 
           {% if may_edit %}
             <button
-              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center me-2 modal-trigger small-modal"
-              style="width: 2rem; height: 2rem;"
-              data-url="{% url "characters:xhr_edit_foe" pk=foe.id %}"
-              data-bs-toggle="modal"
-              data-bs-target=".page-modal"
-              data-modal-title="{% trans 'Edit pet' %}">
+              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center me-2"
+              data-modal-url="{% url "characters:xhr_edit_foe" pk=foe.id %}"
+              data-modal-event-after="refresh-character-description"
+              data-modal-title="{% trans 'Edit pet' %}"
+              style="width: 2rem; height: 2rem;">
               <i class="fas fa-pencil-alt fa-fw"></i>
             </button>
             <a

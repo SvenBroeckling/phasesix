@@ -4,10 +4,10 @@
   <div class="col-md-6">
     <div>
       {% if may_edit %}
-        <a class="btn btn-primary btn-sm float-end modal-trigger"
-           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
+        <a class="btn btn-primary btn-sm float-end"
+           data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
+           data-modal-size-class="modal-xl"
+           data-modal-event-after="refresh-character-gear"
            data-modal-title="{% trans 'Add Armor' %}"
            href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
       {% endif %}
@@ -18,10 +18,10 @@
 
     <div>
       {% if may_edit %}
-        <a class="btn btn-primary btn-sm float-end modal-trigger"
-           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
+        <a class="btn btn-primary btn-sm float-end"
+           data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
+           data-modal-size-class="modal-xl"
+           data-modal-event-after="refresh-character-gear"
            data-modal-title="{% trans 'Add Weapon' %}"
            href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
       {% endif %}
@@ -34,12 +34,11 @@
   <div class="col-md-6">
     <div>
       {% if may_edit %}
-        <a class="btn btn-primary btn-sm float-end modal-trigger"
-           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
-           title="{% trans 'Add Item' %}"
-           data-bs-toggle="modal"
+        <a class="btn btn-primary btn-sm float-end"
+           data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
+           data-modal-size-class="modal-xl"
+           data-modal-event-after="refresh-character-gear"
            data-modal-title="{% trans 'Add item' %}"
-           data-bs-target=".page-modal"
            href=""><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
       {% endif %}
       <h2 class="mb-2 h4">{% trans 'Items' %}</h2>

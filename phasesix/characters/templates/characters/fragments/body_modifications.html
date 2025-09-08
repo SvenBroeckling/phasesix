@@ -45,11 +45,14 @@
 <div class="row justify-content-center">
   <div class="col-12 col-md-4 text-center">
     <div class="card h-100">
-      <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Body Modification' %}"
-           class="card-body modal-trigger d-flex flex-column align-items-center">
+      <div
+        {% if may_edit %}
+          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+          data-modal-size-class="modal-xl"
+          data-modal-event-after="refresh-character-body_modifications"
+          data-modal-title="{% trans 'Add Body Modification' %}"
+        {% endif %}
+          class="card-body d-flex flex-column align-items-center">
             <span title="{% trans "Sockets" %}"
                   class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
             <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_head }}
@@ -83,11 +86,14 @@
 <div class="row justify-content-center mt-3">
   <div class="col-12 col-md-4 text-center mb-2">
     <div class="card h-100">
-      <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Body Modification' %}"
-           class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+      <div
+        {% if may_edit %}
+          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+          data-modal-size-class="modal-xl"
+          data-modal-event-after="refresh-character-body_modifications"
+          data-modal-title="{% trans 'Add Body Modification' %}"
+        {% endif %}
+          class="card-body d-flex flex-column align-items-center justify-content-center">
             <span title="{% trans "Sockets" %}"
                   class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
             <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_left_arm }}
@@ -119,11 +125,14 @@
 
   <div class="col-12 col-md-4 text-center mb-2">
     <div class="card h-100">
-      <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Body Modification' %}"
-           class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+      <div
+        {% if may_edit %}
+          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+          data-modal-size-class="modal-xl"
+          data-modal-event-after="refresh-character-body_modifications"
+          data-modal-title="{% trans 'Add Body Modification' %}"
+        {% endif %}
+          class="card-body d-flex flex-column align-items-center justify-content-center">
             <span title="{% trans "Sockets" %}"
                   class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
             <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_torso }}
@@ -155,11 +164,14 @@
 
   <div class="col-12 col-md-4 text-center mb-2">
     <div class="card h-100">
-      <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Body Modification' %}"
-           class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+      <div
+        {% if may_edit %}
+          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+          data-modal-size-class="modal-xl"
+          data-modal-event-after="refresh-character-body_modifications"
+          data-modal-title="{% trans 'Add Body Modification' %}"
+        {% endif %}
+          class="card-body d-flex flex-column align-items-center justify-content-center">
             <span title="{% trans "Sockets" %}"
                   class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
             <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_right_arm }}
@@ -193,11 +205,14 @@
 <div class="row justify-content-center mt-3">
   <div class="col-12 col-md-4 text-center mb-2">
     <div class="card h-100">
-      <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Body Modification' %}"
-           class="card-body modal-trigger d-flex flex-column align-items-center justify-content-center">
+      <div
+        {% if may_edit %}
+          data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+          data-modal-size-class="modal-xl"
+          data-modal-event-after="refresh-character-body_modifications"
+          data-modal-title="{% trans 'Add Body Modification' %}"
+        {% endif %}
+          class="card-body d-flex flex-column align-items-center justify-content-center">
             <span title="{% trans "Sockets" %}"
                   class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
             <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_left_leg }}
@@ -229,11 +244,14 @@
 
   <div class="col-12 col-md-4 text-center mb-2">
     <div class="card h-100">
-      <div data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
-           data-modal-title="{% trans 'Add Body Modification' %}"
-           class="card-body modal-trigger d-flex flex-column align-items-center position-relative justify-content-center">
+      <div
+        {% if may_edit %}
+          data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
+          data-modal-size-class="modal-xl"
+          data-modal-event-after="refresh-character-body_modifications"
+          data-modal-title="{% trans 'Add Body Modification' %}"
+        {% endif %}
+          class="card-body d-flex flex-column align-items-center position-relative justify-content-center">
             <span title="{% trans "Sockets" %}"
                   class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
             <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_right_leg }}

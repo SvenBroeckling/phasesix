@@ -1,11 +1,10 @@
 {% load i18n %}
 {% load django_bootstrap5 %}
 
-<form class="add-form"
+<form data-fetch-form="true"
+      data-fetch-form-close="all"
       action="{% url "characters:xhr_edit_description" pk=object.id %}">
   {% csrf_token %}
   {% bootstrap_form form show_label=False %}
-  <button
-    data-success="{% trans 'Saved' %}"
-    class="btn btn-primary">{% trans "Save" %}</button>
+  <button class="btn btn-primary">{% trans "Save" %}</button>
 </form>

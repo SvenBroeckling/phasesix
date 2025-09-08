@@ -22,7 +22,7 @@
         <div class="btn-group w-100">
           <a class="btn btn-secondary btn-sm action-link mb-1"
              href="{% url 'characters:reload' characterweapon_pk=object.id %}"><i
-                  class="fas fa-redo fa-fw"></i> {% trans 'Reload' %}</a>
+            class="fas fa-redo fa-fw"></i> {% trans 'Reload' %}</a>
         </div>
       </div>
     {% endif %}
@@ -31,10 +31,10 @@
       <div class="btn-group w-100">
         <a class="btn btn-warning btn-sm action-link"
            href="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="damage" %}"><i
-                class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
+          class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
         <a class="btn btn-success btn-sm action-link"
            href="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="repair" %}"><i
-                class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
+          class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
       </div>
     </div>
 
@@ -42,13 +42,12 @@
       <div class="btn-group w-100">
         {% has_valid_weaponmodifications object.weapon object.character as has_valid_wm %}
         {% if has_valid_wm %}
-          <a
-                  class="btn btn-primary btn-sm modal-trigger close-sidebar mt-1"
-                  data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.character.id %}?character_weapon_id={{ object.id }}"
-                  data-bs-toggle="modal"
-                  data-bs-target=".page-modal"
-                  data-modal-title="{% trans 'Add Modification' %}"
-                  href=""><i class="fas fa-puzzle-piece"></i> {% trans 'Modifications' %}</a>
+          <a class="btn btn-primary btn-sm mt-1"
+             data-modal-url="{% url 'characters:xhr_add_weapon_modification' pk=object.character.id %}?character_weapon_id={{ object.id }}"
+             data-modal-size-class="modal-xl"
+             data-modal-event-after="refresh-character-gear"
+             data-modal-title="{% trans 'Add Modification' %}"
+             href=""><i class="fas fa-puzzle-piece"></i> {% trans 'Modifications' %}</a>
         {% endif %}
       </div>
     </div>
@@ -123,10 +122,12 @@
   {% for keyword in wm.weaponmodificationkeyword_set.all %}
     <span class="fw-bold {% if keyword.keyword.is_rare %}text-primary{% endif %}">{{ keyword.keyword.name }}</span>
     {% color_value_span keyword.value 6 %}<br>
+    {% comment %}
     <a class="action-link btn btn-danger btn-sm w-100 mt-2 mb-3"
-       data-url="{% url 'characters:xhr_add_weapon_modifications' pk=object.id %}?character_weapon_id={{ weapon.id }}"
+       data-url="{% url 'characters:xhr_add_weapon_modification' pk=object.id %}?character_weapon_id={{ weapon.id }}"
        title="{% trans 'Remove Modification' %}"
        href="{% url 'characters:xhr_remove_weapon_modification' pk=object.character.id weapon_pk=object.id weapon_modification_pk=wm.id %}">
       <i class="fas fa-trash"></i> {% trans 'Remove' %}</a>
+    {% endcomment %}
   {% endfor %}
 {% endfor %}

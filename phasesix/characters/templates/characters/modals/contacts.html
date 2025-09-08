@@ -2,11 +2,10 @@
 {% load django_bootstrap5 %}
 
 <form action="{% url "characters:xhr_contact" pk=object.id %}"
-      class="add-form"
+      data-fetch-form="true"
+      data-fetch-form-close="all"
       method="post">
   {% csrf_token %}
   {% bootstrap_form form layout="floating" %}
-  <button
-    data-success="{% trans 'Created' %}"
-    class="btn btn-primary">{% trans "Create" %}</button>
+  <button class="btn btn-primary">{% trans "Create" %}</button>
 </form>

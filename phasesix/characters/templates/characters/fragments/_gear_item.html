@@ -6,9 +6,9 @@
     <div class="card mb-2 sidebar-trigger"
          data-sidebar-title="{{ ci.item }}"
          data-pk="{{ ci.id }}"
-            {% if ci.item.get_image_thumbnail %}
+      {% if ci.item.get_image_thumbnail %}
          style="background-image: url('{{ ci.item.get_image_thumbnail }}'), linear-gradient(to left, rgb(0 0 0 / 1%), rgb(0 0 0 / 99%)); background-blend-mode: overlay; background-size: cover;"
-            {% endif %}
+      {% endif %}
          data-sidebar-url="{% url 'characters:xhr_sidebar' pk=ci.id sidebar_template="item" %}">
 
       <div class="card-body position-relative z-2">
@@ -28,12 +28,12 @@
 
     {% if empty_message == "body" %}
       <div {% if may_edit %}
-        data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
-        data-bs-toggle="modal"
-        data-bs-target=".page-modal"
+        data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
+        data-modal-size-class="modal-xl"
+        data-modal-event-after="refresh-character-gear"
         data-modal-title="{% trans 'Add Items' %}"
       {% endif %}
-        class="pointer p-4 d-flex align-items-center justify-content-start {% if may_edit %}modal-trigger{% endif %}">
+        class="p-4 d-flex align-items-center justify-content-start">
         <i class="fs-1 me-3 gi-delapouite-holy-hand-grenade"></i>
         <div>
           <span class="fs-4">{% trans "No items." %}</span><br>

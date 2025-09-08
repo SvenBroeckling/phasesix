@@ -64,11 +64,11 @@
 
       {% if may_edit %}
         <button
-                class="btn btn-success w-100 mt-1 modal-trigger"
-                data-bs-toggle="modal"
-                data-bs-target=".page-modal"
-                data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}"
-                data-modal-title="{% trans 'Reputation' %}">
+          class="btn btn-success w-100 mt-1"
+          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}"
+          data-modal-size-class="modal-xl"
+          data-modal-event-after="refresh-character-advancement"
+          data-modal-title="{% trans 'Reputation' %}">
           {% trans 'Add character templates' %}
         </button>
       {% endif %}

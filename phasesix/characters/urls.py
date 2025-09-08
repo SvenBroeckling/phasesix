@@ -81,11 +81,6 @@ urlpatterns = [
         views.XhrAddSpellTemplateView.as_view(),
         name="xhr_add_spell_template",
     ),
-    path(
-        "add_spell_template/<int:pk>/<int:spell_template_pk>/<int:character_spell_pk>",
-        views.AddSpellTemplateView.as_view(),
-        name="add_spell_template",
-    ),
     # pantheon
     path(
         "grace/<int:pk>/<mode>/",
@@ -270,14 +265,9 @@ urlpatterns = [
     ),
     # weapon modifications
     path(
-        "xhr_add_weapon_modifications/<int:pk>",
-        views.XhrAddWeaponModView.as_view(),
-        name="xhr_add_weapon_modifications",
-    ),
-    path(
-        "add_weapon_modification/<int:pk>/<int:weapon_modification_pk>/<int:character_weapon_pk>",
-        views.AddWeaponModificationView.as_view(),
-        name="add_weapon_modification",
+        "xhr_add_weapon_modification/<int:pk>",
+        views.XhrAddWeaponModificationView.as_view(),
+        name="xhr_add_weapon_modification",
     ),
     # Notes
     path(

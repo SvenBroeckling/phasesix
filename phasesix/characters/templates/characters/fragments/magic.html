@@ -26,10 +26,10 @@
     {% if may_edit %}
       <div class="row">
         <div class="col-12">
-          <button class="btn btn-primary float-end mb-2 modal-trigger"
-                  data-bs-toggle="modal"
-                  data-bs-target=".page-modal"
-                  data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="spell" %}"
+          <button class="btn btn-primary float-end mb-2"
+                  data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="spell" %}"
+                  data-modal-size-class="modal-xl"
+                  data-modal-event-after="refresh-character-magic"
                   data-modal-title="{% trans 'Learn a spell' %}">
             <i class="gi-lorc-fairy-wand text-warning"></i>{% trans "Add a spell" %}
           </button>

@@ -1,11 +1,11 @@
 {% load django_bootstrap5 i18n %}
 
 <form action="{% url "characters:xhr_edit_foe" pk=object.id %}"
-      class="add-form"
-      method="post" enctype="multipart/form-data">
+      data-fetch-form="true"
+      data-fetch-form-close="all"
+      method="post"
+      enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form form layout="floating" %}
-  <button
-    data-success="{% trans 'Saved' %}"
-    class="btn btn-primary">{% trans "Save" %}</button>
+  <button class="btn btn-primary">{% trans "Save" %}</button>
 </form>

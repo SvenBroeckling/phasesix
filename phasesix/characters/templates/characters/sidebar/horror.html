@@ -91,10 +91,10 @@
         {% endblocktrans %}
       </p>
       <div class="col-12 mb-3 mt-1">
-        <a class="btn btn-warning btn-sm w-100 modal-trigger"
-           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
+        <a class="btn btn-warning btn-sm w-100"
+           data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}"
+           data-modal-size-class="modal-xl"
+           data-modal-event-after="refresh-fragments"
            data-modal-title="{% trans 'Choose Quirk' %}"
            href=""><i class="fas fa-shapes fa-fw"></i> {% trans 'Choose Quirk' %}</a>
       </div>
