@@ -1,68 +1,65 @@
-{% extends 'characters/fragments/fragment_base.html' %}
-{% load characters_extras rules_extras i18n thumbnail %}
-
-{% block fragment %}
-  {% if object.extension_enabled.magic and object.is_magical %}
-    {% with spell_points_available=character.spell_points_available %}
-      <div class="row">
-        <div class="col-12 col-md-6 h-100">
-          <div class="card sidebar-trigger mb-3" data-sidebar-title="{% trans 'Magic' %}"
-               data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
-            <div class="card-body">
-              <h5>{% trans "Arcana" %}</h5>
-              {% arcana_display object %}
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 h-100">
-          <div class="card sidebar-trigger mb-3" data-sidebar-title="{% trans 'Magic' %}"
-               data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
-            <div class="card-body">
-              <h5>{% trans "Spell points" %}</h5>
-              <span class="fs-3 text-danger">{{ spell_points_available }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {% if may_edit %}
-        <div class="row">
-          <div class="col-12">
-            <button class="btn btn-primary float-end mb-2 modal-trigger"
-                    data-bs-toggle="modal"
-                    data-bs-target=".page-modal"
-                    data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="spell" %}"
-                    data-modal-title="{% trans 'Learn a spell' %}">
-              <i class="gi-lorc-fairy-wand text-warning"></i>{% trans "Add a spell" %}
-            </button>
-          </div>
-        </div>
-      {% endif %}
-
-      {% if spell_points_available < 0 %}
-        <div class="card border-danger mb-4">
+{% load characters_extras %}
+{% load i18n %}
+{% if object.extension_enabled.magic and object.is_magical %}
+  {% with spell_points_available=character.spell_points_available %}
+    <div class="row">
+      <div class="col-12 col-md-6 h-100">
+        <div class="card sidebar-trigger mb-3" data-sidebar-title="{% trans 'Magic' %}"
+             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
           <div class="card-body">
-            <div class="d-flex align-items-center justify-content-start">
-              <i class="fs-2 me-2 gi-lorc-magic-palm text-danger"></i>
-              <h4>{% trans "You have memorized too much!" %}</h4>
-            </div>
-            <p>
-              {% blocktrans %}
-                Your memorised spells use up more spell points than you have available. Either forget some spells or
-                take character templates that increase your spell points.
-              {% endblocktrans %}
-            </p>
-            <p>
-              {% trans "Your current spell points are:" %} <span
-              class="fs-3 text-danger">{{ spell_points_available }}</span>
-            </p>
+            <h5>{% trans "Arcana" %}</h5>
+            {% arcana_display object %}
           </div>
         </div>
-      {% endif %}
-
-      <div class="column-container column-layout-2">
-        {% include 'characters/includes/character_spell_cards.html' %}
       </div>
-    {% endwith %}
-  {% endif %}
-{% endblock %}
+      <div class="col-12 col-md-6 h-100">
+        <div class="card sidebar-trigger mb-3" data-sidebar-title="{% trans 'Magic' %}"
+             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
+          <div class="card-body">
+            <h5>{% trans "Spell points" %}</h5>
+            <span class="fs-3 text-danger">{{ spell_points_available }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if may_edit %}
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-primary float-end mb-2 modal-trigger"
+                  data-bs-toggle="modal"
+                  data-bs-target=".page-modal"
+                  data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="spell" %}"
+                  data-modal-title="{% trans 'Learn a spell' %}">
+            <i class="gi-lorc-fairy-wand text-warning"></i>{% trans "Add a spell" %}
+          </button>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if spell_points_available < 0 %}
+      <div class="card border-danger mb-4">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-start">
+            <i class="fs-2 me-2 gi-lorc-magic-palm text-danger"></i>
+            <h4>{% trans "You have memorized too much!" %}</h4>
+          </div>
+          <p>
+            {% blocktrans %}
+              Your memorised spells use up more spell points than you have available. Either forget some spells or
+              take character templates that increase your spell points.
+            {% endblocktrans %}
+          </p>
+          <p>
+            {% trans "Your current spell points are:" %} <span
+            class="fs-3 text-danger">{{ spell_points_available }}</span>
+          </p>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="column-container column-layout-2">
+      {% include 'characters/includes/character_spell_cards.html' %}
+    </div>
+  {% endwith %}
+{% endif %}

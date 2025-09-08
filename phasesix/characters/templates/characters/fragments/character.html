@@ -1,32 +1,27 @@
-{% extends 'characters/fragments/fragment_base.html' %}
-{% load characters_extras rules_extras i18n %}
-
-{% block fragment %}
-  <div class="row">
-    <div class="col-md-4">
-      {% include 'characters/includes/physis_table.html' %}
-    </div>
-
-    <div class="col-md-4">
-      {% include 'characters/includes/persona_table.html' %}
-    </div>
-
-    <div class="col-md-4">
-      {% include 'characters/includes/knowledge_table.html' %}
-    </div>
+<div class="row">
+  <div class="col-md-4">
+    {% include 'characters/includes/physis_table.html' %}
   </div>
 
-  <div class="row mt-2">
-    <div class="col-md-4">
-      {% include 'characters/includes/mind_skill_table.html' %}
-    </div>
-
-    <div class="col-md-4">
-      {% include 'characters/includes/practical_skill_table.html' %}
-    </div>
-
-    <div class="col-md-4">
-      {% include 'characters/includes/shadows_table.html' %}
-    </div>
+  <div class="col-md-4">
+    {% include 'characters/includes/persona_table.html' %}
   </div>
-{% endblock %}
+
+  <div class="col-md-4">
+    {% include 'characters/includes/knowledge_table.html' %}
+  </div>
+</div>
+
+<div class="row mt-2">
+  <div class="col-md-4">
+    {% include 'characters/includes/mind_skill_table.html' %}
+  </div>
+
+  <div class="col-md-4">
+    {% include 'characters/includes/practical_skill_table.html' %}
+  </div>
+
+  <div class="col-md-4">
+    {% include 'characters/includes/shadows_table.html' %}
+  </div>
+</div>

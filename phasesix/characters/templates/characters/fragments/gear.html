@@ -1,66 +1,62 @@
-{% extends 'characters/fragments/fragment_base.html' %}
-{% load characters_extras rules_extras i18n %}
-
-{% block fragment %}
-
-  <div class="row">
-    <div class="col-md-6">
-      <div>
-        {% if may_edit %}
-          <a class="btn btn-primary btn-sm float-end modal-trigger"
-             data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
-             data-bs-toggle="modal"
-             data-bs-target=".page-modal"
-             data-modal-title="{% trans 'Add Armor' %}"
-             href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
-        {% endif %}
-        <h2 class="mb-2 h4">{% trans 'Armor' %}</h2>
-      </div>
-
-      {% include 'characters/includes/character_riot_gear_cards.html' %}
-
-      <div>
-        {% if may_edit %}
-          <a class="btn btn-primary btn-sm float-end modal-trigger"
-             data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
-             data-bs-toggle="modal"
-             data-bs-target=".page-modal"
-             data-modal-title="{% trans 'Add Weapon' %}"
-             href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
-        {% endif %}
-        <h2 class="mb-2 h4">{% trans 'Weapons' %}</h2>
-      </div>
-
-      {% include 'characters/includes/character_weapon_cards.html' %}
-    </div>
-
-    <div class="col-md-6">
-      <div>
-        {% if may_edit %}
-          <a class="btn btn-primary btn-sm float-end modal-trigger"
-             data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
-             title="{% trans 'Add Item' %}"
-             data-bs-toggle="modal"
-             data-modal-title="{% trans 'Add item' %}"
-             data-bs-target=".page-modal"
-             href=""><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
-        {% endif %}
-        <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
-      </div>
-
-      {% if object.currency_map %}
-        <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Currency' %}"
-             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="currency" %}">
-          <div class="card-body text-center">
-            {% for unit in object.currency_map.currencymapunit_set.all %}
-              <i class="ms-1 {{ unit.fa_icon_class }} {{ unit.color_class }}"></i>
-              {{ object|currency_quantity:unit }}
-            {% endfor %}
-          </div>
-        </div>
+{% load characters_extras %}
+{% load i18n %}
+<div class="row">
+  <div class="col-md-6">
+    <div>
+      {% if may_edit %}
+        <a class="btn btn-primary btn-sm float-end modal-trigger"
+           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
+           data-bs-toggle="modal"
+           data-bs-target=".page-modal"
+           data-modal-title="{% trans 'Add Armor' %}"
+           href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
       {% endif %}
-
-      {% include 'characters/includes/character_item_cards.html' %}
+      <h2 class="mb-2 h4">{% trans 'Armor' %}</h2>
     </div>
+
+    {% include 'characters/includes/character_riot_gear_cards.html' %}
+
+    <div>
+      {% if may_edit %}
+        <a class="btn btn-primary btn-sm float-end modal-trigger"
+           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
+           data-bs-toggle="modal"
+           data-bs-target=".page-modal"
+           data-modal-title="{% trans 'Add Weapon' %}"
+           href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
+      {% endif %}
+      <h2 class="mb-2 h4">{% trans 'Weapons' %}</h2>
+    </div>
+
+    {% include 'characters/includes/character_weapon_cards.html' %}
   </div>
-{% endblock %}
+
+  <div class="col-md-6">
+    <div>
+      {% if may_edit %}
+        <a class="btn btn-primary btn-sm float-end modal-trigger"
+           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
+           title="{% trans 'Add Item' %}"
+           data-bs-toggle="modal"
+           data-modal-title="{% trans 'Add item' %}"
+           data-bs-target=".page-modal"
+           href=""><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
+      {% endif %}
+      <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
+    </div>
+
+    {% if object.currency_map %}
+      <div class="card mb-3 sidebar-trigger" data-sidebar-title="{% trans 'Currency' %}"
+           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="currency" %}">
+        <div class="card-body text-center">
+          {% for unit in object.currency_map.currencymapunit_set.all %}
+            <i class="ms-1 {{ unit.fa_icon_class }} {{ unit.color_class }}"></i>
+            {{ object|currency_quantity:unit }}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% include 'characters/includes/character_item_cards.html' %}
+  </div>
+</div>

@@ -8,107 +8,107 @@
 
 {% block javascript %}
   <script>
-      $(function () {
-          let timer = null;
+    $(function () {
+      let timer = null;
 
-          function displayWarnings(warnings) {
-              let element = $('.character-warnings');
-              element.html("");
-              if (!!warnings.length) {
-                  element.removeClass('d-none');
-                  for (let warning of warnings) {
-                      element.append(`<div>${warning}</div>`)
-                  }
-              } else {
-                  element.addClass("d-none");
-              }
+      function displayWarnings(warnings) {
+        let element = $('.character-warnings');
+        element.html("");
+        if (!!warnings.length) {
+          element.removeClass('d-none');
+          for (let warning of warnings) {
+            element.append(`<div>${warning}</div>`)
           }
+        } else {
+          element.addClass("d-none");
+        }
+      }
 
-          $('#id_q').on('keyup', function (e) {
-              let q = $(this).val();
+      $('#id_q').on('keyup', function (e) {
+        let q = $(this).val();
 
-              function updateTabs() {
-                  $('.tab-pane').each(function (index) {
-                      let elem = $(this);
-                      let ct = elem.find('.constructed-template:not(.d-none)');
-                      if (ct.length === 0) {
-                          elem.addClass('d-none');
-                          $(elem.data('rel')).addClass('disabled');
-                      } else {
-                          elem.removeClass('d-none');
-                          $(elem.data('rel')).removeClass('disabled');
-                      }
-                      $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
-                  })
-              }
+        function updateTabs() {
+          $('.tab-pane').each(function (index) {
+            let elem = $(this);
+            let ct = elem.find('.constructed-template:not(.d-none)');
+            if (ct.length === 0) {
+              elem.addClass('d-none');
+              $(elem.data('rel')).addClass('disabled');
+            } else {
+              elem.removeClass('d-none');
+              $(elem.data('rel')).removeClass('disabled');
+            }
+            $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
+          })
+        }
 
-              if (timer) {
-                  clearTimeout(timer);
-              }
-              timer = setTimeout(function () {
-                  $('.constructed-template').each(function (index) {
-                      if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                          $(this).removeClass('d-none');
-                      } else {
-                          $(this).addClass('d-none');
-                      }
-                  });
-                  updateTabs();
-              }, 100);
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+          $('.constructed-template').each(function (index) {
+            if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
+              $(this).removeClass('d-none');
+            } else {
+              $(this).addClass('d-none');
+            }
           });
+          updateTabs();
+        }, 100);
+      });
 
-          $('.row').on('click', '.constructed-template', function (e) {
-              let template_div = $(this);
-              let template_id = template_div.data('template-id');
-              let preview_url = template_div.data('preview-url');
-              if (template_div.hasClass('selected')) {
-                  $.post(
-                      template_div.data('remove-url'),
-                      {template_id: template_id},
-                      function (data) {
-                          if (data.status === 'ok') {
-                              $('.template-points').text(data.remaining_points);
-                              template_div.removeClass('selected');
-                              displayWarnings(data.warnings);
-                              $('.character-preview').load(preview_url);
-                          } else {
-                              // shake
-                          }
-                      });
+      $('.row').on('click', '.constructed-template', function (e) {
+        let template_div = $(this);
+        let template_id = template_div.data('template-id');
+        let preview_url = template_div.data('preview-url');
+        if (template_div.hasClass('selected')) {
+          $.post(
+            template_div.data('remove-url'),
+            {template_id: template_id},
+            function (data) {
+              if (data.status === 'ok') {
+                $('.template-points').text(data.remaining_points);
+                template_div.removeClass('selected');
+                displayWarnings(data.warnings);
+                $('.character-preview').load(preview_url);
               } else {
-                  $.post(
-                      template_div.data('add-url'),
-                      {template_id: template_id},
-                      function (data) {
-                          if (data.status === 'ok') {
-                              $('.template-points').text(data.remaining_points);
-                              template_div.addClass('selected');
-                              displayWarnings(data.warnings);
-                              $('.character-preview').load(preview_url);
-                          } else {
-                              template_div.addClass('notenoughpoints');
-                              $('.template-points').addClass('animated wobble');
-                              setTimeout(function () {
-                                  template_div.removeClass('notenoughpoints');
-                                  $('.template-points').removeClass('animated wobble');
-                              }, 500);
-                          }
-                      });
+                // shake
               }
-              e.preventDefault();
-              return false;
-          });
-
-          $('#switch-preview').on('change', function () {
-              if ($(this).prop('checked')) {
-                  $('.template-list').addClass('d-none');
-                  $('.character-preview').removeClass('d-none');
+            });
+        } else {
+          $.post(
+            template_div.data('add-url'),
+            {template_id: template_id},
+            function (data) {
+              if (data.status === 'ok') {
+                $('.template-points').text(data.remaining_points);
+                template_div.addClass('selected');
+                displayWarnings(data.warnings);
+                $('.character-preview').load(preview_url);
               } else {
-                  $('.character-preview').addClass('d-none');
-                  $('.template-list').removeClass('d-none');
+                template_div.addClass('notenoughpoints');
+                $('.template-points').addClass('animated wobble');
+                setTimeout(function () {
+                  template_div.removeClass('notenoughpoints');
+                  $('.template-points').removeClass('animated wobble');
+                }, 500);
               }
-          });
-      })
+            });
+        }
+        e.preventDefault();
+        return false;
+      });
+
+      $('#switch-preview').on('change', function () {
+        if ($(this).prop('checked')) {
+          $('.template-list').addClass('d-none');
+          $('.character-preview').removeClass('d-none');
+        } else {
+          $('.character-preview').addClass('d-none');
+          $('.template-list').removeClass('d-none');
+        }
+      });
+    })
   </script>
 {% endblock %}
 
@@ -183,7 +183,10 @@
     </div>
 
     <div class="col-12 col-md-9 character-preview d-none">
-      {% detail_fragment 'character' %}
+      <div
+        hx-trigger="intersect,refresh-fragments from:document,refresh-character-character from:document"
+        hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="character" %}">
+      </div>
     </div>
   </div>
 

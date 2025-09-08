@@ -57,47 +57,80 @@
         </div>
       {% endif %}
 
-      {% detail_fragment "status" %}
+      <div
+        hx-trigger="intersect,refresh-fragments from:document,refresh-character-status from:document"
+        hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="status" %}">
+      </div>
 
       <div class="tab-content">
         <div class="tab-pane fade show active" id="v-description" role="tabpanel">
-          {% detail_fragment 'description' show_loader=False %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-description from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="description" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-character" role="tabpanel">
-          {% detail_fragment 'character' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-character from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="character" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-gear" role="tabpanel">
-          {% detail_fragment 'gear' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-gear from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="gear" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-body-modifications" role="tabpanel">
-          {% detail_fragment 'body_modifications' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-body_modifications from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="body_modifications" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-combat" role="tabpanel">
-          {% detail_fragment 'combat' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-combat from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="combat" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-magic" role="tabpanel">
-          {% detail_fragment 'magic' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-magic from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="magic" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-pantheon" role="tabpanel">
-          {% detail_fragment 'pantheon' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-pantheon from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="pantheon" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-horror" role="tabpanel">
-          {% detail_fragment 'horror' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-horror from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="horror" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-background" role="tabpanel">
-          {% detail_fragment 'advancement' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-advancement from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="advancement" %}">
+          </div>
         </div>
 
         <div class="tab-pane fade" id="v-notes" role="tabpanel">
-          {% detail_fragment 'notes' %}
+          <div
+            hx-trigger="intersect,refresh-fragments from:document,refresh-character-notes from:document"
+            hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="notes" %}">
+          </div>
         </div>
       </div>
     </div>

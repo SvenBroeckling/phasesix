@@ -1,82 +1,79 @@
-{% extends 'characters/fragments/fragment_base.html' %}
-{% load characters_extras rules_extras i18n %}
-
-{% block fragment %}
-  <div class="row">
-
-    <div class="col-12 col-md-6 mb-3">
-      <div class="card sidebar-trigger h-100" data-sidebar-title="{% trans 'Reputation' %}"
-           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="reputation" %}">
-        <div class="card-body">
-          <h4 class="card-title">{% trans "Reputation gained" %}</h4>
-          <p>
-            {% blocktrans %}
-              Reputation represents the popularity of a character. Reputation can be
-              to purchase new character templates. Reputation is distributed by the GM after each game session and for
-              for special events.
-            {% endblocktrans %}
-          </p>
-          <p>
-            {% trans "Your gained reputation is" %}
-            <span class="h3">{% color_value_span object.reputation_gained 100 %}</span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="col-12 col-md-6 mb-3">
-      <div class="card h-100 modal-trigger pointer"
-           data-modal-title="{% trans 'Add character templates' %}"
-           data-bs-toggle="modal"
-           data-bs-target=".page-modal"
-           data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}">
-        <div class="card-body">
-          <h4 class="card-title">{% trans "Reputation available" %}</h4>
-          <p>
-            {% blocktrans %}
-              Any point of reputation not spent on character templates is available. You can add character
-              templates for these points. This is usually done between game sessions.
-            {% endblocktrans %}
-          </p>
-          {% if character.reputation_available > 0 %}
-            <p>
-              {% blocktrans %}
-                You have unspent reputation points. Click here to add new templates to your
-                character and advance in your professions.
-              {% endblocktrans %}
-            </p>
-          {% endif %}
-          <p>
-            {% trans "Your available reputation is" %}
-            <span class="h3">{% color_value_span object.reputation_available 40 %}</span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 mb-3">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex flex-column align-items-center justify-content-center gap-2 p-3">
-            <i class="fs-2 gi-delapouite-book-cover text-warning"></i>
-            <h3>{% trans "Your background" %}</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-
-      <div class="column-container column-layout-2">
-        {% for template in character.charactertemplate_set.all %}
-          <div class="sidebar-trigger"
-               data-sidebar-title="{{ template.template }}"
-               data-sidebar-url="{% url 'characters:xhr_sidebar' pk=template.id sidebar_template="template" %}">
-            {% template_widget template.template character=character add_button=False %}
-          </div>
-        {% endfor %}
+{% load rules_extras %}
+{% load characters_extras %}
+{% load i18n %}
+<div class="row">
+  <div class="col-12 col-md-6 mb-3">
+    <div class="card sidebar-trigger h-100" data-sidebar-title="{% trans 'Reputation' %}"
+         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="reputation" %}">
+      <div class="card-body">
+        <h4 class="card-title">{% trans "Reputation gained" %}</h4>
+        <p>
+          {% blocktrans %}
+            Reputation represents the popularity of a character. Reputation can be
+            to purchase new character templates. Reputation is distributed by the GM after each game session and for
+            for special events.
+          {% endblocktrans %}
+        </p>
+        <p>
+          {% trans "Your gained reputation is" %}
+          <span class="h3">{% color_value_span object.reputation_gained 100 %}</span>
+        </p>
       </div>
     </div>
   </div>
-{% endblock %}
+
+
+  <div class="col-12 col-md-6 mb-3">
+    <div class="card h-100 modal-trigger pointer"
+         data-modal-title="{% trans 'Add character templates' %}"
+         data-bs-toggle="modal"
+         data-bs-target=".page-modal"
+         data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}">
+      <div class="card-body">
+        <h4 class="card-title">{% trans "Reputation available" %}</h4>
+        <p>
+          {% blocktrans %}
+            Any point of reputation not spent on character templates is available. You can add character
+            templates for these points. This is usually done between game sessions.
+          {% endblocktrans %}
+        </p>
+        {% if character.reputation_available > 0 %}
+          <p>
+            {% blocktrans %}
+              You have unspent reputation points. Click here to add new templates to your
+              character and advance in your professions.
+            {% endblocktrans %}
+          </p>
+        {% endif %}
+        <p>
+          {% trans "Your available reputation is" %}
+          <span class="h3">{% color_value_span object.reputation_available 40 %}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex flex-column align-items-center justify-content-center gap-2 p-3">
+          <i class="fs-2 gi-delapouite-book-cover text-warning"></i>
+          <h3>{% trans "Your background" %}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+
+    <div class="column-container column-layout-2">
+      {% for template in character.charactertemplate_set.all %}
+        <div class="sidebar-trigger"
+             data-sidebar-title="{{ template.template }}"
+             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=template.id sidebar_template="template" %}">
+          {% template_widget template.template character=character add_button=False %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

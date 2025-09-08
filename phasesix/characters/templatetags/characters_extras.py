@@ -83,14 +83,6 @@ def display_modifications(character_weapon, identifier):
     return mark_safe(res)
 
 
-@register.inclusion_tag("characters/fragments/fragment_base.html", takes_context=True)
-def detail_fragment(context, fragment_template, show_loader=True):
-    context = context.flatten()
-    context["fragment_template"] = fragment_template
-    context["show_loader"] = show_loader
-    return context
-
-
 @register.simple_tag
 def has_extensions(template, extensions):
     for e in template.extensions.all():

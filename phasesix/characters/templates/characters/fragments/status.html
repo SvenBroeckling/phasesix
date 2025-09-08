@@ -1,36 +1,33 @@
-{% extends 'characters/fragments/fragment_base.html' %}
-{% load characters_extras rules_extras i18n %}
-
-{% block fragment %}
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Wounds' %}"
-           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="wounds" %}">
-        <div class="card-body">
-          <h5>{% trans "Wounds" %}</h5>
-          {% wound_display object %}
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Protection' %}"
-           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="protection" %}">
-        <div class="card-body">
-          <h5>{% trans "Protection" %}</h5>
-          {% protection_display object %}
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}"
-           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="dice" %}">
-        <div class="card-body">
-          <h5>{% trans "Dice" %} / {% trans "Custom roll" %}</h5>
-          {% dice_display object %}
-        </div>
+{% load characters_extras %}
+{% load i18n %}
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Wounds' %}"
+         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="wounds" %}">
+      <div class="card-body">
+        <h5>{% trans "Wounds" %}</h5>
+        {% wound_display object %}
       </div>
     </div>
   </div>
-{% endblock %}
+
+  <div class="col-md-4 mb-3">
+    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Protection' %}"
+         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="protection" %}">
+      <div class="card-body">
+        <h5>{% trans "Protection" %}</h5>
+        {% protection_display object %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}"
+         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="dice" %}">
+      <div class="card-body">
+        <h5>{% trans "Dice" %} / {% trans "Custom roll" %}</h5>
+        {% dice_display object %}
+      </div>
+    </div>
+  </div>
+</div>
