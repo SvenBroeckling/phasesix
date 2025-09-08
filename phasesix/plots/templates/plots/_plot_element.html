@@ -27,43 +27,44 @@
   <div id="details-{{ element.id }}" class="collapse">
     <div class="rounded p-3 my-2 small border">
       {# Player summary #}
-      {% if element.player_summary %}
-        <div class="mb-3">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
-            <button
-              data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
-              data-modal-refresh-after="true"
-              data-modal-title="{% trans 'Edit plot element' %}"
-              type="button" class="btn btn-sm btn-outline-primary" data-action="edit-summary"
-              title="{% trans 'Edit summary' %}"><i class="fa fa-pen"></i> {% trans 'Edit' %}</button>
-          </div>
-          <div class="text-body">{{ element.player_summary|linebreaksbr }}</div>
+      <div class="mb-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
+          <button
+            data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
+            data-modal-refresh-after="true"
+            data-modal-title="{% trans 'Edit plot element' %}"
+            type="button" class="btn btn-sm btn-outline-primary"
+            title="{% trans 'Edit summary' %}"><i class="fa fa-pen"></i> {% trans 'Edit' %}</button>
         </div>
-      {% endif %}
+        {% trans "None" as none_text %}
+        <div class="text-body">{{ element.player_summary|linebreaksbr|default:none_text }}</div>
+      </div>
 
       {# GM notes #}
-      {% if element.gm_notes %}
-        <div class="mb-3">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
-            <button
-              data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
-              data-modal-refresh-after="true"
-              data-modal-title="{% trans 'Edit plot element' %}"
-              type="button" class="btn btn-sm btn-outline-primary" data-action="edit-notes"
-              title="{% trans 'Edit notes' %}"><i class="fa fa-pen"></i> {% trans 'Edit' %}</button>
-          </div>
-          <div class="text-body">{{ element.gm_notes|linebreaksbr }}</div>
+      <div class="mb-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
+          <button
+            data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
+            data-modal-refresh-after="true"
+            data-modal-title="{% trans 'Edit plot element' %}"
+            type="button" class="btn btn-sm btn-outline-primary"
+            title="{% trans 'Edit notes' %}"><i class="fa fa-pen"></i> {% trans 'Edit' %}</button>
         </div>
-      {% endif %}
+        <div class="text-body">{{ element.gm_notes|linebreaksbr|default:none_text }}</div>
+      </div>
 
       {# Handouts #}
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Handouts' %}</div>
-          <button type="button" class="btn btn-sm btn-outline-primary" data-action="add-handout"
-                  title="{% trans 'Add handout' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
+          <button
+            data-modal-url="{% url "plots:create_handout" plot_element_pk=element.id %}"
+            data-modal-refresh-after="true"
+            data-modal-title="{% trans 'Create handout' %}"
+            type="button" class="btn btn-sm btn-outline-primary"
+            title="{% trans 'Add handout' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
         </div>
 
         <div class="d-flex flex-wrap gap-2">
@@ -90,8 +91,10 @@
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
-          <button type="button" class="btn btn-sm btn-outline-primary" data-action="add-handout"
-                  title="{% trans 'Add handout' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
+          <a class="btn btn-sm btn-outline-primary"
+             target="_blank"
+             href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id %}?plot_element_pk={{ object.id }}"
+             title="{% trans 'Add npc' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
         </div>
 
         <div class="d-flex flex-wrap gap-3">
@@ -115,8 +118,12 @@
       <div>
         <div class="d-flex align-items-center justify-content-between">
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Locations' %}</div>
-          <button type="button" class="btn btn-sm btn-outline-primary" data-action="add-handout"
-                  title="{% trans 'Add location' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
+          <button
+            data-modal-url="{% url "plots:create_location" plot_element_pk=element.id %}"
+            data-modal-refresh-after="true"
+            data-modal-title="{% trans 'Create location' %}"
+            type="button" class="btn btn-sm btn-outline-primary"
+            title="{% trans 'Add location' %}"><i class="fa fa-plus"></i> {% trans 'Add' %}</button>
         </div>
         <div class="d-flex flex-wrap gap-3">
           {% for loc in element.locations.all %}

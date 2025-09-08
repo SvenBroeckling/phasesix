@@ -8,6 +8,8 @@ from .views import (
     XhrUpdatePlotView,
     XhrCreatePlotElementView,
     XhrUpdatePlotElementView,
+    XhrCreateHandoutView,
+    XhrCreateLocationView,
 )
 
 app_name = "plots"
@@ -37,5 +39,16 @@ urlpatterns = [
         "plot_element/<int:pk>/update",
         staff_member_required(XhrUpdatePlotElementView.as_view()),
         name="update_plot_element",
+    ),
+    # Handouts and Locations
+    path(
+        "<int:plot_element_pk>/handout/create",
+        staff_member_required(XhrCreateHandoutView.as_view()),
+        name="create_handout",
+    ),
+    path(
+        "<int:plot_element_pk>/location/create",
+        staff_member_required(XhrCreateLocationView.as_view()),
+        name="create_location",
     ),
 ]

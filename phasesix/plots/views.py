@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
-from plots.forms import PlotForm, PlotElementForm
-from plots.models import Plot, PlotElement
+from plots.forms import PlotForm, PlotElementForm, HandoutForm, LocationForm
+from plots.models import Plot, PlotElement, Handout, Location
 
 
 class PlotEditorView(DetailView):
@@ -18,7 +18,7 @@ class PlotListView(ListView):
 
 class XhrCreatePlotView(CreateView):
     model = Plot
-    template_name = "plots/create_plot.html"
+    template_name = "plots/xhr_plot_modal.html"
     form_class = PlotForm
     extra_context = {
         "post_url": reverse_lazy("plots:create_plot"),
@@ -30,7 +30,7 @@ class XhrCreatePlotView(CreateView):
 
 class XhrUpdatePlotView(UpdateView):
     model = Plot
-    template_name = "plots/create_plot.html"
+    template_name = "plots/xhr_plot_modal.html"
     form_class = PlotForm
 
     def get_context_data(self, **kwargs):
@@ -46,7 +46,7 @@ class XhrUpdatePlotView(UpdateView):
 
 class XhrCreatePlotElementView(CreateView):
     model = PlotElement
-    template_name = "plots/create_plot.html"
+    template_name = "plots/xhr_plot_modal.html"
     form_class = PlotElementForm
 
     def get_context_data(self, **kwargs):
@@ -73,7 +73,7 @@ class XhrCreatePlotElementView(CreateView):
 
 class XhrUpdatePlotElementView(UpdateView):
     model = PlotElement
-    template_name = "plots/create_plot.html"
+    template_name = "plots/xhr_plot_modal.html"
     form_class = PlotElementForm
 
     def get_context_data(self, **kwargs):
@@ -85,3 +85,49 @@ class XhrUpdatePlotElementView(UpdateView):
 
     def get_success_url(self):
         return reverse("plots:plot_editor", kwargs={"pk": self.kwargs["pk"]})
+
+
+class XhrCreateHandoutView(CreateView):
+    model = Handout
+    template_name = "plots/xhr_plot_modal.html"
+    form_class = HandoutForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
+        context["post_url"] = reverse(
+            "plots:create_handout", kwargs={"plot_element_pk": plot_element.pk}
+        )
+        return context
+
+    def form_valid(self, form):
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
+        plot_element.handouts.add(form.save())
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
+        return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
+
+
+class XhrCreateLocationView(CreateView):
+    model = Location
+    template_name = "plots/xhr_plot_modal.html"
+    form_class = LocationForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
+        context["post_url"] = reverse(
+            "plots:create_location", kwargs={"plot_element_pk": plot_element.pk}
+        )
+        return context
+
+    def form_valid(self, form):
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
+        plot_element.locations.add(form.save())
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
+        return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
