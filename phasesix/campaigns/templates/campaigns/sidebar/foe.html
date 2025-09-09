@@ -30,10 +30,10 @@
       </button>
     </div>
     <div class="col-12">
-      <a class="btn btn-danger w-100 btn-sm mb-2 confirm-action-link"
-         data-message="{% trans 'Remove foe from campaign?' %}"
-         href="{% url 'campaigns:xhr_remove_foe' pk=object.campaign.id foe_pk=object.id %}"><i
-        class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</a>
+      <button class="btn btn-danger w-100 btn-sm mb-2"
+              data-action-trigger-event-after="refresh-campaign-personae,sidebar-right-hide"
+              data-action-trigger-url="{% url 'campaigns:xhr_remove_foe' pk=object.campaign.id foe_pk=object.id %}"><i
+        class="fas fa-times fa-fw"></i> {% trans 'Remove from campaign' %}</button>
     </div>
   {% endif %}
 </div>

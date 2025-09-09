@@ -4,30 +4,43 @@
   <div class="row">
     <div class="col-12">
       <div class="btn-group w-100 mb-1">
-        <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_bonus" %}"
-           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-six"
-                                                         title="{% trans 'Bonus Dice' %}"></i>{% trans '-Bonus' %}</a>
-        <a href="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}"
-           class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-six"
-                                                         title="{% trans 'Bonus Dice' %}"></i>{% trans '+Bonus' %}</a>
+        <button data-action-trigger-url="{% url 'characters:modify_dice' pk=object.id mode="remove_bonus" %}"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                class="btn btn-sm btn-warning">
+          <i class="fas fa-fw fa-dice-six" title="{% trans 'Bonus Dice' %}"></i>{% trans '-Bonus' %}
+        </button>
+        <button data-action-trigger-url="{% url 'characters:modify_dice' pk=object.id mode="add_bonus" %}"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                class="btn btn-sm btn-success">
+          <i class="fas fa-fw fa-dice-six" title="{% trans 'Bonus Dice' %}"></i>{% trans '+Bonus' %}
+        </button>
       </div>
+
       <div class="btn-group w-100 mb-1">
-        <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_destiny" %}"
-           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-four"
-                                                         title="{% trans 'Destiny Dice' %}"></i>{% trans '-Destiny' %}
-        </a>
-        <a href="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}"
-           class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-four"
-                                                         title="{% trans 'Destiny Dice' %}"></i>{% trans '+Destiny' %}
-        </a>
+        <button data-action-trigger-url="{% url 'characters:modify_dice' pk=object.id mode="remove_destiny" %}"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                class="btn btn-sm btn-warning">
+          <i class="fas fa-fw fa-dice-four" title="{% trans 'Destiny Dice' %}"></i>
+          {% trans '-Destiny' %}
+        </button>
+        <button data-action-trigger-url="{% url 'characters:modify_dice' pk=object.id mode="add_destiny" %}"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                class="btn btn-sm btn-success">
+          <i class="fas fa-fw fa-dice-four" title="{% trans 'Destiny Dice' %}"></i>{% trans '+Destiny' %}
+        </button>
       </div>
+
       <div class="btn-group w-100 mb-3">
-        <a href="{% url 'characters:modify_dice' pk=object.id mode="remove_reroll" %}"
-           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-dice-one"
-                                                         title="{% trans 'Rerolls' %}"></i>{% trans '-Reroll' %}</a>
-        <a href="{% url 'characters:modify_dice' pk=object.id mode="add_reroll" %}"
-           class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-dice-one"
-                                                         title="{% trans 'Rerolls' %}"></i>{% trans '+Reroll' %}</a>
+        <button data-action-trigger-url="{% url 'characters:modify_dice' pk=object.id mode="remove_reroll" %}"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                class="btn btn-sm btn-warning">
+          <i class="fas fa-fw fa-dice-one" title="{% trans 'Rerolls' %}"></i>{% trans '-Reroll' %}
+        </button>
+        <button data-action-trigger-url="{% url 'characters:modify_dice' pk=object.id mode="add_reroll" %}"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                class="btn btn-sm btn-success">
+          <i class="fas fa-fw fa-dice-one" title="{% trans 'Rerolls' %}"></i>{% trans '+Reroll' %}
+        </button>
       </div>
     </div>
   </div>
@@ -40,17 +53,20 @@
         <li class="list-group-item">
           <i class="fas fa-fw fa-dice-six text-success" title="{% trans 'Bonus Dice' %}"></i>
           {% trans 'Bonus Dice' %}
-          <span class="float-end">{% color_value_span object.bonus_dice_free 3 %} / {% color_value_span object.bonus_dice 3 %}</span>
+          <span
+            class="float-end">{% color_value_span object.bonus_dice_free 3 %} / {% color_value_span object.bonus_dice 3 %}</span>
         </li>
         <li class="list-group-item">
           <i class="fas fa-fw fa-dice-four text-danger" title="{% trans 'Destiny Dice' %}"></i>
           {% trans 'Destiny Dice' %}
-          <span class="float-end">{% color_value_span object.destiny_dice_free 3 %} / {% color_value_span object.destiny_dice 3 %}</span>
+          <span
+            class="float-end">{% color_value_span object.destiny_dice_free 3 %} / {% color_value_span object.destiny_dice 3 %}</span>
         </li>
         <li class="list-group-item">
           <i class="fas fa-fw fa-dice-one text-info" title="{% trans 'Rerolls' %}"></i>
           {% trans 'Rerolls' %}
-          <span class="float-end">{% color_value_span object.rerolls_free 3 %} / {% color_value_span object.rerolls 3 %}</span>
+          <span
+            class="float-end">{% color_value_span object.rerolls_free 3 %} / {% color_value_span object.rerolls 3 %}</span>
         </li>
       </ul>
     </div>

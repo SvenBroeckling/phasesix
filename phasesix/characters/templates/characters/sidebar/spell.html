@@ -27,7 +27,7 @@
           data-action-trigger-event-after="refresh-character-magic,sidebar-right-hide"
           data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="spell" %}?object_id={{ object.id }}"
           data-action-trigger-method="DELETE"
-          class="btn btn-sm btn-danger action-link close-sidebar mt-1">
+          class="btn btn-sm btn-danger mt-1">
           <i class="fas fa-fw fa-trash" title="{% trans 'Forget' %}"></i>{% trans 'Forget' %}
         </button>
       </div>

@@ -9,9 +9,8 @@
   <div class="dropdown-menu">
     {% user_campaigns request.user as campaigns %}
     {% for campaign in campaigns %}
-      <a class="dropdown-item action-link add-foe-link"
-         data-message="{% trans "Added" %}"
-         href="{% url 'campaigns:xhr_add_foe' pk=campaign.id foe_pk=object.foe.id %}">
+      <a class="dropdown-item"
+         data-action-trigger-url="{% url 'campaigns:xhr_add_foe' pk=campaign.id foe_pk=object.foe.id %}">
         {{ campaign }}
       </a>
     {% endfor %}

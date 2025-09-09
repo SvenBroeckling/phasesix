@@ -14,7 +14,7 @@
           <button
             data-action-trigger-event-after="refresh-character-pantheon,sidebar-right-refresh"
             data-action-trigger-url="{% url 'characters:modify_grace' pk=object.id mode="restore" %}"
-            class="btn btn-sm btn-success action-link">
+            class="btn btn-sm btn-success">
             <i class="fas fa-fw fa-ankh" title="{% trans 'Gain Grace' %}"></i> {% trans '+Grace' %}
           </button>
         </div>
@@ -26,13 +26,13 @@
         <button
           data-action-trigger-event-after="refresh-character-pantheon,sidebar-right-refresh"
           data-action-trigger-url="{% url 'characters:modify_attitude' pk=object.id mode="use" %}"
-          class="btn btn-sm btn-warning action-link">
+          class="btn btn-sm btn-warning">
           <i class="fas fa-fw fa-balance-scale" title="{% trans 'Reduce Attitude' %}"></i> {% trans '-Attitude' %}
         </button>
         <button
           data-action-trigger-event-after="refresh-character-pantheon,sidebar-right-refresh"
           data-action-trigger-url="{% url 'characters:modify_attitude' pk=object.id mode="restore" %}"
-          class="btn btn-sm btn-success action-link">
+          class="btn btn-sm btn-success">
           <i class="fas fa-fw fa-balance-scale" title="{% trans 'Increase Attitude' %}"></i> {% trans '+Attitude' %}
         </button>
       </div>

@@ -99,10 +99,11 @@
 
           {% if may_edit %}
             <a
-              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center action-link"
+              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center"
               style="width: 2rem; height: 2rem;"
-              data-method="DELETE"
-              href="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}?object_id={{ character_language.id }}">
+              data-action-trigger-method="DELETE"
+              data-action-trigger-event-after="refresh-character-description"
+              data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="language" %}?object_id={{ character_language.id }}">
               <i class="far fa-trash-alt fa-fw"></i>
             </a>
           {% endif %}
@@ -155,10 +156,11 @@
           </div>
           {% if may_edit %}
             <a
-              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center action-link"
+              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center"
               style="width: 2rem; height: 2rem;"
-              data-method="DELETE"
-              href="{% url "characters:xhr_contact" pk=object.id %}?contact_id={{ contact.id }}">
+              data-action-trigger-method="DELETE"
+              data-action-trigger-event-after="refresh-character-description"
+              data-action-trigger-url="{% url "characters:xhr_contact" pk=object.id %}?contact_id={{ contact.id }}">
               <i class="far fa-trash-alt fa-fw"></i>
             </a>
           {% endif %}
@@ -219,10 +221,11 @@
               <i class="fas fa-pencil-alt fa-fw"></i>
             </button>
             <a
-              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center action-link"
+              class="btn btn-sm btn-secondary rounded-circle d-flex align-items-center justify-content-center"
               style="width: 2rem; height: 2rem;"
-              data-method="DELETE"
-              href="{% url "characters:xhr_character_objects" pk=object.id object_type="foe" %}?object_id={{ foe.id }}">
+              data-action-trigger-method="DELETE"
+              data-action-trigger-event-after="refresh-character-description"
+              data-action-trigger-url="{% url "characters:xhr_character_objects" pk=object.id object_type="foe" %}?object_id={{ foe.id }}">
               <i class="far fa-trash-alt fa-fw"></i>
             </a>
           {% endif %}

@@ -119,10 +119,12 @@
 
       {% if may_edit %}
         <div class="col-12">
-          <a class="btn btn-warning w-100 btn-sm mb-2 confirm-action-link"
-             data-message="{% trans 'Switch character NPC status?' %}"
-             href="{% url 'campaigns:xhr_switch_npc' pk=object.pc_or_npc_campaign.id character_pk=object.id %}"><i
-            class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}</a>
+          <button class="btn btn-warning w-100 btn-sm mb-2"
+                  data-message="{% trans 'Switch character NPC status?' %}"
+                  data-action-trigger-event-after="sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'campaigns:xhr_switch_npc' pk=object.pc_or_npc_campaign.id character_pk=object.id %}">
+            <i class="fas fa-times fa-fw"></i> {% trans 'Switch NPC status' %}
+          </button>
         </div>
 
         <div class="col-12">

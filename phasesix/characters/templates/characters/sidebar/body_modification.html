@@ -14,18 +14,19 @@
             <button
               data-action-trigger-url="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="add_charge" %}"
               data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-refresh"
-              class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
-                                                            title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
+              class="btn btn-sm btn-success">
+              <i class="fas fa-fw fa-plus" title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
             </button>
           </div>
         </div>
         <div class="col-12 mt-2">
           <div class="btn-group w-100">
-            <a
-              href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="remove_charge" %}"
-              class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
-                                                            title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
-            </a>
+            <button
+              data-action-trigger-url="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="remove_charge" %}"
+              data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-refresh"
+              class="btn btn-sm btn-warning">
+              <i class="fas fa-fw fa-minus" title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
+            </button>
           </div>
         </div>
       </div>
@@ -113,7 +114,7 @@
         data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="body_modification" %}?object_id={{ object.id }}"
         data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-hide"
         data-action-trigger-method="DELETE"
-        class="btn btn-sm btn-danger action-link close-sidebar">
+        class="btn btn-sm btn-danger">
         <i class="fas fa-fw fa-trash" title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
       </button>
     </div>

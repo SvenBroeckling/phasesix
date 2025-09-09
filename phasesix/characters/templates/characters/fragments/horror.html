@@ -95,11 +95,6 @@
           </div>
 
           {% modifier_widget q.quirkmodifier_set.all %}
-
-          <a class="btn btn-danger btn-sm float-end mt-2 action-link"
-             data-method="DELETE"
-             href="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}?object_id={{ q.id }}">
-            <i class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}</a>
         </div>
       </div>
     </div>
