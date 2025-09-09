@@ -178,6 +178,8 @@ The default event of the element is disabled in this case.
 ### Data Attributes
 
 * `data-action-trigger-url`: **Required** This URL is fetched via `fetch()` with the method POST.
+* `data-action-trigger-method`: The HTTP method to use, defaults to `POST`.
+* `data-action-trigger-event-type`: When to trigger, defaults to `click`. Can be set to `change`.
 * `data-action-trigger-event-after`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the post request is sent. If set to a comma separated list of event names, each event is dispatched after the modal is closed.
 
 ### Events
@@ -191,10 +193,12 @@ An example for a post trigger from the cart. The `POST` view deletes a position 
 
 ```html
     <a data-action-trigger-url="{% url 'shop:cart_delete_position' cart_position_pk=position.id %}"
-        data-action-trigger-event-after="refresh-cart"
-        class="btn btn-outline-danger btn-sm d-inline-flex align-items-center">
-        <i class="fa fa-trash"></i>
-        <span class="ms-2">Delete</span>
+       data-action-trigger-event-typ="change"
+       data-action-trigger-method="DELETE"
+       data-action-trigger-event-after="refresh-cart"
+       class="btn btn-outline-danger btn-sm d-inline-flex align-items-center">
+         <i class="fa fa-trash"></i>
+         <span class="ms-2">Delete</span>
     </a>
 ```
 

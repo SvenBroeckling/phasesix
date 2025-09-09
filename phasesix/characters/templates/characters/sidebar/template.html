@@ -8,7 +8,7 @@
         <button
           data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="template" %}?object_id={{ object.id }}"
           data-action-trigger-event-after="refresh-character-advancement,sidebar-right-hide"
-          data-method="DELETE"
+          data-action-trigger-method="DELETE"
           class="btn btn-sm btn-danger mt-1">
           <i class="fas fa-fw fa-trash" title="{% trans 'Forget' %}"></i>{% trans 'Remove' %}
         </button>

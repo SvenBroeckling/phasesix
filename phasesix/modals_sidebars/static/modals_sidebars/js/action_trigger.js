@@ -1,20 +1,21 @@
 import { dispatch } from "./common.js";
 
-document.addEventListener("click", (event) => {
+const actionTriggerListener = (event) => {
     let actionTrigger = event.target.closest("[data-action-trigger-url]");
     if (actionTrigger) {
-        let eventType = actionTrigger.dataset.actionTriggerEvent || "click";
-        if (eventType === event.type) {
+        if (
+            event.type === actionTrigger.dataset.actionTriggerEvent ||
+            "click"
+        ) {
             event.preventDefault();
 
             const url = actionTrigger.dataset.actionTriggerUrl;
-            const refreshAfter =
-                actionTrigger.dataset.actionTriggerRefreshAfter;
             const eventAfter = actionTrigger.dataset.actionTriggerEventAfter;
+            const method = actionTrigger.dataset.actionTriggerMethod || "POST";
 
             if (url) {
                 fetch(url, {
-                    method: "POST",
+                    method: method.toUpperCase(),
                     redirect: "manual",
                     headers: {
                         mode: "same-origin",
@@ -22,21 +23,12 @@ document.addEventListener("click", (event) => {
                             document.querySelector("body").dataset.csrfToken,
                     },
                 }).then((response) => {
-                    if (refreshAfter) {
-                        window.location.reload();
-                    } else if (
-                        response.status === 200 ||
-                        response.status === 302 ||
-                        response.status === 0
-                    ) {
-                        dispatch(eventAfter);
-                    } else {
-                        console.error(
-                            `data-action-trigger: Failed post to ${url}`,
-                        );
-                    }
+                    dispatch(eventAfter);
                 });
             }
         }
     }
-});
+};
+
+document.addEventListener("click", actionTriggerListener);
+document.addEventListener("change", actionTriggerListener);
