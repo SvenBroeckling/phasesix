@@ -85,8 +85,7 @@
             <i class="gi-lorc-fairy-wand text-danger"></i> {{ s.spell }}<br>
           </td>
           <td class="text-end">
-            {% spell_type_attribute_dice_value s.character s.spell_type as dice %}
-            {{ s.spell_type.reference_attribute.name }} <span class="text-muted">{{ dice }}</span> <i
+            {{ s.spell_type.reference_attribute.name }} <span class="text-muted">{{ s.dice_value }}</span> <i
             class="fas fa-dice-five text-muted"></i>
           </td>
           <td class="text-end">

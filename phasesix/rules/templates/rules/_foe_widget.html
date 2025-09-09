@@ -22,7 +22,9 @@
 
     {% if character and add_button %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="foe" %}"
-            class="float-end add-form" method="post">
+            data-fetch-form="true"
+            class="float-end"
+            method="post">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ foe.id }}">
         <input type="hidden" name="action" value="add">

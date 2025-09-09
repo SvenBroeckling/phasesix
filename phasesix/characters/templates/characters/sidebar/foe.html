@@ -6,15 +6,18 @@
   <div class="row">
     <div class="col-12">
       <div class="btn-group w-100">
-        <a class="btn btn-danger btn-sm action-link"
-           href="{% url 'characters:foe_modify_health' pk=object.id mode='wound' %}"><i
-          class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</a>
-        <a class="btn btn-primary btn-sm action-link"
-           href="{% url 'characters:foe_modify_health' pk=object.id mode='heal' %}"><i
-          class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</a>
-        <a class="btn btn-warning btn-sm action-link"
-           href="{% url 'characters:foe_modify_health' pk=object.id mode='boost' %}"><i
-          class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</a>
+        <button class="btn btn-danger btn-sm"
+                data-action-trigger-event-after="refresh-character-description,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:foe_modify_health' pk=object.id mode='wound' %}">
+          <i class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</button>
+        <button class="btn btn-primary btn-sm"
+                data-action-trigger-event-after="refresh-character-description,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:foe_modify_health' pk=object.id mode='heal' %}">
+          <i class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</button>
+        <button class="btn btn-warning btn-sm"
+                data-action-trigger-event-after="refresh-character-description,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:foe_modify_health' pk=object.id mode='boost' %}">
+          <i class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</button>
       </div>
     </div>
 
@@ -23,7 +26,8 @@
               data-dice-roll="{{ object.foe.dexterity }}d6"
               data-dice-header="{{ object }}: {% trans 'Initiative' %}"
               data-dice-description="{% trans 'Initiative (*Dexterity*d6)' %}"
-              data-dice-campaign="{{ object.campaign.id }}">{% trans "Roll Initiative" %}
+              data-dice-character="{{ object.character.id }}">
+        {% trans "Roll Initiative" %}
         ({{ object.foe.dexterity }}{% trans 'd6' %})
       </button>
     </div>
@@ -41,7 +45,7 @@
   </div>
   {% if object.foe.wiki_page %}
     <div class="col-12">
-      <a class="btn btn-primary w-100 btn-sm mt-2"
+      <a class="w-100 btn-sm mt-2"
          href="{% url "worlds:wiki_page" slug=object.foe.wiki_page.slug world_slug=object.foe.wiki_page.world.slug %}"><i
         class="fas fa-link fa-fw"></i> {% trans 'Go to the wiki page' %}</a>
     </div>

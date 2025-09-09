@@ -3,17 +3,17 @@
 {% load rules_extras %}
 {% load i18n %}
 {% for s in object.priest_actions.all %}
-  <div data-sidebar-title="{{ s.name }}"
-       data-sidebar-url="{% url 'characters:xhr_sidebar_priest_action' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
-       class="card mb-3 sidebar-trigger">
+  <div data-sidebar-right-title="{{ s.name }}"
+       data-sidebar-right-url="{% url 'characters:xhr_sidebar_priest_action' pk=object.id sidebar_template="priest_action" priest_action_pk=s.id %}"
+       class="card mb-3">
     <div class="card-header">
-                <span class="badge bg-dark float-end ms-2" title="{% trans 'Grace cost' %}">
-                    {% if s.grace_cost > 0 %}
-                      {{ s.grace_cost }} {% trans 'Grace' %}
-                    {% else %}
-                      {% trans 'Special' %}
-                    {% endif %}
-                </span>
+      <span class="badge bg-dark float-end ms-2" title="{% trans 'Grace cost' %}">
+          {% if s.grace_cost > 0 %}
+            {{ s.grace_cost }} {% trans 'Grace' %}
+          {% else %}
+            {% trans 'Special' %}
+          {% endif %}
+      </span>
       {{ s }}
     </div>
     <div class="card-body">

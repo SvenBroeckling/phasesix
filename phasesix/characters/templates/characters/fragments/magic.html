@@ -4,8 +4,9 @@
   {% with spell_points_available=character.spell_points_available %}
     <div class="row">
       <div class="col-12 col-md-6 h-100">
-        <div class="card sidebar-trigger mb-3" data-sidebar-title="{% trans 'Magic' %}"
-             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
+        <div class="card mb-3"
+             data-sidebar-right-title="{% trans 'Magic' %}"
+             data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
           <div class="card-body">
             <h5>{% trans "Arcana" %}</h5>
             {% arcana_display object %}
@@ -13,8 +14,9 @@
         </div>
       </div>
       <div class="col-12 col-md-6 h-100">
-        <div class="card sidebar-trigger mb-3" data-sidebar-title="{% trans 'Magic' %}"
-             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
+        <div class="card mb-3"
+             data-sidebar-right-title="{% trans 'Magic' %}"
+             data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="magic" %}">
           <div class="card-body">
             <h5>{% trans "Spell points" %}</h5>
             <span class="fs-3 text-danger">{{ spell_points_available }}</span>

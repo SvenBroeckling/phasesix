@@ -4,14 +4,16 @@
   <div class="row">
     <div class="col-12">
       <div class="btn-group w-100">
-        <a href="{% url 'characters:modify_arcana' pk=object.id mode="use" %}"
-           class="btn btn-sm btn-warning action-link"><i class="gi-lorc-fairy-wand"
-                                                         title="{% trans 'Use Arcana' %}"></i>{% trans '-Arcana' %}
-        </a>
-        <a href="{% url 'characters:modify_arcana' pk=object.id mode="restore" %}"
-           class="btn btn-sm btn-success action-link"><i class="gi-lorc-fairy-wand"
-                                                         title="{% trans 'Restore Arcana' %}"></i>{% trans '+Arcana' %}
-        </a>
+        <button data-action-trigger-url="{% url 'characters:modify_arcana' pk=object.id mode="use" %}"
+                data-action-trigger-event-after="refresh-character-magic,sidebar-right-refresh"
+                class="btn btn-sm btn-warning">
+          <i class="gi-lorc-fairy-wand" title="{% trans 'Use Arcana' %}"></i>{% trans '-Arcana' %}
+        </button>
+        <button data-action-trigger-url="{% url 'characters:modify_arcana' pk=object.id mode="restore" %}"
+                data-action-trigger-event-after="refresh-character-magic,sidebar-right-refresh"
+                class="btn btn-sm btn-success">
+          <i class="gi-lorc-fairy-wand" title="{% trans 'Restore Arcana' %}"></i>{% trans '+Arcana' %}
+        </button>
       </div>
     </div>
   </div>

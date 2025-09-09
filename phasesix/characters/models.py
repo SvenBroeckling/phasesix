@@ -1318,13 +1318,16 @@ class CharacterWeapon(models.Model):
         )
 
     @property
-    def capacity_available(self):
-        capacity = (
+    def capacity(self):
+        return (
             self.modified_keywords["capacity"]["value"]
             if "capacity" in self.modified_keywords
             else 0
         )
-        return capacity - self.capacity_used
+
+    @property
+    def capacity_available(self):
+        return self.capacity - self.capacity_used
 
 
 class CharacterRiotGearQuerySet(models.QuerySet):
@@ -1417,6 +1420,21 @@ class CharacterSpell(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+    @property
+    def dice_value(self):
+        attribute = self.spell_type.reference_attribute
+        try:
+            da = self.character.characterattribute_set.get(attribute=attribute).value
+        except CharacterAttribute.DoesNotExist:
+            da = 0
+
+        try:
+            sc = self.character.characterskill_set.spell_casting_skill().value
+        except CharacterSkill.DoesNotExist:
+            sc = 0
+
+        return da + sc
 
     def modifier_attribute_modification(self, attribute_name):
         mod = 0

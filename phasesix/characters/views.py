@@ -1084,11 +1084,19 @@ class CharacterCastSpellView(View):
     def post(self, request, *args, **kwargs):
         character_spell = CharacterSpell.objects.get(id=kwargs["pk"])
         character = character_spell.character
-        if character.may_edit(request.user):
-            if character_spell.arcana_cost <= character.arcana:
-                character.arcana -= character_spell.arcana_cost
-                character.save()
-        return JsonResponse({"status": "ok"})
+        if not character.may_edit(request.user):
+            raise PermissionDenied()
+        if character_spell.arcana_cost <= character.arcana:
+            character.arcana -= character_spell.arcana_cost
+            roll_and_send(
+                character.id,
+                f"{character_spell.dice_value}d6",
+                header=character_spell.spell.name,
+                description=f"{character_spell.spell.rules}",
+                minimum_roll=character.minimum_roll,
+            )
+            character.save()
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrAddSpellTemplateView(TemplateView):
@@ -1123,7 +1131,7 @@ class XhrModifyCurrencyView(View):
         character = Character.objects.get(id=kwargs["pk"])
 
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
 
         for k, v in request.POST.items():
             unit_id = k.split("-")[-1]
@@ -1135,7 +1143,7 @@ class XhrModifyCurrencyView(View):
                     currency_map_unit=CurrencyMapUnit.objects.get(id=unit_id),
                     quantity=v,
                 )
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrCreateNoteView(View):
@@ -1159,24 +1167,25 @@ class XhrUpdateNoteView(View):
         note = CharacterNote.objects.get(id=kwargs["note_pk"])
 
         if not note.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
 
         note.is_private = request.POST.get("private", "off") == "on"
         note.subject = request.POST.get("subject", None)
         note.text = request.POST.get("text", None)
         note.save()
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(note.character.get_absolute_url())
 
 
 class XhrDeleteNoteView(View):
     def post(self, request, *args, **kwargs):
         note = CharacterNote.objects.get(id=kwargs["note_pk"])
+        character = note.character
 
-        if not note.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+        if not character.may_edit(request.user):
+            raise PermissionDenied()
 
         note.delete()
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class CharacterPDFView(DetailView):

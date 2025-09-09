@@ -1,35 +1,35 @@
 {% load i18n characters_extras rules_extras %}
-{% spell_type_attribute_dice_value object.character object.spell_type as dice %}
 
 {% if may_edit %}
   <div class="row">
     <div class="col-12">
+
       <div class="btn-group w-100">
-        <a href="{% url 'characters:cast_spell' pk=object.id %}"
-           data-dice-roll="{{ dice }}d6"
-           data-dice-header="{{ object }} ({% trans "power" %} {{ object.power }})"
-           data-dice-description="{{ object.spell.rules }}"
-           data-dice-character="{{ object.character.id }}"
-           class="btn btn-sm btn-primary action-link dice-roll"><i class="fas fa-fw fa-dice-five"
-                                                                   title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}
-        </a>
+        <button
+          data-action-trigger-event-after="refresh-character-magic,sidebar-right-hide"
+          data-action-trigger-url="{% url 'characters:cast_spell' pk=object.id %}"
+          class="btn btn-sm btn-primary">
+          <i class="fas fa-fw fa-dice-five" title="{% trans 'Cast' %}"></i>{% trans 'Cast' %}
+        </button>
+      </div>
+
+      <div class="btn-group w-100">
+        <button class="btn btn-sm btn-primary mt-1"
+                data-modal-url="{% url 'characters:xhr_add_spell_template' pk=object.id %}"
+                data-modal-size-class="modal-lg"
+                data-modal-event-after="refresh-character-magic"
+                data-modal-title="{% trans 'Add Modification' %}">
+          <i class="fas fa-fw fa-plus" title="{% trans 'Add Modification' %}"></i>{% trans 'Add Modification' %}
+        </button>
       </div>
       <div class="btn-group w-100">
-        <a class="btn btn-sm btn-primary mt-1"
-           data-modal-url="{% url 'characters:xhr_add_spell_template' pk=object.id %}"
-           data-modal-size-class="modal-lg"
-           data-modal-event-after="refresh-character-magic"
-           data-modal-title="{% trans 'Add Modification' %}"
-           href=""><i class="fas fa-fw fa-plus"
-                      title="{% trans 'Add Modification' %}"></i>{% trans 'Add Modification' %}</a>
-      </div>
-      <div class="btn-group w-100">
-        <a
-          href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="spell" %}?object_id={{ object.id }}"
-          data-method="DELETE"
-          class="btn btn-sm btn-danger action-link close-sidebar mt-1"><i class="fas fa-fw fa-trash"
-                                                                          title="{% trans 'Forget' %}"></i>{% trans 'Forget' %}
-        </a>
+        <button
+          data-action-trigger-event-after="refresh-character-magic,sidebar-right-hide"
+          data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="spell" %}?object_id={{ object.id }}"
+          data-action-trigger-method="DELETE"
+          class="btn btn-sm btn-danger action-link close-sidebar mt-1">
+          <i class="fas fa-fw fa-trash" title="{% trans 'Forget' %}"></i>{% trans 'Forget' %}
+        </button>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
           <i class="fas fa-dice-five fa-fw"></i>
           {% trans 'Spell Casting' %}
           <span class="float-end"><small
-            class="text-muted">{{ object.spell_type.reference_attribute.name }}</small> {% color_value_span dice 5 %}</span>
+            class="text-muted">{{ object.spell_type.reference_attribute.name }}</small> {% color_value_span object.dice_value 5 %}</span>
         </li>
         <li class="list-group-item">
           <i class="fas fa-bolt fa-fw"></i>

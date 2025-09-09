@@ -8,8 +8,8 @@
   </tr>
   </thead>
   {% for attribute in object.characterattribute_set.persona_attributes %}
-    <tr class="sidebar-trigger" data-sidebar-title="{{ attribute.attribute }}"
-        data-sidebar-url="{% url 'characters:xhr_sidebar' pk=attribute.id sidebar_template="attribute" %}">
+    <tr data-sidebar-right-title="{{ attribute.attribute }}"
+        data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=attribute.id sidebar_template="attribute" %}">
       <td>{{ attribute.attribute.name }}</td>
       <td class="text-end">
         {% if attribute.modifier != 0 %}

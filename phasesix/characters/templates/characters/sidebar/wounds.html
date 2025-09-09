@@ -4,15 +4,18 @@
   <div class="row">
     <div class="col-12">
       <div class="btn-group w-100">
-        <a class="btn btn-danger btn-sm action-link"
-           href="{% url 'characters:modify_health' pk=object.id mode='wound' %}"><i
-          class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</a>
-        <a class="btn btn-primary btn-sm action-link"
-           href="{% url 'characters:modify_health' pk=object.id mode='heal' %}"><i
-          class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</a>
-        <a class="btn btn-warning btn-sm action-link"
-           href="{% url 'characters:modify_health' pk=object.id mode='boost' %}"><i
-          class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</a>
+        <button class="btn btn-danger btn-sm"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:modify_health' pk=object.id mode='wound' %}">
+          <i class="far fa-heart fa-fw"></i> {% trans 'Damage' %}</button>
+        <button class="btn btn-primary btn-sm"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:modify_health' pk=object.id mode='heal' %}">
+          <i class="fas fa-heart fa-fw"></i> {% trans 'Heal' %}</button>
+        <button class="btn btn-warning btn-sm"
+                data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:modify_health' pk=object.id mode='boost' %}">
+          <i class="fas fa-heart fa-fw"></i> {% trans 'Boost' %}</button>
       </div>
     </div>
 
@@ -54,14 +57,16 @@
         {% for se in status_effects %}
           {% with se|status_effect_value:object as se_value %}
             <li class="list-group-item">
-              <i class="{{ se.fa_icon_class }} fa-fw"></i>
+              <i class="{{ se.color_class }} {{ se.fa_icon_class }} fa-fw"></i>
               {{ se }}
               <span class="float-end">
-                <a class="action-link pointer no-decoration text-muted"
-                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='decrease' %}">-</a>
+                <button class="btn text-muted"
+                        data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                        data-action-trigger-url="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='decrease' %}">-</button>
                   {% color_value_span se_value 6 invert=True %}
-                <a class="action-link pointer no-decoration text-muted"
-                   href="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='increase' %}">+</a>
+                <button class="btn text-muted"
+                        data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                        data-action-trigger-url="{% url 'characters:xhr_status_effects_change' pk=object.id status_effect_pk=se.id mode='increase' %}">+</button>
                 <button class="btn btn-sm status-effect-description-button"><i class="fas fa-info-circle"></i></button>
               </span>
               <div class="text-muted d-none status-effect-description mt-1">

@@ -186,24 +186,6 @@ def character_skill_value(character, skill):
     return character.characterskill_set.get(skill=skill).value
 
 
-@register.simple_tag
-def spell_type_attribute_dice_value(character, spell_type):
-    from characters.models import CharacterAttribute, CharacterSkill
-
-    attribute = spell_type.reference_attribute
-    try:
-        da = character.characterattribute_set.get(attribute=attribute).value
-    except CharacterAttribute.DoesNotExist:
-        da = 0
-
-    try:
-        sc = character.characterskill_set.spell_casting_skill().value
-    except CharacterSkill.DoesNotExist:
-        sc = 0
-
-    return da + sc
-
-
 @register.filter
 def currency_quantity(object, currency_map_unit):
     return object.currency_quantity(currency_map_unit)

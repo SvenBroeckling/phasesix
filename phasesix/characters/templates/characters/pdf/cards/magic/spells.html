@@ -1,7 +1,6 @@
 {% load characters_extras i18n rules_extras %}
 
 {% for s in object.characterspell_set.all %}
-  {% spell_type_attribute_dice_value object s.spell_type as dice %}
   <div class="card card-inlay mb-3">
     <h5 class="card-title">{{ s }}</h5>
     <div class="card-body">
@@ -12,7 +11,7 @@
       <table class="table table-underline">
         <tr>
           <td>{{ object.characterskill_set.spell_casting_skill.skill.name }}</td>
-          <td><span class="text-muted">{{ dice }} {{ s.spell_type.reference_attribute.name }}</span>
+          <td><span class="text-muted">{{ s.dice_value }} {{ s.spell_type.reference_attribute.name }}</span>
           </td>
         </tr>
         <tr>

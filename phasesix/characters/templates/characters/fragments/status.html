@@ -2,8 +2,9 @@
 {% load i18n %}
 <div class="row">
   <div class="col-md-4 mb-3">
-    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Wounds' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="wounds" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Wounds' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="wounds" %}">
       <div class="card-body">
         <h5>{% trans "Wounds" %}</h5>
         {% wound_display object %}
@@ -12,8 +13,9 @@
   </div>
 
   <div class="col-md-4 mb-3">
-    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Protection' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="protection" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Protection' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="protection" %}">
       <div class="card-body">
         <h5>{% trans "Protection" %}</h5>
         {% protection_display object %}
@@ -22,8 +24,9 @@
   </div>
 
   <div class="col-md-4 mb-3">
-    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Dice' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="dice" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Dice' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="dice" %}">
       <div class="card-body">
         <h5>{% trans "Dice" %} / {% trans "Custom roll" %}</h5>
         {% dice_display object %}

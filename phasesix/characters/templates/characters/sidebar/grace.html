@@ -1,62 +1,71 @@
 {% load i18n characters_extras %}
 
 {% if may_edit %}
-    <div class="row">
-        {% if object.is_priest %}
-        <div class="col-12">
-            <div class="btn-group w-100">
-                <a href="{% url 'characters:modify_grace' pk=object.id mode="use" %}"
-                   class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-ankh"
-                                                                 title="{% trans 'Lose Grace' %}"></i> {% trans '-Grace' %}
-                </a>
-                <a href="{% url 'characters:modify_grace' pk=object.id mode="restore" %}"
-                   class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-ankh"
-                                                                 title="{% trans 'Gain Grace' %}"></i> {% trans '+Grace' %}
-                </a>
-            </div>
+  <div class="row">
+    {% if object.is_priest %}
+      <div class="col-12">
+        <div class="btn-group w-100">
+          <button
+            data-action-trigger-event-after="refresh-character-pantheon,sidebar-right-refresh"
+            data-action-trigger-url="{% url 'characters:modify_grace' pk=object.id mode="use" %}"
+            class="btn btn-sm btn-warning">
+            <i class="fas fa-fw fa-ankh" title="{% trans 'Lose Grace' %}"></i> {% trans '-Grace' %}
+          </button>
+          <button
+            data-action-trigger-event-after="refresh-character-pantheon,sidebar-right-refresh"
+            data-action-trigger-url="{% url 'characters:modify_grace' pk=object.id mode="restore" %}"
+            class="btn btn-sm btn-success action-link">
+            <i class="fas fa-fw fa-ankh" title="{% trans 'Gain Grace' %}"></i> {% trans '+Grace' %}
+          </button>
         </div>
-        {% endif %}
-        <div class="col-12 mt-2">
-            <div class="btn-group w-100">
-                <a href="{% url 'characters:modify_attitude' pk=object.id mode="use" %}"
-                   class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-balance-scale"
-                                                                 title="{% trans 'Reduce Attitude' %}"></i> {% trans '-Attitude' %}
-                </a>
-                <a href="{% url 'characters:modify_attitude' pk=object.id mode="restore" %}"
-                   class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-balance-scale"
-                                                                 title="{% trans 'Increase Attitude' %}"></i> {% trans '+Attitude' %}
-                </a>
-            </div>
-        </div>
+      </div>
+    {% endif %}
+
+    <div class="col-12 mt-2">
+      <div class="btn-group w-100">
+        <button
+          data-action-trigger-event-after="refresh-character-pantheon,sidebar-right-refresh"
+          data-action-trigger-url="{% url 'characters:modify_attitude' pk=object.id mode="use" %}"
+          class="btn btn-sm btn-warning action-link">
+          <i class="fas fa-fw fa-balance-scale" title="{% trans 'Reduce Attitude' %}"></i> {% trans '-Attitude' %}
+        </button>
+        <button
+          data-action-trigger-event-after="refresh-character-pantheon,sidebar-right-refresh"
+          data-action-trigger-url="{% url 'characters:modify_attitude' pk=object.id mode="restore" %}"
+          class="btn btn-sm btn-success action-link">
+          <i class="fas fa-fw fa-balance-scale" title="{% trans 'Increase Attitude' %}"></i> {% trans '+Attitude' %}
+        </button>
+      </div>
     </div>
+  </div>
 {% endif %}
 
 {% if object.entity %}
-    <div class="row mt-4">
-        <div class="col-12 text-center">
-            <img class="rounded img-fluid" src="{{ object.entity.image.url }}" alt="{{ object.entity }}">
-            <div class="mt-1">
-                {% if object.entity.wiki_page %}<a href="{{ object.entity.wiki_page.get_absolute_url }}">{% endif %}
-                {{ object.entity }}
-                {% if object.entity.wiki_page %}</a>{% endif %}
-            </div>
-        </div>
+  <div class="row mt-4">
+    <div class="col-12 text-center">
+      <img class="rounded img-fluid" src="{{ object.entity.image.url }}" alt="{{ object.entity }}">
+      <div class="mt-1">
+        {% if object.entity.wiki_page %}<a href="{{ object.entity.wiki_page.get_absolute_url }}">{% endif %}
+        {{ object.entity }}
+        {% if object.entity.wiki_page %}</a>{% endif %}
+      </div>
     </div>
+  </div>
 {% endif %}
 
 <div class="row mt-4">
-    {% if object.is_priest %}
-        <div class="col-2 mb-2">
-            <i class="fas fa-2x fa-fw fa-ankh text-warning" title="{% trans 'Grace' %}"></i>
-        </div>
-        <div class="col-10 mb-2">
-            {% trans 'You can receive grace by doing things for your deity, or act on their behalf.' %}
-        </div>
-    {% endif %}
+  {% if object.is_priest %}
     <div class="col-2 mb-2">
-        <i class="fas fa-2x fa-fw fa-balance-scale text-success" title="{% trans 'Attitude' %}"></i>
+      <i class="fas fa-2x fa-fw fa-ankh text-warning" title="{% trans 'Grace' %}"></i>
     </div>
     <div class="col-10 mb-2">
-        {% trans 'Attitude describes the basic orientation of your character. The value ranges from 1 to 100, where 1 stands for abysmally evil, 100 for exceptionally good-natured.' %}
+      {% trans 'You can receive grace by doing things for your deity, or act on their behalf.' %}
     </div>
+  {% endif %}
+  <div class="col-2 mb-2">
+    <i class="fas fa-2x fa-fw fa-balance-scale text-success" title="{% trans 'Attitude' %}"></i>
+  </div>
+  <div class="col-10 mb-2">
+    {% trans 'Attitude describes the basic orientation of your character. The value ranges from 1 to 100, where 1 stands for abysmally evil, 100 for exceptionally good-natured.' %}
+  </div>
 </div>

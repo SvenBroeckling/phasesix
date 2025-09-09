@@ -3,8 +3,9 @@
 {% load characters_extras %}
 {% load i18n %}
 {% for r in character.characterriotgear_set.all %}
-  <div class="card mb-4 sidebar-trigger position-relative" data-sidebar-title="{{ r.riot_gear }}"
-       data-sidebar-url="{% url 'characters:xhr_sidebar' pk=r.id sidebar_template="riot_gear" %}">
+  <div class="card mb-4 position-relative"
+       data-sidebar-right-title="{{ r.riot_gear }}"
+       data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=r.id sidebar_template="riot_gear" %}">
     <div class="card-body">
       {% if r.is_equipped %}
         <div class="top-0 end-0 small me-2 mt-1 text-warning position-absolute">{% trans "Equipped" %}</div>

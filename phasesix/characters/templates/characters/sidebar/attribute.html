@@ -15,19 +15,22 @@
   <div class="row">
     <div class="col-12">
       <div class="btn-group mb-1 w-100">
-        <a class="btn btn-warning btn-sm action-link"
-           href="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='malus' %}">{% trans 'Minus' %}</a>
-        <a class="btn btn-primary btn-sm action-link"
-           href="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='set_zero' %}">{% trans 'Reset' %}</a>
-        <a class="btn btn-success btn-sm action-link"
-           href="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='bonus' %}">{% trans 'Plus' %}</a>
+        <button class="btn btn-warning btn-sm"
+                data-action-trigger-event-after="refresh-fragments,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='malus' %}">{% trans 'Minus' %}</button>
+        <button class="btn btn-primary btn-sm"
+                data-action-trigger-event-after="refresh-fragments,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='set_zero' %}">{% trans 'Reset' %}</button>
+        <button class="btn btn-success btn-sm"
+                data-action-trigger-event-after="refresh-fragments,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:modify_attribute' character_attribute_pk=object.id mode='bonus' %}">{% trans 'Plus' %}</button>
       </div>
       <button
-              data-dice-roll="{{ object.value }}d6"
-              data-dice-header="{{ object.attribute }}"
-              data-dice-description=""
-              data-dice-character="{{ object.character.id }}"
-              class="btn btn-primary btn-sm w-100 dice-roll">
+        data-dice-roll="{{ object.value }}d6"
+        data-dice-header="{{ object.attribute }}"
+        data-dice-description=""
+        data-dice-character="{{ object.character.id }}"
+        class="btn btn-primary btn-sm w-100 dice-roll">
         <i class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %}</button>
     </div>
   </div>

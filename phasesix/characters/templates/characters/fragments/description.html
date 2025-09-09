@@ -196,9 +196,9 @@
 
       {% for foe in object.characterfoe_set.all %}
         <div class="list-group-item d-flex align-items-start py-3">
-          <div class="flex-grow-1 d-flex gap-2 align-items-start sidebar-trigger"
-               data-sidebar-title="{{ foe }}"
-               data-sidebar-url="{% url "characters:xhr_sidebar" pk=foe.id sidebar_template="foe" %}">
+          <div class="flex-grow-1 d-flex gap-2 align-items-start"
+               data-sidebar-right-title="{{ foe }}"
+               data-sidebar-right-url="{% url "characters:xhr_sidebar" pk=foe.id sidebar_template="foe" %}">
             <img class="rounded" src="{% image_url foe geometry="80x80" %}" alt="img-fluid">
             <div>
               {{ foe }}<br>

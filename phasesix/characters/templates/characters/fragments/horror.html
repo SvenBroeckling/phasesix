@@ -4,8 +4,9 @@
 {% load i18n %}
 <div class="row">
   <div class="col-12 col-md-6 mb-3">
-    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Stress' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
       <div class="card-body">
         <h5 class="card-title">{% trans "Stress" %}</h5>
         <p>
@@ -30,8 +31,9 @@
   </div>
 
   <div class="col-12 col-md-6 mb-3">
-    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Stress' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Stress' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
       <div class="card-body">
         <h5 class="card-title">{% trans "Dread" %}</h5>
         <p>
@@ -76,8 +78,9 @@
 
   {% for q in object.quirks.all %}
     <div class="col-12 col-md-6 mb-2">
-      <div class="card mb-3 sidebar-trigger" data-sidebar-title="{{ q }}"
-           data-sidebar-url="{% url 'characters:xhr_sidebar' pk=q.id sidebar_template="quirk" %}">
+      <div class="card mb-3"
+           data-sidebar-right-title="{{ q }}"
+           data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=q.id sidebar_template="quirk" %}">
         <div class="card-header">{{ q }}</div>
         <div class="card-body">
           <div class="text-muted">

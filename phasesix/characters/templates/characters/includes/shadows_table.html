@@ -7,14 +7,14 @@
     </tr>
     </thead>
     {% for template in object.templates_with_rules.all %}
-      <tr class="sidebar-trigger" data-sidebar-title="{{ template.template.name }}"
-          data-sidebar-url="{% url 'characters:xhr_sidebar' pk=template.template.id sidebar_template="template_shadow" %}">
+      <tr data-sidebar-right-title="{{ template.template.name }}"
+          data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=template.template.id sidebar_template="template_shadow" %}">
         <td>{{ template.template.name }}</td>
       </tr>
     {% endfor %}
     {% for quirk in object.quirks.all %}
-      <tr class="sidebar-trigger" data-sidebar-title="{{ quirk }}"
-          data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
+      <tr data-sidebar-right-title="{{ quirk }}"
+          data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="horror" %}">
         <td>{{ quirk }} <small>({% trans 'Quirk' %})</small></td>
       </tr>
     {% endfor %}

@@ -9,8 +9,8 @@
     </tr>
     </thead>
     {% for knowledge in object.knowledge_dict.items %}
-      <tr class="sidebar-trigger" data-sidebar-title="{{ knowledge.0 }}"
-          data-sidebar-url="{% url 'characters:xhr_sidebar_knowledge' pk=object.id sidebar_template="knowledge" knowledge_pk=knowledge.0.id %}">
+      <tr data-sidebar-right-title="{{ knowledge.0 }}"
+          data-sidebar-right-url="{% url 'characters:xhr_sidebar_knowledge' pk=object.id sidebar_template="knowledge" knowledge_pk=knowledge.0.id %}">
         <td>
           {{ knowledge.0 }}
           {% if knowledge.0.skill %}

@@ -4,13 +4,14 @@
 
 {% for s in object.characterspell_set.all %}
   <div class="mb-2">
-    <div data-sidebar-title="{{ s.name }}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=s.id sidebar_template="spell" %}"
-         class="card mb-2 sidebar-trigger">
+    <div data-sidebar-right-title="{{ s.name }}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=s.id sidebar_template="spell" %}"
+         class="card mb-2">
 
       <div class="card-body">
         <h4>{{ s.spell }}</h4>
-        <span class="fs-3 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ s.spell_point_cost }}</span>
+        <span
+          class="fs-3 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ s.spell_point_cost }}</span>
         <small class="text-muted">{{ s.spell.variant }} - {{ s.spell.type }}</small>
 
         {% if s.is_ritual %}
@@ -21,8 +22,8 @@
           {{ s.spell.rules|phasesix_markup }}
         </p>
 
-        {% spell_type_attribute_dice_value object s.spell_type as dice %}
-        <i class="fas fa-dice-five fa-fw"></i> {{ object.characterskill_set.spell_casting_skill.skill.name }}: {% color_value_span dice 5 %}
+        <i
+          class="fas fa-dice-five fa-fw"></i> {{ object.characterskill_set.spell_casting_skill.skill.name }}: {% color_value_span object.dice_value 5 %}
         <small class="text-muted">{{ s.spell_type.reference_attribute.name }}</small><br>
         <i class="gi-lorc-fairy-wand"></i> {% trans 'Arcana' %}:
         {% for a in s.arcana_cost|to_range %}<i class="gi-lorc-fairy-wand text-warning"></i>{% endfor %}<br>
