@@ -122,13 +122,13 @@
               {% if object.in_container is not None %}
                 <a
                   data-action-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
-                  data-action-trigger-event-after="refresh-character-gear"
+                  data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
                   class="dropdown-item">{% trans 'On Body' %}</a>
               {% endif %}
               {% for container in object.other_containers %}
                 <a
                   data-action-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
-                  data-action-trigger-event-after="refresh-character-gear"
+                  data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
                   class="dropdown-item">{{ container.item }}</a>
               {% endfor %}
             </div>
