@@ -1,3 +1,9 @@
+# Modals and Sidebars
+
+Modals and Sidebars are used to display information in a modal or sidebar. They are implemented as a set of data attribute configurations and Javascript events.
+
+They have interoperability with HTMX, Bootstrap Modals and Bootstrap Offcanvas. All fetched content is processed by HTMX, so HTMX events work well.
+
 ## Forms
 
 Forms can be marked as `fetch()` forms by specifying the data attribute `data-fetch-form="true"`. At that moment, a
@@ -161,23 +167,22 @@ Trigger a sidebar via JavaScript
     })
 ```
 
-## Post Trigger
+## Action Triggers
 
-Often you want to trigger an asyncronous request via POST with information contained in the URL. **Post Trigger** allow
+Often you want to trigger an asyncronous request via POST with information contained in the URL. **Action Triggers** allow
 this by using custom `data-` attributes in the HTML. To convert an element into a post trigger, the data attribute
-`data-post-trigger="true"` must be set.
+`data-action-trigger="true"` must be set.
 
 The default event of the element is disabled in this case.
 
 ### Data Attributes
 
-* `data-post-trigger-url`: **Required** This URL is fetched via `fetch()` with the method POST.
-* `data-post-trigger-refresh-after` wenn auf "true" gesetzt wird die aktuelle Seite nach dem POST neu geladen.
-* `data-post-trigger-event-after`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the post request is sent. If set to a comma separated list of event names, each event is dispatched after the modal is closed.
+* `data-action-trigger-url`: **Required** This URL is fetched via `fetch()` with the method POST.
+* `data-action-trigger-event-after`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the post request is sent. If set to a comma separated list of event names, each event is dispatched after the modal is closed.
 
 ### Events
 
-Post Triggers have no event listeners.
+Action Triggers have no event listeners.
 
 ### Example
 
@@ -185,8 +190,8 @@ Post Triggers have no event listeners.
 An example for a post trigger from the cart. The `POST` view deletes a position from a cart.
 
 ```html
-    <a data-post-trigger-url="{% url 'shop:cart_delete_position' cart_position_pk=position.id %}"
-        data-post-trigger-event-after="refresh-cart"
+    <a data-action-trigger-url="{% url 'shop:cart_delete_position' cart_position_pk=position.id %}"
+        data-action-trigger-event-after="refresh-cart"
         class="btn btn-outline-danger btn-sm d-inline-flex align-items-center">
         <i class="fa fa-trash"></i>
         <span class="ms-2">Delete</span>

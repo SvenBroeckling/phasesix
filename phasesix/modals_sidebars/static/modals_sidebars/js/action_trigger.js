@@ -1,15 +1,16 @@
 import { dispatch } from "./common.js";
 
 document.addEventListener("click", (event) => {
-    let postTrigger = event.target.closest("[data-post-trigger-url]");
-    if (postTrigger) {
-        let eventType = postTrigger.dataset.postTriggerEvent || "click";
+    let actionTrigger = event.target.closest("[data-action-trigger-url]");
+    if (actionTrigger) {
+        let eventType = actionTrigger.dataset.actionTriggerEvent || "click";
         if (eventType === event.type) {
             event.preventDefault();
 
-            const url = postTrigger.dataset.postTriggerUrl;
-            const refreshAfter = postTrigger.dataset.postTriggerRefreshAfter;
-            const eventAfter = postTrigger.dataset.postTriggerEventAfter;
+            const url = actionTrigger.dataset.actionTriggerUrl;
+            const refreshAfter =
+                actionTrigger.dataset.actionTriggerRefreshAfter;
+            const eventAfter = actionTrigger.dataset.actionTriggerEventAfter;
 
             if (url) {
                 fetch(url, {
@@ -31,7 +32,7 @@ document.addEventListener("click", (event) => {
                         dispatch(eventAfter);
                     } else {
                         console.error(
-                            `data-post-trigger: Failed post to ${url}`,
+                            `data-action-trigger: Failed post to ${url}`,
                         );
                     }
                 });

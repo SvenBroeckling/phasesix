@@ -21,8 +21,7 @@ def modals_sidebars_javascript():
         static("modals_sidebars/js/sidebar_right.js"),
         static("modals_sidebars/js/fetch_form.js"),
         static("modals_sidebars/js/modals.js"),
-        static("modals_sidebars/js/change_post_trigger.js"),
-        static("modals_sidebars/js/click_post_trigger.js"),
+        static("modals_sidebars/js/action_trigger.js"),
     ]
     return mark_safe(
         "\n".join([f'<script type="module" src="{js}"></script>' for js in js_modules])

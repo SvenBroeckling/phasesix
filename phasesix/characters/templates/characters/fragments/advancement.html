@@ -3,15 +3,16 @@
 {% load i18n %}
 <div class="row">
   <div class="col-12 col-md-6 mb-3">
-    <div class="card sidebar-trigger h-100" data-sidebar-title="{% trans 'Reputation' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="reputation" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Reputation' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="reputation" %}">
       <div class="card-body">
         <h4 class="card-title">{% trans "Reputation gained" %}</h4>
         <p>
           {% blocktrans %}
             Reputation represents the popularity of a character. Reputation can be
             to purchase new character templates. Reputation is distributed by the GM after each game session and for
-            for special events.
+            special events.
           {% endblocktrans %}
         </p>
         <p>
@@ -69,9 +70,8 @@
 
     <div class="column-container column-layout-2">
       {% for template in character.charactertemplate_set.all %}
-        <div class="sidebar-trigger"
-             data-sidebar-title="{{ template.template }}"
-             data-sidebar-url="{% url 'characters:xhr_sidebar' pk=template.id sidebar_template="template" %}">
+        <div data-sidebar-right-title="{{ template.template }}"
+             data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=template.id sidebar_template="template" %}">
           {% template_widget template.template character=character add_button=False %}
         </div>
       {% endfor %}

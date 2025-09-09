@@ -852,16 +852,14 @@ class XhrCharacterModifyReputationView(View):
         character = Character.objects.get(id=kwargs["pk"])
         operation = request.POST.get("operation", "noop")
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
         if operation == "add":
             try:
                 character.reputation += int(request.POST.get("reputation", 0))
                 character.save()
             except ValueError:
                 pass
-        return JsonResponse(
-            {"status": "ok", "remaining_reputation": character.reputation_available}
-        )
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 # gear

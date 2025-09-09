@@ -39,8 +39,10 @@
 <div class="row mt-2">
   <div class="col-12">
     {% if may_edit %}
-      <form action="{% url 'characters:xhr_modify_reputation' pk=object.id %}" method="post"
-            class="add-form">
+      <form action="{% url 'characters:xhr_modify_reputation' pk=object.id %}"
+            method="post"
+            data-fetch-form="true"
+            data-fetch-form-event-after="sidebar-right-refresh,refresh-character-advancement">
         {% csrf_token %}
         <input type="hidden" name="operation" value="add">
         <div class="input-group mb-3">

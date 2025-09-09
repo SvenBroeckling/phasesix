@@ -28,8 +28,8 @@
   <div class="row">
     <div class="col-12 search-results">
       {% for foe in foes %}
-        <div data-post-trigger-url="{% url 'campaigns:xhr_add_foe' pk=object.id foe_pk=foe.id %}"
-             data-post-trigger-event-after="refresh-campaign-personae"
+        <div data-action-trigger-url="{% url 'campaigns:xhr_add_foe' pk=object.id foe_pk=foe.id %}"
+             data-action-trigger-event-after="refresh-campaign-personae"
              class="card flex-row mb-2"
              x-show="matches('{{ foe.name|escapejs }}')">
           <img src="{% image_url foe "80x80" crop="center" %}"

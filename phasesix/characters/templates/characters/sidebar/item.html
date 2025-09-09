@@ -6,21 +6,21 @@
     <div class="col-12">
       <div class="btn-group w-100">
         <button
-          data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove" %}"
-          data-post-trigger-event-after="refresh-character-gear,sidebar-right-hide"
+          data-action-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove" %}"
+          data-action-trigger-event-after="refresh-character-gear,sidebar-right-hide"
           class="btn btn-sm btn-danger"><i class="fas fa-fw fa-times"
                                            title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
         </button>
         <button
-          data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="decrease_quantity" %}"
-          data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+          data-action-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="decrease_quantity" %}"
+          data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
           class="btn btn-sm btn-warning {% if object.quantity <= 1 %}disabled{% endif %}"><i class="fas fa-fw fa-minus"
                                                                                              title="{% trans 'Less' %}"></i>{% trans 'Less' %}
         </button>
         {% if not object.item.is_container %}
           <button
-            data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="increase_quantity" %}"
-            data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+            data-action-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="increase_quantity" %}"
+            data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
             class="btn btn-sm btn-success"><i class="fas fa-fw fa-plus"
                                               title="{% trans 'More' %}"></i>{% trans 'More' %}
           </button>
@@ -34,8 +34,8 @@
       <div class="col-12">
         <div class="btn-group w-100">
           <button
-            data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add_charge" %}"
-            data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+            data-action-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add_charge" %}"
+            data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
             class="btn btn-sm btn-success"><i class="fas fa-fw fa-plus"
                                               title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
           </button>
@@ -44,8 +44,8 @@
       <div class="col-12 mt-2">
         <div class="btn-group w-100">
           <button
-            data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove_charge" %}"
-            data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+            data-action-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove_charge" %}"
+            data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
             class="btn btn-sm btn-warning"><i class="fas fa-fw fa-minus"
                                               title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
           </button>
@@ -120,14 +120,15 @@
             </button>
             <div class="dropdown-menu">
               {% if object.in_container is not None %}
-                <a data-post-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
-                   data-post-trigger-event-after="refresh-character-gear"
-                   class="dropdown-item">{% trans 'On Body' %}</a>
+                <a
+                  data-action-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
+                  data-action-trigger-event-after="refresh-character-gear"
+                  class="dropdown-item">{% trans 'On Body' %}</a>
               {% endif %}
               {% for container in object.other_containers %}
                 <a
-                  data-post-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
-                  data-post-trigger-event-after="refresh-character-gear"
+                  data-action-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
+                  data-action-trigger-event-after="refresh-character-gear"
                   class="dropdown-item">{{ container.item }}</a>
               {% endfor %}
             </div>
