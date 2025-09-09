@@ -1243,10 +1243,10 @@ class XhrCharacterObjectsView(TemplateView):
 
         if self.character:
             if not self.character.may_edit(request.user):
-                return JsonResponse({"status": "forbidden"})
+                raise PermissionDenied()
         else:
             if not self.campaign.may_edit(request.user):
-                return JsonResponse({"status": "forbidden"})
+                raise PermissionDenied()
 
         character_object_class = get_character_object_class(self.kwargs["object_type"])
         self.character_object = character_object_class(
@@ -1270,21 +1270,18 @@ class XhrCharacterObjectsView(TemplateView):
         action = request.POST.get("action", "add")
 
         if action == "buy" and self.character is not None:
-            # Determine price via character_object and attempt to subtract
             try:
                 price = self.character_object.get_price(object_id)
             except Exception:
                 price = 0
             if price:
                 if not self.character.subtract_currency(price):
-                    return JsonResponse({"status": "notenoughcurrency"})
-            # If price is 0 or subtraction succeeded, proceed to add
+                    return HttpResponseRedirect(self.character.get_absolute_url())
             self.character_object.add(object_id)
-            return JsonResponse({"status": "ok"})
+            return HttpResponseRedirect(self.character.get_absolute_url())
 
-        # Default behavior: just add
         self.character_object.add(object_id)
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(self.character.get_absolute_url())
 
     def delete(self, request, *args, **kwargs):
         self.character_object.remove(request.GET.get("object_id"))

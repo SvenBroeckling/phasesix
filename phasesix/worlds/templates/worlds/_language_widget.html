@@ -17,13 +17,16 @@
 
     {% if character %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="language" %}"
+            data-fetch-form="true"
+            data-fetch-form-event-after="refresh-character-description"
             method="post"
-            class="float-end add-form">
+            class="float-end">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ language.id }}">
         <div class="w-100 d-flex justify-end mt-3">
           <button type="submit" class="btn btn-primary btn-sm"
-                  data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                  data-danger="{% trans 'Not possible' %}"
+                  data-success="{% trans 'Added' %}">
             {% trans 'Add' %}
           </button>
         </div>

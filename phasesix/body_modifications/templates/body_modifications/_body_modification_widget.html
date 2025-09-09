@@ -80,8 +80,11 @@
         <ul class="dropdown-menu" aria-labelledby="socketDropdown">
           {% for sl in body_modification.bodymodificationsocketlocation_set.all %}
             <li>
-              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type='body_modification' %}"
-                    class="add-form" method="post">
+              <form
+                action="{% url 'characters:xhr_character_objects' pk=character.id object_type='body_modification' %}"
+                data-fetch-form="true"
+                data-fetch-form-event-after="refresh-character-body_modifications"
+                method="post">
                 {% csrf_token %}
                 <input type="hidden" name="object_id" value="{{ body_modification.id }}">
                 <input type="hidden" name="socket_location_pk" value="{{ sl.socket_location.id }}">

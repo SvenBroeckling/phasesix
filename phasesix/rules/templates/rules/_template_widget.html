@@ -34,11 +34,14 @@
 
     {% if character and add_button %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="template" %}"
-            class="float-end add-form" method="post">
+            data-fetch-form="true"
+            data-fetch-form-event-after="refresh-fragments"
+            class="float-end" method="post">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ template.id }}">
         <input type="hidden" name="action" value="add">
-        <button class="btn btn-sm btn-primary m-2"
+        <button type="submit"
+                class="btn btn-sm btn-primary m-2"
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}">
           {% trans 'Add' %}

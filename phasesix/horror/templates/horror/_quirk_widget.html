@@ -21,10 +21,13 @@
 
     {% if character and add_button %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="quirk" %}"
-            class="float-end add-form" method="post">
+            data-fetch-form="true"
+            data-fetch-form-event-after="refresh-fragments"
+            class="float-end" method="post">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ quirk.id }}">
         <button class="btn btn-sm btn-primary float-end"
+                type="submit"
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}">{% trans 'Add Quirk' %}</button>
       </form>

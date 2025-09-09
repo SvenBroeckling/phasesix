@@ -21,13 +21,28 @@ document.addEventListener("submit", (event) => {
         }
     }
 
+    function flashMessageOnButton(messageDataAttribute) {
+        let button = form.querySelector('[type="submit"]');
+        if (button) {
+            let message = button.dataset[messageDataAttribute];
+            if (!message) {
+                return;
+            }
+            let oldText = button.innerHTML;
+            button.innerHTML = message;
+            setTimeout(() => {
+                button.innerHTML = oldText;
+            }, 1000);
+        }
+    }
+
     function setButtonState(state = "enabled") {
         if (state === "enabled") {
             add_class(".form-submit-spinner", "d-none");
-            add_class('[type="submit"]', "disabled");
+            remove_class('[type="submit"]', "disabled");
         } else {
             remove_class(".form-submit-spinner", "d-none");
-            remove_class('[type="submit"]', "disabled");
+            add_class('[type="submit"]', "disabled");
         }
     }
 
@@ -55,11 +70,14 @@ document.addEventListener("submit", (event) => {
         })
             .then((response) => {
                 if (response.status === 302 || response.status === 0) {
+                    flashMessageOnButton("success");
                     return null; // Django View success_url redirect
                 }
+                flashMessageOnButton("danger");
                 return response.text();
             })
             .then((text) => {
+                setButtonState("enabled");
                 if (text === null || text === "") {
                     if (close === "all") {
                         dispatch("sidebar-right-hide,modal-hide");
@@ -69,7 +87,6 @@ document.addEventListener("submit", (event) => {
                     } else if (close === "modal") {
                         dispatch("modal-hide");
                     }
-                    setButtonState("enabled");
                     dispatch(eventAfter);
                 } else {
                     container.innerHTML = text;

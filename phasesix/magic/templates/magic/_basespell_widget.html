@@ -7,7 +7,8 @@
 
   <div class="card-body position-relative">
     <h4>{{ basespell }}</h4>
-    <span class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ basespell.spell_point_cost }}</span>
+    <span
+      class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ basespell.spell_point_cost }}</span>
     <small class="text-muted">{{ basespell.variant }} - {{ basespell.type }}</small>
 
     {% if basespell.is_ritual %}
@@ -19,7 +20,8 @@
     </p>
 
     <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ basespell.origin }}<br>
-    <i class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
+    <i
+      class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
     <i class="gi-lorc-fairy-wand"></i> {% trans 'Arcana' %}:
     {% for a in basespell.arcana_cost|to_range %}<i class="gi-lorc-fairy-wand text-warning"></i>{% endfor %}<br>
     <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span basespell.range 4 %}<br>
@@ -35,10 +37,13 @@
     <div class="w-100">
       {% if character %}
         <form action="{% url "characters:xhr_character_objects" pk=character.id object_type="spell" %}"
-              class="float-end add-form" method="post">
+              data-fetch-form="true"
+              data-fetch-form-event-after="refresh-character-magic"
+              class="float-end" method="post">
           {% csrf_token %}
           <input type="hidden" name="object_id" value="{{ basespell.id }}">
-          <button class="btn btn-sm btn-primary m-2"
+          <button type="submit"
+                  class="btn btn-sm btn-primary m-2"
                   data-danger="{% trans 'Not possible' %}"
                   data-success="{% trans 'Learned' %}">
             {% trans 'Learn' %}

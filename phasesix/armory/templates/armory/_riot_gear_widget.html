@@ -43,21 +43,27 @@
           <ul class="dropdown-menu">
             <li class="dropdown-item">
               <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
+                    data-fetch-form="true"
+                    data-fetch-form-event-after="refresh-character-gear"
                     method="post"
-                    class="add-form px-3 py-1">
+                    class="px-3 py-1">
                 {% csrf_token %}
                 <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
                 <input type="hidden" name="action" value="add">
-                <button type="submit" class="dropdown-item"
-                        data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                <button type="submit"
+                        class="dropdown-item"
+                        data-danger="{% trans 'Not possible' %}"
+                        data-success="{% trans 'Added' %}">
                   {% trans 'Add' %}
                 </button>
               </form>
             </li>
             <li class="dropdown-item">
               <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="riot_gear" %}"
+                    data-fetch-form="true"
+                    data-fetch-form-event-after="refresh-character-gear"
                     method="post"
-                    class="add-form px-3 py-1">
+                    class="px-3 py-1">
                 {% csrf_token %}
                 <input type="hidden" name="object_id" value="{{ riot_gear.id }}">
                 <input type="hidden" name="action" value="buy">

@@ -30,11 +30,14 @@
             <ul class="dropdown-menu">
               <li class="dropdown-item">
                 <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="item" %}"
-                      class="add-form px-3 py-1" method="post">
+                      data-fetch-form="true"
+                      data-fetch-form-event-after="refresh-character-gear"
+                      class="px-3 py-1" method="post">
                   {% csrf_token %}
                   <input type="hidden" name="object_id" value="{{ item.id }}">
                   <input type="hidden" name="action" value="add">
-                  <button class="dropdown-item"
+                  <button type="submit"
+                          class="dropdown-item"
                           data-danger="{% trans 'Not possible' %}"
                           data-success="{% trans 'Added' %}">
                     {% trans 'Add' %}
@@ -43,11 +46,14 @@
               </li>
               <li class="dropdown-item">
                 <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="item" %}"
-                      class="add-form px-3 py-1" method="post">
+                      data-fetch-form="true"
+                      data-fetch-form-event-after="refresh-character-gear"
+                      class="px-3 py-1" method="post">
                   {% csrf_token %}
                   <input type="hidden" name="object_id" value="{{ item.id }}">
                   <input type="hidden" name="action" value="buy">
                   <button class="dropdown-item"
+                          type="submit"
                           data-danger="{% trans 'Not possible' %}"
                           data-success="{% trans 'Added' %}">
                     {% trans 'Buy' %}
