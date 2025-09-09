@@ -24,6 +24,7 @@ class SidebarRight {
     set body(body) {
         this.sidebarElement.querySelector(".offcanvas-body").innerHTML = body;
         htmx.process(this.sidebarElement.querySelector(".offcanvas-body"));
+        dispatch(this.eventShow);
     }
 
     set dialog_class(value) {
@@ -86,6 +87,7 @@ class SidebarRight {
         }
         this.refreshAfter = dataset.sidebarRightRefreshAfter;
         this.eventAfter = dataset.sidebarRightEventAfter;
+        this.eventShow = dataset.sidebarRightEventShow;
     }
 
     /* fetches the most recent url. */

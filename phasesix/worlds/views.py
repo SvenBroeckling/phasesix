@@ -2,6 +2,7 @@ import re
 
 import reversion
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -190,12 +191,7 @@ class XhrUploadImageView(View):
     def post(self, request, *args, **kwargs):
         wiki_page = get_object_or_404(WikiPage, slug=self.kwargs["slug"])
         if not wiki_page.may_edit(request.user):
-            return JsonResponse(
-                {
-                    "error": _("You do not have permission to edit this wiki page."),
-                    "status": "error",
-                }
-            )
+            raise PermissionDenied()
 
         if self.kwargs["kind"] == "additional_image":
             wiki_page.wikipageimage_set.create(
@@ -217,7 +213,7 @@ class XhrUploadImageView(View):
             "copyright-url"
         )
         request.user.profile.save()
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(wiki_page.get_absolute_url())
 
 
 class XhrAdditionalImagesView(TemplateView):

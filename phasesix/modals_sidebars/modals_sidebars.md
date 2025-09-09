@@ -129,6 +129,7 @@ element, but there is currently only a `SidebarRight` known. A sidebar on the le
 * `data-sidebar-right-body`: If set, the given content is copied as the first content in the sidebar.
 * `data-sidebar-right-body-from-id`: If set to an HTML ID (`#mytemplate`), the content of this element is copied into the sidebar.
 * `data-sidebar-right-iframe="true"`: If set, the content of the sidebar is loaded into an `iframe` and **not** via `fetch()`.
+* `data-sidebar-right-event-show`:  A comma separated list of event names to be dispatched from `document` after the sidebar is shown.
 * `data-sidebar-right-event-after`: A comma separated list of event names to be dispatched from `document` after the sidebar is closed.
 
 ### Events

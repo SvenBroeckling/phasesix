@@ -12,11 +12,9 @@ function fallbackCopyTextToClipboard(text) {
     textArea.select();
 
     try {
-        let successful = document.execCommand('copy');
-        let msg = successful ? 'successful' : 'unsuccessful';
-        console.log('Fallback: Copying text command was ' + msg);
+        document.execCommand("copy");
     } catch (err) {
-        console.error('Fallback: Oops, unable to copy', err);
+        console.error("Fallback: Oops, unable to copy", err);
     }
 
     document.body.removeChild(textArea);
@@ -27,9 +25,30 @@ function copyTextToClipboard(text) {
         fallbackCopyTextToClipboard(text);
         return;
     }
-    navigator.clipboard.writeText(text).then(function () {
-        console.log('Async: Copying to clipboard was successful!');
-    }, function (err) {
-        console.error('Async: Could not copy text: ', err);
-    });
+    navigator.clipboard.writeText(text).then(
+        function () {},
+        function (err) {
+            console.error("Async: Could not copy text: ", err);
+        },
+    );
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("click", function (e) {
+        let clipboardTrigger = e.target.closest("[data-clipboard-value]");
+        if (clipboardTrigger) {
+            let value = clipboardTrigger.getAttribute("data-clipboard-value");
+            copyTextToClipboard(value);
+            Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT);
+            Toast.setMaxCount(5);
+            Toast.create({
+                title: clipboardTrigger.dataset.clipboardTitle || "Copied",
+                message:
+                    clipboardTrigger.dataset.clipboardMessage ||
+                    "Copied to clipboard",
+                status: TOAST_STATUS.SUCCESS,
+                timeout: 5000,
+            });
+        }
+    });
+});

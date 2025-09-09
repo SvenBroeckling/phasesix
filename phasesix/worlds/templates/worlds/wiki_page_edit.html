@@ -5,7 +5,6 @@
 
 {% block javascript %}
     <script src="{% static 'js/worlds_detail.js' %}"></script>
-    <script src="{% static 'js/clipboard.js' %}"></script>
     <script>
         $(function () {
             $('a.autotag-link').on('click', function (event) {
@@ -57,15 +56,15 @@
                             class="btn btn-success float-end"
                             title="{% trans 'Save' %}"><i class="fa fa-save"></i><span class="d-none d-md-inline"> {% trans 'Save' %}</span></button>
                         <button type="button"
-                                data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
-                                data-sidebar-title="{% trans 'Page images' %}"
-                                class="btn btn-primary float-end me-1 sidebar-trigger">
+                                data-sidebar-right-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
+                                data-sidebar-right-title="{% trans 'Page images' %}"
+                                class="btn btn-primary float-end me-1">
                             <i class="fa fa-image"></i><span class="d-none d-md-inline"> {% trans 'Images' %}</span>
                         </button>
                         <div class="btn-group me-1 float-end">
-                            <button class="btn btn-primary sidebar-trigger"
-                                    data-sidebar-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
-                                    data-sidebar-title="{% trans 'Insert Link' %}"
+                            <button class="btn btn-primary"
+                                    data-sidebar-right-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
+                                    data-sidebar-right-title="{% trans 'Insert Link' %}"
                                     role="button"><i class="fas fa-plus"></i><span class="d-none d-md-inline"> {% trans 'Links' %}</span></button>
                             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">

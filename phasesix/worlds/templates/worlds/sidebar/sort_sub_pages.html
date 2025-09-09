@@ -1,33 +1,5 @@
 {% load i18n characters_extras rules_extras thumbnail static %}
 
-<script src="{% static 'js/clipboard.js' %}"></script>
-<script>
-    $(function () {
-        console.log('sort_sub_pages.html')
-        function saveSortOrder(selector, url) {
-            let order = {}
-            $(selector).each((idx, e) => {
-                order[$(e).data('pk')] = idx
-            })
-            $.post(url, order)
-        }
-
-        for (const element of [".wiki-link-sortable"]) {
-            console.log(element)
-            $(element).sortable({
-                tolerance: 'pointer',
-                items: 'div.card',
-                placeholder: '<div class="card mb-3"><div class="card-header">&nbsp;</div></div>'
-            }).bind('sortstart', function (e, ui) {
-            }).bind('sortstop', function (e, ui) {
-            }).bind('sortupdate', function (e, ui) {
-                console.log('sortupdate')
-                saveSortOrder(`${element} > div`, $(this).data('url'))
-            })
-        }
-    })
-</script>
-
 <div class="row">
   <div class="col-12">
     <p>
