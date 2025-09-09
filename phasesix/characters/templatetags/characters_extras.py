@@ -67,6 +67,11 @@ def color_value_span(value, max_value, invert=False, algebraic_sign=False):
     )
 
 
+@register.filter
+def value_for_attack_mode(character_weapon, attack_mode):
+    return character_weapon.value_for_attack_mode(attack_mode)
+
+
 @register.simple_tag
 def display_modifications(character_weapon, identifier):
     if isinstance(character_weapon, FillProxyModel):

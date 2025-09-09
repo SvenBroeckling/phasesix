@@ -11,17 +11,20 @@
       <div class="row mt-2">
         <div class="col-12">
           <div class="btn-group w-100">
-            <a href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="add_charge" %}"
-               class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
-                                                             title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
-            </a>
+            <button
+              data-action-trigger-url="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="add_charge" %}"
+              data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-refresh"
+              class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
+                                                            title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
+            </button>
           </div>
         </div>
         <div class="col-12 mt-2">
           <div class="btn-group w-100">
-            <a href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="remove_charge" %}"
-               class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
-                                                             title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
+            <a
+              href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="remove_charge" %}"
+              class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
+                                                            title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
             </a>
           </div>
         </div>
@@ -29,18 +32,19 @@
     {% endif %}
 
     <div class="row mt-2">
-
       {% if body_modification.activation == "p" %}
         <div class="col-12">
           <div class="btn-group w-100">
-            <a href="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="switch_active" %}"
-               class="action-link btn btn-primary btn-sm dice-roll mb-2 d-flex align-items-center justify-content-center">
+            <button
+              class="btn btn-primary btn-sm dice-roll mb-2 d-flex align-items-center justify-content-center"
+              data-action-trigger-url="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="switch_active" %}"
+              data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-refresh">
               {% if object.is_active %}
-                <i class="gi gi-guard13007-play-button me-1"></i> {% trans 'Turn off' %}
+                <i class="gi gi-lord-berandas-power-button me-1"></i> {% trans 'Turn off' %}
               {% else %}
                 <i class="gi gi-guard13007-play-button me-1"></i> {% trans 'Turn on' %}
               {% endif %}
-            </a>
+            </button>
           </div>
         </div>
       {% endif %}
@@ -53,7 +57,7 @@
                     data-dice-header="{{ body_modification }}"
                     data-dice-description="{{ body_modification.dice_roll_string }}"
                     data-dice-character="{{ object.character.id }}"><i
-                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.dice_roll_string }}
+              class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.dice_roll_string }}
             </button>
           </div>
         </div>
@@ -66,10 +70,9 @@
                     data-dice-roll="{% character_attribute_value object.character body_modification.attribute %}d6"
                     data-dice-header="{{ body_modification }} - {{ body_modification.attribute }}"
                     data-dice-description="
-
-                          {% character_attribute_value object.character body_modification.attribute %}{% trans 'd6' %}"
+                      {% character_attribute_value object.character body_modification.attribute %}{% trans 'd6' %}"
                     data-dice-character="{{ object.character.id }}"><i
-                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.attribute }}
+              class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.attribute }}
             </button>
           </div>
         </div>
@@ -84,7 +87,7 @@
                     data-dice-description="
                           {% character_skill_value object.character body_modification.skill %}{% trans 'd6' %}"
                     data-dice-character="{{ object.character.id }}"><i
-                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.skill }}</button>
+              class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.skill }}</button>
           </div>
         </div>
       {% endif %}
@@ -96,10 +99,9 @@
                     data-dice-roll="{% character_knowledge_value object.character body_modification.knowledge %}d6"
                     data-dice-header="{{ body_modification }} - {{ body_modification.knowledge }}"
                     data-dice-description="
-
-                          {% character_knowledge_value object.character body_modification.knowledge %}{% trans 'd6' %}"
+                      {% character_knowledge_value object.character body_modification.knowledge %}{% trans 'd6' %}"
                     data-dice-character="{{ object.character.id }}"><i
-                    class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.knowledge }}
+              class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ body_modification.knowledge }}
             </button>
           </div>
         </div>
@@ -107,11 +109,13 @@
     </div>
 
     <div class="btn-group w-100">
-      <a href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="body_modification" %}?object_id={{ object.id }}"
-         data-method="DELETE"
-         class="btn btn-sm btn-danger action-link close-sidebar"><i class="fas fa-fw fa-trash"
-                                                                    title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
-      </a>
+      <button
+        data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="body_modification" %}?object_id={{ object.id }}"
+        data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-hide"
+        data-action-trigger-method="DELETE"
+        class="btn btn-sm btn-danger action-link close-sidebar">
+        <i class="fas fa-fw fa-trash" title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
+      </button>
     </div>
 
   {% endif %}
@@ -151,7 +155,8 @@
             <i class="fas fa-angle-double-right fa-fw"></i>
             {% trans 'Rarity' %}
             </span>
-            <span class="text-{% rarity_color_class body_modification.rarity %}">{{ body_modification.get_rarity_display }}</span>
+            <span
+              class="text-{% rarity_color_class body_modification.rarity %}">{{ body_modification.get_rarity_display }}</span>
           </li>
           <li class="list-group-item d-flex align-items-center justify-content-between">
             <span>
@@ -193,5 +198,4 @@
       </div>
     </div>
   </div>
-
 {% endwith %}

@@ -53,15 +53,16 @@
 
         {% for w in object.characterweapon_set.all %}
           {% with modified_keywords=w.modified_keywords %}
-            <tr class="sidebar-trigger" data-sidebar-title="{{ w.weapon }}"
-                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=w.id sidebar_template="weapon" %}">
+            <tr data-sidebar-right-title="{{ w.weapon }}"
+                data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=w.id sidebar_template="weapon" %}">
               <td>
                 <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
                 <small class="text-muted">{{ w.weapon.type }}</small>
               </td>
               <td class="text-end">
-                {% for am in w.attack_modes_with_values %}
-                  {{ am.0 }} {% color_value_span am.1 7 %} <i class="fas text-muted fa-dice-five"></i>
+                {% for am in w.weapon.attack_modes.all %}
+                  {{ am.name }} {% color_value_span w|value_for_attack_mode:am 7 %}
+                  <i class="fas text-muted fa-dice-five"></i>
                   <br>
                 {% endfor %}
               </td>

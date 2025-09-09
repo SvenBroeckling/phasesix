@@ -344,12 +344,18 @@ class CharacterAttackView(View):
         attack_mode = AttackMode.objects.get(id=kwargs["attack_mode_pk"])
 
         if not character_weapon.character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
 
         character_weapon.capacity_used += attack_mode.capacity_consumed
         character_weapon.save()
-
-        return JsonResponse({"status": "ok"})
+        roll_and_send(
+            character_weapon.character.id,
+            f"{character_weapon.value_for_attack_mode(attack_mode)}d6",
+            header=character_weapon.weapon.name,
+            description=f"{attack_mode.name} {character_weapon.roll_info_display}",
+            minimum_roll=character_weapon.character.minimum_roll,
+        )
+        return HttpResponseRedirect(character_weapon.character.get_absolute_url())
 
 
 class CharacterReloadView(View):

@@ -1244,27 +1244,18 @@ class CharacterWeapon(models.Model):
     def may_edit(self, user):
         return self.character.may_edit(user)
 
-    def attack_modes_with_values(self):
+    def value_for_attack_mode(self, attack_mode):
         skill = self.character.characterskill_set.ranged_combat_skill()
         if self.weapon.is_hand_to_hand_weapon:
             skill = self.character.characterskill_set.hand_to_hand_combat_skill()
         if self.weapon.is_throwing_weapon:
             skill = self.character.characterskill_set.throwing_combat_skill()
-
-        damage_potential = (
-            self.modified_keywords["damage_potential"]["value"]
-            if "damage_potential" in self.modified_keywords
-            else 0
-        )
-        return [
-            (am.name, skill.value + am.dice_bonus + damage_potential, am.id)
-            for am in self.weapon.attack_modes.all()
-        ]
+        return skill.value + attack_mode.dice_bonus + self.damage_potential
 
     @property
     def roll_info_display(self):
         traits = [
-            "{{{}}}: {{{}}}".format(k["name"], k["value"])
+            "{}: {}".format(k["name"], k["value"])
             for k in self.modified_keywords.values()
             if k["show_in_dice_rolls"]
         ]
@@ -1317,6 +1308,14 @@ class CharacterWeapon(models.Model):
                         "show_in_summary": k.keyword.show_in_summary,
                     }
         return weapon_keywords
+
+    @property
+    def damage_potential(self):
+        return (
+            self.modified_keywords["damage_potential"]["value"]
+            if "damage_potential" in self.modified_keywords
+            else 0
+        )
 
     @property
     def capacity_available(self):

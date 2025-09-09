@@ -30,8 +30,8 @@
               <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
             </td>
             <td class="text-end">
-              {% for am in w.attack_modes_with_values %}
-                {{ am.0 }} <span class="text-muted">{{ am.1 }}</span>
+              {% for am in w.weapon.attack_modes.all %}
+                {{ am.name }} <span class="text-muted">{{ w|value_for_attack_mode:am }}</span>
                 <i class="fas text-muted fa-dice-five"></i><br>
               {% endfor %}
             </td>
@@ -43,7 +43,7 @@
               {% endfor %}
             </td>
             <td class="text-end">
-              {% if w.has_capacity %}
+              {% if modified_keywords.capacity %}
                 <span class="text-muted">{{ w.capacity_available }}</span> /
                 <span class="text-muted">{{ modified_keywords.capacity.value }}</span>
               {% else %}

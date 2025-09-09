@@ -13,19 +13,17 @@ const actionTriggerListener = (event) => {
             const eventAfter = actionTrigger.dataset.actionTriggerEventAfter;
             const method = actionTrigger.dataset.actionTriggerMethod || "POST";
 
-            if (url) {
-                fetch(url, {
-                    method: method.toUpperCase(),
-                    redirect: "manual",
-                    headers: {
-                        mode: "same-origin",
-                        "X-CSRFToken":
-                            document.querySelector("body").dataset.csrfToken,
-                    },
-                }).then((response) => {
-                    dispatch(eventAfter);
-                });
-            }
+            fetch(url, {
+                method: method.toUpperCase(),
+                redirect: "manual",
+                headers: {
+                    mode: "same-origin",
+                    "X-CSRFToken":
+                        document.querySelector("body").dataset.csrfToken,
+                },
+            }).then((response) => {
+                dispatch(eventAfter);
+            });
         }
     }
 };

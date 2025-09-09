@@ -3,38 +3,36 @@
 
 {% if may_edit %}
   <div class="row">
-    {% if object.weapon.attack_modes.exists %}
-      {% for fm in object.attack_modes_with_values %}
-        <div class="col-12">
-          <div class="btn-group w-100">
-            <a class="btn btn-primary btn-sm action-link dice-roll mb-1"
-               data-dice-roll="{{ fm.1 }}d6"
-               data-dice-header="{{ object.weapon }}"
-               data-dice-description="{{ fm.0 }} {{ object.roll_info_display }}"
-               data-dice-character="{{ object.character.id }}"
-               href="{% url 'characters:attack' characterweapon_pk=object.id attack_mode_pk=fm.2 %}">
-              {% trans 'Attack:' %} {{ fm.0 }}
-              {% color_value_span fm.1 8 %} <i class="fas fa-dice-five"></i></a>
-          </div>
-        </div>
-      {% endfor %}
+    {% for am in object.weapon.attack_modes.all %}
       <div class="col-12">
         <div class="btn-group w-100">
-          <a class="btn btn-secondary btn-sm action-link mb-1"
-             href="{% url 'characters:reload' characterweapon_pk=object.id %}"><i
-            class="fas fa-redo fa-fw"></i> {% trans 'Reload' %}</a>
+          <button class="btn btn-primary btn-sm mb-1"
+                  data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'characters:attack' characterweapon_pk=object.id attack_mode_pk=am.id %}">
+            {% trans 'Attack:' %} {{ am.name }}
+            {% color_value_span object|value_for_attack_mode:am 8 %} <i class="fas fa-dice-five"></i></button>
         </div>
       </div>
-    {% endif %}
+    {% endfor %}
+    <div class="col-12">
+      <div class="btn-group w-100">
+        <button class="btn btn-secondary btn-sm mb-1"
+                data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:reload' characterweapon_pk=object.id %}"><i
+          class="fas fa-redo fa-fw"></i> {% trans 'Reload' %}</button>
+      </div>
+    </div>
 
     <div class="col-12">
       <div class="btn-group w-100">
-        <a class="btn btn-warning btn-sm action-link"
-           href="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="damage" %}"><i
-          class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</a>
-        <a class="btn btn-success btn-sm action-link"
-           href="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="repair" %}"><i
-          class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</a>
+        <button class="btn btn-warning btn-sm"
+                data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="damage" %}">
+          <i class="fas fa-times fa-fw"></i> {% trans 'Damage' %}</button>
+        <button class="btn btn-success btn-sm"
+                data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+                data-action-trigger-url="{% url 'characters:xhr_weapon_condition' pk=object.character.id weapon_pk=object.id mode="repair" %}">
+          <i class="fas fa-wrench fa-fw"></i> {% trans 'Repair' %}</button>
       </div>
     </div>
 
@@ -54,10 +52,11 @@
 
     <div class="col-12">
       <div class="btn-group w-100">
-        <a class="btn btn-danger btn-sm action-link close-sidebar mt-1"
-           data-method="DELETE"
-           href="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="weapon" %}?object_id={{ object.id }}">
-          <i class="fas fa-trash"></i> {% trans 'Remove' %}</a>
+        <button class="btn btn-danger btn-sm close-sidebar mt-1"
+                data-action-trigger-method="DELETE"
+                data-action-trigger-event-after="refresh-character-gear,sidebar-right-hide"
+                data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="weapon" %}?object_id={{ object.id }}">
+          <i class="fas fa-trash"></i> {% trans 'Remove' %}</button>
       </div>
     </div>
   </div>
@@ -80,6 +79,16 @@
   <div class="col-12">
     <div class="card mb-2 mt-2">
       <ul class="list-group list-group-flush">
+        {% if object.modified_keywords.capacity %}
+          <li class="list-group-item">
+            <i class="fas fa-arrows-alt-h fa-fw"></i>
+            {% trans 'Ammunition' %}
+            <span class="float-end">
+                {% color_value_span object.capacity_available object.modified_keywords.capacity.value %} /
+                {% color_value_span object.modified_keywords.capacity.value object.modified_keywords.capacity.value %}
+            </span>
+          </li>
+        {% endif %}
         <li class="list-group-item">
           <i class="fas fa-arrows-alt-h fa-fw"></i>
           {% trans 'Condition' %}
@@ -122,12 +131,10 @@
   {% for keyword in wm.weaponmodificationkeyword_set.all %}
     <span class="fw-bold {% if keyword.keyword.is_rare %}text-primary{% endif %}">{{ keyword.keyword.name }}</span>
     {% color_value_span keyword.value 6 %}<br>
-    {% comment %}
-    <a class="action-link btn btn-danger btn-sm w-100 mt-2 mb-3"
-       data-url="{% url 'characters:xhr_add_weapon_modification' pk=object.id %}?character_weapon_id={{ weapon.id }}"
-       title="{% trans 'Remove Modification' %}"
-       href="{% url 'characters:xhr_remove_weapon_modification' pk=object.character.id weapon_pk=object.id weapon_modification_pk=wm.id %}">
-      <i class="fas fa-trash"></i> {% trans 'Remove' %}</a>
-    {% endcomment %}
   {% endfor %}
+  <button class="btn btn-danger btn-sm w-100 mt-2 mb-3"
+          title="{% trans 'Remove Modification' %}"
+          data-action-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+          data-action-trigger-url="{% url 'characters:xhr_remove_weapon_modification' pk=object.character.id weapon_pk=object.id weapon_modification_pk=wm.id %}">
+    <i class="fas fa-trash"></i> {% trans 'Remove' %}</button>
 {% endfor %}

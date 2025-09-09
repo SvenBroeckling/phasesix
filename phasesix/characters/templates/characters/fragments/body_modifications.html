@@ -1,8 +1,9 @@
 {% load i18n %}
 <div class="row mb-3">
   <div class="col-12 col-md-6 mb-2">
-    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain and Energy' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Biostrain and Energy' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
       <div class="card-body">
         <h5 class="card-title">{% trans "Biostrain" %}</h5>
         <p>
@@ -21,8 +22,9 @@
   </div>
 
   <div class="col-12 col-md-6 mb-2">
-    <div class="card h-100 sidebar-trigger" data-sidebar-title="{% trans 'Biostrain and Energy' %}"
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
+    <div class="card h-100"
+         data-sidebar-right-title="{% trans 'Biostrain and Energy' %}"
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="biostrain" %}">
       <div class="card-body">
         <h5 class="card-title">{% trans "Energy Consumption" %}</h5>
         <p>
@@ -44,241 +46,72 @@
 
 <div class="row justify-content-center">
   <div class="col-12 col-md-4 text-center">
-    <div class="card h-100">
-      <div
-        {% if may_edit %}
-          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-          data-modal-size-class="modal-xl"
-          data-modal-event-after="refresh-character-body_modifications"
-          data-modal-title="{% trans 'Add Body Modification' %}"
-        {% endif %}
-          class="card-body d-flex flex-column align-items-center">
-            <span title="{% trans "Sockets" %}"
-                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
-            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_head }}
-            </span>
-        <i class="gi gi-delapouite-vr-headset fs-2"></i>
-        {% trans "Head" %}
-      </div>
-      {% if object.characterbodymodification_set.head.exists %}
-        <ul class="list-group list-group-flush">
-          {% for cbm in object.characterbodymodification_set.head %}
-            <li data-sidebar-title="{{ cbm.body_modification.name }}"
-                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
-                class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-              <div class="d-flex align-items-center">
-                <i title="{% trans "Is active" %}"
-                   class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
-                {{ cbm.body_modification.name }}
-              </div>
-              <span class="badge bg-dark rounded-pill">
-                  <i class="gi gi-delapouite-plug me-1"></i>
-                  {{ cbm.socket_amount }}
-                </span>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
+    {% with sockets=object.sockets_head %}
+      {% with qs=object.characterbodymodification_set.head %}
+        {% with icon_class="gi gi-delapouite-vr-headset" %}
+          {% trans "Head" as location_name %}
+          {% include "characters/fragments/_body_modifications_socket_location.html" %}
+        {% endwith %}
+      {% endwith %}
+    {% endwith %}
   </div>
 </div>
 
 <div class="row justify-content-center mt-3">
   <div class="col-12 col-md-4 text-center mb-2">
-    <div class="card h-100">
-      <div
-        {% if may_edit %}
-          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-          data-modal-size-class="modal-xl"
-          data-modal-event-after="refresh-character-body_modifications"
-          data-modal-title="{% trans 'Add Body Modification' %}"
-        {% endif %}
-          class="card-body d-flex flex-column align-items-center justify-content-center">
-            <span title="{% trans "Sockets" %}"
-                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
-            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_left_arm }}
-            </span>
-        <i class="gi gi-delapouite-forearm fs-2"></i>
-        {% trans "Left Arm" %}
-      </div>
-      {% if object.characterbodymodification_set.left_arm.exists %}
-        <ul class="list-group list-group-flush">
-          {% for cbm in object.characterbodymodification_set.left_arm %}
-            <li data-sidebar-title="{{ cbm.body_modification.name }}"
-                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
-                class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-              <div class="d-flex align-items-center">
-                <i title="{% trans "Is active" %}"
-                   class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
-                {{ cbm.body_modification.name }}
-              </div>
-              <span class="badge bg-dark rounded-pill">
-                  <i class="gi gi-delapouite-plug me-1"></i>
-                  {{ cbm.socket_amount }}
-                </span>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
+    {% with sockets=object.sockets_left_arm %}
+      {% with qs=object.characterbodymodification_set.left_arm %}
+        {% with icon_class="gi gi-delapouite-forearm" %}
+          {% trans "Left Arm" as location_name %}
+          {% include "characters/fragments/_body_modifications_socket_location.html" %}
+        {% endwith %}
+      {% endwith %}
+    {% endwith %}
   </div>
 
   <div class="col-12 col-md-4 text-center mb-2">
-    <div class="card h-100">
-      <div
-        {% if may_edit %}
-          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-          data-modal-size-class="modal-xl"
-          data-modal-event-after="refresh-character-body_modifications"
-          data-modal-title="{% trans 'Add Body Modification' %}"
-        {% endif %}
-          class="card-body d-flex flex-column align-items-center justify-content-center">
-            <span title="{% trans "Sockets" %}"
-                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
-            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_torso }}
-            </span>
-        <i class="gi gi-delapouite-muscular-torso fs-2"></i>
-        {% trans "Torso" %}
-      </div>
-      {% if object.characterbodymodification_set.torso.exists %}
-        <ul class="list-group list-group-flush">
-          {% for cbm in object.characterbodymodification_set.torso %}
-            <li data-sidebar-title="{{ cbm.body_modification.name }}"
-                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
-                class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-              <div class="d-flex align-items-center">
-                <i title="{% trans "Is active" %}"
-                   class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
-                {{ cbm.body_modification.name }}
-              </div>
-              <span class="badge bg-dark rounded-pill">
-                  <i class="gi gi-delapouite-plug me-1"></i>
-                  {{ cbm.socket_amount }}
-                </span>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
+    {% with sockets=object.sockets_torso %}
+      {% with qs=object.characterbodymodification_set.torso %}
+        {% with icon_class="gi gi-delapouite-muscular-torso" %}
+          {% trans "Torso" as location_name %}
+          {% include "characters/fragments/_body_modifications_socket_location.html" %}
+        {% endwith %}
+      {% endwith %}
+    {% endwith %}
   </div>
 
   <div class="col-12 col-md-4 text-center mb-2">
-    <div class="card h-100">
-      <div
-        {% if may_edit %}
-          data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-          data-modal-size-class="modal-xl"
-          data-modal-event-after="refresh-character-body_modifications"
-          data-modal-title="{% trans 'Add Body Modification' %}"
-        {% endif %}
-          class="card-body d-flex flex-column align-items-center justify-content-center">
-            <span title="{% trans "Sockets" %}"
-                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
-            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_right_arm }}
-            </span>
-        <i class="gi gi-delapouite-forearm mirrored fs-2"></i>
-        {% trans "Right Arm" %}
-      </div>
-      {% if object.characterbodymodification_set.right_arm.exists %}
-        <ul class="list-group list-group-flush">
-          {% for cbm in object.characterbodymodification_set.right_arm %}
-            <li data-sidebar-title="{{ cbm.body_modification.name }}"
-                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
-                class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-              <div class="d-flex align-items-center">
-                <i title="{% trans "Is active" %}"
-                   class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
-                {{ cbm.body_modification.name }}
-              </div>
-              <span class="badge bg-dark rounded-pill">
-                  <i class="gi gi-delapouite-plug me-1"></i>
-                  {{ cbm.socket_amount }}
-                </span>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
+    {% with sockets=object.sockets_right_arm %}
+      {% with qs=object.characterbodymodification_set.right_arm %}
+        {% with icon_class="gi gi-delapouite-forearm mirrored" %}
+          {% trans "Right Arm" as location_name %}
+          {% include "characters/fragments/_body_modifications_socket_location.html" %}
+        {% endwith %}
+      {% endwith %}
+    {% endwith %}
   </div>
 </div>
 
 <div class="row justify-content-center mt-3">
   <div class="col-12 col-md-4 text-center mb-2">
-    <div class="card h-100">
-      <div
-        {% if may_edit %}
-          data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-          data-modal-size-class="modal-xl"
-          data-modal-event-after="refresh-character-body_modifications"
-          data-modal-title="{% trans 'Add Body Modification' %}"
-        {% endif %}
-          class="card-body d-flex flex-column align-items-center justify-content-center">
-            <span title="{% trans "Sockets" %}"
-                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
-            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_left_leg }}
-            </span>
-        <i class="gi gi-delapouite-leg mirrored fs-2"></i>
-        {% trans "Left Leg" %}
-      </div>
-      {% if object.characterbodymodification_set.left_leg.exists %}
-        <ul class="list-group list-group-flush">
-          {% for cbm in object.characterbodymodification_set.left_leg %}
-            <li data-sidebar-title="{{ cbm.body_modification.name }}"
-                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
-                class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-              <div class="d-flex align-items-center">
-                <i title="{% trans "Is active" %}"
-                   class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
-                {{ cbm.body_modification.name }}
-              </div>
-              <span class="badge bg-dark rounded-pill">
-                  <i class="gi gi-delapouite-plug me-1"></i>
-                  {{ cbm.socket_amount }}
-                </span>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
+    {% with sockets=object.sockets_left_leg %}
+      {% with qs=object.characterbodymodification_set.left_leg %}
+        {% with icon_class="gi gi-delapouite-leg mirrored" %}
+          {% trans "Left Leg" as location_name %}
+          {% include "characters/fragments/_body_modifications_socket_location.html" %}
+        {% endwith %}
+      {% endwith %}
+    {% endwith %}
   </div>
 
   <div class="col-12 col-md-4 text-center mb-2">
-    <div class="card h-100">
-      <div
-        {% if may_edit %}
-          data-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="body_modification" %}"
-          data-modal-size-class="modal-xl"
-          data-modal-event-after="refresh-character-body_modifications"
-          data-modal-title="{% trans 'Add Body Modification' %}"
-        {% endif %}
-          class="card-body d-flex flex-column align-items-center position-relative justify-content-center">
-            <span title="{% trans "Sockets" %}"
-                  class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-dark d-flex align-items-center">
-            <i class="gi gi-delapouite-plug"></i>&nbsp;{{ object.sockets_right_leg }}
-            </span>
-        <i class="gi gi-delapouite-leg fs-2"></i>
-        {% trans "Right Leg" %}
-      </div>
-      {% if object.characterbodymodification_set.right_leg.exists %}
-        <ul class="list-group list-group-flush">
-          {% for cbm in object.characterbodymodification_set.right_leg %}
-            <li data-sidebar-title="{{ cbm.body_modification.name }}"
-                data-sidebar-url="{% url 'characters:xhr_sidebar' pk=cbm.id sidebar_template="body_modification" %}"
-                class="sidebar-trigger list-group-item d-flex justify-content-between align-items-center text-start">
-              <div class="d-flex align-items-center">
-                <i title="{% trans "Is active" %}"
-                   class="gi gi-guard13007-play-button {% if cbm.is_active %}text-success{% else %}text-danger{% endif %} me-1"></i>
-                {{ cbm.body_modification.name }}
-              </div>
-              <span class="badge bg-dark rounded-pill">
-                  <i class="gi gi-delapouite-plug me-1"></i>
-                  {{ cbm.socket_amount }}
-                </span>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-
-    </div>
+    {% with sockets=object.sockets_right_leg %}
+      {% with qs=object.characterbodymodification_set.right_leg %}
+        {% with icon_class="gi gi-delapouite-leg" %}
+          {% trans "Right Leg" as location_name %}
+          {% include "characters/fragments/_body_modifications_socket_location.html" %}
+        {% endwith %}
+      {% endwith %}
+    {% endwith %}
   </div>
 </div>
