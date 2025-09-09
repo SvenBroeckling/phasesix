@@ -953,30 +953,34 @@ class XhrModifyItemView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
         item = CharacterItem.objects.get(id=kwargs["item_pk"])
 
-        if self.kwargs["mode"] == "add":
-            item.quantity += 1
         if self.kwargs["mode"] == "remove":
+            item.delete()
+            return HttpResponseRedirect(character.get_absolute_url())
+
+        if self.kwargs["mode"] == "increase_quantity":
+            item.quantity += 1
+        if self.kwargs["mode"] == "decrease_quantity":
             if item.quantity > 0:
                 item.quantity -= 1
         if self.kwargs["mode"] == "add_charge":
             item.charges_used -= 1
         if self.kwargs["mode"] == "remove_charge":
             item.charges_used += 1
+
         item.save()
         if item.quantity <= 0:
             item.delete()
-
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrPutIntoView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
         item = CharacterItem.objects.get(id=kwargs["item_pk"])
 
         container = None
@@ -986,7 +990,7 @@ class XhrPutIntoView(View):
         if not item.item.is_container:
             item.in_container = container
             item.save()
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrModifyBodyModificationView(View):

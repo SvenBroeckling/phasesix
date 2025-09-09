@@ -167,7 +167,6 @@ Often you want to trigger an asyncronous request via POST with information conta
 this by using custom `data-` attributes in the HTML. To convert an element into a post trigger, the data attribute
 `data-post-trigger="true"` must be set.
 
-
 The default event of the element is disabled in this case.
 
 ### Data Attributes
@@ -176,34 +175,21 @@ The default event of the element is disabled in this case.
 * `data-post-trigger-refresh-after` wenn auf "true" gesetzt wird die aktuelle Seite nach dem POST neu geladen.
 * `data-post-trigger-event-after`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the post request is sent. If set to a comma separated list of event names, each event is dispatched after the modal is closed.
 
-* `data-post-trigger-fetch-after`: wenn dieses Attribut gesetzt ist und eine URL enthält wird nach erfolgreichem `POST`
-  ein `GET` auf diese URL ausgeführt. Dies kann genutzt werden, um ein Resultat anzuzeigen.
-* `data-post-trigger-fetch-after-target` gibt das Ziel des nachträglichen `GET` Aufrufs an. Dies kann eine der folgenden
-  Optionen sein:
-    * `modal`: Das Ergebnis wird im Modal angezeigt, das Modal wird geöffnet
-    * `sidebar`: Das Ergebnis wird in der Sidebar angezeigt, die Sidebar wird geöffnet
-    * Ein Selector: Wenn das Attribut gefüllt ist und nicht `modal` oder `sidebar` enthält, wird der CSS Selector im DOM
-      angefragt und das Ergebnis in den bestehenden DOM eingefügt.
-* `data-post-trigger-fetch-after-title`: Für die Optionen `modal` und `sidebar` kann hier der zu verwendende Titel
-  angegeben werden.
-
 ### Events
 
-Post Trigger haben keine Event Listener.
+Post Triggers have no event listeners.
 
-### Beispiel
+### Example
 
-Ein Beispiel für den Post Trigger aus dem Warenkorb. Die `POST` View löscht eine Position aus dem Warenkorb, die "fetch
-after" View ist der Sidebar Warenkorb selbst, so wird die Anzeige aktualisiert.
+
+An example for a post trigger from the cart. The `POST` view deletes a position from a cart.
 
 ```html
-    <a
-    data-post-trigger="true"
-    data-post-trigger-url="{% url 'shop:cart_delete_position' cart_position_pk=position.id %}"
-    data-post-trigger-fetch-after="{% url " shop:cart_sidebar" %}"
-data-post-trigger-fetch-after-target="sidebar"
-class="float-end cursor-pointer">
-{% svg_symbol 'x-lg' 24 24 color="gray" %}
-</a>
+    <a data-post-trigger-url="{% url 'shop:cart_delete_position' cart_position_pk=position.id %}"
+        data-post-trigger-event-after="refresh-cart"
+        class="btn btn-outline-danger btn-sm d-inline-flex align-items-center">
+        <i class="fa fa-trash"></i>
+        <span class="ms-2">Delete</span>
+    </a>
 ```
 

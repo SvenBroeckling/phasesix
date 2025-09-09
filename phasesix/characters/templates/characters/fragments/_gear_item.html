@@ -3,14 +3,10 @@
      data-url="{% url 'characters:xhr_update_item_sort_order' pk=character.id %}">
 
   {% for ci in qs %}
-    <div class="card mb-2 sidebar-trigger"
-         data-sidebar-title="{{ ci.item }}"
+    <div class="card mb-2"
+         data-sidebar-right-title="{{ ci.item }}"
          data-pk="{{ ci.id }}"
-      {% if ci.item.get_image_thumbnail %}
-         style="background-image: url('{{ ci.item.get_image_thumbnail }}'), linear-gradient(to left, rgb(0 0 0 / 1%), rgb(0 0 0 / 99%)); background-blend-mode: overlay; background-size: cover;"
-      {% endif %}
-         data-sidebar-url="{% url 'characters:xhr_sidebar' pk=ci.id sidebar_template="item" %}">
-
+         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=ci.id sidebar_template="item" %}">
       <div class="card-body position-relative z-2">
         {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}
           x {% endif %} {{ ci.item }}

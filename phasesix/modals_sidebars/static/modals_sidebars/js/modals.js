@@ -1,3 +1,5 @@
+import { dispatch } from "./common.js";
+
 class SiteModal {
     constructor() {
         this.modalElement = document.getElementById("site-modal");
@@ -37,7 +39,7 @@ class SiteModal {
     set body(body) {
         this.modalElement.querySelector(this.target).innerHTML = body;
         htmx.process(this.modalElement.querySelector(this.target));
-        this.#dispatch(this.eventShow);
+        dispatch(this.eventShow);
     }
 
     set dialog_class(value) {
@@ -92,7 +94,7 @@ class SiteModal {
                 }, 0);
             }
 
-            this.#dispatch(this.eventAfter);
+            dispatch(this.eventAfter);
         });
 
         document.addEventListener("modal-show", (event) => {
@@ -147,23 +149,8 @@ class SiteModal {
         this.confirmClose = dataset.modalConfirmClose;
         this.eventShow = dataset.modalEventShow;
         this.eventAfter = dataset.modalEventAfter;
-        this.eventClose = dataset.modalEventClose;
         this.htmxTriggersClose = dataset.modalHtmxTriggersClose;
         this.autoShowQueryString = dataset.modalAutoShowQueryString;
-    }
-
-    /* eventString: comma separated string of event names to dispatch */
-    #dispatch(eventString) {
-        if (eventString) {
-            for (let e of eventString.split(",")) {
-                document.dispatchEvent(
-                    new CustomEvent(e, {
-                        detail: null,
-                        bubbles: true,
-                    }),
-                );
-            }
-        }
     }
 }
 

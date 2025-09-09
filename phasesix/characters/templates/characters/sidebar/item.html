@@ -5,15 +5,25 @@
   <div class="row">
     <div class="col-12">
       <div class="btn-group w-100">
-        <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove" %}"
-           class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
-                                                         title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
-        </a>
+        <button
+          data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove" %}"
+          data-post-trigger-event-after="refresh-character-gear,sidebar-right-hide"
+          class="btn btn-sm btn-danger"><i class="fas fa-fw fa-times"
+                                           title="{% trans 'Remove' %}"></i>{% trans 'Remove' %}
+        </button>
+        <button
+          data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="decrease_quantity" %}"
+          data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+          class="btn btn-sm btn-warning {% if object.quantity <= 1 %}disabled{% endif %}"><i class="fas fa-fw fa-minus"
+                                                                                             title="{% trans 'Less' %}"></i>{% trans 'Less' %}
+        </button>
         {% if not object.item.is_container %}
-          <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add" %}"
-             class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
-                                                           title="{% trans 'Add' %}"></i>{% trans 'Add' %}
-          </a>
+          <button
+            data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="increase_quantity" %}"
+            data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+            class="btn btn-sm btn-success"><i class="fas fa-fw fa-plus"
+                                              title="{% trans 'More' %}"></i>{% trans 'More' %}
+          </button>
         {% endif %}
       </div>
     </div>
@@ -23,18 +33,22 @@
     <div class="row mt-2">
       <div class="col-12">
         <div class="btn-group w-100">
-          <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add_charge" %}"
-             class="btn btn-sm btn-success action-link"><i class="fas fa-fw fa-plus"
-             title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
-          </a>
+          <button
+            data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="add_charge" %}"
+            data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+            class="btn btn-sm btn-success"><i class="fas fa-fw fa-plus"
+                                              title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
+          </button>
         </div>
       </div>
       <div class="col-12 mt-2">
         <div class="btn-group w-100">
-          <a href="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove_charge" %}"
-             class="btn btn-sm btn-warning action-link"><i class="fas fa-fw fa-minus"
-             title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
-          </a>
+          <button
+            data-post-trigger-url="{% url 'characters:xhr_modify_item' pk=object.character.id item_pk=object.id mode="remove_charge" %}"
+            data-post-trigger-event-after="refresh-character-gear,sidebar-right-refresh"
+            class="btn btn-sm btn-warning"><i class="fas fa-fw fa-minus"
+                                              title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
+          </button>
         </div>
       </div>
     </div>
@@ -49,7 +63,7 @@
                   data-dice-header="{{ object.item }}"
                   data-dice-description="{{ object.item.dice_roll_string }}"
                   data-dice-character="{{ object.character.id }}"><i
-                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.dice_roll_string }}
+            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.dice_roll_string }}
           </button>
         </div>
       </div>
@@ -64,7 +78,7 @@
                   data-dice-description="
                           {% character_attribute_value object.character object.item.attribute %}{% trans 'd6' %}"
                   data-dice-character="{{ object.character.id }}"><i
-                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.attribute }}</button>
+            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.attribute }}</button>
         </div>
       </div>
     {% endif %}
@@ -77,7 +91,7 @@
                   data-dice-header="{{ object.item }} - {{ object.item.skill }}"
                   data-dice-description="{% character_skill_value object.character object.item.skill %}{% trans 'd6' %}"
                   data-dice-character="{{ object.character.id }}"><i
-                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.skill }}</button>
+            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.skill }}</button>
         </div>
       </div>
     {% endif %}
@@ -91,7 +105,7 @@
                   data-dice-description="
                           {% character_knowledge_value object.character object.item.knowledge %}{% trans 'd6' %}"
                   data-dice-character="{{ object.character.id }}"><i
-                  class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.knowledge }}</button>
+            class="fas fa-dice-five fa-fw"></i> {% trans 'Roll' %} {{ object.item.knowledge }}</button>
         </div>
       </div>
     {% endif %}
@@ -106,12 +120,15 @@
             </button>
             <div class="dropdown-menu">
               {% if object.in_container is not None %}
-                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
-                   class="dropdown-item action-link">{% trans 'On Body' %}</a>
+                <a data-post-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id %}"
+                   data-post-trigger-event-after="refresh-character-gear"
+                   class="dropdown-item">{% trans 'On Body' %}</a>
               {% endif %}
               {% for container in object.other_containers %}
-                <a href="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
-                   class="dropdown-item action-link">{{ container.item }}</a>
+                <a
+                  data-post-trigger-url="{% url 'characters:xhr_put_into' pk=object.character.id item_pk=object.id container_pk=container.id %}"
+                  data-post-trigger-event-after="refresh-character-gear"
+                  class="dropdown-item">{{ container.item }}</a>
               {% endfor %}
             </div>
           </div>
@@ -146,13 +163,15 @@
         <li class="list-group-item">
           <i class="fas fa-angle-double-right fa-fw"></i>
           {% trans 'Rarity' %}
-          <span class="float-end text-{% rarity_color_class object.item.rarity %}">{{ object.item.get_rarity_display }}</span>
+          <span
+            class="float-end text-{% rarity_color_class object.item.rarity %}">{{ object.item.get_rarity_display }}</span>
         </li>
         {% if object.item.charges is not None %}
           <li class="list-group-item">
             <i class="fas fa-bolt fa-fw"></i>
             {% trans 'Charges' %}
-            <span class="float-end">{% color_value_span object.charges_available 100 invert=True %}/{{ object.item.charges }}</span>
+            <span
+              class="float-end">{% color_value_span object.charges_available 100 invert=True %}/{{ object.item.charges }}</span>
           </li>
         {% endif %}
         <li class="list-group-item">

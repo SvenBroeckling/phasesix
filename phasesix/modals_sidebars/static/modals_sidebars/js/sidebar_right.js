@@ -1,7 +1,11 @@
+import { dispatch } from "./common.js";
+
 class SidebarRight {
     constructor() {
         this.sidebarElement = document.getElementById("sidebar-right");
         this.offcanvas = new bootstrap.Offcanvas(this.sidebarElement);
+        this.mostRecentUrl = undefined;
+        this.iframe = undefined;
         this.setupGlobalListeners();
     }
 
@@ -42,6 +46,10 @@ class SidebarRight {
             this.offcanvas.show();
         });
 
+        document.addEventListener("sidebar-right-refresh", (event) => {
+            this.#fetch();
+        });
+
         document.addEventListener("sidebar-right-fetch-and-show", (event) => {
             this.fillSidebarFromDataSet(event.detail);
             this.offcanvas.show();
@@ -52,7 +60,7 @@ class SidebarRight {
             if (this.refreshAfter) {
                 window.location.reload();
             }
-            this.#dispatch(this.eventAfter);
+            dispatch(this.eventAfter);
         });
     }
 
@@ -72,29 +80,22 @@ class SidebarRight {
             ).innerHTML;
         }
         if (dataset.sidebarRightUrl) {
-            if (dataset.sidebarRightIframe) {
-                this.body = `<iframe style="width: 100%; height: 100%" src="${dataset.sidebarRightUrl}"></iframe>`;
-            } else {
-                fetch(dataset.sidebarRightUrl)
-                    .then((response) => response.text())
-                    .then((text) => (this.body = text));
-            }
+            this.mostRecentUrl = dataset.sidebarRightUrl;
+            this.iframe = dataset.sidebarRightIframe;
+            this.#fetch();
         }
         this.refreshAfter = dataset.sidebarRightRefreshAfter;
         this.eventAfter = dataset.sidebarRightEventAfter;
     }
 
-    /* eventString: comma separated string of event names to dispatch */
-    #dispatch(eventString) {
-        if (eventString) {
-            for (let e of eventString.split(",")) {
-                document.dispatchEvent(
-                    new CustomEvent(e, {
-                        detail: null,
-                        bubbles: true,
-                    }),
-                );
-            }
+    /* fetches the most recent url. */
+    #fetch() {
+        if (this.iframe !== undefined && this.iframe === "true") {
+            this.body = `<iframe style="width: 100%; height: 100%" src="${this.mostRecentUrl}"></iframe>`;
+        } else {
+            fetch(this.mostRecentUrl)
+                .then((response) => response.text())
+                .then((text) => (this.body = text));
         }
     }
 }

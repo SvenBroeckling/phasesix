@@ -157,8 +157,9 @@
 
   <script src="{% static "plots/js/plot_editor.js" %}"></script>
 
-  {% modals_sidebars_javascript %}
 {% endcompress %}
+
+{% modals_sidebars_javascript %} {# uses type="module" - don't compress #}
 
 {% block javascript %}{% endblock %}
 

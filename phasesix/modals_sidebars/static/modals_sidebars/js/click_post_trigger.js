@@ -1,100 +1,41 @@
-window.addEventListener("DOMContentLoaded", (event) => {
-    document.addEventListener("click", (event) => {
-        let postTrigger = event.target.closest("[data-post-trigger-url]");
-        if (postTrigger) {
-            let eventType = postTrigger.dataset.postTriggerEvent || "click";
-            if (eventType === event.type) {
-                event.preventDefault();
+import { dispatch } from "./common.js";
 
-                const url = postTrigger.dataset.postTriggerUrl;
-                const refreshAfter =
-                    postTrigger.dataset.postTriggerRefreshAfter;
-                const eventAfter = postTrigger.dataset.postTriggerEventAfter;
-                const fetchAfter = postTrigger.dataset.postTriggerFetchAfter;
-                const fetchAfterTarget =
-                    postTrigger.dataset.postTriggerFetchAfterTarget;
-                const fetchAfterTitle =
-                    postTrigger.dataset.postTriggerFetchAfterTitle;
+document.addEventListener("click", (event) => {
+    let postTrigger = event.target.closest("[data-post-trigger-url]");
+    if (postTrigger) {
+        let eventType = postTrigger.dataset.postTriggerEvent || "click";
+        if (eventType === event.type) {
+            event.preventDefault();
 
-                if (url) {
-                    fetch(url, {
-                        method: "POST",
-                        redirect: "manual",
-                        headers: {
-                            mode: "same-origin",
-                            "X-CSRFToken":
-                                document.querySelector("body").dataset
-                                    .csrfToken,
-                        },
-                    }).then((response) => {
-                        if (refreshAfter) {
-                            window.location.reload();
-                        } else if (
-                            response.status === 200 ||
-                            response.status === 302
-                        ) {
-                            if (eventAfter) {
-                                document.dispatchEvent(
-                                    new CustomEvent(eventAfter, {
-                                        detail: null,
-                                        bubbles: true,
-                                    }),
-                                );
-                            }
+            const url = postTrigger.dataset.postTriggerUrl;
+            const refreshAfter = postTrigger.dataset.postTriggerRefreshAfter;
+            const eventAfter = postTrigger.dataset.postTriggerEventAfter;
 
-                            if (fetchAfter) {
-                                if (
-                                    fetchAfterTarget &&
-                                    fetchAfterTarget === "sidebar"
-                                ) {
-                                    document.dispatchEvent(
-                                        new CustomEvent(
-                                            "sidebar-right-fetch-and-show",
-                                            {
-                                                detail: {
-                                                    sidebarTitle:
-                                                        fetchAfterTitle,
-                                                    sidebarUrl: fetchAfter,
-                                                },
-                                            },
-                                        ),
-                                    );
-                                } else if (
-                                    fetchAfterTarget &&
-                                    fetchAfterTarget === "modal"
-                                ) {
-                                    document.dispatchEvent(
-                                        new CustomEvent(
-                                            "site-modal-fetch-and-show",
-                                            {
-                                                detail: {
-                                                    siteModalTitle:
-                                                        fetchAfterTitle,
-                                                    siteModalUrl: fetchAfter,
-                                                },
-                                            },
-                                        ),
-                                    );
-                                } else {
-                                    fetch(fetchAfter, { method: "GET" })
-                                        .then((response) => response.text())
-                                        .then((text) => {
-                                            if (fetchAfterTarget) {
-                                                document.querySelector(
-                                                    fetchAfterTarget,
-                                                ).innerHTML = text;
-                                            }
-                                        });
-                                }
-                            }
-                        } else {
-                            console.error(
-                                `data-post-trigger: Failed post to ${url}`,
-                            );
-                        }
-                    });
-                }
+            if (url) {
+                fetch(url, {
+                    method: "POST",
+                    redirect: "manual",
+                    headers: {
+                        mode: "same-origin",
+                        "X-CSRFToken":
+                            document.querySelector("body").dataset.csrfToken,
+                    },
+                }).then((response) => {
+                    if (refreshAfter) {
+                        window.location.reload();
+                    } else if (
+                        response.status === 200 ||
+                        response.status === 302 ||
+                        response.status === 0
+                    ) {
+                        dispatch(eventAfter);
+                    } else {
+                        console.error(
+                            `data-post-trigger: Failed post to ${url}`,
+                        );
+                    }
+                });
             }
         }
-    });
+    }
 });
