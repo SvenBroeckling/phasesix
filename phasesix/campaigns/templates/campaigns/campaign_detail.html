@@ -49,9 +49,9 @@
                   <div>
                     {% trans "You have been invited to join this campaign. Create a new character to join the campaign." %}<br>
                     <a href=""
-                       data-sidebar-title="{% trans 'Join campaign' %}"
-                       data-sidebar-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"
-                       class="sidebar-trigger btn btn-success mt-2"><i
+                       data-sidebar-right-title="{% trans 'Join campaign' %}"
+                       data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"
+                       class="btn btn-success mt-2"><i
                       class="fas fa-dice-five"></i> {% trans 'Join campaign' %}</a>
                   </div>
                 </div>

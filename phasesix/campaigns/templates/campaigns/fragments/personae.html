@@ -6,9 +6,9 @@
     <div class="d-flex justify-content-start flex-wrap">
       {% for c in object.character_set.all %}
         <a href=""
-           data-sidebar-title="{{ c }}"
-           data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
-           class="sidebar-trigger sidebar-spinner mb-2 me-2">
+           data-sidebar-right-title="{{ c }}"
+           data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
+           class="mb-2 me-2">
           <div class="position-relative">
             <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
                  class="img-fluid object-fit-cover">
@@ -39,9 +39,9 @@
     <div class="d-flex justify-content-start flex-wrap">
       {% for c in object.npc_set.all %}
         <a href=""
-           data-sidebar-title="{{ c }}"
-           data-sidebar-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
-           class="sidebar-trigger sidebar-spinner mb-2 me-2">
+           data-sidebar-right-title="{{ c }}"
+           data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}"
+           class="mb-2 me-2">
           <div class="position-relative">
             <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
                  class="img-fluid object-fit-cover">
@@ -82,9 +82,9 @@
       {% for f in object.campaignfoe_set.all %}
         {% with foe=f.foe %}
           <a href=""
-             data-sidebar-title="{{ foe.name }}"
-             data-sidebar-url="{% url 'campaigns:xhr_foe_sidebar' pk=f.id sidebar_template="foe" %}"
-             class="sidebar-trigger sidebar-spinner mb-2 me-2">
+             data-sidebar-right-title="{{ foe.name }}"
+             data-sidebar-right-url="{% url 'campaigns:xhr_foe_sidebar' pk=f.id sidebar_template="foe" %}"
+             class="mb-2 me-2">
             <div class="position-relative">
               <img src="{% image_url foe geometry="200x200" crop="center" %}" alt="{{ foe }}"
                    class="img-fluid object-fit-cover">
@@ -99,9 +99,8 @@
 
       {% if may_edit %}
         <a href=""
-           class="sidebar-trigger"
-           data-sidebar-url="{% url 'campaigns:xhr_search_foe' pk=object.id %}"
-           data-sidebar-title="{% trans "Search foe" %}">
+           data-sidebar-right-url="{% url 'campaigns:xhr_search_foe' pk=object.id %}"
+           data-sidebar-right-title="{% trans "Search foe" %}">
           <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
                style="width: 200px; height: 200px">
             <i class="fas fa-plus fa-2x"></i>

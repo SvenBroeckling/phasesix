@@ -158,9 +158,9 @@
       <span class="ms-3 d-block d-lg-block">{% trans "Notes" %}</span>
     </div>
     {% if may_edit %}
-      <button type="button" class="btn btn-sm ms-2 sidebar-trigger"
-              data-sidebar-title="{% trans 'Take a note' %}"
-              data-sidebar-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="create_note" %}">
+      <button type="button" class="btn btn-sm ms-2"
+              data-sidebar-right-title="{% trans 'Take a note' %}"
+              data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="create_note" %}">
         +
       </button>
     {% endif %}

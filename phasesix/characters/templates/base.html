@@ -64,37 +64,8 @@
 
 {% include '_main_nav.html' %}
 
-<div id="sidebar-right" class="sidebar sidebar-right position-fixed h-100">
-  <header class="sidebar-header p-3 overflow-auto">
-    <button type="button" class="sidebar-close float-end btn btn-danger btn-sm close" aria-label="Close"><span
-      aria-hidden="true">&times;</span>
-    </button>
-    <h4 class="d-inline-block mb-0">{% trans 'Properties' %}</h4>
-  </header>
-  <div class="sidebar-content px-3 pt-2 pb-5">
-  </div>
-</div>
-
 {% site_modal %}
-{# sidebar_right #}
-
-<div id="page-modal" class="modal fade page-modal" tabindex="-1" role="dialog"
-     aria-labelledby="page-modal">
-  <div class="modal-dialog modal-xl modal-fullscreen-lg-down" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Modal</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body page-modal-container">
-        <div class="text-center h-100 w-100 d-flex justify-content-center align-items-center">
-          <i class="fa fa-cog fa-spin fa-5x fa-fw"></i>
-          <span class="sr-only">{% trans 'Loading' %}...</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% sidebar_right %}
 
 {% block header %}
   {% backdrop_image_url object "1900x600" as backdrop_image %}
@@ -183,8 +154,6 @@
 
   <script src="{% static 'js/searchable_object_card_list.js' %}?2"></script>
   <script src="{% static 'js/portal.js' %}"></script>
-  <script src="{% static 'js/sidebar.js' %}"></script>
-  <script src="{% static 'js/actions.js' %}"></script>
 
   <script src="{% static "plots/js/plot_editor.js" %}"></script>
 

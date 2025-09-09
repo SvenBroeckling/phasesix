@@ -1,6 +1,6 @@
-window.addEventListener("load", (event) => {
+window.addEventListener("DOMContentLoaded", (event) => {
     document.addEventListener("click", (event) => {
-        let postTrigger = event.target.closest("[data-post-trigger]");
+        let postTrigger = event.target.closest("[data-post-trigger-url]");
         if (postTrigger) {
             let eventType = postTrigger.dataset.postTriggerEvent || "click";
             if (eventType === event.type) {
@@ -9,6 +9,7 @@ window.addEventListener("load", (event) => {
                 const url = postTrigger.dataset.postTriggerUrl;
                 const refreshAfter =
                     postTrigger.dataset.postTriggerRefreshAfter;
+                const eventAfter = postTrigger.dataset.postTriggerEventAfter;
                 const fetchAfter = postTrigger.dataset.postTriggerFetchAfter;
                 const fetchAfterTarget =
                     postTrigger.dataset.postTriggerFetchAfterTarget;
@@ -21,7 +22,9 @@ window.addEventListener("load", (event) => {
                         redirect: "manual",
                         headers: {
                             mode: "same-origin",
-                            "X-CSRFToken": csrftoken,
+                            "X-CSRFToken":
+                                document.querySelector("body").dataset
+                                    .csrfToken,
                         },
                     }).then((response) => {
                         if (refreshAfter) {
@@ -30,6 +33,15 @@ window.addEventListener("load", (event) => {
                             response.status === 200 ||
                             response.status === 302
                         ) {
+                            if (eventAfter) {
+                                document.dispatchEvent(
+                                    new CustomEvent(eventAfter, {
+                                        detail: null,
+                                        bubbles: true,
+                                    }),
+                                );
+                            }
+
                             if (fetchAfter) {
                                 if (
                                     fetchAfterTarget &&

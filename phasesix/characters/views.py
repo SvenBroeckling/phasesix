@@ -1135,7 +1135,7 @@ class XhrCreateNoteView(View):
         character = Character.objects.get(id=kwargs["pk"])
 
         if not character.may_edit(request.user):
-            return JsonResponse({"status": "forbidden"})
+            raise PermissionDenied()
 
         character.characternote_set.create(
             is_private=request.POST.get("private", "off") == "on",
@@ -1143,7 +1143,7 @@ class XhrCreateNoteView(View):
             text=request.POST.get("text", None),
         )
 
-        return JsonResponse({"status": "ok"})
+        return HttpResponseRedirect(character.get_absolute_url())
 
 
 class XhrUpdateNoteView(View):

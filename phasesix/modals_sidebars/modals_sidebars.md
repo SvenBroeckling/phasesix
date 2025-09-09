@@ -29,6 +29,8 @@ success case, where the call specified by `success_url` is inserted.
 <form
     data-fetch-form="true"
     data-fetch-form-close="all"
+    data-fetch-form-event-after="modal-hide"
+    data-fetch-form-event-on-render="toast-show,header-blink"
     action="{% url 'myapp:object_update' pk=object.id %}"
     method="post">
     {% csrf_token %}
@@ -61,8 +63,8 @@ To add the modal to the base template, the template tag `{% site_modal %}` can b
 * `data-modal-body`: If set, the given content is copied as the first content in the modal.
 * `data-modal-body-from-id`: If set to an HTML ID (`#mytemplate`), the content of this element is copied into the modal.
 * `data-modal-refresh-after`: If set to "true", the current page is reloaded after closing the modal.
-* `data-modal-event-after`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the modal is closed.
-* `data-modal-event-show`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the modal is shown.
+* `data-modal-event-after`: A comma separated list of event names to be dispatched from `document` after the modal is closed.
+* `data-modal-event-show`:  A comma separated list of event names to be dispatched from `document` after the modal is shown.
 * `data-modal-iframe="true"`: If set, the content of the modal is loaded into an `iframe` and **not** via `fetch()`.
 * `data-modal-size-class`: Set the Bootstrap CSS class to the modal. Options are `modal-sm`, `modal-lg`, `modal-xl` and `modal-fullscreen`
 * `data-modal-confirm-close`: If set to "true", the modal is closed only after a confirmation prompt is accepted via `confirm()`.
@@ -111,52 +113,43 @@ Trigger a modal via JavaScript
 
 ## Sidebar
 
-Die Sidebar verhält sich analog zum Modal und bietet die selben Mechaniken. Die Sidebar verwendet ein Bootstrap
-`Offcanvas` Element, es ist aber zu unserem Code hin bislang eine `SidebarRight` bekannt. Eine Sidebar auf der linken
-Seite gibt es noch nicht.
+The sidebar behaves similar to the modal and offers the same mechanisms. The sidebar uses a Bootstrap `Offcanvas`
+element, but there is currently only a `SidebarRight` known. A sidebar on the left side does not yet exist.
 
 ### Data Attribute
 
-* `data-sidebar-right` aktiviert die Sidebar, wenn es auf true gesetzt ist.
-* `data-sidebar-title` gibt einen Titel an, der in der Sidebar verwendet wird.
-* Wenn `data-sidebar-body` gesetzt ist, wird der angegebene Inhalt als erstes in die Sidebar kopiert.
-* Wenn `data-sidebar-body-from-id` mit einem HTML ID gefüllt ist (`#meintemplate`), wird der Inhalt dieses Elements in
-  die Sidebar kopiert.
-* Ist eine `data-sidebar-url` angegeben, wird als letztes diese URL via `fetch()` mit der methode GET abgerufen.
-* Ist `data-sidebar-iframe="true"` angegeben, so wird der Inhalt der Sidebar in ein `iframe` geladen, und **nicht** via
-  `fetch()` abgerufen.
-* `data-sidebar-event-after` wenn auf einen Namen gesetzt wird ein CustomEvent mit dem angegebenen Namen von `document`
-  dispatched.
+* `data-sidebar-right-url`:  **Required** This URL is fetched via `fetch()` with the method GET.
+* `data-sidebar-right-title`: Gives a title to the sidebar.
+* `data-sidebar-right-body`: If set, the given content is copied as the first content in the sidebar.
+* `data-sidebar-right-body-from-id`: If set to an HTML ID (`#mytemplate`), the content of this element is copied into the sidebar.
+* `data-sidebar-right-iframe="true"`: If set, the content of the sidebar is loaded into an `iframe` and **not** via `fetch()`.
+* `data-sidebar-right-event-after`: A comma separated list of event names to be dispatched from `document` after the sidebar is closed.
 
 ### Events
 
-*Neu nach Merge Request !33*
+The following events can be dispatched in Javascript to influence the sidebar:
 
-Folgende Events können im Javascript dispatched werden, um die Sidebar zu beeinflussen:
+* `sidebar-right-hide`: The sidebar is hidden and cleared.
+* `sidebar-right-show`: The sidebar is shown with the current content.
+* `sidebar-right-fetch-and-show`:  A URL is fetched via GET and shown in the sidebar. The event must be a `CustomEvent` with the same `detail` object as the data set in the HTML (data-sidebar-right-url is mapped to sidebarRightUrl).
 
-* `sidebar-right-hide`: Die Sidebar wird ausgeblendet und geleert.
-* `sidebar-right-show`: Die Sidebar wird mit aktuellem Inhalt angezeigt
-* `sidebar-right-fetch-and-show`: Es wird eine URL per GET abgerufen und danach in der Sidebar angezeigt. Das Event muss
-  ein `CustomEvent` sein, das `detail` Object enthält die selben Elemente wie das DataSet im HTML (
-  data-sidebar-right-url wird zu sidebarRightUrl)
+### Examples
 
-### Beispiele
 
-Sidebar im HTML triggern
+Trigger a sidebar via HTML
 
 ```html
 
 <button
-    data-sidebar-right="true"
-    data-sidebar-title="{% trans " Bearbeiten" %}"
-data-sidebar-url="{% url 'property_management:residential_object_update' pk=object.id %}"
-class="btn btn-outline-primary btn-sm d-inline-flex align-items-center">
-{% svg_symbol 'pencil' 14 14 %}
-<span class="ms-2">{% trans 'Bearbeiten' %}</span>
+    data-sidebar-title="Edit"
+    data-sidebar-url="{% url 'my_app:object_update' pk=object.id %}"
+    class="btn btn-outline-primary btn-sm d-inline-flex align-items-center">
+    <i class="fa fa-pencil"></i>
+    <span class="ms-2">Edit</span>
 </button>
 ```
 
-Sidebar im JavaScript triggern
+Trigger a sidebar via JavaScript
 
 ```javascript
     document.dispatchEvent(
@@ -170,18 +163,19 @@ Sidebar im JavaScript triggern
 
 ## Post Trigger
 
-Oft möchte man durch einen Klick auf einen Button oder einen Link einfach einen asyncronen Request via POST auslösen,
-dessen Informationen bereits in der URL durch Keyword Arguments vorhanden sind. **Post Trigger** ermöglichen dies durch
-eigene `data-` Angaben im HTML. Um ein Element in einen Post Trigger zu verwandeln, muss das Data Attribut
-`data-post-trigger="true"` gesetzt werden.
+Often you want to trigger an asyncronous request via POST with information contained in the URL. **Post Trigger** allow
+this by using custom `data-` attributes in the HTML. To convert an element into a post trigger, the data attribute
+`data-post-trigger="true"` must be set.
 
-Das Default Event des Elements wird hierdurch deaktiviert.
 
-### Data Attribute
+The default event of the element is disabled in this case.
 
-* `data-post-trigger` aktiviert den Post Trigger auf dem Element.
-* `data-post-trigger-url` gibt die URL an, die via `POST` aufgerufen wird.
+### Data Attributes
+
+* `data-post-trigger-url`: **Required** This URL is fetched via `fetch()` with the method POST.
 * `data-post-trigger-refresh-after` wenn auf "true" gesetzt wird die aktuelle Seite nach dem POST neu geladen.
+* `data-post-trigger-event-after`: If set to a name, a CustomEvent with the given name from `document` is dispatched, once the post request is sent. If set to a comma separated list of event names, each event is dispatched after the modal is closed.
+
 * `data-post-trigger-fetch-after`: wenn dieses Attribut gesetzt ist und eine URL enthält wird nach erfolgreichem `POST`
   ein `GET` auf diese URL ausgeführt. Dies kann genutzt werden, um ein Resultat anzuzeigen.
 * `data-post-trigger-fetch-after-target` gibt das Ziel des nachträglichen `GET` Aufrufs an. Dies kann eine der folgenden

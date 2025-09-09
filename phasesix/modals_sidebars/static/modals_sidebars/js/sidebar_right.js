@@ -30,7 +30,7 @@ class SidebarRight {
 
     setupGlobalListeners() {
         document.addEventListener("click", (e) => {
-            let sidebarTrigger = e.target.closest("[data-sidebar-right]");
+            let sidebarTrigger = e.target.closest("[data-sidebar-right-url]");
             if (sidebarTrigger) {
                 this.fillSidebarFromDataSet(sidebarTrigger.dataset);
                 e.preventDefault();
@@ -49,48 +49,53 @@ class SidebarRight {
 
         document.addEventListener("sidebar-right-hide", (event) => {
             this.offcanvas.hide();
-        });
-
-        // Don't break existing code. FIXME: Replace occurrences in html with -hide and remove this
-        document.addEventListener("sidebar-right-close", (event) => {
-            this.offcanvas.hide();
             if (this.refreshAfter) {
                 window.location.reload();
             }
-            if (this.eventAfter) {
-                document.dispatchEvent(
-                    new CustomEvent(this.eventAfter, { bubbles: true }),
-                );
-            }
+            this.#dispatch(this.eventAfter);
         });
     }
 
     fillSidebarFromDataSet(dataset) {
-        if (dataset.sidebarTitle !== undefined) {
-            this.title = dataset.sidebarTitle;
+        if (dataset.sidebarRightTitle !== undefined) {
+            this.title = dataset.sidebarRightTitle;
         }
-        if (dataset.sidebarBody) {
-            this.body = dataset.sidebarBody;
+        if (dataset.sidebarRightBody) {
+            this.body = dataset.sidebarRightBody;
         }
         if (dataset.sidebarSizeClass) {
-            this.dialog_class = dataset.sidebarSizeClass;
+            this.dialog_class = dataset.sidebarRightSizeClass;
         }
-        if (dataset.sidebarBodyFromId) {
+        if (dataset.sidebarRightBodyFromId) {
             this.body = document.querySelector(
-                dataset.sidebarBodyFromId,
+                dataset.sidebarRightBodyFromId,
             ).innerHTML;
         }
-        if (dataset.sidebarUrl) {
-            if (dataset.sidebarIframe) {
-                this.body = `<iframe style="width: 100%; height: 100%" src="${dataset.siteModalUrl}"></iframe>`;
+        if (dataset.sidebarRightUrl) {
+            if (dataset.sidebarRightIframe) {
+                this.body = `<iframe style="width: 100%; height: 100%" src="${dataset.sidebarRightUrl}"></iframe>`;
             } else {
-                fetch(dataset.sidebarUrl)
+                fetch(dataset.sidebarRightUrl)
                     .then((response) => response.text())
                     .then((text) => (this.body = text));
             }
         }
-        this.refreshAfter = dataset.sidebarRefreshAfter;
-        this.eventAfter = dataset.sidebarEventAfter;
+        this.refreshAfter = dataset.sidebarRightRefreshAfter;
+        this.eventAfter = dataset.sidebarRightEventAfter;
+    }
+
+    /* eventString: comma separated string of event names to dispatch */
+    #dispatch(eventString) {
+        if (eventString) {
+            for (let e of eventString.split(",")) {
+                document.dispatchEvent(
+                    new CustomEvent(e, {
+                        detail: null,
+                        bubbles: true,
+                    }),
+                );
+            }
+        }
     }
 }
 

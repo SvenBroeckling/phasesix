@@ -1,11 +1,23 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-    // Fetch Form submit listener
+    /* eventString: comma separated string of event names to dispatch */
+    function dispatch(eventString) {
+        if (eventString) {
+            for (let e of eventString.split(",")) {
+                document.dispatchEvent(
+                    new CustomEvent(e, {
+                        detail: null,
+                        bubbles: true,
+                    }),
+                );
+            }
+        }
+    }
+
     document.addEventListener("submit", (event) => {
         const form = event.target;
         const container = form.closest(".fetch-form-container");
         const close = form.dataset.fetchFormClose;
         const eventAfter = form.dataset.fetchFormEventAfter;
-        const eventAfterDetail = form.dataset.fetchFormEventAfterDetail;
         const eventOnRender = form.dataset.fetchFormEventOnRender;
 
         function add_class(selector, className) {
@@ -57,46 +69,25 @@ window.addEventListener("DOMContentLoaded", (event) => {
             })
                 .then((response) => {
                     if (response.status === 302 || response.status === 0) {
-                        // Django View success_url redirect
-                        return null;
+                        return null; // Django View success_url redirect
                     }
                     return response.text();
                 })
                 .then((text) => {
                     if (text === null || text === "") {
                         if (close === "all") {
-                            document.dispatchEvent(
-                                new Event("sidebar-right-close"),
-                            );
-                            document.dispatchEvent(new Event("modal-close"));
+                            dispatch("sidebar-right-hide,modal-hide");
                         }
                         if (close === "sidebar") {
-                            document.dispatchEvent(
-                                new Event("sidebar-right-close"),
-                            );
+                            dispatch("sidebar-right-hide");
                         } else if (close === "modal") {
-                            document.dispatchEvent(new Event("modal-close"));
+                            dispatch("modal-hide");
                         }
                         setButtonState("enabled");
-
-                        if (eventAfter) {
-                            document.dispatchEvent(
-                                new CustomEvent(eventAfter, {
-                                    detail: eventAfterDetail || null,
-                                    bubbles: true,
-                                }),
-                            );
-                        }
+                        dispatch(eventAfter);
                     } else {
                         container.innerHTML = text;
-                        if (eventOnRender) {
-                            document.dispatchEvent(
-                                new CustomEvent(eventOnRender, {
-                                    detail: null,
-                                    bubbles: true,
-                                }),
-                            );
-                        }
+                        dispatch(eventOnRender);
                     }
                 });
             event.preventDefault();

@@ -37,14 +37,7 @@ class SiteModal {
     set body(body) {
         this.modalElement.querySelector(this.target).innerHTML = body;
         htmx.process(this.modalElement.querySelector(this.target));
-        if (this.eventShow) {
-            document.dispatchEvent(
-                new CustomEvent(this.eventShow, {
-                    detail: this.eventShowDetail || null,
-                    bubbles: true,
-                }),
-            );
-        }
+        this.#dispatch(this.eventShow);
     }
 
     set dialog_class(value) {
@@ -65,7 +58,7 @@ class SiteModal {
             }
         });
 
-        // clear modal when hide
+        // clear the modal body when the modal is hidden
         this.modalElement.addEventListener("hide.bs.modal", (event) => {
             if (this.confirmClose) {
                 if (!confirm(this.confirmClose)) {
@@ -78,17 +71,6 @@ class SiteModal {
                 for (let t of this.htmxTriggersClose.split(",")) {
                     htmx.trigger(document.body, t);
                 }
-            }
-
-            if (this.eventClose) {
-                document.dispatchEvent(
-                    new CustomEvent(this.eventClose, {
-                        detail: this.eventCloseDetail || null,
-                        bubbles: true,
-                    }),
-                );
-                event.preventDefault();
-                return false;
             }
 
             this.modalElement.innerHTML = "";
@@ -110,14 +92,7 @@ class SiteModal {
                 }, 0);
             }
 
-            if (this.eventAfter) {
-                document.dispatchEvent(
-                    new CustomEvent(this.eventAfter, {
-                        detail: this.eventAfterDetail || null,
-                        bubbles: true,
-                    }),
-                );
-            }
+            this.#dispatch(this.eventAfter);
         });
 
         document.addEventListener("modal-show", (event) => {
@@ -130,13 +105,6 @@ class SiteModal {
         });
 
         document.addEventListener("modal-hide", (event) => {
-            this.modal.hide();
-        });
-
-        document.addEventListener("modal-close", (event) => {
-            if (event.detail && event.detail.forced) {
-                delete this.eventClose;
-            }
             this.modal.hide();
         });
     }
@@ -182,38 +150,20 @@ class SiteModal {
         this.eventClose = dataset.modalEventClose;
         this.htmxTriggersClose = dataset.modalHtmxTriggersClose;
         this.autoShowQueryString = dataset.modalAutoShowQueryString;
-
-        if (dataset.modalEventShowDetail)
-            this.eventShowDetail = this.parseToObject(
-                dataset.modalEventShowDetail,
-            );
-        if (dataset.modalEventAfterDetail)
-            this.eventAfterDetail = this.parseToObject(
-                dataset.modalEventAfterDetail,
-            );
-        if (dataset.modalEventCloseDetail)
-            this.eventCloseDetail = this.parseToObject(
-                dataset.modalEventCloseDetail,
-            );
     }
 
-    parseToObject(input) {
-        const keyValuePairs = input.split(";").map((pair) => pair.trim());
-        const jsonObject = {};
-
-        keyValuePairs.forEach((pair) => {
-            const [key, value] = pair.split("=").map((part) => part.trim());
-            if (key) {
-                if (!isNaN(value)) {
-                    jsonObject[key] = value.includes(".")
-                        ? parseFloat(value)
-                        : parseInt(value, 10);
-                } else {
-                    jsonObject[key] = value;
-                }
+    /* eventString: comma separated string of event names to dispatch */
+    #dispatch(eventString) {
+        if (eventString) {
+            for (let e of eventString.split(",")) {
+                document.dispatchEvent(
+                    new CustomEvent(e, {
+                        detail: null,
+                        bubbles: true,
+                    }),
+                );
             }
-        });
-        return jsonObject;
+        }
     }
 }
 
