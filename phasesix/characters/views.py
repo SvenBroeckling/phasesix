@@ -262,7 +262,7 @@ class XhrCharacterRestView(TemplateView):
                     character.base_stress += 1
                     character.quirks_gained += 1
 
-            character.stress = character.get_aspect_modifier("base_base_stress")
+            character.stress = character.calculated_base_stress
             character.save()
         return HttpResponseRedirect(character.get_absolute_url())
 

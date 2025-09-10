@@ -514,19 +514,11 @@ class Character(models.Model):
     def add_template(self, template):
         if not self.charactertemplate_set.filter(template=template).exists():
             self.charactertemplate_set.create(template=template)
-            # Clear cached modifiers when templates change
-            if hasattr(self, "_aspect_modifiers_cache"):
-                del self._aspect_modifiers_cache
-            if hasattr(self, "_attribute_modifiers_cache"):
-                del self._attribute_modifiers_cache
+            self.clear_aspect_modifiers_cache()
 
     def remove_template(self, template):
         self.charactertemplate_set.filter(template=template).delete()
-        # Clear cached modifiers when templates change
-        if hasattr(self, "_aspect_modifiers_cache"):
-            del self._aspect_modifiers_cache
-        if hasattr(self, "_attribute_modifiers_cache"):
-            del self._attribute_modifiers_cache
+        self.clear_aspect_modifiers_cache()
 
     def clear_aspect_modifiers_cache(self):
         """Clear the aspect modifiers cache to force recalculation"""
@@ -615,8 +607,17 @@ class Character(models.Model):
 
     # Horror
     @property
+    def calculated_base_stress(self):
+        """
+        This is worded differently from other base_ aspects.
+        The reason is, that the aspect itself is named base,
+        and it can be modified by the player *and* by templates etc.
+        """
+        return self.base_stress + self.get_aspect_modifier("base_base_stress")
+
+    @property
     def available_stress(self):
-        return self.max_stress - self.stress
+        return self.max_stress - max(self.stress, self.calculated_base_stress)
 
     @property
     def max_stress(self):

@@ -16,10 +16,10 @@
           {% endblocktrans %}
         </p>
         <p>
-          {% for i in object.base_stress|to_range %}
+          {% for i in object.calculated_base_stress|to_range %}
             <i class="fas fa-2x fa-frown text-danger" title="{% trans 'Base stress' %}"></i>
           {% endfor %}
-          {% for i in object.stress|subtract:object.base_stress|to_range %}
+          {% for i in object.stress|subtract:object.calculated_base_stress|to_range %}
             <i class="fas fa-2x fa-meh text-warning" title="{% trans 'Stress' %}"></i>
           {% endfor %}
           {% for i in object.available_stress|to_range %}

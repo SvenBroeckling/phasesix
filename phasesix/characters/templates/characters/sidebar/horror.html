@@ -6,24 +6,24 @@
     <div class="col-12">
       <div class="btn-group mb-1 w-100">
         <button class="btn btn-success btn-sm"
-                data-action-trigger-event-after="refresh-character-horror,sidebar-right-refresh"
+                data-action-trigger-event-after="refresh-character-horror,refresh-character-status,sidebar-right-refresh"
                 data-action-trigger-url="{% url 'characters:modify_stress' pk=object.id kind="stress" mode='remove' %}">
           <i class="fas fa-minus fa-fw"></i> {% trans 'Stress' %}
         </button>
         <button class="btn btn-warning btn-sm"
-                data-action-trigger-event-after="refresh-character-horror,sidebar-right-refresh"
+                data-action-trigger-event-after="refresh-character-horror,refresh-character-status,sidebar-right-refresh"
                 data-action-trigger-url="{% url 'characters:modify_stress' pk=object.id kind="stress" mode='gain' %}">
           <i class="fas fa-plus fa-fw"></i> {% trans 'Stress' %}
         </button>
       </div>
       <div class="btn-group mb-1 w-100">
         <button class="btn btn-success btn-sm"
-                data-action-trigger-event-after="refresh-character-horror,sidebar-right-refresh"
+                data-action-trigger-event-after="refresh-character-horror,refresh-character-status,sidebar-right-refresh"
                 data-action-trigger-url="{% url 'characters:modify_stress' pk=object.id kind="base_stress" mode='remove' %}">
           <i class="fas fa-minus fa-fw"></i> {% trans 'Base Stress' %}
         </button>
         <button class="btn btn-warning btn-sm"
-                data-action-trigger-event-after="refresh-character-horror,sidebar-right-refresh"
+                data-action-trigger-event-after="refresh-character-horror,refresh-character-status,sidebar-right-refresh"
                 data-action-trigger-url="{% url 'characters:modify_stress' pk=object.id kind="base_stress" mode='gain' %}">
           <i class="fas fa-plus fa-fw"></i> {% trans 'Base Stress' %}
         </button>
