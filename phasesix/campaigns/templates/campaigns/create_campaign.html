@@ -6,7 +6,7 @@
 {% block in_page_subtitle %}{% trans "Choose a world to play in" %}{% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div data-app="campaigns" class="row">
     {% for extension in extensions %}
       <div class="col-12 col-md-6 col-lg-4">
         {% if extension.fixed_epoch %}

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     let body = $("body");
 
-    body.on("click", ".campaign-link", function (e) {
+    body.on("click", "[data-app='campaigns'] .campaign-link", function (e) {
         let elem = $(this);
         let text = $(this).find(".invite-text");
         let orig_text = text.text();
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return false;
     });
 
-    $("table.campaign-status-sortable").tablesorter({
+    $("[data-app='campaigns'] table.campaign-status-sortable").tablesorter({
         textExtraction: {
             ".data": function (node, table, cellIndex) {
                 return $(node).find("span.sort-key").text();
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Campaign creation
-    body.on("click", ".create-epoch-card", function () {
+    body.on("click", "[data-app='campaigns'] .create-epoch-card", function () {
         let id = $(this).data("extension-id");
         let option = $(`#id_extensions > option[value=${id}]`);
         let was_selected = $(this).hasClass("selected");

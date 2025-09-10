@@ -2,25 +2,29 @@ $(function () {
     let body = $("body");
 
     document.addEventListener("DOMContentLoaded", function () {
-        let characterMainNav = $(".character-main-nav");
+        let characterMainNav = $("[data-app='characters'] .character-main-nav");
         if (characterMainNav) {
             characterMainNav.find("a[href]:first").tab("show");
         }
     });
 
-    body.on("click", ".status-effect-description-button", function (e) {
-        let elem = $(this);
-        let target = elem.closest("li").find(".status-effect-description");
-        if (target.hasClass("d-none")) {
-            target.removeClass("d-none");
-        } else {
-            target.addClass("d-none");
-        }
-        e.preventDefault();
-        return false;
-    });
+    body.on(
+        "click",
+        "[data-app='characters'] .status-effect-description-button",
+        function (e) {
+            let elem = $(this);
+            let target = elem.closest("li").find(".status-effect-description");
+            if (target.hasClass("d-none")) {
+                target.removeClass("d-none");
+            } else {
+                target.addClass("d-none");
+            }
+            e.preventDefault();
+            return false;
+        },
+    );
 
-    body.on("click", ".delete-character", function (e) {
+    body.on("click", "[data-app='characters'] .delete-character", function (e) {
         let elem = $(this);
         if (confirm(elem.data("message"))) {
             $.post(elem.attr("href"), function (data) {
@@ -32,26 +36,22 @@ $(function () {
     });
 
     // Sortable Items
-    function saveSortOrder(selector, url) {
-        let order = {};
-        $(selector).each((idx, e) => {
-            order[$(e).data("pk")] = idx;
-        });
-        $.post(url, order);
-    }
-
-    for (const element of [".item-sortable"]) {
-        $(element)
+    document.addEventListener("attach-sortables", function () {
+        $("[data-app='characters'] .item-sortable")
             .sortable({
                 tolerance: "pointer",
                 items: "div.card",
                 placeholder:
                     '<div class="card mb-3"><div class="card-header">&nbsp;</div></div>',
             })
-            .bind("sortstart", function (e, ui) {})
-            .bind("sortstop", function (e, ui) {})
             .bind("sortupdate", function (e, ui) {
-                saveSortOrder(`${element} > div`, $(this).data("url"));
+                let order = {};
+                $("[data-app='characters'] .item-sortable > div").each(
+                    (idx, e) => {
+                        order[$(e).data("pk")] = idx;
+                    },
+                );
+                $.post($(this).data("url"), order);
             });
-    }
+    });
 });

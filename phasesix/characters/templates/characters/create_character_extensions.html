@@ -7,7 +7,7 @@
   {% trans "Choose any number of additional extensions to add to your character." %}{% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div data-app="characters" class="row">
     {% for extension in extensions %}
       <div class="col-12 col-md-6 col-lg-4">
         <div class="card text-center create-epoch-card create-extension-card mb-4 pointer"

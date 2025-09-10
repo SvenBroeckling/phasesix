@@ -2,18 +2,24 @@ document.addEventListener("DOMContentLoaded", function () {
     let body = $("body");
 
     /* Extension Card selection */
-    body.on("click", ".create-extension-card", function () {
-        let id = $(this).data("extension-id");
-        let option = $(`#id_extensions > option[value=${id}]`);
-        let was_selected = $(this).hasClass("selected");
-        if (was_selected) {
-            option.removeAttr("selected");
-            $(this).removeClass("selected");
-        } else {
-            option.attr("selected", "selected");
-            $(this).addClass("selected");
-        }
-    });
+    body.on(
+        "click",
+        "[data-app='characters'] .create-extension-card",
+        function () {
+            let id = $(this).data("extension-id");
+            let option = $(
+                `[data-app='characters'] #id_extensions > option[value=${id}]`,
+            );
+            let was_selected = $(this).hasClass("selected");
+            if (was_selected) {
+                option.removeAttr("selected");
+                $(this).removeClass("selected");
+            } else {
+                option.attr("selected", "selected");
+                $(this).addClass("selected");
+            }
+        },
+    );
 
     /* Character data form */
     function getCharacterCreationInfo(event) {
@@ -30,12 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     body.on(
         "change focus",
-        "form.character-data-form select",
+        "[data-app='characters'] form.character-data-form select",
         getCharacterCreationInfo,
     );
     body.on(
         "focus",
-        "form.character-data-form input",
+        "[data-app='characters'] form.character-data-form input",
         getCharacterCreationInfo,
     );
 
@@ -43,9 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let debounceTimer = null;
 
     function displayWarnings(warnings) {
-        let element = $(
-            ".create-character-template-selection .character-warnings",
-        );
+        let element = $("[data-app='characters'] .character-warnings");
         element.html("");
         if (!!warnings.length) {
             element.removeClass("d-none");
@@ -57,12 +61,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    body.on("keyup", "#id_creation_template_search_q", function (e) {
-        let q = $(this).val();
+    body.on(
+        "keyup",
+        "[data-app='characters'] #id_creation_template_search_q",
+        function (e) {
+            let q = $(this).val();
 
-        function updateTabs() {
-            $(".create-character-template-selection .tab-pane").each(
-                function (index) {
+            function updateTabs() {
+                $("[data-app='characters'] .tab-pane").each(function (index) {
                     let elem = $(this);
                     let ct = elem.find(".constructed-template:not(.d-none)");
                     if (ct.length === 0) {
@@ -73,30 +79,37 @@ document.addEventListener("DOMContentLoaded", function () {
                         $(elem.data("rel")).removeClass("disabled");
                     }
                     $(
-                        '.create-character-template-selection a[data-bs-toggle="tab"]:not(.disabled):first',
+                        "[data-app='characters'] a[data-bs-toggle=\"tab\"]:not(.disabled):first",
                     ).tab("show");
-                },
-            );
-        }
+                });
+            }
 
-        if (debounceTimer) {
-            clearTimeout(debounceTimer);
-        }
-        debounceTimer = setTimeout(function () {
-            $(".constructed-template").each(function (index) {
-                if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-                    $(this).removeClass("d-none");
-                } else {
-                    $(this).addClass("d-none");
-                }
-            });
-            updateTabs();
-        }, 100);
-    });
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+            debounceTimer = setTimeout(function () {
+                $("[data-app='characters'] .constructed-template").each(
+                    function (index) {
+                        if (
+                            $(this)
+                                .text()
+                                .toLowerCase()
+                                .search(q.toLowerCase()) > -1
+                        ) {
+                            $(this).removeClass("d-none");
+                        } else {
+                            $(this).addClass("d-none");
+                        }
+                    },
+                );
+                updateTabs();
+            }, 100);
+        },
+    );
 
     body.on(
         "click",
-        ".create-character-template-selection .constructed-template",
+        "[data-app='characters'] .constructed-template",
         function (e) {
             let template_div = $(this);
             let template_id = template_div.data("template-id");
@@ -122,21 +135,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     { template_id: template_id },
                     function (data) {
                         if (data.status === "ok") {
-                            $(
-                                ".create-character-template-selection .template-points",
-                            ).text(data.remaining_points);
+                            $("[data-app='characters'] .template-points").text(
+                                data.remaining_points,
+                            );
                             template_div.addClass("selected");
                             displayWarnings(data.warnings);
                             $(
-                                ".create-character-template-selection .character-preview",
+                                "[data-app='characters'] .character-preview",
                             ).load(preview_url);
                         } else {
                             template_div.addClass("notenoughpoints");
-                            $(".template-points").addClass("animated wobble");
+                            $(
+                                "[data-app='characters'] .template-points",
+                            ).addClass("animated wobble");
                             setTimeout(function () {
                                 template_div.removeClass("notenoughpoints");
                                 $(
-                                    ".create-character-template-selection .template-points",
+                                    "[data-app='characters'] .template-points",
                                 ).removeClass("animated wobble");
                             }, 500);
                         }
@@ -148,25 +163,15 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     );
 
-    body.on(
-        "change",
-        ".create-character-template-selection #switch-preview",
-        function () {
-            if ($(this).prop("checked")) {
-                $(
-                    ".create-character-template-selection .template-list",
-                ).addClass("d-none");
-                $(
-                    ".create-character-template-selection .character-preview",
-                ).removeClass("d-none");
-            } else {
-                $(
-                    ".create-character-template-selection .character-preview",
-                ).addClass("d-none");
-                $(
-                    ".create-character-template-selection .template-list",
-                ).removeClass("d-none");
-            }
-        },
-    );
+    body.on("change", "[data-app='characters'] #switch-preview", function () {
+        if ($(this).prop("checked")) {
+            $("[data-app='characters'] .template-list").addClass("d-none");
+            $("[data-app='characters'] .character-preview").removeClass(
+                "d-none",
+            );
+        } else {
+            $("[data-app='characters'] .character-preview").addClass("d-none");
+            $("[data-app='characters'] .template-list").removeClass("d-none");
+        }
+    });
 });

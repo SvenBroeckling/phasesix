@@ -7,7 +7,7 @@
   {% trans "Choose settings for your campaign. These settings apply to every character created for this campaign." %}{% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div data-app="campaigns" class="row">
     <div class="col-12 col-md-8">
       <form action="" method="post">
         {% csrf_token %}

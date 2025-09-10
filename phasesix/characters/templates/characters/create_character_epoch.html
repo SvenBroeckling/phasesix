@@ -7,7 +7,7 @@
   {% trans "Choose an epoch to play in. The chosen epoch determines which weapons, armour and items are available." %}{% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div data-app="characters" class="row">
     {% for extension in extensions %}
       <div class="col-12 col-md-6 col-lg-4">
         <a href="{% url 'characters:create_character_extensions' world_pk=world_pk epoch_pk=extension.id %}">

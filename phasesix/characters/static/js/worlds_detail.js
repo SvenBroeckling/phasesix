@@ -37,7 +37,7 @@ $(function () {
     });
 
     // Sortable sub pages
-    document.addEventListener("worlds-attach-subpages-sortable", function () {
+    document.addEventListener("attach-sortables", function () {
         $(".wiki-link-sortable")
             .sortable({
                 tolerance: "pointer",

@@ -7,7 +7,6 @@
 {% block in_page_subtitle %}{% trans 'A campaign by' %} {{ object.created_by }}{% endblock %}
 
 {% block javascript %}
-  <script src="{% static 'js/campaign_detail.js' %}"></script>
   <script src="{% static 'js/campaign_socket.js' %}"></script>
 {% endblock %}
 
@@ -32,7 +31,7 @@
   <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
   <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
-  <div class="row mt-4">
+  <div data-app="campaigns" class="row mt-4">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'campaigns/_navigation.html' with object=object may_edit=may_edit %}
     </div>

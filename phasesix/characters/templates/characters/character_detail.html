@@ -38,7 +38,7 @@
   <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
   <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
-  <div class="row">
+  <div data-app="characters" class="row">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'characters/_navigation.html' with object=object may_edit=may_edit %}
     </div>
@@ -74,6 +74,7 @@
         <div class="tab-pane fade" id="v-gear" role="tabpanel">
           <div
             hx-trigger="intersect,refresh-fragments from:document,refresh-character-gear from:document"
+            hx-on::after-request="this.dispatchEvent(new CustomEvent('attach-sortables', { bubbles: true }))"
             hx-get="{% url 'characters:xhr_detail_fragment' pk=object.id fragment_template="gear" %}">
           </div>
         </div>

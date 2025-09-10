@@ -41,7 +41,7 @@
     {% if object.is_world %}
       <a
         data-sidebar-right-url="{% url 'worlds:xhr_world_sort_sidebar' slug=world.slug sidebar_template="sort_sub_pages" %}"
-        data-sidebar-right-event-show="worlds-attach-subpages-sortable"
+        data-sidebar-right-event-show="attach-sortables"
         data-sidebar-right-title="{% trans 'Sort Subpages' %}"
         class="list-group-item py-3">
         <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
@@ -49,7 +49,7 @@
     {% else %}
       <a
         data-sidebar-right-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
-        data-sidebar-right-event-show="worlds-attach-subpages-sortable"
+        data-sidebar-right-event-show="attach-sortables"
         data-sidebar-right-title="{% trans 'Sort Subpages' %}"
         class="list-group-item py-3">
         <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
