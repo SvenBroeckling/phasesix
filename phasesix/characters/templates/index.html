@@ -18,9 +18,8 @@
             <a href="{{ create_char_url }}" class="btn btn-primary">
               <i class="fas fa-user-plus me-1"></i> {% trans "Create Character" %}
             </a>
-            {% create_campaign_url as create_camp_url %}
-            <a href="{{ create_camp_url }}" class="btn btn-outline-primary">
-              <i class="fas fa-flag me-1"></i> {% trans "Create Campaign" %}
+            <a href="{% url "rulebook:download" %}" class="btn btn-outline-primary">
+              <i class="fas fa-flag me-1"></i> {% trans "Download rulebook" %}
             </a>
           </div>
         </div>
