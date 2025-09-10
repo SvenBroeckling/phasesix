@@ -138,6 +138,7 @@
 </div>
 
 {% compress js %}
+  <!-- Vendor JS -->
   <script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
   <script src="{% static 'vendor/jquery/popper.min.js' %}"></script>
   <script src="{% static 'vendor/fontawesome/js/all.min.js' %}"></script>
@@ -152,12 +153,17 @@
   <script src="{% static 'vendor/alpine/alpine.min.js' %}"></script>
   <script src="{% static 'vendor/bs5-lightbox/lightbox.bundle.min.js' %}"></script>
 
+  <!-- Page JS -->
+  <script src="{% static 'js/character_detail.js' %}"></script>
+  <script src="{% static 'js/character_creation.js' %}"></script>
+  <script src="{% static 'js/worlds_detail.js' %}"></script>
+  <script src="{% static 'forum/js/forum.js' %}"></script>
+
+  <!-- Component JS -->
   <script src="{% static 'js/searchable_object_card_list.js' %}?2"></script>
   <script src="{% static 'js/clipboard.js' %}"></script>
   <script src="{% static 'js/portal.js' %}"></script>
-
   <script src="{% static "plots/js/plot_editor.js" %}"></script>
-
 {% endcompress %}
 
 {% modals_sidebars_javascript %} {# uses type="module" - don't compress #}

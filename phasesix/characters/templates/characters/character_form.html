@@ -5,24 +5,6 @@
 {% block in_page_title %}{% trans "Create Character" %}{% endblock %}
 {% block in_page_subtitle %}{% trans "Give your character a name and some more information." %}{% endblock %}
 
-{% block javascript %}
-  <script>
-      $(function () {
-          const form = $('form.character-data-form')
-          const url = form.data('info-url')
-
-          function getInfo(event) {
-              $.get(url, {field: event.target.name, value: event.target.value}, function (data) {
-                  $('div.description').html(data)
-              })
-          }
-
-          form.find('input, select').on('focus', getInfo)
-          form.find('select').on('change', getInfo)
-      })
-  </script>
-{% endblock %}
-
 {% block content %}
   <form action="" method="post" class="character-data-form"
         data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">

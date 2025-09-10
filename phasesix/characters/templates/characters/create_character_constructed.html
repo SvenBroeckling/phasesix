@@ -6,119 +6,13 @@
 {% block in_page_subtitle %}
   {% trans 'These are the templates your character will start with. They define all values and abilities of your character.' %}{% endblock %}
 
-{% block javascript %}
-  <script>
-    $(function () {
-      let timer = null;
-
-      function displayWarnings(warnings) {
-        let element = $('.character-warnings');
-        element.html("");
-        if (!!warnings.length) {
-          element.removeClass('d-none');
-          for (let warning of warnings) {
-            element.append(`<div>${warning}</div>`)
-          }
-        } else {
-          element.addClass("d-none");
-        }
-      }
-
-      $('#id_q').on('keyup', function (e) {
-        let q = $(this).val();
-
-        function updateTabs() {
-          $('.tab-pane').each(function (index) {
-            let elem = $(this);
-            let ct = elem.find('.constructed-template:not(.d-none)');
-            if (ct.length === 0) {
-              elem.addClass('d-none');
-              $(elem.data('rel')).addClass('disabled');
-            } else {
-              elem.removeClass('d-none');
-              $(elem.data('rel')).removeClass('disabled');
-            }
-            $('a[data-bs-toggle="tab"]:not(.disabled):first').tab('show');
-          })
-        }
-
-        if (timer) {
-          clearTimeout(timer);
-        }
-        timer = setTimeout(function () {
-          $('.constructed-template').each(function (index) {
-            if ($(this).text().toLowerCase().search(q.toLowerCase()) > -1) {
-              $(this).removeClass('d-none');
-            } else {
-              $(this).addClass('d-none');
-            }
-          });
-          updateTabs();
-        }, 100);
-      });
-
-      $('.row').on('click', '.constructed-template', function (e) {
-        let template_div = $(this);
-        let template_id = template_div.data('template-id');
-        let preview_url = template_div.data('preview-url');
-        if (template_div.hasClass('selected')) {
-          $.post(
-            template_div.data('remove-url'),
-            {template_id: template_id},
-            function (data) {
-              if (data.status === 'ok') {
-                $('.template-points').text(data.remaining_points);
-                template_div.removeClass('selected');
-                displayWarnings(data.warnings);
-                $('.character-preview').load(preview_url);
-              } else {
-                // shake
-              }
-            });
-        } else {
-          $.post(
-            template_div.data('add-url'),
-            {template_id: template_id},
-            function (data) {
-              if (data.status === 'ok') {
-                $('.template-points').text(data.remaining_points);
-                template_div.addClass('selected');
-                displayWarnings(data.warnings);
-                $('.character-preview').load(preview_url);
-              } else {
-                template_div.addClass('notenoughpoints');
-                $('.template-points').addClass('animated wobble');
-                setTimeout(function () {
-                  template_div.removeClass('notenoughpoints');
-                  $('.template-points').removeClass('animated wobble');
-                }, 500);
-              }
-            });
-        }
-        e.preventDefault();
-        return false;
-      });
-
-      $('#switch-preview').on('change', function () {
-        if ($(this).prop('checked')) {
-          $('.template-list').addClass('d-none');
-          $('.character-preview').removeClass('d-none');
-        } else {
-          $('.character-preview').addClass('d-none');
-          $('.template-list').removeClass('d-none');
-        }
-      });
-    })
-  </script>
-{% endblock %}
-
 {% block content %}
-
-  <div class="row">
+  <div class="row create-character-template-selection">
     <div class="col-12 col-md-3">
       <div class="row initial-data">
         <div class="col-md-12">
-          <input type="text" class="form-control mb-3 w-100" placeholder="{% trans "Search" %}" id="id_q">
+          <input type="text" class="form-control mb-3 w-100" placeholder="{% trans "Search" %}"
+                 id="id_creation_template_search_q">
           <div class="h2">
             <span class="badge bg-info template-points">{{ character.remaining_template_points }}</span>
           </div>

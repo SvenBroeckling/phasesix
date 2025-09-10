@@ -2,10 +2,6 @@
 {% load portal_extras %}
 {% load static i18n characters_extras rules_extras thumbnail world_extras campaign_extras %}
 
-{% block javascript %}
-  <script src="{% static 'js/worlds_detail.js' %}"></script>
-{% endblock %}
-
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{{ object }}{% endblock %}
 {% block in_page_subtitle %}{{ object.text|to_first_linebreak|replace_wiki_tags:object.world }}{% endblock %}

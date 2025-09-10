@@ -11,12 +11,8 @@
   {% bottom_navigation_button "forum/_thread_navigation.html" %}
 {% endblock %}
 
-{% block javascript %}
-  <script src="{% static 'forum/js/forum.js' %}"></script>
-{% endblock %}
-
 {% block content %}
-  <div class="row">
+  <div data-app="forum" class="row">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'forum/_thread_navigation.html' %}
     </div>

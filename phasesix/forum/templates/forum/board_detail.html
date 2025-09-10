@@ -12,12 +12,8 @@
   {% bottom_navigation_button "forum/_navigation.html" %}
 {% endblock %}
 
-{% block javascript %}
-  <script src="{% static 'forum/js/forum.js' %}"></script>
-{% endblock %}
-
 {% block content %}
-  <div class="row">
+  <div data-app="forum" class="row">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'forum/_navigation.html' %}
     </div>
@@ -30,7 +26,7 @@
                   enctype="multipart/form-data">
               {% csrf_token %}
               <small class="float-end"><a
-                      href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
+                href="{% trans 'https://en.wikipedia.org/wiki/Markdown' %}">{% trans 'Markdown' %}</a></small>
               {% bootstrap_form form %}
               <input type="file" id="forumUploadFileInput" accept="image/*" style="display: none;"/>
               <div class="btn-group" role="group">
@@ -51,10 +47,10 @@
             {% if image %}
               {% thumbnail image "28x28" as im %}
                 <img
-                        class="rounded-circle me-1"
-                        style="width: 28px; height: 28px"
-                        src="{{ im.url }}"
-                        alt="{{ thread.created_by }}">
+                  class="rounded-circle me-1"
+                  style="width: 28px; height: 28px"
+                  src="{{ im.url }}"
+                  alt="{{ thread.created_by }}">
               {% endthumbnail %}
             {% endif %}
             <a class="no-link-colors" href="{{ thread.get_absolute_url }}">{{ thread.name }}</a>

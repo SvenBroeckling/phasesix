@@ -1,6 +1,13 @@
 $(function () {
     let body = $("body");
 
+    document.addEventListener("DOMContentLoaded", function () {
+        let characterMainNav = $(".character-main-nav");
+        if (characterMainNav) {
+            characterMainNav.find("a[href]:first").tab("show");
+        }
+    });
+
     body.on("click", ".status-effect-description-button", function (e) {
         let elem = $(this);
         let target = elem.closest("li").find(".status-effect-description");
