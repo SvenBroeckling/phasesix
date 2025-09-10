@@ -41,9 +41,5 @@ class ItemListView(TemplateView):
         return context
 
 
-class ItemDetailView(DetailView):
-    model = Item
-
-
 class MaterialOverviewView(TemplateView):
     template_name = "armory/material_overview.html"
