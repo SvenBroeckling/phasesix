@@ -11,14 +11,7 @@
 {% block in_page_subtitle %}{% endblock %}
 
 {% block content %}
-  <div class="d-none d-xl-flex justify-content-between">
-    {% if may_edit %}
-      <div>
-      </div>
-    {% endif %}
-  </div>
-
-  <div class="row">
+  <div data-app="worlds" class="row">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'worlds/_navigation.html' with object=object may_edit=may_edit %}
     </div>

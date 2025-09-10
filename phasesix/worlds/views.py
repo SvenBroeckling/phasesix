@@ -76,7 +76,7 @@ class WikiPageEditTextView(DetailView):
 
 
 class XhrCreateWikiPageView(CreateView):
-    template_name = "worlds/create_wiki_page.html"
+    template_name = "worlds/modals/create_wiki_page.html"
     model = WikiPage
     form_class = WikiPageForm
 

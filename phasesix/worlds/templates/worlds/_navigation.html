@@ -28,12 +28,14 @@
     {% if object.is_world %}
       <a class="list-group-item py-3"
          data-modal-url="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}"
+         data-modal-size-class="modal-xl"
          data-modal-refresh-after="true"
          data-modal-title="{% trans 'Create Wiki Page' %}"
          href=""><i class="fa fa-plus"></i> {% trans 'Create Page' %}</a>
     {% else %}
       <a class="list-group-item py-3"
          data-modal-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
+         data-modal-size-class="modal-xl"
          data-modal-refresh-after="true"
          data-modal-title="{% trans 'Create Wiki Page' %}"
          href=""><i class="fa fa-plus"></i> {% trans 'Create Subpage' %}</a>
