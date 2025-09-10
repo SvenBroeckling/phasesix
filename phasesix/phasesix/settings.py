@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "forum",
     "portal",
     "gmtools",
+    "curators_desk",
     "armory",
     "worlds",
     "homebrew",

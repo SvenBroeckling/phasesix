@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block header %}{% endblock %} {# disable header #}
+
+{% block raw_content %}
+  <div class="container">
+    {% bootstrap_messages %}
+  </div>
+{% endblock %}

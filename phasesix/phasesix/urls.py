@@ -33,6 +33,7 @@ urlpatterns = [
         include("body_modifications.urls", namespace="body_modifications"),
     ),
     path("world/", include("worlds.urls", namespace="world")),
+    path("curators_desk/", include("curators_desk.urls", namespace="curators_desk")),
     path("gmtools/", include("gmtools.urls", namespace="gmtools")),
     path("plots/", include("plots.urls", namespace="plots")),
     path("accounts/", include("django.contrib.auth.urls")),
