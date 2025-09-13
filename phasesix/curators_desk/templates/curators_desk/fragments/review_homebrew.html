@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load curators_desk_extras %}
+{% for qs in homebrew_querysets %}
+  {% if qs.exists %}
+    <table class="table mb-4">
+      <thead>
+      <tr>
+        <th>{{ qs|model_name }}</th>
+        <th>{% trans 'Character' %}</th>
+        <th>{% trans 'Campaign' %}</th>
+        <th>{% trans 'Created by' %}</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for object in qs %}
+        <tr>
+          <td><a href="{% admin_url_for_qs_model qs object.id %}">{{ object }}</a></td>
+          <td>{{ object.homebrew_character }}</td>
+          <td>{{ object.homebrew_campaign }}</td>
+          <td>{{ object.created_by }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endfor %}

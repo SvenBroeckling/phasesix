@@ -3,7 +3,7 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <form action="{% url "gmtools:upload_rulebook" %}" method="post" enctype="multipart/form-data">
+  <form action="{% url "curators_desk:upload_rulebook" %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form layout="floating" %}
     <button class="btn btn-primary btn-lg">

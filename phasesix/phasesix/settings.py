@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "rulebook",
     "forum",
     "portal",
-    "gmtools",
     "curators_desk",
     "armory",
     "worlds",

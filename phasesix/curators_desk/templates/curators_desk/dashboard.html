@@ -1,10 +1,52 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5 %}
+{% load portal_extras %}
 
 {% block header %}{% endblock %} {# disable header #}
 
-{% block raw_content %}
-  <div class="container">
-    {% bootstrap_messages %}
+{% block bottom_nav %}
+  {% bottom_navigation_button "curators_desk/_navigation.html" %}
+{% endblock %}
+
+{% block content %}
+  <div data-app="curators_desk" class="row">
+    <div class="col-12 col-xl-3 d-none d-xl-block">
+      {% include 'curators_desk/_navigation.html' with object=object may_edit=may_edit %}
+    </div>
+
+    <div class="col-12 col-xl-9">
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="v-roll-statistics" role="tabpanel">
+          <div
+            hx-trigger="load,refresh-curators-desk-roll-statistics from:document"
+            hx-get="{% url "curators_desk:roll_statistics" %}">
+          </div>
+        </div>
+        <div class="tab-pane fade" id="v-template-statistics" role="tabpanel">
+          <div
+            hx-trigger="refresh-curators-desk-template-statistics from:document"
+            hx-get="{% url "curators_desk:template_statistics" %}">
+          </div>
+        </div>
+        <div class="tab-pane fade" id="v-template-extension-grid" role="tabpanel">
+          <div
+            hx-trigger="refresh-curators-desk-extension-grid from:document"
+            hx-get="{% url "curators_desk:extension_grid" type="template" %}">
+          </div>
+        </div>
+        <div class="tab-pane fade" id="v-template-review-homebrew" role="tabpanel">
+          <div
+            hx-trigger="refresh-curators-desk-extension-grid from:document"
+            hx-get="{% url "curators_desk:review_homebrew" %}">
+          </div>
+        </div>
+        <div class="tab-pane fade" id="v-translation-status" role="tabpanel">
+          <div
+            hx-trigger="refresh-curators-desk-translation-status from:document"
+            hx-get="{% url "curators_desk:translation_status" %}">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
 {% endblock %}

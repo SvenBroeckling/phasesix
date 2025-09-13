@@ -1,14 +1,14 @@
 from decimal import Decimal
 
 from django.db.models import (
-    F,
+    Q,
     DecimalField,
-    Value,
-    When,
     Case,
+    When,
+    F,
+    Value,
     ExpressionWrapper,
     QuerySet,
-    Q,
 )
 from django.db.models.functions import Length
 from django.template import Library

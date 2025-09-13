@@ -107,18 +107,6 @@
         <div class="tab-pane fade" id="more-tab-pane" role="tabpanel" tabindex="0">
           <div class="row">
 
-            {% if request.user.is_superuser and may_edit %}
-              <div class="col-12 col-md-6 mb-3">
-                <a href="{% url 'admin:index' %}" class="no-decoration">
-                  <div class="position-relative profile-cta">
-                    <img src="{% static "img/profile_cta_images/profile_admin.png" %}" alt="admin"
-                         class="img img-fluid rounded">
-                    <div class="profile-cta-text w-100 p-2">{% trans "Admin" %}</div>
-                  </div>
-                </a>
-              </div>
-            {% endif %}
-
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2024 %}" class="no-decoration">
                 <div class="position-relative profile-cta">
@@ -135,78 +123,6 @@
                   <img src="{% static "img/profile_cta_images/profile_wrapup_2023.png" %}" alt="wrapup"
                        class="img img-fluid rounded">
                   <div class="profile-cta-text w-100 p-2">{% trans "2023 WrapUp" %}</div>
-                </div>
-              </a>
-            </div>
-
-            {% if request.user.is_superuser and may_edit %}
-              <div class="col-12 col-md-6 mb-3">
-                <a href="{% url 'gmtools:extension_grid' type='riotgear' %}" class="no-decoration">
-                  <div class="position-relative profile-cta">
-                    <img src="{% static "img/profile_cta_images/profile_extension_grid.png" %}"
-                         alt="admin"
-                         class="img img-fluid rounded">
-                    <div class="profile-cta-text w-100 p-2">{% trans "Extension Grids" %}</div>
-                  </div>
-                </a>
-              </div>
-            {% endif %}
-
-            {% if request.user.is_staff and may_edit %}
-              <div class="col-12 col-md-6 mb-3">
-                <a href="{% url 'gmtools:upload_rulebook' %}" class="no-decoration">
-                  <div class="position-relative profile-cta">
-                    <img src="{% static "img/profile_cta_images/profile_extension_grid.png" %}"
-                         alt="admin"
-                         class="img img-fluid rounded">
-                    <div class="profile-cta-text w-100 p-2">{% trans "Upload Rulebook" %}</div>
-                  </div>
-                </a>
-              </div>
-            {% endif %}
-
-            <div class="col-12 col-md-6 mb-3">
-              <a href="{% url 'gmtools:template_statistics' %}" class="no-decoration">
-                <div class="position-relative profile-cta">
-                  <img src="{% static "img/profile_cta_images/profile_template_statistics.png" %}"
-                       alt="admin"
-                       class="img img-fluid rounded">
-                  <div class="profile-cta-text w-100 p-2">{% trans "Template Statistics" %}</div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-12 col-md-6 mb-3">
-              <a href="{% url 'gmtools:translation_status' %}" class="no-decoration">
-                <div class="position-relative profile-cta">
-                  <img src="{% static "img/profile_cta_images/profile_translation_status.png" %}"
-                       alt="admin"
-                       class="img img-fluid rounded">
-                  <div class="profile-cta-text w-100 p-2">{% trans "Translation Status" %}</div>
-                </div>
-              </a>
-            </div>
-
-            {% if request.user.is_superuser and may_edit %}
-              <div class="col-12 col-md-6 mb-3">
-                <a href="{% url 'homebrew:index' %}" class="no-decoration">
-                  <div class="position-relative profile-cta">
-                    <img src="{% static "img/profile_cta_images/profile_homebrew_review.png" %}"
-                         alt="admin"
-                         class="img img-fluid rounded">
-                    <div class="profile-cta-text w-100 p-2">{% trans "Review Homebrew" %}</div>
-                  </div>
-                </a>
-              </div>
-            {% endif %}
-
-            <div class="col-12 col-md-6 mb-3">
-              <a href="{% url "gmtools:roll_statistics" %}" class="no-decoration">
-                <div class="position-relative profile-cta">
-                  <img src="{% static "img/profile_cta_images/profile_roll_statistics.png" %}"
-                       alt="admin"
-                       class="img img-fluid rounded">
-                  <div class="profile-cta-text w-100 p-2">{% trans "Roll Statistics" %}</div>
                 </div>
               </a>
             </div>
