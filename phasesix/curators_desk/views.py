@@ -1,10 +1,12 @@
-from django.contrib import messages
 from django.http import HttpResponse
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView, FormView
 
 from armory.models import Weapon, Item, WeaponModification, RiotGear
+from campaigns.models import Roll
 from curators_desk.forms import UploadRulebookForm
 from curators_desk.utils import get_models_with_translations, get_homebrew_models
 from magic.models import BaseSpell
@@ -29,19 +31,37 @@ class UploadRulebookView(FormView):
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, "Rulebook uploaded successfully.")
         return super().form_valid(form)
 
 
 class RollStatisticsView(TemplateView):
     template_name = "curators_desk/fragments/roll_statistics.html"
 
+    @staticmethod
+    def _get_roll_statistics(model):
+        d = []
+        for a in model.objects.all():
+            d.append(
+                {
+                    "object": a,
+                    "roll_count": Roll.objects.filter(
+                        header__in=[a.name_de, a.name_en]
+                    ).count(),
+                }
+            )
+        return d
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["attributes"] = Attribute.objects.all()
-        context["skills"] = Skill.objects.all()
-        context["weapons"] = Weapon.objects.all()
-        context["base_spells"] = BaseSpell.objects.all()
+        context["object_list"] = [
+            {
+                "title": _("Attributes"),
+                "elements": self._get_roll_statistics(Attribute),
+            },
+            {"title": _("Skills"), "elements": self._get_roll_statistics(Skill)},
+            {"title": _("Weapons"), "elements": self._get_roll_statistics(Weapon)},
+            {"title": _("Spells"), "elements": self._get_roll_statistics(BaseSpell)},
+        ]
         return context
 
 

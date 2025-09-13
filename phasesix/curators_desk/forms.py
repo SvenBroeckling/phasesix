@@ -1,5 +1,4 @@
 from django import forms
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import Weapon, RiotGear
