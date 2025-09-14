@@ -12,20 +12,16 @@
         <div class="col-12">
           <div class="btn-group w-100">
             <button
-              data-action-trigger-url="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="add_charge" %}"
-              data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-refresh"
-              class="btn btn-sm btn-success">
-              <i class="fas fa-fw fa-plus" title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
-            </button>
-          </div>
-        </div>
-        <div class="col-12 mt-2">
-          <div class="btn-group w-100">
-            <button
               data-action-trigger-url="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="remove_charge" %}"
               data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-refresh"
               class="btn btn-sm btn-warning">
               <i class="fas fa-fw fa-minus" title="{% trans 'Remove Charge' %}"></i>{% trans 'Remove Charge' %}
+            </button>
+            <button
+              data-action-trigger-url="{% url 'characters:xhr_modify_body_modification' pk=object.character.id body_modification_pk=object.id mode="add_charge" %}"
+              data-action-trigger-event-after="refresh-character-body_modifications,sidebar-right-refresh"
+              class="btn btn-sm btn-success">
+              <i class="fas fa-fw fa-plus" title="{% trans 'Add Charge' %}"></i>{% trans 'Add Charge' %}
             </button>
           </div>
         </div>
@@ -128,8 +124,14 @@
   {% endif %}
 
 
+  {% if body_modification.rules %}
+    <div class="my-3">
+      {{ body_modification.rules|phasesix_markup }}
+    </div>
+  {% endif %}
+
   {% if body_modification.description %}
-    <div class="text-center my-3">
+    <div class="my-3 fst-italic">
       {{ body_modification.description|phasesix_markup }}
     </div>
   {% endif %}
