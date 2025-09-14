@@ -38,13 +38,12 @@ class BodyModificationAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
-        "type",
-        "rarity",
         "price",
         "bio_strain",
         "energy_consumption_ma",
         "activation",
     )
+    list_editable = ("price", "bio_strain", "energy_consumption_ma", "activation")
     list_filter = (
         "type",
         "rarity",
@@ -52,7 +51,7 @@ class BodyModificationAdmin(ModelAdmin):
         "energy_consumption_ma",
         "activation",
     )
-    list_editable = ("rarity", "price", "bio_strain", "energy_consumption_ma")
+    filter_horizontal = ("extensions",)
     fieldsets = [
         (
             None,

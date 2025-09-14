@@ -127,6 +127,7 @@ class RiotGearAdmin(ModelAdmin):
     )
     inlines = [RiotGearProtectionInline, RiotGearModifierInline]
     list_filter = ("extensions", "type")
+    filter_horizontal = ("extensions",)
     search_fields = "name_de", "name_en"
     fieldsets = [
         (
@@ -191,6 +192,7 @@ class ItemAdmin(ModelAdmin):
         "skill",
     )
     list_filter = ("type", "extensions")
+    filter_horizontal = ("extensions",)
     search_fields = ("name_de", "name_en", "description_de", "description_en")
     fieldsets = [
         (
