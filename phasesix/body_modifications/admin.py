@@ -36,7 +36,8 @@ class BodyModificationAdmin(ModelAdmin):
     inlines = [BodyModificationSocketLocationInline, BodyModificationModifierInline]
     search_fields = ("name_en", "name_de")
     list_display = (
-        "name",
+        "name_de",
+        "name_en",
         "type",
         "rarity",
         "price",
