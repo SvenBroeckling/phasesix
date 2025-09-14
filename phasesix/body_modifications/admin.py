@@ -42,6 +42,7 @@ class BodyModificationAdmin(ModelAdmin):
         "bio_strain",
         "energy_consumption_ma",
         "activation",
+        "has_stat_changes",
     )
     list_editable = ("price", "bio_strain", "energy_consumption_ma", "activation")
     list_filter = (
@@ -111,3 +112,7 @@ class BodyModificationAdmin(ModelAdmin):
             },
         ),
     ]
+
+    @admin.display(boolean=True)
+    def has_stat_changes(self, obj):
+        return obj.bodymodificationmodifier_set.exists()
