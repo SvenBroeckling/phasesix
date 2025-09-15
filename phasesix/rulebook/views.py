@@ -7,6 +7,13 @@ class DownloadView(ListView):
     template_name = "rulebook/download.html"
     model = WorldBook
 
+    def get_queryset(self):
+        if self.request.world_configuration:
+            return WorldBook.objects.filter(
+                world=self.request.world_configuration.world
+            )
+        return WorldBook.objects.all()
+
 
 class ChapterDetailView(DetailView):
     template_name = "rulebook/chapter_detail.html"
