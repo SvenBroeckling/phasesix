@@ -45,6 +45,15 @@ class Quirk(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def as_json(self):
+        return {
+            "name": self.name,
+            "category": self.category.name,
+            "description": self.description,
+            "positive_effects": self.positive_effects,
+            "negative_effects": self.negative_effects,
+        }
+
 
 class QuirkModifier(ModifierBase):
     quirk = models.ForeignKey(Quirk, verbose_name=_("quirk"), on_delete=models.CASCADE)

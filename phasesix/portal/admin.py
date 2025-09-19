@@ -4,6 +4,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User, Group
 from unfold.admin import ModelAdmin
 
+from portal.models import Profile
+
 
 class UserAdmin(ModelAdmin, BaseUserAdmin):
     pass
@@ -17,3 +19,4 @@ admin.site.unregister(User)
 admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
 admin.site.register(Group, GroupAdmin)
+admin.site.register(Profile, ModelAdmin)

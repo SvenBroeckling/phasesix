@@ -133,12 +133,24 @@ class Item(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def get_image_thumbnail(self):
-        return None  # TODO: Check if it is possible to make this beautiful in _gear_item.html
-        # if not self.image:
-        #     return None
-        # thumbnail = get_thumbnail(self.image, "100x20", crop="center")
-        # return thumbnail.url
+    def as_json(self):
+        return {
+            "extensions": [e.identifier for e in self.extensions.all()],
+            "name": self.name,
+            "description": self.description,
+            "type": self.type.name,
+            "is_container": self.is_container,
+            "weight": self.weight,
+            "price": self.price,
+            "rarity": self.rarity,
+            "concealment": self.concealment,
+            "charges": self.charges,
+            "usable_in_combat": self.usable_in_combat,
+            "attribute": self.attribute.name if self.attribute else None,
+            "skill": self.skill.name if self.skill else None,
+            "knowledge": self.knowledge.name if self.knowledge else None,
+            "dice_roll_string": self.dice_roll_string,
+        }
 
 
 class WeaponTypeQuerySet(models.QuerySet):
@@ -251,6 +263,19 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def as_json(self):
+        return {
+            "extensions": [e for e in self.extensions.all().values_list("identifier")],
+            "is_hand_to_hand_weapon": self.is_hand_to_hand_weapon,
+            "is_throwing_weapon": self.is_throwing_weapon,
+            "name": self.name,
+            "description": self.description,
+            "attack_modes": [a.name for a in self.attack_modes.all()],
+            "type": self.type,
+            "weight": self.weight,
+            "price": self.price,
+        }
+
 
 class Keyword(models.Model, metaclass=TransMeta):
     identifier = models.CharField(_("identifier"), max_length=40, unique=True)
@@ -351,6 +376,19 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 
     def extension_string(self):
         return ", ".join([e.identifier for e in self.extensions.all()])
+
+    def as_json(self):
+        return {
+            "extensions": [e.identifier for e in self.extensions.all()],
+            "available_for_weapon_types": [
+                wt.name for wt in self.available_for_weapon_types.all()
+            ],
+            "name": self.name,
+            "description": self.description,
+            "rules": self.rules,
+            "type": self.type.name,
+            "price": self.price,
+        }
 
 
 class WeaponModificationKeyword(models.Model):
@@ -457,6 +495,26 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
 
     def get_protection(self):
         return self.riotgearprotection_set.order_by("protection_type__ordering")
+
+    def as_json(self):
+        return {
+            "extensions": [e.identifier for e in self.extensions.all()],
+            "name": self.name,
+            "description": self.description,
+            "type": self.type.name,
+            "shield_cover": self.shield_cover,
+            "encumbrance": self.encumbrance,
+            "concealment": self.concealment,
+            "weight": self.weight,
+            "price": self.price,
+            "protections": [
+                {"type": p.protection_type.name, "value": p.value}
+                for p in self.riotgearprotection_set.all()
+            ],
+            "modifier": [
+                modifier.as_json() for modifier in self.riotgearmodifier_set.all()
+            ],
+        }
 
 
 class RiotGearModifier(ModifierBase):

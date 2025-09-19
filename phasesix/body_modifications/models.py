@@ -153,6 +153,43 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def as_json(self):
+        return {
+            "id": self.id,
+            "type": self.type.name,
+            "name": self.name,
+            "description": self.description,
+            "rules": self.rules,
+            "quote": self.quote,
+            "quote_author": self.quote_author,
+            "activation": self.activation,
+            "price": float(self.price),
+            "rarity": self.rarity,
+            "bio_strain": self.bio_strain,
+            "energy_consumption_ma": self.energy_consumption_ma,
+            "charges": self.charges,
+            "usable_in_combat": self.usable_in_combat,
+            "attribute": self.attribute.name if self.attribute else None,
+            "skill": self.skill.name if self.skill else None,
+            "knowledge": self.knowledge.name if self.knowledge else None,
+            "dice_roll_string": self.dice_roll_string,
+            "image": self.image.url if self.image else None,
+            "image_copyright": self.image_copyright,
+            "image_copyright_url": self.image_copyright_url,
+            "socket_locations": [
+                {
+                    "id": sl.socket_location.id,
+                    "name": sl.socket_location.name,
+                    "amount": sl.socket_amount,
+                }
+                for sl in self.bodymodificationsocketlocation_set.all()
+            ],
+            "modifiers": [
+                modifier.as_json()
+                for modifier in self.bodymodificationmodifier_set.all()
+            ],
+        }
+
 
 class BodyModificationSocketLocation(models.Model):
     body_modification = models.ForeignKey(BodyModification, on_delete=models.CASCADE)

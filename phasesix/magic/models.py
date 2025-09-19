@@ -175,14 +175,55 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
         _("quote author"), max_length=50, null=True, blank=True
     )
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         ordering = ("id",)
         translate = ("name", "rules", "duration")
         verbose_name = _("base spell")
         verbose_name_plural = _("base spells")
+
+    def __str__(self):
+        return self.name
+
+    def as_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "spell_point_cost": self.spell_point_cost,
+            "arcana_cost": self.arcana_cost,
+            "range": self.range,
+            "actions": self.actions,
+            "duration": self.duration,
+            "duration_unit": self.duration_unit,
+            "needs_concentration": self.needs_concentration,
+            "is_ritual": self.is_ritual,
+            "type": {
+                "id": self.type.id,
+                "name": self.type.name,
+            },
+            "origin": (
+                {
+                    "id": self.origin.id,
+                    "name": self.origin.name,
+                }
+                if self.origin
+                else None
+            ),
+            "variant": {
+                "id": self.variant.id,
+                "name": self.variant.name,
+            },
+            "shape": (
+                {
+                    "id": self.shape.id,
+                    "name": self.shape.name,
+                }
+                if self.shape
+                else None
+            ),
+            "rules": self.rules,
+            "quote": self.quote,
+            "quote_author": self.quote_author,
+        }
 
 
 class SpellTemplateCategory(models.Model, metaclass=TransMeta):
@@ -223,6 +264,22 @@ class SpellTemplate(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def as_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "spell_point_cost": self.spell_point_cost,
+            "category": {
+                "id": self.category.id,
+                "name": self.category.name,
+            },
+            "rules": self.rules,
+            "quote": self.quote,
+            "modifiers": [
+                modifier.as_json() for modifier in self.spelltemplatemodifier_set.all()
+            ],
+        }
+
 
 class SpellTemplateModifier(models.Model, metaclass=TransMeta):
     spell_template = models.ForeignKey(SpellTemplate, on_delete=models.CASCADE)
@@ -257,3 +314,38 @@ class SpellTemplateModifier(models.Model, metaclass=TransMeta):
         null=True,
         blank=True,
     )
+
+    class Meta:
+        verbose_name = _("spell template modifier")
+        verbose_name_plural = _("spell template modifiers")
+
+    def as_json(self):
+        return {
+            "id": self.id,
+            "attribute": self.attribute,
+            "attribute_modifier": self.attribute_modifier,
+            "variant_change": (
+                {
+                    "id": self.variant_change.id,
+                    "name": self.variant_change.name,
+                }
+                if self.variant_change
+                else None
+            ),
+            "type_change": (
+                {
+                    "id": self.type_change.id,
+                    "name": self.type_change.name,
+                }
+                if self.type_change
+                else None
+            ),
+            "shape_change": (
+                {
+                    "id": self.shape_change.id,
+                    "name": self.shape_change.name,
+                }
+                if self.shape_change
+                else None
+            ),
+        }

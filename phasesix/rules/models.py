@@ -145,6 +145,18 @@ class ModifierBase(models.Model, metaclass=TransMeta):
     class Meta:
         abstract = True
 
+    def as_json(self):
+        return {
+            "aspect": self.aspect,
+            "aspect_modifier": self.aspect_modifier,
+            "attribute": self.attribute.name if self.attribute else None,
+            "attribute_modifier": self.attribute_modifier,
+            "skill": self.skill.name if self.skill else None,
+            "skill_modifier": self.skill_modifier,
+            "knowledge": self.knowledge.name if self.knowledge else None,
+            "knowledge_modifier": self.knowledge_modifier,
+        }
+
 
 class ExtensionSelectQuerySet(models.QuerySet):
     def for_extensions(self, extension_rm):
@@ -540,6 +552,23 @@ class Template(HomebrewModel, metaclass=TransMeta):
             | Q(aspect__in=["base_max_arcana", "base_spell_points"])
         ).exists()
 
+    def as_json(self):
+        return {
+            "name": self.name,
+            "extensions": [
+                e for e in self.extensions.all().values_list("identifier", flat=True)
+            ],
+            "category": self.category.name,
+            "rules": self.rules,
+            "quote": self.quote,
+            "quote_author": self.quote_author,
+            "cost": self.cost,
+            "is_mastery": self.is_mastery,
+            "modifiers": [
+                modifier.as_json() for modifier in self.templatemodifier_set.all()
+            ],
+        }
+
 
 class TemplateModifier(ModifierBase):
     template = models.ForeignKey(
@@ -715,6 +744,24 @@ class Foe(HomebrewModel, metaclass=TransMeta):
             crop=crop,
         )
 
+    def as_json(self):
+        return {
+            "name": self.name,
+            "short_description": self.short_description,
+            "type": self.type.name,
+            "health": self.health,
+            "movement": self.movement,
+            "strength": self.strength,
+            "dexterity": self.dexterity,
+            "mind": self.mind,
+            "stress_test_succeeded_stress": self.stress_test_succeeded_stress,
+            "stress_test_failed_stress": self.stress_test_failed_stress,
+            "resistances": [r.name for r in self.resistances.all()],
+            "weaknesses": [w.name for w in self.weaknesses.all()],
+            "actions": [action.as_json() for action in self.foeaction_set.all()],
+            "extensions": [e.identifier for e in self.extensions.all()],
+        }
+
 
 class FoeAction(HomebrewModel, metaclass=TransMeta):
     foe = models.ForeignKey(Foe, verbose_name=_("foe"), on_delete=models.CASCADE)
@@ -726,3 +773,10 @@ class FoeAction(HomebrewModel, metaclass=TransMeta):
         translate = ("name", "effect")
         verbose_name = _("foe action")
         verbose_name_plural = _("foe actions")
+
+    def as_json(self):
+        return {
+            "name": self.name,
+            "skill": self.skill,
+            "effect": self.effect,
+        }

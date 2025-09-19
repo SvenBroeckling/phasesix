@@ -13,6 +13,8 @@ class Profile(models.Model):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("updated at"), auto_now=True)
 
+    api_key = models.CharField(_("api key"), max_length=120, blank=True, null=True)
+
     image = models.ImageField(
         _("image"), upload_to="profile_images", max_length=200, blank=True, null=True
     )
