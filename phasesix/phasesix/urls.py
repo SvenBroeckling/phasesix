@@ -15,6 +15,7 @@ urlpatterns = [
     path("", IndexView.as_view(), name="index"),
     path("feeds/new_admin/", LatestNewAdmin()),
     path("feeds/modified_admin/", LatestModifiedAdmin()),
+    path("api/", include("api.urls", namespace="api")),
     path("", include("characters.urls", namespace="characters")),
     path("admin/", admin.site.urls),
     path(
