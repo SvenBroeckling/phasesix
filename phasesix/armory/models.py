@@ -271,7 +271,7 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
             "name": self.name,
             "description": self.description,
             "attack_modes": [a.name for a in self.attack_modes.all()],
-            "type": self.type,
+            "type": self.type.name if self.type else None,
             "weight": self.weight,
             "price": self.price,
         }
