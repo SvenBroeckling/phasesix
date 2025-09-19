@@ -17,5 +17,10 @@ class ChapterAdmin(ModelAdmin):
     list_editable = ("number", "identifier")
 
 
-admin.site.register(WorldBook, ModelAdmin)
+@admin.register(WorldBook)
+class WorldBookAdmin(ModelAdmin):
+    list_display = "world", "book", "book_title"
+    filter_horizontal = ("disabled_chapters",)
+
+
 admin.site.register(Book, ModelAdmin)
