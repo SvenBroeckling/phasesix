@@ -145,7 +145,7 @@ class ModifierBase(models.Model, metaclass=TransMeta):
     class Meta:
         abstract = True
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "aspect": self.aspect,
             "aspect_modifier": self.aspect_modifier,
@@ -463,6 +463,13 @@ class TemplateCategory(SearchableCardListMixin, models.Model, metaclass=TransMet
     def child_item_qs(self):
         return self.template_set.all()
 
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
+
     def get_bg_color_class(self):
         if self.bg_color_class:
             return "bg-{}".format(self.bg_color_class)
@@ -552,7 +559,7 @@ class Template(HomebrewModel, metaclass=TransMeta):
             | Q(aspect__in=["base_max_arcana", "base_spell_points"])
         ).exists()
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "name": self.name,
             "extensions": [
@@ -565,7 +572,7 @@ class Template(HomebrewModel, metaclass=TransMeta):
             "cost": self.cost,
             "is_mastery": self.is_mastery,
             "modifiers": [
-                modifier.as_json() for modifier in self.templatemodifier_set.all()
+                modifier.as_dict() for modifier in self.templatemodifier_set.all()
             ],
         }
 
@@ -635,6 +642,12 @@ class FoeType(models.Model, metaclass=TransMeta):
 
     def child_item_qs(self):
         return self.foe_set.all()
+
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
 
 
 class FoeResistanceOrWeakness(models.Model, metaclass=TransMeta):
@@ -744,7 +757,7 @@ class Foe(HomebrewModel, metaclass=TransMeta):
             crop=crop,
         )
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "name": self.name,
             "short_description": self.short_description,
@@ -758,7 +771,7 @@ class Foe(HomebrewModel, metaclass=TransMeta):
             "stress_test_failed_stress": self.stress_test_failed_stress,
             "resistances": [r.name for r in self.resistances.all()],
             "weaknesses": [w.name for w in self.weaknesses.all()],
-            "actions": [action.as_json() for action in self.foeaction_set.all()],
+            "actions": [action.as_dict() for action in self.foeaction_set.all()],
             "extensions": [e.identifier for e in self.extensions.all()],
         }
 
@@ -774,7 +787,7 @@ class FoeAction(HomebrewModel, metaclass=TransMeta):
         verbose_name = _("foe action")
         verbose_name_plural = _("foe actions")
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "name": self.name,
             "skill": self.skill,

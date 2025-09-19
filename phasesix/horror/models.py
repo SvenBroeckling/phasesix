@@ -24,6 +24,12 @@ class QuirkCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def child_item_qs(self):
         return self.quirk_set.all()
 
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
+
 
 class Quirk(HomebrewModel, metaclass=TransMeta):
     objects = HomebrewQuerySet.as_manager()
@@ -45,7 +51,7 @@ class Quirk(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "name": self.name,
             "category": self.category.name,

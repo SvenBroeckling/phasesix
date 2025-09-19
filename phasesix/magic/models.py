@@ -102,6 +102,16 @@ class SpellOrigin(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def child_item_qs(self):
         return self.basespell_set.all()
 
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "fa_icon_class": self.fa_icon_class,
+            "image": self.image.url if self.image else None,
+            "image_copyright": self.image_copyright,
+            "image_copyright_url": self.image_copyright_url,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
+
 
 class BaseSpell(HomebrewModel, metaclass=TransMeta):
     objects = HomebrewQuerySet.as_manager()
@@ -184,7 +194,7 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "id": self.id,
             "name": self.name,
@@ -192,7 +202,7 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
             "arcana_cost": self.arcana_cost,
             "range": self.range,
             "actions": self.actions,
-            "duration": self.duration,
+            "duration": self.get_duration_unit_display(),
             "duration_unit": self.duration_unit,
             "needs_concentration": self.needs_concentration,
             "is_ritual": self.is_ritual,
@@ -237,6 +247,15 @@ class SpellTemplateCategory(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def child_item_qs(self):
+        return self.spelltemplate_set.all()
+
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
+
 
 class SpellTemplate(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=120)
@@ -264,7 +283,7 @@ class SpellTemplate(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "id": self.id,
             "name": self.name,
@@ -276,7 +295,7 @@ class SpellTemplate(models.Model, metaclass=TransMeta):
             "rules": self.rules,
             "quote": self.quote,
             "modifiers": [
-                modifier.as_json() for modifier in self.spelltemplatemodifier_set.all()
+                modifier.as_dict() for modifier in self.spelltemplatemodifier_set.all()
             ],
         }
 
@@ -319,7 +338,7 @@ class SpellTemplateModifier(models.Model, metaclass=TransMeta):
         verbose_name = _("spell template modifier")
         verbose_name_plural = _("spell template modifiers")
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "id": self.id,
             "attribute": self.attribute,

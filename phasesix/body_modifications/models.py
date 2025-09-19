@@ -40,17 +40,23 @@ class BodyModificationType(models.Model, metaclass=TransMeta):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         ordering = ("id",)
         translate = ("name",)
         verbose_name = _("body modification type")
         verbose_name_plural = _("body modification types")
 
+    def __str__(self):
+        return self.name
+
     def child_item_qs(self):
         return self.bodymodification_set.all()
+
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
 
 
 class BodyModificationQuerySet(HomebrewQuerySet):
@@ -153,7 +159,7 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "id": self.id,
             "type": self.type.name,
@@ -185,7 +191,7 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
                 for sl in self.bodymodificationsocketlocation_set.all()
             ],
             "modifiers": [
-                modifier.as_json()
+                modifier.as_dict()
                 for modifier in self.bodymodificationmodifier_set.all()
             ],
         }

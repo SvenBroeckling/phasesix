@@ -51,6 +51,13 @@ class ItemType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def child_item_qs(self):
         return self.item_set.all()
 
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
+
 
 class ItemQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
@@ -133,7 +140,7 @@ class Item(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "extensions": [e.identifier for e in self.extensions.all()],
             "name": self.name,
@@ -184,6 +191,13 @@ class WeaponType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
 
     def child_item_qs(self):
         return self.weapon_set.all()
+
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
 
 
 RANGE_CHOICES = (
@@ -263,7 +277,7 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "extensions": [e for e in self.extensions.all().values_list("identifier")],
             "is_hand_to_hand_weapon": self.is_hand_to_hand_weapon,
@@ -377,7 +391,7 @@ class WeaponModification(models.Model, metaclass=TransMeta):
     def extension_string(self):
         return ", ".join([e.identifier for e in self.extensions.all()])
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "extensions": [e.identifier for e in self.extensions.all()],
             "available_for_weapon_types": [
@@ -452,6 +466,13 @@ class RiotGearType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def child_item_qs(self):
         return self.riotgear_set.all()
 
+    def as_dict(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+        }
+
 
 class RiotGearQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
@@ -496,7 +517,7 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
     def get_protection(self):
         return self.riotgearprotection_set.order_by("protection_type__ordering")
 
-    def as_json(self):
+    def as_dict(self):
         return {
             "extensions": [e.identifier for e in self.extensions.all()],
             "name": self.name,
@@ -512,7 +533,7 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
                 for p in self.riotgearprotection_set.all()
             ],
             "modifier": [
-                modifier.as_json() for modifier in self.riotgearmodifier_set.all()
+                modifier.as_dict() for modifier in self.riotgearmodifier_set.all()
             ],
         }
 
