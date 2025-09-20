@@ -202,8 +202,8 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
             "arcana_cost": self.arcana_cost,
             "range": self.range,
             "actions": self.actions,
-            "duration": self.get_duration_unit_display(),
-            "duration_unit": self.duration_unit,
+            "duration": self.duration,
+            "duration_unit": self.get_duration_unit_display(),
             "needs_concentration": self.needs_concentration,
             "is_ritual": self.is_ritual,
             "type": {

@@ -168,9 +168,9 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
             "rules": self.rules,
             "quote": self.quote,
             "quote_author": self.quote_author,
-            "activation": self.activation,
-            "price": float(self.price),
-            "rarity": self.rarity,
+            "activation": self.get_activation_display(),
+            "price": int(self.price),
+            "rarity": self.get_rarity_display(),
             "bio_strain": self.bio_strain,
             "energy_consumption_ma": self.energy_consumption_ma,
             "charges": self.charges,
@@ -182,14 +182,12 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
             "image": self.image.url if self.image else None,
             "image_copyright": self.image_copyright,
             "image_copyright_url": self.image_copyright_url,
-            "socket_locations": [
-                {
-                    "id": sl.socket_location.id,
-                    "name": sl.socket_location.name,
-                    "amount": sl.socket_amount,
-                }
-                for sl in self.bodymodificationsocketlocation_set.all()
-            ],
+            "socket_locations": ", ".join(
+                [
+                    f"{sl.socket_location.name} ({sl.socket_amount})"
+                    for sl in self.bodymodificationsocketlocation_set.all()
+                ]
+            ),
             "modifiers": [
                 modifier.as_dict()
                 for modifier in self.bodymodificationmodifier_set.all()

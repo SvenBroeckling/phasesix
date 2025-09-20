@@ -88,6 +88,33 @@ class ModifierBaseQuerySet(models.QuerySet):
         )
 
 
+def modifiers_for_object(modified_object):
+    """
+    Returns a dictionary with the modifiers for an object with modifiers (Template,
+    BodyModification, RiotGear, Quirk, etc.).
+    Aggregates the modifiers for each aspect, attribute, skill and knowledge, spell origin.
+    Example:
+        {
+          "aspects": {
+            "Wounds": "1",
+            "Protection": "1",
+          },
+          "Attributes": {
+            "Strength": "1",
+          },
+          "skills": {
+            "Stealth": "-1",
+          }
+          "knowledge": {
+            "Medicine": "3",
+          }
+          "spell_origins": {
+            "Black magic": True
+          }
+        }
+    """
+
+
 class ModifierBase(models.Model, metaclass=TransMeta):
     objects = ModifierBaseQuerySet.as_manager()
 
