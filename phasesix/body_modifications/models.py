@@ -5,7 +5,7 @@ from transmeta import TransMeta
 
 from armory.models import RARITY_CHOICES
 from homebrew.models import HomebrewModel, HomebrewQuerySet
-from rules.models import ModifierBase
+from rules.models import ModifierBase, modifiers_for_qs
 
 
 class SocketLocation(models.Model, metaclass=TransMeta):
@@ -182,16 +182,11 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
             "image": self.image.url if self.image else None,
             "image_copyright": self.image_copyright,
             "image_copyright_url": self.image_copyright_url,
-            "socket_locations": ", ".join(
-                [
-                    f"{sl.socket_location.name} ({sl.socket_amount})"
-                    for sl in self.bodymodificationsocketlocation_set.all()
-                ]
-            ),
-            "modifiers": [
-                modifier.as_dict()
-                for modifier in self.bodymodificationmodifier_set.all()
+            "socket_locations": [
+                f"{sl.socket_location.name} ({sl.socket_amount})"
+                for sl in self.bodymodificationsocketlocation_set.all()
             ],
+            "modifiers": modifiers_for_qs(self.bodymodificationmodifier_set.all()),
         }
 
 

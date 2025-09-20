@@ -135,24 +135,36 @@ def modifiers_for_qs(qs):
         aspects = {}
         for code, total in aspect_totals.items():
             if total:
-                label = aspect_label_map.get(code, code)
-                aspects[label] = total
+                label = str(aspect_label_map.get(code, code))
+                aspects[label] = f"+{total}" if total > 0 else f"{total}"
         if aspects:
             mods["aspects"] = aspects
     if attribute_totals:
-        attributes = {name: total for name, total in attribute_totals.items() if total}
+        attributes = {
+            str(name): f"+{total}" if total > 0 else f"{total}"
+            for name, total in attribute_totals.items()
+            if total
+        }
         if attributes:
             mods["attributes"] = attributes
     if skill_totals:
-        skills = {name: total for name, total in skill_totals.items() if total}
+        skills = {
+            str(name): f"+{total}" if total > 0 else f"{total}"
+            for name, total in skill_totals.items()
+            if total
+        }
         if skills:
             mods["skills"] = skills
     if knowledge_totals:
-        knowledge = {name: total for name, total in knowledge_totals.items() if total}
+        knowledge = {
+            str(name): f"+{total}" if total > 0 else f"{total}"
+            for name, total in knowledge_totals.items()
+            if total
+        }
         if knowledge:
             mods["knowledge"] = knowledge
     if spell_origin_names:
-        mods["spell_origins"] = {name: True for name in sorted(spell_origin_names)}
+        mods["spell_origins"] = {str(name): True for name in sorted(spell_origin_names)}
 
     return mods
 
@@ -213,18 +225,6 @@ class ModifierBase(models.Model, metaclass=TransMeta):
 
     class Meta:
         abstract = True
-
-    def as_dict(self):
-        return {
-            "aspect": self.aspect,
-            "aspect_modifier": self.aspect_modifier,
-            "attribute": self.attribute.name if self.attribute else None,
-            "attribute_modifier": self.attribute_modifier,
-            "skill": self.skill.name if self.skill else None,
-            "skill_modifier": self.skill_modifier,
-            "knowledge": self.knowledge.name if self.knowledge else None,
-            "knowledge_modifier": self.knowledge_modifier,
-        }
 
 
 class ExtensionSelectQuerySet(models.QuerySet):
@@ -640,9 +640,7 @@ class Template(HomebrewModel, metaclass=TransMeta):
             "quote_author": self.quote_author,
             "cost": self.cost,
             "is_mastery": self.is_mastery,
-            "modifiers": [
-                modifier.as_dict() for modifier in self.templatemodifier_set.all()
-            ],
+            "modifiers": modifiers_for_qs(self.templatemodifier_set.all()),
         }
 
 
