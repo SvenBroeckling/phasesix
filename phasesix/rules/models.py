@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models import Q, Sum
 from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import get_thumbnail
-from transmeta import TransMeta
+from transmeta import TransMeta, get_real_fieldname
 
 from armory.choices import COLOR_CLASS_CHOICES
 from armory.mixins import SearchableCardListMixin
@@ -88,7 +88,7 @@ class ModifierBaseQuerySet(models.QuerySet):
         )
 
 
-def modifiers_for_object(modified_object):
+def modifiers_for_qs(qs):
     """
     Returns a dictionary with the modifiers for an object with modifiers (Template,
     BodyModification, RiotGear, Quirk, etc.).
@@ -113,6 +113,62 @@ def modifiers_for_object(modified_object):
           }
         }
     """
+    mods = {}
+
+    # Aspects
+    aspects = {}
+    for aspect in CHARACTER_ASPECT_CHOICES:
+        val = qs.filter(aspect=aspect[0]).aggregate(Sum("aspect_modifier"))[
+            "aspect_modifier__sum"
+        ]
+        if val:
+            aspects[aspect[1]] = val
+    if aspects:
+        mods["aspects"] = aspects
+
+    # Attributes
+    attributes = {}
+    for attribute in Attribute.objects.all():
+        val = qs.filter(attribute=attribute).aggregate(Sum("attribute_modifier"))[
+            "attribute_modifier__sum"
+        ]
+        if val:
+            attributes[attribute.name] = val
+    if attributes:
+        mods["attributes"] = attributes
+
+    # Skills
+    skills = {}
+    for skill in Skill.objects.all():
+        val = qs.filter(skill=skill).aggregate(Sum("skill_modifier"))[
+            "skill_modifier__sum"
+        ]
+        if val:
+            skills[skill.name] = val
+    if skills:
+        mods["skills"] = skills
+
+    # Knowledge
+    knowledge = {}
+    for k in Knowledge.objects.all():
+        val = qs.filter(knowledge=k).aggregate(Sum("knowledge_modifier"))[
+            "knowledge_modifier__sum"
+        ]
+        if val:
+            knowledge[k.name] = val
+    if knowledge:
+        mods["knowledge"] = knowledge
+
+    # Spell Origins
+    spell_origins = {}
+    for spell_origin in qs.filter(unlocks_spell_origin__isnull=False).values_list(
+        get_real_fieldname("unlocks_spell_origin__name"), flat=True
+    ):
+        spell_origins[spell_origin] = True
+    if spell_origins:
+        mods["spell_origins"] = spell_origins
+
+    return mods
 
 
 class ModifierBase(models.Model, metaclass=TransMeta):

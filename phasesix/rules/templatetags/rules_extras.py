@@ -8,6 +8,7 @@ from sorl.thumbnail import get_thumbnail
 
 from characters.models import Character
 from rulebook.models import Chapter
+from rules.models import modifiers_for_qs
 from worlds.models import WikiPage, WikiPageImage
 
 register = Library()
@@ -15,9 +16,7 @@ register = Library()
 
 @register.inclusion_tag("rules/_modifier_widget.html")
 def modifier_widget(qs):
-    return {
-        "qs": qs,
-    }
+    return {"modifiers": modifiers_for_qs(qs)}
 
 
 @register.inclusion_tag("rules/_template_widget.html", takes_context=True)
