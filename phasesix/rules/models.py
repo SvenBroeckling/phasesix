@@ -12,6 +12,7 @@ from armory.choices import COLOR_CLASS_CHOICES
 from armory.mixins import SearchableCardListMixin
 from characters.utils import static_thumbnail
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from worlds.models import World
 from worlds.unique_slugify import unique_slugify
 
 CHARACTER_ASPECT_CHOICES = (
@@ -250,6 +251,10 @@ class ExtensionSelectQuerySet(models.QuerySet):
 class ExtensionQuerySet(models.QuerySet):
     def active(self):
         return self.filter(is_active=True)
+
+    def for_world_identifier(self, world_identifier):
+        world = World.objects.get(extension__identifier=world_identifier)
+        return self.for_world(world)
 
     def for_world(self, world):
         q = Q(is_mandatory=True)
@@ -529,14 +534,18 @@ class TemplateCategory(SearchableCardListMixin, models.Model, metaclass=TransMet
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.template_set.for_extensions(extension_qs).all()
         return self.template_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
             "description": self.description,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
     def get_bg_color_class(self):
@@ -707,13 +716,17 @@ class FoeType(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.foe_set.for_extensions(extension_qs)
         return self.foe_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 

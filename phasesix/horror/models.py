@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
 from armory.mixins import SearchableCardListMixin
-from characters.templatetags.characters_extras import color_value_span
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 from rules.models import ModifierBase
 from rules.models import Skill, Attribute, Knowledge
@@ -21,13 +20,16 @@ class QuirkCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        # TODO: Implement extensions on quirks
         return self.quirk_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 

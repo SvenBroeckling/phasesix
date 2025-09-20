@@ -5,19 +5,16 @@ from django.utils.translation import activate
 from django.views import View
 
 from armory.models import (
-    Weapon,
-    WeaponModification,
-    Item,
-    RiotGear,
     WeaponType,
     RiotGearType,
     ItemType,
+    WeaponModificationType,
 )
-from body_modifications.models import BodyModification, BodyModificationType
-from horror.models import Quirk, QuirkCategory
-from magic.models import SpellTemplate, BaseSpell, SpellOrigin, SpellTemplateCategory
+from body_modifications.models import BodyModificationType
+from horror.models import QuirkCategory
+from magic.models import SpellOrigin, SpellTemplateCategory
 from portal.models import Profile
-from rules.models import Template, Foe, TemplateCategory, FoeType
+from rules.models import TemplateCategory, FoeType, Extension
 
 
 class ApiKeyView(View):
@@ -36,7 +33,7 @@ class DumpApiView(ApiKeyView):
         model_map = {
             "templates": TemplateCategory,
             "weapons": WeaponType,
-            "weapon_modifications": WeaponModification,
+            "weapon_modifications": WeaponModificationType,
             "riot_gear": RiotGearType,
             "items": ItemType,
             "spells": SpellOrigin,
@@ -46,4 +43,11 @@ class DumpApiView(ApiKeyView):
             "foes": FoeType,
         }
         qs = model_map[kwargs["model"]].objects.all()
-        return JsonResponse([t.as_dict() for t in qs], safe=False)
+
+        world_name = request.GET.get("world", None)
+        extensions = Extension.objects.active()
+        if world_name is not None and world_name in ["nexus", "tirakan"]:
+            extensions = Extension.objects.for_world_identifier(world_name)
+        return JsonResponse(
+            [t.as_dict(extension_qs=extensions) for t in qs], safe=False
+        )

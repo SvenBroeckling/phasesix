@@ -5,7 +5,7 @@ from transmeta import TransMeta
 
 from armory.models import RARITY_CHOICES
 from homebrew.models import HomebrewModel, HomebrewQuerySet
-from rules.models import ModifierBase, modifiers_for_qs
+from rules.models import ModifierBase, modifiers_for_qs, ExtensionSelectQuerySet
 
 
 class SocketLocation(models.Model, metaclass=TransMeta):
@@ -49,17 +49,21 @@ class BodyModificationType(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.bodymodification_set.for_extensions(extension_qs).all()
         return self.bodymodification_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 
-class BodyModificationQuerySet(HomebrewQuerySet):
+class BodyModificationQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
     pass
 
 

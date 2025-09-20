@@ -53,14 +53,18 @@ class ItemType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.item_set.for_extensions(extension_qs).all()
         return self.item_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
             "description": self.description,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 
@@ -194,14 +198,18 @@ class WeaponType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def get_first_image(self):
         return self.weapon_set.earliest("id").image
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.weapon_set.for_extensions(extension_qs).all()
         return self.weapon_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
             "description": self.description,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 
@@ -366,6 +374,21 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.weaponmodification_set.for_extensions(extension_qs).all()
+        return self.weaponmodification_set.all()
+
+    def as_dict(self, extension_qs=None):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "unique_equip": self.unique_equip,
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
+        }
+
 
 class WeaponModification(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
@@ -396,9 +419,8 @@ class WeaponModification(models.Model, metaclass=TransMeta):
     def extension_string(self):
         return ", ".join([e.identifier for e in self.extensions.all()])
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
-            "extensions": [e.identifier for e in self.extensions.all()],
             "available_for_weapon_types": [
                 wt.name for wt in self.available_for_weapon_types.all()
             ],
@@ -468,14 +490,18 @@ class RiotGearType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.riotgear_set.for_extensions(extension_qs).all()
         return self.riotgear_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
             "description": self.description,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 

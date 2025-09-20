@@ -99,17 +99,20 @@ class SpellOrigin(SearchableCardListMixin, models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        # TODO: Implement extensions on basespells
         return self.basespell_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
             "fa_icon_class": self.fa_icon_class,
             "image": self.image.url if self.image else None,
             "image_copyright": self.image_copyright,
             "image_copyright_url": self.image_copyright_url,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 
@@ -247,13 +250,16 @@ class SpellTemplateCategory(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
+    def child_item_qs(self, extension_qs=None):
+        # TODO: Implement extensions on spelltemplates
         return self.spelltemplate_set.all()
 
-    def as_dict(self):
+    def as_dict(self, extension_qs=None):
         return {
             "name": self.name,
-            "objects": [obj.as_dict() for obj in self.child_item_qs()],
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
         }
 
 
