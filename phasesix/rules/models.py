@@ -93,78 +93,75 @@ def modifiers_for_qs(qs):
     Returns a dictionary with the modifiers for an object with modifiers (Template,
     BodyModification, RiotGear, Quirk, etc.).
     Aggregates the modifiers for each aspect, attribute, skill and knowledge, spell origin.
-    Example:
-        {
-          "aspects": {
-            "Wounds": "1",
-            "Protection": "1",
-          },
-          "Attributes": {
-            "Strength": "1",
-          },
-          "skills": {
-            "Stealth": "-1",
-          }
-          "knowledge": {
-            "Medicine": "3",
-          }
-          "spell_origins": {
-            "Black magic": True
-          }
-        }
     """
     mods = {}
 
-    # Aspects
+    # Aspects (one query)
     aspects = {}
-    for aspect in CHARACTER_ASPECT_CHOICES:
-        val = qs.filter(aspect=aspect[0]).aggregate(Sum("aspect_modifier"))[
-            "aspect_modifier__sum"
-        ]
-        if val:
-            aspects[aspect[1]] = val
+    aspect_label_map = dict(CHARACTER_ASPECT_CHOICES)
+    for row in (
+        qs.filter(aspect__isnull=False, aspect_modifier__isnull=False)
+        .values("aspect")
+        .annotate(total=Sum("aspect_modifier"))
+    ):
+        total = row["total"]
+        if total:
+            # Map aspect code to translated label
+            label = aspect_label_map.get(row["aspect"], row["aspect"])  # fallback
+            aspects[label] = total
     if aspects:
         mods["aspects"] = aspects
 
-    # Attributes
+    # Attributes (one query)
     attributes = {}
-    for attribute in Attribute.objects.all():
-        val = qs.filter(attribute=attribute).aggregate(Sum("attribute_modifier"))[
-            "attribute_modifier__sum"
-        ]
-        if val:
-            attributes[attribute.name] = val
+    attr_name_field = get_real_fieldname("attribute__name")
+    for row in (
+        qs.filter(attribute__isnull=False, attribute_modifier__isnull=False)
+        .values(attr_name_field)
+        .annotate(total=Sum("attribute_modifier"))
+    ):
+        total = row["total"]
+        if total:
+            attributes[row[attr_name_field]] = total
     if attributes:
         mods["attributes"] = attributes
 
-    # Skills
+    # Skills (one query)
     skills = {}
-    for skill in Skill.objects.all():
-        val = qs.filter(skill=skill).aggregate(Sum("skill_modifier"))[
-            "skill_modifier__sum"
-        ]
-        if val:
-            skills[skill.name] = val
+    skill_name_field = get_real_fieldname("skill__name")
+    for row in (
+        qs.filter(skill__isnull=False, skill_modifier__isnull=False)
+        .values(skill_name_field)
+        .annotate(total=Sum("skill_modifier"))
+    ):
+        total = row["total"]
+        if total:
+            skills[row[skill_name_field]] = total
     if skills:
         mods["skills"] = skills
 
-    # Knowledge
+    # Knowledge (one query)
     knowledge = {}
-    for k in Knowledge.objects.all():
-        val = qs.filter(knowledge=k).aggregate(Sum("knowledge_modifier"))[
-            "knowledge_modifier__sum"
-        ]
-        if val:
-            knowledge[k.name] = val
+    knowledge_name_field = get_real_fieldname("knowledge__name")
+    for row in (
+        qs.filter(knowledge__isnull=False, knowledge_modifier__isnull=False)
+        .values(knowledge_name_field)
+        .annotate(total=Sum("knowledge_modifier"))
+    ):
+        total = row["total"]
+        if total:
+            knowledge[row[knowledge_name_field]] = total
     if knowledge:
         mods["knowledge"] = knowledge
 
-    # Spell Origins
+    # Spell Origins (one query)
     spell_origins = {}
-    for spell_origin in qs.filter(unlocks_spell_origin__isnull=False).values_list(
-        get_real_fieldname("unlocks_spell_origin__name"), flat=True
+    for name in (
+        qs.filter(unlocks_spell_origin__isnull=False)
+        .values_list(get_real_fieldname("unlocks_spell_origin__name"), flat=True)
+        .distinct()
     ):
-        spell_origins[spell_origin] = True
+        spell_origins[name] = True
     if spell_origins:
         mods["spell_origins"] = spell_origins
 
