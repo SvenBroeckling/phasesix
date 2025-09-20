@@ -10,6 +10,7 @@ from armory.choices import (
     CURRENCY_FA_ICON_CLASS_CHOICES,
 )
 from armory.mixins import SearchableCardListMixin
+from characters.utils import strip_newlines
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 from rules.models import (
     ExtensionSelectQuerySet,
@@ -300,7 +301,8 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
             "attack_modes": [a.name for a in self.attack_modes.all()],
             "type": self.type.name if self.type else None,
             "weight": self.weight,
-            "price": self.price,
+            "price": int(self.price),
+            "keywords": [kw.as_dict() for kw in self.weaponkeyword_set.all()],
         }
 
 
@@ -339,6 +341,13 @@ class WeaponKeyword(models.Model):
 
     def __str__(self):
         return self.keyword.name
+
+    def as_dict(self):
+        return {
+            "name": self.keyword.name,
+            "description": strip_newlines(self.keyword.description),
+            "value": self.value,
+        }
 
 
 class WeaponModificationTypeQuerySet(models.QuerySet):
@@ -558,9 +567,13 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
             "encumbrance": self.encumbrance,
             "concealment": self.concealment,
             "weight": self.weight,
-            "price": self.price,
+            "price": int(self.price),
             "protections": [
-                {"type": p.protection_type.name, "value": p.value}
+                {
+                    "type": p.protection_type.name,
+                    "letter": p.protection_type.letter,
+                    "value": p.value,
+                }
                 for p in self.riotgearprotection_set.all()
             ],
             "modifier": modifiers_for_qs(self.riotgearmodifier_set.all()),

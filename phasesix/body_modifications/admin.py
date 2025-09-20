@@ -9,6 +9,7 @@ from body_modifications.models import (
     BodyModificationSocketLocation,
     BodyModificationModifier,
 )
+from portal.admin import ShortDescriptionListFilter, ShortRulesListFilter
 
 
 @admin.register(SocketLocation)
@@ -46,6 +47,8 @@ class BodyModificationAdmin(ModelAdmin):
     )
     list_editable = ("price", "bio_strain", "energy_consumption_ma", "activation")
     list_filter = (
+        ShortDescriptionListFilter,
+        ShortRulesListFilter,
         "type",
         "rarity",
         "bio_strain",

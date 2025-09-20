@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
 
+from portal.admin import ShortShortDescriptionListFilter
 from rules.models import (
     Skill,
     Extension,
@@ -144,7 +145,7 @@ class FoeAdmin(ModelAdmin):
         "dexterity",
         "mind",
     )
-    list_filter = ("type", "extensions", "is_homebrew")
+    list_filter = (ShortShortDescriptionListFilter, "type", "extensions", "is_homebrew")
     search_fields = (
         "name_de",
         "name_en",

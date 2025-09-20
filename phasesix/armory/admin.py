@@ -21,6 +21,7 @@ from armory.models import (
     ProtectionType,
     RiotGearModifier,
 )
+from portal.admin import ShortDescriptionListFilter, ShortRulesListFilter
 
 
 class WeaponKeywordInline(TabularInline):
@@ -35,6 +36,7 @@ class WeaponAdmin(ModelAdmin):
         "price",
     )
     list_filter = (
+        ShortDescriptionListFilter,
         "type",
         "extensions",
         "is_hand_to_hand_weapon",
@@ -126,7 +128,7 @@ class RiotGearAdmin(ModelAdmin):
         "concealment",
     )
     inlines = [RiotGearProtectionInline, RiotGearModifierInline]
-    list_filter = ("extensions", "type")
+    list_filter = (ShortDescriptionListFilter, "extensions", "type")
     filter_horizontal = ("extensions",)
     search_fields = "name_de", "name_en"
     fieldsets = [
@@ -191,7 +193,7 @@ class ItemAdmin(ModelAdmin):
         "usable_in_combat",
         "skill",
     )
-    list_filter = ("type", "extensions")
+    list_filter = (ShortDescriptionListFilter, "type", "extensions")
     filter_horizontal = ("extensions",)
     search_fields = ("name_de", "name_en", "description_de", "description_en")
     fieldsets = [
@@ -255,7 +257,11 @@ class WeapomModificationKeywordInline(TabularInline):
 @admin.register(WeaponModification)
 class WeaponModificationAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "type", "extension_string", "price")
-    list_filter = ("type",)
+    list_filter = (
+        ShortDescriptionListFilter,
+        ShortRulesListFilter,
+        "type",
+    )
     search_fields = "name_de", "name_en"
     filter_horizontal = ("extensions", "available_for_weapon_types")
     inlines = [WeapomModificationKeywordInline]

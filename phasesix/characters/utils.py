@@ -5,6 +5,12 @@ from django.conf import settings
 from django.contrib.staticfiles import finders
 
 
+def strip_newlines(value):
+    if value is not None:
+        return value.replace("\n", "").replace("\r", "")
+    return value
+
+
 def render_string(string, context):
     from django.template import Template, Context
 

@@ -11,6 +11,7 @@ from magic.models import (
     SpellType,
     SpellVariant,
 )
+from portal.admin import ShortRulesListFilter
 
 
 @admin.register(BaseSpell)
@@ -37,6 +38,7 @@ class BaseSpellAdmin(ModelAdmin):
     )
     search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     list_filter = (
+        ShortRulesListFilter,
         "origin",
         "type",
         "variant",
