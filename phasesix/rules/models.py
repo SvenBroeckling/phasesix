@@ -91,79 +91,68 @@ class ModifierBaseQuerySet(models.QuerySet):
 def modifiers_for_qs(qs):
     """
     Returns a dictionary with the modifiers for an object with modifiers (Template,
-    BodyModification, RiotGear, Quirk, etc.).
-    Aggregates the modifiers for each aspect, attribute, skill and knowledge, spell origin.
+    BodyModification, RiotGear, Quirk, etc.). Aggregates the modifiers for each
+    aspect, attribute, skill, knowledge, and spell origin.
     """
     mods = {}
 
-    # Aspects (one query)
-    aspects = {}
+    aspect_totals = {}
+    attribute_totals = {}
+    skill_totals = {}
+    knowledge_totals = {}
+    spell_origin_names = set()
+
     aspect_label_map = dict(CHARACTER_ASPECT_CHOICES)
-    for row in (
-        qs.filter(aspect__isnull=False, aspect_modifier__isnull=False)
-        .values("aspect")
-        .annotate(total=Sum("aspect_modifier"))
-    ):
-        total = row["total"]
-        if total:
-            # Map aspect code to translated label
-            label = aspect_label_map.get(row["aspect"], row["aspect"])  # fallback
-            aspects[label] = total
-    if aspects:
-        mods["aspects"] = aspects
+    iter_qs = qs.select_related(
+        "attribute",
+        "skill",
+        "knowledge",
+        "unlocks_spell_origin",
+    )
 
-    # Attributes (one query)
-    attributes = {}
-    attr_name_field = get_real_fieldname("attribute__name")
-    for row in (
-        qs.filter(attribute__isnull=False, attribute_modifier__isnull=False)
-        .values(attr_name_field)
-        .annotate(total=Sum("attribute_modifier"))
-    ):
-        total = row["total"]
-        if total:
-            attributes[row[attr_name_field]] = total
-    if attributes:
-        mods["attributes"] = attributes
+    for row in iter_qs:
+        if row.aspect is not None and row.aspect_modifier is not None:
+            aspect_totals[row.aspect] = (
+                aspect_totals.get(row.aspect, 0) + row.aspect_modifier
+            )
+        if row.attribute_id is not None and row.attribute_modifier is not None:
+            name = row.attribute.name  # translatable field via TransMeta
+            attribute_totals[name] = (
+                attribute_totals.get(name, 0) + row.attribute_modifier
+            )
+        if row.skill_id is not None and row.skill_modifier is not None:
+            name = row.skill.name
+            skill_totals[name] = skill_totals.get(name, 0) + row.skill_modifier
+        if row.knowledge_id is not None and row.knowledge_modifier is not None:
+            name = row.knowledge.name
+            knowledge_totals[name] = (
+                knowledge_totals.get(name, 0) + row.knowledge_modifier
+            )
+        if row.unlocks_spell_origin_id is not None:
+            spell_origin_names.add(row.unlocks_spell_origin.name)
 
-    # Skills (one query)
-    skills = {}
-    skill_name_field = get_real_fieldname("skill__name")
-    for row in (
-        qs.filter(skill__isnull=False, skill_modifier__isnull=False)
-        .values(skill_name_field)
-        .annotate(total=Sum("skill_modifier"))
-    ):
-        total = row["total"]
-        if total:
-            skills[row[skill_name_field]] = total
-    if skills:
-        mods["skills"] = skills
-
-    # Knowledge (one query)
-    knowledge = {}
-    knowledge_name_field = get_real_fieldname("knowledge__name")
-    for row in (
-        qs.filter(knowledge__isnull=False, knowledge_modifier__isnull=False)
-        .values(knowledge_name_field)
-        .annotate(total=Sum("knowledge_modifier"))
-    ):
-        total = row["total"]
-        if total:
-            knowledge[row[knowledge_name_field]] = total
-    if knowledge:
-        mods["knowledge"] = knowledge
-
-    # Spell Origins (one query)
-    spell_origins = {}
-    for name in (
-        qs.filter(unlocks_spell_origin__isnull=False)
-        .values_list(get_real_fieldname("unlocks_spell_origin__name"), flat=True)
-        .distinct()
-    ):
-        spell_origins[name] = True
-    if spell_origins:
-        mods["spell_origins"] = spell_origins
+    if aspect_totals:
+        aspects = {}
+        for code, total in aspect_totals.items():
+            if total:
+                label = aspect_label_map.get(code, code)
+                aspects[label] = total
+        if aspects:
+            mods["aspects"] = aspects
+    if attribute_totals:
+        attributes = {name: total for name, total in attribute_totals.items() if total}
+        if attributes:
+            mods["attributes"] = attributes
+    if skill_totals:
+        skills = {name: total for name, total in skill_totals.items() if total}
+        if skills:
+            mods["skills"] = skills
+    if knowledge_totals:
+        knowledge = {name: total for name, total in knowledge_totals.items() if total}
+        if knowledge:
+            mods["knowledge"] = knowledge
+    if spell_origin_names:
+        mods["spell_origins"] = {name: True for name in sorted(spell_origin_names)}
 
     return mods
 
