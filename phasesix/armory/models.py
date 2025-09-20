@@ -508,6 +508,9 @@ class RiotGearType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
         return {
             "name": self.name,
             "description": self.description,
+            "protection_footnote": ", ".join(
+                [f"{p.letter} - {p.name}" for p in ProtectionType.objects.all()]
+            ),
             "objects": [
                 obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
             ],
@@ -576,7 +579,7 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
                 }
                 for p in self.riotgearprotection_set.all()
             ],
-            "modifier": modifiers_for_qs(self.riotgearmodifier_set.all()),
+            "modifiers": modifiers_for_qs(self.riotgearmodifier_set.all()),
         }
 
 

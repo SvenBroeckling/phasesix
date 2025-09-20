@@ -643,7 +643,6 @@ class Template(HomebrewModel, metaclass=TransMeta):
             "extensions": [
                 e for e in self.extensions.all().values_list("identifier", flat=True)
             ],
-            "category": self.category.name,
             "rules": self.rules,
             "quote": self.quote,
             "quote_author": self.quote_author,
