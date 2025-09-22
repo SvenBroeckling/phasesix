@@ -347,7 +347,7 @@ class SpellTemplateModifier(models.Model, metaclass=TransMeta):
     def as_dict(self):
         return {
             "id": self.id,
-            "attribute": self.attribute,
+            "attribute": self.get_attribute_display(),
             "attribute_modifier": self.attribute_modifier,
             "variant_change": (
                 {

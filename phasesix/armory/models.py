@@ -158,8 +158,8 @@ class Item(HomebrewModel, metaclass=TransMeta):
             "type": self.type.name,
             "is_container": self.is_container,
             "weight": self.weight,
-            "price": self.price,
-            "rarity": self.rarity,
+            "price": int(self.price),
+            "rarity": self.get_rarity_display(),
             "concealment": self.concealment,
             "charges": self.charges,
             "usable_in_combat": self.usable_in_combat,
@@ -437,7 +437,10 @@ class WeaponModification(models.Model, metaclass=TransMeta):
             "description": self.description,
             "rules": self.rules,
             "type": self.type.name,
-            "price": self.price,
+            "price": int(self.price),
+            "keywords": [
+                kw.as_dict() for kw in self.weaponmodificationkeyword_set.all()
+            ],
         }
 
 
@@ -447,6 +450,12 @@ class WeaponModificationKeyword(models.Model):
     )
     keyword = models.ForeignKey("armory.Keyword", on_delete=models.CASCADE)
     value = models.IntegerField(_("value"), default=0)
+
+    def as_dict(self):
+        return {
+            "name": self.keyword.name,
+            "value": self.value,
+        }
 
 
 class ProtectionType(models.Model, metaclass=TransMeta):
