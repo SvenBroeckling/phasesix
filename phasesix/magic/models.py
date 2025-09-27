@@ -101,7 +101,7 @@ class SpellOrigin(SearchableCardListMixin, models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         # TODO: Implement extensions on basespells
-        return self.basespell_set.all()
+        return self.basespell_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {
@@ -252,7 +252,7 @@ class SpellTemplateCategory(models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         # TODO: Implement extensions on spelltemplates
-        return self.spelltemplate_set.all()
+        return self.spelltemplate_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {

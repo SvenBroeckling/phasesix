@@ -22,7 +22,7 @@ class QuirkCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         # TODO: Implement extensions on quirks
-        return self.quirk_set.all()
+        return self.quirk_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {

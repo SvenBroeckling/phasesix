@@ -536,8 +536,8 @@ class TemplateCategory(SearchableCardListMixin, models.Model, metaclass=TransMet
 
     def child_item_qs(self, extension_qs=None):
         if extension_qs is not None:
-            return self.template_set.for_extensions(extension_qs).all()
-        return self.template_set.all()
+            return self.template_set.for_extensions(extension_qs).distinct()
+        return self.template_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {
@@ -717,8 +717,8 @@ class FoeType(models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         if extension_qs is not None:
-            return self.foe_set.for_extensions(extension_qs)
-        return self.foe_set.all()
+            return self.foe_set.for_extensions(extension_qs).distinct()
+        return self.foe_set.all().distinct()
 
     def as_dict(self, extension_qs=None):
         return {

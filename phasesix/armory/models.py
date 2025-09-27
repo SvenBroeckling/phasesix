@@ -56,8 +56,8 @@ class ItemType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         if extension_qs is not None:
-            return self.item_set.for_extensions(extension_qs).all()
-        return self.item_set.all()
+            return self.item_set.for_extensions(extension_qs).distinct()
+        return self.item_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {
@@ -201,8 +201,8 @@ class WeaponType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         if extension_qs is not None:
-            return self.weapon_set.for_extensions(extension_qs).all()
-        return self.weapon_set.all()
+            return self.weapon_set.for_extensions(extension_qs).distinct()
+        return self.weapon_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {
@@ -385,8 +385,8 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         if extension_qs is not None:
-            return self.weaponmodification_set.for_extensions(extension_qs).all()
-        return self.weaponmodification_set.all()
+            return self.weaponmodification_set.for_extensions(extension_qs).distinct()
+        return self.weaponmodification_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {
@@ -510,8 +510,8 @@ class RiotGearType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         if extension_qs is not None:
-            return self.riotgear_set.for_extensions(extension_qs).all()
-        return self.riotgear_set.all()
+            return self.riotgear_set.for_extensions(extension_qs).distinct()
+        return self.riotgear_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {

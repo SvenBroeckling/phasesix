@@ -51,8 +51,8 @@ class BodyModificationType(models.Model, metaclass=TransMeta):
 
     def child_item_qs(self, extension_qs=None):
         if extension_qs is not None:
-            return self.bodymodification_set.for_extensions(extension_qs).all()
-        return self.bodymodification_set.all()
+            return self.bodymodification_set.for_extensions(extension_qs).distinct()
+        return self.bodymodification_set.distinct()
 
     def as_dict(self, extension_qs=None):
         return {
