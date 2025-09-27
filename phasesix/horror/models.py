@@ -4,7 +4,7 @@ from transmeta import TransMeta
 
 from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
-from rules.models import ModifierBase
+from rules.models import ModifierBase, modifiers_for_qs
 from rules.models import Skill, Attribute, Knowledge
 
 
@@ -60,6 +60,7 @@ class Quirk(HomebrewModel, metaclass=TransMeta):
             "description": self.description,
             "positive_effects": self.positive_effects,
             "negative_effects": self.negative_effects,
+            "modifiers": modifiers_for_qs(self.quirkmodifier_set.all()),
         }
 
 
