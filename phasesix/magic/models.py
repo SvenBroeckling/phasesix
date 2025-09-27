@@ -7,10 +7,10 @@ from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 
 SPELL_ATTRIBUTE_CHOICES = (
-    ("power", _("power")),
-    ("range", _("range")),
-    ("actions", _("actions")),
-    ("arcana_cost", _("arcana")),
+    ("power", _("Power")),
+    ("range", _("Range")),
+    ("actions", _("Actions")),
+    ("arcana_cost", _("Arcana")),
 )
 
 
