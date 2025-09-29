@@ -4,10 +4,10 @@ register = Library()
 
 
 @register.filter
-def world_has_extension(world_configuration, extension_identifier):
-    if world_configuration is None:
+def world_has_extension(world, extension_identifier):
+    if world is None:
         return True  # No world configuration - base site
-    return world_configuration.has_extension(extension_identifier)
+    return world.has_extension(extension_identifier)
 
 
 @register.filter

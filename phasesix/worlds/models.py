@@ -12,37 +12,6 @@ from homebrew.models import HomebrewModel, HomebrewQuerySet
 from worlds.unique_slugify import unique_slugify
 
 
-class WorldSiteConfiguration(models.Model):
-    world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
-    dns_domain_name = models.CharField(
-        _("dns domain name"),
-        max_length=120,
-        blank=True,
-        null=True,
-        help_text=_(
-            "This world is set as default if the given dns domain name is requested"
-        ),
-    )
-    session_cookie_domain = models.CharField(
-        _("session cookie domain"), max_length=120, blank=True, null=True
-    )
-
-    class Meta:
-        verbose_name = _("world site configuration")
-        verbose_name_plural = _("world site configurations")
-
-    def has_extension(self, identifier):
-        if self.world is None:
-            return False
-        if self.world.extension is None:
-            return False
-        if self.world.extension.identifier == identifier:
-            return True
-        return self.world.extension.fixed_extensions.filter(
-            identifier=identifier
-        ).exists()
-
-
 @reversion.register
 class World(models.Model, metaclass=TransMeta):
     INDEX_TEMPLATE_CHOICES = (
@@ -64,6 +33,19 @@ class World(models.Model, metaclass=TransMeta):
 
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+
+    dns_domain_name = models.CharField(
+        _("dns domain name"),
+        max_length=120,
+        blank=True,
+        null=True,
+        help_text=_(
+            "This world is set as default if the given dns domain name is requested"
+        ),
+    )
+    session_cookie_domain = models.CharField(
+        _("session cookie domain"), max_length=120, blank=True, null=True
+    )
 
     name = models.CharField(_("name"), max_length=120)
     slug = models.SlugField(_("slug"), max_length=220, unique=True, null=True)
@@ -144,6 +126,13 @@ class World(models.Model, metaclass=TransMeta):
 
     def get_absolute_url(self):
         return reverse("worlds:detail", args=[self.slug])
+
+    def has_extension(self, identifier):
+        if self.extension is None:
+            return False
+        if self.extension.identifier == identifier:
+            return True
+        return self.extension.fixed_extensions.filter(identifier=identifier).exists()
 
     @property
     def world(self):

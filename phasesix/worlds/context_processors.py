@@ -3,14 +3,12 @@ from django.utils.translation import gettext as _
 
 
 def brand_information(request):
-    obj = request.world_configuration
-    if obj is not None:
-        world = obj.world
+    if request.world is not None:
         return {
-            "brand_name": world.brand_name,
-            "brand_domain_name": obj.dns_domain_name,
-            "brand_description": world.description_1,
-            "brand_logo": world.brand_logo.url,
+            "brand_name": request.world.brand_name,
+            "brand_domain_name": request.world.dns_domain_name,
+            "brand_description": request.world.description_1,
+            "brand_logo": request.world.brand_logo.url,
         }
     return {
         "brand_name": "Phase Six",

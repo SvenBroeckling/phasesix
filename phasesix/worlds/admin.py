@@ -5,7 +5,6 @@ from worlds.models import (
     World,
     WikiPage,
     WikiPageImage,
-    WorldSiteConfiguration,
     WikiPageFoeType,
     WikiPageFoeResistanceOrWeakness,
     WikiPageGameValues,
@@ -15,10 +14,6 @@ from worlds.models import (
     Language,
     LanguageGroup,
 )
-
-
-class WorldSiteConfigurationInline(TabularInline):
-    model = WorldSiteConfiguration
 
 
 class WorldLeadImageInline(TabularInline):
@@ -31,7 +26,7 @@ class WorldAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "is_active", "ordering")
     list_filter = ("is_active",)
     search_fields = ("name_de", "name_en")
-    inlines = [WorldLeadImageInline, WorldSiteConfigurationInline]
+    inlines = [WorldLeadImageInline]
 
 
 class WikiPageImageInline(TabularInline):

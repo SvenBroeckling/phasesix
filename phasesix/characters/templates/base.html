@@ -18,8 +18,8 @@
     <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css"
           rel="stylesheet"/>
 
-    {% if request.world_configuration %}
-      <link type="text/x-scss" href="{{ request.world_configuration.world.scss_file_static }}" rel="stylesheet"/>
+    {% if request.world %}
+      <link type="text/x-scss" href="{{ request.world.scss_file_static }}" rel="stylesheet"/>
     {% else %}
       <link type="text/x-scss" href="{% static 'theme/phasesix.scss' %}" rel="stylesheet"/>
     {% endif %}

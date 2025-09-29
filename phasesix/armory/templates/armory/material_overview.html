@@ -68,7 +68,7 @@
       </a>
     </div>
 
-    {% if request.world_configuration|world_has_extension:"magic" %}
+    {% if request.world|world_has_extension:"magic" %}
       <div class="col-12 col-md-6 mb-4">
         <a href="{% url "magic:spell_origin_list" %}">
           <div class="card p-4">
@@ -81,7 +81,7 @@
       </div>
     {% endif %}
 
-    {% if request.world_configuration|world_has_extension:"body_modifications" %}
+    {% if request.world|world_has_extension:"body_modifications" %}
       <div class="col-12 mb-4">
         <a href="{% url "body_modifications:body_modification_type_list" %}">
           <div class="card p-4">

@@ -8,10 +8,8 @@ class DownloadView(ListView):
     model = WorldBook
 
     def get_queryset(self):
-        if self.request.world_configuration:
-            return WorldBook.objects.filter(
-                world=self.request.world_configuration.world
-            )
+        if self.request.world:
+            return WorldBook.objects.filter(world=self.request.world)
         return WorldBook.objects.all()
 
 

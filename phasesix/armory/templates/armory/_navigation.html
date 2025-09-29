@@ -76,7 +76,7 @@
     </div>
   </a>
 
-  {% if request.world_configuration|world_has_extension:"magic" %}
+  {% if request.world|world_has_extension:"magic" %}
     <a
       class="{% if navigation == "spell_origin_list" %}active{% endif %} navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
       href="{% url "magic:spell_origin_list" %}"
@@ -88,7 +88,7 @@
     </a>
   {% endif %}
 
-  {% if request.world_configuration|world_has_extension:"body_modifications" %}
+  {% if request.world|world_has_extension:"body_modifications" %}
     <a
       class="{% if navigation == "body_modification_type_list" %}active{% endif %} navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
       href="{% url "body_modifications:body_modification_type_list" %}"

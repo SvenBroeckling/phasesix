@@ -241,10 +241,8 @@ class XhrSearchFoeSidebarView(DetailView):
         context["may_edit"] = self.object.may_edit(self.request.user)
         foes = Foe.objects.all()
 
-        if self.request.world_configuration is not None:
-            foes = foes.filter(
-                extensions=self.request.world_configuration.world.extension
-            )
+        if self.request.world is not None:
+            foes = foes.filter(extensions=self.request.world.extension)
 
         context["foes"] = foes.order_by("name_de")
         return context

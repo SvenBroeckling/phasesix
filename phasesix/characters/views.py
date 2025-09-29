@@ -775,7 +775,7 @@ class CreateCharacterConstructedView(DetailView):
         context["template_categories"] = TemplateCategory.objects.filter(
             allow_at_character_creation=True
         )
-        context["warnings"] = self.object.warnings(self.request.world_configuration)
+        context["warnings"] = self.object.warnings(self.request.world)
         context["character_template_ids"] = [
             ct.template.id for ct in self.object.charactertemplate_set.all()
         ]
@@ -811,7 +811,7 @@ class XhrConstructedAddTemplateView(View):
             return JsonResponse(
                 {
                     "status": "ok",
-                    "warnings": character.warnings(self.request.world_configuration),
+                    "warnings": character.warnings(self.request.world),
                     "remaining_points": remaining_points - template.cost,
                 }
             )
@@ -829,7 +829,7 @@ class XhrConstructedRemoveTemplateView(View):
             return JsonResponse(
                 {
                     "status": "ok",
-                    "warnings": character.warnings(self.request.world_configuration),
+                    "warnings": character.warnings(self.request.world),
                     "remaining_points": character.remaining_template_points,
                 }
             )

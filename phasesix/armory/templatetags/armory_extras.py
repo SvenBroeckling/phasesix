@@ -76,7 +76,7 @@ def object_widget(context, obj, character=None, add_button=False):
                 "obj": obj,
                 "character": character,
                 "add_button": add_button,
-                "world_configuration": context.get("world_configuration", None),
+                "world": context.get("world", None),
                 "user": context["user"],
             }
         )
@@ -90,7 +90,7 @@ def searchable_object_card_list(
     add_button=False,
 ):
     return {
-        "world_configuration": context["request"].world_configuration,
+        "world": context["request"].world,
         "character_object": character_object,
         "add_button": add_button,
         "user": context["user"],

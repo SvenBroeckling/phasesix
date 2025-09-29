@@ -63,9 +63,9 @@ class Contact(models.Model):
 
 
 class CharacterQuerySet(models.QuerySet):
-    def for_world_configuration(self, world_configuration):
-        if world_configuration is not None:
-            return self.filter(extensions=world_configuration.world.extension)
+    def for_world(self, world):
+        if world is not None:
+            return self.filter(extensions=world.extension)
         return self.all()
 
     def with_templates(self):
@@ -257,7 +257,7 @@ class Character(models.Model):
             ).url
         return None
 
-    def warnings(self, world_configuration):
+    def warnings(self, world):
         """Returns game logic warnings for this character"""
         warnings = []
         if self.is_magical and not self.unlocked_spell_origins.exists():

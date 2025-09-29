@@ -196,10 +196,8 @@ def latest_user_image(user):
 
 
 @register.filter
-def templates_for_world_configuration(qs, world_configuration):
-    if world_configuration:
-        qs = qs.for_world(world_configuration.world)
-    return qs
+def templates_for_world(qs, world):
+    return qs.for_world(world) if world else qs
 
 
 @register.filter

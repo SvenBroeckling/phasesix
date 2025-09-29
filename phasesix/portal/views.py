@@ -23,13 +23,9 @@ class IndexView(TemplateView):
 
         lead_images = WorldLeadImage.objects.all()
 
-        if self.request.world_configuration is not None:
-            characters = characters.filter(
-                extensions=self.request.world_configuration.world.extension
-            )
-            lead_images = lead_images.filter(
-                world=self.request.world_configuration.world
-            )
+        if self.request.world is not None:
+            characters = characters.filter(extensions=self.request.world.extension)
+            lead_images = lead_images.filter(world=self.request.world)
         if self.request.user.is_authenticated:
             characters = characters.filter(
                 created_by=self.request.user, npc_campaign__isnull=True
@@ -47,10 +43,8 @@ class IndexView(TemplateView):
     def get_context_campaigns(self):
         context = {}
         campaigns = Campaign.objects.filter(image__isnull=False)
-        if self.request.world_configuration is not None:
-            campaigns = campaigns.filter(
-                world_extension=self.request.world_configuration.world.extension
-            )
+        if self.request.world is not None:
+            campaigns = campaigns.filter(world_extension=self.request.world.extension)
 
         if self.request.user.is_authenticated:
             campaigns = campaigns.filter(created_by=self.request.user).order_by(
@@ -63,17 +57,16 @@ class IndexView(TemplateView):
 
     def get_context_worlds(self):
         context = {}
-        if not self.request.world_configuration:
+        if not self.request.world:
             context["worlds"] = World.objects.filter(is_active=True)
         return context
 
     def get_context_wiki_pages(self):
         context = {}
-        if self.request.world_configuration is not None:
-            world = self.request.world_configuration.world
+        if self.request.world is not None:
             context["wiki_pages"] = (
                 WikiPage.objects.annotate(text_len=Length("text_de"))
-                .filter(world=world, text_len__gte=30)
+                .filter(world=self.request.world, text_len__gte=30)
                 .order_by("?")[:3]
             )
         return context
@@ -85,8 +78,8 @@ class IndexView(TemplateView):
         context.update(self.get_context_campaigns())
         context.update(self.get_context_wiki_pages())
 
-        if self.request.world_configuration:
-            world = self.request.world_configuration.world
+        if self.request.world:
+            world = self.request.world
             context["world"] = world
             context["may_edit"] = world.may_edit(self.request.user)
         else:
@@ -129,18 +122,11 @@ class XhrSearchResultsView(TemplateView):
                     Q(name_de__icontains=query) | Q(name_en__icontains=query)
                 )
 
-            if (
-                self.request.world_configuration
-                and self.request.world_configuration.world
-            ):
-                wiki_pages = wiki_pages.filter(
-                    Q(world=self.request.world_configuration.world)
-                )
-                characters = characters.filter(
-                    extensions=self.request.world_configuration.world.extension
-                )
+            if self.request.world:
+                wiki_pages = wiki_pages.filter(Q(world=self.request.world))
+                characters = characters.filter(extensions=self.request.world.extension)
                 campaigns = campaigns.filter(
-                    world_extension=self.request.world_configuration.world.extension
+                    world_extension=self.request.world.extension
                 )
 
             context["wiki_pages"] = wiki_pages

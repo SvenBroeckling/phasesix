@@ -49,7 +49,7 @@ def active_if_url_name_matches(context, url_name_list, **kwargs):
 @register.simple_tag(takes_context=True)
 def create_character_url(context):
     try:
-        world = context["request"].world_configuration.world
+        world = context["request"].world
     except AttributeError:
         world = None
 

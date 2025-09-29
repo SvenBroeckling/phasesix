@@ -204,8 +204,8 @@ def has_knowledge(character, knowledge):
 
 
 @register.filter
-def for_world_configuration(qs, world_configuration):
-    return qs.for_world_configuration(world_configuration)
+def for_world(qs, world):
+    return qs.for_world(world)
 
 
 # Character Sheet PDF

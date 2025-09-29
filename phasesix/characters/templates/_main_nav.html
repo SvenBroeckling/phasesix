@@ -15,10 +15,10 @@
           </a>
         </li>
 
-        {% if request.world_configuration %}
+        {% if request.world %}
           <li class="nav-item">
             {% active_if_url_name_matches "worlds:detail,worlds:wiki_page,worlds:edit_text" as active %}
-            <a href="{{ request.world_configuration.world.get_absolute_url }}"
+            <a href="{{ request.world.get_absolute_url }}"
                class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
               <i class="fas fa-spa mb-0"></i>
               <span class="d-none d-md-inline">{% trans "World" %}</span>

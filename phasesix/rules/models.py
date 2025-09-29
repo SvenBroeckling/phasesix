@@ -265,13 +265,6 @@ class ExtensionQuerySet(models.QuerySet):
         q |= Q(pk__in=world.extension.fixed_extensions.all())
         return self.active().filter(q)
 
-    def for_world_configuration(self, world_configuration):
-        if not world_configuration:
-            return self.active()
-        if not world_configuration.world:
-            return self.active()
-        return self.for_world(world_configuration.world)
-
     def first_class_extensions(self):
         return self.filter(Q(type="e") | Q(is_mandatory=True)).filter(is_active=True)
 

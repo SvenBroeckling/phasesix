@@ -1,4 +1,4 @@
-from worlds.models import WorldSiteConfiguration
+from worlds.models import World
 
 
 class WorldFromDomainNameMiddleware:
@@ -6,19 +6,17 @@ class WorldFromDomainNameMiddleware:
         self.get_response = get_response
 
     @staticmethod
-    def _get_world_configuration(request):
+    def _get_world(request):
         try:
-            return WorldSiteConfiguration.objects.get(
+            return World.objects.get(
                 dns_domain_name=request.headers["x-forwarded-host"]
             )
-        except (WorldSiteConfiguration.DoesNotExist, KeyError):
+        except (World.DoesNotExist, KeyError):
             try:
-                return WorldSiteConfiguration.objects.get(
-                    dns_domain_name=request.headers["host"]
-                )
-            except (WorldSiteConfiguration.DoesNotExist, KeyError):
+                return World.objects.get(dns_domain_name=request.headers["host"])
+            except (World.DoesNotExist, KeyError):
                 return None
 
     def __call__(self, request):
-        request.world_configuration = self._get_world_configuration(request)
+        request.world = self._get_world(request)
         return self.get_response(request)

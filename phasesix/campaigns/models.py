@@ -12,9 +12,9 @@ from worlds.unique_slugify import unique_slugify
 
 
 class CampaignQuerySet(models.QuerySet):
-    def for_world_configuration(self, world_configuration):
-        if world_configuration is not None:
-            return self.filter(world_extension=world_configuration.world.extension)
+    def for_world(self, world):
+        if world is not None:
+            return self.filter(world_extension=world.extension)
         return self.all()
 
 

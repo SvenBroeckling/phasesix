@@ -10,9 +10,7 @@ register = Library()
 
 @register.simple_tag(takes_context=True)
 def user_campaigns(context, user):
-    campaigns = Campaign.objects.for_world_configuration(
-        context["request"].world_configuration
-    )
+    campaigns = Campaign.objects.for_world(context["request"].world)
     return campaigns.filter(created_by=user)
 
 
@@ -31,7 +29,7 @@ def int_with_sign(value):
 @register.simple_tag(takes_context=True)
 def create_campaign_url(context):
     try:
-        extension = context["request"].world_configuration.world.extension
+        extension = context["request"].world.extension
     except AttributeError:
         extension = None
 

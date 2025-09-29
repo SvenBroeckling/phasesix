@@ -25,7 +25,7 @@
         {{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>
     {% endif %}
 
-    {% if not world_configuration and not character %}
+    {% if not world and not character %}
       {% for extension in template.extensions.all %}
         <span class="mt-3 badge text-muted bg-primary-subtle" title="{{ extension }}">
           <i class="m-1 {{ extension.fa_icon_class }}"></i></span>

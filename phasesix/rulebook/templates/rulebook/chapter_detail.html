@@ -19,7 +19,7 @@
 
     <div class="col-12 col-xl-9">
       <div class="rules">
-        {% with world=request.world_configuration.world %}
+        {% with world=request.world %}
           {{ object.text|render_book_as_template:world|phasesix_markup:False|resolve_rulebook_chapter_links }}
         {% endwith %}
       </div>

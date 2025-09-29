@@ -66,7 +66,7 @@
           </div>
         {% endwith %}
       {% else %}
-        {% if not world_configuration %}
+        {% if not world %}
           {% for extension in item.extensions.all %}
             <span class="mt-2 badge text-muted bg-primary-subtle" title="{{ extension }}">
               <i class="m-1 {{ extension.fa_icon_class }}"></i>
