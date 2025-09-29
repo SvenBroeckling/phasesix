@@ -258,11 +258,11 @@ class ExtensionQuerySet(models.QuerySet):
 
     def for_world(self, world):
         q = Q(is_mandatory=True)
-        if world.extension:
+        if world and world.extension:
             q |= Q(pk=world.extension.pk)
-        if world.extension.fixed_epoch:
+            q |= Q(pk__in=world.extension.fixed_extensions.all())
+        if world and world.extension.fixed_epoch:
             q |= Q(pk=world.extension.fixed_epoch.pk)
-        q |= Q(pk__in=world.extension.fixed_extensions.all())
         return self.active().filter(q)
 
     def first_class_extensions(self):
