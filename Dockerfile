@@ -1,5 +1,5 @@
 # Stage 1: Build environment
-FROM python:3.14-rc-trixie AS builder
+FROM python:3.14-trixie AS builder
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -25,7 +25,7 @@ ARG GIT_COMMIT_HASH
 RUN echo $GIT_COMMIT_HASH > /app/git_commit_hash.txt
 
 # Stage 2: Production environment
-FROM python:3.14-rc-slim
+FROM python:3.14-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
