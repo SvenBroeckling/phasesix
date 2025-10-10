@@ -70,7 +70,14 @@ def _send_to_discord(roll_obj, character_name, character=None, campaign=None):
     elif campaign:
         json_data["avatar_url"] = f"{settings.BASE_URL}{campaign.get_image_url()}"
 
-    requests.post(url, json=json_data)
+    headers = {"User-Agent": "PhaseSix Dice Roller (https://phasesix.org, v1.0)"}
+    try:
+        response = requests.post(url, json=json_data, headers=headers, timeout=10)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"Error sending to Discord: {e}")
+    except Exception as e:
+        print(f"Error sending to Discord: {e}")
 
 
 def _get_roll_context(character_id, campaign_id, minimum_roll):
