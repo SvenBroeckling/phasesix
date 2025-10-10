@@ -21,9 +21,9 @@ class CampaignSettingsIntegrationForm(forms.ModelForm):
         model = Campaign
         fields = (
             "roll_on_site",
+            "discord_integration",
+            "discord_webhook_url",
             # "tale_spire_integration",
-            # "discord_integration",
-            # "discord_webhook_url",
         )
 
 
