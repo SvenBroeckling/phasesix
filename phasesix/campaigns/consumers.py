@@ -73,6 +73,7 @@ def _send_to_discord(roll_obj, character_name, character=None, campaign=None):
     headers = {"User-Agent": "PhaseSix Dice Roller (https://phasesix.org, v1.0)"}
     try:
         response = requests.post(url, json=json_data, headers=headers, timeout=10)
+        print(f"Discord response: {response.status_code}")
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Error sending to Discord: {e}")
