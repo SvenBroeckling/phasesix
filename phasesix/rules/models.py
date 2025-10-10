@@ -257,6 +257,9 @@ class ExtensionQuerySet(models.QuerySet):
         return self.for_world(world)
 
     def for_world(self, world):
+        if world is None:
+            return self.active()
+
         q = Q(is_mandatory=True)
         if world and world.extension:
             q |= Q(pk=world.extension.pk)
