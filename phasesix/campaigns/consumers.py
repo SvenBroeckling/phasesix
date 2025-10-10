@@ -46,15 +46,12 @@ def _send_to_channel(ctx, roll_obj):
 
 
 def _send_to_discord(roll_obj, character_name, character=None, campaign=None):
-    print("Sending to Discord...")
     if not campaign or not campaign.discord_integration:
         return
 
     url = campaign.discord_webhook_url if campaign else None
     if not url:
         return
-
-    print(f"Discord webhook URL: {url}")
 
     dice_result = ", ".join(str(r) for r in roll_obj.get_dice_list())
     if roll_obj.modifier:
@@ -69,14 +66,13 @@ def _send_to_discord(roll_obj, character_name, character=None, campaign=None):
         json_data["embeds"] = [{"description": roll_obj.description}]
 
     if character:
-        json_data["avatar_url"] = f"{settings.BASE_URL}{character.get_image_url()}"
+        json_data["avatar_url"] = character.get_image_url()
     elif campaign:
-        json_data["avatar_url"] = f"{settings.BASE_URL}{campaign.get_image_url()}"
+        json_data["avatar_url"] = campaign.get_image_url()
 
     headers = {"User-Agent": "PhaseSix Dice Roller (https://phasesix.org, v1.0)"}
     try:
         response = requests.post(url, json=json_data, headers=headers, timeout=10)
-        print(f"Discord response: {response.status_code}")
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Error sending to Discord: {e}")
