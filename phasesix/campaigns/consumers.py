@@ -46,12 +46,15 @@ def _send_to_channel(ctx, roll_obj):
 
 
 def _send_to_discord(roll_obj, character_name, character=None, campaign=None):
+    print("Sending to Discord...")
     if not campaign or not campaign.discord_integration:
         return
 
     url = campaign.discord_webhook_url if campaign else None
     if not url:
         return
+
+    print(f"Discord webhook URL: {url}")
 
     dice_result = ", ".join(str(r) for r in roll_obj.get_dice_list())
     if roll_obj.modifier:
