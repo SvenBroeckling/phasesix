@@ -48,6 +48,8 @@ class DumpApiView(ApiKeyView):
         extensions = Extension.objects.active()
         if world_name is not None and world_name in ["nexus", "tirakan"]:
             extensions = Extension.objects.for_world_identifier(world_name)
+        else:
+            extensions = Extension.objects.exclude(type="w")
         return JsonResponse(
             [t.as_dict(extension_qs=extensions) for t in qs], safe=False
         )

@@ -37,9 +37,10 @@ class WeaponAdmin(ModelAdmin):
     )
     list_filter = (
         ShortDescriptionListFilter,
+        "is_hand_to_hand_weapon",
+        "is_homebrew",
         "type",
         "extensions",
-        "is_hand_to_hand_weapon",
     )
     search_fields = "name_en", "name_de"
     inlines = [WeaponKeywordInline]

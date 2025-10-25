@@ -637,7 +637,8 @@ class Template(HomebrewModel, metaclass=TransMeta):
         return {
             "name": self.name,
             "extensions": [
-                e for e in self.extensions.all().values_list("identifier", flat=True)
+                {"name": e.name, "identifier": e.identifier}
+                for e in self.extensions.all()
             ],
             "rules": self.rules,
             "quote": self.quote,
