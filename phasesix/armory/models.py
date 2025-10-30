@@ -461,7 +461,7 @@ class WeaponModificationKeyword(models.Model):
     def as_dict(self):
         return {
             "name": self.keyword.name,
-            "value": self.value,
+            "value": f"+{self.value}" if self.value > 0 else f"{value}",
         }
 
 
