@@ -293,7 +293,10 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
 
     def as_dict(self):
         return {
-            "extensions": [e for e in self.extensions.all().values_list("identifier")],
+            "extensions": [
+                {"name": e.name, "identifier": e.identifier}
+                for e in self.extensions.all()
+            ],
             "is_hand_to_hand_weapon": self.is_hand_to_hand_weapon,
             "is_throwing_weapon": self.is_throwing_weapon,
             "name": self.name,

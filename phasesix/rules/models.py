@@ -298,6 +298,7 @@ class Extension(models.Model, metaclass=TransMeta):
     fa_icon_class = models.CharField(
         _("FA Icon Class"), max_length=30, default="fas fa-book"
     )
+    fa_icon_latex = models.CharField(_("FA Icon LaTeX"), max_length=30, default="")
 
     image = models.ImageField(
         _("image"), upload_to="extension_images", max_length=256, blank=True, null=True
