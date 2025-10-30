@@ -433,6 +433,10 @@ class WeaponModification(models.Model, metaclass=TransMeta):
 
     def as_dict(self, extension_qs=None):
         return {
+            "extensions": [
+                {"name": e.name, "identifier": e.identifier, "icon": e.fa_icon_latex}
+                for e in self.extensions.all()
+            ],
             "available_for_weapon_types": [
                 wt.name for wt in self.available_for_weapon_types.all()
             ],
