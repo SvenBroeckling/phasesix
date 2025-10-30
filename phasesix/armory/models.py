@@ -294,7 +294,7 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
     def as_dict(self):
         return {
             "extensions": [
-                {"name": e.name, "identifier": e.identifier}
+                {"name": e.name, "identifier": e.identifier, "icon": e.fa_icon_latex}
                 for e in self.extensions.all()
             ],
             "is_hand_to_hand_weapon": self.is_hand_to_hand_weapon,
