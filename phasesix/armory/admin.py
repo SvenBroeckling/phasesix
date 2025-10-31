@@ -129,7 +129,7 @@ class RiotGearAdmin(ModelAdmin):
         "concealment",
     )
     inlines = [RiotGearProtectionInline, RiotGearModifierInline]
-    list_filter = (ShortDescriptionListFilter, "extensions", "type")
+    list_filter = (ShortDescriptionListFilter, "is_homebrew", "extensions", "type")
     filter_horizontal = ("extensions",)
     search_fields = "name_de", "name_en"
     fieldsets = [
