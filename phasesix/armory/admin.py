@@ -137,12 +137,12 @@ class RiotGearAdmin(ModelAdmin):
             None,
             {
                 "fields": (
-                    ("name_en", "name_de"),
+                    ("name_de", "name_en"),
                     "extensions",
                     ("type", "price", "weight"),
                     ("shield_cover",),
                     ("concealment", "encumbrance"),
-                    ("description_en", "description_de"),
+                    ("description_de", "description_en"),
                 )
             },
         ),
