@@ -152,7 +152,10 @@ class Item(HomebrewModel, metaclass=TransMeta):
 
     def as_dict(self):
         return {
-            "extensions": [e.identifier for e in self.extensions.all()],
+            "extensions": [
+                {"name": e.name, "identifier": e.identifier, "icon": e.fa_icon_latex}
+                for e in self.extensions.all()
+            ],
             "name": self.name,
             "description": self.description,
             "type": self.type.name,
