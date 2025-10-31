@@ -38,18 +38,3 @@ class MultipleFileField(forms.FileField):
         else:
             result = [single_file_clean(data, initial)]
         return result
-
-
-class UploadRulebookForm(forms.Form):
-    markdown_files = MultipleFileField(
-        label=_("Markdown files"),
-    )
-
-    def save(self, *args, **kwargs):
-        for file in self.cleaned_data["markdown_files"]:
-            file_name, ext = file.name.split(".")
-            identifier = "_".join(file_name.split("_")[:-1])
-            language = file_name.split("_")[-1]
-            chapter = Chapter.objects.get(identifier=f"chapter-{identifier}")
-            field = getattr(chapter, f"rules_file_{language}")
-            field.save(f"{identifier}_{language}.{ext}", file)

@@ -36,8 +36,8 @@
         {% endif %}
 
         <li class="nav-item">
-          {% active_if_url_name_matches "rulebook:detail" as active %}
-          <a href="{% url "rulebook:detail" pk=11 %}"
+          {% active_if_url_name_matches "rulebook:download" as active %}
+          <a href="{% url "rulebook:download" %}"
              class="nav-link {{ active }} d-md-flex flex-md-column align-items-center justify-content-center">
             <i class="fas fa-book-dead mb-0"></i>
             <span class="d-none d-md-inline">{% trans "Rules" %}</span>

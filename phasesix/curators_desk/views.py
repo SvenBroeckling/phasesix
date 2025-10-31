@@ -1,13 +1,10 @@
 from django.http import HttpResponse
-from django.utils.translation import gettext_lazy as _
-from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView
 
 from armory.models import Weapon, Item, WeaponModification, RiotGear
 from campaigns.models import Roll
-from curators_desk.forms import UploadRulebookForm
 from curators_desk.utils import get_models_with_translations, get_homebrew_models
 from magic.models import BaseSpell
 from rules.models import (
@@ -22,16 +19,6 @@ from rules.models import (
 
 class DashboardView(TemplateView):
     template_name = "curators_desk/dashboard.html"
-
-
-class UploadRulebookView(FormView):
-    template_name = "curators_desk/sidebar/upload_rulebook.html"
-    form_class = UploadRulebookForm
-    success_url = reverse_lazy("curators_desk:upload_rulebook")
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
 
 
 class RollStatisticsView(TemplateView):

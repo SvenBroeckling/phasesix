@@ -8,11 +8,6 @@ app_name = "curators_desk"
 urlpatterns = [
     path("", staff_member_required(views.DashboardView.as_view()), name="dashboard"),
     path(
-        "upload_rulebook",
-        staff_member_required(views.UploadRulebookView.as_view()),
-        name="upload_rulebook",
-    ),
-    path(
         "roll_statistics/",
         views.RollStatisticsView.as_view(),
         name="roll_statistics",
