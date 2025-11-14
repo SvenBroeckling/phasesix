@@ -73,6 +73,18 @@ class ItemQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
 
 
+class ItemBrewingEffect(models.Model, metaclass=TransMeta):
+    name = models.CharField(_("name"), max_length=256)
+
+    class Meta:
+        translate = ("name",)
+        verbose_name = _("item brewing effect")
+        verbose_name_plural = _("item brewing effects")
+
+    def __str__(self):
+        return self.name
+
+
 class Item(HomebrewModel, metaclass=TransMeta):
     objects = ItemQuerySet.as_manager()
 
@@ -96,6 +108,10 @@ class Item(HomebrewModel, metaclass=TransMeta):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
+    )
+
+    brewing_effect = models.ForeignKey(
+        ItemBrewingEffect, on_delete=models.CASCADE, blank=True, null=True
     )
 
     charges = models.IntegerField(_("charges"), null=True, blank=True)

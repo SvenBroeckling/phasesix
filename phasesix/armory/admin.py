@@ -20,6 +20,7 @@ from armory.models import (
     RiotGearProtection,
     ProtectionType,
     RiotGearModifier,
+    ItemBrewingEffect,
 )
 from portal.admin import ShortDescriptionListFilter, ShortRulesListFilter
 
@@ -172,6 +173,11 @@ class ItemTypeAdmin(ModelAdmin):
     list_editable = ("ordering",)
 
 
+@admin.register(ItemBrewingEffect)
+class ItemBrewingEffectAdmin(ModelAdmin):
+    pass
+
+
 @admin.register(Item)
 class ItemAdmin(ModelAdmin):
     list_display = (
@@ -209,6 +215,7 @@ class ItemAdmin(ModelAdmin):
                     "extensions",
                     ("description_en", "description_de"),
                     ("skill", "attribute", "knowledge"),
+                    "brewing_effect",
                     "dice_roll_string",
                     ("image", "image_copyright", "image_copyright_url"),
                 ),

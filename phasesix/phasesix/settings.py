@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     "vehicles",
     "campaigns",
     "plots",
+    "potions",
     "api",
 ]
 
