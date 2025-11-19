@@ -549,6 +549,9 @@ class LanguageQuerySet(HomebrewQuerySet):
 class Language(HomebrewModel, metaclass=TransMeta):
     objects = LanguageQuerySet.as_manager()
 
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+
     name = models.CharField(_("name"), max_length=100)
     country_name = models.CharField(_("country name"), max_length=100)
     amount_of_people_speaking = models.IntegerField(_("amount of people speaking"))

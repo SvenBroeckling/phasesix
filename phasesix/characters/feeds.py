@@ -4,9 +4,20 @@ from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from armory.models import ItemType, Item, WeaponType, Weapon, RiotGear
+from armory.models import (
+    ItemType,
+    Item,
+    WeaponType,
+    Weapon,
+    RiotGear,
+    WeaponModification,
+)
+from body_modifications.models import BodyModification
+from horror.models import Quirk
 from magic.models import BaseSpell
-from rules.models import Knowledge, Extension, Template, Lineage
+from potions.models import Recipe
+from rules.models import Knowledge, Extension, Template, Lineage, Foe
+from worlds.models import Language
 
 
 class LatestNewAdmin(Feed):
@@ -29,7 +40,13 @@ class LatestNewAdmin(Feed):
             BaseSpell.objects.order_by("-created_at")[:30],
             WeaponType.objects.order_by("-created_at")[:30],
             Weapon.objects.order_by("-created_at")[:30],
+            WeaponModification.objects.order_by("-created_at")[:30],
             RiotGear.objects.order_by("-created_at")[:30],
+            BodyModification.objects.order_by("-created_at")[:30],
+            Quirk.objects.order_by("-created_at")[:30],
+            Recipe.objects.order_by("-created_at")[:30],
+            Language.objects.order_by("-created_at")[:30],
+            Foe.objects.order_by("-created_at")[:30],
         )
 
     def item_link(self, item):
@@ -61,7 +78,13 @@ class LatestModifiedAdmin(LatestNewAdmin):
             Item.objects.order_by("-modified_at")[:30],
             WeaponType.objects.order_by("-modified_at")[:30],
             Weapon.objects.order_by("-modified_at")[:30],
+            WeaponModification.objects.order_by("-modified_at")[:30],
             RiotGear.objects.order_by("-modified_at")[:30],
+            BodyModification.objects.order_by("-modified_at")[:30],
+            Quirk.objects.order_by("-modified_at")[:30],
+            Recipe.objects.order_by("-modified_at")[:30],
+            Language.objects.order_by("-modified_at")[:30],
+            Foe.objects.order_by("-modified_at")[:30],
         )
 
     def item_pubdate(self, item):

@@ -424,6 +424,9 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
 class WeaponModification(models.Model, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+
     extensions = models.ManyToManyField("rules.Extension")
     available_for_weapon_types = models.ManyToManyField(WeaponType)
     name = models.CharField(_("name"), max_length=40)

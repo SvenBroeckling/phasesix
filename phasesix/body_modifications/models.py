@@ -142,6 +142,7 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
     )
 
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("created by"),
