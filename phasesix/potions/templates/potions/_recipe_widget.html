@@ -1,0 +1,48 @@
+{% load rules_extras %}
+{% load characters_extras %}
+{% load i18n %}
+
+<div class="card mb-3">
+  <div class="card-body position-relative">
+    <h4 class="mb-0">{{ recipe }}</h4>
+    <small class="text-muted">{{ recipe.difficulty }}</small>
+
+    {% if recipe.description %}
+      <p class="mt-2">
+        {{ recipe.description|phasesix_markup }}
+      </p>
+    {% endif %}
+
+    {% if recipe.recipeingredient_set.exists %}
+      <h4>{% trans "Ingredients" %}</h4>
+      <ul>
+        {% for ingredient in recipe.recipeingredient_set.all %}
+          <li>{{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <div class="w-100">
+      {% if character %}
+        <form action="{% url "characters:xhr_character_objects" pk=character.id object_type="recipe" %}"
+              data-fetch-form="true"
+              data-fetch-form-event-after="refresh-character-recipes"
+              class="float-end" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="object_id" value="{{ recipe.id }}">
+          <button type="submit"
+                  class="btn btn-sm btn-primary m-2"
+                  data-danger="{% trans 'Not possible' %}"
+                  data-success="{% trans 'Learned' %}">
+            {% trans 'Learn' %}
+          </button>
+        </form>
+      {% endif %}
+    </div>
+
+    {% if user.is_superuser %}
+      <a href="{% url 'admin:potions_recipe_change' recipe.id %}"
+         style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+    {% endif %}
+  </div>
+</div>

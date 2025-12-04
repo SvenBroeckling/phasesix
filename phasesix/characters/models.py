@@ -1597,3 +1597,19 @@ class CharacterFoe(models.Model):
     @property
     def wounds_taken(self):
         return self.max_health - self.health
+
+
+class CharacterRecipe(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    recipe = models.ForeignKey("potions.Recipe", on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ("recipe__name_de",)
+        verbose_name = _("Recipe")
+        verbose_name_plural = _("Recipes")
+
+    def __str__(self):
+        return self.recipe.name
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)

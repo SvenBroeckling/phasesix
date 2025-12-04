@@ -1,0 +1,21 @@
+{% load characters_extras %}
+{% load i18n %}
+{% if object.extension_enabled.magic and object.is_magical %}
+  {% if may_edit %}
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-primary float-end mb-2"
+                data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="recipe" %}"
+                data-modal-size-class="modal-xl"
+                data-modal-event-after="refresh-character-recipes"
+                data-modal-title="{% trans 'Learn a recipe' %}">
+          <i class="gi gi-lorc-potion-ball text-warning"></i> {% trans "Learn a recipe" %}
+        </button>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="column-container column-layout-2">
+    {% include 'characters/includes/character_recipe_cards.html' %}
+  </div>
+{% endif %}

@@ -1,0 +1,47 @@
+{% load armory_extras %}
+{% load rules_extras %}
+{% load characters_extras %}
+{% load i18n %}
+
+{% for character_recipe in object.characterrecipe_set.all %}
+  <div class="card mb-4"
+       data-sidebar-right-title="{{ character_recipe.recipe.name }}"
+       data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=character_recipe.id sidebar_template="recipe" %}">
+
+    <div class="card-body">
+      <h4 class="mb-0">{{ character_recipe.recipe.name }}</h4>
+      <small class="text-muted">{{ character_recipe.recipe.difficulty }}</small>
+
+      <p class="mt-2">
+        {{ character_recipe.recipe.description|phasesix_markup }}
+      </p>
+
+      {% if character_recipe.recipe.recipeingredient_set.exists %}
+        <h4>{% trans "Ingredients" %}</h4>
+        <ul>
+          {% for ingredient in character_recipe.recipe.recipeingredient_set.all %}
+            <li>{{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+{% empty %}
+  <div {% if may_edit %}
+    data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="recipe" %}"
+    data-modal-size-class="modal-xl"
+    data-modal-event-after="refresh-character-recipes"
+    data-modal-title="{% trans 'Learn Recipe' %}"
+  {% endif %}
+    class="card mb-4">
+    <div class="card-body p-4 d-flex align-items-center justify-content-start">
+      <i class="fs-1 me-3 gi-lorc-potion-ball"></i>
+      <div>
+        <span class="fs-4">{% trans "No brewing recipes." %}</span><br>
+        {% if may_edit %}
+          <small class="text-muted">{% trans "Click to add a recipe" %}</small>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

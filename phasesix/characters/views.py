@@ -55,6 +55,7 @@ from characters.models import (
     CharacterBodyModification,
     Contact,
     CharacterFoe,
+    CharacterRecipe,
 )
 from characters.utils import crit_successes
 from horror.models import Quirk
@@ -139,6 +140,7 @@ class XhrSidebarView(DetailView):
         "weapon": CharacterWeapon,
         "weaponless": Character,
         "wounds": Character,
+        "recipe": CharacterRecipe,
     }
 
     def get_model(self):

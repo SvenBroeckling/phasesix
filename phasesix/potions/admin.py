@@ -6,6 +6,7 @@ from potions.models import (
     RecipeDifficulty,
     RecipeIngredientUnit,
     RecipeIngredient,
+    RecipeCategory,
 )
 
 
@@ -25,9 +26,14 @@ class RecipeIngredientInline(TabularInline):
     extra = 0
 
 
+@admin.register(RecipeCategory)
+class RecipeCategoryAdmin(ModelAdmin):
+    pass
+
+
 @admin.register(Recipe)
 class RecipeAdmin(ModelAdmin):
-    list_display = ("name_de", "name_en")
+    list_display = ("name_de", "name_en", "category")
     filter_horizontal = ("extensions",)
     search_fields = ("name_de", "name_en", "description_de", "description_en")
     inlines = [RecipeIngredientInline]

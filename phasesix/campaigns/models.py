@@ -217,6 +217,14 @@ class CampaignFoe(models.Model):
         return self.campaign.may_edit(user)
 
 
+class CampaignRecipe(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    recipe = models.ForeignKey("potions.Recipe", on_delete=models.CASCADE)
+
+    def may_edit(self, user):
+        return self.campaign.may_edit(user)
+
+
 class Scene(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     name = models.CharField(_("name"), max_length=80)

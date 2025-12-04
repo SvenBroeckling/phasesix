@@ -1,0 +1,42 @@
+{% load i18n characters_extras rules_extras %}
+
+{% if may_edit %}
+  <div class="row">
+    <div class="col-12">
+
+      <div class="btn-group w-100">
+        <button
+          data-action-trigger-event-after="refresh-character-recipes,sidebar-right-hide"
+          data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="recipe" %}?object_id={{ object.id }}"
+          data-action-trigger-method="DELETE"
+          class="btn btn-sm btn-danger mt-1">
+          <i class="fas fa-fw fa-trash" title="{% trans 'Forget' %}"></i>{% trans 'Forget' %}
+        </button>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<div class="row">
+  <div class="col-12">
+    <small class="text-muted">{{ object.recipe.difficulty }}</small>
+
+    <p class="mt-2">
+      {{ object.recipe.description|phasesix_markup }}
+    </p>
+
+    {% if object.recipe.recipeingredient_set.exists %}
+      <h4>{% trans "Ingredients" %}</h4>
+      <ul>
+        {% for ingredient in object.recipe.recipeingredient_set.all %}
+          <li>{{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+
+{% if user.is_superuser %}
+  <a href="{% url 'admin:potions_recipe_change' object.recipe.id %}"
+     style="font-size: xx-small">admin</a>
+{% endif %}

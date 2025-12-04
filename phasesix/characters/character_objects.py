@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from decimal import Decimal
 
 from django.utils.translation import get_language
 
@@ -26,9 +27,11 @@ from homebrew.forms import (
     CreateLanguageForm,
     CreateFoeForm,
     CreateFoeActionFormSet,
+    CreateRecipeForm,
 )
 from horror.models import QuirkCategory, Quirk
 from magic.models import SpellOrigin, BaseSpell
+from potions.models import RecipeCategory, Recipe
 from rules.models import TemplateCategory, Template, Extension, FoeType, Foe
 from worlds.models import LanguageGroup, Language
 
@@ -312,3 +315,20 @@ class FoeObject(CharacterObject):
         self.character.characterfoe_set.create(
             foe=foe, health=foe.health, max_health=foe.health
         )
+
+
+class RecipeObject(CharacterObject):
+    object_type = "recipe"
+    model = RecipeCategory
+    child_model = Recipe
+    homebrew_form_class = CreateRecipeForm
+
+    def get_price(self, pk):
+        return Decimal(0)
+
+    def remove(self, pk):
+        self.character.characterrecipe_set.filter(id=pk).delete()
+
+    def add(self, pk):
+        obj = Recipe.objects.get(id=pk)
+        self.character.characterrecipe_set.create(recipe=obj)

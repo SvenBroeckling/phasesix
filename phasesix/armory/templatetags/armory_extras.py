@@ -4,6 +4,7 @@ from armory.models import Item, RiotGear, Weapon
 from body_modifications.models import BodyModification
 from horror.models import Quirk
 from magic.models import BaseSpell
+from potions.models import Recipe
 from rules.models import Template as PhaseSixTemplate, Foe
 from worlds.models import Language
 
@@ -68,6 +69,7 @@ def object_widget(context, obj, character=None, add_button=False):
         Quirk: "{% load horror_extras %}{% quirk_widget obj character=character add_button=add_button %}",
         Language: "{% load world_extras %}{% language_widget obj character=character add_button=add_button %}",
         BodyModification: "{% load body_modification_extras %}{% body_modification_widget obj character=character add_button=add_button %}",
+        Recipe: "{% load potions_extras %}{% recipe_widget obj character=character add_button=add_button %}",
     }
 
     return Template(mapping.get(type(obj), "")).render(

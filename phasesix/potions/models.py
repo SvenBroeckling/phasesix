@@ -3,6 +3,8 @@ from transmeta import TransMeta
 
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+
+from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
 from rules.models import ExtensionSelectQuerySet
 
@@ -23,9 +25,30 @@ class RecipeQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
 
 
+class RecipeCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
+    name = models.CharField(_("name"), max_length=100)
+    description = models.TextField(_("description"), blank=True, null=True)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
+    ordering = models.IntegerField(_("ordering"), default=10)
+
+    class Meta:
+        ordering = ("-ordering",)
+        translate = ("name", "description")
+        verbose_name = _("recipe category")
+        verbose_name_plural = _("recipe categories")
+
+    def __str__(self):
+        return self.name
+
+    def child_item_qs(self):
+        return self.recipe_set.all()
+
+
 class Recipe(HomebrewModel, metaclass=TransMeta):
     objects = RecipeQuerySet.as_manager()
 
+    category = models.ForeignKey(RecipeCategory, on_delete=models.CASCADE)
     extensions = models.ManyToManyField("rules.Extension")
 
     difficulty = models.ForeignKey(

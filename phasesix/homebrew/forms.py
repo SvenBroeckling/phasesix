@@ -12,6 +12,7 @@ from armory.models import (
 from body_modifications.models import BodyModification, BodyModificationSocketLocation
 from horror.models import Quirk, QuirkModifier
 from magic.models import BaseSpell
+from potions.models import Recipe
 from rules.models import Template, TemplateModifier, FoeAction, Foe
 from worlds.models import Language
 
@@ -362,3 +363,22 @@ class CreateFoeForm(CreateHomebrewForm):
         if self.campaign is not None:
             self.campaign.campaignfoe_set.create(foe=foe, health=foe.health)
         return foe
+
+
+class CreateRecipeForm(CreateHomebrewForm):
+    class Meta:
+        model = Recipe
+        fields = [
+            "name_de",
+            "category",
+            "description_de",
+            "difficulty",
+        ]
+
+    def save(self, commit=True):
+        recipe = super().save(commit=commit)
+        if self.character is not None and self.cleaned_data["add_to_character"]:
+            self.character.characterrecipe_set.create(recipe=recipe)
+        if self.campaign is not None:
+            self.campaign.campaignfoe_set.create(recipe=recipe)
+        return recipe
