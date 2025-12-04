@@ -33,7 +33,7 @@ class RecipeCategoryAdmin(ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(ModelAdmin):
-    list_display = ("name_de", "name_en", "category")
+    list_display = ("name_de", "name_en", "category", "expected_amount")
     filter_horizontal = ("extensions",)
     search_fields = ("name_de", "name_en", "description_de", "description_en")
     inlines = [RecipeIngredientInline]

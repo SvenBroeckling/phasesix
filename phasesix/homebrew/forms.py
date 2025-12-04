@@ -373,6 +373,7 @@ class CreateRecipeForm(CreateHomebrewForm):
             "category",
             "description_de",
             "difficulty",
+            "expected_amount",
         ]
 
     def save(self, commit=True):
