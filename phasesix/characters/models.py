@@ -24,7 +24,7 @@ from body_modifications.models import (
     BodyModificationSocketLocation,
 )
 from characters.utils import static_thumbnail
-from horror.models import QuirkModifier
+from horror.models import Quirk, QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
 from pantheon.models import PriestAction
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
@@ -196,9 +196,6 @@ class Character(models.Model):
     latest_initiative = models.IntegerField(_("latest initiative"), default=0)
 
     # Horror
-    quirks = models.ManyToManyField(
-        "horror.Quirk", verbose_name=_("quirks"), blank=True
-    )
     quirks_gained = models.IntegerField(
         _("quirks gained"),
         default=0,
@@ -626,6 +623,16 @@ class Character(models.Model):
         )
 
     @property
+    def quirks(self):
+        return Quirk.objects.filter(characterquirk__character=self)
+
+    def add_quirk(self, quirk):
+        CharacterQuirk.objects.get_or_create(character=self, quirk=quirk)
+
+    def remove_quirk(self, quirk):
+        CharacterQuirk.objects.filter(character=self, quirk=quirk).delete()
+
+    @property
     def quirks_active(self):
         return self.quirks_gained - self.quirks_healed
 
@@ -1019,6 +1026,22 @@ class CharacterLanguage(models.Model):
     character = models.ForeignKey(Character, models.CASCADE)
     language = models.ForeignKey("worlds.Language", on_delete=models.CASCADE)
     modifier = models.IntegerField(_("Modifier"), default=0)
+
+
+class CharacterQuirk(models.Model):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    quirk = models.ForeignKey("horror.Quirk", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+
+    class Meta:
+        ordering = ("quirk__id",)
+        unique_together = ("character", "quirk")
+
+    def __str__(self):
+        return f"{self.character} - {self.quirk}"
+
+    def may_edit(self, user):
+        return self.character.may_edit(user)
 
 
 class CharacterAttributeQuerySet(models.QuerySet):

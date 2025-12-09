@@ -300,7 +300,7 @@ class CreateQuirkForm(CreateHomebrewForm):
     def save(self, commit=True):
         quirk = super().save(commit=commit)
         if self.character is not None and self.cleaned_data["add_to_character"]:
-            self.character.quirks.add(quirk)
+            self.character.add_quirk(quirk)
         return quirk
 
 

@@ -244,11 +244,12 @@ class QuirkObject(CharacterObject):
     homebrew_formset_class = CreateQuirkModifierFormSet
 
     def remove(self, pk):
-        self.character.quirks.remove(pk)
+        # pk refers to CharacterQuirk.id
+        self.character.characterquirk_set.filter(id=pk).delete()
 
     def add(self, pk):
         obj = Quirk.objects.get(id=pk)
-        self.character.quirks.add(obj)
+        self.character.add_quirk(obj)
 
 
 class LanguageObject(CharacterObject):

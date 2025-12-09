@@ -20,18 +20,18 @@
 <div class="row mt-3">
   <div class="col-12 mb-2">
     <div class="mb-3">
-      {% modifier_widget object.quirkmodifier_set.all %}
+      {% modifier_widget object.quirk.quirkmodifier_set.all %}
     </div>
 
     <div class="text-muted">
-      <i>{{ object.description|phasesix_markup }}</i>
+      <i>{{ object.quirk.description|phasesix_markup }}</i>
     </div>
 
     <div class="mb-3 text-success">
-      {{ object.positive_effects|phasesix_markup }}
+      {{ object.quirk.positive_effects|phasesix_markup }}
     </div>
     <div class="mb-3 text-danger">
-      {{ object.negative_effects|phasesix_markup }}
+      {{ object.quirk.negative_effects|phasesix_markup }}
     </div>
   </div>
 </div>

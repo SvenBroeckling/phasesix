@@ -76,25 +76,25 @@
     </div>
   {% endif %}
 
-  {% for q in object.quirks.all %}
+  {% for cq in object.characterquirk_set.all %}
     <div class="col-12 col-md-6 mb-2">
       <div class="card mb-3"
-           data-sidebar-right-title="{{ q }}"
-           data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=q.id sidebar_template="quirk" %}">
-        <div class="card-header">{{ q }}</div>
+           data-sidebar-right-title="{{ cq.quirk }}"
+           data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=cq.id sidebar_template="quirk" %}">
+        <div class="card-header">{{ cq.quirk }}</div>
         <div class="card-body">
           <div class="text-muted">
-            <i>{{ q.description|phasesix_markup }}</i>
+            <i>{{ cq.quirk.description|phasesix_markup }}</i>
           </div>
 
           <div class="mb-3 text-success">
-            {{ q.positive_effects|phasesix_markup }}
+            {{ cq.quirk.positive_effects|phasesix_markup }}
           </div>
           <div class="mb-3 text-danger">
-            {{ q.negative_effects|phasesix_markup }}
+            {{ cq.quirk.negative_effects|phasesix_markup }}
           </div>
 
-          {% modifier_widget q.quirkmodifier_set.all %}
+          {% modifier_widget cq.quirk.quirkmodifier_set.all %}
         </div>
       </div>
     </div>

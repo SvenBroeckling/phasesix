@@ -56,6 +56,7 @@ from characters.models import (
     Contact,
     CharacterFoe,
     CharacterRecipe,
+    CharacterQuirk,
 )
 from characters.utils import crit_successes
 from horror.models import Quirk
@@ -124,7 +125,7 @@ class XhrSidebarView(DetailView):
         "magic": Character,
         "grace": Character,
         "horror": Character,
-        "quirk": Quirk,
+        "quirk": CharacterQuirk,
         "item": CharacterItem,
         "knowledge": Character,  # Context depends on knowledge_pk
         "note": CharacterNote,

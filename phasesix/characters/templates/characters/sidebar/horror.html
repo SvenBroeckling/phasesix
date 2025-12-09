@@ -110,28 +110,28 @@
     </div>
   {% endif %}
 
-  {% for q in object.quirks.all %}
+  {% for cq in object.characterquirk_set.all %}
     <div class="col-12 mb-2">
       <div class="card">
-        <div class="card-header">{{ q }}</div>
+        <div class="card-header">{{ cq.quirk }}</div>
         <div class="card-body">
           <div class="text-muted">
-            <i>{{ q.description|phasesix_markup }}</i>
+            <i>{{ cq.quirk.description|phasesix_markup }}</i>
           </div>
 
           <div class="mb-3 text-success">
-            {{ q.positive_effects|phasesix_markup }}
+            {{ cq.quirk.positive_effects|phasesix_markup }}
           </div>
           <div class="mb-3 text-danger">
-            {{ q.negative_effects|phasesix_markup }}
+            {{ cq.quirk.negative_effects|phasesix_markup }}
           </div>
 
-          {% modifier_widget q.quirkmodifier_set.all %}
+          {% modifier_widget cq.quirk.quirkmodifier_set.all %}
 
           <a class="btn btn-danger btn-sm float-end mt-2"
              data-action-trigger-method="DELETE"
              data-action-trigger-event-after="refresh-character-horror,sidebar-right-hide"
-             data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}?object_id={{ q.id }}">
+             data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}?object_id={{ cq.id }}">
             <i class="far fa-meh fa-fw"></i> {% trans 'Remove Quirk' %}
           </a>
         </div>
