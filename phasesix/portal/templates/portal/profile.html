@@ -108,6 +108,16 @@
           <div class="row">
 
             <div class="col-12 col-md-6 mb-3">
+              <a href="{% url "portal:wrapup" pk=object.user.id year=2025 %}" class="no-decoration">
+                <div class="position-relative profile-cta">
+                  <img src="{% static "img/profile_cta_images/profile_wrapup_2024.png" %}" alt="wrapup"
+                       class="img img-fluid rounded">
+                  <div class="profile-cta-text w-100 p-2">{% trans "2024 WrapUp" %}</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2024 %}" class="no-decoration">
                 <div class="position-relative profile-cta">
                   <img src="{% static "img/profile_cta_images/profile_wrapup_2024.png" %}" alt="wrapup"

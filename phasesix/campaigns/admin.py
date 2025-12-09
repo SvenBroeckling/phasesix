@@ -6,6 +6,7 @@ from campaigns.models import Campaign, Roll
 
 @admin.register(Roll)
 class RollAdmin(ModelAdmin):
+    search_fields = ("header",)
     list_display = (
         "campaign",
         "character",
