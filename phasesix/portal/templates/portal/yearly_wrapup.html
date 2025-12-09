@@ -22,8 +22,8 @@
 {% block raw_content %}
   <header class="d-flex flex-column justify-content-center align-items-center"
           style="height: 50vh; background: url({{ header_image }}) no-repeat; background-size: cover; background-position: bottom">
-    <h1 class="display-4">{% blocktrans with t_year=year %}{{ t_year }} in Review{% endblocktrans %}</h1>
-    <h2>{{ wrapup_user|capfirst }}</h2>
+    <h1 style="text-shadow: #333 3px 3px" class="display-4">{% blocktrans with t_year=year %}{{ t_year }} in Review{% endblocktrans %}</h1>
+    <h2 style="text-shadow: #333 3px 3px">{{ wrapup_user|capfirst }}</h2>
   </header>
 
   <div class="container-fluid pt-0 bg-body-tertiary">

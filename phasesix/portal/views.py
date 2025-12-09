@@ -192,7 +192,9 @@ class YearlyWrapUpView(TemplateView):
             return None
 
     def get_platform_stats(self):
-        qs = Roll.objects.filter(created_at__year=self.kwargs["year"])
+        qs = Roll.objects.filter(
+            created_at__year=self.kwargs["year"], character__isnull=False
+        )
         return {
             "platform_crit_count": self.get_highest_roll(qs, "crit_count"),
             "platform_exploded_dice_count": self.get_highest_roll(
@@ -241,9 +243,12 @@ class YearlyWrapUpView(TemplateView):
         context = super().get_context_data(**kwargs)
         context.update(self.get_user_stats())
         context.update(self.get_platform_stats())
-        context["header_image"] = static("img/wrapup_2024.png")
         if self.kwargs["year"] == 2023:
             context["header_image"] = static("img/wrapup_2023.png")
+        elif self.kwargs["year"] == 2024:
+            context["header_image"] = static("img/wrapup_2024.png")
+        else:
+            context["header_image"] = static("img/wrapup_2025.png")
         return context
 
     def _get_days(self, qs, character=None):
