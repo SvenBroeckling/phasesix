@@ -60,6 +60,11 @@ urlpatterns = [
         name="spend_protection",
     ),
     path(
+        "protection/<int:pk>/<protection_type_pk>/<riot_gear_pk>/unspend",
+        views.CharacterUnspendProtectionView.as_view(),
+        name="unspend_protection",
+    ),
+    path(
         "protection/<int:pk>/restore",
         views.CharacterRestoreAllProtectionView.as_view(),
         name="restore_protection",

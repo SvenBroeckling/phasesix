@@ -4,8 +4,9 @@
 <div class="row">
   <div class="col-12 text-center mt-1 mb-3">
     {% if object.base_protection %}
+      {% trans "Base protection" as base_protection_title %}
       {% for i in object.base_protection|to_range %}
-        <i class="fs-2 gi-delapouite-roman-shield text-info" title="{% trans "Base protection" %}"></i>
+        {% protection_symbol icon_class="gi-delapouite-roman-shield" color_class="text-info" letter="B" title=base_protection_title %}
       {% endfor %}
     {% endif %}
 
@@ -16,13 +17,29 @@
             <a data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
                data-action-trigger-url="{% url 'characters:spend_protection' pk=object.id protection_type_pk=rgp.protection_type.id riot_gear_pk=rgp.riot_gear.id %}">
           {% endif %}
-        <i class="fs-2 {{ rgp.protection_type.icon_class }} {{ rgp.protection_type.color_class }}"
-           title="{{ rgp.protection_type.name }}"></i>
-        {% if may_edit %}
-          </a>
-        {% endif %}
+          {% protection_type_symbol rgp.protection_type %}
+          {% if may_edit %}
+            </a>
+          {% endif %}
         {% endfor %}
       {% endwith %}
+    {% endfor %}
+
+    {% for total in object.total_protection_available %}
+      {% if total.used_protection %}
+        {% with rgp=total.riot_gear_protection %}
+          {% for i in total.used_protection|to_range %}
+            {% if may_edit %}
+              <a data-action-trigger-event-after="refresh-character-status,sidebar-right-refresh"
+                 data-action-trigger-url="{% url 'characters:unspend_protection' pk=object.id protection_type_pk=rgp.protection_type.id riot_gear_pk=rgp.riot_gear.id %}">
+            {% endif %}
+            {% protection_type_symbol rgp.protection_type color_class="text-secondary opacity-50" %}
+            {% if may_edit %}
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% endwith %}
+      {% endif %}
     {% endfor %}
   </div>
 </div>
@@ -50,8 +67,9 @@
 
 <div class="row">
   {% if object.base_protection %}
+    {% trans "Base protection" as base_protection_title %}
     <div class="col-2 mb-2">
-      <i class="fs-2 gi-delapouite-roman-shield text-info" title="{% trans "Base protection" %}"></i>
+      {% protection_symbol icon_class="gi-delapouite-roman-shield" color_class="text-info" letter="B" title=base_protection_title %}
     </div>
     <div class="col-10 mb-2">
       {% blocktrans %}
@@ -63,8 +81,7 @@
 
   {% for protection_type in protection_types %}
     <div class="col-2 mb-2">
-      <i class="fs-1 {{ protection_type.icon_class }} {{ protection_type.color_class }}"
-         title="{{ protection_type.name }}"></i>
+      {% protection_type_symbol protection_type size_class="fs-1" %}
     </div>
     <div class="col-10 mb-2">
       <b>{{ protection_type.name }}</b>:<br>
@@ -72,4 +89,3 @@
     </div>
   {% endfor %}
 </div>
-

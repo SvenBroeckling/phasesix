@@ -421,6 +421,28 @@ class CharacterSpendProtectionView(View):
         return JsonResponse({"status": "ok"})
 
 
+class CharacterUnspendProtectionView(View):
+    def post(self, request, *args, **kwargs):
+        character = Character.objects.get(id=kwargs["pk"])
+        if character.may_edit(request.user):
+            protection_type = ProtectionType.objects.get(
+                id=kwargs["protection_type_pk"]
+            )
+            qs = CharacterRiotGearProtectionUsed.objects.filter(
+                character_riot_gear__riot_gear=kwargs["riot_gear_pk"],
+                character_riot_gear__character=character,
+                protection_type=protection_type,
+            )
+            if qs.exists():
+                obj = qs.first()
+                if obj.value > 1:
+                    obj.value -= 1
+                    obj.save()
+                else:
+                    obj.delete()
+        return JsonResponse({"status": "ok"})
+
+
 class CharacterRestoreAllProtectionView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])

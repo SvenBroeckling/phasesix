@@ -24,9 +24,10 @@ def rarity_color_class(rarity):
     return rarity_colors.get(rarity, "default")
 
 
-@register.inclusion_tag("armory/_riot_gear_protection_display.html")
-def riot_gear_protection_display(riot_gear):
-    return {"riot_gear": riot_gear}
+@register.inclusion_tag("armory/_riot_gear_protection_display.html", takes_context=True)
+def riot_gear_protection_display(context, riot_gear):
+    context.update({"riot_gear": riot_gear})
+    return context
 
 
 @register.inclusion_tag("armory/_item_widget.html", takes_context=True)

@@ -25,9 +25,59 @@ def wound_display(character):
     return {"character": character}
 
 
-@register.inclusion_tag("characters/_protection_display.html")
-def protection_display(character):
-    return {"character": character}
+def _use_protection_icons(context):
+    request = context.get("request")
+    user = getattr(request, "user", None) if request else None
+    if user and getattr(user, "is_authenticated", False):
+        try:
+            return user.profile.settings_protection_display == "G"
+        except Exception:
+            return False
+    return False
+
+
+def _render_protection_symbol(show_icon, icon_class, color_class, letter, title, size):
+    base_classes = f"{size} {color_class}".strip()
+    if show_icon:
+        return mark_safe(f'<i class="{base_classes} {icon_class}" title="{title}"></i>')
+    return mark_safe(
+        f'<span class="{base_classes} fw-bold align-middle" title="{title}">{letter}</span>'
+    )
+
+
+@register.simple_tag(takes_context=True)
+def protection_type_symbol(
+    context, protection_type, size_class="fs-2", color_class=None
+):
+    show_icon = _use_protection_icons(context)
+    letter = (protection_type.letter or protection_type.name[:1]).upper()
+    return _render_protection_symbol(
+        show_icon,
+        protection_type.icon_class,
+        color_class or protection_type.color_class,
+        letter,
+        protection_type.name,
+        size_class,
+    )
+
+
+@register.simple_tag(takes_context=True)
+def protection_symbol(
+    context, icon_class, color_class, letter="P", title="", size_class="fs-2"
+):
+    """
+    Generic symbol renderer for protection that does not come from ProtectionType (e.g., base protection).
+    """
+    show_icon = _use_protection_icons(context)
+    return _render_protection_symbol(
+        show_icon, icon_class, color_class, letter.upper(), title, size_class
+    )
+
+
+@register.inclusion_tag("characters/_protection_display.html", takes_context=True)
+def protection_display(context, character):
+    context.update({"character": character})
+    return context
 
 
 @register.simple_tag

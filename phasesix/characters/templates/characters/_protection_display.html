@@ -2,14 +2,15 @@
 {% load characters_extras %}
 
 {% if character.base_protection %}
+  {% trans "Base protection" as base_protection_title %}
   {% for i in character.base_protection|to_range %}
-    <i class="gi-delapouite-roman-shield text-info" title="{% trans "Base protection" %}"></i>
+    {% protection_symbol icon_class="gi-delapouite-roman-shield" color_class="text-info" letter="B" title=base_protection_title size_class="" %}
   {% endfor %}
 {% endif %}
 
 {% for rgp in character.total_protection_available %}
   {% for i in rgp.available_protection|to_range %}
-    <i class="{{ rgp.riot_gear_protection.protection_type.icon_class }} {{ rgp.riot_gear_protection.protection_type.color_class }}"></i>
+    {% protection_type_symbol rgp.riot_gear_protection.protection_type size_class="" %}
   {% endfor %}
 {% empty %}
   {% trans "- no available protection -" %}

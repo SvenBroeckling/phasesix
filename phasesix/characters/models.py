@@ -842,6 +842,7 @@ class Character(models.Model):
         [{
           "riot_gear_protection": riot_gear_protection_object,
           "available_protection": available_protection,
+          "used_protection": used_protection,
         },]
         Only considers equipped riot gear.
         """
@@ -855,19 +856,19 @@ class Character(models.Model):
                 character=self, riot_gear=r.riot_gear, is_equipped=True
             ).first()
 
-            available_protection = (
-                r.value
-                - CharacterRiotGearProtectionUsed.objects.filter(
-                    character_riot_gear=character_riot_gear,
-                    protection_type=r.protection_type,
-                ).aggregate(Sum("value", default=0))["value__sum"]
-            )
+            used_protection = CharacterRiotGearProtectionUsed.objects.filter(
+                character_riot_gear=character_riot_gear,
+                protection_type=r.protection_type,
+            ).aggregate(Sum("value", default=0))["value__sum"]
 
-            if available_protection:
+            available_protection = r.value - used_protection
+
+            if available_protection or used_protection:
                 res.append(
                     {
                         "riot_gear_protection": r,
                         "available_protection": available_protection,
+                        "used_protection": used_protection,
                     }
                 )
         return res

@@ -53,8 +53,8 @@ class Profile(models.Model):
         max_length=1,
         default="I",
         choices=(
-            ("I", _("Shield icons")),
-            ("G", _("Letters")),
+            ("I", _("Letters")),
+            ("G", _("Shield Icons")),
         ),
     )
 
