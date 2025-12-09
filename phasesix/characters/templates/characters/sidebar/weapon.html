@@ -45,6 +45,7 @@
         {% if has_valid_wm %}
           <a class="btn btn-primary btn-sm mt-1"
              data-modal-url="{% url 'characters:xhr_add_weapon_modification' pk=object.character.id %}?character_weapon_id={{ object.id }}"
+             data-modal-event-show="sidebar-right-hide"
              data-modal-size-class="modal-xl"
              data-modal-event-after="refresh-character-gear,refresh-character-combat"
              data-modal-title="{% trans 'Add Modification' %}"

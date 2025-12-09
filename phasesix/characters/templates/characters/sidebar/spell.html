@@ -17,6 +17,7 @@
         <button class="btn btn-sm btn-primary mt-1"
                 data-modal-url="{% url 'characters:xhr_add_spell_template' pk=object.id %}"
                 data-modal-size-class="modal-lg"
+                data-modal-event-show="sidebar-right-hide"
                 data-modal-event-after="refresh-character-magic"
                 data-modal-title="{% trans 'Add Modification' %}">
           <i class="fas fa-fw fa-plus" title="{% trans 'Add Modification' %}"></i>{% trans 'Add Modification' %}

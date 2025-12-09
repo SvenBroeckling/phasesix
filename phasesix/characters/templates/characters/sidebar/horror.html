@@ -102,6 +102,7 @@
         <a class="btn btn-warning btn-sm w-100"
            data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="quirk" %}"
            data-modal-size-class="modal-xl"
+           data-modal-event-show="sidebar-right-hide"
            data-modal-event-after="refresh-fragments"
            data-modal-title="{% trans 'Choose Quirk' %}"
            href=""><i class="fas fa-shapes fa-fw"></i> {% trans 'Choose Quirk' %}</a>

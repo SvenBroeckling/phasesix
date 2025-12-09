@@ -68,6 +68,7 @@
         <button
           class="btn btn-success w-100 mt-1"
           data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="template" %}"
+          data-modal-event-show="sidebar-right-hide"
           data-modal-size-class="modal-xl"
           data-modal-event-after="refresh-character-advancement"
           data-modal-title="{% trans 'Reputation' %}">
