@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.views import View
@@ -110,6 +110,22 @@ class CampaignDetailView(DetailView):
         context["may_join"] = self.kwargs.get("hash", "") == self.object.campaign_hash
         context["may_edit"] = self.object.may_edit(self.request.user)
         return context
+
+
+class CloneCampaignView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, slug=kwargs["slug"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+
+        clone = campaign.clone()
+        messages.success(
+            request,
+            _(
+                "Campaign cloned. You are now viewing the duplicate. Everything but player characters is copied."
+            ),
+        )
+        return HttpResponseRedirect(clone.get_absolute_url())
 
 
 class XhrDiceLogView(ListView):

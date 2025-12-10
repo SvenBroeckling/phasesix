@@ -13,6 +13,11 @@ urlpatterns = [
         name="xhr_toggle_favorite",
     ),
     path(
+        "<slug:slug>/clone",
+        login_required(views.CloneCampaignView.as_view()),
+        name="clone",
+    ),
+    path(
         "new/<int:world_pk>/",
         views.CreateCampaignEpochView.as_view(),
         name="create_epoch",

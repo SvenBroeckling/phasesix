@@ -3,7 +3,7 @@ import math
 import random
 from decimal import Decimal, ROUND_FLOOR
 
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Sum, Max, Q, Value
 from django.db.models.functions import Coalesce
 from django.urls import reverse
@@ -253,6 +253,195 @@ class Character(models.Model):
                 self.get_epoch().image, geometry, crop=crop, quality=99
             ).url
         return None
+
+    def clone(self, new_campaign=None, new_npc_campaign=None):
+        with transaction.atomic():
+            clone = Character(
+                name=self.name,
+                description=self.description,
+                may_appear_on_start_page=self.may_appear_on_start_page,
+                size=self.size,
+                weight=self.weight,
+                date_of_birth=self.date_of_birth,
+                entity=self.entity,
+                attitude=self.attitude,
+                grace=self.grace,
+                image=self.image,
+                image_copyright=self.image_copyright,
+                image_copyright_url=self.image_copyright_url,
+                backdrop_image=self.backdrop_image,
+                backdrop_copyright=self.backdrop_copyright,
+                backdrop_copyright_url=self.backdrop_copyright_url,
+                pronoun=self.pronoun,
+                created_by=self.created_by,
+                is_favorite=self.is_favorite,
+                lineage=self.lineage,
+                currency_map=self.currency_map,
+                campaign=new_campaign,
+                npc_campaign=new_npc_campaign,
+                reputation=self.reputation,
+                health=self.health,
+                boost=self.boost,
+                arcana=self.arcana,
+                base_stress=self.base_stress,
+                stress=self.stress,
+                bonus_dice_used=self.bonus_dice_used,
+                destiny_dice_used=self.destiny_dice_used,
+                rerolls_used=self.rerolls_used,
+                latest_initiative=self.latest_initiative,
+                quirks_gained=self.quirks_gained,
+                quirks_healed=self.quirks_healed,
+            )
+
+            # Ensure a fresh slug is generated
+            clone.pk = None
+            clone.slug = None
+            clone.save()
+
+            clone.extensions.set(self.extensions.all())
+
+            for attr in self.characterattribute_set.all():
+                CharacterAttribute.objects.create(
+                    character=clone,
+                    attribute=attr.attribute,
+                    modifier=attr.modifier,
+                )
+
+            for skill in self.characterskill_set.all():
+                CharacterSkill.objects.create(character=clone, skill=skill.skill)
+
+            for status_effect in self.characterstatuseffect_set.all():
+                CharacterStatusEffect.objects.create(
+                    character=clone,
+                    status_effect=status_effect.status_effect,
+                    base_value=status_effect.base_value,
+                )
+
+            for template in self.charactertemplate_set.all():
+                CharacterTemplate.objects.create(
+                    character=clone, template=template.template
+                )
+
+            for bm in self.characterbodymodification_set.all():
+                CharacterBodyModification.objects.create(
+                    character=clone,
+                    body_modification=bm.body_modification,
+                    socket_location=bm.socket_location,
+                    is_active=bm.is_active,
+                    socket_amount=bm.socket_amount,
+                    charges_used=bm.charges_used,
+                )
+
+            riot_gear_map = {}
+            for rg in self.characterriotgear_set.all():
+                new_rg = CharacterRiotGear.objects.create(
+                    character=clone,
+                    riot_gear=rg.riot_gear,
+                    condition=rg.condition,
+                    is_equipped=rg.is_equipped,
+                )
+                riot_gear_map[rg.id] = new_rg
+
+            for used in CharacterRiotGearProtectionUsed.objects.filter(
+                character_riot_gear__character=self
+            ):
+                new_rg = riot_gear_map.get(used.character_riot_gear_id)
+                if new_rg:
+                    CharacterRiotGearProtectionUsed.objects.create(
+                        character_riot_gear=new_rg,
+                        protection_type=used.protection_type,
+                        value=used.value,
+                    )
+
+            for weapon in self.characterweapon_set.all():
+                new_weapon = CharacterWeapon.objects.create(
+                    character=clone,
+                    weapon=weapon.weapon,
+                    condition=weapon.condition,
+                    capacity_used=weapon.capacity_used,
+                )
+                new_weapon.modifications.set(weapon.modifications.all())
+
+            item_map = {}
+            for item in self.characteritem_set.all():
+                new_item = CharacterItem.objects.create(
+                    character=clone,
+                    quantity=item.quantity,
+                    charges_used=item.charges_used,
+                    item=item.item,
+                    ordering=item.ordering,
+                )
+                item_map[item.id] = new_item
+
+            for item in self.characteritem_set.exclude(in_container__isnull=True):
+                new_item = item_map.get(item.id)
+                container = item_map.get(item.in_container_id)
+                if new_item and container:
+                    new_item.in_container = container
+                    new_item.save(update_fields=["in_container"])
+
+            for spell in self.characterspell_set.all():
+                new_spell = CharacterSpell.objects.create(
+                    character=clone,
+                    spell=spell.spell,
+                    custom_name=spell.custom_name,
+                )
+                for template in spell.characterspelltemplate_set.all():
+                    CharacterSpellTemplate.objects.create(
+                        character_spell=new_spell,
+                        spell_template=template.spell_template,
+                    )
+
+            for currency in self.charactercurrency_set.all():
+                CharacterCurrency.objects.create(
+                    character=clone,
+                    currency_map_unit=currency.currency_map_unit,
+                    quantity=currency.quantity,
+                )
+
+            for note in self.characternote_set.all():
+                CharacterNote.objects.create(
+                    character=clone,
+                    is_private=note.is_private,
+                    subject=note.subject,
+                    text=note.text,
+                    ordering=note.ordering,
+                )
+
+            for foe in self.characterfoe_set.all():
+                CharacterFoe.objects.create(
+                    character=clone,
+                    foe=foe.foe,
+                    health=foe.health,
+                    max_health=foe.max_health,
+                    boost=foe.boost,
+                    name=foe.name,
+                    is_familiar=foe.is_familiar,
+                    image=foe.image,
+                )
+
+            for recipe in self.characterrecipe_set.all():
+                CharacterRecipe.objects.create(character=clone, recipe=recipe.recipe)
+
+            for quirk in self.characterquirk_set.all():
+                CharacterQuirk.objects.create(character=clone, quirk=quirk.quirk)
+
+            for lang in self.characterlanguage_set.all():
+                CharacterLanguage.objects.create(
+                    character=clone,
+                    language=lang.language,
+                    modifier=lang.modifier,
+                )
+
+            for contact in self.contact_set.all():
+                Contact.objects.create(
+                    character=clone,
+                    name=contact.name,
+                    occupation=contact.occupation,
+                    description=contact.description,
+                )
+
+            return clone
 
     def warnings(self, world):
         """Returns game logic warnings for this character"""

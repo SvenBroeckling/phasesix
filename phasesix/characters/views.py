@@ -86,6 +86,20 @@ class CharacterDetailView(DetailView):
         return context
 
 
+class CloneCharacterView(View):
+    def post(self, request, *args, **kwargs):
+        character = get_object_or_404(Character, slug=kwargs["slug"])
+        if not character.may_edit(request.user):
+            raise PermissionDenied()
+
+        clone = character.clone()
+        messages.success(
+            request,
+            _("Character cloned. You are now viewing the duplicate."),
+        )
+        return HttpResponseRedirect(clone.get_absolute_url())
+
+
 class XhrDiceLogView(ListView):
     template_name = "characters/dice_log.html"
     paginate_by = 8

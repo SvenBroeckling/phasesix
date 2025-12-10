@@ -1,7 +1,8 @@
 import hashlib
 
 from django.conf import settings
-from django.db import models
+from django.db import models, transaction
+from django.apps import apps
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import get_thumbnail
@@ -201,6 +202,74 @@ class Campaign(models.Model):
             image = self.backdrop_image
 
         return get_thumbnail(image, geometry, crop=crop, quality=99).url
+
+    def clone(self):
+        with transaction.atomic():
+            clone = Campaign(
+                name=self.name,
+                ingame_act_date=self.ingame_act_date,
+                image=self.image,
+                image_copyright=self.image_copyright,
+                image_copyright_url=self.image_copyright_url,
+                may_appear_on_start_page=self.may_appear_on_start_page,
+                backdrop_image=self.backdrop_image,
+                backdrop_copyright=self.backdrop_copyright,
+                backdrop_copyright_url=self.backdrop_copyright_url,
+                abstract=self.abstract,
+                created_by=self.created_by,
+                is_favorite=self.is_favorite,
+                epoch_extension=self.epoch_extension,
+                world_extension=self.world_extension,
+                starting_template_points=self.starting_template_points,
+                roll_on_site=self.roll_on_site,
+                discord_integration=self.discord_integration,
+                tale_spire_integration=self.tale_spire_integration,
+                discord_webhook_url=self.discord_webhook_url,
+                currency_map=self.currency_map,
+                seed_money=self.seed_money,
+                foe_visibility=self.foe_visibility,
+                npc_visibility=self.npc_visibility,
+                game_log_visibility=self.game_log_visibility,
+                character_visibility=self.character_visibility,
+            )
+            clone.slug = None
+            clone.save()
+
+            clone.extensions.set(self.extensions.all())
+            clone.forbidden_templates.set(self.forbidden_templates.all())
+
+            for cf in self.campaignfoe_set.all():
+                CampaignFoe.objects.create(campaign=clone, foe=cf.foe, health=cf.health)
+
+            for cr in self.campaignrecipe_set.all():
+                CampaignRecipe.objects.create(campaign=clone, recipe=cr.recipe)
+
+            Character = apps.get_model("characters", "Character")
+            npc_map = {}
+            for npc in Character.objects.filter(npc_campaign=self):
+                new_npc = npc.clone(new_npc_campaign=clone)
+                npc_map[npc.id] = new_npc
+
+            for scene in self.scene_set.all():
+                new_scene = Scene.objects.create(
+                    campaign=clone, name=scene.name, text=scene.text
+                )
+                # Attach cloned NPCs only
+                for npc in scene.npc.all():
+                    if npc.id in npc_map:
+                        new_scene.npc.add(npc_map[npc.id])
+
+                # Clone handouts
+                for handout in scene.handout_set.all():
+                    Handout.objects.create(
+                        scene=new_scene,
+                        name=handout.name,
+                        image=handout.image,
+                        image_copyright=handout.image_copyright,
+                        image_copyright_url=handout.image_copyright_url,
+                    )
+
+            return clone
 
     @property
     def ws_room_name(self) -> str:

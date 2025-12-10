@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 12:38+0000\n"
-"PO-Revision-Date: 2025-12-09 13:38+0100\n"
+"POT-Creation-Date: 2025-12-10 22:11+0000\n"
+"PO-Revision-Date: 2025-12-10 23:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -180,8 +180,8 @@ msgstr "Legendär"
 #: armory/models.py:493 armory/models.py:530 armory/models.py:579
 #: armory/models.py:649 armory/models.py:657 body_modifications/models.py:12
 #: body_modifications/models.py:27 body_modifications/models.py:136
-#: campaigns/models.py:30 campaigns/models.py:230 campaigns/models.py:238
-#: characters/models.py:49 characters/models.py:85 characters/models.py:1570
+#: campaigns/models.py:31 campaigns/models.py:299 campaigns/models.py:307
+#: characters/models.py:49 characters/models.py:85 characters/models.py:1783
 #: forum/models.py:38 forum/models.py:60 horror/models.py:12
 #: horror/models.py:42 magic/models.py:18 magic/models.py:31 magic/models.py:44
 #: magic/models.py:75 magic/models.py:184 magic/models.py:243
@@ -205,7 +205,7 @@ msgstr "Name"
 #: armory/models.py:277 armory/models.py:334 armory/models.py:391
 #: armory/models.py:433 armory/models.py:494 armory/models.py:532
 #: armory/models.py:580 body_modifications/models.py:137
-#: campaigns/models.py:259 characters/models.py:57 characters/models.py:86
+#: campaigns/models.py:328 characters/models.py:57 characters/models.py:86
 #: horror/models.py:48 pantheon/models.py:23 pantheon/models.py:66
 #: plots/models.py:51 plots/models.py:62 potions/models.py:30
 #: potions/models.py:59 rules/models.py:295 rules/models.py:362
@@ -218,19 +218,20 @@ msgstr "Beschreibung"
 
 #: armory/models.py:44 armory/models.py:104 armory/models.py:205
 #: armory/models.py:268 armory/models.py:427 armory/models.py:576
-#: body_modifications/models.py:144 campaigns/models.py:70
-#: campaigns/models.py:257 characters/models.py:135 characters/models.py:1169
-#: characters/models.py:1216 characters/models.py:1551 forum/models.py:21
-#: forum/models.py:27 forum/models.py:31 forum/models.py:37 forum/models.py:55
-#: forum/models.py:99 horror/models.py:39 magic/models.py:142
-#: magic/models.py:274 pantheon/models.py:24 pantheon/models.py:43
-#: pantheon/models.py:101 portal/models.py:13 potions/models.py:31
-#: potions/models.py:64 rules/models.py:313 rules/models.py:369
-#: rules/models.py:473 rules/models.py:572 rules/models.py:691
-#: rules/models.py:750 vehicles/models.py:38 vehicles/models.py:169
-#: vehicles/models.py:338 worlds/models.py:34 worlds/models.py:221
-#: worlds/models.py:353 worlds/models.py:425 worlds/models.py:491
-#: worlds/models.py:519 worlds/models.py:552
+#: body_modifications/models.py:144 campaigns/models.py:71
+#: campaigns/models.py:326 characters/models.py:135 characters/models.py:1223
+#: characters/models.py:1382 characters/models.py:1429
+#: characters/models.py:1764 forum/models.py:21 forum/models.py:27
+#: forum/models.py:31 forum/models.py:37 forum/models.py:55 forum/models.py:99
+#: horror/models.py:39 magic/models.py:142 magic/models.py:274
+#: pantheon/models.py:24 pantheon/models.py:43 pantheon/models.py:101
+#: portal/models.py:13 potions/models.py:31 potions/models.py:64
+#: rules/models.py:313 rules/models.py:369 rules/models.py:473
+#: rules/models.py:572 rules/models.py:691 rules/models.py:750
+#: vehicles/models.py:38 vehicles/models.py:169 vehicles/models.py:338
+#: worlds/models.py:34 worlds/models.py:221 worlds/models.py:353
+#: worlds/models.py:425 worlds/models.py:491 worlds/models.py:519
+#: worlds/models.py:552
 msgid "created at"
 msgstr "Erzeugt am"
 
@@ -250,7 +251,7 @@ msgstr "Modifiziert am"
 
 #: armory/models.py:46 armory/models.py:207 armory/models.py:343
 #: armory/models.py:495 armory/models.py:533 armory/models.py:681
-#: characters/models.py:1555 pantheon/models.py:26 pantheon/models.py:77
+#: characters/models.py:1768 pantheon/models.py:26 pantheon/models.py:77
 #: potions/models.py:33 rules/models.py:315 rules/models.py:693
 #: worlds/models.py:104 worlds/models.py:267
 msgid "ordering"
@@ -302,7 +303,7 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:107 armory/models.py:289 armory/models.py:571
-#: body_modifications/models.py:148 campaigns/models.py:68
+#: body_modifications/models.py:148 campaigns/models.py:69
 #: characters/models.py:145 magic/models.py:139 pantheon/models.py:46
 #: pantheon/models.py:99 potions/models.py:68 rules/models.py:576
 #: rules/models.py:754 worlds/models.py:31 worlds/models.py:218
@@ -341,8 +342,8 @@ msgid "Shows a roll button at the item if not empty."
 msgstr "Zeigt einen Button an wenn der Wert gefüllt ist."
 
 #: armory/models.py:152 armory/models.py:296 body_modifications/models.py:30
-#: body_modifications/models.py:123 campaigns/models.py:35
-#: campaigns/models.py:240 characters/models.py:112 characters/models.py:1573
+#: body_modifications/models.py:123 campaigns/models.py:36
+#: campaigns/models.py:309 characters/models.py:112 characters/models.py:1786
 #: forum/models.py:33 magic/models.py:49 magic/models.py:80
 #: pantheon/models.py:69 plots/models.py:15 plots/models.py:53
 #: plots/models.py:64 portal/models.py:19 rules/models.py:304
@@ -353,8 +354,8 @@ msgid "image"
 msgstr "Bild"
 
 #: armory/models.py:155 armory/models.py:299 body_modifications/models.py:37
-#: body_modifications/models.py:130 campaigns/models.py:38
-#: campaigns/models.py:60 campaigns/models.py:243 characters/models.py:115
+#: body_modifications/models.py:130 campaigns/models.py:39
+#: campaigns/models.py:61 campaigns/models.py:312 characters/models.py:115
 #: characters/models.py:129 magic/models.py:52 magic/models.py:87
 #: pantheon/models.py:72 portal/models.py:22 portal/models.py:43
 #: rules/models.py:307 rules/models.py:805 vehicles/models.py:163
@@ -364,8 +365,8 @@ msgid "image copyright"
 msgstr "Bild Copyright"
 
 #: armory/models.py:158 armory/models.py:302 body_modifications/models.py:40
-#: body_modifications/models.py:133 campaigns/models.py:41
-#: campaigns/models.py:63 campaigns/models.py:246 characters/models.py:118
+#: body_modifications/models.py:133 campaigns/models.py:42
+#: campaigns/models.py:64 campaigns/models.py:315 characters/models.py:118
 #: characters/models.py:132 magic/models.py:55 magic/models.py:90
 #: pantheon/models.py:75 portal/models.py:25 portal/models.py:46
 #: rules/models.py:310 rules/models.py:808 vehicles/models.py:166
@@ -480,7 +481,7 @@ msgid "keywords"
 msgstr "Schlüsselworte"
 
 #: armory/models.py:358 armory/models.py:481 armory/models.py:638
-#: armory/models.py:660 characters/models.py:1358
+#: armory/models.py:660 characters/models.py:1571
 msgid "value"
 msgstr "Wert"
 
@@ -815,7 +816,7 @@ msgstr "Körpermodifikation"
 msgid "body modifications"
 msgstr "Körpermodifikationen"
 
-#: body_modifications/models.py:203 characters/models.py:1214
+#: body_modifications/models.py:203 characters/models.py:1427
 msgid "socket amount"
 msgstr "Anzahl Einbauplätze"
 
@@ -853,35 +854,35 @@ msgid "Things you can integrate into your body"
 msgstr "Dinge die du in deinen Körper integrieren kannst"
 
 #: campaigns/forms.py:13
-#: campaigns/templates/campaigns/fragments/settings.html:27
+#: campaigns/templates/campaigns/fragments/settings.html:41
 #: characters/forms.py:57 characters/forms.py:94 phasesix/settings.py:331
 #: phasesix/settings.py:365 plots/templates/plots/plot_editor.html:58
 msgid "Extensions"
 msgstr "Erweiterungen"
 
-#: campaigns/models.py:23
+#: campaigns/models.py:24
 msgid "GM Only"
 msgstr "Nur SL"
 
-#: campaigns/models.py:24
+#: campaigns/models.py:25
 msgid "All"
 msgstr "Alle"
 
-#: campaigns/models.py:29 characters/models.py:84 portal/models.py:11
+#: campaigns/models.py:30 characters/models.py:84 portal/models.py:11
 #: rules/models.py:762 worlds/models.py:51 worlds/models.py:232
 #: worlds/models.py:365
 msgid "slug"
 msgstr "Slug"
 
-#: campaigns/models.py:32
+#: campaigns/models.py:33
 msgid "in game act date"
 msgstr "Spieldatum"
 
-#: campaigns/models.py:45 characters/models.py:89
+#: campaigns/models.py:46 characters/models.py:89
 msgid "may appear on start page"
 msgstr "Darf auf der Startseite erscheinen"
 
-#: campaigns/models.py:47
+#: campaigns/models.py:48
 msgid ""
 "This campaign may appear on the anonymous start page (i.E. if it has only "
 "free images"
@@ -889,57 +890,57 @@ msgstr ""
 "Diese Kampagne darf auf der Startseite für anonyme Besucher erscheinen (hat "
 "z.B. nur freie Bilder)"
 
-#: campaigns/models.py:53 characters/models.py:122 portal/models.py:36
+#: campaigns/models.py:54 characters/models.py:122 portal/models.py:36
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
-#: campaigns/models.py:65
+#: campaigns/models.py:66
 msgid "abstract"
 msgstr "Zusammenfassung"
 
-#: campaigns/models.py:71 characters/models.py:152
+#: campaigns/models.py:72 characters/models.py:152
 msgid "is favorite"
 msgstr "Ist Favorit"
 
-#: campaigns/models.py:78
-#: campaigns/templates/campaigns/fragments/settings.html:18
+#: campaigns/models.py:79
+#: campaigns/templates/campaigns/fragments/settings.html:32
 #: characters/forms.py:82 characters/forms.py:87 plots/models.py:22
 #: plots/templates/plots/plot_editor.html:50 rules/models.py:282
 msgid "Epoch"
 msgstr "Epoche"
 
-#: campaigns/models.py:85
-#: campaigns/templates/campaigns/fragments/settings.html:9
+#: campaigns/models.py:86
+#: campaigns/templates/campaigns/fragments/settings.html:23
 #: characters/templates/_main_nav.html:24 plots/models.py:29
 #: plots/templates/plots/plot_editor.html:54 rules/models.py:283
 msgid "World"
 msgstr "Welt"
 
-#: campaigns/models.py:94
+#: campaigns/models.py:95
 msgid "additional starting career points"
 msgstr "Zusätzliche Werdegangspunkte"
 
-#: campaigns/models.py:99
+#: campaigns/models.py:100
 msgid "roll on site"
 msgstr "Auf dieser Plattform würfeln"
 
-#: campaigns/models.py:100
+#: campaigns/models.py:101
 msgid "Shows dice results on this platform."
 msgstr "Zeigt die Würfelergebnisse auf dieser Plattform an."
 
-#: campaigns/models.py:104
+#: campaigns/models.py:105
 msgid "discord integration"
 msgstr "Discord Integration"
 
-#: campaigns/models.py:105
+#: campaigns/models.py:106
 msgid "Enables the integration with discord. Requires a webhook url."
 msgstr "Aktiviert die Integration mit Discord. Benötigt eine Webhook URL."
 
-#: campaigns/models.py:109
+#: campaigns/models.py:110
 msgid "tale spire integration"
 msgstr "TaleSpire Integration"
 
-#: campaigns/models.py:111
+#: campaigns/models.py:112
 msgid ""
 "Enables TaleSpire integration. All roll links are generated so that the "
 "TaleSpire game is accessed."
@@ -947,116 +948,116 @@ msgstr ""
 "Aktiviert die Integration mit TaleSpire. Alle Würfelllinks werden so "
 "generiert, dass das TaleSpire Spiel angesprochen wird."
 
-#: campaigns/models.py:116
+#: campaigns/models.py:117
 msgid "discord webhook url"
 msgstr "Discord Webhook URL"
 
-#: campaigns/models.py:119
+#: campaigns/models.py:120
 msgid ""
 "Create a discord webhook and paste it's url here to display dice results."
 msgstr ""
 "Lege einen Discord Webhook an und kopiere seine URL hier herein, um "
 "Würfelergebnisse anzuzeigen."
 
-#: campaigns/models.py:126
+#: campaigns/models.py:127
 msgid "seed money"
 msgstr "Startkapital"
 
-#: campaigns/models.py:129
+#: campaigns/models.py:130
 msgid "foe visibility"
 msgstr "Gegnersichtbarkeit"
 
-#: campaigns/models.py:133
+#: campaigns/models.py:134
 msgid "npc visibility"
 msgstr "NSC Sichtbarkeit"
 
-#: campaigns/models.py:137
+#: campaigns/models.py:138
 msgid "game log visibility"
 msgstr "Spielprotokollsichtbarkeit"
 
-#: campaigns/models.py:141
+#: campaigns/models.py:142
 msgid "character visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/models.py:145 characters/models.py:170
+#: campaigns/models.py:146 characters/models.py:170
 #: curators_desk/templates/curators_desk/fragments/review_homebrew.html:10
 #: portal/templates/portal/sidebar/search_results.html:30
 #: worlds/templates/worlds/_add_to_campaign.html:7
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: campaigns/models.py:146 characters/templates/_main_nav.html:157
+#: campaigns/models.py:147 characters/templates/_main_nav.html:157
 #: phasesix/settings.py:292 portal/templates/portal/_navigation.html:36
 msgid "Campaigns"
 msgstr "Kampagnen"
 
-#: campaigns/models.py:214 characters/models.py:186 characters/models.py:1567
+#: campaigns/models.py:283 characters/models.py:186 characters/models.py:1780
 #: rules/models.py:770 worlds/models.py:432
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: campaigns/models.py:231 characters/models.py:1554 forum/models.py:104
+#: campaigns/models.py:300 characters/models.py:1767 forum/models.py:104
 #: worlds/models.py:250
 msgid "text"
 msgstr "Text"
 
-#: campaigns/models.py:258
+#: campaigns/models.py:327
 msgid "header"
 msgstr "Kopfzeile"
 
-#: campaigns/models.py:261
+#: campaigns/models.py:330
 msgid "roll string"
 msgstr "Würfelstring"
 
-#: campaigns/models.py:263
+#: campaigns/models.py:332
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
-#: campaigns/models.py:265
+#: campaigns/models.py:334
 msgid "modifier"
 msgstr "Modifikator"
 
-#: campaigns/models.py:266 rules/models.py:25 worlds/models.py:441
+#: campaigns/models.py:335 rules/models.py:25 worlds/models.py:441
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: campaigns/models.py:269
+#: campaigns/models.py:338
 msgid "crit count"
 msgstr "Anzahl kritischer Erfolge"
 
-#: campaigns/models.py:270
+#: campaigns/models.py:339
 msgid "crit sum"
 msgstr "Summe kritischer Erfolge"
 
-#: campaigns/models.py:271
+#: campaigns/models.py:340
 msgid "exploded dice count"
 msgstr "Anzahl Exploding Dice"
 
-#: campaigns/models.py:272
+#: campaigns/models.py:341
 msgid "exploded dice sum"
 msgstr "Summe Exploding Dice"
 
-#: campaigns/models.py:273
+#: campaigns/models.py:342
 msgid "highest single roll"
 msgstr "Höchster einzelner Wurf"
 
-#: campaigns/models.py:274
+#: campaigns/models.py:343
 msgid "successes count"
 msgstr "Anzahl Erfolge"
 
-#: campaigns/models.py:275
+#: campaigns/models.py:344
 msgid "successes sum"
 msgstr "Summe Erfolge"
 
-#: campaigns/models.py:276
+#: campaigns/models.py:345
 msgid "fails count"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:277
+#: campaigns/models.py:346
 msgid "fails sum"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:278
+#: campaigns/models.py:347
 msgid "total sum"
 msgstr "Gesamtsumme"
 
@@ -1204,9 +1205,9 @@ msgid "Abstract"
 msgstr "Zusammenfassung"
 
 #: campaigns/templates/campaigns/fragments/dramaturgy.html:6
-#: campaigns/templates/campaigns/fragments/settings.html:67
-#: campaigns/templates/campaigns/fragments/settings.html:117
-#: campaigns/templates/campaigns/fragments/settings.html:169
+#: campaigns/templates/campaigns/fragments/settings.html:81
+#: campaigns/templates/campaigns/fragments/settings.html:131
+#: campaigns/templates/campaigns/fragments/settings.html:183
 msgid "Edit settings"
 msgstr "Einstellungen bearbeiten"
 
@@ -1313,51 +1314,57 @@ msgstr "Gegner suchen"
 msgid "Add foe"
 msgstr "Gegner hinzufügen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:4
+#: campaigns/templates/campaigns/fragments/settings.html:11
+#, fuzzy
+#| msgid "NPC Campaign"
+msgid "Clone Campaign"
+msgstr "Kampagne NPC"
+
+#: campaigns/templates/campaigns/fragments/settings.html:18
 msgid "Game Options"
 msgstr "Spieleinstellungen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:10
+#: campaigns/templates/campaigns/fragments/settings.html:24
 msgid "The game world this campaign is set in"
 msgstr "Die Spielwelt, in der diese Kampagne spielt"
 
-#: campaigns/templates/campaigns/fragments/settings.html:19
+#: campaigns/templates/campaigns/fragments/settings.html:33
 msgid "The time period of the campaign"
 msgstr "Der Zeitraum der Kampagne"
 
-#: campaigns/templates/campaigns/fragments/settings.html:28
+#: campaigns/templates/campaigns/fragments/settings.html:42
 msgid "Additional rule sets enabled for this campaign"
 msgstr "Zusätzliche aktivierte Regelerweiterungen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:36
-#: characters/forms.py:75 characters/views.py:737
+#: campaigns/templates/campaigns/fragments/settings.html:50
+#: characters/forms.py:75 characters/views.py:774
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
-#: campaigns/templates/campaigns/fragments/settings.html:37
+#: campaigns/templates/campaigns/fragments/settings.html:51
 msgid "Defines the monetary system used"
 msgstr "Definiert das monetäre System, welches benutzt wird"
 
-#: campaigns/templates/campaigns/fragments/settings.html:45
-#: characters/forms.py:78 characters/views.py:708
+#: campaigns/templates/campaigns/fragments/settings.html:59
+#: characters/forms.py:78 characters/views.py:745
 msgid "Seed Money"
 msgstr "Startkapital"
 
-#: campaigns/templates/campaigns/fragments/settings.html:46
+#: campaigns/templates/campaigns/fragments/settings.html:60
 msgid "Starting money for new characters"
 msgstr "Das Startguthaben für neue Charaktere"
 
-#: campaigns/templates/campaigns/fragments/settings.html:54
+#: campaigns/templates/campaigns/fragments/settings.html:68
 msgid "Additional starting career points"
 msgstr "Zusätzliche Werdegangspunkte"
 
-#: campaigns/templates/campaigns/fragments/settings.html:55
+#: campaigns/templates/campaigns/fragments/settings.html:69
 msgid "Extra points for character creation"
 msgstr "Extrapunkte für die Charaktererschaffung"
 
-#: campaigns/templates/campaigns/fragments/settings.html:68
-#: campaigns/templates/campaigns/fragments/settings.html:119
-#: campaigns/templates/campaigns/fragments/settings.html:171
+#: campaigns/templates/campaigns/fragments/settings.html:82
+#: campaigns/templates/campaigns/fragments/settings.html:133
+#: campaigns/templates/campaigns/fragments/settings.html:185
 #: characters/templates/characters/fragments/description.html:37
 #: plots/templates/plots/_plot_element.html:41
 #: plots/templates/plots/_plot_element.html:57
@@ -1366,69 +1373,69 @@ msgstr "Extrapunkte für die Charaktererschaffung"
 msgid "Edit"
 msgstr "Editieren"
 
-#: campaigns/templates/campaigns/fragments/settings.html:74
+#: campaigns/templates/campaigns/fragments/settings.html:88
 msgid "Visibility"
 msgstr "Sichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:79
+#: campaigns/templates/campaigns/fragments/settings.html:93
 msgid "Character Visibility"
 msgstr "Charaktersichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:80
+#: campaigns/templates/campaigns/fragments/settings.html:94
 msgid "Who can see player characters"
 msgstr "Wer kann Spielercharaktere sehen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:88
+#: campaigns/templates/campaigns/fragments/settings.html:102
 msgid "NPC Visibility"
 msgstr "NSC Sichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:89
+#: campaigns/templates/campaigns/fragments/settings.html:103
 msgid "Who can see non-player characters"
 msgstr "Wer kann NPC sehen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:97
+#: campaigns/templates/campaigns/fragments/settings.html:111
 msgid "Foe Visibility"
 msgstr "Gegnersichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:98
+#: campaigns/templates/campaigns/fragments/settings.html:112
 msgid "Who can see enemies and opponents"
 msgstr "Wer kann Gegner sehen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:106
+#: campaigns/templates/campaigns/fragments/settings.html:120
 msgid "Game Log Visibility"
 msgstr "Spielprotokollsichtbarkeit"
 
-#: campaigns/templates/campaigns/fragments/settings.html:107
+#: campaigns/templates/campaigns/fragments/settings.html:121
 msgid "Who can access the game history"
 msgstr "Wer kann auf das Spielprotokoll zugreifen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:126
+#: campaigns/templates/campaigns/fragments/settings.html:140
 msgid "Integrations"
 msgstr "Integrationen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:131
+#: campaigns/templates/campaigns/fragments/settings.html:145
 msgid "Phase Six Rolls"
 msgstr "Phase Six Würfel"
 
-#: campaigns/templates/campaigns/fragments/settings.html:132
+#: campaigns/templates/campaigns/fragments/settings.html:146
 msgid "Roll dice on this platform"
 msgstr "Würfe auf dieser Plattform anzeigen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:135
-#: campaigns/templates/campaigns/fragments/settings.html:160 portal/admin.py:20
+#: campaigns/templates/campaigns/fragments/settings.html:149
+#: campaigns/templates/campaigns/fragments/settings.html:174 portal/admin.py:20
 msgid "Yes"
 msgstr "Ja"
 
-#: campaigns/templates/campaigns/fragments/settings.html:135
-#: campaigns/templates/campaigns/fragments/settings.html:160 portal/admin.py:21
+#: campaigns/templates/campaigns/fragments/settings.html:149
+#: campaigns/templates/campaigns/fragments/settings.html:174 portal/admin.py:21
 msgid "No"
 msgstr "Nein"
 
-#: campaigns/templates/campaigns/fragments/settings.html:156
+#: campaigns/templates/campaigns/fragments/settings.html:170
 msgid "Discord Integration"
 msgstr "Discord Integration"
 
-#: campaigns/templates/campaigns/fragments/settings.html:157
+#: campaigns/templates/campaigns/fragments/settings.html:171
 msgid "Send dice roll results to Discord"
 msgstr "Sendet die Würfelergebnisse nach Discord"
 
@@ -1475,7 +1482,7 @@ msgstr "Gesamtsumme"
 #: campaigns/templates/campaigns/modals/settings.html:12
 #: characters/templates/characters/modals/edit_description.html:9
 #: characters/templates/characters/modals/edit_foe.html:10
-#: characters/templates/characters/sidebar/character.html:81
+#: characters/templates/characters/sidebar/character.html:40
 #: plots/templates/plots/xhr_plot_modal.html:11
 #: worlds/templates/worlds/wiki_page_edit.html:16
 #: worlds/templates/worlds/wiki_page_edit.html:17
@@ -1592,8 +1599,6 @@ msgstr "Gehe zur Wikiseite"
 
 #: campaigns/templates/campaigns/sidebar/foe.html:26
 #: characters/templates/characters/fragments/combat.html:9
-#: characters/templates/characters/sidebar/character.html:38
-#: characters/templates/characters/sidebar/character.html:43
 #: characters/templates/characters/sidebar/foe.html:27
 msgid "Initiative"
 msgstr "Initiative"
@@ -1615,7 +1620,6 @@ msgstr "Initiative würfeln"
 #: characters/templates/characters/sidebar/body_modification.html:70
 #: characters/templates/characters/sidebar/body_modification.html:85
 #: characters/templates/characters/sidebar/body_modification.html:99
-#: characters/templates/characters/sidebar/character.html:46
 #: characters/templates/characters/sidebar/foe.html:31
 #: characters/templates/characters/sidebar/foe.html:68
 #: characters/templates/characters/sidebar/item.html:79
@@ -1674,7 +1678,6 @@ msgid "D6"
 msgstr "W6"
 
 #: campaigns/templates/campaigns/sidebar/roll.html:18
-#: characters/templates/characters/sidebar/character.html:63
 #: characters/templates/characters/sidebar/dice.html:89
 msgid "Custom Roll"
 msgstr "Individueller Wurf"
@@ -1697,6 +1700,14 @@ msgstr "Suchen"
 msgid "No rolls yet."
 msgstr "Noch keine Würfe."
 
+#: campaigns/views.py:125
+msgid ""
+"Campaign cloned. You are now viewing the duplicate. Everything but player "
+"characters is copied."
+msgstr ""
+"Kampagne geklont. Du siehst jetzt den Klon. Alles bis auf Spielercharaktere "
+"wurde kopiert."
+
 #: characters/feeds.py:27
 msgid "Phase Six latest additions"
 msgstr "Phase Six letzte Neuerungen"
@@ -1709,12 +1720,12 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:64 characters/views.py:669 forum/forms.py:6
+#: characters/forms.py:64 characters/views.py:706 forum/forms.py:6
 #: plots/templates/plots/plot_editor.html:42
 msgid "Name"
 msgstr "Name"
 
-#: characters/forms.py:66 characters/views.py:693
+#: characters/forms.py:66 characters/views.py:730
 msgid "Pronouns"
 msgstr "Pronomen"
 
@@ -1723,19 +1734,19 @@ msgstr "Pronomen"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:98 characters/views.py:676
+#: characters/forms.py:98 characters/views.py:713
 msgid "Size"
 msgstr "Größe"
 
 #: characters/forms.py:99 characters/templates/characters/sidebar/item.html:180
 #: characters/templates/characters/sidebar/riot_gear.html:102
-#: characters/views.py:685
+#: characters/views.py:722
 #: rulebook/templates/rulebook/pdf/appendix/items.html:17
 #: rulebook/templates/rulebook/pdf/appendix/riot_gear.html:17
 msgid "Weight"
 msgstr "Gewicht"
 
-#: characters/forms.py:100 characters/views.py:702
+#: characters/forms.py:100 characters/views.py:739
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -1751,7 +1762,7 @@ msgstr "Gottheit"
 #: characters/forms.py:107 characters/forms.py:113
 #: characters/templates/characters/fragments/pantheon.html:11
 #: characters/templates/characters/sidebar/grace.html:66
-#: characters/views.py:726
+#: characters/views.py:763
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -1836,7 +1847,7 @@ msgstr "Kampagne NPC"
 msgid "reputation"
 msgstr "Reputation"
 
-#: characters/models.py:187 characters/models.py:1569
+#: characters/models.py:187 characters/models.py:1782
 msgid "boost"
 msgstr "Boost"
 
@@ -1868,28 +1879,24 @@ msgstr "Benutzte Wiederholungswürfe"
 msgid "latest initiative"
 msgstr "Letzte Initiative"
 
-#: characters/models.py:200 horror/models.py:54
-msgid "quirks"
-msgstr "Eigenarten"
-
-#: characters/models.py:203
+#: characters/models.py:200
 msgid "quirks gained"
 msgstr "Erhaltene Eigenarten"
 
-#: characters/models.py:205
+#: characters/models.py:202
 msgid "The amount of quirks gained by excess stress"
 msgstr ""
 "Die Anzahl an Eigenarten, die durch überschüssigen Stress verursacht wurden"
 
-#: characters/models.py:208
+#: characters/models.py:205
 msgid "quirks healed"
 msgstr "Kurierte Eigenarten"
 
-#: characters/models.py:210
+#: characters/models.py:207
 msgid "The amount of quirks healed by treatment."
 msgstr "Die Anzahl an Eigenarten, die durch Behandlung geheilt wurden."
 
-#: characters/models.py:266
+#: characters/models.py:452
 msgid ""
 "Your character has arcana or spell points, but you don't have any spell "
 "origins unlocked. You will not be able to add spells. Choose an occupation "
@@ -1899,84 +1906,84 @@ msgstr ""
 "Magieursprünge freigeschaltet. Du wirst keine Zauber hinzufügen können. "
 "Wähle einen Beruf mit einem magischen Ursprung."
 
-#: characters/models.py:1020 characters/models.py:1043
+#: characters/models.py:1217 characters/models.py:1256
 msgid "Modifier"
 msgstr "Modifikator"
 
-#: characters/models.py:1153
+#: characters/models.py:1366
 msgid "base value"
 msgstr "Basiswert"
 
-#: characters/models.py:1213 rules/models.py:288 rules/models.py:679
+#: characters/models.py:1426 rules/models.py:288 rules/models.py:679
 #: worlds/models.py:64 worlds/models.py:266
 msgid "is active"
 msgstr "Ist aktiv"
 
-#: characters/models.py:1215
+#: characters/models.py:1428
 msgid "charges used"
 msgstr "Ladungen benutzt"
 
-#: characters/models.py:1240
+#: characters/models.py:1453
 msgid "capacity used"
 msgstr "Benutzte Kapazität"
 
-#: characters/models.py:1343
+#: characters/models.py:1556
 msgid "condition"
 msgstr "Zustand"
 
-#: characters/models.py:1344
+#: characters/models.py:1557
 msgid "is equipped"
 msgstr "ist ausgerüstet"
 
-#: characters/models.py:1382
+#: characters/models.py:1595
 msgid "Quantity"
 msgstr "Menge"
 
-#: characters/models.py:1383
+#: characters/models.py:1596
 msgid "Charges used"
 msgstr "Ladungen benutzt"
 
-#: characters/models.py:1388
+#: characters/models.py:1601
 msgid "Ordering"
 msgstr "Sortierung"
 
-#: characters/models.py:1413 vehicles/models.py:425
+#: characters/models.py:1626 vehicles/models.py:425
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:1544 potions/models.py:98
+#: characters/models.py:1757 potions/models.py:98
 msgid "quantity"
 msgstr "Menge"
 
-#: characters/models.py:1552
+#: characters/models.py:1765
 msgid "is private"
 msgstr "Ist Privat"
 
-#: characters/models.py:1553
+#: characters/models.py:1766
 msgid "subject"
 msgstr "Thema"
 
-#: characters/models.py:1568 rules/models.py:21 rules/models.py:375
+#: characters/models.py:1781 rules/models.py:21 rules/models.py:375
 msgid "max health"
 msgstr "Maximale Lebenspunkte"
 
-#: characters/models.py:1571
+#: characters/models.py:1784
 msgid "is familiar"
 msgstr "Ist Vertrauter"
 
-#: characters/models.py:1582
+#: characters/models.py:1795
 msgid "character foe"
 msgstr "Charakter Gegner"
 
-#: characters/models.py:1583
+#: characters/models.py:1796
 msgid "character foes"
 msgstr "Charakter Gegner"
 
-#: characters/models.py:1608
+#: characters/models.py:1821
 msgid "Recipe"
 msgstr "Rezept"
 
-#: characters/models.py:1609
+#: characters/models.py:1822
 #: characters/templates/characters/_navigation.html:82
 msgid "Recipes"
 msgstr "Rezepte"
@@ -2061,7 +2068,7 @@ msgstr "- keine Bonuswürfel -"
 #: characters/templates/characters/pdf/cards/combat/combat.html:93
 #: characters/templates/characters/pdf/cards/magic/spells.html:35
 #: characters/templates/characters/pdf/cards/overview/game_values.html:6
-#: characters/templates/characters/sidebar/spell.html:77 magic/models.py:12
+#: characters/templates/characters/sidebar/spell.html:78 magic/models.py:12
 #: magic/templates/magic/_basespell_widget.html:29
 #: magic/templates/magic/basespell_detail.html:45
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:26
@@ -2144,13 +2151,13 @@ msgstr "Editieren / Herunterladen"
 msgid "Download"
 msgstr "Herunterladen"
 
-#: characters/templates/characters/_protection_display.html:6
-#: characters/templates/characters/sidebar/protection.html:8
-#: characters/templates/characters/sidebar/protection.html:54
+#: characters/templates/characters/_protection_display.html:5
+#: characters/templates/characters/sidebar/protection.html:7
+#: characters/templates/characters/sidebar/protection.html:70
 msgid "Base protection"
 msgstr "Basisschutz"
 
-#: characters/templates/characters/_protection_display.html:15
+#: characters/templates/characters/_protection_display.html:16
 msgid "- no available protection -"
 msgstr "- kein verfügbarer Schutz -"
 
@@ -2291,7 +2298,7 @@ msgid "Click on any item to place it in this container."
 msgstr "Klicke auf einen Gegenstand, um ihn in einen Container zu legen."
 
 #: characters/templates/characters/fragments/advancement.html:7
-#: characters/templates/characters/sidebar/reputation.html:73
+#: characters/templates/characters/sidebar/reputation.html:74
 msgid "Reputation"
 msgstr "Reputation"
 
@@ -2323,7 +2330,7 @@ msgid "Your gained reputation is"
 msgstr "Deine erhaltene Reputation ist"
 
 #: characters/templates/characters/fragments/advancement.html:29
-#: characters/templates/characters/sidebar/reputation.html:74
+#: characters/templates/characters/sidebar/reputation.html:75
 msgid "Add character templates"
 msgstr "Charakterschablonen hinzufügen"
 
@@ -2480,7 +2487,7 @@ msgstr "Kap."
 #: characters/templates/characters/fragments/combat.html:29
 #: characters/templates/characters/includes/character_spell_cards.html:31
 #: characters/templates/characters/pdf/cards/magic/spells.html:27
-#: characters/templates/characters/sidebar/spell.html:67 magic/models.py:11
+#: characters/templates/characters/sidebar/spell.html:68 magic/models.py:11
 #: magic/templates/magic/_basespell_widget.html:27
 #: magic/templates/magic/basespell_detail.html:42
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:23
@@ -2541,7 +2548,7 @@ msgstr "Schildparade - Deckung"
 #: characters/templates/characters/includes/character_spell_cards.html:30
 #: characters/templates/characters/pdf/cards/combat/combat.html:92
 #: characters/templates/characters/pdf/cards/magic/spells.html:23
-#: characters/templates/characters/sidebar/spell.html:62 magic/models.py:10
+#: characters/templates/characters/sidebar/spell.html:63 magic/models.py:10
 msgid "Power"
 msgstr "Stärke"
 
@@ -2841,8 +2848,8 @@ msgstr ""
 
 #: characters/templates/characters/fragments/horror.html:69
 #: characters/templates/characters/fragments/horror.html:72
-#: characters/templates/characters/sidebar/horror.html:106
 #: characters/templates/characters/sidebar/horror.html:107
+#: characters/templates/characters/sidebar/horror.html:108
 msgid "Choose Quirk"
 msgstr "Eigenart wählen"
 
@@ -2852,7 +2859,7 @@ msgstr "Eigenart wählen"
 #: characters/templates/characters/pdf/cards/magic/spells.html:18
 #: characters/templates/characters/pdf/cards/overview/arcana.html:4
 #: characters/templates/characters/sidebar/magic.html:35
-#: characters/templates/characters/sidebar/spell.html:39 magic/models.py:13
+#: characters/templates/characters/sidebar/spell.html:40 magic/models.py:13
 #: magic/templates/magic/_basespell_widget.html:25
 #: magic/templates/magic/basespell_detail.html:40
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:22
@@ -3016,7 +3023,7 @@ msgstr "Ritual"
 #: characters/templates/characters/modals/add_spell_template.html:54
 #: characters/templates/characters/modals/add_spell_template.html:55
 #: characters/templates/characters/pdf/cards/magic/spells.html:31
-#: characters/templates/characters/sidebar/spell.html:72
+#: characters/templates/characters/sidebar/spell.html:73
 #: magic/templates/magic/_basespell_widget.html:28
 #: magic/templates/magic/basespell_detail.html:43
 #: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:45
@@ -3026,7 +3033,7 @@ msgid "Shape"
 msgstr "Form"
 
 #: characters/templates/characters/includes/character_spell_cards.html:35
-#: characters/templates/characters/sidebar/spell.html:83
+#: characters/templates/characters/sidebar/spell.html:84
 #: magic/templates/magic/_basespell_widget.html:31
 #: magic/templates/magic/basespell_detail.html:46
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:28
@@ -3034,7 +3041,7 @@ msgid "Instant"
 msgstr "Sofort"
 
 #: characters/templates/characters/includes/character_spell_cards.html:36
-#: characters/templates/characters/sidebar/spell.html:82
+#: characters/templates/characters/sidebar/spell.html:83
 #: magic/templates/magic/_basespell_widget.html:32
 #: magic/templates/magic/basespell_detail.html:47
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:29
@@ -3042,7 +3049,7 @@ msgid "Duration"
 msgstr "Dauer"
 
 #: characters/templates/characters/includes/character_spell_cards.html:39
-#: characters/templates/characters/sidebar/spell.html:86
+#: characters/templates/characters/sidebar/spell.html:87
 #: magic/templates/magic/_basespell_widget.html:35
 #: magic/templates/magic/basespell_detail.html:50
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:33
@@ -3155,7 +3162,7 @@ msgstr "(ausgerüstet)"
 #: characters/templates/characters/modals/add_weapon_modification.html:49
 #: characters/templates/characters/sidebar/item.html:192
 #: characters/templates/characters/sidebar/riot_gear.html:119
-#: characters/templates/characters/sidebar/weapon.html:104
+#: characters/templates/characters/sidebar/weapon.html:105
 #: rulebook/templates/rulebook/pdf/appendix/body_modifications.html:31
 #: rulebook/templates/rulebook/pdf/appendix/items.html:19
 #: rulebook/templates/rulebook/pdf/appendix/riot_gear.html:21
@@ -3309,7 +3316,7 @@ msgid "Weapon"
 msgstr "Waffe"
 
 #: characters/templates/characters/pdf/cards/magic/spells.html:40
-#: characters/templates/characters/sidebar/weapon.html:51
+#: characters/templates/characters/sidebar/weapon.html:52
 msgid "Modifications"
 msgstr "Modifikationen"
 
@@ -3431,8 +3438,8 @@ msgstr "Einschalten"
 #: characters/templates/characters/sidebar/quirk.html:13
 #: characters/templates/characters/sidebar/riot_gear.html:25
 #: characters/templates/characters/sidebar/template.html:13
-#: characters/templates/characters/sidebar/weapon.html:62
-#: characters/templates/characters/sidebar/weapon.html:142
+#: characters/templates/characters/sidebar/weapon.html:63
+#: characters/templates/characters/sidebar/weapon.html:143
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -3468,37 +3475,17 @@ msgstr "Automatisch"
 msgid "Download PDF"
 msgstr "PDF herunterladen"
 
-#: characters/templates/characters/sidebar/character.html:27
-msgid "Roll Dice"
-msgstr "Würfeln"
+#: characters/templates/characters/sidebar/character.html:24
+#, fuzzy
+#| msgid "Create character"
+msgid "Clone character"
+msgstr "Erstelle einen Charakter"
 
-#: characters/templates/characters/sidebar/character.html:29
-msgid "Edit Character"
-msgstr "Editieren"
-
-#: characters/templates/characters/sidebar/character.html:44
-msgid "*Quickness*d6"
-msgstr "Schnelligkeit w6"
-
-#: characters/templates/characters/sidebar/character.html:52
-msgid ""
-"\n"
-"            Roll a custom amount of dice here, just klick on the button "
-"with\n"
-"            the amount you'd like to roll.\n"
-"          "
-msgstr ""
-"\n"
-"Würfel eine beliebige Anzahl an Würfeln hier, klick einfach auf den Button "
-"mit\n"
-"der passenden Anzahl.\n"
-"     "
-
-#: characters/templates/characters/sidebar/character.html:90
+#: characters/templates/characters/sidebar/character.html:49
 msgid "Delete character"
 msgstr "Charackter löschen"
 
-#: characters/templates/characters/sidebar/character.html:93
+#: characters/templates/characters/sidebar/character.html:52
 msgid "Delete Character"
 msgstr "Charakter löschen"
 
@@ -3779,11 +3766,11 @@ msgstr ""
 "Situation passt.\n"
 "    "
 
-#: characters/templates/characters/sidebar/horror.html:134
+#: characters/templates/characters/sidebar/horror.html:135
 msgid "Remove Quirk"
 msgstr "Eigenart entfernen"
 
-#: characters/templates/characters/sidebar/horror.html:140
+#: characters/templates/characters/sidebar/horror.html:141
 msgid "You don't have any quirks."
 msgstr "Du hast keine Eigenarten."
 
@@ -3836,11 +3823,11 @@ msgstr "Notiz speichern"
 msgid "Delete Note"
 msgstr "Notiz Löschen"
 
-#: characters/templates/characters/sidebar/protection.html:36
+#: characters/templates/characters/sidebar/protection.html:53
 msgid "Restore all"
 msgstr "Alle wiederherstellen"
 
-#: characters/templates/characters/sidebar/protection.html:37
+#: characters/templates/characters/sidebar/protection.html:54
 msgid ""
 "\n"
 "        Click on the shield icons above to spend protection points.\n"
@@ -3854,12 +3841,12 @@ msgstr ""
 "musst und dieser nicht anderweitig verhindert werden kann.\n"
 "    "
 
-#: characters/templates/characters/sidebar/protection.html:47
+#: characters/templates/characters/sidebar/protection.html:64
 #: phasesix/settings.py:324
 msgid "Protection Types"
 msgstr "Schutztypen"
 
-#: characters/templates/characters/sidebar/protection.html:57
+#: characters/templates/characters/sidebar/protection.html:75
 msgid ""
 "\n"
 "        This is an innate protection that comes from your character's "
@@ -3877,7 +3864,7 @@ msgstr ""
 
 #: characters/templates/characters/sidebar/quirk.html:13
 #: characters/templates/characters/sidebar/recipe.html:13
-#: characters/templates/characters/sidebar/spell.html:31
+#: characters/templates/characters/sidebar/spell.html:32
 #: characters/templates/characters/sidebar/template.html:13
 msgid "Forget"
 msgstr "Vergessen"
@@ -3948,7 +3935,7 @@ msgid "Shield Cover"
 msgstr "Schilddeckung"
 
 #: characters/templates/characters/sidebar/riot_gear.html:112
-#: characters/templates/characters/sidebar/weapon.html:97
+#: characters/templates/characters/sidebar/weapon.html:98
 msgid "Condition"
 msgstr "Zustand"
 
@@ -3956,17 +3943,17 @@ msgstr "Zustand"
 msgid "Cast"
 msgstr "Zauber ausführen"
 
-#: characters/templates/characters/sidebar/spell.html:21
 #: characters/templates/characters/sidebar/spell.html:22
-#: characters/templates/characters/sidebar/weapon.html:50
+#: characters/templates/characters/sidebar/spell.html:23
+#: characters/templates/characters/sidebar/weapon.html:51
 msgid "Add Modification"
 msgstr "Modifikatoren hinzufügen"
 
-#: characters/templates/characters/sidebar/spell.html:45
+#: characters/templates/characters/sidebar/spell.html:46
 msgid "Spell cost"
 msgstr "Zauber Kosten"
 
-#: characters/templates/characters/sidebar/spell.html:56
+#: characters/templates/characters/sidebar/spell.html:57
 #: magic/templates/magic/_basespell_widget.html:24
 #: magic/templates/magic/basespell_detail.html:39
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:21
@@ -3987,11 +3974,11 @@ msgstr "Angriff:"
 msgid "Reload"
 msgstr "Nachladen"
 
-#: characters/templates/characters/sidebar/weapon.html:88
+#: characters/templates/characters/sidebar/weapon.html:89
 msgid "Ammunition"
 msgstr "Munition"
 
-#: characters/templates/characters/sidebar/weapon.html:139
+#: characters/templates/characters/sidebar/weapon.html:140
 msgid "Remove Modification"
 msgstr "Modifikatoren entfernen"
 
@@ -4272,39 +4259,43 @@ msgstr ""
 "href=\"%(t_contact_url)s\">Kontaktseite</a>.\n"
 "      "
 
-#: characters/views.py:103
+#: characters/views.py:98
+msgid "Character cloned. You are now viewing the duplicate."
+msgstr "Charakter geklont. Du siehst nun die Kopie."
+
+#: characters/views.py:118
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:227
+#: characters/views.py:242
 msgid "Rest wound roll"
 msgstr "Rastwundenwurf"
 
-#: characters/views.py:228
+#: characters/views.py:243
 msgid "Wound roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:243
+#: characters/views.py:258
 msgid "Rest arcana roll"
 msgstr "Rastarkanawurf"
 
-#: characters/views.py:244
+#: characters/views.py:259
 msgid "Arcana roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:258
+#: characters/views.py:273
 msgid "Rest resolve dread"
 msgstr "Grauen auflösen"
 
-#: characters/views.py:259
+#: characters/views.py:274
 msgid "Resolve dread roll"
 msgstr "Grauen auflösen Wurf"
 
-#: characters/views.py:670
+#: characters/views.py:707
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:695
+#: characters/views.py:732
 msgid ""
 "At several places in the interface, your character will be referred to using "
 "their pronouns. Choose the pronouns that best describe your character."
@@ -4312,11 +4303,11 @@ msgstr ""
 "An verschiedenen Stellen wird dein Charakter mit Pronomen angesprochen. "
 "Wähle die Pronomen, die am besten passen."
 
-#: characters/views.py:703
+#: characters/views.py:740
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:710
+#: characters/views.py:747
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -4329,7 +4320,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:728
+#: characters/views.py:765
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -4346,7 +4337,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:739
+#: characters/views.py:776
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -4614,6 +4605,10 @@ msgstr "Negative Effekte"
 #: horror/models.py:53 horror/models.py:71
 msgid "quirk"
 msgstr "Eigenart"
+
+#: horror/models.py:54
+msgid "quirks"
+msgstr "Eigenarten"
 
 #: horror/templates/horror/_quirk_widget.html:32
 msgid "Add Quirk"
@@ -5139,12 +5134,14 @@ msgid "protection display"
 msgstr "Schutzanzeige"
 
 #: portal/models.py:56
-msgid "Shield icons"
-msgstr "Schildsymbole"
-
-#: portal/models.py:57
 msgid "Letters"
 msgstr "Buchstaben"
+
+#: portal/models.py:57
+#, fuzzy
+#| msgid "Shield icons"
+msgid "Shield Icons"
+msgstr "Schildsymbole"
 
 #: portal/models.py:62
 msgid "reduce images"
@@ -6838,6 +6835,28 @@ msgstr "Kopiere englischen Text ohne Links"
 #: worlds/views.py:100
 msgid "You do not have permission to edit this world."
 msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
+
+#~ msgid "Roll Dice"
+#~ msgstr "Würfeln"
+
+#~ msgid "Edit Character"
+#~ msgstr "Editieren"
+
+#~ msgid "*Quickness*d6"
+#~ msgstr "Schnelligkeit w6"
+
+#~ msgid ""
+#~ "\n"
+#~ "            Roll a custom amount of dice here, just klick on the button "
+#~ "with\n"
+#~ "            the amount you'd like to roll.\n"
+#~ "          "
+#~ msgstr ""
+#~ "\n"
+#~ "Würfel eine beliebige Anzahl an Würfeln hier, klick einfach auf den "
+#~ "Button mit\n"
+#~ "der passenden Anzahl.\n"
+#~ "     "
 
 #~ msgid "Tirakan HuS"
 #~ msgstr "Tirakan HuS"
