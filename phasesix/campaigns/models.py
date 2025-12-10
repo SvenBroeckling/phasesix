@@ -1,6 +1,10 @@
 import hashlib
+import os
+import uuid
 
 from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.db import models, transaction
 from django.apps import apps
 from django.urls import reverse
@@ -10,6 +14,25 @@ from sorl.thumbnail import get_thumbnail
 from characters.utils import static_thumbnail
 from rules.models import Extension
 from worlds.unique_slugify import unique_slugify
+
+
+def _copy_field_file(field_file):
+    """Return a saved copy of the given FieldFile (or None if empty)."""
+    if not field_file:
+        return None
+
+    field_file.open("rb")
+    try:
+        file_data = field_file.read()
+    finally:
+        field_file.close()
+
+    base_dir, filename = os.path.split(field_file.name)
+    name, ext = os.path.splitext(filename)
+    new_filename = f"{name}_{uuid.uuid4().hex}{ext}"
+    new_path = os.path.join(base_dir, new_filename)
+
+    return default_storage.save(new_path, ContentFile(file_data))
 
 
 class CampaignQuerySet(models.QuerySet):
@@ -208,11 +231,11 @@ class Campaign(models.Model):
             clone = Campaign(
                 name=self.name,
                 ingame_act_date=self.ingame_act_date,
-                image=self.image,
+                image=_copy_field_file(self.image),
                 image_copyright=self.image_copyright,
                 image_copyright_url=self.image_copyright_url,
                 may_appear_on_start_page=self.may_appear_on_start_page,
-                backdrop_image=self.backdrop_image,
+                backdrop_image=_copy_field_file(self.backdrop_image),
                 backdrop_copyright=self.backdrop_copyright,
                 backdrop_copyright_url=self.backdrop_copyright_url,
                 abstract=self.abstract,
@@ -264,7 +287,7 @@ class Campaign(models.Model):
                     Handout.objects.create(
                         scene=new_scene,
                         name=handout.name,
-                        image=handout.image,
+                        image=_copy_field_file(handout.image),
                         image_copyright=handout.image_copyright,
                         image_copyright_url=handout.image_copyright_url,
                     )

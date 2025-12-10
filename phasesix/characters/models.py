@@ -1,8 +1,12 @@
 import itertools
 import math
+import os
 import random
+import uuid
 from decimal import Decimal, ROUND_FLOOR
 
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.db import models, transaction
 from django.db.models import Sum, Max, Q, Value
 from django.db.models.functions import Coalesce
@@ -29,6 +33,25 @@ from magic.models import SpellTemplateModifier, SpellOrigin
 from pantheon.models import PriestAction
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
 from worlds.unique_slugify import unique_slugify
+
+
+def _copy_field_file(field_file):
+    """Return a saved copy of the given FieldFile (or None if empty)."""
+    if not field_file:
+        return None
+
+    field_file.open("rb")
+    try:
+        file_data = field_file.read()
+    finally:
+        field_file.close()
+
+    base_dir, filename = os.path.split(field_file.name)
+    name, ext = os.path.splitext(filename)
+    new_filename = f"{name}_{uuid.uuid4().hex}{ext}"
+    new_path = os.path.join(base_dir, new_filename)
+
+    return default_storage.save(new_path, ContentFile(file_data))
 
 
 class Pronoun(models.Model, metaclass=TransMeta):
@@ -266,10 +289,10 @@ class Character(models.Model):
                 entity=self.entity,
                 attitude=self.attitude,
                 grace=self.grace,
-                image=self.image,
+                image=_copy_field_file(self.image),
                 image_copyright=self.image_copyright,
                 image_copyright_url=self.image_copyright_url,
-                backdrop_image=self.backdrop_image,
+                backdrop_image=_copy_field_file(self.backdrop_image),
                 backdrop_copyright=self.backdrop_copyright,
                 backdrop_copyright_url=self.backdrop_copyright_url,
                 pronoun=self.pronoun,
@@ -417,7 +440,7 @@ class Character(models.Model):
                     boost=foe.boost,
                     name=foe.name,
                     is_familiar=foe.is_familiar,
-                    image=foe.image,
+                    image=_copy_field_file(foe.image),
                 )
 
             for recipe in self.characterrecipe_set.all():
