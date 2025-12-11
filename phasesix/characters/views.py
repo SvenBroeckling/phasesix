@@ -330,8 +330,9 @@ class CharacterModifyStressView(View):
     def post(self, request, *args, **kwargs):
         character = Character.objects.get(id=kwargs["pk"])
         if character.may_edit(request.user):
-            func = getattr(self, f"modify_{self.kwargs['kind']}")
-            func(character, kwargs["mode"])
+            func = getattr(self, f"modify_{self.kwargs['kind']}", None)
+            if func:
+                func(character, kwargs["mode"])
         return JsonResponse({"status": "ok"})
 
     def modify_stress(self, character, mode):
@@ -352,6 +353,25 @@ class CharacterModifyStressView(View):
         elif mode == "remove":
             if character.base_stress > 0:
                 character.base_stress -= 1
+        character.save()
+
+    def modify_quirks_gained(self, character, mode):
+        # Track quirks earned through stress; never let healed exceed gained
+        if mode == "gain":
+            character.quirks_gained += 1
+        elif mode == "remove" and character.quirks_gained > 0:
+            character.quirks_gained -= 1
+            if character.quirks_gained < character.quirks_healed:
+                character.quirks_healed = character.quirks_gained
+        character.save()
+
+    def modify_quirks_healed(self, character, mode):
+        # Track treated quirks; cannot heal more than gained or go below zero
+        if mode == "gain":
+            if character.quirks_healed < character.quirks_gained:
+                character.quirks_healed += 1
+        elif mode == "remove" and character.quirks_healed > 0:
+            character.quirks_healed -= 1
         character.save()
 
 
