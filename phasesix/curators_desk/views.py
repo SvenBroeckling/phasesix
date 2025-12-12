@@ -310,55 +310,57 @@ class TemplatesByIdView(TemplateView):
 class ExtensionGrid(TemplateView):
     template_name = "curators_desk/fragments/extension_grid.html"
 
+    MODEL_MAP = {
+        "template": (Template, "admin:rules_template_change"),
+        "lineage": (Lineage, "admin:rules_lineage_change"),
+        "skill": (Skill, "admin:rules_skill_change"),
+        "item": (Item, "admin:armory_item_change"),
+        "weapon": (Weapon, "admin:armory_weapon_change"),
+        "weaponmodification": (
+            WeaponModification,
+            "admin:armory_weaponmodification_change",
+        ),
+        "riotgear": (RiotGear, "admin:armory_riotgear_change"),
+    }
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        grid_type = kwargs.get("type")
+        model, admin_url = self.MODEL_MAP.get(grid_type, (None, None))
+
         context["extensions"] = Extension.objects.all()
-        context["type"] = kwargs.get("type")
-        if kwargs.get("type") == "template":
-            context["object_list"] = Template.objects.all()
-            context["admin_url"] = "admin:rules_template_change"
-        elif kwargs.get("type") == "lineage":
-            context["object_list"] = Lineage.objects.all()
-            context["admin_url"] = "admin:rules_lineage_change"
-        elif kwargs.get("type") == "skill":
-            context["object_list"] = Skill.objects.all()
-            context["admin_url"] = "admin:rules_skill_change"
-        elif kwargs.get("type") == "item":
-            context["object_list"] = Item.objects.all()
-            context["admin_url"] = "admin:armory_item_change"
-        elif kwargs.get("type") == "weapon":
-            context["object_list"] = Weapon.objects.all()
-            context["admin_url"] = "admin:armory_weapon_change"
-        elif kwargs.get("type") == "weaponmodification":
-            context["object_list"] = WeaponModification.objects.all()
-            context["admin_url"] = "admin:armory_weaponmodification_change"
-        elif kwargs.get("type") == "riotgear":
-            context["object_list"] = RiotGear.objects.all()
-            context["admin_url"] = "admin:armory_riotgear_change"
+        context["type"] = grid_type
+        context["admin_url"] = admin_url
+
+        if model:
+            object_list = model.objects.prefetch_related("extensions")
+            object_list = list(object_list)
+            for obj in object_list:
+                obj.extension_ids = {ext.id for ext in obj.extensions.all()}
+            context["object_list"] = object_list
+        else:
+            context["object_list"] = []
+
         return context
 
     def post(self, request, *args, **kwargs):
-        if kwargs.get("type") == "template":
-            obj = Template.objects.get(id=request.POST.get("object"))
-        elif kwargs.get("type") == "lineage":
-            obj = Lineage.objects.get(id=request.POST.get("object"))
-        elif kwargs.get("type") == "skill":
-            obj = Skill.objects.get(id=request.POST.get("object"))
-        elif kwargs.get("type") == "item":
-            obj = Item.objects.get(id=request.POST.get("object"))
-        elif kwargs.get("type") == "weapon":
-            obj = Weapon.objects.get(id=request.POST.get("object"))
-        elif kwargs.get("type") == "weaponmodification":
-            obj = WeaponModification.objects.get(id=request.POST.get("object"))
-        elif kwargs.get("type") == "riotgear":
-            obj = RiotGear.objects.get(id=request.POST.get("object"))
-        else:
+        grid_type = kwargs.get("type")
+        model, _ = self.MODEL_MAP.get(grid_type, (None, None))
+
+        if not model:
             return HttpResponse(
                 mark_safe('<i class="fas fa-question text-warning"></i>')
             )
-        extension = Extension.objects.get(id=request.POST.get("extension"))
 
-        if extension in obj.extensions.all():
+        try:
+            obj = model.objects.get(id=request.POST.get("object"))
+            extension = Extension.objects.get(id=request.POST.get("extension"))
+        except (model.DoesNotExist, Extension.DoesNotExist):
+            return HttpResponse(
+                mark_safe('<i class="fas fa-question text-warning"></i>')
+            )
+
+        if obj.extensions.filter(pk=extension.pk).exists():
             obj.extensions.remove(extension)
             return HttpResponse(mark_safe('<i class="fas fa-times text-danger"></i>'))
         else:
