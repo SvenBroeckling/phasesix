@@ -9,6 +9,7 @@
         <th>{% trans 'Character' %}</th>
         <th>{% trans 'Campaign' %}</th>
         <th>{% trans 'Created by' %}</th>
+        <th>{% trans 'Actions' %}</th>
       </tr>
       </thead>
       <tbody>
@@ -18,6 +19,14 @@
           <td>{{ object.homebrew_character }}</td>
           <td>{{ object.homebrew_campaign }}</td>
           <td>{{ object.created_by }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary"
+                    hx-post="{% url 'curators_desk:keep_homebrew' %}"
+                    hx-vals='{"model_name": "{{ qs|model_name }}", "object_id": "{{ object.id }}"}'
+                    hx-confirm="{% trans 'Are you sure?' %}">
+              {% trans 'Keep as Homebrew' %}
+            </button>
+          </td>
         </tr>
       {% endfor %}
       </tbody>

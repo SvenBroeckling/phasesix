@@ -25,17 +25,22 @@
           <div
             hx-trigger="refresh-curators-desk-template-statistics from:document"
             hx-get="{% url "curators_desk:template_statistics" %}">
+            <div class="d-flex justify-content-center mt-5">
+              <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="tab-pane fade" id="v-template-extension-grid" role="tabpanel">
+        <div class="tab-pane fade" id="v-extension-grid" role="tabpanel">
           <div
             hx-trigger="refresh-curators-desk-extension-grid from:document"
             hx-get="{% url "curators_desk:extension_grid" type="template" %}">
           </div>
         </div>
-        <div class="tab-pane fade" id="v-template-review-homebrew" role="tabpanel">
+        <div class="tab-pane fade" id="v-review-homebrew" role="tabpanel">
           <div
-            hx-trigger="refresh-curators-desk-extension-grid from:document"
+            hx-trigger="refresh-curators-desk-review-homebrew from:document"
             hx-get="{% url "curators_desk:review_homebrew" %}">
           </div>
         </div>

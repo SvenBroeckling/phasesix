@@ -18,40 +18,44 @@
   </div>
 </div>
 
-<div class="row mb-4">
-  <div class="col-12">
-    <nav class="nav nav-pills" role="tablist">
+<div class="row">
+  <div class="col-md-3">
+    <div class="list-group" id="model-list-tab" role="tablist">
       {% for model in translation_models %}
-        <a
-          data-bs-toggle="tab"
-          data-bs-target="#{{ model.id }}-tab-pane"
-          role="tab"
-          class="nav-link pointer me-2 mb-1 {% if forloop.first %}active{% endif %}">{{ model.name|capfirst }}</a>
+        <a class="list-group-item list-group-item-action {% if forloop.first %}active{% endif %}"
+           id="{{ model.id }}-list-tab"
+           data-bs-toggle="list"
+           href="#{{ model.id }}-tab-pane"
+           role="tab"
+           aria-controls="{{ model.id }}-tab-pane">{{ model.name|capfirst }}</a>
       {% endfor %}
-    </nav>
+    </div>
   </div>
-</div>
-
-<div class="tab-content">
-  {% for model in translation_models %}
-    <div class="tab-pane fade {% if forloop.first %} show active{% endif %}"
-         id="{{ model.id }}-tab-pane" role="tabpanel"
-         tabindex="0">
-      <div class="row">
-        {% for object in model.qs|objects_with_missing_translations:model.translatable_fields %}
-          <div class="col-12">
-            {% url model.admin_url_name object_id=object.id as admin_url %}
-            {% if admin_url %}
-              <a href="">{{ object }}</a>
-            {% else %}
-              {{ object }}
-            {% endif %}
-            {% for field in model.translatable_fields %}
-              {% translation_field_badge object field %}
+  <div class="col-md-9">
+    <div class="tab-content">
+      {% for model in translation_models %}
+        <div class="tab-pane fade {% if forloop.first %} show active{% endif %}"
+             id="{{ model.id }}-tab-pane"
+             role="tabpanel"
+             aria-labelledby="{{ model.id }}-list-tab"
+             tabindex="0">
+          <div class="row">
+            {% for object in model.qs|objects_with_missing_translations:model.translatable_fields %}
+              <div class="col-12 small">
+                {% url model.admin_url_name object_id=object.id as admin_url %}
+                {% if admin_url %}
+                  <a href="{{ admin_url }}">{{ object }}</a>
+                {% else %}
+                  {{ object }}
+                {% endif %}
+                {% for field in model.translatable_fields %}
+                  {% translation_field_badge object field %}
+                {% endfor %}
+              </div>
             {% endfor %}
           </div>
-        {% endfor %}
-      </div>
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
+  </div>
 </div>

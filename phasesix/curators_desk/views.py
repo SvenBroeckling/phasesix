@@ -1,6 +1,12 @@
+from functools import reduce
+from operator import or_
+
+from django.db import models
+from django.db.models import Q, Sum, Count, Max, Min
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.generic import TemplateView
 
 from armory.models import Weapon, Item, WeaponModification, RiotGear
@@ -14,6 +20,7 @@ from rules.models import (
     Extension,
     Template,
     Lineage,
+    TemplateModifier,
 )
 
 
@@ -58,118 +65,133 @@ class TemplateStatisticsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        aspects_sum = {}
-        aspects_positive_sum = {}
-        aspects_count = {}
-        aspects_max = {}
-        aspects_min = {}
-        attributes_sum = {}
-        attributes_positive_sum = {}
-        attributes_count = {}
-        attributes_max = {}
-        attributes_min = {}
-        skills_sum = {}
-        skills_positive_sum = {}
-        skills_count = {}
-        skills_max = {}
-        skills_min = {}
-
-        for a in CHARACTER_ASPECT_CHOICES:
-            aspects_sum[a[0]] = [0, []]  # Sum, Templates
-            aspects_positive_sum[a[0]] = [0, []]
-            aspects_count[a[0]] = [0, []]
-            aspects_max[a[0]] = [-999, []]
-            aspects_min[a[0]] = [999, []]
-
-        for s in Skill.objects.all():
-            skills_sum[s] = [0, []]  # Sum, Templates
-            skills_positive_sum[s] = [0, []]
-            skills_count[s] = [0, []]
-            skills_max[s] = [-999, []]
-            skills_min[s] = [999, []]
-
-        for a in Attribute.objects.all():
-            attributes_sum[a] = [0, []]  # Sum, Templates
-            attributes_positive_sum[a] = [0, []]  # Sum, Templates
-            attributes_count[a] = [0, []]
-            attributes_max[a] = [-999, []]
-            attributes_min[a] = [999, []]
-
-        extension_id = self.request.GET.get("e", None)
-        if extension_id is not None:
-            active_extension = Extension.objects.get(id=extension_id)
-            templates = Template.objects.filter(extensions=active_extension)
+        extension_id = self.request.GET.get("e")
+        templates_qs = Template.objects.all()
+        if extension_id:
+            try:
+                active_extension = Extension.objects.get(id=extension_id)
+                templates_qs = templates_qs.filter(extensions=active_extension)
+            except Extension.DoesNotExist:
+                active_extension = None
         else:
             active_extension = None
-            templates = Template.objects.all()
 
-        for t in templates:
-            for m in t.templatemodifier_set.all():
-                if m.aspect:
-                    aspects_sum[m.aspect][0] += m.aspect_modifier
-                    aspects_sum[m.aspect][1].append(t)
+        modifiers_qs = TemplateModifier.objects.filter(template__in=templates_qs)
 
-                    if m.aspect_modifier > 0:
-                        aspects_positive_sum[m.aspect][0] += m.aspect_modifier
-                        aspects_positive_sum[m.aspect][1].append(t)
+        def get_stats_for_field(field_name, modifier_field, all_items_map):
+            agg_stats = (
+                modifiers_qs.filter(**{f"{field_name}__isnull": False})
+                .values(field_name)
+                .annotate(
+                    sum_val=Sum(modifier_field),
+                    count_val=Count("id"),
+                    max_val=Max(modifier_field),
+                    min_val=Min(modifier_field),
+                )
+            )
 
-                    aspects_count[m.aspect][0] += 1
-                    aspects_count[m.aspect][1].append(t)
+            pos_agg_stats = (
+                modifiers_qs.filter(
+                    **{f"{field_name}__isnull": False, f"{modifier_field}__gt": 0}
+                )
+                .values(field_name)
+                .annotate(pos_sum_val=Sum(modifier_field))
+            )
+            pos_sums = {item[field_name]: item["pos_sum_val"] for item in pos_agg_stats}
 
-                    if m.aspect_modifier > aspects_max[m.aspect][0]:
-                        aspects_max[m.aspect][0] = m.aspect_modifier
-                        aspects_max[m.aspect][1] = [t]
-                    elif m.aspect_modifier == aspects_max[m.aspect][0]:
-                        aspects_max[m.aspect][1].append(t)
-                    if m.aspect_modifier < aspects_max[m.aspect][0]:
-                        aspects_min[m.aspect][0] = m.aspect_modifier
-                        aspects_min[m.aspect][1] = [t]
-                    elif m.aspect_modifier == aspects_min[m.aspect][0]:
-                        aspects_min[m.aspect][1].append(t)
+            stats_sum = {}
+            stats_pos_sum = {}
+            stats_count = {}
+            stats_max = {}
+            stats_min = {}
 
-                if m.skill:
-                    skills_sum[m.skill][0] += m.skill_modifier
-                    skills_sum[m.skill][1].append(t)
+            max_min_queries = []
+            for stat in agg_stats:
+                item_id = stat[field_name]
+                item_obj = all_items_map.get(item_id)
+                if not item_obj:
+                    continue
 
-                    if m.skill_modifier > 0:
-                        skills_positive_sum[m.skill][0] += m.skill_modifier
-                        skills_positive_sum[m.skill][1].append(t)
+                stats_sum[item_obj] = [stat["sum_val"], []]
+                stats_count[item_obj] = [stat["count_val"], []]
+                stats_pos_sum[item_obj] = [pos_sums.get(item_id, 0), []]
 
-                    skills_count[m.skill][0] += 1
-                    skills_count[m.skill][1].append(t)
+                max_val = stat["max_val"]
+                min_val = stat["min_val"]
 
-                    if m.skill_modifier > skills_max[m.skill][0]:
-                        skills_max[m.skill][0] = m.skill_modifier
-                        skills_max[m.skill][1] = [t]
-                    elif m.skill_modifier == skills_max[m.skill][0]:
-                        skills_max[m.skill][1].append(t)
-                    if m.skill_modifier < skills_min[m.skill][0]:
-                        skills_min[m.skill][0] = m.skill_modifier
-                        skills_min[m.skill][1] = [t]
-                    elif m.skill_modifier == skills_min[m.skill][0]:
-                        skills_min[m.skill][1].append(t)
+                stats_max[item_obj] = [max_val, []]
+                stats_min[item_obj] = [min_val, []]
 
-                if m.attribute:
-                    attributes_sum[m.attribute][0] += m.attribute_modifier
-                    attributes_sum[m.attribute][1].append(t)
+                max_min_queries.append(
+                    Q(**{field_name: item_id, modifier_field: max_val})
+                )
+                max_min_queries.append(
+                    Q(**{field_name: item_id, modifier_field: min_val})
+                )
 
-                    if m.attribute_modifier > 0:
-                        attributes_positive_sum[m.attribute][0] += m.attribute_modifier
-                        attributes_positive_sum[m.attribute][1].append(t)
+            if not max_min_queries:
+                for item_id, item_obj in all_items_map.items():
+                    if item_obj not in stats_sum:
+                        stats_sum[item_obj] = [0, []]
+                        stats_pos_sum[item_obj] = [0, []]
+                        stats_count[item_obj] = [0, []]
+                        stats_max[item_obj] = [-999, []]
+                        stats_min[item_obj] = [999, []]
+                return (
+                    stats_sum,
+                    stats_pos_sum,
+                    stats_count,
+                    stats_max,
+                    stats_min,
+                )
 
-                    attributes_count[m.attribute][0] += 1
-                    attributes_count[m.attribute][1].append(t)
+            relevant_modifiers = modifiers_qs.filter(
+                reduce(or_, max_min_queries)
+            ).select_related("template")
 
-                    if m.attribute_modifier > attributes_max[m.attribute][0]:
-                        attributes_max[m.attribute][0] = m.attribute_modifier
-                        attributes_max[m.attribute][1] = [t]
-                    elif m.attribute_modifier == attributes_max[m.attribute][0]:
-                        attributes_max[m.attribute][1].append(t)
-                    if m.attribute_modifier < attributes_min[m.attribute][0]:
-                        attributes_min[m.attribute][0] = m.attribute_modifier
-                        attributes_min[m.attribute][1] = [t]
-                    elif m.attribute_modifier == attributes_min[m.attribute][0]:
-                        attributes_min[m.attribute][1].append(t)
+            for mod in relevant_modifiers:
+                item_id = getattr(mod, field_name)
+                if isinstance(item_id, models.Model):
+                    item_id = item_id.pk
+                item_obj = all_items_map.get(item_id)
+                mod_val = getattr(mod, modifier_field)
+
+                if item_obj in stats_max and stats_max[item_obj][0] == mod_val:
+                    if mod.template not in stats_max[item_obj][1]:
+                        stats_max[item_obj][1].append(mod.template)
+
+                if item_obj in stats_min and stats_min[item_obj][0] == mod_val:
+                    if mod.template not in stats_min[item_obj][1]:
+                        stats_min[item_obj][1].append(mod.template)
+
+            return stats_sum, stats_pos_sum, stats_count, stats_max, stats_min
+
+        aspect_map = {a[0]: a[0] for a in CHARACTER_ASPECT_CHOICES}
+        (
+            aspects_sum,
+            aspects_positive_sum,
+            aspects_count,
+            aspects_max,
+            aspects_min,
+        ) = get_stats_for_field("aspect", "aspect_modifier", aspect_map)
+
+        attribute_map = {obj.pk: obj for obj in Attribute.objects.all()}
+        (
+            attributes_sum,
+            attributes_positive_sum,
+            attributes_count,
+            attributes_max,
+            attributes_min,
+        ) = get_stats_for_field("attribute", "attribute_modifier", attribute_map)
+
+        skill_map = {obj.pk: obj for obj in Skill.objects.all()}
+        (
+            skills_sum,
+            skills_positive_sum,
+            skills_count,
+            skills_max,
+            skills_min,
+        ) = get_stats_for_field("skill", "skill_modifier", skill_map)
 
         context.update(
             {
@@ -331,3 +353,29 @@ class ReviewHomebrewView(TemplateView):
             for model in get_homebrew_models()
         ]
         return context
+
+
+class KeepHomebrewView(View):
+    def post(self, request, *args, **kwargs):
+        model_name = request.POST.get("model_name")
+        object_id = request.POST.get("object_id")
+
+        model = None
+        for m in get_homebrew_models():
+            if m.__name__ == model_name:
+                model = m
+                break
+
+        if model:
+            try:
+                obj = model.objects.get(id=object_id)
+                obj.keep_as_homebrew = True
+                obj.save()
+
+                response = HttpResponse(status=204)
+                response["HX-Trigger"] = "refresh-curators-desk-review-homebrew"
+                return response
+            except model.DoesNotExist:
+                return HttpResponse("Object not found", status=404)
+
+        return HttpResponse("Model not found", status=400)

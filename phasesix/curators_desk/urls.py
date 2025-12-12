@@ -32,4 +32,9 @@ urlpatterns = [
         views.ReviewHomebrewView.as_view(),
         name="review_homebrew",
     ),
+    path(
+        "keep_homebrew/",
+        staff_member_required(views.KeepHomebrewView.as_view()),
+        name="keep_homebrew",
+    ),
 ]
