@@ -16,9 +16,9 @@
       {% for object in qs %}
         <tr>
           <td><a href="{% admin_url_for_qs_model qs object.id %}">{{ object }}</a></td>
-          <td>{{ object.homebrew_character }}</td>
-          <td>{{ object.homebrew_campaign }}</td>
-          <td>{{ object.created_by }}</td>
+          <td><a href="{{ object.homebrew_character.get_absolute_url }}">{{ object.homebrew_character }}</a></td>
+          <td><a href="{{ object.homebrew_campaign.get_absolute_url }}">{{ object.homebrew_campaign }}</a></td>
+          <td><a href="{{ object.created_by.profile.get_absolute_url }}">{{ object.created_by }}</a></td>
           <td>
             <button class="btn btn-sm btn-primary"
                     hx-post="{% url 'curators_desk:keep_homebrew' %}"

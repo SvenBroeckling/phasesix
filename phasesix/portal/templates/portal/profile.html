@@ -110,8 +110,10 @@
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2025 %}" class="no-decoration">
                 <div class="position-relative profile-cta">
-                  <img src="{% static "img/profile_cta_images/profile_wrapup_2024.png" %}" alt="wrapup"
-                       class="img img-fluid rounded">
+                  <div class="ratio ratio-16x9">
+                    <img src="{% static "img/wrapup_2025.png" %}" alt="wrapup"
+                         class="rounded object-fit-cover">
+                  </div>
                   <div class="profile-cta-text w-100 p-2">{% trans "2025 WrapUp" %}</div>
                 </div>
               </a>
@@ -120,8 +122,10 @@
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2024 %}" class="no-decoration">
                 <div class="position-relative profile-cta">
-                  <img src="{% static "img/profile_cta_images/profile_wrapup_2024.png" %}" alt="wrapup"
-                       class="img img-fluid rounded">
+                  <div class="ratio ratio-16x9">
+                    <img src="{% static "img/profile_cta_images/profile_wrapup_2024.png" %}" alt="wrapup"
+                         class="rounded object-fit-cover">
+                  </div>
                   <div class="profile-cta-text w-100 p-2">{% trans "2024 WrapUp" %}</div>
                 </div>
               </a>
@@ -130,8 +134,10 @@
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2023 %}" class="no-decoration">
                 <div class="position-relative profile-cta">
-                  <img src="{% static "img/profile_cta_images/profile_wrapup_2023.png" %}" alt="wrapup"
-                       class="img img-fluid rounded">
+                  <div class="ratio ratio-16x9">
+                    <img src="{% static "img/profile_cta_images/profile_wrapup_2023.png" %}" alt="wrapup"
+                         class="rounded object-fit-cover">
+                  </div>
                   <div class="profile-cta-text w-100 p-2">{% trans "2023 WrapUp" %}</div>
                 </div>
               </a>
