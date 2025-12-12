@@ -6,7 +6,13 @@
     <ul class="list-group">
         {% for d in objects.items %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="" data-bs-toggle="modal" data-bs-target="#info-modal">{{ d.0 }}</a>
+                <a href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#info-modal"
+                    hx-get="{% url 'curators_desk:templates_by_id' %}?ids={% for t in d.1.1 %}{{ t.id }},{% endfor %}"
+                    hx-target="#info-modal .modal-body"
+                    hx-swap="innerHTML"
+                >{{ d.0 }}</a>
                 <span class="badge bg-secondary">
                     {% if d.1.0 != 999 and d.1.0 != -999 %}
                         {{ d.1.0 }}
@@ -14,11 +20,6 @@
                         n/a
                     {% endif %}
                 </span>
-                <div class="d-none">
-                    {% for t in d.1.1 %}
-                        {% template_widget t %}
-                    {% endfor %}
-                </div>
             </li>
         {% endfor %}
     </ul>

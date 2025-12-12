@@ -18,6 +18,11 @@ urlpatterns = [
         name="template_statistics",
     ),
     path(
+        "templates_by_id/",
+        views.TemplatesByIdView.as_view(),
+        name="templates_by_id",
+    ),
+    path(
         "extension_grid/<type>/",
         staff_member_required(views.ExtensionGrid.as_view()),
         name="extension_grid",

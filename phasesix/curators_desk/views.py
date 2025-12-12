@@ -79,6 +79,27 @@ class TemplateStatisticsView(TemplateView):
         modifiers_qs = TemplateModifier.objects.filter(template__in=templates_qs)
 
         def get_stats_for_field(field_name, modifier_field, all_items_map):
+            item_to_templates = {}
+            item_to_pos_templates = {}
+            all_modifiers_for_field = modifiers_qs.filter(
+                **{f"{field_name}__isnull": False}
+            ).select_related("template")
+            for mod in all_modifiers_for_field:
+                item_id = getattr(mod, field_name)
+                if isinstance(item_id, models.Model):
+                    item_id = item_id.pk
+
+                if item_id not in item_to_templates:
+                    item_to_templates[item_id] = []
+                if mod.template not in item_to_templates[item_id]:
+                    item_to_templates[item_id].append(mod.template)
+
+                if getattr(mod, modifier_field) > 0:
+                    if item_id not in item_to_pos_templates:
+                        item_to_pos_templates[item_id] = []
+                    if mod.template not in item_to_pos_templates[item_id]:
+                        item_to_pos_templates[item_id].append(mod.template)
+
             agg_stats = (
                 modifiers_qs.filter(**{f"{field_name}__isnull": False})
                 .values(field_name)
@@ -112,9 +133,18 @@ class TemplateStatisticsView(TemplateView):
                 if not item_obj:
                     continue
 
-                stats_sum[item_obj] = [stat["sum_val"], []]
-                stats_count[item_obj] = [stat["count_val"], []]
-                stats_pos_sum[item_obj] = [pos_sums.get(item_id, 0), []]
+                stats_sum[item_obj] = [
+                    stat["sum_val"],
+                    item_to_templates.get(item_id, []),
+                ]
+                stats_count[item_obj] = [
+                    stat["count_val"],
+                    item_to_templates.get(item_id, []),
+                ]
+                stats_pos_sum[item_obj] = [
+                    pos_sums.get(item_id, 0),
+                    item_to_pos_templates.get(item_id, []),
+                ]
 
                 max_val = stat["max_val"]
                 min_val = stat["min_val"]
@@ -260,6 +290,20 @@ class TemplateStatisticsView(TemplateView):
                 "active_extension": active_extension,
             }
         )
+        return context
+
+
+class TemplatesByIdView(TemplateView):
+    template_name = "curators_desk/fragments/_template_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ids = self.request.GET.get("ids")
+        if ids:
+            ids = [int(i) for i in ids.split(",") if i]
+            context["templates"] = Template.objects.filter(id__in=ids)
+        else:
+            context["templates"] = Template.objects.none()
         return context
 
 
