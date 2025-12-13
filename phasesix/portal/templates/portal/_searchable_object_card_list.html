@@ -1,9 +1,10 @@
+{% load homebrew_extras %}
 {% load django_bootstrap5 %}
 {% load characters_extras %}
 {% load armory_extras %}
 {% load i18n static %}
 
-{% with category_qs_exists=character_object.category_qs.exists homebrew_qs_exists=character_object.homebrew_qs.exists %}
+{% with category_qs_exists=character_object.category_qs.exists homebrew_qs_exists=character_object.get_homebrew_qs.exists %}
   <div class="row">
     <div class="col-12 col-md-4 col-lg-3">
 
@@ -104,7 +105,7 @@
                class="tab-pane searchable-object-card-list-tab-pane {% if forloop.first %}active{% endif %}"
                id="category-{{ category.id }}">
             <div class="column-container column-layout-2">
-              {% for object in category.child_item_qs.distinct|for_extensions:character_object.get_extension_qs %}
+              {% for object in category.child_item_qs.distinct|for_extensions:character_object.get_extension_qs|without_homebrew %}
                 <div class="searchable-object-card">
                   {% object_widget object character=character_object.character add_button=add_button %}
                 </div>

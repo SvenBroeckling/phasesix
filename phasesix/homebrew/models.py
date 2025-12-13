@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as gt
 
 class HomebrewQuerySet(models.QuerySet):
     def homebrew(self, character=None, campaign=None):
+        if character is None and campaign is None:
+            return self.none()
         qs = self.filter(is_homebrew=True)
         if campaign is not None:
             return qs.filter(homebrew_campaign=campaign)
