@@ -54,6 +54,15 @@
       {% endfor %}
 
       {% if may_edit %}
+        <a href=""
+           data-sidebar-right-url="{% url 'campaigns:xhr_select_npc' pk=object.id %}"
+           data-sidebar-right-title="{% trans "Select NPC" %}">
+          <div class="card d-flex justify-content-center align-items-center me-2 mb-2"
+               style="width: 200px; height: 200px">
+            <i class="fas fa-user-plus fa-2x"></i>
+            <span class="invite-text">{% trans "Select NPC" %}</span>
+          </div>
+        </a>
         <a
           href="{% url 'characters:create_random_npc' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
           <div class="card d-flex justify-content-center align-items-center me-2 mb-2"

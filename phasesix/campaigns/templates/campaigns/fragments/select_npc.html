@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load portal_extras %}
+
+<div class="list-group">
+  {% for character in characters %}
+    <div class="card mb-2">
+      <div class="d-flex">
+        <img src="{% image_url character "80x80" crop="center" %}"
+             alt="{{ character.name }}"
+             style="width: 80px; height: 80px;">
+        <div class="card-body">
+          <h5 class="card-title">{{ character.name }}</h5>
+          {% if character.campaign %}
+            <a href="{{ character.campaign.get_absolute_url }}" class="card-link">{{ character.campaign }}</a>
+          {% elif character.npc_campaign %}
+            <a href="{{ character.npc_campaign.get_absolute_url }}" class="card-link">{{ character.npc_campaign }}</a>
+          {% endif %}
+          <div class="d-flex w-100 justify-content-end mt-2">
+            <button class="btn btn-sm btn-primary"
+                    data-action-trigger-url="{% url 'campaigns:clone_npc' pk=campaign.id character_pk=character.id %}"
+                    data-action-trigger-event-after="refresh-campaign-personae,sidebar-right-hide">
+              {% trans "Clone" %}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

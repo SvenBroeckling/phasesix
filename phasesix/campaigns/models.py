@@ -94,6 +94,14 @@ class Campaign(models.Model):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     is_favorite = models.BooleanField(_("is favorite"), default=False)
 
+    cloned_from = models.ForeignKey(
+        "self",
+        verbose_name=_("cloned from"),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+
     epoch_extension = models.ForeignKey(
         "rules.Extension",
         limit_choices_to={"type": "e", "is_mandatory": False},
@@ -254,6 +262,7 @@ class Campaign(models.Model):
                 npc_visibility=self.npc_visibility,
                 game_log_visibility=self.game_log_visibility,
                 character_visibility=self.character_visibility,
+                cloned_from=self,
             )
             clone.slug = None
             clone.save()

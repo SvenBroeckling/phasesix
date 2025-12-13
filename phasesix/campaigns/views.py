@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import (
@@ -262,6 +262,61 @@ class XhrSearchFoeSidebarView(DetailView):
 
         context["foes"] = foes.order_by("name_de")
         return context
+
+
+class XhrSelectNPCView(DetailView):
+    model = Campaign
+    template_name = "campaigns/fragments/select_npc.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["characters"] = Character.objects.filter(
+            created_by=self.request.user
+        ).exclude(id__in=self.object.npc_set.all())
+        context["campaign"] = self.object
+        return context
+
+
+class CloneNPCView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, pk=kwargs["pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+
+        character = get_object_or_404(Character, pk=kwargs["character_pk"])
+        character.clone(new_npc_campaign=campaign)
+        return render(
+            request,
+            "campaigns/fragments/select_npc.html",
+            {
+                "characters": Character.objects.filter(
+                    created_by=self.request.user
+                ).exclude(id__in=campaign.npc_set.all()),
+                "campaign": campaign,
+            },
+        )
+
+
+class AssignNPCView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, pk=kwargs["pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+
+        character = get_object_or_404(Character, pk=kwargs["character_pk"])
+        character.npc_campaign = campaign
+        character.save()
+        messages.success(request, _("NPC assigned to this campaign."))
+        return render(
+            request,
+            "campaigns/fragments/select_npc.html",
+            {
+                "characters": Character.objects.filter(
+                    created_by=self.request.user
+                ).exclude(id__in=campaign.npc_set.all()),
+                "campaign": campaign,
+            },
+        )
 
 
 class XhrCampaignGameLogView(ListView):

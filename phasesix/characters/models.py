@@ -176,6 +176,14 @@ class Character(models.Model):
         default=False,
     )
 
+    cloned_from = models.ForeignKey(
+        "self",
+        verbose_name=_("cloned from"),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+
     extensions = models.ManyToManyField(
         "rules.Extension", limit_choices_to={"is_mandatory": False}
     )
@@ -314,6 +322,7 @@ class Character(models.Model):
                 latest_initiative=self.latest_initiative,
                 quirks_gained=self.quirks_gained,
                 quirks_healed=self.quirks_healed,
+                cloned_from=self,
             )
 
             # Ensure a fresh slug is generated

@@ -75,6 +75,21 @@ urlpatterns = [
         name="xhr_search_foe",
     ),
     path(
+        "select_npc/<int:pk>",
+        views.XhrSelectNPCView.as_view(),
+        name="xhr_select_npc",
+    ),
+    path(
+        "clone_npc/<int:pk>/<int:character_pk>",
+        views.CloneNPCView.as_view(),
+        name="clone_npc",
+    ),
+    path(
+        "assign_npc/<int:pk>/<int:character_pk>",
+        views.AssignNPCView.as_view(),
+        name="assign_npc",
+    ),
+    path(
         "sidebar/<int:pk>/<sidebar_template>",
         views.XhrSidebarView.as_view(),
         name="xhr_sidebar",
