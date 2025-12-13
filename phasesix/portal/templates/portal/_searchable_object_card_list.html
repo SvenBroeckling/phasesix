@@ -6,7 +6,7 @@
 
 {% with category_qs_exists=character_object.category_qs.exists homebrew_qs_exists=character_object.get_homebrew_qs.exists %}
   <div class="row">
-    <div class="col-12 col-md-4 col-lg-3">
+    <div class="col-12 col-md-4 col-lg-3 sticky-top align-self-start bg-body py-2 py-md-0 navbar-nav-scroll">
 
       {% if category_qs_exists %}
         <div class="input-group input-group-sm mb-3">
