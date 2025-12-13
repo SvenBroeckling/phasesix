@@ -20,12 +20,20 @@
           <td><a href="{{ object.homebrew_campaign.get_absolute_url }}">{{ object.homebrew_campaign }}</a></td>
           <td><a href="{{ object.created_by.profile.get_absolute_url }}">{{ object.created_by }}</a></td>
           <td>
-            <button class="btn btn-sm btn-primary"
-                    hx-post="{% url 'curators_desk:keep_homebrew' %}"
-                    hx-vals='{"model_name": "{{ qs|model_name }}", "object_id": "{{ object.id }}"}'
-                    hx-confirm="{% trans 'Are you sure?' %}">
-              {% trans 'Keep as Homebrew' %}
-            </button>
+            <div class="btn-group btn-group-sm" role="group">
+              <button class="btn btn-outline-primary"
+                      title="{% trans 'Keep as Homebrew' %}"
+                      hx-post="{% url 'curators_desk:keep_homebrew' %}"
+                      hx-vals='{"model_name": "{{ qs|model_name }}", "object_id": "{{ object.id }}"}'>
+                <i class="fas fa-book"></i>
+              </button>
+              <button class="btn btn-outline-success"
+                      title="{% trans 'Accept Homebrew' %}"
+                      hx-post="{% url 'curators_desk:accept_homebrew' %}"
+                      hx-vals='{"model_name": "{{ qs|model_name }}", "object_id": "{{ object.id }}"}'>
+                <i class="fas fa-check"></i>
+              </button>
+            </div>
           </td>
         </tr>
       {% endfor %}

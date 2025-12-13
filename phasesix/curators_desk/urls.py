@@ -42,4 +42,9 @@ urlpatterns = [
         staff_member_required(views.KeepHomebrewView.as_view()),
         name="keep_homebrew",
     ),
+    path(
+        "accept_homebrew/",
+        staff_member_required(views.AcceptHomebrewView.as_view()),
+        name="accept_homebrew",
+    ),
 ]

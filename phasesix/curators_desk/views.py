@@ -425,3 +425,29 @@ class KeepHomebrewView(View):
                 return HttpResponse("Object not found", status=404)
 
         return HttpResponse("Model not found", status=400)
+
+
+class AcceptHomebrewView(View):
+    def post(self, request, *args, **kwargs):
+        model_name = request.POST.get("model_name")
+        object_id = request.POST.get("object_id")
+
+        model = None
+        for m in get_homebrew_models():
+            if m.__name__ == model_name:
+                model = m
+                break
+
+        if model:
+            try:
+                obj = model.objects.get(id=object_id)
+                obj.is_homebrew = False
+                obj.save()
+
+                response = HttpResponse(status=204)
+                response["HX-Trigger"] = "refresh-curators-desk-review-homebrew"
+                return response
+            except model.DoesNotExist:
+                return HttpResponse("Object not found", status=404)
+
+        return HttpResponse("Model not found", status=400)
