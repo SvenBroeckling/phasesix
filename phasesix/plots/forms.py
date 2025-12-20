@@ -1,4 +1,5 @@
 from plots.models import Plot, PlotElement, Handout, Location
+from characters.models import Character
 from django import forms
 
 from portal.widgets import BootstrapTextarea
@@ -45,6 +46,15 @@ class HandoutForm(forms.ModelForm):
 class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
+        fields = ("name", "description", "image")
+        widgets = {
+            "description": BootstrapTextarea({"rows": 5}),
+        }
+
+
+class PlotNpcForm(forms.ModelForm):
+    class Meta:
+        model = Character
         fields = ("name", "description", "image")
         widgets = {
             "description": BootstrapTextarea({"rows": 5}),

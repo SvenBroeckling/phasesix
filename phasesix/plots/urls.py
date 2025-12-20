@@ -9,7 +9,16 @@ from .views import (
     XhrCreatePlotElementView,
     XhrUpdatePlotElementView,
     XhrCreateHandoutView,
+    XhrUpdateHandoutView,
+    DeleteHandoutView,
     XhrCreateLocationView,
+    XhrUpdateLocationView,
+    DeleteLocationView,
+    XhrSelectPlotNpcView,
+    AddPlotNpcView,
+    AssignPlotNpcView,
+    DeletePlotNpcView,
+    XhrUpdatePlotNpcView,
     XhrPlotFragmentView,
     XhrReorderPlotElementView,
 )
@@ -59,8 +68,53 @@ urlpatterns = [
         name="create_handout",
     ),
     path(
+        "<int:plot_element_pk>/handout/<int:pk>/update",
+        staff_member_required(XhrUpdateHandoutView.as_view()),
+        name="update_handout",
+    ),
+    path(
+        "<int:plot_element_pk>/handout/<int:pk>/delete",
+        staff_member_required(DeleteHandoutView.as_view()),
+        name="delete_handout",
+    ),
+    path(
         "<int:plot_element_pk>/location/create",
         staff_member_required(XhrCreateLocationView.as_view()),
         name="create_location",
+    ),
+    path(
+        "<int:plot_element_pk>/location/<int:pk>/update",
+        staff_member_required(XhrUpdateLocationView.as_view()),
+        name="update_location",
+    ),
+    path(
+        "<int:plot_element_pk>/location/<int:pk>/delete",
+        staff_member_required(DeleteLocationView.as_view()),
+        name="delete_location",
+    ),
+    path(
+        "plot_element/<int:pk>/npc/select",
+        staff_member_required(XhrSelectPlotNpcView.as_view()),
+        name="select_plot_npc",
+    ),
+    path(
+        "plot_element/<int:pk>/npc/<int:character_pk>/add",
+        staff_member_required(AddPlotNpcView.as_view()),
+        name="add_plot_npc",
+    ),
+    path(
+        "plot_element/<int:pk>/npc/<int:character_pk>/assign",
+        staff_member_required(AssignPlotNpcView.as_view()),
+        name="assign_plot_npc",
+    ),
+    path(
+        "plot_element/<int:plot_element_pk>/npc/<int:pk>/delete",
+        staff_member_required(DeletePlotNpcView.as_view()),
+        name="delete_plot_npc",
+    ),
+    path(
+        "plot_element/<int:plot_element_pk>/npc/<int:pk>/update",
+        staff_member_required(XhrUpdatePlotNpcView.as_view()),
+        name="update_plot_npc",
     ),
 ]

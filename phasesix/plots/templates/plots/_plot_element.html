@@ -77,7 +77,11 @@
         </div>
         <div class="d-flex flex-wrap gap-2">
           {% for handout in element.handouts.all %}
-            <div class="text-center">
+            <button type="button"
+                    class="btn p-0 border-0 bg-transparent text-center"
+                    data-modal-url="{% url "plots:update_handout" plot_element_pk=element.id pk=handout.id %}"
+                    data-modal-title="{{ handout.name }}"
+                    data-modal-size-class="modal-xl">
               {% if handout.image %}
                 <img src="{{ handout.image.url }}"
                      alt="{{ handout.name }}"
@@ -91,7 +95,7 @@
                 </div>
               {% endif %}
               <div class="small mt-1">{{ handout.name }}</div>
-            </div>
+            </button>
           {% empty %}
             <div class="text-muted fst-italic">{% trans 'No handouts yet.' %}</div>
           {% endfor %}
@@ -101,27 +105,35 @@
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
-          <a class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
-             target="_blank"
-             href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id %}?plot_element_pk={{ object.id }}"
-             title="{% trans 'Add npc' %}"><i class="fa fa-plus me-1"></i> {% trans 'Add' %}</a>
+          <button class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
+                  type="button"
+                  data-sidebar-right-url="{% url 'plots:select_plot_npc' pk=element.id %}"
+                  data-sidebar-right-title="{% trans 'Select NPC' %}"
+                  title="{% trans 'Add npc' %}">
+            <i class="fa fa-plus me-1"></i> {% trans 'Add' %}
+          </button>
         </div>
-        <div class="d-flex flex-wrap gap-3">
+        <div class="d-flex flex-wrap gap-2">
           {% for character in element.npc.all %}
-            <a href="{{ character.get_absolute_url }}"
-               class="text-decoration-none text-body">
-              <div class="d-flex align-items-center gap-2">
-                {% if character.image %}
-                  <img src="{{ character.image.url }}"
-                       alt="{{ character.name }}"
-                       class="rounded"
-                       style="width: 32px;
-                                                height: 32px;
-                                                object-fit: cover">
-                {% endif %}
-                <span>{{ character.name }}</span>
-              </div>
-            </a>
+            <button type="button"
+                    class="btn p-0 border-0 bg-transparent text-center"
+                    data-modal-url="{% url "plots:update_plot_npc" plot_element_pk=element.id pk=character.id %}"
+                    data-modal-title="{{ character.name }}"
+                    data-modal-size-class="modal-xl">
+              {% if character.image %}
+                <img src="{{ character.image.url }}"
+                     alt="{{ character.name }}"
+                     class="img-thumbnail"
+                     style="max-height: 80px">
+              {% else %}
+                <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                     style="width: 120px;
+                                            height: 80px">
+                  <span class="text-muted small">{{ character.name }}</span>
+                </div>
+              {% endif %}
+              <div class="small mt-1">{{ character.name }}</div>
+            </button>
           {% empty %}
             <div class="text-muted fst-italic">{% trans 'No NPC assigned.' %}</div>
           {% endfor %}
@@ -140,19 +152,27 @@
             <i class="fa fa-plus me-1"></i> {% trans 'Add' %}
           </button>
         </div>
-        <div class="d-flex flex-wrap gap-3">
+        <div class="d-flex flex-wrap gap-2">
           {% for loc in element.locations.all %}
-            <div class="d-flex align-items-center gap-2">
+            <button type="button"
+                    class="btn p-0 border-0 bg-transparent text-center"
+                    data-modal-url="{% url "plots:update_location" plot_element_pk=element.id pk=loc.id %}"
+                    data-modal-title="{{ loc.name }}"
+                    data-modal-size-class="modal-xl">
               {% if loc.image %}
                 <img src="{{ loc.image.url }}"
                      alt="{{ loc.name }}"
-                     class="rounded"
-                     style="width: 28px;
-                                            height: 28px;
-                                            object-fit: cover">
+                     class="img-thumbnail"
+                     style="max-height: 80px">
+              {% else %}
+                <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                     style="width: 120px;
+                                            height: 80px">
+                  <span class="text-muted small">{{ loc.name }}</span>
+                </div>
               {% endif %}
-              <span>{{ loc.name }}</span>
-            </div>
+              <div class="small mt-1">{{ loc.name }}</div>
+            </button>
           {% empty %}
             <div class="text-muted fst-italic">{% trans 'No locations assigned.' %}</div>
           {% endfor %}
