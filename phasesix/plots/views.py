@@ -1,9 +1,32 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
 from plots.forms import PlotForm, PlotElementForm, HandoutForm, LocationForm
 from plots.models import Plot, PlotElement, Handout, Location
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class XhrReorderPlotElementView(View):
+    def post(self, request, *args, **kwargs):
+        parent_id = request.POST.get("parent_id")
+        element_ids = request.POST.getlist("element_ids[]")
+
+        if parent_id == "root":
+            parent = None
+        else:
+            parent = get_object_or_404(PlotElement, id=parent_id)
+
+        for index, element_id in enumerate(element_ids):
+            PlotElement.objects.filter(id=element_id).update(
+                parent=parent, ordering=index
+            )
+
+        return JsonResponse({"status": "ok"})
 
 
 class PlotEditorView(DetailView):

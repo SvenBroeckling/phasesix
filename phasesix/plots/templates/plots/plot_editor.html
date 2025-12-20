@@ -4,6 +4,39 @@
 
 {% block header %}{% endblock %}
 
+{% block extraheader %}
+  <link rel="stylesheet" href="{% static 'plots/css/plot_editor.css' %}">
+  <style>
+    .drag-handle {
+      cursor: grab !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      padding: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .drag-handle:active {
+      cursor: grabbing !important;
+    }
+    .sortable[data-parent-id="root"] > .sortable-placeholder::before {
+      content: "\21c5   {% trans 'Same Level / Top Level' %}";
+    }
+    .sortable:not([data-parent-id="root"]) > .sortable-placeholder::before {
+      content: "\21c5   {% trans 'Move as Child' %}";
+    }
+    .sortable-active > .plot-element-container::before {
+      content: "{% trans 'Same Level' %}";
+    }
+    .sortable-active > .plot-element-container::after {
+      content: "{% trans 'Same Level' %}";
+    }
+    .sortable:not([data-parent-id="root"]).sortable-active:empty::after {
+      content: "{% trans 'Drop here for children' %}";
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
   <div class="row g-4">
     <div class="col-12 col-lg-8"

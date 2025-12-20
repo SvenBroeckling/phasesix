@@ -1,10 +1,10 @@
 {% load i18n %}
-<div class="sortable" data-parent-id="root">
+<div class="sortable py-3" data-parent-id="root" data-reorder-url="{% url 'plots:xhr_reorder_plot_element' %}">
   {% for element in object.root_elements %}
     {% include 'plots/_plot_element.html' with element=element depth=0 %}
   {% empty %}
     <div
-      class="text-muted fst-italic">{% trans 'No plot elements yet. Use "Root element" to get started.' %}</div>
+      class="text-muted fst-italic">{% trans 'No plot elements yet. Add an element to get started.' %}</div>
   {% endfor %}
 </div>
 

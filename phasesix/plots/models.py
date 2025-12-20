@@ -42,6 +42,7 @@ class Plot(models.Model, metaclass=TransMeta):
         return (
             self.plotelement_set.filter(parent__isnull=True)
             .prefetch_related("children")
+            .order_by("ordering")
             .all()
         )
 
@@ -90,6 +91,10 @@ class PlotElement(models.Model, metaclass=TransMeta):
     npc = models.ManyToManyField("characters.Character", blank=True)
     handouts = models.ManyToManyField(Handout, blank=True)
     locations = models.ManyToManyField(Location, blank=True)
+    ordering = models.PositiveIntegerField(_("ordering"), default=0)
+
+    class Meta:
+        ordering = ["ordering"]
 
     def __str__(self):
         return self.name

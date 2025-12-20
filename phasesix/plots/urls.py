@@ -11,6 +11,7 @@ from .views import (
     XhrCreateHandoutView,
     XhrCreateLocationView,
     XhrPlotFragmentView,
+    XhrReorderPlotElementView,
 )
 
 app_name = "plots"
@@ -34,6 +35,11 @@ urlpatterns = [
         "xhr_plot_fragment/<int:pk>/<fragment_template>",
         staff_member_required(XhrPlotFragmentView.as_view()),
         name="xhr_plot_fragment",
+    ),
+    path(
+        "xhr_reorder_plot_element",
+        staff_member_required(XhrReorderPlotElementView.as_view()),
+        name="xhr_reorder_plot_element",
     ),
     # PlotElement
     path(
