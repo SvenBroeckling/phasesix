@@ -31,7 +31,8 @@
   <table class="table table-bordered table-hover-tr">
     <thead>
     <tr>
-      <th class="bg-dark">{% trans 'Template' %}</th>
+      <th class="bg-dark text-white"
+          style="position: sticky; left: 0; z-index: 3;">{% trans 'Template' %}</th>
       {% for e in extensions %}
         <th class="bg-dark">{{ e.name }}</th>
       {% endfor %}
@@ -40,7 +41,8 @@
     <tbody>
     {% for t in object_list %}
       <tr>
-        <td>
+        <td class="text-white"
+            style="position: sticky; left: 0; z-index: 2; background-color: var(--bs-dark);">
           <a href="{% url admin_url object_id=t.id %}">
             {{ t }}
           </a>
