@@ -1,7 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -18,7 +18,7 @@ from plots.forms import (
 )
 from plots.models import Plot, PlotElement, Handout, Location
 from characters.models import Character
-from rules.models import Foe
+from rules.models import Foe, Extension
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -307,7 +307,11 @@ class XhrSelectPlotFoeView(DetailView):
         plot = self.object.plot
         foes = Foe.objects.all()
         if plot.world_extension_id:
-            foes = foes.for_extensions(plot.world_extension)
+            extensions = Extension.objects.filter(
+                Q(id__in=[p.id for p in plot.extensions.all()]) |
+                Q(id=plot.world_extension.id)
+            )
+            foes = foes.for_extensions(extensions)
         context["foes"] = foes.exclude(id__in=self.object.foes.all()).order_by(
             "name_de"
         )
