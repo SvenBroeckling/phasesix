@@ -21,6 +21,7 @@ from rules.models import (
     Template,
     Lineage,
     TemplateModifier,
+    Foe,
 )
 
 
@@ -321,6 +322,7 @@ class ExtensionGrid(TemplateView):
             "admin:armory_weaponmodification_change",
         ),
         "riotgear": (RiotGear, "admin:armory_riotgear_change"),
+        "foe": (Foe, "admin:rules_foe_change"),
     }
 
     def get_context_data(self, **kwargs):
