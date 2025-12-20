@@ -74,6 +74,7 @@ class PlotElement(models.Model, metaclass=TransMeta):
         ACT = "a", _("Act")
         SCENE = "s", _("Scene")
         ENCOUNTER = "e", _("Encounter")
+        INFO = "i", _("Info")
 
     plot = models.ForeignKey(Plot, verbose_name=_("Plot"), on_delete=models.CASCADE)
     parent = models.ForeignKey(
