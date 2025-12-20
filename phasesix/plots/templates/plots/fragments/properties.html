@@ -1,0 +1,62 @@
+{% load i18n %}
+<div class="card bg-body-secondary border-0 shadow-sm">
+  <div class="card-body position-relative">
+
+    <div class="position-absolute top-0 end-0 me-2 mt-2 d-flex gap-1">
+      <button
+        class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
+        data-modal-url="{% url "plots:update_plot" pk=object.id %}"
+        data-modal-event-after="refresh-plot"
+        data-modal-title="{% trans "Edit plot" %}"
+        title="{% trans "Edit" %}">
+        <i class="fas fa-pen me-1"></i>
+        {% trans "Edit" %}
+      </button>
+      <button
+        class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
+        data-modal-url="{% url "plots:create_plot_element" plot_pk=object.id %}"
+        data-modal-event-after="refresh-plot"
+        data-modal-title="{% trans 'Create plot element' %}"
+        title="{% trans "Add Element" %}">
+        <i class="fas fa-plus me-1"></i>
+        {% trans "Add Element" %}
+      </button>
+    </div>
+
+    <h5 class="card-title mb-3">{% trans 'Plot' %}</h5>
+    <div class="mb-3">
+      <div class="fw-semibold">{% trans 'Name' %}</div>
+      <div>{{ object.name }}</div>
+    </div>
+    <div class="mb-3">
+      <div class="fw-semibold">{% trans 'Language' %}</div>
+      <div>{{ object.get_language_display }}</div>
+    </div>
+    <div class="mb-3">
+      <div class="fw-semibold">{% trans 'Epoch' %}</div>
+      <div>{{ object.epoch_extension }}</div>
+    </div>
+    <div class="mb-3">
+      <div class="fw-semibold">{% trans 'World' %}</div>
+      <div>{{ object.world_extension }}</div>
+    </div>
+    <div class="mb-3">
+      <div class="fw-semibold">{% trans 'Extensions' %}</div>
+      <div>
+        {% for ext in object.extensions.all %}
+          <span class="badge text-bg-dark me-1 mb-1">{{ ext }}</span>
+        {% empty %}
+          <span class="text-muted">{% trans 'None' %}</span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="mb-3">
+      <div class="fw-semibold">{% trans 'Player abstract' %}</div>
+      <div>{{ object.player_abstract|linebreaksbr }}</div>
+    </div>
+    <div class="mb-3">
+      <div class="fw-semibold">{% trans 'GM Description' %}</div>
+      <div>{{ object.gm_description|linebreaksbr }}</div>
+    </div>
+  </div>
+</div>

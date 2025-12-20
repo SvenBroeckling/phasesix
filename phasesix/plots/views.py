@@ -16,6 +16,18 @@ class PlotListView(ListView):
     template_name = "plots/plot_list.html"
 
 
+class XhrPlotFragmentView(DetailView):
+    model = Plot
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["fragment_template"] = self.kwargs["fragment_template"]
+        return context
+
+    def get_template_names(self):
+        return ["plots/fragments/" + self.kwargs["fragment_template"] + ".html"]
+
+
 class XhrCreatePlotView(CreateView):
     model = Plot
     template_name = "plots/xhr_plot_modal.html"

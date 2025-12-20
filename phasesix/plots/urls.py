@@ -10,6 +10,7 @@ from .views import (
     XhrUpdatePlotElementView,
     XhrCreateHandoutView,
     XhrCreateLocationView,
+    XhrPlotFragmentView,
 )
 
 app_name = "plots"
@@ -28,6 +29,11 @@ urlpatterns = [
         "<int:pk>/editor",
         staff_member_required(PlotEditorView.as_view()),
         name="plot_editor",
+    ),
+    path(
+        "xhr_plot_fragment/<int:pk>/<fragment_template>",
+        staff_member_required(XhrPlotFragmentView.as_view()),
+        name="xhr_plot_fragment",
     ),
     # PlotElement
     path(
