@@ -211,6 +211,14 @@ class Character(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
+    plot_campaign = models.ForeignKey(
+        "plots.Plot",
+        verbose_name=_("Plot Campaign"),
+        related_name="plot_npc_set",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
     reputation = models.IntegerField(_("reputation"), default=0)
 
@@ -285,7 +293,7 @@ class Character(models.Model):
             ).url
         return None
 
-    def clone(self, new_campaign=None, new_npc_campaign=None):
+    def clone(self, new_campaign=None, new_npc_campaign=None, plot=None):
         with transaction.atomic():
             clone = Character(
                 name=self.name,
@@ -310,6 +318,7 @@ class Character(models.Model):
                 currency_map=self.currency_map,
                 campaign=new_campaign,
                 npc_campaign=new_npc_campaign,
+                plot_campaign=plot,
                 reputation=self.reputation,
                 health=self.health,
                 boost=self.boost,

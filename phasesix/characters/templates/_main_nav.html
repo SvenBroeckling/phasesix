@@ -174,18 +174,25 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li>
-                  {% create_campaign_url as create_url %}
                   <a class="dropdown-item d-flex align-items-center gap-3"
                      href="{% url "admin:index" %}">
                     {% trans "Admin" %}
                   </a>
                 </li>
                 <li>
-                  {% create_campaign_url as create_url %}
                   <a class="dropdown-item d-flex align-items-center gap-3"
                      href="{% url "curators_desk:dashboard" %}">
                     {% trans "Curators Desk" %}
                   </a>
+                </li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center gap-3"
+                     href="{% url "plots:list_plots" %}">
+                    {% trans "Plot editor" %}
+                  </a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
                 </li>
               {% endif %}
 
