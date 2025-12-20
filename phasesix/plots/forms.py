@@ -29,8 +29,8 @@ class PlotElementForm(forms.ModelForm):
         model = PlotElement
         fields = ("name", "type", "gm_notes", "player_summary")
         widgets = {
-            "gm_notes": BootstrapTextarea({"rows": 5}),
-            "player_summary": BootstrapTextarea({"rows": 5}),
+            "gm_notes": BootstrapTextarea({"rows": 15}),
+            "player_summary": BootstrapTextarea({"rows": 15}),
         }
 
 

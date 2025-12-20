@@ -8,6 +8,7 @@ from .views import (
     XhrUpdatePlotView,
     XhrCreatePlotElementView,
     XhrUpdatePlotElementView,
+    DeletePlotElementView,
     XhrCreateHandoutView,
     XhrUpdateHandoutView,
     DeleteHandoutView,
@@ -60,6 +61,11 @@ urlpatterns = [
         "plot_element/<int:pk>/update",
         staff_member_required(XhrUpdatePlotElementView.as_view()),
         name="update_plot_element",
+    ),
+    path(
+        "plot_element/<int:pk>/delete",
+        staff_member_required(DeletePlotElementView.as_view()),
+        name="delete_plot_element",
     ),
     # Handouts and Locations
     path(

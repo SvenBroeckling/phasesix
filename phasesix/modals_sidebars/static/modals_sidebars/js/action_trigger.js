@@ -9,6 +9,12 @@ const actionTriggerListener = (event) => {
         ) {
             event.preventDefault();
 
+            const confirmMessage =
+                actionTrigger.dataset.actionTriggerConfirm;
+            if (confirmMessage && !window.confirm(confirmMessage)) {
+                return;
+            }
+
             const url = actionTrigger.dataset.actionTriggerUrl;
             const eventAfter = actionTrigger.dataset.actionTriggerEventAfter;
             const method = actionTrigger.dataset.actionTriggerMethod || "POST";

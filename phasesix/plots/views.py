@@ -1,5 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
+from django.db import transaction
+from django.db.models import F
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -124,10 +126,48 @@ class XhrUpdatePlotElementView(UpdateView):
         context["post_url"] = reverse(
             "plots:update_plot_element", kwargs={"pk": self.object.pk}
         )
+        context["delete_url"] = reverse(
+            "plots:delete_plot_element", kwargs={"pk": self.object.pk}
+        )
         return context
 
     def get_success_url(self):
         return reverse("plots:plot_editor", kwargs={"pk": self.kwargs["pk"]})
+
+
+class DeletePlotElementView(View):
+    def post(self, request, *args, **kwargs):
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["pk"])
+        new_parent = plot_element.parent
+
+        if new_parent is None:
+            sibling_qs = PlotElement.objects.filter(
+                plot=plot_element.plot, parent__isnull=True
+            ).exclude(id=plot_element.id)
+        else:
+            sibling_qs = PlotElement.objects.filter(parent=new_parent).exclude(
+                id=plot_element.id
+            )
+
+        children = list(plot_element.children.order_by("ordering"))
+        child_count = len(children)
+        shift_by = child_count - 1
+        insertion_point = plot_element.ordering
+
+        with transaction.atomic():
+            if shift_by != 0:
+                sibling_qs.filter(ordering__gt=insertion_point).update(
+                    ordering=F("ordering") + shift_by
+                )
+
+            for index, child in enumerate(children):
+                child.parent = new_parent
+                child.ordering = insertion_point + index
+                child.save(update_fields=["parent", "ordering"])
+
+            plot_element.delete()
+
+        return JsonResponse({"status": "ok"})
 
 
 class XhrCreateHandoutView(CreateView):

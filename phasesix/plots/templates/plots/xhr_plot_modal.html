@@ -5,8 +5,36 @@
       data-fetch-form-close="all"
       method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  {% bootstrap_form form layout="floating" %}
   {% bootstrap_form_errors form %}
-  <button type="submit"
-          class="btn btn-primary">{% trans "Save" %}</button>
+  {% if form.fields.type and form.fields.gm_notes %}
+    <div class="row g-3">
+      <div class="col-12 col-lg-8">
+        {% bootstrap_field form.name layout="floating" %}
+      </div>
+      <div class="col-12 col-lg-4">
+        {% bootstrap_field form.type layout="floating" %}
+      </div>
+      <div class="col-12 col-lg-6">
+        {% bootstrap_field form.gm_notes layout="floating" %}
+      </div>
+      <div class="col-12 col-lg-6">
+        {% bootstrap_field form.player_summary layout="floating" %}
+      </div>
+    </div>
+  {% else %}
+    {% bootstrap_form form layout="floating" %}
+  {% endif %}
+  <div class="d-flex align-items-center gap-2">
+    <button type="submit"
+            class="btn btn-primary">{% trans "Save" %}</button>
+    {% if delete_url %}
+      <button type="button"
+              class="btn btn-outline-danger"
+              data-action-trigger-url="{{ delete_url }}"
+              data-action-trigger-confirm="{% trans "Delete this plot element?" %}"
+              data-action-trigger-event-after="refresh-plot,modal-hide">
+        {% trans "Delete" %}
+      </button>
+    {% endif %}
+  </div>
 </form>
