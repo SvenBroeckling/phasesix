@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load rules_extras %}
+
+<div class="container-fluid">
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      {% include "rules/_foe_widget.html" with foe=object show_description=True %}
+    </div>
+    <div class="col-12 col-lg-5">
+      <div class="d-flex align-items-center gap-2">
+        <button type="button"
+                class="btn btn-outline-danger"
+                data-action-trigger-url="{% url 'plots:delete_plot_foe' plot_element_pk=plot_element.id pk=object.id %}"
+                data-action-trigger-event-after="refresh-plot,modal-hide">
+          {% trans "Remove" %}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

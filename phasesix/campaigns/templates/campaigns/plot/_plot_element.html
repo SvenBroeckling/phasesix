@@ -1,0 +1,137 @@
+{% load i18n rules_extras portal_extras %}
+<div class="plot-element-container"
+     data-element-id="{{ element.id }}">
+  <div class="plot-bar d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center gap-2">
+      <span type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#details-{{ element.id }}"
+            aria-expanded="false"
+            aria-controls="details-{{ element.id }}"
+            title="{% trans 'Show details' %}">
+        <span class="badge text-bg-secondary">{{ element.get_type_display }}</span>
+        <span class="fw-semibold">{{ element.name }}</span>
+      </span>
+    </div>
+  </div>
+  <div id="details-{{ element.id }}" class="collapse">
+    <div class="rounded p-3 my-2 small border">
+
+      {% if element.player_summary %}
+        <div class="mb-3">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
+          <div class="text-body">{{ element.player_summary|phasesix_markup }}</div>
+        </div>
+      {% endif %}
+
+      {% if element.gm_notes %}
+        <div class="mb-3">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
+          <div class="text-body">{{ element.gm_notes|phasesix_markup }}</div>
+        </div>
+      {% endif %}
+
+      {% if element.handouts.exists %}
+        <div class="mb-3">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Handouts' %}</div>
+          <div class="d-flex flex-wrap gap-2">
+            {% for handout in element.handouts.all %}
+              <div class="d-flex flex-column align-items-center text-center">
+                {% if handout.image %}
+                  <div style="width: 140px;">
+                    <img src="{{ handout.image.url }}"
+                         alt="{{ handout.name }}"
+                         class="img-thumbnail w-100"
+                         style="height: 100px; object-fit: cover;">
+                  </div>
+                {% else %}
+                  <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                       style="width: 140px; height: 100px;">
+                    <span class="text-muted small">{{ handout.name }}</span>
+                  </div>
+                {% endif %}
+                <div class="small mt-1 text-break" style="width: 140px;">{{ handout.name }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if element.npc.exists %}
+        <div class="mb-3">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
+          <div class="d-flex flex-wrap gap-2">
+            {% for character in element.npc.all %}
+              <div class="d-flex flex-column align-items-center text-center">
+                {% if character.image %}
+                  <div style="width: 140px;">
+                    <img src="{{ character.image.url }}"
+                         alt="{{ character.name }}"
+                         class="img-thumbnail w-100"
+                         style="height: 100px; object-fit: cover;">
+                  </div>
+                {% else %}
+                  <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                       style="width: 140px; height: 100px;">
+                    <span class="text-muted small">{{ character.name }}</span>
+                  </div>
+                {% endif %}
+                <div class="small mt-1 text-break" style="width: 140px;">{{ character.name }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if element.foes.exists %}
+        <div class="mb-3">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Foes' %}</div>
+          <div class="d-flex flex-wrap gap-2">
+            {% for foe in element.foes.all %}
+              <div class="d-flex flex-column align-items-center text-center">
+                <div style="width: 140px;">
+                  <img src="{% image_url foe "140x140" crop="center" %}"
+                       alt="{{ foe.name }}"
+                       class="img-thumbnail w-100"
+                       style="height: 140px; object-fit: cover;">
+                </div>
+                <div class="small mt-1 text-break" style="width: 140px;">{{ foe.name }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if element.locations.exists %}
+        <div>
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Locations' %}</div>
+          <div class="d-flex flex-wrap gap-2">
+            {% for loc in element.locations.all %}
+              <div class="d-flex flex-column align-items-center text-center">
+                {% if loc.image %}
+                  <div style="width: 140px;">
+                    <img src="{{ loc.image.url }}"
+                         alt="{{ loc.name }}"
+                         class="img-thumbnail w-100"
+                         style="height: 100px; object-fit: cover;">
+                  </div>
+                {% else %}
+                  <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                       style="width: 140px; height: 100px;">
+                    <span class="text-muted small">{{ loc.name }}</span>
+                  </div>
+                {% endif %}
+                <div class="small mt-1 text-break" style="width: 140px;">{{ loc.name }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="sortable py-2" data-parent-id="{{ element.id }}">
+    {% for child in element.children.all %}
+      {% include 'campaigns/plot/_plot_element.html' with element=child %}
+    {% endfor %}
+  </div>
+</div>

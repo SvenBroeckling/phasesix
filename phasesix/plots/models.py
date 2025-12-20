@@ -90,6 +90,7 @@ class PlotElement(models.Model, metaclass=TransMeta):
     player_summary = models.TextField(_("player summary"), blank=True, null=True)
 
     npc = models.ManyToManyField("characters.Character", blank=True)
+    foes = models.ManyToManyField("rules.Foe", blank=True)
     handouts = models.ManyToManyField(Handout, blank=True)
     locations = models.ManyToManyField(Location, blank=True)
     ordering = models.PositiveIntegerField(_("ordering"), default=0)

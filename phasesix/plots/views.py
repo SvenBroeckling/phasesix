@@ -18,6 +18,7 @@ from plots.forms import (
 )
 from plots.models import Plot, PlotElement, Handout, Location
 from characters.models import Character
+from rules.models import Foe
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -297,6 +298,22 @@ class XhrSelectPlotNpcView(DetailView):
         return context
 
 
+class XhrSelectPlotFoeView(DetailView):
+    model = PlotElement
+    template_name = "plots/sidebar/select_foe.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        plot = self.object.plot
+        foes = Foe.objects.all()
+        if plot.world_extension_id:
+            foes = foes.for_extensions(plot.world_extension)
+        context["foes"] = foes.exclude(id__in=self.object.foes.all()).order_by(
+            "name_de"
+        )
+        return context
+
+
 class AddPlotNpcView(View):
     def post(self, request, *args, **kwargs):
         plot_element = get_object_or_404(PlotElement, id=kwargs["pk"])
@@ -341,6 +358,22 @@ class DeletePlotNpcView(View):
         return JsonResponse({"status": "ok"})
 
 
+class AssignPlotFoeView(View):
+    def post(self, request, *args, **kwargs):
+        plot_element = get_object_or_404(PlotElement, id=kwargs["pk"])
+        foe = get_object_or_404(Foe, id=kwargs["foe_pk"])
+        plot_element.foes.add(foe)
+        return JsonResponse({"status": "ok"})
+
+
+class DeletePlotFoeView(View):
+    def post(self, request, *args, **kwargs):
+        plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
+        foe = get_object_or_404(Foe, id=self.kwargs["pk"])
+        plot_element.foes.remove(foe)
+        return JsonResponse({"status": "ok"})
+
+
 class XhrUpdatePlotNpcView(UpdateView):
     model = Character
     template_name = "plots/xhr_plot_npc_modal.html"
@@ -362,3 +395,15 @@ class XhrUpdatePlotNpcView(UpdateView):
     def get_success_url(self):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
         return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
+
+
+class XhrUpdatePlotFoeView(DetailView):
+    model = Foe
+    template_name = "plots/xhr_plot_foe_modal.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["plot_element"] = get_object_or_404(
+            PlotElement, id=self.kwargs["plot_element_pk"]
+        )
+        return context

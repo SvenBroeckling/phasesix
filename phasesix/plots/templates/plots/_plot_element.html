@@ -1,4 +1,5 @@
 {% load rules_extras %}
+{% load portal_extras %}
 {% load i18n %}
 <div class="plot-element-container"
      data-element-id="{{ element.id }}">
@@ -137,6 +138,38 @@
             </button>
           {% empty %}
             <div class="text-muted fst-italic">{% trans 'No NPC assigned.' %}</div>
+          {% endfor %}
+        </div>
+      </div>
+      {# Foes #}
+      <div class="mb-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Foes' %}</div>
+          <button class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
+                  type="button"
+                  data-sidebar-right-url="{% url 'plots:select_plot_foe' pk=element.id %}"
+                  data-sidebar-right-title="{% trans 'Select foe' %}"
+                  title="{% trans 'Add foe' %}">
+            <i class="fa fa-plus me-1"></i> {% trans 'Add' %}
+          </button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          {% for foe in element.foes.all %}
+            <button type="button"
+                    class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                    data-modal-url="{% url "plots:update_plot_foe" plot_element_pk=element.id pk=foe.id %}"
+                    data-modal-title="{{ foe.name }}"
+                    data-modal-size-class="modal-xl">
+              <div style="width: 140px;">
+                <img src="{% image_url foe "140x140" crop="center" %}"
+                     alt="{{ foe.name }}"
+                     class="rounded border w-100"
+                     style="height: 140px; object-fit: cover;">
+              </div>
+              <div class="small mt-1 text-break" style="width: 140px;">{{ foe.name }}</div>
+            </button>
+          {% empty %}
+            <div class="text-muted fst-italic">{% trans 'No foes assigned.' %}</div>
           {% endfor %}
         </div>
       </div>

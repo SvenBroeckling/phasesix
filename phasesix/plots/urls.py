@@ -16,10 +16,14 @@ from .views import (
     XhrUpdateLocationView,
     DeleteLocationView,
     XhrSelectPlotNpcView,
+    XhrSelectPlotFoeView,
     AddPlotNpcView,
     AssignPlotNpcView,
     DeletePlotNpcView,
+    AssignPlotFoeView,
+    DeletePlotFoeView,
     XhrUpdatePlotNpcView,
+    XhrUpdatePlotFoeView,
     XhrPlotFragmentView,
     XhrReorderPlotElementView,
 )
@@ -104,6 +108,11 @@ urlpatterns = [
         name="select_plot_npc",
     ),
     path(
+        "plot_element/<int:pk>/foe/select",
+        staff_member_required(XhrSelectPlotFoeView.as_view()),
+        name="select_plot_foe",
+    ),
+    path(
         "plot_element/<int:pk>/npc/<int:character_pk>/add",
         staff_member_required(AddPlotNpcView.as_view()),
         name="add_plot_npc",
@@ -119,8 +128,23 @@ urlpatterns = [
         name="delete_plot_npc",
     ),
     path(
+        "plot_element/<int:pk>/foe/<int:foe_pk>/assign",
+        staff_member_required(AssignPlotFoeView.as_view()),
+        name="assign_plot_foe",
+    ),
+    path(
+        "plot_element/<int:plot_element_pk>/foe/<int:pk>/delete",
+        staff_member_required(DeletePlotFoeView.as_view()),
+        name="delete_plot_foe",
+    ),
+    path(
         "plot_element/<int:plot_element_pk>/npc/<int:pk>/update",
         staff_member_required(XhrUpdatePlotNpcView.as_view()),
         name="update_plot_npc",
+    ),
+    path(
+        "plot_element/<int:plot_element_pk>/foe/<int:pk>/update",
+        staff_member_required(XhrUpdatePlotFoeView.as_view()),
+        name="update_plot_foe",
     ),
 ]

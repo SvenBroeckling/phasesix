@@ -1,0 +1,46 @@
+{% load portal_extras %}
+{% load i18n %}
+
+<div x-data="{
+       q: '',
+       matches(name) {
+         const query = (this.q || '').toLowerCase().trim();
+         if (!query) return true;
+         return (name || '').toLowerCase().includes(query);
+       }
+     }">
+
+  <div class="row">
+    <div class="col-12 mb-3">
+      <form action="{% url 'portal:xhr_search_results' %}" class="search-form" @submit.prevent>
+        <div class="input-group">
+          <input class="form-control" type="search" name="q"
+                 autocomplete="off"
+                 placeholder="{% trans 'Foe names' %}"
+                 x-model="q">
+          <button class="btn btn-primary" type="submit">{% trans 'Search' %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 search-results">
+      {% for foe in foes %}
+        <div data-action-trigger-url="{% url 'plots:assign_plot_foe' pk=object.id foe_pk=foe.id %}"
+             data-action-trigger-event-after="refresh-plot,sidebar-right-hide"
+             class="card flex-row mb-2"
+             x-show="matches('{{ foe.name|escapejs }}')">
+          <img src="{% image_url foe "80x80" crop="center" %}"
+               alt="{{ foe.name }}">
+          <div class="card-body">
+            {{ foe.name }}<br>
+          </div>
+        </div>
+      {% empty %}
+        <div class="text-muted fst-italic">{% trans 'No foes available.' %}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
