@@ -17,6 +17,14 @@
             </span>
     </div>
     <div class="d-flex align-items-center gap-2">
+      <button data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
+              data-modal-event-after="refresh-plot"
+              data-modal-title="{% trans 'Edit plot element' %}"
+              type="button"
+              class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
+              title="{% trans 'Edit summary' %}">
+        <i class="fa fa-pen me-1"></i> {% trans 'Edit' %}
+      </button>
       <button data-modal-url="{% url "plots:create_plot_element" plot_pk=object.id %}?parent_pk={{ element.id }}"
               data-modal-event-after="refresh-plot"
               data-modal-title="{% trans 'Create plot element' %}"
@@ -35,14 +43,6 @@
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
-          <button data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
-                  data-modal-event-after="refresh-plot"
-                  data-modal-title="{% trans 'Edit plot element' %}"
-                  type="button"
-                  class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
-                  title="{% trans 'Edit summary' %}">
-            <i class="fa fa-pen me-1"></i> {% trans 'Edit' %}
-          </button>
         </div>
         {% trans "None" as none_text %}
         <div class="text-body">{{ element.player_summary|linebreaksbr|default:none_text }}</div>
@@ -51,14 +51,6 @@
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
-          <button data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
-                  data-modal-event-after="refresh-plot"
-                  data-modal-title="{% trans 'Edit plot element' %}"
-                  type="button"
-                  class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
-                  title="{% trans 'Edit notes' %}">
-            <i class="fa fa-pen me-1"></i> {% trans 'Edit' %}
-          </button>
         </div>
         <div class="text-body">{{ element.gm_notes|linebreaksbr|default:none_text }}</div>
       </div>
