@@ -59,43 +59,17 @@ class DetailView(TemplateView):
         return context
 
 
-class UploadView(View):
-
-    def post(self, request, pad_id):
-        get_object_or_404(Pad, id=pad_id)
-        if "file" not in request.FILES:
-            raise Http404("File missing")
-
-        upload = request.FILES["file"]
-        safe_name = get_valid_filename(upload.name)
-        unique_name = f"{uuid.uuid4()}_{safe_name}"
-        storage_path = os.path.join(settings.MEDIA_ROOT, "partypad")
-        os.makedirs(storage_path, exist_ok=True)
-        storage = FileSystemStorage(
-            location=storage_path,
-            base_url=f"{settings.MEDIA_URL}partypad/",
-        )
-        file_name = storage.save(unique_name, upload)
-        file_url = storage.url(file_name)
-
-        return JsonResponse(
-            {
-                "success": True,
-                "file": f"partypad/{file_name}",
-                "url": file_url,
-            }
-        )
-
-
-class UpsertObjectView(View):
-    http_method_names = ["post"]
-
+class ModifyObjectView(View):
     def post(self, request, pad_id):
         pad = get_object_or_404(Pad, id=pad_id)
-        try:
-            payload = json.loads(request.body.decode("utf-8"))
-        except json.JSONDecodeError as exc:
-            return JsonResponse({"success": False, "error": str(exc)}, status=400)
+
+        if request.content_type == "application/json":
+            try:
+                payload = json.loads(request.body.decode("utf-8"))
+            except json.JSONDecodeError as exc:
+                return JsonResponse({"success": False, "error": str(exc)}, status=400)
+        else:
+            payload = request.POST.dict()
 
         object_id = payload.get("id")
         if not object_id:
@@ -118,15 +92,19 @@ class UpsertObjectView(View):
 
         defaults = {
             "object_type": object_type,
-            "x": payload.get("x", 0),
-            "y": payload.get("y", 0),
-            "width": payload.get("width", 100),
-            "height": payload.get("height", 100),
-            "rotation": payload.get("rotation", 0),
-            "file": _normalize_upload_path(payload.get("file")),
-            "playing": payload.get("playing", False),
-            "loop": payload.get("loop", False),
+            "x": int(payload.get("x", 0)),
+            "y": int(payload.get("y", 0)),
+            "width": int(payload.get("width", 100)),
+            "height": int(payload.get("height", 100)),
+            "rotation": int(payload.get("rotation", 0)),
+            "playing": str(payload.get("playing", "")).lower() == "true",
+            "loop": str(payload.get("loop", "")).lower() == "true",
         }
+
+        if "file" in request.FILES:
+            defaults["file"] = request.FILES["file"]
+        elif payload.get("file"):
+            defaults["file"] = _normalize_upload_path(payload.get("file"))
 
         obj, created = PadObject.objects.get_or_create(
             id=object_uuid,
@@ -143,13 +121,24 @@ class UpsertObjectView(View):
                 "success": True,
                 "created": created,
                 "id": str(obj.id),
+                "file": obj.file.name if obj.file else None,
+                "file_url": obj.file.url if obj.file else None,
             }
         )
 
-
-class DeleteObjectView(View):
-    def post(self, request, pad_id, object_id):
+    def delete(self, request, pad_id):
         pad = get_object_or_404(Pad, id=pad_id)
+        try:
+            payload = json.loads(request.body.decode("utf-8"))
+        except json.JSONDecodeError as exc:
+            return JsonResponse({"success": False, "error": str(exc)}, status=400)
+
+        object_id = payload.get("id")
+        if not object_id:
+            return JsonResponse(
+                {"success": False, "error": "Missing object id."}, status=400
+            )
+
         obj = get_object_or_404(PadObject, id=object_id, pad=pad)
         obj.delete()
         return JsonResponse({"success": True})

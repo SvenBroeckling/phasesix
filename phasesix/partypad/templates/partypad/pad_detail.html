@@ -9,9 +9,7 @@
      data-pad-id="{{ pad.id }}"
      data-csrf-token="{{ csrf_token }}"
      data-ws-url="{% partypad_ws_room_url pad.id %}"
-     data-upload-url="{% url 'partypad:upload' pad_id=pad.id %}"
-     data-upsert-url="{% url 'partypad:upsert_object' pad_id=pad.id %}"
-     data-delete-url-template="/partypad/{{ pad.id }}/objects/__OBJECT_ID__/delete/">
+     data-modify-object-view="{% url 'partypad:modify_object' pad_id=pad.id %}">
   <div class="position-absolute top-0 start-50 translate-middle-x mt-4 z-3">
     <div class="btn-group bg-dark bg-opacity-75 border border-secondary rounded-pill px-2 py-2">
       <button type="button" class="btn btn-sm btn-outline-light" data-partypad-action="upload-image">

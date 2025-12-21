@@ -13,18 +13,8 @@ urlpatterns = [
         name="detail",
     ),
     path(
-        "partypad/<uuid:pad_id>/upload/",
-        login_required(views.UploadView.as_view()),
-        name="upload",
-    ),
-    path(
         "partypad/<uuid:pad_id>/objects/",
-        login_required(views.UpsertObjectView.as_view()),
-        name="upsert_object",
-    ),
-    path(
-        "partypad/<uuid:pad_id>/objects/<uuid:object_id>/delete/",
-        login_required(views.DeleteObjectView.as_view()),
-        name="delete_object",
+        login_required(views.ModifyObjectView.as_view()),
+        name="modify_object",
     ),
 ]

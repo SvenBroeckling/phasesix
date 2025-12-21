@@ -15,6 +15,11 @@
     <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css"
           rel="stylesheet"/>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+
     {% if request.world %}
       <link type="text/x-scss" href="{{ request.world.scss_file_static }}" rel="stylesheet"/>
     {% else %}
