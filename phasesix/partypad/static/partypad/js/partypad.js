@@ -1,209 +1,389 @@
-(function () {
-    const root = document.getElementById("partypad-root");
-    const stageContainer = document.getElementById("partypad-stage");
-    const objectsScript = document.getElementById("partypad-objects");
+class PartyPad {
+    constructor(root) {
+        this.root = root;
+        this.stageContainer =
+            root.querySelector("[data-partypad-stage]") ||
+            document.getElementById("partypad-stage");
+        this.objectsScript =
+            root.querySelector("[data-partypad-objects]") ||
+            document.getElementById("partypad-objects");
 
-    if (!root || !stageContainer || !objectsScript || !window.Konva) {
-        return;
-    }
-
-    const csrfToken = root.dataset.csrfToken;
-    const padId = root.dataset.padId;
-    const modifyUrl = root.dataset.modifyObjectView;
-    const wsUrl = root.dataset.wsUrl;
-
-    const playerKey = "partypad-player-name";
-    let playerName = localStorage.getItem(playerKey);
-    if (!playerName) {
-        playerName = `Player_${Math.random().toString(36).substring(7)}`;
-        localStorage.setItem(playerKey, playerName);
-    }
-
-    const objects = new Map();
-    let selectedId = null;
-    let copiedObject = null;
-    let cursorPosition = { x: 0, y: 0 };
-
-    const stage = new Konva.Stage({
-        container: stageContainer,
-        width: root.clientWidth,
-        height: root.clientHeight,
-    });
-    const layer = new Konva.Layer();
-    stage.add(layer);
-    const transformer = new Konva.Transformer({
-        rotateEnabled: true,
-        ignoreStroke: true,
-        keepRatio: true,
-    });
-    layer.add(transformer);
-
-    const resizeStage = () => {
-        stage.width(root.clientWidth);
-        stage.height(root.clientHeight);
-    };
-    window.addEventListener("resize", resizeStage);
-
-    const stagePointer = () => stage.getPointerPosition() || cursorPosition;
-
-    const updateCursor = () => {
-        const pos = stagePointer();
-        if (pos) {
-            cursorPosition = { x: pos.x, y: pos.y };
-        }
-    };
-
-    const selectNode = (node, id) => {
-        selectedId = id;
-        transformer.nodes([node]);
-        layer.batchDraw();
-    };
-
-    const clearSelection = () => {
-        selectedId = null;
-        transformer.nodes([]);
-        layer.batchDraw();
-    };
-
-    stage.on("mousedown", (e) => {
-        if (e.evt.button === 2) {
+        if (!this.stageContainer || !this.objectsScript || !window.Konva) {
             return;
         }
-        if (e.target === stage) {
-            clearSelection();
+
+        this.csrfToken = root.dataset.csrfToken;
+        this.padId = root.dataset.padId;
+        this.modifyUrl = root.dataset.modifyObjectView;
+        this.wsUrl = root.dataset.wsUrl;
+
+        this.playerName = this.getOrCreatePlayerName();
+
+        this.objects = new Map();
+        this.selectedId = null;
+        this.copiedObject = null;
+        this.cursorPosition = { x: 0, y: 0 };
+        this.isPanning = false;
+        this.lastPanPos = null;
+        this.socket = null;
+
+        this.setupStage();
+        this.setupStageEvents();
+        this.setupStageNavigation();
+        this.setupSocket();
+        this.loadExistingObjects();
+        this.setupUiHandlers();
+        this.setupKeyboardHandlers();
+        this.setupClipboardHandlers();
+    }
+
+    getOrCreatePlayerName() {
+        const playerKey = "partypad-player-name";
+        let playerName = localStorage.getItem(playerKey);
+        if (!playerName) {
+            playerName = `Player_${Math.random().toString(36).substring(7)}`;
+            localStorage.setItem(playerKey, playerName);
         }
-    });
+        return playerName;
+    }
 
-    stage.on("mousemove", updateCursor);
-    stageContainer.addEventListener("contextmenu", (e) => e.preventDefault());
-
-    let isPanning = false;
-    let lastPanPos = null;
-
-    stage.on("mousedown", (e) => {
-        if (e.evt.button !== 2) return;
-        isPanning = true;
-        lastPanPos = stage.getPointerPosition();
-        e.evt.preventDefault();
-    });
-
-    stage.on("mouseup", () => {
-        isPanning = false;
-        lastPanPos = null;
-    });
-
-    stage.on("mousemove", (e) => {
-        if (!isPanning) return;
-        const pos = stage.getPointerPosition();
-        if (!pos || !lastPanPos) return;
-        const dx = pos.x - lastPanPos.x;
-        const dy = pos.y - lastPanPos.y;
-        stage.position({
-            x: stage.x() + dx,
-            y: stage.y() + dy,
+    setupStage() {
+        this.stage = new Konva.Stage({
+            container: this.stageContainer,
+            width: this.root.clientWidth,
+            height: this.root.clientHeight,
         });
-        lastPanPos = pos;
-        stage.batchDraw();
-        e.evt.preventDefault();
-    });
+        this.layer = new Konva.Layer();
+        this.stage.add(this.layer);
+        this.transformer = new Konva.Transformer({
+            rotateEnabled: true,
+            ignoreStroke: true,
+            keepRatio: true,
+        });
+        this.layer.add(this.transformer);
 
-    stage.on("wheel", (e) => {
-        e.evt.preventDefault();
-        const scaleBy = 1.1;
-        const oldScale = stage.scaleX();
-        const pointer = stage.getPointerPosition();
-        if (!pointer) return;
-        const mousePointTo = {
-            x: pointer.x / oldScale - stage.x() / oldScale,
-            y: pointer.y / oldScale - stage.y() / oldScale,
+        this.resizeStage = () => {
+            this.stage.width(this.root.clientWidth);
+            this.stage.height(this.root.clientHeight);
         };
-        const direction = e.evt.deltaY < 0 ? 1 : -1;
-        const newScale =
-            direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-        stage.scale({ x: newScale, y: newScale });
-        stage.position({
-            x: -(mousePointTo.x - pointer.x / newScale) * newScale,
-            y: -(mousePointTo.y - pointer.y / newScale) * newScale,
+        window.addEventListener("resize", this.resizeStage);
+    }
+
+    setupStageEvents() {
+        this.stage.on("mousedown", (event) => {
+            if (event.evt.button === 2) {
+                return;
+            }
+            if (event.target === this.stage) {
+                this.clearSelection();
+            }
         });
-        stage.batchDraw();
-    });
 
-    const jsonHeaders = {
-        "Content-Type": "application/json",
-        "X-CSRFToken": csrfToken,
-    };
+        this.stage.on("mousemove", () => this.updateCursor());
+        this.stageContainer.addEventListener("contextmenu", (event) =>
+            event.preventDefault(),
+        );
+    }
 
-    const postJson = (url, payload, method = "POST") =>
-        fetch(url, {
+    setupStageNavigation() {
+        this.stage.on("mousedown", (event) => {
+            if (event.evt.button !== 2) return;
+            this.isPanning = true;
+            this.lastPanPos = this.stage.getPointerPosition();
+            event.evt.preventDefault();
+        });
+
+        this.stage.on("mouseup", () => {
+            this.isPanning = false;
+            this.lastPanPos = null;
+        });
+
+        this.stage.on("mousemove", (event) => {
+            if (!this.isPanning) return;
+            const pos = this.stage.getPointerPosition();
+            if (!pos || !this.lastPanPos) return;
+            const dx = pos.x - this.lastPanPos.x;
+            const dy = pos.y - this.lastPanPos.y;
+            this.stage.position({
+                x: this.stage.x() + dx,
+                y: this.stage.y() + dy,
+            });
+            this.lastPanPos = pos;
+            this.stage.batchDraw();
+            event.evt.preventDefault();
+        });
+
+        this.stage.on("wheel", (event) => {
+            event.evt.preventDefault();
+            const scaleBy = 1.1;
+            const oldScale = this.stage.scaleX();
+            const pointer = this.stage.getPointerPosition();
+            if (!pointer) return;
+            const mousePointTo = {
+                x: pointer.x / oldScale - this.stage.x() / oldScale,
+                y: pointer.y / oldScale - this.stage.y() / oldScale,
+            };
+            const direction = event.evt.deltaY < 0 ? 1 : -1;
+            const newScale =
+                direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+            this.stage.scale({ x: newScale, y: newScale });
+            this.stage.position({
+                x: -(mousePointTo.x - pointer.x / newScale) * newScale,
+                y: -(mousePointTo.y - pointer.y / newScale) * newScale,
+            });
+            this.stage.batchDraw();
+        });
+    }
+
+    setupSocket() {
+        if (!this.wsUrl) {
+            return;
+        }
+        this.socket = new ReconnectingWebSocket(this.wsUrl, null, {
+            reconnectInterval: 3000,
+        });
+        this.socket.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (
+                    data.type === "pad_object_create" ||
+                    data.type === "pad_object_update"
+                ) {
+                    this.applyIncoming(data.payload);
+                }
+                if (data.type === "pad_object_delete") {
+                    this.removeNode(data.payload);
+                }
+            } catch (err) {}
+        };
+    }
+
+    loadExistingObjects() {
+        const existingObjects = JSON.parse(
+            this.objectsScript.textContent || "[]",
+        );
+        existingObjects.forEach((data) => {
+            this.createNode(data);
+        });
+        this.layer.batchDraw();
+    }
+
+    setupUiHandlers() {
+        this.root.addEventListener("click", (event) => {
+            const target = event.target.closest("[data-partypad-action]");
+            if (!target) return;
+            const action = target.dataset.partypadAction;
+            if (action === "upload-image") {
+                this.getInput("image").click();
+            }
+            if (action === "upload-video") {
+                this.getInput("video").click();
+            }
+            if (action === "upload-audio") {
+                this.getInput("audio").click();
+            }
+            if (action === "add-token") {
+                const data = this.createBaseObject("token", {
+                    width: 80,
+                    height: 80,
+                });
+                this.addObject(data);
+            }
+        });
+
+        this.getInput("image").addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                await this.handleFileUpload(file, "image");
+                event.target.value = "";
+            }
+        });
+
+        this.getInput("video").addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                await this.handleFileUpload(file, "video");
+                event.target.value = "";
+            }
+        });
+
+        this.getInput("audio").addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                await this.handleFileUpload(file, "audio");
+                event.target.value = "";
+            }
+        });
+    }
+
+    setupKeyboardHandlers() {
+        window.addEventListener("keydown", (event) => {
+            if (
+                event.target &&
+                ["INPUT", "TEXTAREA"].includes(event.target.tagName)
+            ) {
+                return;
+            }
+            if (event.key === "Escape") {
+                this.clearSelection();
+            }
+            if (event.key === "Delete") {
+                this.handleDeleteSelected();
+            }
+            if (event.ctrlKey && event.key.toLowerCase() === "c") {
+                this.copySelected();
+            }
+            if (event.ctrlKey && event.key.toLowerCase() === "v") {
+                this.pasteCopied();
+            }
+        });
+    }
+
+    setupClipboardHandlers() {
+        document.addEventListener("paste", (event) => {
+            if (this.copiedObject) {
+                event.preventDefault();
+                return;
+            }
+            if (!event.clipboardData) return;
+            const items = event.clipboardData.items;
+            for (let i = 0; i < items.length; i += 1) {
+                const item = items[i];
+                if (item.type.indexOf("image") !== -1) {
+                    const file = item.getAsFile();
+                    if (file) {
+                        this.handleFileUpload(file, "image").catch(() => {});
+                    }
+                    break;
+                }
+                if (item.type.indexOf("video") !== -1) {
+                    const file = item.getAsFile();
+                    if (file) {
+                        this.handleFileUpload(file, "video").catch(() => {});
+                    }
+                    break;
+                }
+                if (item.type.indexOf("audio") !== -1) {
+                    const file = item.getAsFile();
+                    if (file) {
+                        this.handleFileUpload(file, "audio").catch(() => {});
+                    }
+                    break;
+                }
+            }
+        });
+    }
+
+    getInput(type) {
+        return this.root.querySelector(`[data-partypad-input="${type}"]`);
+    }
+
+    stagePointer() {
+        return this.stage.getPointerPosition() || this.cursorPosition;
+    }
+
+    updateCursor() {
+        const pos = this.stagePointer();
+        if (pos) {
+            this.cursorPosition = { x: pos.x, y: pos.y };
+        }
+    }
+
+    selectNode(node, id) {
+        this.selectedId = id;
+        this.transformer.nodes([node]);
+        this.layer.batchDraw();
+    }
+
+    clearSelection() {
+        this.selectedId = null;
+        this.transformer.nodes([]);
+        this.layer.batchDraw();
+    }
+
+    jsonHeaders() {
+        return {
+            "Content-Type": "application/json",
+            "X-CSRFToken": this.csrfToken,
+        };
+    }
+
+    postJson(url, payload, method = "POST") {
+        return fetch(url, {
             method: method,
-            headers: jsonHeaders,
+            headers: this.jsonHeaders(),
             body: JSON.stringify(payload),
         });
+    }
 
-    const sendSocket = (type, payload) => {
-        if (!socket || socket.readyState !== WebSocket.OPEN) return;
-        socket.send(JSON.stringify({ type, payload }));
-    };
+    sendSocket(type, payload) {
+        if (!this.socket || this.socket.readyState !== WebSocket.OPEN) return;
+        this.socket.send(JSON.stringify({ type, payload }));
+    }
 
-    const persistObject = (data) => {
-        postJson(modifyUrl, data).catch(() => {});
-    };
+    persistObject(data) {
+        this.postJson(this.modifyUrl, data).catch(() => {});
+    }
 
-    const deleteObject = (id) => {
-        postJson(modifyUrl, { id }, "DELETE").catch(() => {});
-    };
+    deleteObject(id) {
+        this.postJson(this.modifyUrl, { id }, "DELETE").catch(() => {});
+    }
 
-    const updateDataFromNode = (entry) => {
+    updateDataFromNode(entry) {
         const node = entry.node;
         const data = entry.data;
         const scaleX = node.scaleX();
         const scaleY = node.scaleY();
 
-        // Calculate new dimensions based on scale
         data.width = Math.max(5, Math.round(node.width() * scaleX));
         data.height = Math.max(5, Math.round(node.height() * scaleY));
         data.x = Math.round(node.x());
         data.y = Math.round(node.y());
         data.rotation = Math.round(node.rotation());
 
-        // Reset scale and apply calculated dimensions to the node
         node.scaleX(1);
         node.scaleY(1);
         node.width(data.width);
         node.height(data.height);
-    };
+    }
 
-    const applyDataToNode = (entry) => {
+    applyDataToNode(entry) {
         const data = entry.data;
         entry.node.position({ x: data.x, y: data.y });
         entry.node.width(data.width);
         entry.node.height(data.height);
         entry.node.rotation(data.rotation || 0);
-    };
+    }
 
-    const attachNodeHandlers = (entry) => {
+    attachNodeHandlers(entry) {
         const node = entry.node;
         node.draggable(true);
-        node.on("mousedown", (e) => {
-            if (e.evt.button === 2) return;
-            selectNode(node, entry.data.id);
+        node.on("mousedown", (event) => {
+            if (event.evt.button === 2) return;
+            this.selectNode(node, entry.data.id);
         });
         node.on("dragend", () => {
-            updateDataFromNode(entry);
-            sendSocket("pad_object_update", { ...entry.data, playerName });
-            persistObject(entry.data);
+            this.updateDataFromNode(entry);
+            this.sendSocket("pad_object_update", {
+                ...entry.data,
+                playerName: this.playerName,
+            });
+            this.persistObject(entry.data);
         });
         node.on("transformend", () => {
-            updateDataFromNode(entry);
-            sendSocket("pad_object_update", { ...entry.data, playerName });
-            persistObject(entry.data);
+            this.updateDataFromNode(entry);
+            this.sendSocket("pad_object_update", {
+                ...entry.data,
+                playerName: this.playerName,
+            });
+            this.persistObject(entry.data);
         });
-    };
+    }
 
-    const createImageNode = (entry) => {
+    createImageNode(entry) {
         const image = new Image();
         image.onload = () => {
-            layer.batchDraw();
+            this.layer.batchDraw();
         };
         image.onerror = () => {
             console.error("Failed to load image:", entry.data.file_url);
@@ -221,17 +401,17 @@
         image.src = entry.data.file_url || "";
 
         if (image.complete) {
-            layer.batchDraw();
+            this.layer.batchDraw();
         }
 
         entry.node = node;
         entry.imageElement = image;
-        attachNodeHandlers(entry);
-        layer.add(node);
-        layer.batchDraw();
-    };
+        this.attachNodeHandlers(entry);
+        this.layer.add(node);
+        this.layer.batchDraw();
+    }
 
-    const createVideoNode = (entry) => {
+    createVideoNode(entry) {
         const video = document.createElement("video");
         video.loop = true;
         video.muted = true;
@@ -242,13 +422,13 @@
             if (!entry.data.width || !entry.data.height) {
                 entry.data.width = Math.round(video.videoWidth / 2) || 200;
                 entry.data.height = Math.round(video.videoHeight / 2) || 200;
-                applyDataToNode(entry);
+                this.applyDataToNode(entry);
             }
-            layer.batchDraw();
+            this.layer.batchDraw();
         });
         video.addEventListener("canplay", () => {
             video.play().catch(() => {});
-            layer.batchDraw();
+            this.layer.batchDraw();
         });
 
         const node = new Konva.Image({
@@ -264,19 +444,16 @@
 
         entry.node = node;
         entry.videoElement = video;
-        attachNodeHandlers(entry);
-        layer.add(node);
+        this.attachNodeHandlers(entry);
+        this.layer.add(node);
 
-        const anim = new Konva.Animation(() => {
-            // No need to do anything here, Konva.Image with video will redraw automatically
-            // if we tell the layer to batchDraw or if we use a simple animation loop.
-        }, layer);
+        const anim = new Konva.Animation(() => {}, this.layer);
         anim.start();
         entry.animation = anim;
-        layer.batchDraw();
-    };
+        this.layer.batchDraw();
+    }
 
-    const createAudioNode = (entry) => {
+    createAudioNode(entry) {
         const audio = document.createElement("audio");
         audio.src = entry.data.file_url || "";
         const group = new Konva.Group({
@@ -353,9 +530,9 @@
         entry.audioElement = audio;
         entry.audioControls = { playText, loopRect, loopCircle };
         entry.audioLabel = label;
-        attachNodeHandlers(entry);
-        layer.add(group);
-        layer.batchDraw();
+        this.attachNodeHandlers(entry);
+        this.layer.add(group);
+        this.layer.batchDraw();
 
         const updateAudioState = () => {
             audio.loop = !!entry.data.loop;
@@ -368,7 +545,7 @@
             }
             loopRect.fill(entry.data.loop ? "#4CAF50" : "#777");
             loopCircle.x(entry.data.loop ? 30 : 10);
-            layer.batchDraw();
+            this.layer.batchDraw();
         };
 
         updateAudioState();
@@ -376,12 +553,15 @@
         playGroup.on("click tap", () => {
             entry.data.playing = !entry.data.playing;
             updateAudioState();
-            sendSocket("pad_object_update", { ...entry.data, playerName });
-            persistObject(entry.data);
+            this.sendSocket("pad_object_update", {
+                ...entry.data,
+                playerName: this.playerName,
+            });
+            this.persistObject(entry.data);
         });
 
         exclusiveGroup.on("click tap", () => {
-            objects.forEach((other) => {
+            this.objects.forEach((other) => {
                 if (
                     other.data.object_type === "audio" &&
                     other.data.id !== entry.data.id
@@ -397,19 +577,25 @@
             });
             entry.data.playing = true;
             updateAudioState();
-            sendSocket("pad_object_update", { ...entry.data, playerName });
-            persistObject(entry.data);
+            this.sendSocket("pad_object_update", {
+                ...entry.data,
+                playerName: this.playerName,
+            });
+            this.persistObject(entry.data);
         });
 
         loopGroup.on("click tap", () => {
             entry.data.loop = !entry.data.loop;
             updateAudioState();
-            sendSocket("pad_object_update", { ...entry.data, playerName });
-            persistObject(entry.data);
+            this.sendSocket("pad_object_update", {
+                ...entry.data,
+                playerName: this.playerName,
+            });
+            this.persistObject(entry.data);
         });
-    };
+    }
 
-    const createTokenNode = (entry) => {
+    createTokenNode(entry) {
         const node = new Konva.Rect({
             x: entry.data.x,
             y: entry.data.y,
@@ -422,12 +608,12 @@
             strokeWidth: 2,
         });
         entry.node = node;
-        attachNodeHandlers(entry);
-        layer.add(node);
-        layer.batchDraw();
-    };
+        this.attachNodeHandlers(entry);
+        this.layer.add(node);
+        this.layer.batchDraw();
+    }
 
-    const createNode = (data) => {
+    createNode(data) {
         const entry = {
             data: { ...data },
             node: null,
@@ -441,30 +627,30 @@
 
         switch (data.object_type) {
             case "image":
-                createImageNode(entry);
+                this.createImageNode(entry);
                 break;
             case "video":
-                createVideoNode(entry);
+                this.createVideoNode(entry);
                 break;
             case "audio":
-                createAudioNode(entry);
+                this.createAudioNode(entry);
                 break;
             case "token":
             default:
-                createTokenNode(entry);
+                this.createTokenNode(entry);
                 break;
         }
 
-        objects.set(data.id, entry);
-        layer.batchDraw();
-    };
+        this.objects.set(data.id, entry);
+        this.layer.batchDraw();
+    }
 
-    const applyIncoming = (payload) => {
+    applyIncoming(payload) {
         if (!payload || !payload.id) return;
-        if (objects.has(payload.id)) {
-            const entry = objects.get(payload.id);
+        if (this.objects.has(payload.id)) {
+            const entry = this.objects.get(payload.id);
             entry.data = { ...entry.data, ...payload };
-            applyDataToNode(entry);
+            this.applyDataToNode(entry);
             if (entry.audioControls) {
                 entry.audioControls.playText.text(
                     entry.data.playing ? "❚❚" : "▶",
@@ -509,15 +695,15 @@
                     );
                 }
             }
-            layer.batchDraw();
+            this.layer.batchDraw();
             return;
         }
-        createNode(payload);
-    };
+        this.createNode(payload);
+    }
 
-    const removeNode = (payload) => {
+    removeNode(payload) {
         if (!payload || !payload.id) return;
-        const entry = objects.get(payload.id);
+        const entry = this.objects.get(payload.id);
         if (!entry) return;
         if (entry.node) {
             entry.node.destroy();
@@ -528,64 +714,43 @@
         if (entry.audioElement) {
             entry.audioElement.pause();
         }
-        objects.delete(payload.id);
-        if (selectedId === payload.id) {
-            clearSelection();
+        this.objects.delete(payload.id);
+        if (this.selectedId === payload.id) {
+            this.clearSelection();
         }
-        layer.batchDraw();
-    };
+        this.layer.batchDraw();
+    }
 
-    const socket = wsUrl
-        ? new ReconnectingWebSocket(wsUrl, null, { reconnectInterval: 3000 })
-        : null;
-    if (socket) {
-        socket.onmessage = (event) => {
-            try {
-                const data = JSON.parse(event.data);
-                if (
-                    data.type === "pad_object_create" ||
-                    data.type === "pad_object_update"
-                ) {
-                    applyIncoming(data.payload);
-                }
-                if (data.type === "pad_object_delete") {
-                    removeNode(data.payload);
-                }
-            } catch (err) {}
+    createBaseObject(objectType, overrides) {
+        return {
+            id:
+                window.crypto && window.crypto.randomUUID
+                    ? window.crypto.randomUUID()
+                    : `${objectType}-${Date.now()}`,
+            object_type: objectType,
+            x: Math.round(this.cursorPosition.x || 100),
+            y: Math.round(this.cursorPosition.y || 100),
+            width: 200,
+            height: objectType === "audio" ? 70 : 200,
+            rotation: 0,
+            file: null,
+            file_url: null,
+            playing: false,
+            loop: false,
+            ...overrides,
         };
     }
 
-    const existingObjects = JSON.parse(objectsScript.textContent || "[]");
-    existingObjects.forEach((data) => {
-        createNode(data);
-    });
-    layer.batchDraw();
+    addObject(data) {
+        this.createNode(data);
+        this.sendSocket("pad_object_create", {
+            ...data,
+            playerName: this.playerName,
+        });
+        this.persistObject(data);
+    }
 
-    const createBaseObject = (objectType, overrides) => ({
-        id:
-            window.crypto && window.crypto.randomUUID
-                ? window.crypto.randomUUID()
-                : `${objectType}-${Date.now()}`,
-        object_type: objectType,
-        x: Math.round(cursorPosition.x || 100),
-        y: Math.round(cursorPosition.y || 100),
-        width: 200,
-        height: objectType === "audio" ? 70 : 200,
-        rotation: 0,
-        file: null,
-        file_url: null,
-        playing: false,
-        loop: false,
-        ...overrides,
-    });
-
-    const addObject = (data) => {
-        createNode(data);
-        sendSocket("pad_object_create", { ...data, playerName });
-        persistObject(data);
-    };
-
-    const getImageDimensions = (file) => {
+    getImageDimensions(file) {
         return new Promise((resolve) => {
             const img = new Image();
             img.onload = () => {
@@ -598,9 +763,9 @@
             };
             img.src = URL.createObjectURL(file);
         });
-    };
+    }
 
-    const getVideoDimensions = (file) => {
+    getVideoDimensions(file) {
         return new Promise((resolve) => {
             const video = document.createElement("video");
             video.preload = "metadata";
@@ -617,19 +782,18 @@
             };
             video.src = URL.createObjectURL(file);
         });
-    };
+    }
 
-    const handleFileUpload = async (file, type) => {
+    async handleFileUpload(file, type) {
         let dimensions = { width: 200, height: 200 };
         if (type === "image") {
-            dimensions = await getImageDimensions(file);
+            dimensions = await this.getImageDimensions(file);
         } else if (type === "video") {
-            dimensions = await getVideoDimensions(file);
+            dimensions = await this.getVideoDimensions(file);
         } else if (type === "audio") {
             dimensions = { width: 250, height: 70 };
         }
 
-        // Limit initial size while maintaining aspect ratio
         const maxDim = 400;
         if (type !== "audio") {
             if (dimensions.width > maxDim || dimensions.height > maxDim) {
@@ -646,17 +810,17 @@
 
         const formData = new FormData();
         formData.append("file", file);
-        const data = createBaseObject(type, dimensions);
+        const data = this.createBaseObject(type, dimensions);
         Object.keys(data).forEach((key) => {
             if (data[key] !== null && data[key] !== undefined) {
                 formData.append(key, data[key]);
             }
         });
 
-        fetch(modifyUrl, {
+        fetch(this.modifyUrl, {
             method: "POST",
             headers: {
-                "X-CSRFToken": csrfToken,
+                "X-CSRFToken": this.csrfToken,
             },
             body: formData,
         })
@@ -665,141 +829,48 @@
                 if (!result.success) return;
                 data.file = result.file;
                 data.file_url = result.file_url;
-                addObject(data);
+                this.addObject(data);
             });
-    };
+    }
 
-    root.addEventListener("click", (event) => {
-        const target = event.target.closest("[data-partypad-action]");
-        if (!target) return;
-        const action = target.dataset.partypadAction;
-        if (action === "upload-image") {
-            const input = root.querySelector('[data-partypad-input="image"]');
-            input.click();
-        }
-        if (action === "upload-video") {
-            const input = root.querySelector('[data-partypad-input="video"]');
-            input.click();
-        }
-        if (action === "upload-audio") {
-            const input = root.querySelector('[data-partypad-input="audio"]');
-            input.click();
-        }
-        if (action === "add-token") {
-            const data = createBaseObject("token", {
-                width: 80,
-                height: 80,
-            });
-            addObject(data);
-        }
-    });
-
-    root.querySelector('[data-partypad-input="image"]').addEventListener(
-        "change",
-        async (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                await handleFileUpload(file, "image");
-                event.target.value = "";
-            }
-        },
-    );
-    root.querySelector('[data-partypad-input="video"]').addEventListener(
-        "change",
-        async (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                await handleFileUpload(file, "video");
-                event.target.value = "";
-            }
-        },
-    );
-    root.querySelector('[data-partypad-input="audio"]').addEventListener(
-        "change",
-        async (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                await handleFileUpload(file, "audio");
-                event.target.value = "";
-            }
-        },
-    );
-
-    const copySelected = () => {
-        if (!selectedId) return;
-        const entry = objects.get(selectedId);
+    copySelected() {
+        if (!this.selectedId) return;
+        const entry = this.objects.get(this.selectedId);
         if (!entry) return;
-        copiedObject = { ...entry.data };
-    };
+        this.copiedObject = { ...entry.data };
+    }
 
-    const pasteCopied = () => {
-        if (!copiedObject) return;
-        const data = createBaseObject(copiedObject.object_type, {
-            ...copiedObject,
+    pasteCopied() {
+        if (!this.copiedObject) return;
+        const data = this.createBaseObject(this.copiedObject.object_type, {
+            ...this.copiedObject,
             id:
                 window.crypto && window.crypto.randomUUID
                     ? window.crypto.randomUUID()
-                    : `${copiedObject.object_type}-${Date.now()}`,
-            x: Math.round(cursorPosition.x || copiedObject.x),
-            y: Math.round(cursorPosition.y || copiedObject.y),
+                    : `${this.copiedObject.object_type}-${Date.now()}`,
+            x: Math.round(this.cursorPosition.x || this.copiedObject.x),
+            y: Math.round(this.cursorPosition.y || this.copiedObject.y),
         });
-        addObject(data);
-    };
+        this.addObject(data);
+    }
 
-    const handleDeleteSelected = () => {
-        if (!selectedId) return;
-        const entry = objects.get(selectedId);
+    handleDeleteSelected() {
+        if (!this.selectedId) return;
+        const entry = this.objects.get(this.selectedId);
         if (!entry) return;
-        removeNode({ id: selectedId });
-        sendSocket("pad_object_delete", { id: selectedId, playerName });
-        deleteObject(selectedId);
-    };
+        this.removeNode({ id: this.selectedId });
+        this.sendSocket("pad_object_delete", {
+            id: this.selectedId,
+            playerName: this.playerName,
+        });
+        this.deleteObject(this.selectedId);
+    }
+}
 
-    window.addEventListener("keydown", (event) => {
-        if (
-            event.target &&
-            ["INPUT", "TEXTAREA"].includes(event.target.tagName)
-        ) {
-            return;
-        }
-        if (event.key === "Escape") {
-            clearSelection();
-        }
-        if (event.key === "Delete") {
-            handleDeleteSelected();
-        }
-        if (event.ctrlKey && event.key.toLowerCase() === "c") {
-            copySelected();
-        }
-        if (event.ctrlKey && event.key.toLowerCase() === "v") {
-            pasteCopied();
-        }
-    });
-
-    document.addEventListener("paste", (event) => {
-        if (copiedObject) {
-            event.preventDefault();
-            return;
-        }
-        if (!event.clipboardData) return;
-        const items = event.clipboardData.items;
-        for (let i = 0; i < items.length; i += 1) {
-            const item = items[i];
-            if (item.type.indexOf("image") !== -1) {
-                const file = item.getAsFile();
-                if (file) handleFileUpload(file, "image").catch(() => {});
-                break;
-            }
-            if (item.type.indexOf("video") !== -1) {
-                const file = item.getAsFile();
-                if (file) handleFileUpload(file, "video").catch(() => {});
-                break;
-            }
-            if (item.type.indexOf("audio") !== -1) {
-                const file = item.getAsFile();
-                if (file) handleFileUpload(file, "audio").catch(() => {});
-                break;
-            }
-        }
-    });
-})();
+window.addEventListener("DOMContentLoaded", () => {
+    const root = document.getElementById("partypad-root");
+    if (!root) {
+        return;
+    }
+    new PartyPad(root);
+});
