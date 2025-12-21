@@ -17,4 +17,9 @@ urlpatterns = [
         login_required(views.ModifyObjectView.as_view()),
         name="modify_object",
     ),
+    path(
+        "partypad/<uuid:pad_id>/objects/<uuid:object_id>/",
+        login_required(views.ModifyObjectView.as_view()),
+        name="modify_object_specific",
+    ),
 ]

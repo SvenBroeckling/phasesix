@@ -60,7 +60,7 @@ class DetailView(TemplateView):
 
 
 class ModifyObjectView(View):
-    def post(self, request, pad_id):
+    def post(self, request, pad_id, object_id=None):
         pad = get_object_or_404(Pad, id=pad_id)
 
         if request.content_type == "application/json":
@@ -71,18 +71,26 @@ class ModifyObjectView(View):
         else:
             payload = request.POST.dict()
 
-        object_id = payload.get("id")
-        if not object_id:
-            return JsonResponse(
-                {"success": False, "error": "Missing object id."}, status=400
-            )
-
-        try:
-            object_uuid = uuid.UUID(str(object_id))
-        except ValueError:
-            return JsonResponse(
-                {"success": False, "error": "Invalid object id."}, status=400
-            )
+        if object_id:
+            try:
+                object_uuid = uuid.UUID(str(object_id))
+            except ValueError:
+                return JsonResponse(
+                    {"success": False, "error": "Invalid object id."}, status=400
+                )
+        else:
+            # Try to get id from payload for backward compatibility or direct creation with specific ID
+            payload_id = payload.get("id")
+            if payload_id:
+                try:
+                    object_uuid = uuid.UUID(str(payload_id))
+                except ValueError:
+                    return JsonResponse(
+                        {"success": False, "error": "Invalid object id in payload."},
+                        status=400,
+                    )
+            else:
+                object_uuid = uuid.uuid4()
 
         object_type = payload.get("object_type")
         if object_type not in PadObject.ObjectType.values:
@@ -123,20 +131,23 @@ class ModifyObjectView(View):
                 "id": str(obj.id),
                 "file": obj.file.name if obj.file else None,
                 "file_url": obj.file.url if obj.file else None,
+                "modify_url": obj.as_dict()["modify_url"],
             }
         )
 
-    def delete(self, request, pad_id):
+    def delete(self, request, pad_id, object_id=None):
         pad = get_object_or_404(Pad, id=pad_id)
-        try:
-            payload = json.loads(request.body.decode("utf-8"))
-        except json.JSONDecodeError as exc:
-            return JsonResponse({"success": False, "error": str(exc)}, status=400)
 
-        object_id = payload.get("id")
+        if not object_id:
+            try:
+                payload = json.loads(request.body.decode("utf-8"))
+                object_id = payload.get("id")
+            except (json.JSONDecodeError, AttributeError):
+                pass
+
         if not object_id:
             return JsonResponse(
-                {"success": False, "error": "Missing object id."}, status=400
+                {"success": False, "error": "Object id missing."}, status=400
             )
 
         obj = get_object_or_404(PadObject, id=object_id, pad=pad)

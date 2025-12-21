@@ -34,8 +34,7 @@ class Pad(models.Model):
         return {
             "id": str(self.id),
             "objects": [
-                obj.as_dict()
-                for obj in self.pad_objects.order_by("created_at")
+                obj.as_dict() for obj in self.pad_objects.order_by("created_at")
             ],
         }
 
@@ -84,6 +83,8 @@ class PadObject(models.Model):
         return f"{self.object_type}:{self.id}"
 
     def as_dict(self) -> dict:
+        from django.urls import reverse
+
         return {
             "id": str(self.id),
             "object_type": self.object_type,
@@ -96,4 +97,8 @@ class PadObject(models.Model):
             "file_url": self.file.url if self.file else None,
             "playing": self.playing,
             "loop": self.loop,
+            "modify_url": reverse(
+                "partypad:modify_object_specific",
+                kwargs={"pad_id": self.pad_id, "object_id": self.id},
+            ),
         }

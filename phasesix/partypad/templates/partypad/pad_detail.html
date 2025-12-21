@@ -9,7 +9,9 @@
      data-pad-id="{{ pad.id }}"
      data-csrf-token="{{ csrf_token }}"
      data-ws-url="{% partypad_ws_room_url pad.id %}"
-     data-modify-object-view="{% url 'partypad:modify_object' pad_id=pad.id %}">
+     data-modify-object-url="{% url 'partypad:modify_object' pad_id=pad.id %}"
+     data-partypad-background-image="{% static 'partypad/images/background.png' %}"
+     data-partypad-background-color="#0b0b0b">
   <div class="position-absolute top-0 start-50 translate-middle-x mt-4 z-3">
     <div class="btn-group bg-dark bg-opacity-75 border border-secondary rounded-pill px-2 py-2">
       <button type="button" class="btn btn-sm btn-outline-light" data-partypad-action="upload-image">

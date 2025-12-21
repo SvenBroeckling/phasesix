@@ -14,8 +14,11 @@ class PartyPad {
 
         this.csrfToken = root.dataset.csrfToken;
         this.padId = root.dataset.padId;
-        this.modifyUrl = root.dataset.modifyObjectView;
+        this.modifyUrl = root.dataset.modifyObjectUrl;
         this.wsUrl = root.dataset.wsUrl;
+        this.backgroundImageUrl = root.dataset.partypadBackgroundImage || "";
+        this.backgroundColor =
+            root.dataset.partypadBackgroundColor || "#0b0b0b";
 
         this.playerName = this.getOrCreatePlayerName();
 
@@ -53,6 +56,17 @@ class PartyPad {
             width: this.root.clientWidth,
             height: this.root.clientHeight,
         });
+        this.backgroundLayer = new Konva.Layer({ listening: false });
+        this.backgroundRect = new Konva.Rect({
+            x: 0,
+            y: 0,
+            width: this.stage.width(),
+            height: this.stage.height(),
+            fill: this.backgroundColor,
+        });
+        this.backgroundLayer.add(this.backgroundRect);
+        this.stage.add(this.backgroundLayer);
+
         this.layer = new Konva.Layer();
         this.stage.add(this.layer);
         this.transformer = new Konva.Transformer({
@@ -65,8 +79,12 @@ class PartyPad {
         this.resizeStage = () => {
             this.stage.width(this.root.clientWidth);
             this.stage.height(this.root.clientHeight);
+            this.updateBackgroundSize();
+            this.updateBackgroundTransform();
         };
         window.addEventListener("resize", this.resizeStage);
+
+        this.setupBackground();
     }
 
     setupStageEvents() {
@@ -108,6 +126,7 @@ class PartyPad {
                 x: this.stage.x() + dx,
                 y: this.stage.y() + dy,
             });
+            this.updateBackgroundTransform();
             this.lastPanPos = pos;
             this.stage.batchDraw();
             event.evt.preventDefault();
@@ -131,6 +150,7 @@ class PartyPad {
                 x: -(mousePointTo.x - pointer.x / newScale) * newScale,
                 y: -(mousePointTo.y - pointer.y / newScale) * newScale,
             });
+            this.updateBackgroundTransform();
             this.stage.batchDraw();
         });
     }
@@ -274,6 +294,45 @@ class PartyPad {
         });
     }
 
+    setupBackground() {
+        this.updateBackgroundTransform();
+        if (!this.backgroundImageUrl) {
+            this.backgroundLayer.batchDraw();
+            return;
+        }
+
+        const image = new Image();
+        image.onload = () => {
+            this.backgroundRect.fillPatternImage(image);
+            this.backgroundRect.fillPatternRepeat("repeat");
+            this.backgroundRect.fillPatternOffset({ x: 0, y: 0 });
+            this.updateBackgroundTransform();
+            this.backgroundLayer.batchDraw();
+        };
+        image.onerror = () => {
+            this.backgroundLayer.batchDraw();
+        };
+        image.src = this.backgroundImageUrl;
+    }
+
+    updateBackgroundSize() {
+        if (!this.backgroundRect) return;
+        this.backgroundRect.width(this.stage.width());
+        this.backgroundRect.height(this.stage.height());
+        this.backgroundLayer.batchDraw();
+    }
+
+    updateBackgroundTransform() {
+        if (!this.backgroundLayer) return;
+        const scaleX = this.stage.scaleX() || 1;
+        const scaleY = this.stage.scaleY() || 1;
+        this.backgroundLayer.scale({ x: 1 / scaleX, y: 1 / scaleY });
+        this.backgroundLayer.position({
+            x: -this.stage.x() / scaleX,
+            y: -this.stage.y() / scaleY,
+        });
+    }
+
     getInput(type) {
         return this.root.querySelector(`[data-partypad-input="${type}"]`);
     }
@@ -322,11 +381,17 @@ class PartyPad {
     }
 
     persistObject(data) {
-        this.postJson(this.modifyUrl, data).catch(() => {});
+        const url = data.modify_url || this.modifyUrl;
+        this.postJson(url, data).catch(() => {});
     }
 
     deleteObject(id) {
-        this.postJson(this.modifyUrl, { id }, "DELETE").catch(() => {});
+        const entry = this.objects.get(id);
+        const url =
+            entry && entry.data.modify_url
+                ? entry.data.modify_url
+                : this.modifyUrl;
+        this.postJson(url, { id }, "DELETE").catch(() => {});
     }
 
     updateDataFromNode(entry) {
@@ -747,6 +812,9 @@ class PartyPad {
             ...data,
             playerName: this.playerName,
         });
+        if (!data.modify_url) {
+            data.modify_url = this.modifyUrl;
+        }
         this.persistObject(data);
     }
 
@@ -817,7 +885,8 @@ class PartyPad {
             }
         });
 
-        fetch(this.modifyUrl, {
+        const url = this.modifyUrl;
+        fetch(url, {
             method: "POST",
             headers: {
                 "X-CSRFToken": this.csrfToken,
@@ -829,6 +898,7 @@ class PartyPad {
                 if (!result.success) return;
                 data.file = result.file;
                 data.file_url = result.file_url;
+                data.modify_url = result.modify_url;
                 this.addObject(data);
             });
     }
