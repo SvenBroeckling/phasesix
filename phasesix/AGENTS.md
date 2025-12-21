@@ -7,6 +7,8 @@
 - Static assets live in `static/` folders in the apps and app-specific assets (such as `characters/static/`). Uploaded/media files are in `media_files/`.
 - Prever bootstrap classes over css, do not create custom css if possible
 - Data and utilities are in `contrib/` and project artifacts like `phasesix.sql.bz2` are stored at the repo root.
+- Don't add javascript to html files, create static files or use data- attribute driven mechanics as much as possible. 
+
 
 ## Build, Test, and Development Commands
 - `uv run manage.py runserver` — run the local development server.

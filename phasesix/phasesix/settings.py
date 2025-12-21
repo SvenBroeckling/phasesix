@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     "plots",
     "potions",
     "api",
+    "partypad",
 ]
 
 MIDDLEWARE = [

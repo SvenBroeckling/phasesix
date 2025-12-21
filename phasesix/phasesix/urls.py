@@ -36,6 +36,7 @@ urlpatterns = [
     path("world/", include("worlds.urls", namespace="world")),
     path("curators_desk/", include("curators_desk.urls", namespace="curators_desk")),
     path("plots/", include("plots.urls", namespace="plots")),
+    path("", include("partypad.urls", namespace="partypad")),
     path("accounts/", include("django.contrib.auth.urls")),
     path(
         "accounts/register/",

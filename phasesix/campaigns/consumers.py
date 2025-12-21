@@ -148,6 +148,12 @@ def roll_and_send(
 
 
 class DiceConsumer(WebsocketConsumer):
+    pad_message_types = {
+        "pad_object_create",
+        "pad_object_update",
+        "pad_object_delete",
+    }
+
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         async_to_sync(self.channel_layer.group_add)(self.room_name, self.channel_name)
@@ -161,14 +167,28 @@ class DiceConsumer(WebsocketConsumer):
     # websocket receive
     def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
-        roll_and_send(
-            data.get("character", None),
-            data["roll"],
-            data["header"],
-            data["description"],
-            data.get("campaign", None),
-            data.get("save_to", None),
-        )
+        message_type = data.get("type")
+        if message_type == "dice_roll" or (
+            message_type is None and data.get("roll") is not None
+        ):
+            roll_and_send(
+                data.get("character", None),
+                data["roll"],
+                data["header"],
+                data.get("description"),
+                data.get("campaign", None),
+                data.get("save_to", None),
+            )
+            return
+
+        if message_type in self.pad_message_types:
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_name,
+                {
+                    "type": message_type,
+                    "message": data.get("payload", {}),
+                },
+            )
 
     # group receive
     def dice_roll(self, event):
@@ -176,3 +196,12 @@ class DiceConsumer(WebsocketConsumer):
 
     def tale_spire_roll_link(self, event):
         self.send(text_data=json.dumps(event))
+
+    def pad_object_create(self, event):
+        self.send(text_data=json.dumps({"type": "pad_object_create", "payload": event["message"]}))
+
+    def pad_object_update(self, event):
+        self.send(text_data=json.dumps({"type": "pad_object_update", "payload": event["message"]}))
+
+    def pad_object_delete(self, event):
+        self.send(text_data=json.dumps({"type": "pad_object_delete", "payload": event["message"]}))
