@@ -1,0 +1,35 @@
+{% extends "partypad/base.html" %}
+{% load i18n %}
+
+{% block title %}PartyPad{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">PartyPad</h1>
+    <p class="lead text-secondary">{% trans "A shared canvas for your campaign sessions." %}</p>
+    <form method="post" action="{% url 'partypad:index' %}" hx-post="{% url 'partypad:index' %}" hx-swap="none">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-lg px-5">
+        <i class="fas fa-plus me-2"></i>{% trans "Create Party Pad" %}
+      </button>
+    </form>
+  </div>
+
+  {% if pads %}
+    <div class="row g-3">
+      {% for pad in pads %}
+        <div class="col-12 col-md-6 col-lg-4">
+          <a class="card bg-dark border-secondary text-decoration-none text-light h-100"
+             href="{% url 'partypad:detail' pad_id=pad.id %}">
+            <div class="card-body">
+              <h5 class="card-title mb-1">PartyPad</h5>
+              <p class="card-text text-secondary small mb-0">{{ pad.created_at }}</p>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</main>
+{% endblock %}

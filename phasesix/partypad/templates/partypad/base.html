@@ -1,0 +1,50 @@
+{% load static i18n compress django_bootstrap5 %}
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  {% compress css %}
+    <link href="{% static 'theme/fonts/Oxanium/stylesheet.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'theme/fonts/MorrisRoman/stylesheet.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'theme/fonts/NotoSans/stylesheet.css' %}" type="text/css" rel="stylesheet"/>
+
+    <link href="{% static 'vendor/game-icons/gameicons.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.css' %}" type="text/css"
+          rel="stylesheet"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+
+    {% if request.world %}
+      <link type="text/x-scss" href="{{ request.world.scss_file_static }}" rel="stylesheet"/>
+    {% else %}
+      <link type="text/x-scss" href="{% static 'theme/phasesix.scss' %}" rel="stylesheet"/>
+    {% endif %}
+  {% endcompress %}
+
+  <title>{% block title %}PartyPad{% endblock %}</title>
+  {% block extraheader %}{% endblock %}
+</head>
+
+<body class="bg-dark text-light" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+{% block content %}{% endblock %}
+
+{% compress js %}
+  <script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'vendor/jquery/popper.min.js' %}"></script>
+  <script src="{% static 'vendor/fontawesome/js/all.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap-toaster/bootstrap-toaster.min.js' %}"></script>
+  <script src="{% static 'vendor/reconnecting-websocket/reconnecting-websocket.js' %}"></script>
+  <script src="{% static 'vendor/htmx/htmx.js' %}"></script>
+{% endcompress %}
+
+<script src="{% static 'partypad/vendor/konva/konva.min.js' %}"></script>
+{% block javascript %}{% endblock %}
+</body>
+</html>

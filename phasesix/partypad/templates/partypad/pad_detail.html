@@ -1,0 +1,44 @@
+{% extends "partypad/base.html" %}
+{% load static partypad_extras %}
+
+{% block title %}PartyPad{% endblock %}
+
+{% block content %}
+<div class="position-relative vh-100 vw-100 overflow-hidden bg-black"
+     id="partypad-root"
+     data-pad-id="{{ pad.id }}"
+     data-csrf-token="{{ csrf_token }}"
+     data-ws-url="{% partypad_ws_room_url pad.id %}"
+     data-modify-object-url="{% url 'partypad:modify_object' pad_id=pad.id %}"
+     data-partypad-background-image="{% static 'partypad/images/background.png' %}"
+     data-partypad-background-color="#0b0b0b">
+  <div class="position-absolute top-0 start-50 translate-middle-x mt-4 z-3">
+    <div class="btn-group bg-dark bg-opacity-75 border border-secondary rounded-pill px-2 py-2">
+      <button type="button" class="btn btn-sm btn-outline-light" data-partypad-action="upload-image">
+        <i class="fas fa-image me-1"></i>Image
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-light" data-partypad-action="upload-video">
+        <i class="fas fa-film me-1"></i>Video
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-light" data-partypad-action="upload-audio">
+        <i class="fas fa-music me-1"></i>Audio
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-light" data-partypad-action="add-token">
+        <i class="fas fa-user-circle me-1"></i>Token
+      </button>
+    </div>
+  </div>
+
+  <input type="file" class="d-none" accept="image/*" data-partypad-input="image">
+  <input type="file" class="d-none" accept="video/*" data-partypad-input="video">
+  <input type="file" class="d-none" accept="audio/*" data-partypad-input="audio">
+
+  <div id="partypad-stage" class="w-100 h-100"></div>
+</div>
+
+{{ pad_objects|json_script:"partypad-objects" }}
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'partypad/js/partypad.js' %}"></script>
+{% endblock %}

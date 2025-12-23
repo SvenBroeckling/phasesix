@@ -24,6 +24,10 @@ $(function () {
         if (data.type === 'tale_spire_roll_link') {
             console.log(data.message.url)
             window.location = data.message.url
+            return
+        }
+        if (data.type !== 'dice_roll') {
+            return
         } else {
             const audioElement = document.getElementById('room-audio')
             let diceLogVisible = document.querySelector("#dice-log.show")
@@ -53,6 +57,7 @@ $(function () {
     $('body').on('click', '.dice-roll', function (e) {
         let elem = $(this)
         let data = {
+            type: 'dice_roll',
             roll: elem.data('dice-roll'),
             header: elem.data('dice-header'),
             description: elem.data('dice-description'),
