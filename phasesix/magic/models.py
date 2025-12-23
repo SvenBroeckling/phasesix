@@ -5,6 +5,7 @@ from transmeta import TransMeta
 
 from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import ModelWithImage, PhaseSixModel
 
 SPELL_ATTRIBUTE_CHOICES = (
     ("power", _("Power")),
@@ -40,20 +41,12 @@ class SpellShape(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class SpellType(models.Model, metaclass=TransMeta):
+class SpellType(ModelWithImage, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=30)
     fa_icon_class = models.CharField(
         _("FA Icon Class"), max_length=30, default="fas fa-book"
     )
-    image = models.ImageField(
-        _("image"), upload_to="spelltype_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
+    image_upload_to = "spelltype_images"
 
     reference_attribute = models.ForeignKey(
         "rules.Attribute",
@@ -71,24 +64,12 @@ class SpellType(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class SpellOrigin(SearchableCardListMixin, models.Model, metaclass=TransMeta):
+class SpellOrigin(SearchableCardListMixin, ModelWithImage, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=30)
     fa_icon_class = models.CharField(
         _("FA Icon Class"), max_length=30, default="fas fa-book"
     )
-    image = models.ImageField(
-        _("image"),
-        upload_to="spellorigin_images",
-        max_length=256,
-        blank=True,
-        null=True,
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
+    image_upload_to = "spellorigin_images"
 
     class Meta:
         ordering = ("id",)
@@ -116,7 +97,7 @@ class SpellOrigin(SearchableCardListMixin, models.Model, metaclass=TransMeta):
         }
 
 
-class BaseSpell(HomebrewModel, metaclass=TransMeta):
+class BaseSpell(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     objects = HomebrewQuerySet.as_manager()
     DURATION_UNITS = (
         ("actions", _("actions")),
@@ -138,9 +119,6 @@ class BaseSpell(HomebrewModel, metaclass=TransMeta):
         blank=True,
         verbose_name=_("created by"),
     )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     spell_point_cost = models.IntegerField(_("spell point cost"))
     arcana_cost = models.IntegerField(_("arcana cost"), default=1)
@@ -263,16 +241,13 @@ class SpellTemplateCategory(models.Model, metaclass=TransMeta):
         }
 
 
-class SpellTemplate(models.Model, metaclass=TransMeta):
+class SpellTemplate(PhaseSixModel, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=120)
     category = models.ForeignKey(SpellTemplateCategory, on_delete=models.CASCADE)
 
     spell_point_cost = models.IntegerField(
         verbose_name=_("spell point cost"), default=1
     )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     rules = models.TextField(_("rules"), blank=True, null=True)
 

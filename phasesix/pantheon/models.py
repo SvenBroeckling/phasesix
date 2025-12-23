@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from transmeta import TransMeta
 
 from homebrew.models import HomebrewModel
+from phasesix.models import ModelWithImage, PhaseSixModel
 from rules.models import ExtensionSelectQuerySet, Extension
 
 
@@ -16,13 +17,11 @@ class EntityCategoryQuerySet(models.QuerySet):
         ).distinct()
 
 
-class EntityCategory(models.Model, metaclass=TransMeta):
+class EntityCategory(PhaseSixModel, metaclass=TransMeta):
     objects = EntityCategoryQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=100)
     description = models.TextField(_("description"), blank=True, null=True)
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     ordering = models.IntegerField(_("ordering"), default=10)
 
     class Meta:
@@ -35,12 +34,12 @@ class EntityCategory(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Entity(HomebrewModel, metaclass=TransMeta):
+class Entity(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
+    image_upload_to = "entity_images/"
 
     category = models.ForeignKey(EntityCategory, on_delete=models.CASCADE)
 
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("created by"),
@@ -48,7 +47,6 @@ class Entity(HomebrewModel, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL,
     )
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     extensions = models.ManyToManyField("rules.Extension")
     wiki_page = models.ForeignKey(
@@ -65,15 +63,6 @@ class Entity(HomebrewModel, metaclass=TransMeta):
     )
     description = models.TextField(_("description"), blank=True, null=True)
 
-    image = models.ImageField(
-        _("image"), max_length=256, upload_to="entity_images/", null=True, blank=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
     ordering = models.IntegerField(_("ordering"), default=100)
 
     class Meta:
@@ -85,7 +74,7 @@ class Entity(HomebrewModel, metaclass=TransMeta):
         return self.name
 
 
-class PriestAction(HomebrewModel, metaclass=TransMeta):
+class PriestAction(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     WORK_TYPE_CHOICES = (
         ("lesser", _("Lesser")),
         ("higher", _("Higher")),
@@ -98,9 +87,6 @@ class PriestAction(HomebrewModel, metaclass=TransMeta):
         blank=True,
         verbose_name=_("created by"),
     )
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
-
     grace_cost = models.IntegerField(_("grace cost"))
     work_type = models.CharField(
         _("work type"), max_length=6, choices=WORK_TYPE_CHOICES, blank=True, null=True

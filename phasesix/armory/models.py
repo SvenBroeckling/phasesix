@@ -12,6 +12,7 @@ from armory.choices import (
 from armory.mixins import SearchableCardListMixin
 from characters.utils import strip_newlines
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import ModelWithImage, PhaseSixModel
 from rules.models import (
     ExtensionSelectQuerySet,
     Extension,
@@ -36,13 +37,11 @@ class ItemTypeQuerySet(models.QuerySet):
         ).distinct()
 
 
-class ItemType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
+class ItemType(SearchableCardListMixin, PhaseSixModel, metaclass=TransMeta):
     objects = ItemTypeQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=100)
     description = models.TextField(_("description"), blank=True, null=True)
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     ordering = models.IntegerField(_("ordering"), default=10)
 
     class Meta:
@@ -85,8 +84,9 @@ class ItemBrewingEffect(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Item(HomebrewModel, metaclass=TransMeta):
+class Item(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     objects = ItemQuerySet.as_manager()
+    image_upload_to = "item_images/"
 
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
@@ -101,7 +101,6 @@ class Item(HomebrewModel, metaclass=TransMeta):
     )
     concealment = models.IntegerField(_("concealment"), default=0)
     extensions = models.ManyToManyField("rules.Extension")
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("created by"),
@@ -116,7 +115,6 @@ class Item(HomebrewModel, metaclass=TransMeta):
 
     charges = models.IntegerField(_("charges"), null=True, blank=True)
 
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     usable_in_combat = models.BooleanField(_("usable in combat"), default=False)
     attribute = models.ForeignKey(
         "rules.Attribute",
@@ -146,16 +144,6 @@ class Item(HomebrewModel, metaclass=TransMeta):
         null=True,
         max_length=10,
         help_text=_("Shows a roll button at the item if not empty."),
-    )
-
-    image = models.ImageField(
-        _("image"), max_length=256, upload_to="item_images/", null=True, blank=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
     )
 
     class Meta:
@@ -197,13 +185,11 @@ class WeaponTypeQuerySet(models.QuerySet):
         ).distinct()
 
 
-class WeaponType(SearchableCardListMixin, models.Model, metaclass=TransMeta):
+class WeaponType(SearchableCardListMixin, PhaseSixModel, metaclass=TransMeta):
     objects = WeaponTypeQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=100)
     description = models.TextField(_("description"), blank=True, null=True)
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     ordering = models.IntegerField(_("ordering"), default=10)
 
     class Meta:
@@ -261,13 +247,11 @@ class WeaponQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
 
 
-class Weapon(HomebrewModel, metaclass=TransMeta):
+class Weapon(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     objects = WeaponQuerySet.as_manager()
+    image_upload_to = "weapon_images/"
 
     extensions = models.ManyToManyField("rules.Extension")
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
-
     is_hand_to_hand_weapon = models.BooleanField(
         _("is hand to hand weapon"), default=False
     )
@@ -290,16 +274,6 @@ class Weapon(HomebrewModel, metaclass=TransMeta):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-    )
-
-    image = models.ImageField(
-        _("image"), max_length=256, upload_to="weapon_images/", null=True, blank=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
     )
 
     class Meta:
@@ -421,11 +395,8 @@ class WeaponModificationType(models.Model, metaclass=TransMeta):
         }
 
 
-class WeaponModification(models.Model, metaclass=TransMeta):
+class WeaponModification(PhaseSixModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     extensions = models.ManyToManyField("rules.Extension")
     available_for_weapon_types = models.ManyToManyField(WeaponType)
@@ -561,7 +532,7 @@ class RiotGearQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
 
 
-class RiotGear(HomebrewModel, metaclass=TransMeta):
+class RiotGear(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     objects = RiotGearQuerySet.as_manager()
 
     extensions = models.ManyToManyField("rules.Extension")
@@ -573,9 +544,6 @@ class RiotGear(HomebrewModel, metaclass=TransMeta):
         null=True,
         on_delete=models.SET_NULL,
     )
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
-
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
     type = models.ForeignKey(

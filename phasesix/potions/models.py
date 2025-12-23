@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import PhaseSixModel
 from rules.models import ExtensionSelectQuerySet
 
 
@@ -25,11 +26,9 @@ class RecipeQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
 
 
-class RecipeCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
+class RecipeCategory(SearchableCardListMixin, PhaseSixModel, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=100)
     description = models.TextField(_("description"), blank=True, null=True)
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     ordering = models.IntegerField(_("ordering"), default=10)
 
     class Meta:
@@ -45,7 +44,7 @@ class RecipeCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta)
         return self.recipe_set.all()
 
 
-class Recipe(HomebrewModel, metaclass=TransMeta):
+class Recipe(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     objects = RecipeQuerySet.as_manager()
 
     category = models.ForeignKey(RecipeCategory, on_delete=models.CASCADE)
@@ -61,8 +60,6 @@ class Recipe(HomebrewModel, metaclass=TransMeta):
         _("expected amount"), blank=True, null=True
     )
 
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("created by"),

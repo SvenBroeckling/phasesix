@@ -5,6 +5,7 @@ from transmeta import TransMeta
 
 from armory.models import RARITY_CHOICES
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import ModelWithImage, PhaseSixModel
 from rules.models import ModifierBase, modifiers_for_qs, ExtensionSelectQuerySet
 
 
@@ -23,22 +24,9 @@ class SocketLocation(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class BodyModificationType(models.Model, metaclass=TransMeta):
+class BodyModificationType(ModelWithImage, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=30)
-
-    image = models.ImageField(
-        _("image"),
-        upload_to="body_modification_type_images",
-        max_length=256,
-        blank=True,
-        null=True,
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
+    image_upload_to = "body_modification_type_images"
 
     class Meta:
         ordering = ("id",)
@@ -67,12 +55,13 @@ class BodyModificationQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
     pass
 
 
-class BodyModification(HomebrewModel, metaclass=TransMeta):
+class BodyModification(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     ACTIVATION_TYPES = (
         ("a", _("active")),
         ("p", _("passive")),
     )
     objects = BodyModificationQuerySet.as_manager()
+    image_upload_to = "body_modification_images"
     type = models.ForeignKey(
         BodyModificationType, verbose_name=_("type"), on_delete=models.CASCADE
     )
@@ -119,20 +108,6 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
         help_text=_("Shows a roll button at the item if not empty."),
     )
 
-    image = models.ImageField(
-        _("image"),
-        upload_to="body_modification_images",
-        max_length=256,
-        blank=True,
-        null=True,
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
-
     name = models.CharField(_("name"), max_length=80)
     description = models.TextField(_("description"))
     rules = models.TextField(_("rules"), blank=True, null=True)
@@ -141,8 +116,6 @@ class BodyModification(HomebrewModel, metaclass=TransMeta):
         _("quote author"), max_length=50, null=True, blank=True
     )
 
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("created by"),

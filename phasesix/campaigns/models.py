@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import get_thumbnail
 
 from characters.utils import static_thumbnail
+from phasesix.models import ModelWithImage, image_upload_path
 from rules.models import Extension
 from worlds.unique_slugify import unique_slugify
 
@@ -42,27 +43,26 @@ class CampaignQuerySet(models.QuerySet):
         return self.all()
 
 
-class Campaign(models.Model):
+class Campaign(ModelWithImage):
     VISIBILITY_CHOICES = (
         ("G", _("GM Only")),
         ("A", _("All")),
     )
 
     objects = CampaignQuerySet.as_manager()
+    image_upload_to = "campaign_images"
+    image = models.ImageField(
+        _("image"),
+        upload_to=image_upload_path,
+        max_length=200,
+        blank=True,
+        null=True,
+    )
 
     slug = models.SlugField(_("slug"), max_length=220)
     name = models.CharField(_("name"), max_length=80)
     ingame_act_date = models.CharField(
         _("in game act date"), max_length=40, blank=True, null=True
-    )
-    image = models.ImageField(
-        _("image"), upload_to="campaign_images", max_length=200, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
     )
 
     may_appear_on_start_page = models.BooleanField(
@@ -342,18 +342,17 @@ class Scene(models.Model):
     npc = models.ManyToManyField("characters.Character")
 
 
-class Handout(models.Model):
+class Handout(ModelWithImage):
     scene = models.ForeignKey(Scene, on_delete=models.CASCADE)
-    name = models.CharField(_("name"), max_length=80)
+    image_upload_to = "campaign_handouts"
     image = models.ImageField(
-        _("image"), upload_to="campaign_handouts", max_length=200, blank=True, null=True
+        _("image"),
+        upload_to=image_upload_path,
+        max_length=200,
+        blank=True,
+        null=True,
     )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
+    name = models.CharField(_("name"), max_length=80)
 
 
 class Roll(models.Model):

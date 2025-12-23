@@ -12,10 +12,11 @@ from weasyprint import HTML
 from weasyprint.text.fonts import FontConfiguration
 
 from homebrew.models import HomebrewModel
+from phasesix.models import ModelWithImage, PhaseSixModel
 from rulebook.font_utils import get_font_choices
 
 
-class ModelWithCreationInfo(models.Model):
+class ModelWithCreationInfo(PhaseSixModel):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -23,8 +24,6 @@ class ModelWithCreationInfo(models.Model):
         blank=True,
         verbose_name=gt("created by"),
     )
-    created_at = models.DateTimeField(gt("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(gt("modified at"), auto_now=True)
 
     class Meta:
         abstract = True
@@ -193,19 +192,10 @@ class WorldBook(models.Model, metaclass=TransMeta):
         return HTML(string=table_of_contents_html).render()
 
 
-class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
+class Book(ModelWithCreationInfo, ModelWithImage, HomebrewModel, metaclass=TransMeta):
     name = models.CharField(gt("name"), max_length=40)
     ordering = models.IntegerField(gt("ordering"), default=0)
-
-    image = models.ImageField(
-        gt("image"), upload_to="book_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        gt("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        gt("image copyright url"), max_length=150, blank=True, null=True
-    )
+    image_upload_to = "book_images"
 
     def __str__(self):
         return self.name
@@ -217,8 +207,9 @@ class Book(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
         verbose_name_plural = gt("books")
 
 
-class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
+class Chapter(ModelWithCreationInfo, ModelWithImage, HomebrewModel, metaclass=TransMeta):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    image_upload_to = "chapter_images"
     name = models.CharField(gt("name"), max_length=40)
     number = models.IntegerField(gt("number"), default=1)
     identifier = models.CharField(gt("identifier"), max_length=40, unique=True)
@@ -226,16 +217,6 @@ class Chapter(ModelWithCreationInfo, HomebrewModel, metaclass=TransMeta):
 
     rules_file = models.FileField(
         gt("rules file"), upload_to="rulebook/", blank=True, null=True
-    )
-
-    image = models.ImageField(
-        gt("image"), upload_to="chapter_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        gt("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        gt("image copyright url"), max_length=150, blank=True, null=True
     )
 
     def __str__(self):

@@ -4,10 +4,11 @@ from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import get_thumbnail
 
 from characters.utils import static_thumbnail
+from phasesix.models import ModelWithImage, image_upload_path
 from worlds.unique_slugify import unique_slugify
 
 
-class Profile(models.Model):
+class Profile(ModelWithImage):
     slug = models.SlugField(_("slug"), max_length=220)
     user = models.OneToOneField("auth.User", on_delete=models.CASCADE)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
@@ -15,14 +16,13 @@ class Profile(models.Model):
 
     api_key = models.CharField(_("api key"), max_length=120, blank=True, null=True)
 
+    image_upload_to = "profile_images"
     image = models.ImageField(
-        _("image"), upload_to="profile_images", max_length=200, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
+        _("image"),
+        upload_to=image_upload_path,
+        max_length=200,
+        blank=True,
+        null=True,
     )
 
     last_wiki_image_copyright = models.CharField(

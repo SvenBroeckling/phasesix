@@ -6,6 +6,7 @@ from transmeta import TransMeta
 
 from characters.utils import static_thumbnail
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import ModelWithImage, PhaseSixModel
 from rules.models import Extension, ModifierBase
 from armory.models import Weapon, Item
 
@@ -18,7 +19,7 @@ class VehicleTypeQuerySet(HomebrewQuerySet):
         return self.filter(extensions__in=extensions).distinct()
 
 
-class VehicleType(HomebrewModel, metaclass=TransMeta):
+class VehicleType(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     """Vehicle type categorizes vehicles (Car, Motorcycle, Tank, Spaceship)"""
 
     objects = VehicleTypeQuerySet.as_manager()
@@ -35,9 +36,6 @@ class VehicleType(HomebrewModel, metaclass=TransMeta):
         related_name="vehicle_types",
         verbose_name=_("extensions"),
     )
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
-
     class Meta:
         translate = ("name", "description")
         verbose_name = _("vehicle type")
@@ -107,9 +105,10 @@ class MountPoint(HomebrewModel, metaclass=TransMeta):
         return f"{self.name} ({self.get_mount_type_display()}, {self.get_size_display()}, {self.get_direction_display()})"
 
 
-class VehicleMachinery(HomebrewModel, metaclass=TransMeta):
+class VehicleMachinery(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     """Represents equipment, weapons, or systems that can be mounted on a vehicle"""
 
+    image_upload_to = "vehicle_machinery_images"
     name = models.CharField(_("name"), max_length=100)
     description = models.TextField(_("description"), blank=True, null=True)
 
@@ -151,23 +150,6 @@ class VehicleMachinery(HomebrewModel, metaclass=TransMeta):
         related_name="vehicle_machinery",
         verbose_name=_("extensions"),
     )
-
-    image = models.ImageField(
-        _("image"),
-        upload_to="vehicle_machinery_images",
-        max_length=256,
-        blank=True,
-        null=True,
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     class Meta:
         translate = ("name", "description")
@@ -228,10 +210,11 @@ class VehicleQuerySet(HomebrewQuerySet):
         return self.none()
 
 
-class Vehicle(HomebrewModel, metaclass=TransMeta):
+class Vehicle(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     """Main vehicle model"""
 
     objects = VehicleQuerySet.as_manager()
+    image_upload_to = "vehicle_images"
 
     name = models.CharField(_("name"), max_length=100)
     description = models.TextField(_("description"), blank=True, null=True)
@@ -324,19 +307,6 @@ class Vehicle(HomebrewModel, metaclass=TransMeta):
         related_name="vehicles",
         verbose_name=_("extensions"),
     )
-
-    image = models.ImageField(
-        _("image"), upload_to="vehicle_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     TECH_LEVEL_CHOICES = (
         (1, _("Primitive")),

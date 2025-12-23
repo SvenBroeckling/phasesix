@@ -32,6 +32,7 @@ from horror.models import Quirk, QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
 from pantheon.models import PriestAction
 from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
+from phasesix.models import PhaseSixModel, ModelWithImage
 from worlds.unique_slugify import unique_slugify
 
 
@@ -101,8 +102,9 @@ class CharacterQuerySet(models.QuerySet):
         return self.filter(npc_campaign__isnull=True)
 
 
-class Character(models.Model):
+class Character(ModelWithImage, PhaseSixModel):
     objects = CharacterQuerySet.as_manager()
+    image_upload_to = "character_images"
 
     slug = models.SlugField(_("slug"), max_length=220)
     name = models.CharField(_("name"), max_length=80)
@@ -131,16 +133,6 @@ class Character(models.Model):
     attitude = models.IntegerField(_("attitude"), default=50)
     grace = models.IntegerField(_("grace"), default=0)
 
-    image = models.ImageField(
-        _("image"), upload_to="character_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
-
     backdrop_image = models.ImageField(
         _("backdrop image"),
         upload_to="character_backdrop_images",
@@ -155,8 +147,6 @@ class Character(models.Model):
         _("image copyright url"), max_length=150, blank=True, null=True
     )
 
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     pronoun = models.ForeignKey(
         Pronoun,
         verbose_name=_("pronoun"),

@@ -12,6 +12,7 @@ from armory.choices import COLOR_CLASS_CHOICES
 from armory.mixins import SearchableCardListMixin
 from characters.utils import static_thumbnail
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import ModelWithImage, PhaseSixModel
 from worlds.models import World
 from worlds.unique_slugify import unique_slugify
 
@@ -272,7 +273,7 @@ class ExtensionQuerySet(models.QuerySet):
         return self.filter(Q(type="e") | Q(is_mandatory=True)).filter(is_active=True)
 
 
-class Extension(models.Model, metaclass=TransMeta):
+class Extension(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     """
     A PhaseSix source book extension
     """
@@ -283,6 +284,7 @@ class Extension(models.Model, metaclass=TransMeta):
         ("w", _("World")),
     )
     objects = ExtensionQuerySet.as_manager()
+    image_upload_to = "extension_images"
 
     is_mandatory = models.BooleanField(_("is mandatory"), default=False)
     is_active = models.BooleanField(_("is active"), default=True)
@@ -300,18 +302,6 @@ class Extension(models.Model, metaclass=TransMeta):
     )
     fa_icon_latex = models.CharField(_("FA Icon LaTeX"), max_length=30, default="")
 
-    image = models.ImageField(
-        _("image"), upload_to="extension_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
-    )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     ordering = models.IntegerField(_("ordering"), default=100)
 
     # only world related
@@ -355,7 +345,7 @@ class Extension(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Lineage(models.Model, metaclass=TransMeta):
+class Lineage(PhaseSixModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=80)
@@ -365,9 +355,6 @@ class Lineage(models.Model, metaclass=TransMeta):
     template = models.ForeignKey(
         "rules.Template", blank=True, null=True, on_delete=models.SET_NULL
     )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     base_languages = models.IntegerField(_("languages"), default=0)
     base_contacts = models.IntegerField(_("contacts"), default=0)
@@ -465,13 +452,11 @@ class Skill(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Knowledge(models.Model, metaclass=TransMeta):
+class Knowledge(PhaseSixModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=120)
     extensions = models.ManyToManyField("rules.Extension")
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     description = models.TextField(_("description"), blank=True, null=True)
     skill = models.ForeignKey(
         Skill, verbose_name=_("Skill"), blank=True, null=True, on_delete=models.SET_NULL
@@ -560,7 +545,7 @@ class TemplateQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
     pass
 
 
-class Template(HomebrewModel, metaclass=TransMeta):
+class Template(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     """
     A character creation template
     """
@@ -569,7 +554,6 @@ class Template(HomebrewModel, metaclass=TransMeta):
 
     name = models.CharField(_("name"), max_length=120)
     extensions = models.ManyToManyField("rules.Extension")
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         models.CASCADE,
@@ -577,7 +561,6 @@ class Template(HomebrewModel, metaclass=TransMeta):
         null=True,
         blank=True,
     )
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     category = models.ForeignKey(
         TemplateCategory, models.CASCADE, verbose_name=_("category")
     )
@@ -672,7 +655,7 @@ class TemplateRequirement(models.Model, metaclass=TransMeta):
     )
 
 
-class StatusEffect(models.Model, metaclass=TransMeta):
+class StatusEffect(PhaseSixModel, metaclass=TransMeta):
     objects = ExtensionSelectQuerySet.as_manager()
 
     extensions = models.ManyToManyField("rules.Extension")
@@ -688,8 +671,6 @@ class StatusEffect(models.Model, metaclass=TransMeta):
     )
     name = models.CharField(_("name"), max_length=120)
     rules = models.TextField(_("rules"), blank=True, null=True)
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     ordering = models.IntegerField(_("ordering"), default=100)
 
     class Meta:
@@ -743,11 +724,11 @@ class FoeQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
     pass
 
 
-class Foe(HomebrewModel, metaclass=TransMeta):
+class Foe(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     objects = FoeQuerySet.as_manager()
+    image_upload_to = "foe_images"
 
     extensions = models.ManyToManyField("rules.Extension")
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         models.CASCADE,
@@ -755,7 +736,6 @@ class Foe(HomebrewModel, metaclass=TransMeta):
         null=True,
         blank=True,
     )
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     name = models.CharField(_("name"), max_length=120)
     short_description = models.TextField(_("short description"), blank=True, null=True)
@@ -796,16 +776,6 @@ class Foe(HomebrewModel, metaclass=TransMeta):
         blank=True,
         related_name="foe_weakness_set",
         verbose_name=_("weaknesses"),
-    )
-
-    image = models.ImageField(
-        _("image"), upload_to="foe_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
     )
 
     class Meta:

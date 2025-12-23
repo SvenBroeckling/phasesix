@@ -4,6 +4,7 @@ from transmeta import TransMeta
 
 from armory.mixins import SearchableCardListMixin
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import PhaseSixModel
 from rules.models import ModifierBase, modifiers_for_qs
 from rules.models import Skill, Attribute, Knowledge
 
@@ -33,11 +34,8 @@ class QuirkCategory(SearchableCardListMixin, models.Model, metaclass=TransMeta):
         }
 
 
-class Quirk(HomebrewModel, metaclass=TransMeta):
+class Quirk(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     objects = HomebrewQuerySet.as_manager()
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     name = models.CharField(_("name"), max_length=60)
     category = models.ForeignKey(

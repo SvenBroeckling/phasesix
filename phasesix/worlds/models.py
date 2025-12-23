@@ -9,11 +9,12 @@ from transmeta import TransMeta
 
 from characters.utils import static_thumbnail
 from homebrew.models import HomebrewModel, HomebrewQuerySet
+from phasesix.models import ModelWithImage, PhaseSixModel, image_upload_path
 from worlds.unique_slugify import unique_slugify
 
 
 @reversion.register
-class World(models.Model, metaclass=TransMeta):
+class World(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     INDEX_TEMPLATE_CHOICES = (
         ("index.html", "index.html"),
         ("worlds/world_detail.html", "worlds/world_detail.html"),
@@ -23,6 +24,8 @@ class World(models.Model, metaclass=TransMeta):
         ("theme/tirakan.scss", "theme/tirakan.scss"),
         ("theme/nexus.scss", "theme/nexus.scss"),
     )
+    image_upload_to = "world_images"
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -30,9 +33,6 @@ class World(models.Model, metaclass=TransMeta):
         blank=True,
         verbose_name=_("created by"),
     )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     dns_domain_name = models.CharField(
         _("dns domain name"),
@@ -77,16 +77,6 @@ class World(models.Model, metaclass=TransMeta):
 
     show_in_worlds_overview = models.BooleanField(
         _("show in worlds overview"), default=False
-    )
-
-    image = models.ImageField(
-        _("image"), upload_to="world_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
     )
 
     info_name_cm = models.CharField(
@@ -208,8 +198,9 @@ class WikiPageQuerySet(models.QuerySet):
 
 
 @reversion.register
-class WikiPage(models.Model, metaclass=TransMeta):
+class WikiPage(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     objects = WikiPageQuerySet.as_manager()
+    image_upload_to = "wiki_page_images"
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -217,9 +208,6 @@ class WikiPage(models.Model, metaclass=TransMeta):
         blank=True,
         verbose_name=_("created by"),
     )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     name = models.CharField(_("name"), max_length=120)
     short_name = models.CharField(
@@ -251,16 +239,6 @@ class WikiPage(models.Model, metaclass=TransMeta):
         help_text=_("The wiki page text. This may contain Wiki links."),
         blank=True,
         null=True,
-    )
-
-    image = models.ImageField(
-        _("image"), upload_to="wiki_page_images", max_length=256, blank=True, null=True
-    )
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
     )
 
     is_active = models.BooleanField(_("is active"), default=True)
@@ -334,7 +312,15 @@ class WikiPage(models.Model, metaclass=TransMeta):
 
 
 @reversion.register
-class WikiPageImage(models.Model):
+class WikiPageImage(ModelWithImage, PhaseSixModel):
+    image_upload_to = "wiki_page_images"
+    image = models.ImageField(
+        _("image"),
+        max_length=256,
+        upload_to=image_upload_path,
+        blank=False,
+        null=False,
+    )
     wiki_page = models.ForeignKey(
         "worlds.WikiPage",
         verbose_name=_("wiki page"),
@@ -348,17 +334,6 @@ class WikiPageImage(models.Model):
         null=True,
         blank=True,
         verbose_name=_("created by"),
-    )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
-
-    image = models.ImageField(_("image"), max_length=256, upload_to="wiki_page_images")
-    image_copyright = models.CharField(
-        _("image copyright"), max_length=40, blank=True, null=True
-    )
-    image_copyright_url = models.CharField(
-        _("image copyright url"), max_length=150, blank=True, null=True
     )
 
     caption = models.CharField(_("caption"), max_length=120)
@@ -414,16 +389,13 @@ class WikiPageFoeResistanceOrWeakness(models.Model, metaclass=TransMeta):
 
 
 @reversion.register
-class WikiPageGameValues(models.Model):
+class WikiPageGameValues(PhaseSixModel):
     wiki_page = models.ForeignKey(
         "worlds.WikiPage",
         verbose_name=_("wiki page"),
         help_text=_("The wiki page the values belong to."),
         on_delete=models.CASCADE,
     )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     type = models.ForeignKey(
         WikiPageFoeType, verbose_name=_("type"), on_delete=models.CASCADE
@@ -475,7 +447,7 @@ class WikiPageGameValues(models.Model):
         return ",".join([r.name for r in self.weaknesses.all()]) or "-"
 
 
-class WikiPageGameAction(models.Model, metaclass=TransMeta):
+class WikiPageGameAction(PhaseSixModel, metaclass=TransMeta):
     WORK_TYPE_CHOICES = (
         ("lesser", _("Lesser")),
         ("higher", _("Higher")),
@@ -488,8 +460,6 @@ class WikiPageGameAction(models.Model, metaclass=TransMeta):
         on_delete=models.CASCADE,
     )
 
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
     name = models.CharField(_("name"), max_length=256)
     skill = models.IntegerField(_("skill"), default=6)
     effect = models.TextField(_("effect"))
@@ -508,16 +478,13 @@ class WikiPageGameAction(models.Model, metaclass=TransMeta):
         verbose_name_plural = _("wiki page game actions")
 
 
-class WikiPageEmbedding(models.Model):
+class WikiPageEmbedding(PhaseSixModel):
     wiki_page = models.ForeignKey(
         "worlds.WikiPage",
         verbose_name=_("wiki page"),
         help_text=_("The wiki page the embedding belongs to."),
         on_delete=models.CASCADE,
     )
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     character = models.ForeignKey(
         "characters.Character", blank=True, null=True, on_delete=models.SET_NULL
@@ -546,11 +513,8 @@ class LanguageQuerySet(HomebrewQuerySet):
     pass
 
 
-class Language(HomebrewModel, metaclass=TransMeta):
+class Language(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     objects = LanguageQuerySet.as_manager()
-
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
-    modified_at = models.DateTimeField(_("modified at"), auto_now=True)
 
     name = models.CharField(_("name"), max_length=100)
     country_name = models.CharField(_("country name"), max_length=100)
