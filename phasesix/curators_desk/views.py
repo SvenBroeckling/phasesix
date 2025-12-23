@@ -1,6 +1,7 @@
-from functools import reduce
 import base64
 import json
+import logging
+from functools import reduce
 from operator import or_
 
 from django.conf import settings
@@ -14,6 +15,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
 from openai import OpenAI
+
+logger = logging.getLogger(__name__)
 
 from armory.models import Weapon, Item, WeaponModification, RiotGear
 from campaigns.models import Roll
@@ -519,9 +522,9 @@ class UpdateHomebrewView(View):
             prefix=prefix,
         )
 
+        post_save_action = request.POST.get("post_save_action")
         if form.is_valid():
             obj = form.save()
-            post_save_action = request.POST.get("post_save_action")
             if post_save_action == "accept":
                 obj.is_homebrew = False
                 obj.keep_as_homebrew = False
@@ -529,9 +532,26 @@ class UpdateHomebrewView(View):
             elif post_save_action == "keep":
                 obj.keep_as_homebrew = True
                 obj.save(update_fields=["keep_as_homebrew"])
+            if not post_save_action:
+                refreshed_form = form_class(instance=obj, prefix=prefix)
+                obj.review_form = refreshed_form
+                obj.has_image_field = "image" in form_class.base_fields
+                return render(
+                    request,
+                    "curators_desk/fragments/review_homebrew_form.html",
+                    {"object": obj, "model_name": model.__name__},
+                )
             bound_form = None
             bound_object_id = None
         else:
+            if not post_save_action:
+                obj.review_form = form
+                obj.has_image_field = "image" in form_class.base_fields
+                return render(
+                    request,
+                    "curators_desk/fragments/review_homebrew_form.html",
+                    {"object": obj, "model_name": model.__name__},
+                )
             bound_form = form
             bound_object_id = obj.id
 
@@ -630,6 +650,12 @@ class TranslateHomebrewView(View):
             "Preserve meaning and formatting.\n\n"
             f"{json.dumps(payload, ensure_ascii=False)}"
         )
+        logger.info(
+            "OpenAI translate request model=%s payload_keys=%s prompt_length=%s",
+            settings.OPENAI_TRANSLATION_MODEL,
+            list(payload.keys()),
+            len(prompt),
+        )
 
         try:
             response = client.responses.create(
@@ -639,8 +665,16 @@ class TranslateHomebrewView(View):
             output_text = getattr(response, "output_text", None)
             if not output_text and getattr(response, "output", None):
                 output_text = response.output[0].content[0].text
+            logger.info(
+                "OpenAI translate response received model=%s output_length=%s",
+                settings.OPENAI_TRANSLATION_MODEL,
+                len(output_text or ""),
+            )
             translations = self._parse_json_response(output_text or "")
         except Exception:
+            logger.exception(
+                "OpenAI translate failed model=%s", settings.OPENAI_TRANSLATION_MODEL
+            )
             form.add_error(None, _("Translation failed. Please try again."))
             obj.review_form = form
             obj.has_image_field = "image" in form_class.base_fields
@@ -744,16 +778,29 @@ class GenerateHomebrewImageView(View):
         client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
         try:
+            logger.info(
+                "OpenAI image request model=%s size=1024x1024 prompt_length=%s",
+                settings.OPENAI_IMAGE_MODEL,
+                len(prompt),
+            )
             response = client.images.generate(
                 model=settings.OPENAI_IMAGE_MODEL,
                 prompt=prompt,
                 size="1024x1024",
             )
             image_b64 = response.data[0].b64_json
+            logger.info(
+                "OpenAI image response received model=%s b64_length=%s",
+                settings.OPENAI_IMAGE_MODEL,
+                len(image_b64 or ""),
+            )
             image_bytes = base64.b64decode(image_b64)
             filename = f"{model.__name__.lower()}_{obj.id}_generated.png"
             obj.image.save(filename, ContentFile(image_bytes), save=True)
         except Exception:
+            logger.exception(
+                "OpenAI image generation failed model=%s", settings.OPENAI_IMAGE_MODEL
+            )
             form.add_error(None, _("Image generation failed. Please try again."))
             obj.review_form = form
             obj.has_image_field = "image" in form_class.base_fields

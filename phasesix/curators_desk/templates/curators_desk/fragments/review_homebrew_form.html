@@ -5,14 +5,14 @@
   <form method="post"
         enctype="multipart/form-data"
         hx-post="{% url 'curators_desk:update_homebrew' %}"
-        hx-target="#homebrew-table-{{ model_name }}"
-        hx-swap="outerHTML"
+        hx-target="#homebrew-form-wrapper-{{ model_name }}-{{ object.id }}"
+        hx-swap="innerHTML"
         hx-encoding="multipart/form-data">
     {% csrf_token %}
     <input type="hidden" name="model_name" value="{{ model_name }}">
     <input type="hidden" name="object_id" value="{{ object.id }}">
     {% bootstrap_form object.review_form %}
-    <div class="d-flex justify-content-end gap-2">
+    <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
       <button type="button"
               class="btn btn-outline-secondary btn-sm"
               hx-post="{% url 'curators_desk:translate_homebrew' %}"
@@ -44,19 +44,24 @@
         </button>
       {% endif %}
       <button type="submit"
-              class="btn btn-primary btn-sm"
-              name="post_save_action"
-              value="accept">
-        {% trans 'Save and accept' %}
+              class="btn btn-outline-secondary btn-sm"
+              >
+        {% trans 'Save' %}
       </button>
       <button type="submit"
-              class="btn btn-outline-secondary btn-sm">
-        {% trans 'Save' %}
+              class="btn btn-primary btn-sm"
+              name="post_save_action"
+              value="accept"
+              hx-target="#homebrew-table-{{ model_name }}"
+              hx-swap="outerHTML">
+        {% trans 'Save and accept' %}
       </button>
       <button type="submit"
               class="btn btn-outline-primary btn-sm"
               name="post_save_action"
-              value="keep">
+              value="keep"
+              hx-target="#homebrew-table-{{ model_name }}"
+              hx-swap="outerHTML">
         {% trans 'Save and keep as Homebrew' %}
       </button>
     </div>
