@@ -10,6 +10,9 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 BASE_URL = os.environ["BASE_URL"]
 SECRET_KEY = os.environ["SECRET_KEY"]
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_TRANSLATION_MODEL = os.environ.get("OPENAI_TRANSLATION_MODEL", "gpt-4o-mini")
+OPENAI_IMAGE_MODEL = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-1")
 
 ADMINS = [("Sven", "sven@broeckling.de")]
 

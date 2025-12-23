@@ -1,0 +1,57 @@
+{% load i18n %}
+{% load curators_desk_extras %}
+
+<div id="homebrew-table-{{ table.model_name }}" class="mb-4">
+  <table class="table mb-0">
+    <thead>
+    <tr>
+      <th>{{ table.qs|model_name }}</th>
+      <th>{% trans 'Character' %}</th>
+      <th>{% trans 'Campaign' %}</th>
+      <th>{% trans 'Created by' %}</th>
+      <th>{% trans 'Actions' %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in table.objects %}
+      <tr>
+        <td><a href="{% admin_url_for_qs_model table.qs object.id %}">{{ object }}</a></td>
+        <td><a href="{{ object.homebrew_character.get_absolute_url }}">{{ object.homebrew_character }}</a></td>
+        <td><a href="{{ object.homebrew_campaign.get_absolute_url }}">{{ object.homebrew_campaign }}</a></td>
+        <td><a href="{{ object.created_by.profile.get_absolute_url }}">{{ object.created_by }}</a></td>
+        <td>
+          <div class="btn-group btn-group-sm" role="group">
+            <button class="btn btn-outline-primary"
+                    title="{% trans 'Keep as Homebrew' %}"
+                    hx-post="{% url 'curators_desk:keep_homebrew' %}"
+                    hx-vals='{"model_name": "{{ table.model_name }}", "object_id": "{{ object.id }}"}'>
+              <i class="fas fa-book"></i>
+            </button>
+            <button class="btn btn-outline-success"
+                    title="{% trans 'Accept Homebrew' %}"
+                    hx-post="{% url 'curators_desk:accept_homebrew' %}"
+                    hx-vals='{"model_name": "{{ table.model_name }}", "object_id": "{{ object.id }}"}'>
+              <i class="fas fa-check"></i>
+            </button>
+            <button class="btn btn-outline-secondary"
+                    title="{% trans 'Edit Homebrew' %}"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#homebrew-form-{{ table.model_name }}-{{ object.id }}"
+                    aria-expanded="false"
+                    aria-controls="homebrew-form-{{ table.model_name }}-{{ object.id }}">
+              <i class="fas fa-pen"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr id="homebrew-form-{{ table.model_name }}-{{ object.id }}" class="collapse">
+        <td colspan="5">
+          <div class="card card-body">
+            {% include "curators_desk/fragments/review_homebrew_form.html" with object=object model_name=table.model_name %}
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

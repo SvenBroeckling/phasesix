@@ -47,4 +47,19 @@ urlpatterns = [
         staff_member_required(views.AcceptHomebrewView.as_view()),
         name="accept_homebrew",
     ),
+    path(
+        "update_homebrew/",
+        staff_member_required(views.UpdateHomebrewView.as_view()),
+        name="update_homebrew",
+    ),
+    path(
+        "translate_homebrew/",
+        staff_member_required(views.TranslateHomebrewView.as_view()),
+        name="translate_homebrew",
+    ),
+    path(
+        "generate_homebrew_image/",
+        staff_member_required(views.GenerateHomebrewImageView.as_view()),
+        name="generate_homebrew_image",
+    ),
 ]

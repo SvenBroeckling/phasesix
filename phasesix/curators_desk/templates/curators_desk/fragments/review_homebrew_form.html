@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+<div id="homebrew-form-body-{{ model_name }}-{{ object.id }}">
+  <form method="post"
+        enctype="multipart/form-data"
+        hx-post="{% url 'curators_desk:update_homebrew' %}"
+        hx-target="#homebrew-table-{{ model_name }}"
+        hx-swap="outerHTML"
+        hx-encoding="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="model_name" value="{{ model_name }}">
+    <input type="hidden" name="object_id" value="{{ object.id }}">
+    {% bootstrap_form object.review_form %}
+    <div class="d-flex justify-content-end gap-2">
+      <button type="button"
+              class="btn btn-outline-secondary btn-sm"
+              hx-post="{% url 'curators_desk:translate_homebrew' %}"
+              hx-include="closest form"
+              hx-target="#homebrew-form-body-{{ model_name }}-{{ object.id }}"
+              hx-swap="outerHTML">
+        {% trans 'Translate' %}
+      </button>
+    {% comment %}
+      {% if object.has_image_field %}
+        <button type="button"
+                class="btn btn-outline-secondary btn-sm"
+                hx-post="{% url 'curators_desk:generate_homebrew_image' %}"
+                hx-include="closest form"
+                hx-target="#homebrew-form-body-{{ model_name }}-{{ object.id }}"
+                hx-swap="outerHTML">
+          {% trans 'Create image' %}
+        </button>
+      {% endif %}
+    {% endcomment %}
+      <button type="submit" class="btn btn-primary btn-sm">{% trans 'Save' %}</button>
+    </div>
+  </form>
+</div>

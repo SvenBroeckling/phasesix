@@ -1,16 +1,23 @@
 from functools import reduce
+import base64
+import json
 from operator import or_
 
+from django.conf import settings
 from django.db import models
 from django.db.models import Q, Sum, Count, Max, Min
 from django.http import HttpResponse
+from django.core.files.base import ContentFile
+from django.shortcuts import render
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
+from openai import OpenAI
 
 from armory.models import Weapon, Item, WeaponModification, RiotGear
 from campaigns.models import Roll
+from curators_desk.forms import get_homebrew_review_form_class
 from curators_desk.utils import get_models_with_translations, get_homebrew_models
 from magic.models import BaseSpell
 from rules.models import (
@@ -394,11 +401,35 @@ class TranslationStatusView(TemplateView):
 class ReviewHomebrewView(TemplateView):
     template_name = "curators_desk/fragments/review_homebrew.html"
 
+    @staticmethod
+    def _build_homebrew_table(model, bound_form=None, bound_object_id=None):
+        qs = model.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+        objects = list(qs)
+        if not objects:
+            return None
+        form_class = get_homebrew_review_form_class(model)
+        if not form_class:
+            return None
+        for obj in objects:
+            if bound_form and bound_object_id == obj.id:
+                obj.review_form = bound_form
+            else:
+                obj.review_form = form_class(
+                    instance=obj, prefix=f"{model.__name__}-{obj.id}"
+                )
+            obj.has_image_field = "image" in form_class.base_fields
+        return {
+            "qs": qs,
+            "objects": objects,
+            "model_name": model.__name__,
+        }
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["homebrew_querysets"] = [
-            model.objects.filter(is_homebrew=True, keep_as_homebrew=False)
+        context["homebrew_tables"] = [
+            table
             for model in get_homebrew_models()
+            if (table := self._build_homebrew_table(model))
         ]
         return context
 
@@ -453,3 +484,274 @@ class AcceptHomebrewView(View):
                 return HttpResponse("Object not found", status=404)
 
         return HttpResponse("Model not found", status=400)
+
+
+class UpdateHomebrewView(View):
+    @staticmethod
+    def _get_model(model_name):
+        for model in get_homebrew_models():
+            if model.__name__ == model_name:
+                return model
+        return None
+
+    def post(self, request, *args, **kwargs):
+        model_name = request.POST.get("model_name")
+        object_id = request.POST.get("object_id")
+
+        model = self._get_model(model_name)
+        if not model:
+            return HttpResponse("Model not found", status=400)
+
+        try:
+            obj = model.objects.get(id=object_id)
+        except model.DoesNotExist:
+            return HttpResponse("Object not found", status=404)
+
+        form_class = get_homebrew_review_form_class(model)
+        if not form_class:
+            return HttpResponse("Form not found", status=400)
+
+        prefix = f"{model.__name__}-{object_id}"
+        form = form_class(
+            request.POST,
+            request.FILES,
+            instance=obj,
+            prefix=prefix,
+        )
+
+        if form.is_valid():
+            form.save()
+            bound_form = None
+            bound_object_id = None
+        else:
+            bound_form = form
+            bound_object_id = obj.id
+
+        table = ReviewHomebrewView._build_homebrew_table(
+            model, bound_form=bound_form, bound_object_id=bound_object_id
+        )
+        if not table:
+            return HttpResponse(status=204)
+        return render(
+            request,
+            "curators_desk/fragments/review_homebrew_table.html",
+            {"table": table},
+        )
+
+
+class TranslateHomebrewView(View):
+    @staticmethod
+    def _get_model(model_name):
+        for model in get_homebrew_models():
+            if model.__name__ == model_name:
+                return model
+        return None
+
+    @staticmethod
+    def _extract_translation_payload(form):
+        payload = {}
+        for field_name in form.fields:
+            if not field_name.endswith("_de"):
+                continue
+            english_field = f"{field_name[:-3]}_en"
+            if english_field not in form.fields:
+                continue
+            value = form.data.get(form.add_prefix(field_name), "").strip()
+            if value:
+                payload[field_name] = value
+        return payload
+
+    @staticmethod
+    def _parse_json_response(text):
+        start = text.find("{")
+        end = text.rfind("}")
+        if start == -1 or end == -1 or end <= start:
+            raise ValueError("Invalid JSON response")
+        return json.loads(text[start : end + 1])
+
+    def post(self, request, *args, **kwargs):
+        model_name = request.POST.get("model_name")
+        object_id = request.POST.get("object_id")
+
+        model = self._get_model(model_name)
+        if not model:
+            return HttpResponse("Model not found", status=400)
+
+        try:
+            obj = model.objects.get(id=object_id)
+        except model.DoesNotExist:
+            return HttpResponse("Object not found", status=404)
+
+        form_class = get_homebrew_review_form_class(model)
+        if not form_class:
+            return HttpResponse("Form not found", status=400)
+
+        prefix = f"{model.__name__}-{object_id}"
+        data = request.POST.copy()
+        form = form_class(
+            data,
+            request.FILES,
+            instance=obj,
+            prefix=prefix,
+        )
+
+        if not settings.OPENAI_API_KEY:
+            form.add_error(None, _("OpenAI API key is not configured."))
+            obj.review_form = form
+            obj.has_image_field = "image" in form_class.base_fields
+            return render(
+                request,
+                "curators_desk/fragments/review_homebrew_form.html",
+                {"object": obj, "model_name": model.__name__},
+            )
+
+        payload = self._extract_translation_payload(form)
+        if not payload:
+            obj.review_form = form
+            obj.has_image_field = "image" in form_class.base_fields
+            return render(
+                request,
+                "curators_desk/fragments/review_homebrew_form.html",
+                {"object": obj, "model_name": model.__name__},
+            )
+
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
+        prompt = (
+            "Translate the following German text values into English. "
+            "Return ONLY a JSON object mapping the same keys to English translations. "
+            "Preserve meaning and formatting.\n\n"
+            f"{json.dumps(payload, ensure_ascii=False)}"
+        )
+
+        try:
+            response = client.responses.create(
+                model=settings.OPENAI_TRANSLATION_MODEL,
+                input=prompt,
+            )
+            output_text = getattr(response, "output_text", None)
+            if not output_text and getattr(response, "output", None):
+                output_text = response.output[0].content[0].text
+            translations = self._parse_json_response(output_text or "")
+        except Exception:
+            form.add_error(None, _("Translation failed. Please try again."))
+            obj.review_form = form
+            obj.has_image_field = "image" in form_class.base_fields
+            return render(
+                request,
+                "curators_desk/fragments/review_homebrew_form.html",
+                {"object": obj, "model_name": model.__name__},
+            )
+
+        for de_field, translation in translations.items():
+            english_field = f"{de_field[:-3]}_en"
+            if english_field not in form.fields:
+                continue
+            data[form.add_prefix(english_field)] = translation
+
+        updated_form = form_class(
+            data,
+            request.FILES,
+            instance=obj,
+            prefix=prefix,
+        )
+        obj.review_form = updated_form
+        obj.has_image_field = "image" in form_class.base_fields
+        return render(
+            request,
+            "curators_desk/fragments/review_homebrew_form.html",
+            {"object": obj, "model_name": model.__name__},
+        )
+
+
+class GenerateHomebrewImageView(View):
+    @staticmethod
+    def _get_model(model_name):
+        for model in get_homebrew_models():
+            if model.__name__ == model_name:
+                return model
+        return None
+
+    @staticmethod
+    def _build_image_prompt(form):
+        values = []
+        for field_name in form.fields:
+            if not field_name.endswith("_de"):
+                continue
+            value = form.data.get(form.add_prefix(field_name), "").strip()
+            if value:
+                values.append(value)
+        if not values:
+            values.append(str(form.instance))
+        joined = " ".join(values)
+        print(joined)
+        return f"Create a square (1:1) illustration for the following item: {joined}"
+
+    def post(self, request, *args, **kwargs):
+        model_name = request.POST.get("model_name")
+        object_id = request.POST.get("object_id")
+
+        model = self._get_model(model_name)
+        if not model:
+            return HttpResponse("Model not found", status=400)
+
+        try:
+            obj = model.objects.get(id=object_id)
+        except model.DoesNotExist:
+            return HttpResponse("Object not found", status=404)
+
+        form_class = get_homebrew_review_form_class(model)
+        if not form_class:
+            return HttpResponse("Form not found", status=400)
+
+        if "image" not in form_class.base_fields:
+            return HttpResponse("Image field not found", status=400)
+
+        prefix = f"{model.__name__}-{object_id}"
+        form = form_class(
+            request.POST,
+            request.FILES,
+            instance=obj,
+            prefix=prefix,
+        )
+
+        if not settings.OPENAI_API_KEY:
+            form.add_error(None, _("OpenAI API key is not configured."))
+            obj.review_form = form
+            obj.has_image_field = "image" in form_class.base_fields
+            return render(
+                request,
+                "curators_desk/fragments/review_homebrew_form.html",
+                {"object": obj, "model_name": model.__name__},
+            )
+
+        prompt = self._build_image_prompt(form)
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
+
+        try:
+            response = client.images.generate(
+                model=settings.OPENAI_IMAGE_MODEL,
+                prompt=prompt,
+                size="1024x1024",
+            )
+            image_b64 = response.data[0].b64_json
+            image_bytes = base64.b64decode(image_b64)
+            filename = f"{model.__name__.lower()}_{obj.id}_generated.png"
+            obj.image.save(filename, ContentFile(image_bytes), save=True)
+        except Exception:
+            form.add_error(None, _("Image generation failed. Please try again."))
+            obj.review_form = form
+            obj.has_image_field = "image" in form_class.base_fields
+            return render(
+                request,
+                "curators_desk/fragments/review_homebrew_form.html",
+                {"object": obj, "model_name": model.__name__},
+            )
+
+        refreshed_form = form_class(instance=obj, prefix=prefix)
+        obj.review_form = refreshed_form
+        obj.has_image_field = "image" in form_class.base_fields
+        return render(
+            request,
+            "curators_desk/fragments/review_homebrew_form.html",
+            {"object": obj, "model_name": model.__name__},
+        )
