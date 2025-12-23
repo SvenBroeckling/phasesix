@@ -18,22 +18,47 @@
               hx-post="{% url 'curators_desk:translate_homebrew' %}"
               hx-include="closest form"
               hx-target="#homebrew-form-body-{{ model_name }}-{{ object.id }}"
-              hx-swap="outerHTML">
+              hx-swap="outerHTML"
+              hx-indicator="#translate-indicator-{{ model_name }}-{{ object.id }}"
+              hx-disabled-elt="this">
         {% trans 'Translate' %}
+        <span id="translate-indicator-{{ model_name }}-{{ object.id }}"
+              class="htmx-indicator spinner-border spinner-border-sm ms-2"
+              role="status"
+              aria-hidden="true"></span>
       </button>
-    {% comment %}
       {% if object.has_image_field %}
         <button type="button"
                 class="btn btn-outline-secondary btn-sm"
                 hx-post="{% url 'curators_desk:generate_homebrew_image' %}"
                 hx-include="closest form"
                 hx-target="#homebrew-form-body-{{ model_name }}-{{ object.id }}"
-                hx-swap="outerHTML">
+                hx-swap="outerHTML"
+                hx-indicator="#image-indicator-{{ model_name }}-{{ object.id }}"
+                hx-disabled-elt="this">
           {% trans 'Create image' %}
+          <span id="image-indicator-{{ model_name }}-{{ object.id }}"
+                class="htmx-indicator spinner-border spinner-border-sm ms-2"
+                role="status"
+                aria-hidden="true"></span>
         </button>
       {% endif %}
-    {% endcomment %}
-      <button type="submit" class="btn btn-primary btn-sm">{% trans 'Save' %}</button>
+      <button type="submit"
+              class="btn btn-primary btn-sm"
+              name="post_save_action"
+              value="accept">
+        {% trans 'Save and accept' %}
+      </button>
+      <button type="submit"
+              class="btn btn-outline-secondary btn-sm">
+        {% trans 'Save' %}
+      </button>
+      <button type="submit"
+              class="btn btn-outline-primary btn-sm"
+              name="post_save_action"
+              value="keep">
+        {% trans 'Save and keep as Homebrew' %}
+      </button>
     </div>
   </form>
 </div>

@@ -88,6 +88,13 @@ def _build_homebrew_review_fields(form_class):
         except FieldDoesNotExist:
             continue
         expanded_fields.append(english_field)
+    if "extensions" not in expanded_fields:
+        try:
+            model._meta.get_field("extensions")
+        except FieldDoesNotExist:
+            pass
+        else:
+            expanded_fields.append("extensions")
     return expanded_fields
 
 

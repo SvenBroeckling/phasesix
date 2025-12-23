@@ -520,7 +520,15 @@ class UpdateHomebrewView(View):
         )
 
         if form.is_valid():
-            form.save()
+            obj = form.save()
+            post_save_action = request.POST.get("post_save_action")
+            if post_save_action == "accept":
+                obj.is_homebrew = False
+                obj.keep_as_homebrew = False
+                obj.save(update_fields=["is_homebrew", "keep_as_homebrew"])
+            elif post_save_action == "keep":
+                obj.keep_as_homebrew = True
+                obj.save(update_fields=["keep_as_homebrew"])
             bound_form = None
             bound_object_id = None
         else:
@@ -675,7 +683,7 @@ class GenerateHomebrewImageView(View):
     def _build_image_prompt(form):
         values = []
         for field_name in form.fields:
-            if not field_name.endswith("_de"):
+            if not field_name.endswith("_en"):
                 continue
             value = form.data.get(form.add_prefix(field_name), "").strip()
             if value:
@@ -683,8 +691,16 @@ class GenerateHomebrewImageView(View):
         if not values:
             values.append(str(form.instance))
         joined = " ".join(values)
-        print(joined)
-        return f"Create a square (1:1) illustration for the following item: {joined}"
+        prompt_parts = []
+        if hasattr(form.instance, "extensions"):
+            world_extension = form.instance.extensions.filter(type="w").first()
+            if world_extension and world_extension.image_prompt_prefix:
+                prompt_parts.append(world_extension.image_prompt_prefix.strip())
+        prompt_parts.append(
+            f"Create a square (1:1) illustration for the following item: {joined}."
+        )
+        prompt_parts.append("Do not include any text or typography in the image.")
+        return " ".join(prompt_parts)
 
     def post(self, request, *args, **kwargs):
         model_name = request.POST.get("model_name")

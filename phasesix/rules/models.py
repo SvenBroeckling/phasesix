@@ -295,6 +295,12 @@ class Extension(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=120)
     identifier = models.CharField(_("identifier"), max_length=20)
     description = models.TextField(_("description"), blank=True, null=True)
+    image_prompt_prefix = models.TextField(
+        _("image prompt prefix"),
+        blank=True,
+        default="",
+        help_text=_("Optional prompt text prepended to AI image generation."),
+    )
 
     year_range = models.CharField(_("year range"), blank=True, null=True, max_length=50)
     fa_icon_class = models.CharField(
