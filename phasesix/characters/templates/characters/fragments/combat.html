@@ -58,6 +58,7 @@
               <td>
                 <i class="fas fa-hand-rock text-success"></i> {{ w.weapon }}
                 <small class="text-muted">{{ w.weapon.type }}</small>
+                {% include "homebrew/_made_by_label.html" with creator=w.weapon.created_by %}
               </td>
               <td class="text-end">
                 {% for am in w.weapon.attack_modes.all %}
@@ -96,6 +97,7 @@
             <td>
               <i class="fas fa-shield-alt text-info"></i> <span class="text-muted"></span>{{ r.riot_gear }}
               <small class="text-muted">{{ r.riot_gear.type }}</small>
+              {% include "homebrew/_made_by_label.html" with creator=r.riot_gear.created_by %}
             </td>
             <td class="text-end">
             </td>
@@ -117,6 +119,7 @@
             <td>
               <i class="fas fa-bomb text-info"></i> <span class="text-muted"></span>{{ i.item }}
               <small class="text-muted">{{ i.item.type }}</small>
+              {% include "homebrew/_made_by_label.html" with creator=i.item.created_by %}
             </td>
             <td class="text-end">
               {% if i.item.skill %}
@@ -142,6 +145,7 @@
               <i class="gi gi-lorc-bolt-shield text-info"></i> <span
               class="text-muted"></span>{{ cbm.body_modification }}
               <small class="text-muted">{{ cbm.body_modification.type }}</small>
+              {% include "homebrew/_made_by_label.html" with creator=cbm.body_modification.created_by %}
             </td>
             <td class="text-end">
               {% if cbm.body_modification.skill %}
@@ -165,6 +169,7 @@
             <td>
               <i class="gi-lorc-fairy-wand text-danger"></i> {{ s.spell }}
               <small class="text-muted">{{ s.spell_type }} - {{ s.variant }}</small>
+              {% include "homebrew/_made_by_label.html" with creator=s.spell.created_by %}
             </td>
             <td class="text-end">
               {{ s.spell_type.reference_attribute.name }} {% color_value_span s.dice_value 5 %} <i
@@ -298,4 +303,3 @@
     </div>
   </div>
 </div>
-

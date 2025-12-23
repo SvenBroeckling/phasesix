@@ -11,7 +11,10 @@
        data-pk="container.id"
        data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=container.id sidebar_template="item" %}"
        data-sidebar-right-title="{{ container.item }}">
-    <div class="card-header">{{ container.item }}</div>
+  <div class="card-header">
+    <div class="mb-0">{{ container.item }}</div>
+    {% include "homebrew/_made_by_label.html" with creator=container.item.created_by %}
+  </div>
     <div class="card-body">
       {% include 'characters/fragments/_gear_item.html' with qs=container.characteritem_set.without_containers empty_message="container" %}
     </div>

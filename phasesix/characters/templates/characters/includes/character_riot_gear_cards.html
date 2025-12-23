@@ -10,7 +10,8 @@
       {% if r.is_equipped %}
         <div class="top-0 end-0 small me-2 mt-1 text-warning position-absolute">{% trans "Equipped" %}</div>
       {% endif %}
-      <h4>{{ r.riot_gear }}</h4>
+      <h4 class="mb-0">{{ r.riot_gear }}</h4>
+      {% include "homebrew/_made_by_label.html" with creator=r.riot_gear.created_by extra_class="mb-2" %}
       <small class="text-muted">{{ r.riot_gear.type }}</small>
 
       <div class="mb-3">

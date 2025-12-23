@@ -24,7 +24,10 @@
         <div class="d-flex align-items-center">
           <i title="{% trans "Is active" %}"
              class="fs-5 gi {% if cbm.is_active %}gi-guard13007-play-button text-success{% else %}gi gi-lord-berandas-power-button text-danger{% endif %} me-2"></i>
-          {{ cbm.body_modification.name }}
+          <div>
+            {{ cbm.body_modification.name }}
+            {% include "homebrew/_made_by_label.html" with creator=cbm.body_modification.created_by %}
+          </div>
         </div>
         <span class="badge bg-dark rounded-pill">
             <i class="gi gi-delapouite-plug me-1"></i>

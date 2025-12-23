@@ -1,0 +1,8 @@
+{% load i18n %}
+
+{% if creator %}
+  <div class="small {{ text_class|default:"text-muted" }} {{ extra_class|default:"" }}">
+    {% trans "Made by" %}
+    <a href="{{ creator.profile.get_absolute_url }}" class="{{ link_class|default:"link-secondary" }}">{{ creator }}</a>
+  </div>
+{% endif %}

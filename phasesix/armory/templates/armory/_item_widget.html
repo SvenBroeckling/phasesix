@@ -16,7 +16,10 @@
   </div>
 
   <div class="card-img-overlay d-flex flex-row align-items-end">
-    <p>{{ item.description|to_first_linebreak|phasesix_markup }}</p>
+    <div class="me-3">
+      <p>{{ item.description|to_first_linebreak|phasesix_markup }}</p>
+      {% include "homebrew/_made_by_label.html" with creator=item.created_by text_class="text-white-50" link_class="link-light" extra_class="mt-2" %}
+    </div>
 
     <div class="w-100">
       {% if character %}

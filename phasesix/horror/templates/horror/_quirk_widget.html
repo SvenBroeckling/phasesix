@@ -6,6 +6,7 @@
     {{ quirk }}
   </div>
   <div class="card-body">
+    {% include "homebrew/_made_by_label.html" with creator=quirk.created_by extra_class="mb-2" %}
     <div class="text-muted mb-3">
       <i>{{ quirk.description|phasesix_markup }}</i>
     </div>

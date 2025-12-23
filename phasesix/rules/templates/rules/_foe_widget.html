@@ -17,6 +17,7 @@
   {% endif %}
 
   <div class="card-body position-relative">
+    {% include "homebrew/_made_by_label.html" with creator=foe.created_by extra_class="mb-2" %}
     {% include "rules/_foe_stat_block.html" with show_description=True %}
     {% include "rules/_foe_actions_block.html" %}
 

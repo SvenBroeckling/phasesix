@@ -3,7 +3,8 @@
 {% load rules_extras %}
 <div class="card mb-3">
   <div class="card-body">
-    <h3>{{ language }}</h3>
+    <h3 class="mb-0">{{ language }}</h3>
+    {% include "homebrew/_made_by_label.html" with creator=language.created_by extra_class="mb-2" %}
     <small class="text-muted mb-3">
       {% if language.amount_of_people_speaking > 0 %}
         {% blocktrans with t_amount=language.amount_of_people_speaking|intword %}

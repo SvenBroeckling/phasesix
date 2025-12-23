@@ -11,7 +11,8 @@
          data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=character_weapon.id sidebar_template="weapon" %}">
 
       <div class="card-body">
-        <h4>{{ character_weapon.weapon }}</h4>
+        <h4 class="mb-0">{{ character_weapon.weapon }}</h4>
+        {% include "homebrew/_made_by_label.html" with creator=character_weapon.weapon.created_by extra_class="mb-2" %}
 
         <div class="row">
           <div class="col-12">

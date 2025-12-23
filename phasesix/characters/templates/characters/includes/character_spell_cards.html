@@ -9,7 +9,8 @@
          class="card mb-2">
 
       <div class="card-body">
-        <h4>{{ s.spell }}</h4>
+        <h4 class="mb-0">{{ s.spell }}</h4>
+        {% include "homebrew/_made_by_label.html" with creator=s.spell.created_by extra_class="mb-2" %}
         <span
           class="fs-3 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ s.spell_point_cost }}</span>
         <small class="text-muted">{{ s.spell.variant }} - {{ s.spell.type }}</small>

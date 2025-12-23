@@ -6,6 +6,7 @@
   <div class="card-body position-relative">
     <h4 class="mb-0">{{ body_modification }}</h4>
     <small class="text-muted">{{ body_modification.get_rarity_display }}</small>
+    {% include "homebrew/_made_by_label.html" with creator=body_modification.created_by extra_class="mb-2" %}
 
     {% with currency_unit=character.common_currency_unit %}
       <div class="mt-3">

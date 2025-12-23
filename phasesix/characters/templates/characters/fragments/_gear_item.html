@@ -11,6 +11,7 @@
         {% if ci.quantity > 1 %}{% color_value_span ci.quantity 10 %}
           x {% endif %} {{ ci.item }}
         <span class="small text-muted">{{ ci.item.type }}</span>
+        {% include "homebrew/_made_by_label.html" with creator=ci.item.created_by %}
         {% if ci.item.concealment > 0 %}
           <span class="float-end">
             <i class="fas fa-eye-slash fa-fw"

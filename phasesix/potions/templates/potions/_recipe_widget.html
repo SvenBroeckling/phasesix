@@ -6,6 +6,7 @@
   <div class="card-body position-relative">
     <h4 class="mb-0">{{ recipe }}</h4>
     <small class="text-muted">{{ recipe.difficulty }}</small>
+    {% include "homebrew/_made_by_label.html" with creator=recipe.created_by extra_class="mb-2" %}
 
     {% if recipe.description %}
       <p class="mt-2">

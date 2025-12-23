@@ -95,6 +95,7 @@
                 {% endblocktrans %}
               </small>
             {% endif %}
+            {% include "homebrew/_made_by_label.html" with creator=character_language.language.created_by %}
           </div>
 
           {% if may_edit %}
@@ -203,7 +204,8 @@
                data-sidebar-right-url="{% url "characters:xhr_sidebar" pk=foe.id sidebar_template="foe" %}">
             <img class="rounded" src="{% image_url foe geometry="80x80" %}" alt="img-fluid">
             <div>
-              {{ foe }}<br>
+              <div>{{ foe }}</div>
+              {% include "homebrew/_made_by_label.html" with creator=foe.created_by %}
               {% include "characters/_wound_display.html" with character=foe %}
               {% if foe.is_familiar %}
                 {% trans "Is familiar" %}

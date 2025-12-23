@@ -83,6 +83,7 @@
            data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=cq.id sidebar_template="quirk" %}">
         <div class="card-header">{{ cq.quirk }}</div>
         <div class="card-body">
+          {% include "homebrew/_made_by_label.html" with creator=cq.quirk.created_by extra_class="mb-2" %}
           <div class="text-muted">
             <i>{{ cq.quirk.description|phasesix_markup }}</i>
           </div>

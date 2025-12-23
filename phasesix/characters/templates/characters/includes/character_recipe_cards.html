@@ -11,6 +11,7 @@
     <div class="card-body">
       <h4 class="mb-0">{{ character_recipe.recipe.name }}</h4>
       <small class="text-muted">{{ character_recipe.recipe.difficulty }}</small>
+      {% include "homebrew/_made_by_label.html" with creator=character_recipe.recipe.created_by extra_class="mb-2" %}
 
       <p class="mt-2">
         {{ character_recipe.recipe.description|phasesix_markup }}
