@@ -26,6 +26,7 @@
         {% bootstrap_form form layout="floating" %}
         {% bootstrap_form_errors form %}
         <div class="d-flex align-items-center gap-2">
+          <a href="{{ object.get_absolute_url }}" target="_blank" class="btn btn-info">{% trans "Go to Character" %}</a>
           <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
           <button type="button"
                   class="btn btn-outline-danger"

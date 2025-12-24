@@ -336,7 +336,7 @@ class AssignPlotNpcView(View):
         plot_element = get_object_or_404(PlotElement, id=kwargs["pk"])
         character = get_object_or_404(Character, id=kwargs["character_pk"])
 
-        if character.plot_campaign_id != plot_element.plot_id:
+        if character.plot_id != plot_element.plot_id:
             raise PermissionDenied()
         if character.created_by_id != request.user.id:
             raise PermissionDenied()
@@ -355,7 +355,7 @@ class DeletePlotNpcView(View):
 
         plot_element.npc.remove(character)
         if (
-            character.plot_campaign_id == plot_element.plot_id
+            character.plot_id == plot_element.plot_id
             and not character.plotelement_set.exists()
         ):
             character.delete()

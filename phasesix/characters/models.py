@@ -172,6 +172,7 @@ class Character(ModelWithImage, PhaseSixModel):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
+        related_name="clones",
     )
 
     extensions = models.ManyToManyField(
@@ -201,7 +202,7 @@ class Character(ModelWithImage, PhaseSixModel):
         null=True,
         on_delete=models.SET_NULL,
     )
-    plot_campaign = models.ForeignKey(
+    plot = models.ForeignKey(
         "plots.Plot",
         verbose_name=_("Plot Campaign"),
         related_name="plot_npc_set",
@@ -308,7 +309,7 @@ class Character(ModelWithImage, PhaseSixModel):
                 currency_map=self.currency_map,
                 campaign=new_campaign,
                 npc_campaign=new_npc_campaign,
-                plot_campaign=plot,
+                plot=plot,
                 reputation=self.reputation,
                 health=self.health,
                 boost=self.boost,

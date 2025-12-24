@@ -7,7 +7,7 @@
 
 {% block content %}
   <div data-app="characters">
-    <form action="" method="post" class="character-data-form"
+    <form action="?{{ request.GET.urlencode }}" method="post" class="character-data-form"
           data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">
       <div class="row">
         {% csrf_token %}

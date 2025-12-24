@@ -24,6 +24,21 @@
         {% trans "Clone character" %}
       </button>
     </form>
+    {% if object.cloned_from %}
+      <div class="alert alert-info mt-2">
+        {% trans 'Cloned from:' %} <a href="{% url 'characters:detail' slug=object.cloned_from.slug %}">{{ object.cloned_from.name }}</a>
+      </div>
+    {% endif %}
+    {% if object.clones.all %}
+      <div class="mt-2">
+        <strong>{% trans 'Cloned characters:' %}</strong>
+        <ul class="list-unstyled">
+          {% for clone in object.clones.all %}
+            <li><a href="{% url 'characters:detail' slug=clone.slug %}">{{ clone.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
   </div>
 
 </div>

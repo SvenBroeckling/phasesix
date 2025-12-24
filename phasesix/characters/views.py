@@ -65,6 +65,7 @@ from magic.models import (
     SpellTemplate,
 )
 from pantheon.models import Entity, PriestAction
+from plots.models import Plot, PlotElement
 from rules.models import (
     Extension,
     Template,
@@ -655,6 +656,13 @@ class CreateCharacterDataView(FormView):
             self.request.user if self.request.user.is_authenticated else None
         )
         self.object.save()
+
+        plot_element_pk = self.request.GET.get("plot_element_pk")
+        if plot_element_pk:
+            plot_element = get_object_or_404(PlotElement, pk=plot_element_pk)
+            self.object.plot = plot_element.plot
+            self.object.save()
+            plot_element.npc.add(self.object)
 
         return super().form_valid(form)
 

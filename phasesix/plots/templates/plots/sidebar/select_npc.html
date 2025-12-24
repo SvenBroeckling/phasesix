@@ -1,6 +1,10 @@
 {% load i18n %}
 {% load portal_extras %}
 
+<div class="d-grid mb-3">
+  <a class="btn btn-primary" href="{% url 'characters:create_character_data' world_pk=object.plot.world_extension.pk epoch_pk=object.plot.epoch_extension.pk %}?plot_element_pk={{ object.pk }}" target="_blank">{% trans "Create NPC" %}</a>
+</div>
+
 {% if assigned_characters %}
   <div class="mb-3">
     <div class="text-muted text-uppercase fw-semibold small mb-2">{% trans "Already in this plot" %}</div>

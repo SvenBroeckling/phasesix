@@ -9,6 +9,9 @@
   {% if object.pc_or_npc_campaign %}
     <a href="{{ object.pc_or_npc_campaign.get_absolute_url }}">{{ object.pc_or_npc_campaign }}</a>
   {% endif %}
+  {% if object.plot %}
+    <br>{% trans 'Plot NPC' %}: {{ object.plot }}
+  {% endif %}
 {% endblock %}
 
 {% block javascript %}
