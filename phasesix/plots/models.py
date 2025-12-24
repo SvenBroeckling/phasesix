@@ -70,21 +70,12 @@ class Handout(models.Model, metaclass=TransMeta):
 
 
 class PlotElement(models.Model, metaclass=TransMeta):
-    class ElementType(models.TextChoices):
-        ACT = "a", _("Act")
-        SCENE = "s", _("Scene")
-        ENCOUNTER = "e", _("Encounter")
-        INFO = "i", _("Info")
-
     plot = models.ForeignKey(Plot, verbose_name=_("Plot"), on_delete=models.CASCADE)
     parent = models.ForeignKey(
         "self", on_delete=models.CASCADE, related_name="children", null=True, blank=True
     )
 
     name = models.CharField(_("name"), max_length=128)
-    type = models.CharField(
-        _("type"), max_length=1, choices=ElementType.choices, default="s"
-    )
 
     gm_notes = models.TextField(_("GM notes"), blank=True, null=True)
     player_summary = models.TextField(_("player summary"), blank=True, null=True)

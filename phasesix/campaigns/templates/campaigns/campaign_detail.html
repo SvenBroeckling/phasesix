@@ -94,15 +94,6 @@
           </div>
         </div>
 
-        {% if object.plot %}
-          <div class="tab-pane fade" id="v-plot" role="tabpanel">
-            <div
-              hx-trigger="intersect,refresh-fragments from:document,refresh-campaign-plot from:document"
-              hx-get="{% url 'campaigns:xhr_campaign_fragment' pk=object.id fragment_template="plot" %}">
-            </div>
-          </div>
-        {% endif %}
-
         <div class="tab-pane fade" id="v-settings" role="tabpanel">
           <div
             hx-trigger="intersect,refresh-fragments from:document,refresh-campaign-settings from:document"
