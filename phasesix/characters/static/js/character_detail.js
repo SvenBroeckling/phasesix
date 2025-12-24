@@ -31,6 +31,23 @@ $(function () {
         return false;
     });
 
+    body.on("submit", "form[data-loading-form='character-fill-random']", function (e) {
+        let form = $(this);
+        let confirmMessage = form.data("confirm-message");
+        if (confirmMessage && !confirm(confirmMessage)) {
+            e.preventDefault();
+            return false;
+        }
+        let button = form.find("[data-loading-button]");
+        let spinner = form.find("[data-loading-spinner]");
+        if (button.length) {
+            button.prop("disabled", true).addClass("disabled");
+        }
+        if (spinner.length) {
+            spinner.removeClass("d-none");
+        }
+    });
+
     // Sortable Items
     document.addEventListener("attach-sortables", function () {
         $("[data-app='characters'] .item-sortable")

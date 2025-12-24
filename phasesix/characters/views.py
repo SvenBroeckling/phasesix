@@ -101,6 +101,34 @@ class CloneCharacterView(View):
         return HttpResponseRedirect(clone.get_absolute_url())
 
 
+class CharacterFillRandomView(View):
+    def post(self, request, *args, **kwargs):
+        character = get_object_or_404(Character, pk=kwargs["pk"])
+        if not character.may_edit(request.user):
+            raise PermissionDenied()
+        if not self.request.user.is_authenticated and self.request.user.is_superuser:
+            raise PermissionDenied()
+
+        try:
+            added = character.fill_randomly_from_openai()
+        except ValueError as exc:
+            messages.error(request, gettext(str(exc)))
+            return HttpResponseRedirect(character.get_absolute_url())
+        except Exception:
+            messages.error(request, _("Random fill failed. Please try again later."))
+            return HttpResponseRedirect(character.get_absolute_url())
+
+        summary = ", ".join(f"{key}: {value}" for key, value in added.items() if value)
+        if summary:
+            messages.success(
+                request,
+                _("Random fill complete. Added: %(summary)s") % {"summary": summary},
+            )
+        else:
+            messages.info(request, _("Random fill complete. No changes were added."))
+        return HttpResponseRedirect(character.get_absolute_url())
+
+
 class XhrDiceLogView(ListView):
     template_name = "characters/dice_log.html"
     paginate_by = 8

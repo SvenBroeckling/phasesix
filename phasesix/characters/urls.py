@@ -11,6 +11,11 @@ urlpatterns = [
         views.CloneCharacterView.as_view(),
         name="clone",
     ),
+    path(
+        "character/<int:pk>/fill_randomly",
+        views.CharacterFillRandomView.as_view(),
+        name="fill_randomly",
+    ),
     path("character/<slug:slug>/pdf", views.CharacterPDFView.as_view(), name="pdf"),
     path(
         "xhr_delete/<int:pk>", views.XhrDeleteCharacterView.as_view(), name="xhr_delete"

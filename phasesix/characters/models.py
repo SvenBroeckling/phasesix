@@ -23,16 +23,14 @@ from armory.models import (
     RiotGearProtection,
     RiotGearModifier,
 )
-from body_modifications.models import (
-    BodyModificationModifier,
-    BodyModificationSocketLocation,
-)
+from body_modifications.models import BodyModificationModifier
+from characters.openai import CharacterRandomFillService
 from characters.utils import static_thumbnail
 from horror.models import Quirk, QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
 from pantheon.models import PriestAction
-from rules.models import Skill, Template, TemplateCategory, TemplateModifier, Extension
 from phasesix.models import PhaseSixModel, ModelWithImage
+from rules.models import Extension, Skill, Template, TemplateCategory, TemplateModifier
 from worlds.unique_slugify import unique_slugify
 
 
@@ -1212,6 +1210,9 @@ class Character(ModelWithImage, PhaseSixModel):
                 item=Item.objects.for_extensions(self.extensions).order_by("?").first(),
                 quantity=random.randint(1, 3),
             )
+
+    def fill_randomly_from_openai(self):
+        return CharacterRandomFillService(self).fill_randomly_from_openai()
 
 
 class CharacterSkillQuerySet(models.QuerySet):

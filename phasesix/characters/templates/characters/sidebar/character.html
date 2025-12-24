@@ -24,6 +24,20 @@
         {% trans "Clone character" %}
       </button>
     </form>
+    {% if may_edit and request.user.is_authenticated and request.user.is_staff %}
+      <form method="post" action="{% url 'characters:fill_randomly' pk=object.id %}"
+            data-loading-form="character-fill-random"
+            data-confirm-message="{% trans 'This will modify the character and should only be used for NPCs. Continue?' %}">
+        {% csrf_token %}
+        <button class="btn btn-warning mt-2 w-100" data-loading-button>
+          <span class="spinner-border spinner-border-sm me-2 d-none"
+                role="status"
+                aria-hidden="true"
+                data-loading-spinner></span>
+          {% trans "Fill randomly" %}
+        </button>
+      </form>
+    {% endif %}
     {% if object.cloned_from %}
       <div class="alert alert-info mt-2">
         {% trans 'Cloned from:' %} <a href="{% url 'characters:detail' slug=object.cloned_from.slug %}">{{ object.cloned_from.name }}</a>
