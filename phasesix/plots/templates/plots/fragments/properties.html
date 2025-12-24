@@ -7,6 +7,7 @@
         class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
         data-modal-url="{% url "plots:update_plot" pk=object.id %}"
         data-modal-event-after="refresh-plot"
+        data-modal-size-class="modal-xl"
         data-modal-title="{% trans "Edit plot" %}"
         title="{% trans "Edit" %}">
         <i class="fas fa-pen me-1"></i>

@@ -92,7 +92,7 @@ class XhrUpdatePlotView(UpdateView):
 
 class XhrCreatePlotElementView(CreateView):
     model = PlotElement
-    template_name = "plots/xhr_plot_modal.html"
+    template_name = "plots/xhr_plot_element_modal.html"
     form_class = PlotElementForm
 
     def get_context_data(self, **kwargs):
@@ -119,7 +119,7 @@ class XhrCreatePlotElementView(CreateView):
 
 class XhrUpdatePlotElementView(UpdateView):
     model = PlotElement
-    template_name = "plots/xhr_plot_modal.html"
+    template_name = "plots/xhr_plot_element_modal.html"
     form_class = PlotElementForm
 
     def get_context_data(self, **kwargs):
@@ -308,8 +308,8 @@ class XhrSelectPlotFoeView(DetailView):
         foes = Foe.objects.all()
         if plot.world_extension_id:
             extensions = Extension.objects.filter(
-                Q(id__in=[p.id for p in plot.extensions.all()]) |
-                Q(id=plot.world_extension.id)
+                Q(id__in=[p.id for p in plot.extensions.all()])
+                | Q(id=plot.world_extension.id)
             )
             foes = foes.for_extensions(extensions)
         context["foes"] = foes.exclude(id__in=self.object.foes.all()).order_by(

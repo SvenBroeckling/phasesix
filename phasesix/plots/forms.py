@@ -19,8 +19,8 @@ class PlotForm(forms.ModelForm):
             "language",
         )
         widgets = {
-            "gm_description": BootstrapTextarea({"rows": 5}),
-            "player_abstract": BootstrapTextarea({"rows": 5}),
+            "gm_description": BootstrapTextarea({"rows": 20}),
+            "player_abstract": BootstrapTextarea({"rows": 20}),
         }
 
 
