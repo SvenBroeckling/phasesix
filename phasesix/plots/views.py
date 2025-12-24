@@ -173,7 +173,7 @@ class DeletePlotElementView(View):
 
 class XhrCreateHandoutView(CreateView):
     model = Handout
-    template_name = "plots/xhr_plot_modal.html"
+    template_name = "plots/xhr_handout_modal.html"
     form_class = HandoutForm
 
     def get_context_data(self, **kwargs):
@@ -226,7 +226,7 @@ class DeleteHandoutView(View):
 
 class XhrCreateLocationView(CreateView):
     model = Location
-    template_name = "plots/xhr_plot_modal.html"
+    template_name = "plots/xhr_location_modal.html"
     form_class = LocationForm
 
     def get_context_data(self, **kwargs):

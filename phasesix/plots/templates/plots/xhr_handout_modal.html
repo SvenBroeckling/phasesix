@@ -2,20 +2,22 @@
 
 <div class="container-fluid">
   <div class="row g-3">
-    <div class="col-12 col-lg-6">
-      {% if object.image %}
-        <img src="{{ object.image.url }}"
-             alt="{{ object.name }}"
-             class="img-fluid rounded border w-100">
-      {% else %}
-        <div class="ratio ratio-4x3 border rounded bg-light">
-          <div class="d-flex align-items-center justify-content-center">
-            <span class="text-muted small">{% trans "No image uploaded." %}</span>
+    {% if object %}
+      <div class="col-12 col-lg-6">
+        {% if object.image %}
+          <img src="{{ object.image.url }}"
+               alt="{{ object.name }}"
+               class="img-fluid rounded border w-100">
+        {% else %}
+          <div class="ratio ratio-4x3 border rounded">
+            <div class="d-flex align-items-center justify-content-center">
+              <span class="text-muted small">{% trans "No image uploaded." %}</span>
+            </div>
           </div>
-        </div>
-      {% endif %}
-    </div>
-    <div class="col-12 col-lg-6">
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="col-12 {% if object %}col-lg-6{% endif %}">
       <form action="{{ post_url }}"
             data-fetch-form="true"
             data-fetch-form-close="modal"
@@ -27,12 +29,14 @@
         {% bootstrap_form_errors form %}
         <div class="d-flex align-items-center gap-2">
           <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
-          <button type="button"
-                  class="btn btn-outline-danger"
-                  data-action-trigger-url="{% url 'plots:delete_handout' plot_element_pk=plot_element.id pk=object.id %}"
-                  data-action-trigger-event-after="refresh-plot,modal-hide">
-            {% trans "Delete" %}
-          </button>
+          {% if object %}
+            <button type="button"
+                    class="btn btn-outline-danger"
+                    data-action-trigger-url="{% url 'plots:delete_handout' plot_element_pk=plot_element.id pk=object.id %}"
+                    data-action-trigger-event-after="refresh-plot,modal-hide">
+              {% trans "Delete" %}
+            </button>
+          {% endif %}
         </div>
       </form>
     </div>
