@@ -6,12 +6,6 @@
 {% block in_page_title %}{{ object }}{% endblock %}
 {% block in_page_subtitle %}{% trans 'A campaign by' %} {{ object.created_by }}{% endblock %}
 
-{% block extraheader %}
-  {% if object.plot %}
-    <link rel="stylesheet" href="{% static 'plots/css/plot_editor.css' %}">
-  {% endif %}
-{% endblock %}
-
 {% block javascript %}
   <script src="{% static 'js/campaign_socket.js' %}"></script>
   {% if object.plot %}

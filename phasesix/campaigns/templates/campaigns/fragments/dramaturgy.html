@@ -15,7 +15,11 @@
 <p>{{ object.abstract|phasesix_markup }}</p>
 
 {% if object.plot %}
-  <div class="plot-tree"
+  <div class="plot-tree plot-editor-container"
+       style="--plot-placeholder-root-label: '{% trans "Same Level / Top Level" %}';
+              --plot-placeholder-child-label: '{% trans "Move as Child" %}';
+              --plot-same-level-label: '{% trans "Same Level" %}';
+              --plot-drop-children-label: '{% trans "Drop here for children" %}';"
        data-campaign-plot-storage-key="campaignPlotElements-{{ object.id }}">
     <div class="sortable py-3" data-parent-id="root">
       {% for element in object.plot.root_elements %}
