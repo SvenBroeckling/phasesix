@@ -1,8 +1,83 @@
 {% load django_bootstrap5 i18n %}
 
 <div class="container-fluid">
-  <div class="row g-3">
-    {% if object %}
+  {% if not object %}
+    <ul class="nav nav-tabs" id="locationTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active"
+                id="create-location-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#create-location"
+                type="button"
+                role="tab"
+                aria-controls="create-location"
+                aria-selected="true">{% trans "Create new" %}</button>
+      </li>
+      {% if existing_locations %}
+        <li class="nav-item" role="presentation">
+          <button class="nav-link"
+                  id="assign-location-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#assign-location"
+                  type="button"
+                  role="tab"
+                  aria-controls="assign-location"
+                  aria-selected="false">{% trans "Assign existing" %}</button>
+        </li>
+      {% endif %}
+    </ul>
+    <div class="tab-content" id="locationTabContent">
+      <div class="tab-pane fade show active p-3"
+           id="create-location"
+           role="tabpanel"
+           aria-labelledby="create-location-tab">
+        <form action="{{ post_url }}"
+              data-fetch-form="true"
+              data-fetch-form-close="modal"
+              data-fetch-form-event-after="refresh-plot"
+              method="post"
+              enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form layout="floating" %}
+          {% bootstrap_form_errors form %}
+          <div class="d-flex align-items-center gap-2">
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+          </div>
+        </form>
+      </div>
+      {% if existing_locations %}
+        <div class="tab-pane fade p-3"
+             id="assign-location"
+             role="tabpanel"
+             aria-labelledby="assign-location-tab">
+          <div class="d-flex flex-wrap gap-2">
+            {% for location in existing_locations %}
+              <button type="button"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      data-action-trigger-url="{% url 'plots:assign_location' plot_element_pk=plot_element.id location_pk=location.id %}"
+                      data-action-trigger-event-after="refresh-plot,modal-hide">
+                {% if location.image %}
+                  <div style="width: 140px;">
+                    <img src="{{ location.image.url }}"
+                         alt="{{ location.name }}"
+                         class="img-thumbnail w-100"
+                         style="height: 100px; object-fit: cover;">
+                  </div>
+                {% else %}
+                  <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                       style="width: 140px; height: 100px;">
+                    <span class="text-muted small">{{ location.name }}</span>
+                  </div>
+                {% endif %}
+                <div class="small mt-1 text-break" style="width: 140px;">{{ location.name }}</div>
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="row g-3">
       <div class="col-12 col-lg-6">
         {% if object.image %}
           <img src="{{ object.image.url }}"
@@ -16,29 +91,29 @@
           </div>
         {% endif %}
       </div>
-    {% endif %}
-    <div class="col-12 {% if object %}col-lg-6{% endif %}">
-      <form action="{{ post_url }}"
-            data-fetch-form="true"
-            data-fetch-form-close="modal"
-            data-fetch-form-event-after="refresh-plot"
-            method="post"
-            enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form layout="floating" %}
-        {% bootstrap_form_errors form %}
-        <div class="d-flex align-items-center gap-2">
-          <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
-          {% if object %}
-            <button type="button"
-                    class="btn btn-outline-danger"
-                    data-action-trigger-url="{% url 'plots:delete_location' plot_element_pk=plot_element.id pk=object.id %}"
-                    data-action-trigger-event-after="refresh-plot,modal-hide">
-              {% trans "Delete" %}
-            </button>
-          {% endif %}
-        </div>
-      </form>
+      <div class="col-12 col-lg-6">
+        <form action="{{ post_url }}"
+              data-fetch-form="true"
+              data-fetch-form-close="modal"
+              data-fetch-form-event-after="refresh-plot"
+              method="post"
+              enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form layout="floating" %}
+          {% bootstrap_form_errors form %}
+          <div class="d-flex align-items-center gap-2">
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+            {% if object %}
+              <button type="button"
+                      class="btn btn-outline-danger"
+                      data-action-trigger-url="{% url 'plots:delete_location' plot_element_pk=plot_element.id pk=object.id %}"
+                      data-action-trigger-event-after="refresh-plot,modal-hide">
+                {% trans "Delete" %}
+              </button>
+            {% endif %}
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  {% endif %}
 </div>

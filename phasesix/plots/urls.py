@@ -12,9 +12,11 @@ from .views import (
     XhrCreateHandoutView,
     XhrUpdateHandoutView,
     DeleteHandoutView,
+    AssignHandoutView,
     XhrCreateLocationView,
     XhrUpdateLocationView,
     DeleteLocationView,
+    AssignLocationView,
     XhrSelectPlotNpcView,
     XhrSelectPlotFoeView,
     AddPlotNpcView,
@@ -88,6 +90,11 @@ urlpatterns = [
         name="delete_handout",
     ),
     path(
+        "<int:plot_element_pk>/handout/<int:handout_pk>/assign",
+        staff_member_required(AssignHandoutView.as_view()),
+        name="assign_handout",
+    ),
+    path(
         "<int:plot_element_pk>/location/create",
         staff_member_required(XhrCreateLocationView.as_view()),
         name="create_location",
@@ -101,6 +108,11 @@ urlpatterns = [
         "<int:plot_element_pk>/location/<int:pk>/delete",
         staff_member_required(DeleteLocationView.as_view()),
         name="delete_location",
+    ),
+    path(
+        "<int:plot_element_pk>/location/<int:location_pk>/assign",
+        staff_member_required(AssignLocationView.as_view()),
+        name="assign_location",
     ),
     path(
         "plot_element/<int:pk>/npc/select",

@@ -1,8 +1,83 @@
 {% load django_bootstrap5 i18n %}
 
 <div class="container-fluid">
-  <div class="row g-3">
-    {% if object %}
+  {% if not object %}
+    <ul class="nav nav-tabs" id="handoutTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active"
+                id="create-handout-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#create-handout"
+                type="button"
+                role="tab"
+                aria-controls="create-handout"
+                aria-selected="true">{% trans "Create new" %}</button>
+      </li>
+      {% if existing_handouts %}
+        <li class="nav-item" role="presentation">
+          <button class="nav-link"
+                  id="assign-handout-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#assign-handout"
+                  type="button"
+                  role="tab"
+                  aria-controls="assign-handout"
+                  aria-selected="false">{% trans "Assign existing" %}</button>
+        </li>
+      {% endif %}
+    </ul>
+    <div class="tab-content" id="handoutTabContent">
+      <div class="tab-pane fade show active p-3"
+           id="create-handout"
+           role="tabpanel"
+           aria-labelledby="create-handout-tab">
+        <form action="{{ post_url }}"
+              data-fetch-form="true"
+              data-fetch-form-close="modal"
+              data-fetch-form-event-after="refresh-plot"
+              method="post"
+              enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form layout="floating" %}
+          {% bootstrap_form_errors form %}
+          <div class="d-flex align-items-center gap-2">
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+          </div>
+        </form>
+      </div>
+      {% if existing_handouts %}
+        <div class="tab-pane fade p-3"
+             id="assign-handout"
+             role="tabpanel"
+             aria-labelledby="assign-handout-tab">
+          <div class="d-flex flex-wrap gap-2">
+            {% for handout in existing_handouts %}
+              <button type="button"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      data-action-trigger-url="{% url 'plots:assign_handout' plot_element_pk=plot_element.id handout_pk=handout.id %}"
+                      data-action-trigger-event-after="refresh-plot,modal-hide">
+                {% if handout.image %}
+                  <div style="width: 140px;">
+                    <img src="{{ handout.image.url }}"
+                         alt="{{ handout.name }}"
+                         class="img-thumbnail w-100"
+                         style="height: 100px; object-fit: cover;">
+                  </div>
+                {% else %}
+                  <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                       style="width: 140px; height: 100px;">
+                    <span class="text-muted small">{{ handout.name }}</span>
+                  </div>
+                {% endif %}
+                <div class="small mt-1 text-break" style="width: 140px;">{{ handout.name }}</div>
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="row g-3">
       <div class="col-12 col-lg-6">
         {% if object.image %}
           <img src="{{ object.image.url }}"
@@ -16,29 +91,29 @@
           </div>
         {% endif %}
       </div>
-    {% endif %}
-    <div class="col-12 {% if object %}col-lg-6{% endif %}">
-      <form action="{{ post_url }}"
-            data-fetch-form="true"
-            data-fetch-form-close="modal"
-            data-fetch-form-event-after="refresh-plot"
-            method="post"
-            enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form layout="floating" %}
-        {% bootstrap_form_errors form %}
-        <div class="d-flex align-items-center gap-2">
-          <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
-          {% if object %}
-            <button type="button"
-                    class="btn btn-outline-danger"
-                    data-action-trigger-url="{% url 'plots:delete_handout' plot_element_pk=plot_element.id pk=object.id %}"
-                    data-action-trigger-event-after="refresh-plot,modal-hide">
-              {% trans "Delete" %}
-            </button>
-          {% endif %}
-        </div>
-      </form>
+      <div class="col-12 col-lg-6">
+        <form action="{{ post_url }}"
+              data-fetch-form="true"
+              data-fetch-form-close="modal"
+              data-fetch-form-event-after="refresh-plot"
+              method="post"
+              enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form layout="floating" %}
+          {% bootstrap_form_errors form %}
+          <div class="d-flex align-items-center gap-2">
+            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+            {% if object %}
+              <button type="button"
+                      class="btn btn-outline-danger"
+                      data-action-trigger-url="{% url 'plots:delete_handout' plot_element_pk=plot_element.id pk=object.id %}"
+                      data-action-trigger-event-after="refresh-plot,modal-hide">
+                {% trans "Delete" %}
+              </button>
+            {% endif %}
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  {% endif %}
 </div>

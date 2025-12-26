@@ -182,6 +182,12 @@ class XhrCreateHandoutView(CreateView):
         context["post_url"] = reverse(
             "plots:create_handout", kwargs={"plot_element_pk": plot_element.pk}
         )
+        context["plot_element"] = plot_element
+        context["existing_handouts"] = (
+            Handout.objects.filter(plotelement__plot=plot_element.plot)
+            .distinct()
+            .exclude(id__in=plot_element.handouts.all())
+        )
         return context
 
     def form_valid(self, form):
@@ -224,6 +230,19 @@ class DeleteHandoutView(View):
         return JsonResponse({"status": "ok"})
 
 
+class AssignHandoutView(View):
+    def post(self, request, *args, **kwargs):
+        plot_element = get_object_or_404(PlotElement, id=kwargs["plot_element_pk"])
+        handout = get_object_or_404(Handout, id=kwargs["handout_pk"])
+
+        if handout.plotelement_set.first().plot != plot_element.plot:
+            raise PermissionDenied()
+
+        plot_element.handouts.add(handout)
+        return JsonResponse({"status": "ok"})
+
+
+
 class XhrCreateLocationView(CreateView):
     model = Location
     template_name = "plots/xhr_location_modal.html"
@@ -234,6 +253,12 @@ class XhrCreateLocationView(CreateView):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
         context["post_url"] = reverse(
             "plots:create_location", kwargs={"plot_element_pk": plot_element.pk}
+        )
+        context["plot_element"] = plot_element
+        context["existing_locations"] = (
+            Location.objects.filter(plotelement__plot=plot_element.plot)
+            .distinct()
+            .exclude(id__in=plot_element.locations.all())
         )
         return context
 
@@ -274,6 +299,18 @@ class DeleteLocationView(View):
         plot_element.locations.remove(location)
         if not location.plotelement_set.exists():
             location.delete()
+        return JsonResponse({"status": "ok"})
+
+
+class AssignLocationView(View):
+    def post(self, request, *args, **kwargs):
+        plot_element = get_object_or_404(PlotElement, id=kwargs["plot_element_pk"])
+        location = get_object_or_404(Location, id=kwargs["location_pk"])
+
+        if location.plotelement_set.first().plot != plot_element.plot:
+            raise PermissionDenied()
+
+        plot_element.locations.add(location)
         return JsonResponse({"status": "ok"})
 
 
