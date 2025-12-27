@@ -1,0 +1,25 @@
+{% load django_bootstrap5 i18n %}
+
+<form action="{{ post_url }}"
+      data-fetch-form="true"
+      data-fetch-form-close="all"
+      data-fetch-form-event-after="refresh-plot"
+      method="post">
+  {% csrf_token %}
+  {% bootstrap_form_errors form %}
+  <div class="mb-3">
+    {% bootstrap_field form.description layout="floating" %}
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <button type="submit"
+            class="btn btn-primary"
+            data-success="{% trans 'Created' %}"
+            data-danger="{% trans 'Try again' %}">
+      <span class="form-submit-spinner spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+      {% trans "Create plot structure" %}
+    </button>
+    <span class="text-muted small">
+      {% trans "This uses the OpenAI API to generate plot elements, handouts, and locations." %}
+    </span>
+  </div>
+</form>

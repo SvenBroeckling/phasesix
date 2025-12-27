@@ -78,6 +78,15 @@ from rules.models import (
 )
 
 
+def user_may_use_ai(user):
+    return bool(
+        user
+        and user.is_authenticated
+        and hasattr(user, "profile")
+        and user.profile.may_use_ai
+    )
+
+
 class CharacterDetailView(DetailView):
     model = Character
 
@@ -105,6 +114,8 @@ class CharacterFillRandomView(View):
     def post(self, request, *args, **kwargs):
         character = get_object_or_404(Character, pk=kwargs["pk"])
         if not character.may_edit(request.user):
+            raise PermissionDenied()
+        if not user_may_use_ai(request.user):
             raise PermissionDenied()
         if not self.request.user.is_authenticated and self.request.user.is_superuser:
             raise PermissionDenied()

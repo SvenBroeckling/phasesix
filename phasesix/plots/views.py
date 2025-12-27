@@ -7,7 +7,9 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, FormView
+from django.utils.translation import gettext as _
+import logging
 
 from plots.forms import (
     PlotForm,
@@ -15,11 +17,23 @@ from plots.forms import (
     HandoutForm,
     LocationForm,
     PlotNpcForm,
+    PlotFromDescriptionForm,
 )
 from plots.models import Plot, PlotElement, Handout, Location
+from plots.openai import PlotOpenAIService
 from characters.models import Character
 from rules.models import Foe, Extension
 
+logger = logging.getLogger(__name__)
+
+
+def user_may_use_ai(user):
+    return bool(
+        user
+        and user.is_authenticated
+        and hasattr(user, "profile")
+        and user.profile.may_use_ai
+    )
 
 @method_decorator(csrf_exempt, name="dispatch")
 class XhrReorderPlotElementView(View):
@@ -88,6 +102,44 @@ class XhrUpdatePlotView(UpdateView):
 
     def get_success_url(self):
         return reverse("plots:plot_editor", kwargs={"pk": self.object.pk})
+
+
+class XhrCreatePlotFromDescriptionView(FormView):
+    template_name = "plots/xhr_plot_from_description_modal.html"
+    form_class = PlotFromDescriptionForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if not user_may_use_ai(request.user):
+            raise PermissionDenied()
+        self.plot = get_object_or_404(Plot, id=self.kwargs["pk"])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["post_url"] = reverse(
+            "plots:create_plot_from_description", kwargs={"pk": self.plot.pk}
+        )
+        context["plot"] = self.plot
+        return context
+
+    def form_valid(self, form):
+        description = form.cleaned_data.get("description", "").strip()
+        if not description:
+            form.add_error("description", _("Please provide a plot description."))
+            return self.form_invalid(form)
+        try:
+            PlotOpenAIService(self.plot).create_from_description(description)
+        except ValueError as exc:
+            form.add_error(None, str(exc))
+            return self.form_invalid(form)
+        except Exception:
+            logger.exception("Plot generation failed for plot=%s", self.plot.pk)
+            form.add_error(None, _("Plot generation failed. Please try again."))
+            return self.form_invalid(form)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("plots:plot_editor", kwargs={"pk": self.plot.pk})
 
 
 class XhrCreatePlotElementView(CreateView):

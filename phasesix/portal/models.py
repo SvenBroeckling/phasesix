@@ -74,6 +74,11 @@ class Profile(ModelWithImage):
         ),
     )
 
+    may_use_ai = models.BooleanField(
+        _("may use AI"),
+        default=False,
+    )
+
     def __str__(self):
         return self.user.username
 

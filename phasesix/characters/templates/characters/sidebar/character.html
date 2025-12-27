@@ -24,7 +24,7 @@
         {% trans "Clone character" %}
       </button>
     </form>
-    {% if may_edit and request.user.is_authenticated and request.user.is_staff %}
+    {% if may_edit and request.user.is_authenticated and request.user.is_staff and request.user.profile.may_use_ai %}
       <form method="post" action="{% url 'characters:fill_randomly' pk=object.id %}"
             data-loading-form="character-fill-random"
             data-confirm-message="{% trans 'This will modify the character and should only be used for NPCs. Continue?' %}">

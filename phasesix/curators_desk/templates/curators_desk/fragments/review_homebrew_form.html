@@ -13,35 +13,37 @@
     <input type="hidden" name="object_id" value="{{ object.id }}">
     {% bootstrap_form object.review_form %}
     <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
-      <button type="button"
-              class="btn btn-outline-secondary btn-sm"
-              hx-post="{% url 'curators_desk:translate_homebrew' %}"
-              hx-include="closest form"
-              hx-target="#homebrew-form-body-{{ model_name }}-{{ object.id }}"
-              hx-swap="outerHTML"
-              hx-indicator="#translate-indicator-{{ model_name }}-{{ object.id }}"
-              hx-disabled-elt="this">
-        {% trans 'Translate' %}
-        <span id="translate-indicator-{{ model_name }}-{{ object.id }}"
-              class="htmx-indicator spinner-border spinner-border-sm ms-2"
-              role="status"
-              aria-hidden="true"></span>
-      </button>
-      {% if object.has_image_field %}
+      {% if request.user.is_authenticated and request.user.profile.may_use_ai %}
         <button type="button"
                 class="btn btn-outline-secondary btn-sm"
-                hx-post="{% url 'curators_desk:generate_homebrew_image' %}"
+                hx-post="{% url 'curators_desk:translate_homebrew' %}"
                 hx-include="closest form"
                 hx-target="#homebrew-form-body-{{ model_name }}-{{ object.id }}"
                 hx-swap="outerHTML"
-                hx-indicator="#image-indicator-{{ model_name }}-{{ object.id }}"
+                hx-indicator="#translate-indicator-{{ model_name }}-{{ object.id }}"
                 hx-disabled-elt="this">
-          {% trans 'Create image' %}
-          <span id="image-indicator-{{ model_name }}-{{ object.id }}"
+          {% trans 'Translate' %}
+          <span id="translate-indicator-{{ model_name }}-{{ object.id }}"
                 class="htmx-indicator spinner-border spinner-border-sm ms-2"
                 role="status"
                 aria-hidden="true"></span>
         </button>
+        {% if object.has_image_field %}
+          <button type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  hx-post="{% url 'curators_desk:generate_homebrew_image' %}"
+                  hx-include="closest form"
+                  hx-target="#homebrew-form-body-{{ model_name }}-{{ object.id }}"
+                  hx-swap="outerHTML"
+                  hx-indicator="#image-indicator-{{ model_name }}-{{ object.id }}"
+                  hx-disabled-elt="this">
+            {% trans 'Create image' %}
+            <span id="image-indicator-{{ model_name }}-{{ object.id }}"
+                  class="htmx-indicator spinner-border spinner-border-sm ms-2"
+                  role="status"
+                  aria-hidden="true"></span>
+          </button>
+        {% endif %}
       {% endif %}
       <button type="submit"
               class="btn btn-outline-secondary btn-sm"

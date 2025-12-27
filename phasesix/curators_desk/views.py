@@ -8,6 +8,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q, Sum, Count, Max, Min
 from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
 from django.core.files.base import ContentFile
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
@@ -17,6 +18,15 @@ from django.views.generic import TemplateView
 from openai import OpenAI
 
 logger = logging.getLogger(__name__)
+
+
+def user_may_use_ai(user):
+    return bool(
+        user
+        and user.is_authenticated
+        and hasattr(user, "profile")
+        and user.profile.may_use_ai
+    )
 
 from armory.models import Weapon, Item, WeaponModification, RiotGear
 from campaigns.models import Roll
@@ -439,6 +449,8 @@ class ReviewHomebrewView(TemplateView):
 
 class KeepHomebrewView(View):
     def post(self, request, *args, **kwargs):
+        if not user_may_use_ai(request.user):
+            raise PermissionDenied()
         model_name = request.POST.get("model_name")
         object_id = request.POST.get("object_id")
 
@@ -465,6 +477,8 @@ class KeepHomebrewView(View):
 
 class AcceptHomebrewView(View):
     def post(self, request, *args, **kwargs):
+        if not user_may_use_ai(request.user):
+            raise PermissionDenied()
         model_name = request.POST.get("model_name")
         object_id = request.POST.get("object_id")
 

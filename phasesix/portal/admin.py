@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User, Group
-from unfold.admin import ModelAdmin
+from unfold.admin import ModelAdmin, StackedInline
 
 from portal.models import Profile
 
@@ -50,8 +50,12 @@ class ShortRulesListFilter(ShortValueListFilter):
     field_name = "rules"
 
 
+class ProfileInline(StackedInline):
+    model = Profile
+
+
 class UserAdmin(ModelAdmin, BaseUserAdmin):
-    pass
+    inlines = [ProfileInline]
 
 
 class GroupAdmin(ModelAdmin, BaseGroupAdmin):
@@ -62,4 +66,9 @@ admin.site.unregister(User)
 admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
 admin.site.register(Group, GroupAdmin)
-admin.site.register(Profile, ModelAdmin)
+
+
+@admin.register(Profile)
+class ProfileAdmin(ModelAdmin):
+    list_display = ("user", "may_use_ai", "created_at", "updated_at")
+    list_filter = ("may_use_ai",)

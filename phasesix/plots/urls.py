@@ -5,6 +5,7 @@ from .views import (
     PlotEditorView,
     PlotListView,
     XhrCreatePlotView,
+    XhrCreatePlotFromDescriptionView,
     XhrUpdatePlotView,
     XhrCreatePlotElementView,
     XhrUpdatePlotElementView,
@@ -41,6 +42,11 @@ urlpatterns = [
         "<int:pk>/edit",
         staff_member_required(XhrUpdatePlotView.as_view()),
         name="update_plot",
+    ),
+    path(
+        "<int:pk>/from-description",
+        staff_member_required(XhrCreatePlotFromDescriptionView.as_view()),
+        name="create_plot_from_description",
     ),
     path(
         "<int:pk>/editor",

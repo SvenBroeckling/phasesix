@@ -1,6 +1,7 @@
 from plots.models import Plot, PlotElement, Handout, Location
 from characters.models import Character
 from django import forms
+from django.utils.translation import gettext as _
 
 from portal.widgets import BootstrapTextarea
 
@@ -59,3 +60,11 @@ class PlotNpcForm(forms.ModelForm):
         widgets = {
             "description": BootstrapTextarea({"rows": 5}),
         }
+
+
+class PlotFromDescriptionForm(forms.Form):
+    description = forms.CharField(
+        label=_("Plot description"),
+        widget=BootstrapTextarea({"rows": 12}),
+        required=True,
+    )
