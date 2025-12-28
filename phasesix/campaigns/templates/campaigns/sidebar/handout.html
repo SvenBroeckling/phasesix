@@ -1,0 +1,24 @@
+{% load i18n rules_extras %}
+
+<div class="row g-3">
+  <div class="col-12">
+    {% if object.image %}
+      <img src="{{ object.image.url }}"
+           alt="{{ object.name }}"
+           class="img-fluid rounded border w-100">
+    {% else %}
+      <div class="ratio ratio-4x3 border rounded">
+        <div class="d-flex align-items-center justify-content-center">
+          <span class="text-muted small">{% trans "No image uploaded." %}</span>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <h5 class="mb-2">{{ object.name }}</h5>
+    <div class="text-body">{{ object.description|phasesix_markup }}</div>
+  </div>
+</div>

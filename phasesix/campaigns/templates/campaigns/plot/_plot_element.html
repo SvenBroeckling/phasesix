@@ -13,6 +13,7 @@
       </span>
     </div>
   </div>
+
   <div id="details-{{ element.id }}" class="collapse">
     <div class="rounded p-3 my-2 small border">
 
@@ -35,7 +36,10 @@
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Handouts' %}</div>
           <div class="d-flex flex-wrap gap-2">
             {% for handout in element.handouts.all %}
-              <div class="d-flex flex-column align-items-center text-center">
+              <button type="button"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      data-sidebar-right-title="{{ handout.name }}"
+                      data-sidebar-right-url="{% url 'campaigns:xhr_handout_sidebar' campaign_pk=object.id pk=handout.id %}">
                 {% if handout.image %}
                   <div style="width: 140px;">
                     <img src="{{ handout.image.url }}"
@@ -50,7 +54,7 @@
                   </div>
                 {% endif %}
                 <div class="small mt-1 text-break" style="width: 140px;">{{ handout.name }}</div>
-              </div>
+              </button>
             {% endfor %}
           </div>
         </div>
@@ -61,7 +65,10 @@
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
           <div class="d-flex flex-wrap gap-2">
             {% for character in element.npc.all %}
-              <div class="d-flex flex-column align-items-center text-center">
+              <button type="button"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      data-sidebar-right-title="{{ character.name }}"
+                      data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=character.id sidebar_template='character' %}">
                 {% if character.image %}
                   <div style="width: 140px;">
                     <img src="{{ character.image.url }}"
@@ -76,7 +83,7 @@
                   </div>
                 {% endif %}
                 <div class="small mt-1 text-break" style="width: 140px;">{{ character.name }}</div>
-              </div>
+              </button>
             {% endfor %}
           </div>
         </div>
@@ -87,7 +94,10 @@
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Foes' %}</div>
           <div class="d-flex flex-wrap gap-2">
             {% for foe in element.foes.all %}
-              <div class="d-flex flex-column align-items-center text-center">
+              <button type="button"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      data-sidebar-right-title="{{ foe.name }}"
+                      data-sidebar-right-url="{% url 'campaigns:xhr_plot_foe_sidebar' campaign_pk=object.id pk=foe.id %}">
                 <div style="width: 140px;">
                   <img src="{% image_url foe "140x140" crop="center" %}"
                        alt="{{ foe.name }}"
@@ -95,7 +105,7 @@
                        style="height: 140px; object-fit: cover;">
                 </div>
                 <div class="small mt-1 text-break" style="width: 140px;">{{ foe.name }}</div>
-              </div>
+              </button>
             {% endfor %}
           </div>
         </div>
@@ -106,7 +116,10 @@
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Locations' %}</div>
           <div class="d-flex flex-wrap gap-2">
             {% for loc in element.locations.all %}
-              <div class="d-flex flex-column align-items-center text-center">
+              <button type="button"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      data-sidebar-right-title="{{ loc.name }}"
+                      data-sidebar-right-url="{% url 'campaigns:xhr_location_sidebar' campaign_pk=object.id pk=loc.id %}">
                 {% if loc.image %}
                   <div style="width: 140px;">
                     <img src="{{ loc.image.url }}"
@@ -121,7 +134,7 @@
                   </div>
                 {% endif %}
                 <div class="small mt-1 text-break" style="width: 140px;">{{ loc.name }}</div>
-              </div>
+              </button>
             {% endfor %}
           </div>
         </div>

@@ -305,12 +305,67 @@ class XhrCharacterSidebarView(BaseSidebarView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["may_edit"] = self.object.pc_or_npc_campaign.may_edit(self.request.user)
+        campaign = self.object.pc_or_npc_campaign
+        if campaign is None and self.object.plot_id:
+            campaign = self.object.plot.campaign
+        context["campaign"] = campaign
+        context["may_edit"] = campaign.may_edit(self.request.user) if campaign else False
         return context
 
 
 class XhrFoeSidebarView(BaseSidebarView):
     model = CampaignFoe
+
+
+class XhrPlotHandoutSidebarView(DetailView):
+    model = Handout
+    template_name = "campaigns/sidebar/handout.html"
+
+    def get_queryset(self):
+        return Handout.objects.filter(
+            plotelement__plot__campaign_id=self.kwargs["campaign_pk"]
+        ).distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        campaign = get_object_or_404(Campaign, id=self.kwargs["campaign_pk"])
+        context["campaign"] = campaign
+        context["may_edit"] = campaign.may_edit(self.request.user)
+        return context
+
+
+class XhrPlotLocationSidebarView(DetailView):
+    model = Location
+    template_name = "campaigns/sidebar/location.html"
+
+    def get_queryset(self):
+        return Location.objects.filter(
+            plotelement__plot__campaign_id=self.kwargs["campaign_pk"]
+        ).distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        campaign = get_object_or_404(Campaign, id=self.kwargs["campaign_pk"])
+        context["campaign"] = campaign
+        context["may_edit"] = campaign.may_edit(self.request.user)
+        return context
+
+
+class XhrPlotFoeSidebarView(DetailView):
+    model = Foe
+    template_name = "campaigns/sidebar/plot_foe.html"
+
+    def get_queryset(self):
+        return Foe.objects.filter(
+            plotelement__plot__campaign_id=self.kwargs["campaign_pk"]
+        ).distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        campaign = get_object_or_404(Campaign, id=self.kwargs["campaign_pk"])
+        context["campaign"] = campaign
+        context["may_edit"] = campaign.may_edit(self.request.user)
+        return context
 
 
 class XhrSearchFoeSidebarView(DetailView):

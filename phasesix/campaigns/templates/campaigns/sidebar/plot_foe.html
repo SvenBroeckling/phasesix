@@ -1,0 +1,36 @@
+{% load portal_extras %}
+{% load i18n %}
+
+<div class="row">
+  <div class="col-12 mb-3 mt-2">
+    <img class="rounded img-fluid" width="600" height="600"
+         src="{% image_url object geometry="600x600" crop="center" %}"
+         alt="{{ object.name }}">
+  </div>
+</div>
+
+<div class="row">
+  {% if may_edit %}
+    <div class="col-12">
+      <button class="btn btn-primary btn-sm mb-2 w-100 dice-roll mb-1"
+              data-dice-roll="{{ object.dexterity }}d6"
+              data-dice-header="{{ object.name }}: {% trans 'Initiative' %}"
+              data-dice-description="{% trans 'Initiative (*Dexterity*d6)' %}"
+              data-dice-campaign="{{ campaign.id }}">{% trans "Roll Initiative" %}
+        ({{ object.dexterity }}{% trans 'd6' %})
+      </button>
+    </div>
+  {% endif %}
+</div>
+
+<div class="row">
+  <div class="col-12">
+    {% include "rules/_foe_stat_block.html" with foe=object show_description=True %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    {% include "rules/_foe_actions_block.html" with foe=object %}
+  </div>
+</div>

@@ -125,6 +125,21 @@ urlpatterns = [
         name="xhr_foe_sidebar",
     ),
     path(
+        "sidebar/plot/handout/<int:campaign_pk>/<int:pk>",
+        views.XhrPlotHandoutSidebarView.as_view(),
+        name="xhr_handout_sidebar",
+    ),
+    path(
+        "sidebar/plot/location/<int:campaign_pk>/<int:pk>",
+        views.XhrPlotLocationSidebarView.as_view(),
+        name="xhr_location_sidebar",
+    ),
+    path(
+        "sidebar/plot/foe/<int:campaign_pk>/<int:pk>",
+        views.XhrPlotFoeSidebarView.as_view(),
+        name="xhr_plot_foe_sidebar",
+    ),
+    path(
         "game_log/<int:campaign_pk>",
         views.XhrCampaignGameLogView.as_view(),
         name="xhr_game_log",
