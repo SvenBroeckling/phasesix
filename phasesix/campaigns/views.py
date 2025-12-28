@@ -22,6 +22,7 @@ from campaigns.forms import (
 from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
+from plots.models import Plot, Handout, Location
 from rules.models import Extension, Foe
 from worlds.models import WikiPage
 
@@ -144,10 +145,74 @@ class XhrCampaignFragmentView(DetailView):
         context = super().get_context_data(**kwargs)
         context["fragment_template"] = self.kwargs["fragment_template"]
         context["may_edit"] = self.object.may_edit(self.request.user)
+        if self.kwargs["fragment_template"] == "dramaturgy":
+            context["available_plots"] = Plot.objects.filter(
+                world_extension=self.object.world_extension,
+                epoch_extension=self.object.epoch_extension,
+                cloned_from__isnull=True,
+                campaign__isnull=True,
+            ).order_by("name")
         return context
 
     def get_template_names(self):
         return ["campaigns/fragments/" + self.kwargs["fragment_template"] + ".html"]
+
+
+class XhrCampaignPlotPreviewView(View):
+    def get(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+        plot = get_object_or_404(Plot, id=kwargs["plot_pk"])
+        if plot.campaign_id and plot.campaign_id != campaign.id:
+            raise PermissionDenied()
+        return render(
+            request,
+            "campaigns/modals/plot_preview.html",
+            {"campaign": campaign, "plot": plot},
+        )
+
+
+class XhrAssignCampaignPlotView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+        plot = get_object_or_404(Plot, id=kwargs["plot_pk"])
+        if plot.cloned_from_id or plot.campaign_id:
+            raise PermissionDenied()
+        existing_plot = Plot.objects.filter(campaign=campaign).first()
+        if existing_plot:
+            existing_plot.delete()
+        plot.clone(campaign=campaign)
+        return JsonResponse({"status": "ok"})
+
+
+class XhrRemoveCampaignPlotView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+        plot = Plot.objects.filter(campaign=campaign).first()
+        if plot:
+            Handout.objects.filter(plotelement__plot=plot).delete()
+            Location.objects.filter(plotelement__plot=plot).delete()
+            Character.objects.filter(plotelement__plot=plot).delete()
+            plot.delete()
+        return JsonResponse({"status": "ok"})
+
+
+class XhrRemoveCampaignPlotModalView(View):
+    def get(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+        plot = Plot.objects.filter(campaign=campaign).first()
+        return render(
+            request,
+            "campaigns/modals/remove_plot.html",
+            {"campaign": campaign, "plot": plot},
+        )
 
 
 class XhrSwitchCharacterNPCView(View):

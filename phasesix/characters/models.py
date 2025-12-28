@@ -202,7 +202,7 @@ class Character(ModelWithImage, PhaseSixModel):
     )
     plot = models.ForeignKey(
         "plots.Plot",
-        verbose_name=_("Plot Campaign"),
+        verbose_name=_("Plot"),
         related_name="plot_npc_set",
         blank=True,
         null=True,

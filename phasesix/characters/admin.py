@@ -26,18 +26,14 @@ class PronounAdmin(ModelAdmin):
 class CharacterAdmin(ModelAdmin):
     list_display = (
         "name",
-        "may_appear_on_start_page",
         "created_by",
         "pronoun",
+        "plot",
         "campaign",
         "npc_campaign",
-    )
-    list_editable = (
         "may_appear_on_start_page",
-        "campaign",
-        "pronoun",
-        "npc_campaign",
     )
-    list_filter = "campaign", "extensions", "npc_campaign", "created_by"
+    list_editable = ("may_appear_on_start_page",)
+    list_filter = "campaign", "extensions", "plot", "npc_campaign", "created_by"
     search_fields = ("name",)
     inlines = [CharacterTemplateInline]

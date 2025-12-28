@@ -50,6 +50,26 @@ urlpatterns = [
         name="xhr_campaign_fragment",
     ),
     path(
+        "plot_preview/<int:pk>/<int:plot_pk>",
+        views.XhrCampaignPlotPreviewView.as_view(),
+        name="xhr_plot_preview",
+    ),
+    path(
+        "assign_plot/<int:pk>/<int:plot_pk>",
+        views.XhrAssignCampaignPlotView.as_view(),
+        name="xhr_assign_plot",
+    ),
+    path(
+        "remove_plot/<int:pk>",
+        views.XhrRemoveCampaignPlotView.as_view(),
+        name="xhr_remove_plot",
+    ),
+    path(
+        "remove_plot_modal/<int:pk>",
+        views.XhrRemoveCampaignPlotModalView.as_view(),
+        name="xhr_remove_plot_modal",
+    ),
+    path(
         "remove_character/<int:pk>/<int:character_pk>",
         views.XhrRemoveCharacterView.as_view(),
         name="xhr_remove_character",

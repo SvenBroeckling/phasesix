@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class="mb-3">
+  <div class="fw-semibold">{% trans "Remove this plot from the campaign?" %}</div>
+  <div class="text-muted small mt-2">
+    {% trans "This will delete the campaign plot and all linked NPCs, handouts, locations, and plot elements. This cannot be undone." %}
+  </div>
+</div>
+
+<div class="d-flex align-items-center gap-2">
+  <button type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal">
+    {% trans "Cancel" %}
+  </button>
+  <button type="button"
+          class="btn btn-danger"
+          data-action-trigger-url="{% url 'campaigns:xhr_remove_plot' pk=campaign.id %}"
+          data-action-trigger-event-after="refresh-campaign-dramaturgy,modal-hide">
+    {% trans "Remove plot" %}
+  </button>
+</div>

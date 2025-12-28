@@ -20,9 +20,10 @@ class PlotElementInline(StackedInline):
 
 @admin.register(Plot)
 class PlotAdmin(ModelAdmin):
+    list_display = ["name", "world_extension", "cloned_from", "campaign"]
     inlines = [PlotElementInline]
 
 
 @admin.register(PlotElement)
 class PlotElementAdmin(ModelAdmin):
-    pass
+    list_display = ["name", "plot", "parent"]

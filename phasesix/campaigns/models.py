@@ -94,14 +94,6 @@ class Campaign(ModelWithImage):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     is_favorite = models.BooleanField(_("is favorite"), default=False)
 
-    plot = models.ForeignKey(
-        "plots.Plot",
-        verbose_name=_("plot"),
-        on_delete=models.CASCADE,
-        related_name="campaign_set",
-        null=True,
-        blank=True,
-    )
     cloned_from = models.ForeignKey(
         "self",
         verbose_name=_("cloned from"),

@@ -63,6 +63,12 @@ class PlotListView(ListView):
     model = Plot
     template_name = "plots/plot_list.html"
 
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            cloned_from__isnull=True,
+            campaign__isnull=True,
+        )
+
 
 class XhrPlotFragmentView(DetailView):
     model = Plot
