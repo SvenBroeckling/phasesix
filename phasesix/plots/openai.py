@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from collections import defaultdict
 
 from django.conf import settings
@@ -17,11 +18,28 @@ class PlotOpenAIService:
 
     @staticmethod
     def _parse_json_response(text):
-        start = text.find("{")
-        end = text.rfind("}")
-        if start == -1 or end == -1 or end <= start:
+        def extract_json_payload(raw_text):
+            fenced_match = re.search(r"```(?:json)?\s*(.*?)```", raw_text, re.DOTALL)
+            if fenced_match:
+                raw_text = fenced_match.group(1)
+            start = raw_text.find("{")
+            end = raw_text.rfind("}")
+            if start == -1 or end == -1 or end <= start:
+                return None
+            return raw_text[start : end + 1]
+
+        def remove_trailing_commas(raw_text):
+            return re.sub(r",\s*([}\]])", r"\1", raw_text)
+
+        payload = extract_json_payload(text)
+        if not payload:
             raise ValueError("Invalid JSON response")
-        return json.loads(text[start : end + 1])
+
+        try:
+            return json.loads(payload)
+        except json.JSONDecodeError:
+            cleaned = remove_trailing_commas(payload)
+            return json.loads(cleaned)
 
     def _client(self):
         if not settings.OPENAI_API_KEY:
@@ -45,7 +63,8 @@ class PlotOpenAIService:
         context = json.dumps(self._plot_context(), ensure_ascii=False)
         return (
             "You are an RPG plot assistant. Split the provided plot description into a structured outline. "
-            "Return ONLY a JSON object. Use the same language as the plot language code.\n\n"
+            "Return ONLY a JSON object. Use the same language as the plot language code.\n"
+            "No code fences, no comments, no trailing commas.\n\n"
             "Requirements:\n"
             "- Create meaningful plot elements with clear names.\n"
             "- Provide a stable ref for each element (e.g., e1, e2) and use parent_ref for hierarchy.\n"
@@ -84,7 +103,8 @@ class PlotOpenAIService:
         ]
         return (
             "You are an RPG plot assistant. Write GM notes and player summaries for each element. "
-            "Return ONLY a JSON object. Use the same language as the plot language code.\n\n"
+            "Return ONLY a JSON object. Use the same language as the plot language code.\n"
+            "No code fences, no comments, no trailing commas.\n\n"
             "Guidelines:\n"
             "- gm_notes: detailed, for the game master (secrets allowed).\n"
             "- player_summary: an introduction to the scene for players, which a gm could read out loudly. Atmospheric and engaging.\n"
@@ -107,14 +127,32 @@ class PlotOpenAIService:
             f"{json.dumps(elements_payload, ensure_ascii=False)}"
         )
 
-    def _openai_json(self, prompt):
+    def _openai_json(self, prompt, attempt_repair=True):
         client = self._client()
         model = self._model()
         logger.info("OpenAI plot request model=%s prompt_length=%s", model, len(prompt))
-        response = client.responses.create(
-            model=model,
-            input=prompt,
-        )
+        try:
+            response = client.responses.create(
+                model=model,
+                input=prompt,
+                response_format={"type": "json_object"},
+            )
+        except TypeError:
+            logger.warning(
+                "OpenAI response_format json_object not supported by SDK, retrying plain text"
+            )
+            response = client.responses.create(
+                model=model,
+                input=prompt,
+            )
+        except Exception:
+            logger.exception(
+                "OpenAI response_format json_object failed, retrying plain text"
+            )
+            response = client.responses.create(
+                model=model,
+                input=prompt,
+            )
         output_text = getattr(response, "output_text", None)
         if not output_text and getattr(response, "output", None):
             output_text = response.output[0].content[0].text
@@ -123,7 +161,18 @@ class PlotOpenAIService:
             model,
             len(output_text or ""),
         )
-        return self._parse_json_response(output_text or "")
+        try:
+            return self._parse_json_response(output_text or "")
+        except Exception:
+            if not attempt_repair:
+                raise
+            logger.exception("OpenAI JSON parse failed, attempting single repair")
+            repair_prompt = (
+                "Fix the JSON so it is valid strict JSON and matches the same structure. "
+                "Return ONLY the corrected JSON object. No code fences, no comments.\n\n"
+                f"{output_text}"
+            )
+            return self._openai_json(repair_prompt, attempt_repair=False)
 
     def _existing_attachment_cache(self, model):
         cache = {}
