@@ -19,6 +19,15 @@
     <div class="me-3">
       <p>{{ item.description|to_first_linebreak|phasesix_markup }}</p>
       {% include "homebrew/_made_by_label.html" with creator=item.created_by text_class="text-white-50" link_class="link-light" extra_class="mt-2" %}
+      {% if not world and not character %}
+        <div class="mt-2 d-flex flex-wrap gap-1">
+          {% for extension in item.extensions.all %}
+            <span class="badge text-muted bg-primary-subtle" title="{{ extension }}">
+              <i class="m-1 {{ extension.fa_icon_class }}"></i>
+            </span>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
 
     <div class="w-100">
@@ -68,14 +77,6 @@
             </ul>
           </div>
         {% endwith %}
-      {% else %}
-        {% if not world %}
-          {% for extension in item.extensions.all %}
-            <span class="mt-2 badge text-muted bg-primary-subtle" title="{{ extension }}">
-              <i class="m-1 {{ extension.fa_icon_class }}"></i>
-            </span>
-          {% endfor %}
-        {% endif %}
       {% endif %}
     </div>
   </div>
