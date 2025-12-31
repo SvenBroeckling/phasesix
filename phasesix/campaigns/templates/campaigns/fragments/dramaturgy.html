@@ -3,186 +3,37 @@
 {% load thumbnail %}
 {% load portal_extras %}
 
-<ul class="nav nav-tabs flex-column flex-md-row nav-fill gap-2 mb-3" role="tablist">
-  {% if may_edit or object.character_visibility == "A" %}
-    <li class="nav-item" role="presentation">
-      <button class="nav-link {% if may_edit or object.character_visibility == "A" %}active{% endif %}"
-              id="campaign-pc-tab-{{ object.id }}"
-              data-bs-toggle="tab"
-              data-bs-target="#campaign-pc-panel-{{ object.id }}"
-              type="button"
-              role="tab">
-        {% trans "Player characters" %}
-      </button>
-    </li>
-  {% endif %}
-  {% if may_edit or object.npc_visibility == "A" %}
-    <li class="nav-item" role="presentation">
-      <button class="nav-link {% if not may_edit and object.character_visibility != "A" and object.npc_visibility == "A" %}active{% endif %}"
-              id="campaign-npc-tab-{{ object.id }}"
-              data-bs-toggle="tab"
-              data-bs-target="#campaign-npc-panel-{{ object.id }}"
-              type="button"
-              role="tab">
-        {% trans "NPC" %}
-      </button>
-    </li>
-  {% endif %}
-  {% if may_edit or object.foe_visibility == "A" %}
-    <li class="nav-item" role="presentation">
-      <button class="nav-link {% if not may_edit and object.character_visibility != "A" and object.npc_visibility != "A" and object.foe_visibility == "A" %}active{% endif %}"
-              id="campaign-foe-tab-{{ object.id }}"
-              data-bs-toggle="tab"
-              data-bs-target="#campaign-foe-panel-{{ object.id }}"
-              type="button"
-              role="tab">
-        {% trans "Foes" %}
-      </button>
-    </li>
-  {% endif %}
-  {% if may_edit %}
-    <li class="nav-item" role="presentation">
-      <button class="nav-link {% if not may_edit and object.character_visibility != "A" and object.npc_visibility != "A" and object.foe_visibility != "A" %}active{% endif %}"
-              id="campaign-plot-tab-{{ object.id }}"
-              data-bs-toggle="tab"
-              data-bs-target="#campaign-plot-panel-{{ object.id }}"
-              type="button"
-              role="tab">
-        {% trans "Plot" %}
-      </button>
-    </li>
-  {% endif %}
-</ul>
-
-<div class="tab-content">
-  {% if may_edit or object.character_visibility == "A" %}
-    <div class="tab-pane fade {% if may_edit or object.character_visibility == "A" %}show active{% endif %}"
-         id="campaign-pc-panel-{{ object.id }}"
-         role="tabpanel">
-      <div class="mb-4">
-        <div class="d-flex flex-wrap align-items-start gap-2">
-          {% for c in object.character_set.all %}
-            <a href=""
-               data-sidebar-right-title="{{ c }}"
-               data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
-              <div class="position-relative" style="width: 200px; height: 200px;">
-                <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
-                     class="img-fluid object-fit-cover w-100 h-100">
-                <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center bg-dark bg-opacity-75">
-                  <span class="text-white">{{ c }}</span>
-                </div>
+{% if may_edit or object.character_visibility == "A" %}
+    <div class="mb-4">
+      <div class="d-flex flex-wrap align-items-start gap-2">
+        {% for c in object.character_set.all %}
+          <a href=""
+             data-sidebar-right-title="{{ c }}"
+             data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
+            <div class="position-relative" style="width: 200px; height: 200px;">
+              <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
+                   class="img-fluid object-fit-cover w-100 h-100">
+              <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center bg-dark bg-opacity-75">
+                <span class="text-white">{{ c }}</span>
               </div>
-            </a>
-          {% endfor %}
+            </div>
+          </a>
+        {% endfor %}
 
-          {% if may_edit %}
-            <a href="{{ object.invite_link }}" class="campaign-link" data-msg="{% trans "Invite link copied" %}">
-              <div class="card d-flex justify-content-center align-items-center"
-                   style="width: 200px; height: 200px">
-                <i class="fas fa-plus fa-2x"></i>
-                <span class="invite-text">{% trans "Invite Player" %}</span>
-              </div>
-            </a>
-          {% endif %}
-        </div>
+        {% if may_edit %}
+          <a href="{{ object.invite_link }}" class="campaign-link" data-msg="{% trans "Invite link copied" %}">
+            <div class="card d-flex justify-content-center align-items-center"
+                 style="width: 200px; height: 200px">
+              <i class="fas fa-plus fa-2x"></i>
+              <span class="invite-text">{% trans "Invite Player" %}</span>
+            </div>
+          </a>
+        {% endif %}
       </div>
     </div>
-  {% endif %}
-
-  {% if may_edit or object.npc_visibility == "A" %}
-    <div class="tab-pane fade {% if not may_edit and object.character_visibility != "A" and object.npc_visibility == "A" %}show active{% endif %}"
-         id="campaign-npc-panel-{{ object.id }}"
-         role="tabpanel">
-      <div class="mb-4">
-        <div class="d-flex flex-wrap align-items-start gap-2">
-          {% for c in object.npc_set.all %}
-            <a href=""
-               data-sidebar-right-title="{{ c }}"
-               data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
-              <div class="position-relative" style="width: 200px; height: 200px;">
-                <img src="{% image_url c geometry="200x200" crop="center" %}" alt="{{ c }}"
-                     class="img-fluid object-fit-cover w-100 h-100">
-                <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center bg-dark bg-opacity-75">
-                  <span class="text-white">{{ c }}</span>
-                </div>
-              </div>
-            </a>
-          {% endfor %}
-
-          {% if may_edit %}
-            <a href=""
-               data-sidebar-right-url="{% url 'campaigns:xhr_select_npc' pk=object.id %}"
-               data-sidebar-right-title="{% trans "Select NPC" %}">
-              <div class="card d-flex justify-content-center align-items-center"
-                   style="width: 200px; height: 200px">
-                <i class="fas fa-user-plus fa-2x"></i>
-                <span class="invite-text">{% trans "Select NPC" %}</span>
-              </div>
-            </a>
-            <a
-              href="{% url 'characters:create_random_npc' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
-              <div class="card d-flex justify-content-center align-items-center"
-                   style="width: 200px; height: 200px">
-                <i class="fas fa-plus fa-2x"></i>
-                <span class="invite-text">{% trans "Create random npc" %}</span>
-              </div>
-            </a>
-            <a
-              href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="npc" %}">
-              <div class="card d-flex justify-content-center align-items-center"
-                   style="width: 200px; height: 200px">
-                <i class="fas fa-plus fa-2x"></i>
-                <span class="invite-text">{% trans "Create npc" %}</span>
-              </div>
-            </a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  {% endif %}
-
-  {% if may_edit or object.foe_visibility == "A" %}
-    <div class="tab-pane fade {% if not may_edit and object.character_visibility != "A" and object.npc_visibility != "A" and object.foe_visibility == "A" %}show active{% endif %}"
-         id="campaign-foe-panel-{{ object.id }}"
-         role="tabpanel">
-      <div class="mb-4">
-        <div class="d-flex flex-wrap align-items-start gap-2">
-          {% for f in object.campaignfoe_set.all %}
-            {% with foe=f.foe %}
-              <a href=""
-                 data-sidebar-right-title="{{ foe.name }}"
-                 data-sidebar-right-url="{% url 'campaigns:xhr_foe_sidebar' pk=f.id sidebar_template="foe" %}">
-                <div class="position-relative" style="width: 200px; height: 200px;">
-                  <img src="{% image_url foe geometry="200x200" crop="center" %}" alt="{{ foe }}"
-                       class="img-fluid object-fit-cover w-100 h-100">
-                  <div class="position-absolute bottom-0 start-0 end-0 p-2 text-center bg-dark bg-opacity-75">
-                    <span class="text-white">{{ foe.name }}</span>
-                  </div>
-                </div>
-              </a>
-            {% endwith %}
-          {% endfor %}
-
-          {% if may_edit %}
-            <a href=""
-               data-sidebar-right-url="{% url 'campaigns:xhr_search_foe' pk=object.id %}"
-               data-sidebar-right-title="{% trans "Search foe" %}">
-              <div class="card d-flex justify-content-center align-items-center"
-                   style="width: 200px; height: 200px">
-                <i class="fas fa-plus fa-2x"></i>
-                <span class="invite-text">{% trans "Add foe" %}</span>
-              </div>
-            </a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  {% endif %}
+{% endif %}
 
   {% if may_edit %}
-    <div class="tab-pane fade {% if not may_edit and object.character_visibility != "A" and object.npc_visibility != "A" and object.foe_visibility != "A" %}show active{% endif %}"
-         id="campaign-plot-panel-{{ object.id }}"
-         role="tabpanel">
       {% if object.plot %}
         <div class="card shadow-sm mb-4">
           <div class="card-body">
@@ -224,97 +75,136 @@
           </div>
         </div>
       {% else %}
-        <div class="card shadow-sm mb-4">
-          <div class="card-body">
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-              <div>
-                <div class="text-uppercase text-muted small">{% trans "Choose plot" %}</div>
-                <h5 class="mb-0">{% trans "Select a plot for this campaign" %}</h5>
-              </div>
-              <button type="button"
-                      class="btn btn-outline-secondary"
-                      data-modal-url="{% url 'plots:create_plot' %}"
-                      data-modal-title="{% trans 'Create plot' %}"
-                      data-modal-size-class="modal-xl"
-                      data-modal-refresh-after="true">
-                {% trans "Create plot" %}
-              </button>
-            </div>
-            {% if available_plots %}
-              <div id="campaign-plot-carousel-{{ object.id }}"
-                   class="carousel slide"
-                   data-bs-ride="carousel"
-                   data-bs-interval="false">
-                <div class="carousel-inner">
-                  {% for plot in available_plots %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                      <div class="row g-3 align-items-center">
-                        <div class="col-12 col-md-5 col-lg-4">
-                          <div class="plot-card rounded shadow-sm overflow-hidden position-relative">
-                            {% if plot.image %}
-                              {% thumbnail plot.image "600x400" crop="center" as im %}
-                                <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
-                                <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
-                                  <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
-                                  <div class="text-white text-truncate opacity-75 small">{{ plot.world_extension }}</div>
-                                </div>
-                              {% endthumbnail %}
-                            {% else %}
-                              <div class="h-100 bg-light"></div>
-                            {% endif %}
-                          </div>
-                        </div>
-                        <div class="col-12 col-md-7 col-lg-8">
-                          <h5 class="mb-2">{{ plot.name }}</h5>
-                          <div class="text-muted small mb-3">
-                            {{ plot.world_extension }} · {{ plot.epoch_extension }}
-                          </div>
-                          <div class="d-flex flex-wrap gap-2">
-                            <button type="button"
-                                    class="btn btn-primary"
-                                    data-action-trigger-url="{% url 'campaigns:xhr_assign_plot' pk=object.id plot_pk=plot.id %}"
-                                    data-action-trigger-event-after="refresh-campaign-dramaturgy">
-                              {% trans "Choose plot" %}
-                            </button>
-                            <button type="button"
-                                    class="btn btn-outline-secondary"
-                                    data-modal-url="{% url 'campaigns:xhr_plot_preview' pk=object.id plot_pk=plot.id %}"
-                                    data-modal-title="{{ plot.name }}"
-                                    data-modal-size-class="modal-xl">
-                              {% trans "Preview plot" %}
-                            </button>
-                          </div>
-                        </div>
+        <div id="campaign-plot-carousel-{{ object.id }}"
+             class="carousel slide"
+             data-bs-ride="carousel"
+             data-bs-interval="false"
+             data-bs-wrap="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row g-3 justify-content-start">
+
+                {% for plot in available_plots|slice:":2" %}
+                  <div class="col-12 col-md-4">
+                    <div class="card shadow-sm overflow-hidden h-100">
+                      <div class="position-relative" style="height: 360px;">
+                        {% if plot.image %}
+                          {% thumbnail plot.image "600x900" crop="center" as im %}
+                            <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+                            <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
+                              <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
+                              <div class="text-white text-truncate opacity-75 small">{{ plot.world_extension }}</div>
+                            </div>
+                          {% endthumbnail %}
+                        {% else %}
+                          <div class="h-100 bg-light"></div>
+                        {% endif %}
+                      </div>
+                      <div class="card-body p-2 d-flex flex-wrap gap-2 justify-content-center">
+                        <button type="button"
+                                class="btn btn-primary btn-sm"
+                                data-action-trigger-url="{% url 'campaigns:xhr_assign_plot' pk=object.id plot_pk=plot.id %}"
+                                data-action-trigger-event-after="refresh-campaign-dramaturgy">
+                          {% trans "Choose plot" %}
+                        </button>
+                        <button type="button"
+                                class="btn btn-outline-secondary btn-sm"
+                                data-modal-url="{% url 'campaigns:xhr_plot_preview' pk=object.id plot_pk=plot.id %}"
+                                data-modal-title="{{ plot.name }}"
+                                data-modal-size-class="modal-xl">
+                          {% trans "Preview plot" %}
+                        </button>
                       </div>
                     </div>
-                  {% endfor %}
+                  </div>
+                {% endfor %}
+
+                <div class="col-12 col-md-4">
+                  <button type="button"
+                          class="card text-center border w-100 h-100"
+                          style="height: 360px; border-style: dotted;"
+                          data-modal-url="{% url 'plots:create_plot' %}"
+                          data-modal-title="{% trans 'Create plot' %}"
+                          data-modal-size-class="modal-xl"
+                          data-modal-refresh-after="true">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center gap-2">
+                      <i class="fas fa-plus fa-2x"></i>
+                      <span>{% trans "Create your own plot" %}</span>
+                    </div>
+                  </button>
                 </div>
-                <button class="carousel-control-prev" type="button"
-                        data-bs-target="#campaign-plot-carousel-{{ object.id }}"
-                        data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">{% trans "Previous" %}</span>
-                </button>
-                <button class="carousel-control-next" type="button"
-                        data-bs-target="#campaign-plot-carousel-{{ object.id }}"
-                        data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">{% trans "Next" %}</span>
-                </button>
               </div>
-            {% else %}
-              <div class="text-muted fst-italic">{% trans 'No plots available yet.' %}</div>
+            </div>
+            {% for plot in available_plots|slice:"2:" %}
+              {% if forloop.first %}
+                <div class="carousel-item">
+                <div class="row g-3 justify-content-start">
+              {% endif %}
+            <div class="col-12 col-md-4">
+              <div class="card shadow-sm overflow-hidden h-100">
+                <div class="position-relative" style="height: 360px;">
+                  {% if plot.image %}
+                    {% thumbnail plot.image "600x900" crop="center" as im %}
+                      <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+                      <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
+                        <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
+                        <div class="text-white text-truncate opacity-75 small">{{ plot.world_extension }}</div>
+                      </div>
+                    {% endthumbnail %}
+                  {% else %}
+                    <div class="h-100 bg-light"></div>
+                  {% endif %}
+                </div>
+                <div class="card-body p-2 d-flex flex-wrap gap-2 justify-content-center">
+                  <button type="button"
+                          class="btn btn-primary btn-sm"
+                          data-action-trigger-url="{% url 'campaigns:xhr_assign_plot' pk=object.id plot_pk=plot.id %}"
+                          data-action-trigger-event-after="refresh-campaign-dramaturgy">
+                    {% trans "Choose plot" %}
+                  </button>
+                  <button type="button"
+                          class="btn btn-outline-secondary btn-sm"
+                          data-modal-url="{% url 'campaigns:xhr_plot_preview' pk=object.id plot_pk=plot.id %}"
+                          data-modal-title="{{ plot.name }}"
+                          data-modal-size-class="modal-xl">
+                    {% trans "Preview plot" %}
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% if forloop.counter|divisibleby:3 and not forloop.last %}
+              </div>
+              </div>
+              <div class="carousel-item">
+              <div class="row g-3 justify-content-start">
             {% endif %}
+            {% if forloop.last %}
+              </div>
+              </div>
+            {% endif %}
+            {% endfor %}
           </div>
+          <button class="carousel-control-prev" type="button"
+                  data-bs-target="#campaign-plot-carousel-{{ object.id }}"
+                  data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Previous" %}</span>
+          </button>
+          <button class="carousel-control-next" type="button"
+                  data-bs-target="#campaign-plot-carousel-{{ object.id }}"
+                  data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Next" %}</span>
+          </button>
         </div>
       {% endif %}
 
       {% if object.plot %}
         <div class="plot-tree plot-editor-container"
              style="--plot-placeholder-root-label: '{% trans "Same Level / Top Level" %}';
-                    --plot-placeholder-child-label: '{% trans "Move as Child" %}';
-                    --plot-same-level-label: '{% trans "Same Level" %}';
-                    --plot-drop-children-label: '{% trans "Drop here for children" %}';"
+               --plot-placeholder-child-label: '{% trans "Move as Child" %}';
+               --plot-same-level-label: '{% trans "Same Level" %}';
+               --plot-drop-children-label: '{% trans "Drop here for children" %}';"
              data-campaign-plot-storage-key="campaignPlotElements-{{ object.id }}">
           <div class="sortable py-3" data-parent-id="root">
             {% for element in object.plot.root_elements %}
@@ -325,6 +215,4 @@
           </div>
         </div>
       {% endif %}
-    </div>
   {% endif %}
-</div>

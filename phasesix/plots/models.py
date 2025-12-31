@@ -105,6 +105,7 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                 epoch_extension=self.epoch_extension,
                 world_extension=self.world_extension,
                 cloned_from=self,
+                created_by=self.created_by,
                 campaign=campaign,
             )
             clone.extensions.set(self.extensions.all())
