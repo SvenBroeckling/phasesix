@@ -19,6 +19,7 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
+from django_ratelimit.core import is_ratelimited
 
 from armory.models import (
     WeaponModificationType,
@@ -650,6 +651,24 @@ class CreateCharacterDataView(FormView):
             form.fields["attitude"].widget = forms.HiddenInput()
 
         return form
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            limited = is_ratelimited(
+                request,
+                group="create-character-data",
+                key="ip",
+                rate="2/m",
+                method="POST",
+                increment=True,
+            )
+            if limited:
+                messages.error(
+                    request,
+                    _("Too many character creation attempts. Please wait a minute."),
+                )
+                return HttpResponseRedirect(request.get_full_path())
+        return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         self.object = Character.objects.create(
