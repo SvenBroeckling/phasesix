@@ -1338,12 +1338,14 @@ class XhrCharacterObjectsView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.character = Character.objects.get(id=kwargs["pk"])
+            self.character = get_object_or_404(Character, id=kwargs["pk"])
         except KeyError:
             self.character = None
 
         if self.request.GET.get("campaign_pk", "") != "":
-            self.campaign = Campaign.objects.get(id=self.request.GET.get("campaign_pk"))
+            self.campaign = get_object_or_404(
+                Campaign, id=self.request.GET.get("campaign_pk")
+            )
         else:
             self.campaign = self.character.pc_or_npc_campaign
 
