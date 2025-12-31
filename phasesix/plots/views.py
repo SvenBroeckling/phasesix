@@ -35,6 +35,7 @@ def user_may_use_ai(user):
         and user.profile.may_use_ai
     )
 
+
 @method_decorator(csrf_exempt, name="dispatch")
 class XhrReorderPlotElementView(View):
     def post(self, request, *args, **kwargs):
@@ -64,9 +65,13 @@ class PlotListView(ListView):
     template_name = "plots/plot_list.html"
 
     def get_queryset(self):
-        return super().get_queryset().filter(
-            cloned_from__isnull=True,
-            campaign__isnull=True,
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                cloned_from__isnull=True,
+                campaign__isnull=True,
+            )
         )
 
 
@@ -89,6 +94,12 @@ class XhrCreatePlotView(CreateView):
     extra_context = {
         "post_url": reverse_lazy("plots:create_plot"),
     }
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.created_by = self.request.user
+            form.instance.is_homebrew = False
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse("plots:plot_editor", kwargs={"pk": self.object.pk})
@@ -298,7 +309,6 @@ class AssignHandoutView(View):
 
         plot_element.handouts.add(handout)
         return JsonResponse({"status": "ok"})
-
 
 
 class XhrCreateLocationView(CreateView):

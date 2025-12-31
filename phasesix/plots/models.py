@@ -7,6 +7,9 @@ from transmeta import TransMeta
 import os
 import uuid
 
+from homebrew.models import HomebrewModel
+from phasesix.models import ModelWithImage, PhaseSixModel
+
 
 def _copy_field_file(field_file):
     """Return a saved copy of the given FieldFile (or None if empty)."""
@@ -27,7 +30,7 @@ def _copy_field_file(field_file):
     return default_storage.save(new_path, ContentFile(file_data))
 
 
-class Plot(models.Model, metaclass=TransMeta):
+class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=128)
     language = models.CharField(
         _("language"), max_length=4, default="en", choices=settings.LANGUAGES
@@ -63,6 +66,9 @@ class Plot(models.Model, metaclass=TransMeta):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
+    )
+    created_by = models.ForeignKey(
+        "auth.User", verbose_name=_("created by"), on_delete=models.CASCADE
     )
     campaign = models.OneToOneField(
         "campaigns.Campaign",
