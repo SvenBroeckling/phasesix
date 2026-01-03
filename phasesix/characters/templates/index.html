@@ -3,6 +3,12 @@
 {% load portal_extras %}
 {% load rules_extras thumbnail i18n static %}
 
+{% block extraheader %}
+  {% if lead_image %}
+    <link rel="preload" as="image" href="{{ lead_image.image.url }}" fetchpriority="high">
+  {% endif %}
+{% endblock %}
+
 {% block header %}{% endblock %}
 
 {% block raw_content %}
@@ -38,7 +44,14 @@
             {% if lead_image.character %}
               <a href="{{ lead_image.character.get_absolute_url }}" class="d-inline-block">
             {% endif %}
-            <img class="img-fluid rounded" src="{{ lead_image.image.url }}" alt="{% trans "Lead Image" %}">
+            <img class="img-fluid rounded"
+                 src="{{ lead_image.image.url }}"
+                 alt="{% trans "Lead Image" %}"
+                 width="{{ lead_image.image.width }}"
+                 height="{{ lead_image.image.height }}"
+                 loading="eager"
+                 decoding="async"
+                 fetchpriority="high">
             {% if lead_image.character %}
               </a>
             {% endif %}
@@ -67,7 +80,11 @@
             <a href="{{ c.get_absolute_url }}" class="mb-2 me-2 card-hover">
               {% thumbnail c.image "250x250" crop="center" as im %}
                 <img src="{{ im.url }}" class="img-fluid rounded character-image"
-                     alt="">
+                     alt=""
+                     width="{{ im.width }}"
+                     height="{{ im.height }}"
+                     loading="lazy"
+                     decoding="async">
               {% endthumbnail %}
             </a>{% if forloop.last %}<br>{% endif %}
           {% endif %}
@@ -103,7 +120,13 @@
           {% if c.image %}
             <a href="{{ c.get_absolute_url }}" class="mb-2 me-2 card-hover">
               {% thumbnail c.image "250x250" crop="center" as im %}
-                <img src="{{ im.url }}" class="img-fluid rounded character-image" alt="">
+                <img src="{{ im.url }}"
+                     class="img-fluid rounded character-image"
+                     alt=""
+                     width="{{ im.width }}"
+                     height="{{ im.height }}"
+                     loading="lazy"
+                     decoding="async">
               {% endthumbnail %}
             </a>{% if forloop.last %}<br>{% endif %}
           {% endif %}
@@ -139,7 +162,13 @@
               <div class="card mb-2 mb-xl-0 card-hover">
                 {% if wiki_page.image %}
                   {% thumbnail wiki_page.image "1024" as im %}
-                    <img src="{{ im.url }}" alt="{{ world }}" class="card-img-top">
+                    <img src="{{ im.url }}"
+                         alt="{{ world }}"
+                         class="card-img-top"
+                         width="{{ im.width }}"
+                         height="{{ im.height }}"
+                         loading="lazy"
+                         decoding="async">
                   {% endthumbnail %}
                 {% endif %}
                 <div class="card-body">
@@ -170,7 +199,13 @@
           {% for world in worlds %}
             <div class="col-12 col-md-6 col-xl-4 mb-2 {% if forloop.last %}d-none d-xl-block{% endif %}">
               <div class="card mb-2 mb-md-0 card-hover">
-                <img src="{{ world.get_image.image.url }}" alt="{{ world }}" class="card-img-top">
+                <img src="{{ world.get_image.image.url }}"
+                     alt="{{ world }}"
+                     class="card-img-top"
+                     width="{{ world.get_image.image.width }}"
+                     height="{{ world.get_image.image.height }}"
+                     loading="lazy"
+                     decoding="async">
                 <div class="card-body">
                   <h4>{{ world }}</h4>
                   <p>
