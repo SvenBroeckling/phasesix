@@ -69,9 +69,15 @@
 
           <div class="tab-content" id="text-tab-content">
             <div class="tab-pane fade show active" id="text-de" role="tabpanel" aria-labelledby="text-de-tab">
+              <div class="mb-3">
+                {% bootstrap_field form.name_de layout="floating" %}
+              </div>
               {% bootstrap_field form.text_de show_label=False %}
             </div>
             <div class="tab-pane fade" id="text-en" role="tabpanel" aria-labelledby="text-en-tab">
+              <div class="mb-3">
+                {% bootstrap_field form.name_en layout="floating" %}
+              </div>
               {% bootstrap_field form.text_en show_label=False %}
             </div>
           </div>
