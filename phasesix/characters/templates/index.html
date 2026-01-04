@@ -12,15 +12,15 @@
 {% block header %}{% endblock %}
 
 {% block raw_content %}
-{#  {% if user.is_authenticated %}#}
-{#    <a href="{% url "portal:wrapup" pk=user.id year=2025 %}" class="no-decoration no-link-colors">#}
-{#      <header class="d-flex flex-column justify-content-center align-items-center"#}
-{#              style="height: 30vh; background: url({% static "img/wrapup_2025.png" %}) no-repeat; background-size: cover; background-position: 0% 80%">#}
-{#        <h3 style="text-shadow: #333 3px 3px" class="display-4">{% blocktrans with t_year=2025 %}{{ t_year }} in Review{% endblocktrans %}</h3>#}
-{#        <h4 style="text-shadow: #333 3px 3px">{% trans "Click here" %}</h4>#}
-{#      </header>#}
-{#    </a>#}
-{#  {% endif %}#}
+  {#  {% if user.is_authenticated %}#}
+  {#    <a href="{% url "portal:wrapup" pk=user.id year=2025 %}" class="no-decoration no-link-colors">#}
+  {#      <header class="d-flex flex-column justify-content-center align-items-center"#}
+  {#              style="height: 30vh; background: url({% static "img/wrapup_2025.png" %}) no-repeat; background-size: cover; background-position: 0% 80%">#}
+  {#        <h3 style="text-shadow: #333 3px 3px" class="display-4">{% blocktrans with t_year=2025 %}{{ t_year }} in Review{% endblocktrans %}</h3>#}
+  {#        <h4 style="text-shadow: #333 3px 3px">{% trans "Click here" %}</h4>#}
+  {#      </header>#}
+  {#    </a>#}
+  {#  {% endif %}#}
 
   <header class="container-fluid hero py-5">
     <div class="container py-3">
@@ -165,8 +165,6 @@
                     <img src="{{ im.url }}"
                          alt="{{ world }}"
                          class="card-img-top"
-                         width="{{ im.width }}"
-                         height="{{ im.height }}"
                          loading="lazy"
                          decoding="async">
                   {% endthumbnail %}
@@ -199,13 +197,13 @@
           {% for world in worlds %}
             <div class="col-12 col-md-6 col-xl-4 mb-2 {% if forloop.last %}d-none d-xl-block{% endif %}">
               <div class="card mb-2 mb-md-0 card-hover">
-                <img src="{{ world.get_image.image.url }}"
-                     alt="{{ world }}"
-                     class="card-img-top"
-                     width="{{ world.get_image.image.width }}"
-                     height="{{ world.get_image.image.height }}"
-                     loading="lazy"
-                     decoding="async">
+                {% thumbnail world.get_image.image "800" as im %}
+                  <img src="{{ im.url }}"
+                       alt="{{ world }}"
+                       class="card-img-top"
+                       loading="lazy"
+                       decoding="async">
+                {% endthumbnail %}
                 <div class="card-body">
                   <h4>{{ world }}</h4>
                   <p>
