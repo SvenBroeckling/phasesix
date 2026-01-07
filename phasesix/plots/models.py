@@ -179,7 +179,11 @@ class Location(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=128)
     description = models.TextField(_("description"))
     image = models.ImageField(
-        _("image"), upload_to="plot_location_images", blank=True, null=True
+        _("image"),
+        upload_to="plot_location_images",
+        blank=True,
+        null=True,
+        max_length=256,
     )
 
     def __str__(self):

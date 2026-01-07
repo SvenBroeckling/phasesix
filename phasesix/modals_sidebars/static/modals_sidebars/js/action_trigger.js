@@ -9,8 +9,7 @@ const actionTriggerListener = (event) => {
         ) {
             event.preventDefault();
 
-            const confirmMessage =
-                actionTrigger.dataset.actionTriggerConfirm;
+            const confirmMessage = actionTrigger.dataset.actionTriggerConfirm;
             if (confirmMessage && !window.confirm(confirmMessage)) {
                 return;
             }
@@ -34,5 +33,7 @@ const actionTriggerListener = (event) => {
     }
 };
 
-document.addEventListener("click", actionTriggerListener);
-document.addEventListener("change", actionTriggerListener);
+document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("click", actionTriggerListener);
+    document.addEventListener("change", actionTriggerListener);
+});
