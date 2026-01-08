@@ -164,7 +164,9 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                 new_npcs = []
                 for npc in element.npc.all():
                     if npc.id not in npc_map:
-                        npc_map[npc.id] = npc.clone(plot=clone)
+                        npc_map[npc.id] = npc.clone(
+                            plot=clone, new_npc_campaign=campaign
+                        )
                     new_npcs.append(npc_map[npc.id])
                 if new_npcs:
                     new_element.npc.set(new_npcs)
