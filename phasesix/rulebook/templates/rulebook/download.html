@@ -8,10 +8,15 @@
 {% block content %}
   <div class="row">
     {% for object in object_list %}
-      <div class="col-12 col-lg-4 mb-3 {% if object_list.count == 1 %}offset-lg-4{%endif %}">
+      <div class="col-12 col-lg-4 mb-3 {% if object_list.count == 1 %}offset-lg-4{% endif %}">
         <div class="card h-100">
           <img class="card-img-top" src="{{ object.preview_image_de.url }}" alt="{{ object.book_title }}">
           <div class="card-body">
+            {% if object.description %}
+              <p>
+                {{ object.description|phasesix_markup }}
+              </p>
+            {% endif %}
             <a download href="{{ object.pdf_online_de.url }}"
                class="btn btn-primary mb-2 w-100">{% trans 'Download german' %}</a>
             <a download href="{{ object.pdf_online_en.url }}"

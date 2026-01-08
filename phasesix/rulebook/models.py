@@ -35,6 +35,10 @@ BOOK_VARIANTS = ["online", "print"]
 class WorldBook(models.Model, metaclass=TransMeta):
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     book = models.ForeignKey("rulebook.Book", on_delete=models.CASCADE)
+    description = models.TextField(gt("description"), blank=True, null=True)
+
+    ordering = models.IntegerField(gt("ordering"), default=0)
+
     pdf_online_de = models.FileField(
         gt("PDF german online"), upload_to="rulebook_pdf", blank=True, null=True
     )
@@ -85,7 +89,8 @@ class WorldBook(models.Model, metaclass=TransMeta):
         return f"{self.world} - {self.book}"
 
     class Meta:
-        translate = "book_title", "book_claim"
+        ordering = ("ordering",)
+        translate = "book_title", "book_claim", "description"
 
     @property
     def identifier(self):
@@ -207,7 +212,9 @@ class Book(ModelWithCreationInfo, ModelWithImage, HomebrewModel, metaclass=Trans
         verbose_name_plural = gt("books")
 
 
-class Chapter(ModelWithCreationInfo, ModelWithImage, HomebrewModel, metaclass=TransMeta):
+class Chapter(
+    ModelWithCreationInfo, ModelWithImage, HomebrewModel, metaclass=TransMeta
+):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     image_upload_to = "chapter_images"
     name = models.CharField(gt("name"), max_length=40)

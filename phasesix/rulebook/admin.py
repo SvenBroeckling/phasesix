@@ -19,7 +19,8 @@ class ChapterAdmin(ModelAdmin):
 
 @admin.register(WorldBook)
 class WorldBookAdmin(ModelAdmin):
-    list_display = "world", "book", "book_title"
+    list_display = "world", "book", "book_title", "ordering"
+    list_editable = ("ordering",)
     filter_horizontal = ("disabled_chapters",)
 
 
