@@ -39,7 +39,7 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
     player_abstract = models.TextField(_("abstract for players"))
     gm_description = models.TextField(_("gm description"))
     image = models.ImageField(
-        _("image"), upload_to="plot_images", blank=True, null=True
+        _("image"), upload_to="plot_images", blank=True, null=True, max_length=256
     )
     epoch_extension = models.ForeignKey(
         "rules.Extension",
@@ -94,7 +94,8 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
             .all()
         )
 
-    def clone(self, campaign=None):
+    def clone(self, campaign=None, npc_map=None):
+        npc_map = npc_map or {}
         with transaction.atomic():
             clone = Plot.objects.create(
                 name=self.name,
@@ -133,7 +134,6 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
 
             handout_map = {}
             location_map = {}
-            npc_map = {}
             for element in elements:
                 new_element = element_map[element.id]
 
@@ -196,7 +196,11 @@ class Handout(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=128)
     description = models.TextField(_("description"))
     image = models.ImageField(
-        _("image"), upload_to="plot_handout_images", blank=True, null=True
+        _("image"),
+        upload_to="plot_handout_images",
+        blank=True,
+        null=True,
+        max_length=256,
     )
 
     def __str__(self):

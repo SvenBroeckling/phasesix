@@ -1,0 +1,24 @@
+{% load i18n %}
+<div class="mb-3">
+  <div class="fw-semibold">{% trans "Clone this campaign?" %}</div>
+  <div class="text-muted small mt-2">
+    {% trans "This will create a duplicate campaign. Everything except player characters is copied." %}
+  </div>
+</div>
+
+<form method="post"
+      action="{% url 'campaigns:clone' slug=campaign.slug %}"
+      data-submit-loading="true">
+  {% csrf_token %}
+  <div class="d-flex align-items-center gap-2">
+    <button type="button"
+            class="btn btn-outline-secondary"
+            data-bs-dismiss="modal">
+      {% trans "Cancel" %}
+    </button>
+    <button type="submit" class="btn btn-primary">
+      <span class="form-submit-spinner spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+      {% trans "Clone Campaign" %}
+    </button>
+  </div>
+</form>

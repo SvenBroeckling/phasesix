@@ -14,6 +14,18 @@ const actionTriggerListener = (event) => {
                 return;
             }
 
+            const spinner = actionTrigger.querySelector(
+                ".action-trigger-spinner"
+            );
+            if (spinner) {
+                spinner.classList.remove("d-none");
+            }
+            if ("disabled" in actionTrigger) {
+                actionTrigger.disabled = true;
+            } else {
+                actionTrigger.classList.add("disabled");
+            }
+
             const url = actionTrigger.dataset.actionTriggerUrl;
             const eventAfter = actionTrigger.dataset.actionTriggerEventAfter;
             const method = actionTrigger.dataset.actionTriggerMethod || "POST";

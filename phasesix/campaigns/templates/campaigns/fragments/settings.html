@@ -1,19 +1,6 @@
 {% load i18n %}
 
 <div class="row">
-  {% if may_edit %}
-  <div class="col-12 mb-3 d-flex justify-content-end">
-      <form method="post"
-            action="{% url 'campaigns:clone' slug=object.slug %}">
-        {% csrf_token %}
-        <button class="py-3 btn btn-secondary d-flex align-items-center">
-          <i class="fas fa-clone me-2"></i>
-          {% trans "Clone Campaign" %}
-        </button>
-      </form>
-  </div>
-{% endif %}
-
   <div class="col-12">
     <h3>{% trans "Game Options" %}</h3>
     <hr>
@@ -186,4 +173,17 @@
     {% endif %}
 
   </div>
+
+  {% if may_edit %}
+    <div class="col-12 mt-4 d-flex justify-content-end">
+      <button
+        class="btn btn-secondary d-flex align-items-center"
+        data-modal-url="{% url 'campaigns:xhr_clone_modal' slug=object.slug %}"
+        data-modal-title="{% trans 'Clone campaign' %}"
+        data-modal-size-class="modal-md">
+        <i class="fas fa-clone me-2"></i>
+        {% trans "Clone Campaign" %}
+      </button>
+    </div>
+  {% endif %}
 </div>

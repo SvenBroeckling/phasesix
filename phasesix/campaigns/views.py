@@ -215,6 +215,18 @@ class XhrRemoveCampaignPlotModalView(View):
         )
 
 
+class XhrCloneCampaignModalView(View):
+    def get(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, slug=kwargs["slug"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+        return render(
+            request,
+            "campaigns/modals/clone_campaign.html",
+            {"campaign": campaign},
+        )
+
+
 class XhrSwitchCharacterNPCView(View):
     def post(self, request, *args, **kwargs):
         campaign = Campaign.objects.get(id=kwargs["pk"])

@@ -142,7 +142,20 @@ class XhrCreatePlotView(CreateView):
                 form.instance.world_extension = campaign.world_extension
             if not form.instance.epoch_extension_id:
                 form.instance.epoch_extension = campaign.epoch_extension
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        if (
+            campaign
+            and not self.object.cloned_from_id
+            and not self.object.plotelement_set.exists()
+        ):
+            PlotElement.objects.create(
+                plot=self.object,
+                name=_("How to edit this plot"),
+                gm_notes=_(
+                    "Toggle the Edit plot switch, then use Add Element in the properties panel."
+                ),
+            )
+        return response
 
     def get_success_url(self):
         return reverse("plots:plot_editor", kwargs={"pk": self.object.pk})

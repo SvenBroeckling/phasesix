@@ -48,9 +48,6 @@
       <div class="text-uppercase text-muted small">{% trans "Dramaturgy" %}</div>
       <div class="fw-semibold">{% trans "Plot overview" %}</div>
     </div>
-    {% if not object.plot and may_edit %}
-      <span class="badge text-bg-warning">{% trans "Plot not assigned" %}</span>
-    {% endif %}
   </div>
 
   {% if not object.plot %}
@@ -85,6 +82,7 @@
                               class="btn btn-primary btn-sm"
                               data-action-trigger-url="{% url 'campaigns:xhr_assign_plot' pk=object.id plot_pk=plot.id %}"
                               data-action-trigger-event-after="refresh-campaign-dramaturgy">
+                        <span class="action-trigger-spinner spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
                         {% trans "Choose plot" %}
                       </button>
                       <button type="button"
@@ -139,6 +137,7 @@
                         class="btn btn-primary btn-sm"
                         data-action-trigger-url="{% url 'campaigns:xhr_assign_plot' pk=object.id plot_pk=plot.id %}"
                         data-action-trigger-event-after="refresh-campaign-dramaturgy">
+                  <span class="action-trigger-spinner spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
                   {% trans "Choose plot" %}
                 </button>
                 <button type="button"

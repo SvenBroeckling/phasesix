@@ -18,6 +18,11 @@ urlpatterns = [
         name="clone",
     ),
     path(
+        "clone_modal/<slug:slug>",
+        views.XhrCloneCampaignModalView.as_view(),
+        name="xhr_clone_modal",
+    ),
+    path(
         "new/<int:world_pk>/",
         views.CreateCampaignEpochView.as_view(),
         name="create_epoch",

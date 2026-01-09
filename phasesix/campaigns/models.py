@@ -54,7 +54,7 @@ class Campaign(ModelWithImage):
     image = models.ImageField(
         _("image"),
         upload_to=image_upload_path,
-        max_length=200,
+        max_length=256,
         blank=True,
         null=True,
     )
@@ -76,7 +76,7 @@ class Campaign(ModelWithImage):
     backdrop_image = models.ImageField(
         _("backdrop image"),
         upload_to="campaign_backdrop_images",
-        max_length=200,
+        max_length=256,
         blank=True,
         null=True,
     )
@@ -301,6 +301,11 @@ class Campaign(ModelWithImage):
                         image_copyright_url=handout.image_copyright_url,
                     )
 
+            Plot = apps.get_model("plots", "Plot")
+            plot = Plot.objects.filter(campaign=self).first()
+            if plot:
+                plot.clone(campaign=clone, npc_map=npc_map)
+
             return clone
 
     @property
@@ -340,7 +345,7 @@ class Handout(ModelWithImage):
     image = models.ImageField(
         _("image"),
         upload_to=image_upload_path,
-        max_length=200,
+        max_length=256,
         blank=True,
         null=True,
     )

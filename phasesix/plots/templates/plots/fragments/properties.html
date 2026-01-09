@@ -17,16 +17,6 @@
           </button>
         {% endif %}
         <button
-          class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-2 order-sm-2"
-          data-modal-url="{% url "plots:update_plot" pk=object.id %}"
-          data-modal-event-after="refresh-plot"
-          data-modal-size-class="modal-xl"
-          data-modal-title="{% trans "Edit plot" %}"
-          title="{% trans "Edit" %}">
-          <i class="fas fa-pen me-1"></i>
-          {% trans "Edit" %}
-        </button>
-        <button
           class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-1 order-sm-3"
           data-modal-url="{% url "plots:create_plot_element" plot_pk=object.id %}"
           data-modal-event-after="refresh-plot"
@@ -34,6 +24,16 @@
           title="{% trans "Add Element" %}">
           <i class="fas fa-plus me-1"></i>
           {% trans "Add Element" %}
+        </button>
+        <button
+          class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-2 order-sm-2"
+          data-modal-url="{% url "plots:update_plot" pk=object.id %}"
+          data-modal-event-after="refresh-plot"
+          data-modal-size-class="modal-xl"
+          data-modal-title="{% trans "Edit plot" %}"
+          title="{% trans "Edit plot" %}">
+          <i class="fas fa-pen me-1"></i>
+          {% trans "Edit plot" %}
         </button>
         <button type="button"
                 class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-1 order-sm-3"

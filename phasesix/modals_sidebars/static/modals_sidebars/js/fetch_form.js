@@ -95,4 +95,16 @@ document.addEventListener("submit", (event) => {
             });
         event.preventDefault();
     }
+
+    if (form.dataset.submitLoading && !form.dataset.fetchForm) {
+        const spinner = form.querySelector(".form-submit-spinner");
+        if (spinner) {
+            spinner.classList.remove("d-none");
+        }
+        const submitButton = form.querySelector('[type="submit"]');
+        if (submitButton) {
+            submitButton.classList.add("disabled");
+            submitButton.disabled = true;
+        }
+    }
 });
