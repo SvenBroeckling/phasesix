@@ -68,3 +68,11 @@ class PlotFromDescriptionForm(forms.Form):
         widget=BootstrapTextarea({"rows": 12}),
         required=True,
     )
+    language = forms.ChoiceField(
+        label=_("Language"),
+        choices=(
+            ("en", _("English")),
+            ("de", _("German")),
+        ),
+        required=True,
+    )

@@ -195,13 +195,22 @@ class XhrCreatePlotFromDescriptionView(FormView):
         context["plot"] = self.plot
         return context
 
+    def get_initial(self):
+        initial = super().get_initial()
+        if getattr(self, "plot", None):
+            initial["language"] = self.plot.language
+        return initial
+
     def form_valid(self, form):
         description = form.cleaned_data.get("description", "").strip()
+        language = form.cleaned_data.get("language")
         if not description:
             form.add_error("description", _("Please provide a plot description."))
             return self.form_invalid(form)
         try:
-            PlotOpenAIService(self.plot).create_from_description(description)
+            PlotOpenAIService(self.plot).create_from_description(
+                description, language=language
+            )
         except ValueError as exc:
             form.add_error(None, str(exc))
             return self.form_invalid(form)

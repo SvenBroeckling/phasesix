@@ -49,21 +49,28 @@ class PlotOpenAIService:
     def _model(self):
         return getattr(settings, "OPENAI_PLOT_MODEL", settings.OPENAI_TRANSLATION_MODEL)
 
-    def _plot_context(self):
+    def _plot_context(self, language=None):
         extensions = [ext.name for ext in self.plot.extensions.all()]
         return {
             "name": self.plot.name,
-            "language": self.plot.language,
+            "language": language or self.plot.language,
             "epoch": getattr(self.plot.epoch_extension, "name", None),
             "world": getattr(self.plot.world_extension, "name", None),
             "extensions": extensions,
         }
 
-    def _structure_prompt(self, description):
-        context = json.dumps(self._plot_context(), ensure_ascii=False)
+    def _language_hint(self, language):
+        if language == "de":
+            return "German (de)"
+        return "English (en)"
+
+    def _structure_prompt(self, description, language=None):
+        context = json.dumps(self._plot_context(language=language), ensure_ascii=False)
+        language_hint = self._language_hint(language)
         return (
             "You are an RPG plot assistant. Split the provided plot description into a structured outline. "
-            "Return ONLY a JSON object. Use the same language as the plot language code.\n"
+            "Return ONLY a JSON object. Create all content in the requested language.\n"
+            f"Requested language: {language_hint}.\n"
             "No code fences, no comments, no trailing commas.\n\n"
             "Requirements:\n"
             "- Create meaningful plot elements with clear names.\n"
@@ -90,8 +97,9 @@ class PlotOpenAIService:
             f"{description}"
         )
 
-    def _element_descriptions_prompt(self, description, elements):
-        context = json.dumps(self._plot_context(), ensure_ascii=False)
+    def _element_descriptions_prompt(self, description, elements, language=None):
+        context = json.dumps(self._plot_context(language=language), ensure_ascii=False)
+        language_hint = self._language_hint(language)
         elements_payload = [
             {
                 "ref": element.get("ref"),
@@ -103,7 +111,8 @@ class PlotOpenAIService:
         ]
         return (
             "You are an RPG plot assistant. Write GM notes and player summaries for each element. "
-            "Return ONLY a JSON object. Use the same language as the plot language code.\n"
+            "Return ONLY a JSON object. Create all content in the requested language.\n"
+            f"Requested language: {language_hint}.\n"
             "No code fences, no comments, no trailing commas.\n\n"
             "Guidelines:\n"
             "- gm_notes: detailed, for the game master (secrets allowed).\n"
@@ -197,8 +206,10 @@ class PlotOpenAIService:
         cache[key] = obj
         return obj
 
-    def create_from_description(self, description):
-        structure = self._openai_json(self._structure_prompt(description))
+    def create_from_description(self, description, language=None):
+        structure = self._openai_json(
+            self._structure_prompt(description, language=language)
+        )
         elements_payload = structure.get("elements", [])
         if not isinstance(elements_payload, list) or not elements_payload:
             raise ValueError("OpenAI did not return any plot elements.")
@@ -273,7 +284,9 @@ class PlotOpenAIService:
 
         try:
             descriptions = self._openai_json(
-                self._element_descriptions_prompt(description, elements_payload)
+                self._element_descriptions_prompt(
+                    description, elements_payload, language=language
+                )
             )
         except Exception:
             logger.exception("OpenAI plot description generation failed")
