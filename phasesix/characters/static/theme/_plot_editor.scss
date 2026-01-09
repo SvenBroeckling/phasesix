@@ -36,7 +36,10 @@
 
     .sortable {
         min-height: 5px;
-        padding: 2px;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     .sortable-active {
@@ -123,7 +126,6 @@
 
     .plot-element-container {
         margin-left: 1.5rem;
-        margin-bottom: 0.5rem;
         position: relative;
     }
 

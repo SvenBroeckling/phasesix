@@ -223,7 +223,7 @@
       </div>
     </div>
   </div>
-  <div class="sortable py-2" data-parent-id="{{ element.id }}"
+  <div class="sortable py-1" data-parent-id="{{ element.id }}"
        data-reorder-url="{% url 'plots:xhr_reorder_plot_element' %}">
     {% for child in element.children.all %}
       {% include 'plots/_plot_element.html' with element=child depth=depth|add:2 %}

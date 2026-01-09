@@ -1,19 +1,31 @@
+{% load thumbnail %}
+{% load rules_extras %}
 {% load i18n %}
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <div>
-    <div class="text-uppercase text-muted small">{% trans "Plot outline" %}</div>
-    <h4 class="mb-0">{{ plot.name }}</h4>
+
+<div class="d-flex align-items-start">
+  {% thumbnail plot.image "800x400" crop="center" as im %}
+    <img src="{{ im.url }}" alt="{{ plot }}" class="flex-shrink-0" style="width: 33.333%; object-fit: cover;">
+  {% endthumbnail %}
+  <div class="flex-grow-1 ps-3">
+    <div class="text-uppercase text-muted small">{% trans "Player description" %}</div>
+    <div>
+      {{ plot.player_abstract|phasesix_markup }}
+    </div>
+    <div class="text-uppercase text-muted small">{% trans "GM description" %}</div>
+    <div>
+      {{ plot.gm_description|phasesix_markup }}
+    </div>
   </div>
 </div>
 
 <div class="plot-tree plot-editor-container"
      style="--plot-placeholder-root-label: '{% trans "Same Level / Top Level" %}';
-            --plot-placeholder-child-label: '{% trans "Move as Child" %}';
-            --plot-same-level-label: '{% trans "Same Level" %}';
-            --plot-drop-children-label: '{% trans "Drop here for children" %}';">
+       --plot-placeholder-child-label: '{% trans "Move as Child" %}';
+       --plot-same-level-label: '{% trans "Same Level" %}';
+       --plot-drop-children-label: '{% trans "Drop here for children" %}';">
   <div class="sortable py-3" data-parent-id="root">
     {% for element in plot.root_elements %}
-      {% include 'campaigns/plot/_plot_element.html' with element=element %}
+      {% include 'campaigns/plot/_plot_element.html' with element=element object=campaign may_edit=True %}
     {% empty %}
       <div class="text-muted fst-italic">{% trans 'No plot elements yet.' %}</div>
     {% endfor %}

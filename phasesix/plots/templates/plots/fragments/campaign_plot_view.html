@@ -8,7 +8,7 @@
      hx-get="{% url 'plots:xhr_campaign_plot_view' campaign_pk=campaign.id plot_pk=plot.id %}"
      hx-trigger="refresh-plot from:document"
      hx-swap="outerHTML">
-  <div class="sortable py-3" data-parent-id="root">
+  <div class="sortable" data-parent-id="root">
     {% for element in plot.root_elements %}
       {% include 'campaigns/plot/_plot_element.html' with element=element object=campaign %}
     {% empty %}

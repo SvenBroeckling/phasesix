@@ -29,7 +29,7 @@
   <div id="details-{{ element.id }}" class="collapse">
     <div class="rounded p-3 my-2 small border">
 
-      {% if element.player_summary %}
+      {% if element.player_summary and may_edit %}
         <div class="mb-3">
           <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
           <div class="text-body">{{ element.player_summary|phasesix_markup }}</div>
@@ -153,11 +153,14 @@
       {% endif %}
     </div>
   </div>
-  <div id="children-{{ element.id }}" class="collapse show" data-plot-children-collapse>
-    <div class="sortable py-2" data-parent-id="{{ element.id }}">
-      {% for child in element.children.all %}
-        {% include 'campaigns/plot/_plot_element.html' with element=child %}
-      {% endfor %}
+
+  {% if element.children.exists %}
+    <div id="children-{{ element.id }}" class="collapse show pt-2" data-plot-children-collapse>
+      <div class="sortable" data-parent-id="{{ element.id }}">
+        {% for child in element.children.all %}
+          {% include 'campaigns/plot/_plot_element.html' with element=child %}
+        {% endfor %}
+      </div>
     </div>
-  </div>
+  {% endif %}
 </div>
