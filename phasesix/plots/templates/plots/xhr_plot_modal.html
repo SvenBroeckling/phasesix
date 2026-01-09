@@ -3,6 +3,7 @@
 <form action="{{ post_url }}"
       data-fetch-form="true"
       data-fetch-form-close="all"
+      {% if fetch_form_event_after %}data-fetch-form-event-after="{{ fetch_form_event_after }}"{% endif %}
       method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form_errors form %}

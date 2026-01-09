@@ -111,10 +111,37 @@ class XhrCreatePlotView(CreateView):
         "post_url": reverse_lazy("plots:create_plot"),
     }
 
+    def _get_campaign(self):
+        campaign_pk = self.request.GET.get("campaign_pk")
+        if not campaign_pk:
+            return None
+        campaign = get_object_or_404(Campaign, id=campaign_pk)
+        if not campaign.may_edit(self.request.user):
+            raise PermissionDenied()
+        return campaign
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        campaign = self._get_campaign()
+        if campaign:
+            context["campaign"] = campaign
+            context["post_url"] = (
+                reverse("plots:create_plot") + "?campaign_pk=" + str(campaign.id)
+            )
+            context["fetch_form_event_after"] = "refresh-campaign-dramaturgy"
+        return context
+
     def form_valid(self, form):
+        campaign = self._get_campaign()
         if self.request.user.is_authenticated:
             form.instance.created_by = self.request.user
             form.instance.is_homebrew = False
+        if campaign:
+            form.instance.campaign = campaign
+            if not form.instance.world_extension_id:
+                form.instance.world_extension = campaign.world_extension
+            if not form.instance.epoch_extension_id:
+                form.instance.epoch_extension = campaign.epoch_extension
         return super().form_valid(form)
 
     def get_success_url(self):
