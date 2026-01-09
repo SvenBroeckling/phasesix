@@ -3,6 +3,16 @@
 
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
 
+{% block opengraph %}
+  {% trans "New Random NPC" as og_title %}
+  {% if campaign %}
+    {% blocktrans asvar og_description %}Create a new NPC for {{ campaign }}.{% endblocktrans %}
+  {% else %}
+    {% blocktrans asvar og_description %}Create a random NPC with a name and extensions.{% endblocktrans %}
+  {% endif %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <form action="" method="post">
     <div class="row">

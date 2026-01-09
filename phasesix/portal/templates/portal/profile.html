@@ -4,6 +4,7 @@
 {% load characters_extras %}
 {% load campaign_extras %}
 {% load portal_extras %}
+{% load thumbnail %}
 {% load i18n %}
 {% load static %}
 
@@ -14,6 +15,17 @@
   <small>
     {% trans "Member since" %} {{ object.user.date_joined|date:"Y" }}
   </small>
+{% endblock %}
+
+{% block opengraph %}
+  {% latest_user_image object.user as image %}
+  {% if image %}
+    {% thumbnail image "600x600" as im %}
+      {% include "shared/opengraph.html" with og_title=object.user.username|capfirst og_description=object.bio|default:brand_description|striptags|truncatechars:200 og_image_path=im.url %}
+    {% endthumbnail %}
+  {% else %}
+    {% include "shared/opengraph.html" with og_title=object.user.username|capfirst og_description=object.bio|default:brand_description|striptags|truncatechars:200 %}
+  {% endif %}
 {% endblock %}
 
 {% block bottom_nav %}

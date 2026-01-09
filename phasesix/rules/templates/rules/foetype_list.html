@@ -8,6 +8,12 @@
 {% block in_page_title %}{% trans "Foes" %}{% endblock %}
 {% block in_page_subtitle %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Foes" as og_title %}
+  {% blocktrans asvar og_description %}Browse foes, enemies, and adversaries for your campaigns.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block bottom_nav %}
   {% bottom_navigation_button "armory/_navigation.html" %}
 {% endblock %}

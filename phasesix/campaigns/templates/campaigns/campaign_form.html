@@ -6,6 +6,12 @@
 {% block in_page_subtitle %}
   {% trans "Choose settings for your campaign. These settings apply to every character created for this campaign." %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Campaign settings" as og_title %}
+  {% blocktrans asvar og_description %}Choose settings for your campaign. These settings apply to every character created for this campaign.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div data-app="campaigns" class="row">
     <div class="col-12 col-md-8">

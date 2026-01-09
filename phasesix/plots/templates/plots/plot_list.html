@@ -2,6 +2,12 @@
 {% load thumbnail %}
 {% load i18n %}
 
+{% block opengraph %}
+  {% trans "Plots" as og_title %}
+  {% blocktrans asvar og_description %}Browse and manage plot trees for your campaigns.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div class="plot-grid p-4">
     {% for plot in object_list %}

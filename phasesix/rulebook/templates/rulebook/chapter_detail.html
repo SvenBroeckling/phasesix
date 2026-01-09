@@ -6,6 +6,11 @@
 {% block in_page_title %}{{ object.name }}{% endblock %}
 {% block in_page_subtitle %}{{ object.book.name }}{% endblock %}
 
+{% block opengraph %}
+  {% image_url object as image %}
+  {% include "shared/opengraph.html" with og_title=object.name og_description=object.text|to_first_linebreak|default:object.book.name|default:brand_description|striptags|truncatechars:200 og_image_path=image %}
+{% endblock %}
+
 {% block bottom_nav %}
   {% bottom_navigation_button "rulebook/_navigation.html" %}
 {% endblock %}

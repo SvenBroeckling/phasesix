@@ -6,6 +6,12 @@
 {% block in_page_subtitle %}
   {% trans "Choose any number of additional extensions to add to your character." %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Choose extensions" as og_title %}
+  {% blocktrans asvar og_description %}Choose any number of additional extensions to add to your character.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div data-app="characters" class="row">
     {% for extension in extensions %}

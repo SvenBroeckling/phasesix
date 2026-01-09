@@ -6,6 +6,12 @@
 {% block in_page_subtitle %}
   {% trans "Choose an epoch to play in. The chosen epoch determines which weapons, armour and items are available." %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Choose an epoch" as og_title %}
+  {% blocktrans asvar og_description %}Choose an epoch to play in. The chosen epoch determines which weapons, armour and items are available.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div data-app="characters" class="row">
     {% for extension in extensions %}

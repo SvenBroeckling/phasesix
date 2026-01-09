@@ -4,6 +4,14 @@
 
 {% block header %}{% endblock %}
 
+{% block opengraph %}
+  {% if object.image %}
+    {% include "shared/opengraph.html" with og_title=object og_description=object.description|default:brand_description|striptags|truncatechars:200 og_image_path=object.image.url %}
+  {% else %}
+    {% include "shared/opengraph.html" with og_title=object og_description=object.description|default:brand_description|striptags|truncatechars:200 %}
+  {% endif %}
+{% endblock %}
+
 {% block content %}
   <div class="plot-editor-container"
        style="--plot-placeholder-root-label: '{% trans "Same Level / Top Level" %}';

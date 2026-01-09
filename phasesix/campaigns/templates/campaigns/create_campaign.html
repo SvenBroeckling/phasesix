@@ -5,6 +5,12 @@
 {% block in_page_title %}{% trans 'Create a campaign' %}{% endblock %}
 {% block in_page_subtitle %}{% trans "Choose a world to play in" %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Create a campaign" as og_title %}
+  {% blocktrans asvar og_description %}Choose a world to play in.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div data-app="campaigns" class="row">
     {% for extension in extensions %}

@@ -5,6 +5,12 @@
 {% block in_page_title %}{% trans "Worlds" %}{% endblock %}
 {% block in_page_subtitle %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Worlds" as og_title %}
+  {% blocktrans asvar og_description %}Browse worlds and discover their lore and wiki pages.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 
 {% block content %}
   <div data-app="worlds" class="row">

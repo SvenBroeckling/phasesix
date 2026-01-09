@@ -7,6 +7,10 @@
 {% block in_page_title %}{{ title }}{% endblock %}
 {% block in_page_subtitle %}{{ sub_title }}{% endblock %}
 
+{% block opengraph %}
+  {% include "shared/opengraph.html" with og_title=title og_description=sub_title|default:brand_description|striptags|truncatechars:200 %}
+{% endblock %}
+
 {% block bottom_nav %}
   {% bottom_navigation_button "armory/_navigation.html" %}
 {% endblock %}

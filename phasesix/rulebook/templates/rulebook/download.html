@@ -5,6 +5,21 @@
 {% block title %}{% trans 'Download rulebook' %} - {{ block.super }}{% endblock %}
 {% block in_page_subtitle %}{% trans "Download rulebook" %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Download rulebook" as og_title %}
+  {% if object_list %}
+    {% with book=object_list.0 %}
+      {% if book.preview_image_de %}
+        {% include "shared/opengraph.html" with og_title=og_title og_description=book.description|default:brand_description|striptags|truncatechars:200 og_image_path=book.preview_image_de.url %}
+      {% else %}
+        {% include "shared/opengraph.html" with og_title=og_title og_description=book.description|default:brand_description|striptags|truncatechars:200 %}
+      {% endif %}
+    {% endwith %}
+  {% else %}
+    {% include "shared/opengraph.html" with og_title=og_title og_description=brand_description %}
+  {% endif %}
+{% endblock %}
+
 {% block content %}
   <div class="row">
     {% for object in object_list %}

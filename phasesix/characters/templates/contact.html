@@ -3,6 +3,12 @@
 
 {% block title %}{% trans 'Contact' %} - {{ block.super }}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Contact / Privacy" as og_title %}
+  {% blocktrans asvar og_description %}Contact details, privacy policy, and licenses for {{ brand_name }}.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div class="row">
     <div class="nav nav-tabs justify-content-center mb-3" id="v-pills-tab" role="tablist">

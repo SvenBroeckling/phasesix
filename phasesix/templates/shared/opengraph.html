@@ -1,0 +1,18 @@
+{% load static %}
+<meta property="og:title" content="{{ og_title|default:brand_name }}"/>
+<meta property="og:type" content="{{ og_type|default:"website" }}"/>
+{% if og_url %}
+  <meta property="og:url" content="{{ og_url }}"/>
+{% else %}
+  <meta property="og:url" content="https://{{ brand_domain_name }}{{ request.path }}"/>
+{% endif %}
+{% if og_image %}
+  <meta property="og:image" content="{{ og_image }}"/>
+{% elif og_image_path %}
+  <meta property="og:image" content="https://{{ brand_domain_name }}{{ og_image_path }}"/>
+{% else %}
+  <meta property="og:image" content="https://{{ brand_domain_name }}{% static 'img/default-background.jpg' %}"/>
+{% endif %}
+<meta property="og:description" content="{{ og_description|default:brand_description }}"/>
+<meta name="description" content="{{ og_description|default:brand_description }}"/>
+<meta name="keywords" content="{{ og_keywords|default:og_title|default:brand_name }}"/>

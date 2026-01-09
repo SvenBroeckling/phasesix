@@ -7,6 +7,10 @@
 {% block in_page_title %}{{ board }}{% endblock %}
 {% block in_page_subtitle %}{% endblock %}
 
+{% block opengraph %}
+  {% include "shared/opengraph.html" with og_title=board og_description=board.description|default:brand_description|striptags|truncatechars:200 %}
+{% endblock %}
+
 {% block bottom_nav %}
   {% bottom_navigation_button "forum/_navigation.html" %}
 {% endblock %}

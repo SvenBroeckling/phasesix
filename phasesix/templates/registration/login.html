@@ -3,6 +3,12 @@
 
 {% block title %}{% trans 'Login' %} - {{ block.super }}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Login" as og_title %}
+  {% blocktrans asvar og_description %}Log in to your {{ brand_name }} account.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div class="row mt-3">
     <div class="col-md-6 offset-md-3">

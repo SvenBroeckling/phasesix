@@ -10,6 +10,12 @@
   {% endblocktrans %}
 {% endblock %}
 
+{% block opengraph %}
+  {% trans "Material" as og_title %}
+  {% blocktrans asvar og_description %}Weapons, armour, foes, templates, items, and more.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div class="row">
 

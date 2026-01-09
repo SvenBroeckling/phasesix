@@ -3,6 +3,16 @@
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
 
+{% block opengraph %}
+  {% if object.image %}
+    {% thumbnail object.image '600' as image %}
+      {% include "shared/opengraph.html" with og_title=object og_description=object.text|default:brand_description|striptags|truncatechars:200 og_image_path=image.url %}
+    {% endthumbnail %}
+  {% else %}
+    {% include "shared/opengraph.html" with og_title=object og_description=object.text|default:brand_description|striptags|truncatechars:200 %}
+  {% endif %}
+{% endblock %}
+
 {% block content %}
   <div data-app="worlds">
     <form action="" method="post" class="wiki_page_form">

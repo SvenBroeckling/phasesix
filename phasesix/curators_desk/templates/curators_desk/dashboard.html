@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% load portal_extras %}
+{% load i18n %}
 
 {% block header %}{% endblock %} {# disable header #}
+
+{% block opengraph %}
+  {% trans "Curator's Desk" as og_title %}
+  {% blocktrans asvar og_description %}Review homebrew content, translations, and platform statistics for {{ brand_name }}.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
 
 {% block bottom_nav %}
   {% bottom_navigation_button "curators_desk/_navigation.html" %}

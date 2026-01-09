@@ -9,6 +9,14 @@
   {% endif %}
 {% endblock %}
 
+{% block opengraph %}
+  {% if lead_image %}
+    {% include "shared/opengraph.html" with og_title=brand_name og_description=brand_description og_image_path=lead_image.image.url %}
+  {% else %}
+    {% include "shared/opengraph.html" with og_title=brand_name og_description=brand_description %}
+  {% endif %}
+{% endblock %}
+
 {% block header %}{% endblock %}
 
 {% block raw_content %}

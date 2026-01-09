@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% load i18n static %}
 
+{% block title %}{% trans 'Activation failed' %} - {{ block.super }}{% endblock %}
+
+{% block opengraph %}
+  {% trans "Activation failed" as og_title %}
+  {% blocktrans asvar og_description %}There was an error activating your account. The activation link may be too old.{% endblocktrans %}
+  {% static 'img/default-background.jpg' as og_image_path %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description og_image_path=og_image_path %}
+{% endblock %}
+
 {% block content %}
     <div class="row mb-5 mt-5">
         <div class="col-md-8 offset-md-2">

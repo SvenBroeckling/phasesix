@@ -6,6 +6,12 @@
 {% block in_page_subtitle %}
   {% trans 'These are the templates your character will start with. They define all values and abilities of your character.' %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Select templates" as og_title %}
+  {% blocktrans asvar og_description %}These are the templates your character will start with. They define all values and abilities of your character.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div data-app="characters" class="row">
     <div class="col-12 col-md-3">

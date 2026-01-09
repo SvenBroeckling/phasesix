@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 i18n static %}
 
+{% block title %}{% trans 'Activate account' %} - {{ block.super }}{% endblock %}
+
+{% block opengraph %}
+  {% trans "Activate account" as og_title %}
+  {% blocktrans asvar og_description %}Activate your {{ brand_name }} account to get started.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div class="row mb-5 mt-5">
     <div class="col-12 col-md-4 offset-md-4">

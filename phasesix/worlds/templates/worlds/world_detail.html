@@ -10,6 +10,14 @@
 {% block in_page_title %}{{ world }}{% endblock %}
 {% block in_page_subtitle %}{% endblock %}
 
+{% block opengraph %}
+  {% if world.get_image %}
+    {% include "shared/opengraph.html" with og_title=world og_description=world.description_1|default:brand_description|striptags|truncatechars:200 og_image_path=world.get_image.image.url %}
+  {% else %}
+    {% include "shared/opengraph.html" with og_title=world og_description=world.description_1|default:brand_description|striptags|truncatechars:200 %}
+  {% endif %}
+{% endblock %}
+
 {% block content %}
   <div data-app="worlds" class="row">
     <div class="col-12 col-xl-3 d-none d-xl-block">

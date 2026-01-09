@@ -5,6 +5,12 @@
 {% block in_page_title %}{% trans "Create Character" %}{% endblock %}
 {% block in_page_subtitle %}{% trans "Give your character a name and some more information." %}{% endblock %}
 
+{% block opengraph %}
+  {% trans "Create Character" as og_title %}
+  {% blocktrans asvar og_description %}Give your character a name and some more information.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
 {% block content %}
   <div data-app="characters">
     <form action="?{{ request.GET.urlencode }}" method="post" class="character-data-form"
