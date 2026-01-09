@@ -1,0 +1,30 @@
+{% load i18n %}
+{% if plot %}
+  <div data-plot-mode-scope>
+    <div class="plot-mode-switch d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+      {% if may_edit %}
+        <div class="form-check form-switch">
+          <input class="form-check-input"
+                 type="checkbox"
+                 role="switch"
+                 id="plot-mode-switch-{{ plot.id }}"
+                 data-plot-mode-toggle
+                 data-plot-mode-storage-key="plotMode-{{ plot.id }}">
+          <label class="form-check-label" for="plot-mode-switch-{{ plot.id }}">
+            {% trans "Edit plot" %}
+          </label>
+        </div>
+      {% endif %}
+    </div>
+
+    <div data-plot-mode="view">
+      {% include 'plots/fragments/campaign_plot_view.html' with plot=plot campaign=campaign %}
+    </div>
+
+    {% if may_edit %}
+      <div data-plot-mode="edit" class="d-none">
+        {% include 'plots/includes/editor_layout.html' with plot=plot %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

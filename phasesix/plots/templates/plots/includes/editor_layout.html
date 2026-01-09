@@ -1,0 +1,19 @@
+{% load i18n %}
+<div class="plot-editor-container"
+     style="--plot-placeholder-root-label: '{% trans "Same Level / Top Level" %}';
+            --plot-placeholder-child-label: '{% trans "Move as Child" %}';
+            --plot-same-level-label: '{% trans "Same Level" %}';
+            --plot-drop-children-label: '{% trans "Drop here for children" %}';">
+  <div class="row g-4">
+    <div class="col-12 col-lg-8"
+         hx-trigger="refresh-plot from:document"
+         hx-get="{% url 'plots:xhr_plot_fragment' pk=plot.id fragment_template="elements" %}">
+      {% include 'plots/fragments/elements.html' with object=plot %}
+    </div>
+    <div class="col-12 col-lg-4"
+         hx-trigger="refresh-plot from:document"
+         hx-get="{% url 'plots:xhr_plot_fragment' pk=plot.id fragment_template="properties" %}">
+      {% include 'plots/fragments/properties.html' with object=plot %}
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.db import transaction
 from django.db.models import F, Q
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -20,6 +20,7 @@ from plots.forms import (
     PlotFromDescriptionForm,
 )
 from plots.models import Plot, PlotElement, Handout, Location
+from campaigns.models import Campaign
 from plots.openai import PlotOpenAIService
 from characters.models import Character
 from rules.models import Foe, Extension
@@ -85,6 +86,21 @@ class XhrPlotFragmentView(DetailView):
 
     def get_template_names(self):
         return ["plots/fragments/" + self.kwargs["fragment_template"] + ".html"]
+
+
+class XhrCampaignPlotViewFragment(View):
+    def get(self, request, *args, **kwargs):
+        plot = get_object_or_404(Plot, id=kwargs["plot_pk"])
+        campaign = get_object_or_404(Campaign, id=kwargs["campaign_pk"])
+        if plot.campaign_id != campaign.id:
+            raise PermissionDenied()
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+        return render(
+            request,
+            "plots/fragments/campaign_plot_view.html",
+            {"plot": plot, "campaign": campaign},
+        )
 
 
 class XhrCreatePlotView(CreateView):

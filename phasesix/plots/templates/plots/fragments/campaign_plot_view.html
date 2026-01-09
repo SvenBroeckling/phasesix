@@ -1,0 +1,18 @@
+{% load i18n %}
+<div class="plot-tree plot-editor-container"
+     style="--plot-placeholder-root-label: '{% trans "Same Level / Top Level" %}';
+       --plot-placeholder-child-label: '{% trans "Move as Child" %}';
+       --plot-same-level-label: '{% trans "Same Level" %}';
+       --plot-drop-children-label: '{% trans "Drop here for children" %}';"
+     data-campaign-plot-storage-key="campaignPlotElements-{{ campaign.id }}"
+     hx-get="{% url 'plots:xhr_campaign_plot_view' campaign_pk=campaign.id plot_pk=plot.id %}"
+     hx-trigger="refresh-plot from:document"
+     hx-swap="outerHTML">
+  <div class="sortable py-3" data-parent-id="root">
+    {% for element in plot.root_elements %}
+      {% include 'campaigns/plot/_plot_element.html' with element=element object=campaign %}
+    {% empty %}
+      <div class="text-muted fst-italic">{% trans 'No plot elements yet.' %}</div>
+    {% endfor %}
+  </div>
+</div>

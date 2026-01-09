@@ -28,6 +28,7 @@ from .views import (
     XhrUpdatePlotNpcView,
     XhrUpdatePlotFoeView,
     XhrPlotFragmentView,
+    XhrCampaignPlotViewFragment,
     XhrReorderPlotElementView,
 )
 
@@ -57,6 +58,11 @@ urlpatterns = [
         "xhr_plot_fragment/<int:pk>/<fragment_template>",
         staff_member_required(XhrPlotFragmentView.as_view()),
         name="xhr_plot_fragment",
+    ),
+    path(
+        "xhr_campaign_plot_view/<int:campaign_pk>/<int:plot_pk>",
+        staff_member_required(XhrCampaignPlotViewFragment.as_view()),
+        name="xhr_campaign_plot_view",
     ),
     path(
         "xhr_reorder_plot_element",

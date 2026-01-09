@@ -3,6 +3,18 @@
      data-element-id="{{ element.id }}">
   <div class="plot-bar d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-2">
+      {% if element.children.exists %}
+        <button type="button"
+                class="btn btn-sm btn-link p-0 text-muted toggle-children"
+                data-plot-children-toggle
+                data-bs-toggle="collapse"
+                data-bs-target="#children-{{ element.id }}"
+                aria-expanded="true"
+                aria-controls="children-{{ element.id }}"
+                title="{% trans 'Toggle children' %}">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      {% endif %}
       <span type="button"
             data-bs-toggle="collapse"
             data-bs-target="#details-{{ element.id }}"
@@ -141,9 +153,11 @@
       {% endif %}
     </div>
   </div>
-  <div class="sortable py-2" data-parent-id="{{ element.id }}">
-    {% for child in element.children.all %}
-      {% include 'campaigns/plot/_plot_element.html' with element=child %}
-    {% endfor %}
+  <div id="children-{{ element.id }}" class="collapse show" data-plot-children-collapse>
+    <div class="sortable py-2" data-parent-id="{{ element.id }}">
+      {% for child in element.children.all %}
+        {% include 'campaigns/plot/_plot_element.html' with element=child %}
+      {% endfor %}
+    </div>
   </div>
 </div>

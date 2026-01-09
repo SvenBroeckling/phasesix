@@ -202,19 +202,6 @@
       {% endif %}
 
       {% if object.plot %}
-        <div class="plot-tree plot-editor-container"
-             style="--plot-placeholder-root-label: '{% trans "Same Level / Top Level" %}';
-               --plot-placeholder-child-label: '{% trans "Move as Child" %}';
-               --plot-same-level-label: '{% trans "Same Level" %}';
-               --plot-drop-children-label: '{% trans "Drop here for children" %}';"
-             data-campaign-plot-storage-key="campaignPlotElements-{{ object.id }}">
-          <div class="sortable py-3" data-parent-id="root">
-            {% for element in object.plot.root_elements %}
-              {% include 'campaigns/plot/_plot_element.html' with element=element %}
-            {% empty %}
-              <div class="text-muted fst-italic">{% trans 'No plot elements yet.' %}</div>
-            {% endfor %}
-          </div>
-        </div>
+        {% include 'plots/includes/campaign_plot_editor.html' with plot=object.plot campaign=object may_edit=may_edit %}
       {% endif %}
   {% endif %}
