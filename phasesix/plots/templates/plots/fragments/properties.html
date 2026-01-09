@@ -35,6 +35,7 @@
           <i class="fas fa-pen me-1"></i>
           {% trans "Edit plot" %}
         </button>
+      {% if plot.campaign %}
         <button type="button"
                 class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-1 order-sm-3"
                 data-modal-url="{% url 'campaigns:xhr_remove_plot_modal' pk=object.campaign.id %}"
@@ -43,6 +44,7 @@
           <i class="fas fa-trash me-1"></i>
           {% trans "Remove plot" %}
         </button>
+      {% endif %}
       </div>
     </div>
     <div class="mb-3">
