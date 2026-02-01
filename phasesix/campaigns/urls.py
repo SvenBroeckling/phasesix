@@ -8,6 +8,11 @@ app_name = "campaigns"
 urlpatterns = [
     path("new/", login_required(views.CreateCampaignView.as_view()), name="create"),
     path(
+        "new/world/",
+        login_required(views.CreateCampaignWorldView.as_view()),
+        name="create_world",
+    ),
+    path(
         "toggle_favorite/<int:pk>",
         views.XhrCampaignToggleFavoriteView.as_view(),
         name="xhr_toggle_favorite",

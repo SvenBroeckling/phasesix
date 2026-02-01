@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n thumbnail %}
+
+{% block title %}{% trans "Create Campaign" %} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Choose a plot" %}{% endblock %}
+{% block in_page_subtitle %}
+  {% trans "Pick a plot to start from, or create your own." %}
+{% endblock %}
+
+{% block opengraph %}
+  {% trans "Create a campaign" as og_title %}
+  {% blocktrans asvar og_description %}Choose a plot to start from, or create your own.{% endblocktrans %}
+  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description %}
+{% endblock %}
+
+{% block content %}
+  <div class="plot-grid p-4" data-app="campaigns">
+    {% for plot in plots %}
+      {% if world_extension and world_extension.fixed_epoch %}
+        {% url "campaigns:create_data" world_pk=world_extension.id epoch_pk=world_extension.fixed_epoch.id as data_url %}
+      {% elif world_extension %}
+        {% url "campaigns:create_data" world_pk=world_extension.id epoch_pk=plot.epoch_extension.id as data_url %}
+      {% elif plot.world_extension.fixed_epoch %}
+        {% url "campaigns:create_data" world_pk=plot.world_extension.id epoch_pk=plot.world_extension.fixed_epoch.id as data_url %}
+      {% else %}
+        {% url "campaigns:create_data" world_pk=plot.world_extension.id epoch_pk=plot.epoch_extension.id as data_url %}
+      {% endif %}
+      <a href="{{ data_url }}?plot_pk={{ plot.id }}{% if not plot.world_extension.fixed_extensions.exists %}{% for extension in plot.extensions.all %}&extensions={{ extension.id }}{% endfor %}{% endif %}">
+        <div class="plot-card rounded shadow-sm overflow-hidden transition position-relative">
+          {% if plot.image %}
+            {% thumbnail plot.image "600x400" crop="center" as im %}
+              <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+              <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
+                <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
+                <div class="text-white text-truncate opacity-75 small">{{ plot.world_extension }}</div>
+              </div>
+            {% endthumbnail %}
+          {% else %}
+            <div class="h-100 bg-light"></div>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+    <a href="{{ own_plot_url }}">
+      <div class="plot-card pointer border border-2 border-dashed d-flex align-items-center justify-content-center">
+        {% trans "Own plot" %}
+      </div>
+    </a>
+  </div>
+{% endblock %}

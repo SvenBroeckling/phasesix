@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import (
@@ -22,12 +23,59 @@ from campaigns.forms import (
 from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
-from plots.models import Plot, Handout, Location
+from plots.models import Plot, PlotElement, Handout, Location, _copy_field_file
 from rules.models import Extension, Foe
 from worlds.models import WikiPage
 
 
 class CreateCampaignView(TemplateView):
+    template_name = "campaigns/create_campaign_start.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            world_extension = self.request.world.extension
+        except AttributeError:
+            world_extension = None
+        plots = Plot.objects.filter(
+            cloned_from__isnull=True,
+            campaign__isnull=True,
+        )
+        if world_extension:
+            plots = plots.filter(world_extension=world_extension)
+            if world_extension.fixed_epoch:
+                plots = plots.filter(epoch_extension=world_extension.fixed_epoch)
+        context["plots"] = plots.order_by("name")
+        context["world_extension"] = world_extension
+        if world_extension:
+            if world_extension.fixed_epoch:
+                if world_extension.fixed_extensions.exists():
+                    context["own_plot_url"] = reverse(
+                        "campaigns:create_data",
+                        kwargs={
+                            "world_pk": world_extension.id,
+                            "epoch_pk": world_extension.fixed_epoch.id,
+                        },
+                    )
+                else:
+                    context["own_plot_url"] = reverse(
+                        "campaigns:create_extensions",
+                        kwargs={
+                            "world_pk": world_extension.id,
+                            "epoch_pk": world_extension.fixed_epoch.id,
+                        },
+                    )
+            else:
+                context["own_plot_url"] = reverse(
+                    "campaigns:create_epoch",
+                    kwargs={"world_pk": world_extension.id},
+                )
+        else:
+            context["own_plot_url"] = reverse("campaigns:create_world")
+        return context
+
+
+class CreateCampaignWorldView(TemplateView):
     template_name = "campaigns/create_campaign.html"
 
     def get_context_data(self, **kwargs):
@@ -89,6 +137,23 @@ class CreateCampaignDataView(CreateView):
         obj.created_by = self.request.user
         obj.epoch_extension = Extension.objects.get(pk=self.kwargs["epoch_pk"])
         obj.world_extension = Extension.objects.get(pk=self.kwargs["world_pk"])
+        plot_pk = self.request.GET.get("plot_pk")
+        if plot_pk:
+            plot = get_object_or_404(
+                Plot.objects.filter(cloned_from__isnull=True, campaign__isnull=True),
+                pk=plot_pk,
+            )
+            if (
+                plot.world_extension_id != obj.world_extension_id
+                or plot.epoch_extension_id != obj.epoch_extension_id
+            ):
+                form.add_error(
+                    None,
+                    _("Selected plot does not match the chosen world or epoch."),
+                )
+                return self.form_invalid(form)
+            if plot.image:
+                obj.image = _copy_field_file(plot.image)
         obj.save()
 
         extensions = Extension.objects.filter(
@@ -97,10 +162,47 @@ class CreateCampaignDataView(CreateView):
         if obj.world_extension.fixed_extensions.exists():
             extensions = obj.world_extension.fixed_extensions.all()
         obj.extensions.set(extensions)
+        if plot_pk:
+            plot.clone(campaign=obj)
+        else:
+            plot = Plot.objects.create(
+                name=obj.name,
+                language=self.request.LANGUAGE_CODE,
+                player_abstract=obj.abstract or "",
+                gm_description="",
+                epoch_extension=obj.epoch_extension,
+                world_extension=obj.world_extension,
+                created_by=self.request.user,
+                campaign=obj,
+            )
+            plot.extensions.set(obj.extensions.all())
+            PlotElement.objects.create(
+                plot=plot,
+                name=_("How to edit this plot"),
+                gm_notes=_(
+                    "Toggle the Edit plot switch, then use Add Element in the properties panel."
+                ),
+            )
         return super().form_valid(form)
 
     def get_success_url(self):
         return self.object.get_absolute_url()
+
+    def get_initial(self):
+        initial = super().get_initial()
+        plot_pk = self.request.GET.get("plot_pk")
+        if not plot_pk:
+            return initial
+        plot = get_object_or_404(
+            Plot.objects.filter(cloned_from__isnull=True, campaign__isnull=True),
+            pk=plot_pk,
+        )
+        initial.setdefault("name", plot.name)
+        if plot.player_abstract:
+            initial.setdefault("abstract", plot.player_abstract)
+        elif plot.gm_description:
+            initial.setdefault("abstract", plot.gm_description)
+        return initial
 
 
 class CampaignDetailView(DetailView):
@@ -321,7 +423,9 @@ class XhrCharacterSidebarView(BaseSidebarView):
         if campaign is None and self.object.plot_id:
             campaign = self.object.plot.campaign
         context["campaign"] = campaign
-        context["may_edit"] = campaign.may_edit(self.request.user) if campaign else False
+        context["may_edit"] = (
+            campaign.may_edit(self.request.user) if campaign else False
+        )
         return context
 
 
