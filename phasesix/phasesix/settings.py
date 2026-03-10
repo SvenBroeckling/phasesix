@@ -14,7 +14,8 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 OPENAI_TRANSLATION_MODEL = os.environ.get("OPENAI_TRANSLATION_MODEL", "gpt-4o-mini")
 OPENAI_IMAGE_MODEL = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-1")
 
-ADMINS = [("Sven", "sven@broeckling.de")]
+_admin_email = os.environ.get("ADMIN_EMAIL", "")
+ADMINS = [("Admin", _admin_email)] if _admin_email else []
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # 1 year
@@ -29,6 +30,10 @@ CSRF_TRUSTED_ORIGINS = [f"https://{a}" for a in ALLOWED_HOSTS]
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 RATELIMIT_IP_META_KEY = "HTTP_X_FORWARDED_FOR"
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 ASGI_APPLICATION = "phasesix.asgi.application"
 REDIS_HOST = os.environ["REDIS_HOST"]

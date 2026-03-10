@@ -50,6 +50,6 @@ COPY --from=builder /app/git_commit_hash.txt /app/
 # Expose port
 EXPOSE 4444
 
-# Run Django server
-CMD ["/app/.venv/bin/hypercorn", "-w", "5", "-b", "0.0.0.0:4444", "phasesix.asgi:application"]
+# Run migrations/static collection then start server
+CMD ["/bin/sh", "-c", "/app/migrate.sh && /app/.venv/bin/hypercorn -w 5 -b 0.0.0.0:4444 phasesix.asgi:application"]
 
