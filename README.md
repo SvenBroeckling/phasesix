@@ -12,9 +12,9 @@ To run the project in a docker compose environment, all you need is an installed
 
 ```shell
 $ docker-compose up
-$ docker-compose exec web venv/bin/python manage.py migrate
-$ docker-compose exec web venv/bin/python manage.py loaddata demo_data.json
-$ docker-compose exec web venv/bin/python manage.py createsuperuser
+$ docker-compose exec web .venv/bin/python manage.py migrate
+$ docker-compose exec web .venv/bin/python manage.py loaddata demo_data.json
+$ docker-compose exec web .venv/bin/python manage.py createsuperuser
 ```
 
 You can access the admin interface at [http://localhost:8000/admin](http://localhost:8000/admin) after that.
@@ -34,6 +34,7 @@ Phase Six relies on a local [redis](https://redis.io/) server. The installation 
 The supported python versions are 3.10-3.13. A system-wide installed python interpreter is fine, but you want to create a virtualenv. PhaseSix uses `uv` for requirements. This can be done with:
 
 ```shell
+$ cd phasesix
 $ uv sync
 $ . .venv/bin/activate
 ```
@@ -73,4 +74,3 @@ To run the local development server, just run the following management command:
 ```
 
 A single threaded server will be available at http://localhost:8000. Note that this server is not suitable for production deployment. There are many ways to [deploy a django project](https://docs.djangoproject.com/en/4.2/howto/deployment/).
-

@@ -18,7 +18,8 @@ RUN curl --proto '=https' --tlsv1.2 -LsSf https://github.com/astral-sh/uv/releas
 WORKDIR /app
 
 # Install Python dependencies
-COPY pyproject.toml /app/
+COPY phasesix/pyproject.toml /app/
+COPY phasesix/uv.lock /app/
 RUN /root/.local/bin/uv sync
 
 ARG GIT_COMMIT_HASH
@@ -52,4 +53,3 @@ EXPOSE 4444
 
 # Run Django server
 CMD ["/app/.venv/bin/hypercorn", "-w", "5", "-b", "0.0.0.0:4444", "phasesix.asgi:application"]
-

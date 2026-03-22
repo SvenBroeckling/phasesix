@@ -24,7 +24,7 @@ dependencies = [
     "hypercorn>=0.17.3",
     "markdown>=3.7",
     "pillow>=11.1.0",
-    "psycopg>=3.2.6",
+    "psycopg[binary]>=3.2.6",
     "pymemcache>=4.0.0",
     "python-dotenv>=1.0.1",
     "requests>=2.32.3",
@@ -42,6 +42,7 @@ dev = [
     "django-debug-toolbar>=5.1.0",
     "ipython>=9.1.0",
     "pre-commit>=4.2.0",
+    "psycopg>=3.3.3",
     "pudb>=2024.1.3",
 ]
 
