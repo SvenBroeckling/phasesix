@@ -21,6 +21,25 @@
         {% endif %}
       </div>
       <div class="row g-3">
+        {% if object.plot %}
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <a href=""
+               class="text-decoration-none"
+               data-sidebar-right-title="{% trans 'NPC' %}"
+               data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="npc" %}">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="ratio ratio-1x1 rounded-top overflow-hidden bg-body-secondary">
+                  <div class="d-flex align-items-center justify-content-center w-100 h-100">
+                    <i class="fas fa-users fs-1 text-muted"></i>
+                  </div>
+                </div>
+                <div class="card-body p-2 text-center">
+                  <div class="small fw-semibold text-uppercase">{% trans "NPC" %}</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endif %}
         {% for c in object.character_set.all %}
           <div class="col-6 col-sm-4 col-md-3 col-lg-2">
             <a href=""

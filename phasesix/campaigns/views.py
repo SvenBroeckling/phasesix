@@ -404,6 +404,20 @@ class BaseSidebarView(DetailView):
 class XhrSidebarView(BaseSidebarView):
     model = Campaign
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.kwargs["sidebar_template"] == "npc":
+            plot = Plot.objects.filter(campaign=self.object).first()
+            if plot:
+                context["characters"] = (
+                    Character.objects.filter(plotelement__plot=plot)
+                    .distinct()
+                    .order_by("name")
+                )
+            else:
+                context["characters"] = Character.objects.none()
+        return context
+
 
 class XhrSettingsSidebarView(BaseSidebarView):
     model = Campaign

@@ -1,7 +1,8 @@
 from django.contrib import admin
-from unfold.admin import ModelAdmin
+from unfold.admin import ModelAdmin, StackedInline
 
 from campaigns.models import Campaign, Roll
+from plots.models import Plot
 
 
 @admin.register(Roll)
@@ -19,4 +20,14 @@ class RollAdmin(ModelAdmin):
     list_filter = ("campaign", "character", "header")
 
 
-admin.site.register(Campaign, ModelAdmin)
+class PlotInline(StackedInline):
+    model = Plot
+    fk_name = "campaign"
+    extra = 0
+    max_num = 1
+    readonly_fields = ("id",)
+
+
+@admin.register(Campaign)
+class CampaignAdmin(ModelAdmin):
+    inlines = [PlotInline]

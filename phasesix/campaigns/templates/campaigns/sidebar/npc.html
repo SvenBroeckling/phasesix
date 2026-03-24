@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load portal_extras %}
+
+<div class="d-flex flex-column gap-3">
+  {% if characters %}
+    {% for character in characters %}
+      <a href=""
+         class="card text-decoration-none"
+         data-sidebar-right-title="{{ character }}"
+         data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=character.id sidebar_template="character" %}">
+        <div class="d-flex">
+          <img src="{% image_url character "80x80" crop="center" %}"
+               alt="{{ character.name }}"
+               style="width: 80px; height: 80px;"
+               class="object-fit-cover">
+          <div class="card-body">
+            <div class="fw-semibold text-body">{{ character.name }}</div>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  {% else %}
+    <div class="text-muted fst-italic">{% trans "No NPCs found in this plot." %}</div>
+  {% endif %}
+</div>
