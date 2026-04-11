@@ -75,10 +75,13 @@
   {% if may_edit and request.user.is_authenticated %}
     <div class="row">
       <div class="col-12">
-        <a data-message="{% trans 'Delete character' %}: {{ object }}?"
-           class="btn btn-danger btn-sm w-100 delete-character"
-           href="{% url 'characters:xhr_delete' pk=object.id %}"><i
-          class="far fa-times fa-fw text-danger"></i> {% trans 'Delete Character' %}</a>
+        <button class="btn btn-danger btn-sm w-100"
+                type="button"
+                hx-post="{% url 'characters:xhr_delete' pk=object.id %}"
+                hx-confirm="{% trans 'Delete character' %}: {{ object }}?"
+                hx-swap="none">
+          <i class="far fa-times fa-fw text-danger"></i> {% trans 'Delete Character' %}
+        </button>
       </div>
     </div>
   {% endif %}

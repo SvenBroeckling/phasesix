@@ -156,12 +156,11 @@ class XhrDeleteCharacterView(View):
         if obj.created_by == self.request.user:
             messages.info(request, _("Character deleted."))
             obj.delete()
-        return JsonResponse(
-            {
-                "status": "ok",
-                "url": "/",
-            }
-        )
+        if request.htmx:
+            response = HttpResponse(status=204)
+            response["HX-Redirect"] = reverse("index")
+            return response
+        return HttpResponseRedirect(reverse("index"))
 
 
 class XhrSidebarView(DetailView):
