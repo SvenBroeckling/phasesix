@@ -43,6 +43,7 @@
         <input type="hidden" name="action" value="add">
         <button type="submit"
                 class="btn btn-sm btn-primary m-2"
+                {% if template.cost > character.reputation_available %}disabled{% endif %}
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}">
           {% trans 'Add' %}

@@ -1,2 +1,7 @@
 {% load armory_extras %}
+{% if error_message %}
+  <div class="alert alert-danger" role="alert">
+    {{ error_message }}
+  </div>
+{% endif %}
 {% searchable_object_card_list character_object add_button=True %}
