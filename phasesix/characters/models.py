@@ -573,10 +573,18 @@ class Character(ModelWithImage, PhaseSixModel):
         return self.campaign or self.npc_campaign
 
     @property
+    def effective_campaign(self):
+        if self.pc_or_npc_campaign is not None:
+            return self.pc_or_npc_campaign
+        if self.plot_id and self.plot and self.plot.campaign_id:
+            return self.plot.campaign
+        return None
+
+    @property
     def ws_room_name(self) -> str:
         """Websocket room name"""
-        if self.pc_or_npc_campaign is not None:
-            return self.pc_or_npc_campaign.ws_room_name
+        if self.effective_campaign is not None:
+            return self.effective_campaign.ws_room_name
         return f"character-{self.id}"
 
     @property

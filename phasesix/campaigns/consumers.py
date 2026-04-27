@@ -85,9 +85,10 @@ def _get_roll_context(character_id, campaign_id, minimum_roll):
 
     if character_id:
         character = Character.objects.get(id=character_id)
+        campaign = character.effective_campaign
         return {
             "character": character,
-            "campaign": character.pc_or_npc_campaign,
+            "campaign": campaign,
             "ws_room_name": character.ws_room_name,
             "character_name": character.name,
             "minimum_roll": minimum_roll or character.minimum_roll,
