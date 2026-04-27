@@ -20,17 +20,6 @@ $(function () {
         return false;
     });
 
-    body.on("click", "[data-app='characters'] .delete-character", function (e) {
-        let elem = $(this);
-        if (confirm(elem.data("message"))) {
-            $.post(elem.attr("href"), function (data) {
-                window.location = data.url;
-            });
-        }
-        e.preventDefault();
-        return false;
-    });
-
     body.on("submit", "form[data-loading-form='character-fill-random']", function (e) {
         let form = $(this);
         let confirmMessage = form.data("confirm-message");

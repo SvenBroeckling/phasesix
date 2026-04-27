@@ -156,12 +156,11 @@ class XhrDeleteCharacterView(View):
         if obj.created_by == self.request.user:
             messages.info(request, _("Character deleted."))
             obj.delete()
-        return JsonResponse(
-            {
-                "status": "ok",
-                "url": "/",
-            }
-        )
+        if request.htmx:
+            response = HttpResponse(status=204)
+            response["HX-Redirect"] = reverse("index")
+            return response
+        return HttpResponseRedirect(reverse("index"))
 
 
 class XhrSidebarView(DetailView):
@@ -1334,6 +1333,7 @@ class XhrCharacterObjectsView(TemplateView):
         self.character = None
         self.campaign = None
         self.character_object = None
+        self.error_message = None
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -1367,6 +1367,7 @@ class XhrCharacterObjectsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["character_object"] = self.character_object
+        context["error_message"] = self.error_message
         return context
 
     def post(self, request, *args, **kwargs):
@@ -1384,10 +1385,18 @@ class XhrCharacterObjectsView(TemplateView):
             if price:
                 if not self.character.subtract_currency(price):
                     return HttpResponseRedirect(self.character.get_absolute_url())
-            self.character_object.add(object_id)
+            try:
+                self.character_object.add(object_id)
+            except ValueError:
+                self.error_message = _("Not possible.")
+                return self.render_to_response(self.get_context_data(), status=400)
             return HttpResponseRedirect(self.character.get_absolute_url())
 
-        self.character_object.add(object_id)
+        try:
+            self.character_object.add(object_id)
+        except ValueError:
+            self.error_message = _("Not possible.")
+            return self.render_to_response(self.get_context_data(), status=400)
         return HttpResponseRedirect(self.character.get_absolute_url())
 
     def delete(self, request, *args, **kwargs):
