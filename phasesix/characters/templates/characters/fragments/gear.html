@@ -2,46 +2,46 @@
 {% load i18n %}
 <div class="row">
   <div class="col-md-6">
-    <div>
+    <div class="d-flex align-items-start gap-2">
+      <h2 class="mb-2 h4 flex-grow-1">{% trans 'Armor' %}</h2>
       {% if may_edit %}
-        <a class="btn btn-primary btn-sm float-end"
+        <a class="btn btn-primary btn-sm flex-shrink-0"
            data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="riot_gear" %}"
            data-modal-size-class="modal-xl"
            data-modal-event-after="refresh-character-gear"
            data-modal-title="{% trans 'Add Armor' %}"
            href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
       {% endif %}
-      <h2 class="mb-2 h4">{% trans 'Armor' %}</h2>
     </div>
 
     {% include 'characters/includes/character_riot_gear_cards.html' %}
 
-    <div>
+    <div class="d-flex align-items-start gap-2">
+      <h2 class="mb-2 h4 flex-grow-1">{% trans 'Weapons' %}</h2>
       {% if may_edit %}
-        <a class="btn btn-primary btn-sm float-end"
+        <a class="btn btn-primary btn-sm flex-shrink-0"
            data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="weapon" %}"
            data-modal-size-class="modal-xl"
            data-modal-event-after="refresh-character-gear"
            data-modal-title="{% trans 'Add Weapon' %}"
            href=""><i class="fas fa-plus"></i> {% trans 'Add' %}</a>
       {% endif %}
-      <h2 class="mb-2 h4">{% trans 'Weapons' %}</h2>
     </div>
 
     {% include 'characters/includes/character_weapon_cards.html' %}
   </div>
 
   <div class="col-md-6">
-    <div>
+    <div class="d-flex align-items-start gap-2">
+      <h2 class="mb-2 h4 flex-grow-1">{% trans 'Items' %}</h2>
       {% if may_edit %}
-        <a class="btn btn-primary btn-sm float-end"
+        <a class="btn btn-primary btn-sm flex-shrink-0"
            data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="item" %}"
            data-modal-size-class="modal-xl"
            data-modal-event-after="refresh-character-gear"
            data-modal-title="{% trans 'Add item' %}"
            href=""><i class="fa fa-plus"></i> {% trans 'Add' %}</a>
       {% endif %}
-      <h2 class="mb-2 h4">{% trans 'Items' %}</h2>
     </div>
 
     {% if object.currency_map %}

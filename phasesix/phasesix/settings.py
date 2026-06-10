@@ -37,7 +37,15 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(REDIS_HOST, REDIS_PORT)],
+            # Channels uses blocking Redis reads that intentionally outlive
+            # redis-py's default socket timeout.
+            "hosts": [
+                {
+                    "host": REDIS_HOST,
+                    "port": REDIS_PORT,
+                    "socket_timeout": None,
+                }
+            ],
         },
     },
 }
