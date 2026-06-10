@@ -20,17 +20,18 @@
 {% block header %}{% endblock %}
 
 {% block raw_content %}
-  {#  {% if user.is_authenticated %}#}
-  {#    <a href="{% url "portal:wrapup" pk=user.id year=2025 %}" class="no-decoration no-link-colors">#}
-  {#      <header class="d-flex flex-column justify-content-center align-items-center"#}
-  {#              style="height: 30vh; background: url({% static "img/wrapup_2025.png" %}) no-repeat; background-size: cover; background-position: 0% 80%">#}
-  {#        <h3 style="text-shadow: #333 3px 3px" class="display-4">{% blocktrans with t_year=2025 %}{{ t_year }} in Review{% endblocktrans %}</h3>#}
-  {#        <h4 style="text-shadow: #333 3px 3px">{% trans "Click here" %}</h4>#}
-  {#      </header>#}
-  {#    </a>#}
-  {#  {% endif %}#}
+  <div class="atmospheric-index">
+    {#  {% if user.is_authenticated %}#}
+    {#    <a href="{% url "portal:wrapup" pk=user.id year=2025 %}" class="no-decoration no-link-colors">#}
+    {#      <header class="d-flex flex-column justify-content-center align-items-center"#}
+    {#              style="height: 30vh; background: url({% static "img/wrapup_2025.png" %}) no-repeat; background-size: cover; background-position: 0% 80%">#}
+    {#        <h3 style="text-shadow: #333 3px 3px" class="display-4">{% blocktrans with t_year=2025 %}{{ t_year }} in Review{% endblocktrans %}</h3>#}
+    {#        <h4 style="text-shadow: #333 3px 3px">{% trans "Click here" %}</h4>#}
+    {#      </header>#}
+    {#    </a>#}
+    {#  {% endif %}#}
 
-  <header class="container-fluid hero py-5">
+  <header class="container-fluid hero atmospheric-index-hero py-5">
     <div class="container py-3">
       <div class="row align-items-center">
         <div class="col-12 col-lg-6 text-center text-lg-start">
@@ -52,7 +53,7 @@
             {% if lead_image.character %}
               <a href="{{ lead_image.character.get_absolute_url }}" class="d-inline-block">
             {% endif %}
-            <img class="img-fluid rounded"
+            <img class="img-fluid rounded atmospheric-index-lead-image"
                  src="{{ lead_image.image.url }}"
                  alt="{% trans "Lead Image" %}"
                  width="{{ lead_image.image.width }}"
@@ -69,10 +70,10 @@
     </div>
   </header>
 
-  <div class="container-fluid pt-0 bg-body-tertiary">
+  <section class="container-fluid pt-0 bg-body-tertiary atmospheric-index-section">
     <div class="container py-5">
       <div class="text-center mb-4">
-        <h2 class="section-title">{% trans "Create Characters" %}</h2>
+        <h2 class="section-title atmospheric-index-section-title">{% trans "Create Characters" %}</h2>
         <p class="section-subtitle mb-0">
           {% blocktrans %}
             This website lets you create and manage your characters as well as their equipment
@@ -82,13 +83,13 @@
         </p>
       </div>
 
-      <div class="d-flex justify-content-center flex-wrap gap-2 avatar-grid">
+      <div class="d-flex justify-content-center flex-wrap gap-3 avatar-grid atmospheric-index-gallery">
         {% for c in characters %}
           {% if c.image %}
-            <a href="{{ c.get_absolute_url }}" class="mb-2 me-2 card-hover">
+            <a href="{{ c.get_absolute_url }}" class="index-avatar-card card-hover">
               {% thumbnail c.image "250x250" crop="center" as im %}
                 <img src="{{ im.url }}" class="img-fluid rounded character-image"
-                     alt=""
+                     alt="{{ c }}"
                      width="{{ im.width }}"
                      height="{{ im.height }}"
                      loading="lazy"
@@ -100,7 +101,7 @@
 
         {% create_character_url as create_url %}
         <a href="{{ create_url }}">
-          <div class="card create-card card-hover d-flex justify-content-center align-items-center me-2 mb-2"
+          <div class="card create-card card-hover d-flex justify-content-center align-items-center index-create-card"
                style="width: 250px; height: 250px">
             <i class="fas fa-plus fa-2x"></i>
             <span class="invite-text">{% trans "Create Character" %}</span>
@@ -108,12 +109,12 @@
         </a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="container-fluid pt-0">
+  <section class="container-fluid pt-0 atmospheric-index-section">
     <div class="container py-5">
       <div class="text-center mb-4">
-        <h2 class="section-title">{% trans "Manage Campaigns" %}</h2>
+        <h2 class="section-title atmospheric-index-section-title">{% trans "Manage Campaigns" %}</h2>
         <p class="section-subtitle mb-0">
           {% blocktrans %}
             Create and manage your campaigns. Invite your friends to join and play with you.
@@ -123,14 +124,14 @@
         </p>
       </div>
 
-      <div class="d-flex justify-content-center flex-wrap gap-2 avatar-grid">
+      <div class="d-flex justify-content-center flex-wrap gap-3 avatar-grid atmospheric-index-gallery">
         {% for c in campaigns %}
           {% if c.image %}
-            <a href="{{ c.get_absolute_url }}" class="mb-2 me-2 card-hover">
+            <a href="{{ c.get_absolute_url }}" class="index-avatar-card card-hover">
               {% thumbnail c.image "250x250" crop="center" as im %}
                 <img src="{{ im.url }}"
                      class="img-fluid rounded character-image"
-                     alt=""
+                     alt="{{ c }}"
                      width="{{ im.width }}"
                      height="{{ im.height }}"
                      loading="lazy"
@@ -142,7 +143,7 @@
 
         {% create_campaign_url as create_url %}
         <a href="{{ create_url }}">
-          <div class="card create-card card-hover d-flex justify-content-center align-items-center me-2 mb-2"
+          <div class="card create-card card-hover d-flex justify-content-center align-items-center index-create-card"
                style="width: 250px; height: 250px">
             <i class="fas fa-plus fa-2x"></i>
             <span class="invite-text">{% trans "Create Campaign" %}</span>
@@ -150,24 +151,24 @@
         </a>
       </div>
     </div>
-  </div>
+  </section>
 
 
-  <div class="container-fluid pt-0 pt-md-5 bg-body-tertiary">
+  <section class="container-fluid pt-0 pt-md-5 bg-body-tertiary atmospheric-index-section atmospheric-index-discovery">
     <div class="container pt-0 pt-md-2">
 
       {% if wiki_pages.exists %}  {# world configuration domain #}
         <div class="row py-2 py-md-5">
           <div class="col-12">
             <div class="text-center mb-3">
-              <h2 class="mx-auto my-0">{% trans 'Discover the world' %}</h2>
+              <h2 class="mx-auto my-0 atmospheric-index-section-title">{% trans 'Discover the world' %}</h2>
               <h5 class="mb-4"></h5>
             </div>
           </div>
 
           {% for wiki_page in wiki_pages %}
             <div class="col-12 col-md-6 col-xl-4 {% if forloop.last %}d-none d-xl-block{% endif %}">
-              <div class="card mb-2 mb-xl-0 card-hover">
+              <article class="card mb-2 mb-xl-0 card-hover index-lore-card">
                 {% if wiki_page.image %}
                   {% thumbnail wiki_page.image "1024" as im %}
                     <img src="{{ im.url }}"
@@ -177,17 +178,17 @@
                          decoding="async">
                   {% endthumbnail %}
                 {% endif %}
-                <div class="card-body">
+                <div class="card-body index-lore-card-body">
                   <h4>{{ wiki_page }}</h4>
                   <span class="text-muted">{{ wiki_page.parent }}</span>
                   <p>
                     {{ wiki_page.text|to_first_linebreak|phasesix_markup|replace_wiki_tags:world }}
                     <br>
                     <a href="{% url "worlds:wiki_page" world_slug=wiki_page.world.slug slug=wiki_page.slug %}"
-                       class="btn btn-outline-primary stretched-link">{% trans "Discover" %}</a>
+                       class="index-lore-link stretched-link">{% trans "Discover" %}</a>
                   </p>
                 </div>
-              </div>
+              </article>
             </div>
           {% endfor %}
         </div>
@@ -197,43 +198,49 @@
         <div class="row py-2 py-md-5">
           <div class="col-12">
             <div class="text-center mb-3">
-              <h2 class="mx-auto my-0">{% trans 'Discover worlds' %}</h2>
+              <h2 class="mx-auto my-0 atmospheric-index-section-title">{% trans 'Discover worlds' %}</h2>
               <h5 class="mb-4">{% trans "Play in one of these worlds, or use Terra to play on earth." %}</h5>
             </div>
           </div>
 
           {% for world in worlds %}
             <div class="col-12 col-md-6 col-xl-4 mb-2 {% if forloop.last %}d-none d-xl-block{% endif %}">
-              <div class="card mb-2 mb-md-0 card-hover">
-                {% thumbnail world.get_image.image "800" as im %}
-                  <img src="{{ im.url }}"
-                       alt="{{ world }}"
-                       class="card-img-top"
-                       loading="lazy"
-                       decoding="async">
-                {% endthumbnail %}
-                <div class="card-body">
+              <article class="card mb-2 mb-md-0 card-hover index-lore-card">
+                {% if world.get_image %}
+                  {% thumbnail world.get_image.image "800" as im %}
+                    <img src="{{ im.url }}"
+                         alt="{{ world }}"
+                         class="card-img-top"
+                         loading="lazy"
+                         decoding="async">
+                  {% endthumbnail %}
+                {% else %}
+                  <div class="index-lore-sigil" aria-hidden="true">
+                    <i class="gi gi-delapouite-book-cover"></i>
+                  </div>
+                {% endif %}
+                <div class="card-body index-lore-card-body">
                   <h4>{{ world }}</h4>
                   <p>
                     {{ world.description_1 }}
                     <br>
                     <a href="{% url "worlds:detail" slug=world.slug %}"
-                       class="btn btn-outline-primary mt-2 stretched-link">{% trans "Discover" %}</a>
+                       class="index-lore-link stretched-link">{% trans "Discover" %}</a>
                   </p>
                 </div>
-              </div>
+              </article>
             </div>
           {% endfor %}
         </div>
       {% endif %}
     </div>
-  </div>
+  </section>
 
-  <div class="container-fluid pt-0">
+  <section class="container-fluid pt-0 atmospheric-index-section atmospheric-index-open-source">
     <div class="container py-5">
       <div class="row align-items-center">
         <div class="col-12 col-md-7 text-center text-md-start">
-          <h2 class="section-title">{% trans "Open Source Role Playing Game" %}</h2>
+          <h2 class="section-title atmospheric-index-section-title">{% trans "Open Source Role Playing Game" %}</h2>
           {% url "contact" as contact_url %}
           <p class="lead">
             {% blocktrans with t_brand_name=brand_name t_contact_url=contact_url %}
@@ -244,10 +251,11 @@
           </p>
         </div>
         <div class="col-12 col-md-5 text-center mt-4 mt-md-0">
-          <span style="font-size: 128pt">🄯</span>
+          <span class="index-open-source-mark" aria-hidden="true">🄯</span>
         </div>
       </div>
     </div>
+  </section>
   </div>
 
 {% endblock %}

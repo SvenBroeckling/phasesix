@@ -17,6 +17,7 @@
   })
 </script>
 
+<div class="world-sidebar world-images-sidebar">
 <div class="row">
   <div class="col-12">
     <button
@@ -93,7 +94,7 @@
 <div class="row">
   <div class="col-12">
     {% for image in object.wikipageimage_set.all %}
-      <div class="card mt-3 pointer"
+      <div class="card mt-3 pointer world-sidebar-card"
            data-clipboard-value="{{ image.get_wiki_tag }}"
            data-clipboard-title="{% trans 'Wiki tag copied' %}"
            data-clipboard-message="{% trans "Paste the wiki tag somewhere into the text" %}">
@@ -108,4 +109,5 @@
       </div>
     {% endfor %}
   </div>
+</div>
 </div>

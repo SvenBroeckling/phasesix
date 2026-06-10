@@ -13,20 +13,40 @@
 
 
 {% block content %}
-  <div data-app="worlds" class="row">
+  <div data-app="worlds" class="row g-4 world-catalog">
     {% for world in object_list %}
       <div class="col-12 col-md-6 col-xl-4">
-        <div class="card mb-2">
-          <img src="{{ world.get_image.image.url }}" alt="{{ world }}" class="card-img-top">
-          <div class="card-body">
-            <h5>{{ world }}</h5>
-            <p>
-              {{ world.description_1 }}
-              <br>
-              <a href="{% url "worlds:detail" slug=world.slug %}"
-                 class="btn btn-outline-primary mt-2 stretched-link">{% trans "Discover" %}</a>
-            </p>
+        <article class="world-card h-100">
+          <a class="world-card-visual"
+             href="{% url "worlds:detail" slug=world.slug %}"
+             aria-label="{{ world }}">
+            {% if world.get_image %}
+              <img src="{{ world.get_image.image.url }}" alt="{{ world }}">
+            {% else %}
+              <span class="world-card-sigil" aria-hidden="true">
+                <i class="gi gi-delapouite-book-cover"></i>
+              </span>
+            {% endif %}
+            <span class="world-card-shade"></span>
+            <h2>{{ world }}</h2>
+          </a>
+          <div class="world-card-body">
+            <div class="world-card-description">
+              {{ world.description_1|truncatewords_html:45 }}
+            </div>
+            <a href="{% url "worlds:detail" slug=world.slug %}"
+               class="world-card-link">
+              <span>{% trans "Discover" %}</span>
+              <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+            </a>
           </div>
+        </article>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="world-catalog-empty text-center">
+          <i class="gi gi-delapouite-book-cover" aria-hidden="true"></i>
+          <p class="mb-0">{% trans "No worlds are available." %}</p>
         </div>
       </div>
     {% endfor %}

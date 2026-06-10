@@ -3,7 +3,7 @@
 {% load characters_extras %}
 {% load i18n %}
 {% load portal_extras %}
-<div class="list-group mb-3">
+<div class="list-group atmospheric-navigation mb-3">
   {% for page in object.world.wikipage_set.get_top_level %}
     <a
       class="{% if object|is_subpage_of:page %}active{% endif %} navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
@@ -18,7 +18,7 @@
 </div>
 
 {% if may_edit %}
-  <div class="list-group mb-3">
+  <div class="list-group atmospheric-navigation mb-3">
     {% if not object.is_world %}
       <a class="list-group-item py-3"
          href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}"
@@ -55,11 +55,11 @@
         data-sidebar-right-title="{% trans 'Sort Subpages' %}"
         class="list-group-item py-3">
         <i class="fa fa-sort"></i> {% trans 'Sort Subpages' %}
-        {% if user.is_superuser %}
-          <a class="list-group-item py-3" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
-            class="fas fa-lock"></i> {% trans 'Admin' %}</a>
-        {% endif %}
       </a>
+      {% if user.is_superuser %}
+        <a class="list-group-item py-3" href="{% url 'admin:worlds_wikipage_change' object.id %}"><i
+          class="fas fa-lock"></i> {% trans 'Admin' %}</a>
+      {% endif %}
     {% endif %}
   </div>
 {% endif %}

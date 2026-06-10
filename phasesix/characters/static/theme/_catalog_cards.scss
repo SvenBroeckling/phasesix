@@ -1,0 +1,183 @@
+/* Atmospheric material and character-option cards */
+
+.catalog-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.28);
+  background:
+    linear-gradient(145deg, rgba(var(--bs-primary-rgb), 0.06), transparent 45%),
+    var(--bs-tertiary-bg);
+  box-shadow: inset 0 0 0 1px rgba(var(--bs-white-rgb), 0.025), 0 0.75rem 2rem rgba(var(--bs-black-rgb), 0.22);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    width: 2.25rem;
+    height: 2.25rem;
+    pointer-events: none;
+  }
+
+  &::before {
+    top: 0.4rem;
+    left: 0.4rem;
+    border-top: 1px solid rgba(var(--bs-primary-rgb), 0.6);
+    border-left: 1px solid rgba(var(--bs-primary-rgb), 0.6);
+  }
+
+  &::after {
+    right: 0.4rem;
+    bottom: 0.4rem;
+    border-right: 1px solid rgba(var(--bs-primary-rgb), 0.6);
+    border-bottom: 1px solid rgba(var(--bs-primary-rgb), 0.6);
+  }
+
+  &:hover {
+    border-color: rgba(var(--bs-primary-rgb), 0.72);
+    box-shadow: inset 0 0 0 1px rgba(var(--bs-white-rgb), 0.04), 0 1rem 2.5rem rgba(var(--bs-black-rgb), 0.36);
+    transform: translateY(-0.2rem);
+  }
+}
+
+.catalog-card-visual {
+  position: relative;
+  display: flex;
+  min-height: 11rem;
+  align-items: end;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.7) contrast(1.1);
+    transition: filter 250ms ease, transform 350ms ease;
+  }
+
+  .catalog-card:hover & img {
+    filter: saturate(0.95) contrast(1.14);
+    transform: scale(1.035);
+  }
+}
+
+.catalog-card-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(var(--bs-black-rgb), 0.05) 20%, rgba(var(--bs-black-rgb), 0.95) 100%),
+    linear-gradient(90deg, rgba(var(--bs-primary-rgb), 0.11), transparent 55%);
+}
+
+.catalog-card-sigil {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(var(--bs-primary-rgb), 0.4);
+  font-size: 5.5rem;
+  background:
+    radial-gradient(circle, rgba(var(--bs-primary-rgb), 0.13), transparent 55%),
+    linear-gradient(135deg, var(--bs-tertiary-bg), var(--bs-body-bg));
+}
+
+.catalog-card-heading {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 3.5rem 1.25rem 1rem;
+
+  h3 {
+    margin: 0.3rem 0 0;
+    color: var(--bs-white);
+    font-size: 1.65rem;
+    text-shadow: 0 2px 8px rgba(var(--bs-black-rgb), 1);
+  }
+}
+
+.catalog-card-type {
+  color: rgba(var(--bs-white-rgb), 0.68);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.catalog-card-body {
+  position: relative;
+  padding: 1.25rem;
+}
+
+.catalog-card-description {
+  color: var(--bs-secondary-color);
+
+  p {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+.catalog-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(var(--bs-primary-rgb), 0.16);
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), 0.16);
+
+  > span {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    padding: 0.3rem 0.55rem;
+    color: var(--bs-secondary-color);
+    font-size: 0.75rem;
+    background: rgba(var(--bs-primary-rgb), 0.08);
+    border: 1px solid rgba(var(--bs-primary-rgb), 0.14);
+  }
+
+  i {
+    color: rgba(var(--bs-primary-rgb), 0.82);
+  }
+}
+
+.catalog-card-options {
+  margin-top: 1rem;
+
+  .btn {
+    position: relative;
+    z-index: 3;
+  }
+}
+
+.catalog-card-quote {
+  margin: 1rem 0 0;
+  padding-left: 0.85rem;
+  color: var(--bs-secondary-color);
+  border-left: 1px solid rgba(var(--bs-primary-rgb), 0.45);
+}
+
+.catalog-card-action {
+  position: relative;
+  z-index: 3;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.catalog-card-admin {
+  position: absolute;
+  z-index: 4;
+  left: 0.65rem;
+  bottom: 0.35rem;
+  font-size: 0.65rem;
+}
+
+@media (max-width: 767px) {
+  .catalog-card-visual {
+    min-height: 10rem;
+  }
+}

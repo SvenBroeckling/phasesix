@@ -1,25 +1,32 @@
 {% load portal_extras %}
 {% load i18n characters_extras rules_extras %}
-<div class="card mb-3 foe-card">
-  <div class="card-header bg-dark text-white">
-    <h4 class="mb-0 d-flex justify-content-between align-items-center">
-      <span>{{ foe }}</span>
-      <span class="badge bg-secondary">{{ foe.type }}</span>
-    </h4>
+<article class="foe-card mb-3">
+  <div class="foe-card-visual">
+    {% if foe.image %}
+      <img src="{% image_url foe "800x450" crop="center" %}" alt="{{ foe.name }}">
+    {% else %}
+      <span class="foe-card-sigil" aria-hidden="true">
+        <i class="gi gi-lorc-monster-grasp"></i>
+      </span>
+    {% endif %}
+    <span class="foe-card-shade"></span>
+    <div class="foe-card-heading">
+      <span class="foe-card-type">{{ foe.type }}</span>
+      <h3>{{ foe }}</h3>
+    </div>
   </div>
 
-  {% if foe.image %}
-    <img src="{% image_url foe "400x400" crop="center" %}" alt="{{ foe.name }}" class="card-img-top">
-  {% else %}
-    <div class="card-img-placeholder bg-light d-flex justify-content-center align-items-center" style="height: 200px;">
-      <i class="fas fa-question-circle fa-3x text-muted"></i>
-    </div>
-  {% endif %}
-
-  <div class="card-body position-relative">
+  <div class="foe-card-body position-relative">
     {% include "homebrew/_made_by_label.html" with creator=foe.created_by extra_class="mb-2" %}
     {% include "rules/_foe_stat_block.html" with show_description=True %}
     {% include "rules/_foe_actions_block.html" %}
+
+    {% if foe.wiki_page %}
+      <a class="foe-card-lore-link" href="{{ foe.wiki_page.get_absolute_url }}">
+        <span>{% trans "Discover" %}</span>
+        <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+      </a>
+    {% endif %}
 
     {% if character and add_button %}
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="foe" %}"
@@ -39,8 +46,7 @@
     {% endif %}
 
     {% if user.is_superuser %}
-      <a href="{% url 'admin:rules_foe_change' foe.id %}"
-         style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+      <a class="foe-card-admin" href="{% url 'admin:rules_foe_change' foe.id %}">admin</a>
     {% endif %}
   </div>
-</div>
+</article>

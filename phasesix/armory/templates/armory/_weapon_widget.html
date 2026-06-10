@@ -1,90 +1,89 @@
 {% load i18n characters_extras rules_extras thumbnail armory_extras %}
 
-<div class="card mb-3">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-12">
-        <h4 class="mb-0">{{ weapon }}</h4>
-        {% include "homebrew/_made_by_label.html" with creator=weapon.created_by extra_class="mb-2" %}
-        <span class="fs-5 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0"><i
-          class="fas fa-coins"></i> {{ weapon.price|floatformat:0 }}</span>
-
-        {{ weapon.description|phasesix_markup }}
-
-        {% for kw in weapon.weaponkeyword_set.all %}
-          <span class="fw-bold {% if kw.keyword.is_rare %}text-primary{% endif %}">{{ kw.keyword.name }}</span>
-          {% color_value_span kw.value 6 %}
-          <i>({{ kw.keyword.description|replace_keyword_value:kw.value }})</i><br>
-        {% endfor %}
-
-        {% if weapon.attack_modes.exists %}
-          <br>
-          {% for fm in weapon.attack_modes.all %}
-            <button disabled class="btn btn-outline-primary mb-2 w-100">
-              {{ fm.name }}<br>
-            </button>
-          {% endfor %}
-        {% endif %}
-
-        {% if character and add_button %}
-          {% with currency_unit=character.common_currency_unit %}
-            <div class="dropdown float-end pt-3">
-              <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
-                {% trans 'Add' %}
-              </button>
-              <ul class="dropdown-menu">
-                <li class="dropdown-item">
-                  <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="weapon" %}"
-                        data-fetch-form="true"
-                        data-fetch-form-event-after="refresh-character-gear"
-                        class="px-3 py-1" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="object_id" value="{{ weapon.id }}">
-                    <input type="hidden" name="action" value="add">
-                    <button type="submit"
-                            class="dropdown-item"
-                            data-danger="{% trans 'Not possible' %}"
-                            data-success="{% trans 'Added' %}">
-                      {% trans 'Add' %}
-                    </button>
-                  </form>
-                </li>
-                <li class="dropdown-item">
-                  <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="weapon" %}"
-                        data-fetch-form="true"
-                        data-fetch-form-event-after="refresh-character-description"
-                        class="px-3 py-1" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="object_id" value="{{ weapon.id }}">
-                    <input type="hidden" name="action" value="buy">
-                    <button type="submit"
-                            class="dropdown-item"
-                            data-danger="{% trans 'Not possible' %}"
-                            data-success="{% trans 'Added' %}">
-                      {% trans 'Buy' %}
-                      <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
-                      {% color_value_span weapon.price 1000 invert=True %}
-                    </button>
-                  </form>
-                </li>
-              </ul>
-            </div>
-          {% endwith %}
-        {% else %}
-          {% if not world %}
-            {% for extension in weapon.extensions.all %}
-              <span class="mt-2 badge text-muted bg-primary-subtle" title="{{ extension }}">
-          <i class="m-1 {{ extension.fa_icon_class }}"></i></span>
-            {% endfor %}
-          {% endif %}
-        {% endif %}
-      </div>
+<article class="catalog-card mb-3">
+  <div class="catalog-card-visual">
+    {% if weapon.image %}
+      {% thumbnail weapon.image "800x450" crop="center" as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ weapon }}">
+      {% endthumbnail %}
+    {% else %}
+      <span class="catalog-card-sigil" aria-hidden="true"><i class="gi gi-delapouite-axe-sword"></i></span>
+    {% endif %}
+    <span class="catalog-card-shade"></span>
+    <div class="catalog-card-heading">
+      <span class="catalog-card-type">{{ weapon.type }}</span>
+      <h3>{{ weapon }}</h3>
     </div>
+  </div>
+
+  <div class="catalog-card-body">
+    {% include "homebrew/_made_by_label.html" with creator=weapon.created_by extra_class="mb-2" %}
+    <div class="catalog-card-description">{{ weapon.description|phasesix_markup }}</div>
+    <div class="catalog-card-meta">
+      <span><i class="fas fa-weight-hanging"></i>{{ weapon.weight|floatformat:-2 }}</span>
+      <span><i class="fas fa-coins"></i>{{ weapon.price|floatformat:0 }}</span>
+    </div>
+
+    {% for kw in weapon.weaponkeyword_set.all %}
+      <span class="fw-bold {% if kw.keyword.is_rare %}text-primary{% endif %}">{{ kw.keyword.name }}</span>
+      {% color_value_span kw.value 6 %}
+      <i>({{ kw.keyword.description|replace_keyword_value:kw.value }})</i><br>
+    {% endfor %}
+
+    {% if weapon.attack_modes.exists %}
+      <div class="catalog-card-options">
+        {% for fm in weapon.attack_modes.all %}
+          <button disabled class="btn btn-outline-primary mb-2 w-100">{{ fm.name }}</button>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if character and add_button %}
+      {% with currency_unit=character.common_currency_unit %}
+        <div class="dropdown catalog-card-action">
+          <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false" data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+            {% trans 'Add' %}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item">
+              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="weapon" %}"
+                    data-fetch-form="true" data-fetch-form-event-after="refresh-character-gear"
+                    class="px-3 py-1" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ weapon.id }}">
+                <input type="hidden" name="action" value="add">
+                <button type="submit" class="dropdown-item"
+                        data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                  {% trans 'Add' %}
+                </button>
+              </form>
+            </li>
+            <li class="dropdown-item">
+              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="weapon" %}"
+                    data-fetch-form="true" data-fetch-form-event-after="refresh-character-description"
+                    class="px-3 py-1" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ weapon.id }}">
+                <input type="hidden" name="action" value="buy">
+                <button type="submit" class="dropdown-item"
+                        data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+                  {% trans 'Buy' %} <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+                  {% color_value_span weapon.price 1000 invert=True %}
+                </button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      {% endwith %}
+    {% elif not world %}
+      {% for extension in weapon.extensions.all %}
+        <span class="mt-2 badge text-muted bg-primary-subtle" title="{{ extension }}"><i class="m-1 {{ extension.fa_icon_class }}"></i></span>
+      {% endfor %}
+    {% endif %}
+
     {% if user.is_superuser %}
-      <a href="{% url 'admin:armory_weapon_change' weapon.id %}"
-         style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+      <a class="catalog-card-admin" href="{% url 'admin:armory_weapon_change' weapon.id %}">admin</a>
     {% endif %}
   </div>
-</div>
+</article>

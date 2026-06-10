@@ -1,7 +1,7 @@
 {% load rules_extras %}
 {% load i18n characters_extras %}
 
-<ul class="nav nav-tabs justify-content-center" role="tablist">
+<ul class="nav nav-tabs atmospheric-tabs justify-content-center" role="tablist">
   {% for t in weapon_modification_types %}
     {% weaponmodification_type_valid_for_weapon t character_weapon.weapon as wmt %}
     {% if wmt %}

@@ -17,85 +17,113 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div class="row g-4 material-overview">
 
-    <div class="col-12 col-md-6 mb-4">
-      <a href="{% url "rules:foe_list" %}">
-        <div class="card p-4">
-          <div class="card-body d-flex align-items-center justify-content-center">
-            <i class="fs-1 me-2 gi-cathelineau-polar-bear"></i>
-            <span class="fs-2">{% trans "Foes" %}</span>
+    <div class="col-12 col-md-6">
+      <a href="{% url "rules:foe_list" %}" class="material-overview-link">
+        <article class="material-overview-card">
+          <div class="material-overview-sigil" aria-hidden="true">
+            <i class="gi-cathelineau-polar-bear"></i>
           </div>
-        </div>
+          <div class="material-overview-heading">
+            <span>{% trans "Bestiary" %}</span>
+            <h2>{% trans "Foes" %}</h2>
+          </div>
+          <i class="fas fa-long-arrow-alt-right material-overview-arrow" aria-hidden="true"></i>
+        </article>
       </a>
     </div>
 
-    <div class="col-12 col-md-6 mb-4">
-      <a href="{% url "rules:template_list" %}">
-        <div class="card p-4">
-          <div class="card-body d-flex align-items-center justify-content-center">
-            <i class="fs-1 me-2 gi-delapouite-book-cover"></i>
-            <span class="fs-2">{% trans "Templates" %}</span>
+    <div class="col-12 col-md-6">
+      <a href="{% url "rules:template_list" %}" class="material-overview-link">
+        <article class="material-overview-card">
+          <div class="material-overview-sigil" aria-hidden="true">
+            <i class="gi-delapouite-book-cover"></i>
           </div>
-        </div>
+          <div class="material-overview-heading">
+            <span>{% trans "Character options" %}</span>
+            <h2>{% trans "Templates" %}</h2>
+          </div>
+          <i class="fas fa-long-arrow-alt-right material-overview-arrow" aria-hidden="true"></i>
+        </article>
       </a>
     </div>
 
-    <div class="col-12 col-md-6 mb-4">
-      <a href="{% url "armory:item_list" %}">
-        <div class="card p-4">
-          <div class="card-body d-flex align-items-center justify-content-center">
-            <i class="fs-1 me-2 gi-delapouite-holy-hand-grenade"></i>
-            <span class="fs-2">{% trans "Items" %}</span>
+    <div class="col-12 col-md-6">
+      <a href="{% url "armory:item_list" %}" class="material-overview-link">
+        <article class="material-overview-card">
+          <div class="material-overview-sigil" aria-hidden="true">
+            <i class="gi-delapouite-holy-hand-grenade"></i>
           </div>
-        </div>
+          <div class="material-overview-heading">
+            <span>{% trans "Equipment" %}</span>
+            <h2>{% trans "Items" %}</h2>
+          </div>
+          <i class="fas fa-long-arrow-alt-right material-overview-arrow" aria-hidden="true"></i>
+        </article>
       </a>
     </div>
 
-    <div class="col-12 col-md-6 mb-4">
-      <a href="{% url "armory:weapon_list" %}">
-        <div class="card p-4">
-          <div class="card-body d-flex align-items-center justify-content-center">
-            <i class="fs-1 me-2 gi-delapouite-axe-sword"></i>
-            <span class="fs-2">{% trans "Weapons" %}</span>
+    <div class="col-12 col-md-6">
+      <a href="{% url "armory:weapon_list" %}" class="material-overview-link">
+        <article class="material-overview-card">
+          <div class="material-overview-sigil" aria-hidden="true">
+            <i class="gi-delapouite-axe-sword"></i>
           </div>
-        </div>
+          <div class="material-overview-heading">
+            <span>{% trans "Armory" %}</span>
+            <h2>{% trans "Weapons" %}</h2>
+          </div>
+          <i class="fas fa-long-arrow-alt-right material-overview-arrow" aria-hidden="true"></i>
+        </article>
       </a>
     </div>
 
-    <div class="col-12 col-md-6 mb-4">
-      <a href="{% url "armory:riot_gear_list" %}">
-        <div class="card p-4">
-          <div class="card-body d-flex align-items-center justify-content-center">
-            <i class="fs-1 me-2 gi-delapouite-viking-helmet"></i>
-            <span class="fs-2">{% trans "Armour" %}</span>
+    <div class="col-12 col-md-6">
+      <a href="{% url "armory:riot_gear_list" %}" class="material-overview-link">
+        <article class="material-overview-card">
+          <div class="material-overview-sigil" aria-hidden="true">
+            <i class="gi-delapouite-viking-helmet"></i>
           </div>
-        </div>
+          <div class="material-overview-heading">
+            <span>{% trans "Protection" %}</span>
+            <h2>{% trans "Armour" %}</h2>
+          </div>
+          <i class="fas fa-long-arrow-alt-right material-overview-arrow" aria-hidden="true"></i>
+        </article>
       </a>
     </div>
 
     {% if request.world|world_has_extension:"magic" %}
-      <div class="col-12 col-md-6 mb-4">
-        <a href="{% url "magic:spell_origin_list" %}">
-          <div class="card p-4">
-            <div class="card-body d-flex align-items-center justify-content-center">
-              <i class="fs-1 me-2 gi-lorc-fairy-wand"></i>
-              <span class="fs-2">{% trans "Spells" %}</span>
+      <div class="col-12 col-md-6">
+        <a href="{% url "magic:spell_origin_list" %}" class="material-overview-link">
+          <article class="material-overview-card">
+            <div class="material-overview-sigil" aria-hidden="true">
+              <i class="gi-lorc-fairy-wand"></i>
             </div>
-          </div>
+            <div class="material-overview-heading">
+              <span>{% trans "Arcana" %}</span>
+              <h2>{% trans "Spells" %}</h2>
+            </div>
+            <i class="fas fa-long-arrow-alt-right material-overview-arrow" aria-hidden="true"></i>
+          </article>
         </a>
       </div>
     {% endif %}
 
     {% if request.world|world_has_extension:"body_modifications" %}
-      <div class="col-12 mb-4">
-        <a href="{% url "body_modifications:body_modification_type_list" %}">
-          <div class="card p-4">
-            <div class="card-body d-flex align-items-center justify-content-center">
-              <i class="fs-1 me-2 gi gi-lorc-power-lightning"></i>
-              <span class="fs-2">{% trans "Body Modifications" %}</span>
+      <div class="col-12 col-md-6">
+        <a href="{% url "body_modifications:body_modification_type_list" %}" class="material-overview-link">
+          <article class="material-overview-card">
+            <div class="material-overview-sigil" aria-hidden="true">
+              <i class="gi gi-lorc-power-lightning"></i>
             </div>
-          </div>
+            <div class="material-overview-heading">
+              <span>{% trans "Augmentation" %}</span>
+              <h2>{% trans "Body Modifications" %}</h2>
+            </div>
+            <i class="fas fa-long-arrow-alt-right material-overview-arrow" aria-hidden="true"></i>
+          </article>
         </a>
       </div>
     {% endif %}

@@ -21,22 +21,59 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div class="row g-4 justify-content-center rulebook-download">
     {% for object in object_list %}
-      <div class="col-12 col-lg-4 mb-3 {% if object_list.count == 1 %}offset-lg-4{% endif %}">
-        <div class="card h-100">
-          <img class="card-img-top" src="{{ object.preview_image_de.url }}" alt="{{ object.book_title }}">
-          <div class="card-body">
-            {% if object.description %}
-              <p>
-                {{ object.description|phasesix_markup }}
-              </p>
+      <div class="col-12 col-md-6 col-xl-4">
+        <article class="card h-100 rulebook-volume">
+          <div class="rulebook-volume-visual">
+            {% if object.preview_image_de %}
+              <img src="{{ object.preview_image_de.url }}" alt="{{ object.book_title }}">
+            {% else %}
+              <div class="rulebook-volume-sigil" aria-hidden="true">
+                <i class="gi gi-delapouite-rule-book"></i>
+              </div>
             {% endif %}
-            <a download href="{{ object.pdf_online_de.url }}"
-               class="btn btn-primary mb-2 w-100">{% trans 'Download german' %}</a>
-            <a download href="{{ object.pdf_online_en.url }}"
-               class="btn btn-primary w-100">{% trans 'Download english' %}</a>
+            <div class="rulebook-volume-shade"></div>
+            <div class="rulebook-volume-heading">
+              <div class="rulebook-volume-world">{{ object.world }}</div>
+              <h2>{{ object.book_title }}</h2>
+              {% if object.book_claim %}
+                <div class="rulebook-volume-claim">{{ object.book_claim }}</div>
+              {% endif %}
+            </div>
           </div>
+
+          <div class="card-body rulebook-volume-body">
+            {% if object.description %}
+              <div class="rulebook-volume-description">
+                {{ object.description|phasesix_markup }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="rulebook-volume-actions">
+            {% if object.pdf_online_de %}
+              <a download href="{{ object.pdf_online_de.url }}"
+                 class="btn btn-primary">
+                <i class="fas fa-file-download me-2" aria-hidden="true"></i>
+                {% trans 'Download german' %}
+              </a>
+            {% endif %}
+            {% if object.pdf_online_en %}
+              <a download href="{{ object.pdf_online_en.url }}"
+                 class="btn btn-outline-primary">
+                <i class="fas fa-file-download me-2" aria-hidden="true"></i>
+                {% trans 'Download english' %}
+              </a>
+            {% endif %}
+          </div>
+        </article>
+      </div>
+    {% empty %}
+      <div class="col-12 col-lg-8">
+        <div class="rulebook-download-empty text-center">
+          <i class="gi gi-delapouite-rule-book" aria-hidden="true"></i>
+          <p class="mb-0">{% trans "No rulebook downloads are available." %}</p>
         </div>
       </div>
     {% endfor %}

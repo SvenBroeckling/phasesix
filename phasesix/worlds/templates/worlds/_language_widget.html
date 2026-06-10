@@ -1,7 +1,7 @@
 {% load humanize %}
 {% load i18n %}
 {% load rules_extras %}
-<div class="card mb-3">
+<div class="card mb-3 language-card">
   <div class="card-body">
     <h3 class="mb-0">{{ language }}</h3>
     {% include "homebrew/_made_by_label.html" with creator=language.created_by extra_class="mb-2" %}

@@ -3,7 +3,7 @@
 {% load characters_extras %}
 {% load i18n %}
 {% load portal_extras %}
-<div class="list-group mb-3">
+<div class="list-group atmospheric-navigation mb-3">
   {% for board in boards %}
     {% if user.is_staff or not board.is_staff_only %}
       <a class="{% if board == object %}active{% endif %} navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
@@ -19,7 +19,7 @@
 </div>
 
 {% if user.is_authenticated %}
-  <div class="list-group mb-2">
+  <div class="list-group atmospheric-navigation mb-2">
     <button data-bs-toggle="collapse"
             data-bs-target="#new-thread-collapse"
             class="btn btn-primary btn-sm w-100">{% trans 'Create Thread' %}</button>

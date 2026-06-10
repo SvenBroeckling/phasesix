@@ -14,10 +14,10 @@
 {% endblock %}
 
 {% block content %}
-  <div data-app="worlds">
-    <form action="" method="post" class="wiki_page_form">
+  <div data-app="worlds" class="world-editor">
+    <form action="" method="post" class="wiki_page_form world-editor-form">
       {% csrf_token %}
-      <div class="row mt-2">
+      <div class="row mt-2 world-editor-toolbar">
         <div class="col-12">
           {% if may_edit %}
             <button
@@ -68,7 +68,7 @@
 
       <div class="row mt-4">
         <div class="col-12">
-          <div class="nav nav-underline mb-2" id="myTab" role="tablist">
+          <div class="nav nav-underline atmospheric-tabs mb-2" id="myTab" role="tablist">
             <a class="nav-link active" id="text-de-tab" data-bs-toggle="tab" data-bs-target="#text-de"
                type="button" role="tab" aria-controls="text-de" aria-selected="true">{% trans 'German' %}
             </a>

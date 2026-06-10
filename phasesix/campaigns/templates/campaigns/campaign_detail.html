@@ -39,12 +39,12 @@
   <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
   <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
-  <div data-app="campaigns" class="row mt-4">
+  <div data-app="campaigns" class="row mt-4 campaign-sheet">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'campaigns/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    <div class="col-12 col-xl-9">
+    <div class="col-12 col-xl-9 campaign-sheet-content">
       <div class="tab-content">
         <div class="tab-pane fade active show" id="v-overview" role="tabpanel">
           {% if may_join %}

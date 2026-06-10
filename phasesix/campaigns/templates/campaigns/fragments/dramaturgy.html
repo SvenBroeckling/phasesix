@@ -3,10 +3,10 @@
 {% load thumbnail %}
 {% load portal_extras %}
 
-<div class="d-flex flex-column gap-4">
+<div class="d-flex flex-column gap-4 campaign-dramaturgy">
   {% if may_edit or object.character_visibility == "A" %}
     <div>
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 campaign-section-heading">
         <div>
           <div class="text-uppercase text-muted small">{% trans "Characters" %}</div>
           <div class="fw-semibold">{% trans "Campaign cast" %}</div>
@@ -27,7 +27,7 @@
                class="text-decoration-none"
                data-sidebar-right-title="{% trans 'NPC' %}"
                data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="npc" %}">
-              <div class="card border-0 shadow-sm h-100">
+              <div class="card border-0 shadow-sm h-100 campaign-cast-card">
                 <div class="ratio ratio-1x1 rounded-top overflow-hidden bg-body-secondary">
                   <div class="d-flex align-items-center justify-content-center w-100 h-100">
                     <i class="fas fa-users fs-1 text-muted"></i>
@@ -46,7 +46,7 @@
                class="text-decoration-none"
                data-sidebar-right-title="{{ c }}"
                data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=c.id sidebar_template="character" %}">
-              <div class="card border-0 shadow-sm h-100">
+              <div class="card border-0 shadow-sm h-100 campaign-cast-card">
                 <div class="ratio ratio-1x1 rounded-top overflow-hidden">
                   <img src="{% image_url c geometry="160x160" crop="center" %}" alt="{{ c }}"
                        class="w-100 h-100 object-fit-cover">
@@ -62,7 +62,7 @@
     </div>
   {% endif %}
 
-  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 campaign-section-heading">
     <div>
       <div class="text-uppercase text-muted small">{% trans "Dramaturgy" %}</div>
       <div class="fw-semibold">{% trans "Plot overview" %}</div>
@@ -82,7 +82,7 @@
 
               {% for plot in available_plots|slice:":2" %}
                 <div class="col-12 col-md-4">
-                  <div class="card shadow-sm overflow-hidden h-100">
+                  <div class="card shadow-sm overflow-hidden h-100 campaign-plot-card">
                     <div class="position-relative" style="height: 360px;">
                       {% if plot.image %}
                         {% thumbnail plot.image "600x900" crop="center" as im %}
@@ -118,7 +118,7 @@
 
               <div class="col-12 col-md-4">
                 <button type="button"
-                        class="card text-center border w-100 h-100"
+                        class="card text-center border w-100 h-100 campaign-plot-card campaign-empty-card"
                         style="height: 360px; border-style: dotted;"
                         data-modal-url="{% url 'plots:create_plot' %}?campaign_pk={{ object.id }}"
                         data-modal-title="{% trans 'Create plot' %}"
@@ -137,7 +137,7 @@
               <div class="row g-3 justify-content-start">
             {% endif %}
           <div class="col-12 col-md-4">
-            <div class="card shadow-sm overflow-hidden h-100">
+            <div class="card shadow-sm overflow-hidden h-100 campaign-plot-card">
               <div class="position-relative" style="height: 360px;">
                 {% if plot.image %}
                   {% thumbnail plot.image "600x900" crop="center" as im %}
@@ -203,7 +203,7 @@
     {% if may_edit %}
       {% include 'plots/includes/campaign_plot_editor.html' with plot=object.plot campaign=object may_edit=may_edit %}
     {% else %}
-      <div class="border rounded bg-light-subtle p-3">
+      <div class="border rounded bg-light-subtle p-3 campaign-lore-panel">
         <p class="mb-0">{{ object.plot.player_abstract|linebreaksbr }}</p>
       </div>
     {% endif %}

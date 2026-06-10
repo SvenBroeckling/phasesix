@@ -1,124 +1,105 @@
-{% load static %}
 {% load armory_extras %}
 {% load i18n characters_extras rules_extras thumbnail %}
 
-<div class="card mb-3">
-  <div class="card-img-top-wrapper">
+<article class="item-card mb-3">
+  <div class="item-card-visual">
     {% if item.image %}
-      {% thumbnail item.image "500" as thumb %}
-        <img src="{{ thumb.url }}" class="card-img-top" alt="{{ item }}">
+      {% thumbnail item.image "800x450" crop="center" as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ item }}">
       {% endthumbnail %}
     {% else %}
-      <img src="{% static "img/item_placeholder.png" %}" class="card-img-top" alt="{{ item }}">
+      <span class="item-card-sigil" aria-hidden="true">
+        <i class="gi gi-delapouite-holy-hand-grenade"></i>
+      </span>
     {% endif %}
-    <h2 class="card-img-overlay-title">{{ item }}</h2>
-    <div class="card-img-overlay-gradient"></div>
+    <span class="item-card-shade"></span>
+    <div class="item-card-heading">
+      <span class="item-card-type">{{ item.type }}</span>
+      <h3>{{ item }}</h3>
+    </div>
   </div>
 
-  <div class="card-img-overlay d-flex flex-row align-items-end">
-    <div class="me-3">
-      <p>{{ item.description|to_first_linebreak|phasesix_markup }}</p>
-      {% include "homebrew/_made_by_label.html" with creator=item.created_by text_class="text-white-50" link_class="link-light" extra_class="mt-2" %}
-      {% if not world and not character %}
-        <div class="mt-2 d-flex flex-wrap gap-1">
-          {% for extension in item.extensions.all %}
-            <span class="badge text-muted bg-primary-subtle" title="{{ extension }}">
-              <i class="m-1 {{ extension.fa_icon_class }}"></i>
-            </span>
-          {% endfor %}
+  <div class="item-card-body position-relative">
+    <div class="item-card-description">
+      {{ item.description|to_first_linebreak|phasesix_markup }}
+    </div>
+    {% include "homebrew/_made_by_label.html" with creator=item.created_by extra_class="mt-2" %}
+
+    <div class="item-card-meta">
+      <span title="{% trans 'Rarity' %}">
+        <i class="gi gi-lorc-gem-pendant" aria-hidden="true"></i>
+        {{ item.get_rarity_display }}
+      </span>
+      <span title="{% trans 'Weight' %}">
+        <i class="fas fa-weight-hanging" aria-hidden="true"></i>
+        {{ item.weight|floatformat:-2 }}
+      </span>
+      <span title="{% trans 'Price' %}">
+        <i class="fas fa-coins" aria-hidden="true"></i>
+        {{ item.price|floatformat:0 }}
+      </span>
+    </div>
+
+    {% if not world and not character %}
+      <div class="mt-3 d-flex flex-wrap gap-1">
+        {% for extension in item.extensions.all %}
+          <span class="badge text-muted bg-primary-subtle" title="{{ extension }}">
+            <i class="m-1 {{ extension.fa_icon_class }}"></i>
+          </span>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if character %}
+      {% with currency_unit=character.common_currency_unit %}
+        <div class="dropdown item-card-action">
+          <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
+            {% trans 'Add' %}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item">
+              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="item" %}"
+                    data-fetch-form="true"
+                    data-fetch-form-event-after="refresh-character-gear"
+                    class="px-3 py-1" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ item.id }}">
+                <input type="hidden" name="action" value="add">
+                <button type="submit"
+                        class="dropdown-item"
+                        data-danger="{% trans 'Not possible' %}"
+                        data-success="{% trans 'Added' %}">
+                  {% trans 'Add' %}
+                </button>
+              </form>
+            </li>
+            <li class="dropdown-item">
+              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="item" %}"
+                    data-fetch-form="true"
+                    data-fetch-form-event-after="refresh-character-gear"
+                    class="px-3 py-1" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="object_id" value="{{ item.id }}">
+                <input type="hidden" name="action" value="buy">
+                <button class="dropdown-item"
+                        type="submit"
+                        data-danger="{% trans 'Not possible' %}"
+                        data-success="{% trans 'Added' %}">
+                  {% trans 'Buy' %}
+                  <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+                  {{ item.price|floatformat:0 }}
+                </button>
+              </form>
+            </li>
+          </ul>
         </div>
-      {% endif %}
-    </div>
+      {% endwith %}
+    {% endif %}
 
-    <div class="w-100">
-      {% if character %}
-        {% with currency_unit=character.common_currency_unit %}
-          <div class="dropdown float-end">
-            <button class="btn btn-sm btn-primary dropdown-toggle m-2" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
-              {% trans 'Add' %}
-            </button>
-            <ul class="dropdown-menu">
-              <li class="dropdown-item">
-                <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="item" %}"
-                      data-fetch-form="true"
-                      data-fetch-form-event-after="refresh-character-gear"
-                      class="px-3 py-1" method="post">
-                  {% csrf_token %}
-                  <input type="hidden" name="object_id" value="{{ item.id }}">
-                  <input type="hidden" name="action" value="add">
-                  <button type="submit"
-                          class="dropdown-item"
-                          data-danger="{% trans 'Not possible' %}"
-                          data-success="{% trans 'Added' %}">
-                    {% trans 'Add' %}
-                  </button>
-                </form>
-              </li>
-              <li class="dropdown-item">
-                <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="item" %}"
-                      data-fetch-form="true"
-                      data-fetch-form-event-after="refresh-character-gear"
-                      class="px-3 py-1" method="post">
-                  {% csrf_token %}
-                  <input type="hidden" name="object_id" value="{{ item.id }}">
-                  <input type="hidden" name="action" value="buy">
-                  <button class="dropdown-item"
-                          type="submit"
-                          data-danger="{% trans 'Not possible' %}"
-                          data-success="{% trans 'Added' %}">
-                    {% trans 'Buy' %}
-                    <i class="ms-1 {{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
-                    {{ item.price|floatformat:0 }}
-                  </button>
-                </form>
-              </li>
-            </ul>
-          </div>
-        {% endwith %}
-      {% endif %}
-    </div>
+    {% if user.is_superuser %}
+      <a class="item-card-admin" href="{% url 'admin:armory_item_change' item.id %}">admin</a>
+    {% endif %}
   </div>
-
-  {% if user.is_superuser %}
-    <a href="{% url 'admin:armory_item_change' item.id %}"
-       style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
-  {% endif %}
-</div>
-
-<style>
-  .card-img-top-wrapper {
-    position: relative;
-  }
-
-  .card-img-top {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .card-img-overlay-gradient {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 70%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    pointer-events: none;
-  }
-
-  .card-img-overlay-title {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: white;
-    font-size: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .card-title {
-    padding: 10px;
-    font-size: 1.5rem;
-  }
-</style>
+</article>

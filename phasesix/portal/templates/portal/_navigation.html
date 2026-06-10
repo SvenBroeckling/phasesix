@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load portal_extras %}
-<div class="list-group mb-3">
+<div class="list-group atmospheric-navigation mb-3">
   <a
     class="active navigation-link pointer py-3 list-group-item list-group-item-action d-flex justify-content-between align-items-center"
     data-bs-toggle="tab"
@@ -8,7 +8,7 @@
     role="tab"
     aria-current="true">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-home"></i>
+      <i class="fas fa-user-shield"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Characters" %}</span>
     </div>
   </a>
@@ -20,7 +20,7 @@
     role="tab"
     aria-current="true">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-home"></i>
+      <i class="fas fa-users"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "NPC" %}</span>
     </div>
   </a>
@@ -32,7 +32,7 @@
     role="tab"
     aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-home"></i>
+      <i class="fas fa-dungeon"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "Campaigns" %}</span>
     </div>
   </a>
@@ -44,7 +44,7 @@
     role="tab"
     aria-current="false">
     <div class="d-flex justify-content-center align-items-center">
-      <i class="fas fa-home"></i>
+      <i class="fas fa-scroll"></i>
       <span class="ms-3 d-block d-lg-block">{% trans "More" %}</span>
     </div>
   </a>
@@ -63,5 +63,3 @@
 
   {% endif %}
 </div>
-
-

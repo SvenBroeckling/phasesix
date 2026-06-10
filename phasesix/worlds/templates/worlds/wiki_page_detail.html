@@ -21,12 +21,12 @@
 {% endblock %}
 
 {% block content %}
-  <div data-app="worlds" class="row">
+  <div data-app="worlds" class="row world-sheet">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'worlds/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    <div class="col-12 col-xl-9 wiki-page">
+    <div class="col-12 col-xl-9 wiki-page atmospheric-world-content">
       <nav aria-label="breadcrumbs" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb">
           {% breadcrumbs object as crumbs %}
@@ -39,10 +39,10 @@
         {% if img %}
           {% thumbnail img.image '1024' as im %}
             <a class="d-none d-lg-block toggle-lightbox" href="{{ img.image.url }}" data-gallery="{{ object.slug }}">
-              <img class="rounded img-fluid w-25 float-start me-3 mb-2" src="{{ im.url }}"
+              <img class="rounded img-fluid w-25 float-start me-3 mb-2 world-article-image" src="{{ im.url }}"
                    alt="{{ object }}"/>
             </a>
-            <img class="d-lg-none rounded img-fluid me-3 mb-2" src="{{ im.url }}"
+            <img class="d-lg-none rounded img-fluid me-3 mb-2 world-article-image" src="{{ im.url }}"
                  alt="{{ object }}"/>
           {% endthumbnail %}
         {% endif %}
@@ -56,7 +56,7 @@
                     data-bs-target="#game-values-collapse"
                     class="btn btn-outline-primary w-100 my-2">{% trans "Game Values" %}</button>
             <div class="collapse" id="game-values-collapse">
-              <div class="card">
+              <div class="card world-lore-panel">
                 <div class="card-body">
                   {% include 'rules/_foe_stat_block.html' with foe=object.foe show_description=False %}
                   {% include 'rules/_foe_actions_block.html' with foe=object.foe %}
@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class="d-none d-lg-block float-end ms-3 mb-2" style="width: 35%;">
-            <div class="card">
+            <div class="card world-lore-panel">
               <div class="card-body">
                 {% include 'rules/_foe_stat_block.html' with foe=object.foe show_description=False %}
                 {% include 'rules/_foe_actions_block.html' with foe=object.foe %}
@@ -83,7 +83,7 @@
         {% for embedding in object.wikipageembedding_set.all %}
 
           {% if embedding.spell_origin %}
-            <h2 class="mt-5">{% trans "Spells" %}</h2>
+            <h2 class="mt-5 world-section-heading">{% trans "Spells" %}</h2>
             <div class="column-container column-layout-2 mt-4">
               {% for spell in embedding.spell_origin.basespell_set.all %}
                 {% basespell_widget spell %}
@@ -92,7 +92,7 @@
           {% endif %}
 
           {% if embedding.character %}
-            <h2 class="mt-5">{% trans "Character Sheet" %}</h2>
+            <h2 class="mt-5 world-section-heading">{% trans "Character Sheet" %}</h2>
             <div class="column-container column-layout-2 mt-4">
               <div>
                 {% include 'characters/_character_list_widget.html' with character=embedding.character %}
@@ -103,29 +103,7 @@
         {% endfor %}
       {% endif %}
 
-      <div class="column-container column-layout-2 mt-4">
-        {% for page in object.wikipage_set.all %}
-          <div class="card pointer mb-3">
-            <a href="{% url 'world:wiki_page' world_slug=object.world.slug slug=page.slug %}">
-              <div class="card-header no-decoration no-link-colors">
-                {{ page }}
-              </div>
-              {% if page.image %}
-                {% thumbnail page.image "1024" as im %}
-                  <img src="{{ im.url }}" class="card-img-top" alt="{{ page }}">
-                {% endthumbnail %}
-              {% endif %}
-            </a>
-            <div class="card-body">
-              {{ page.text|to_first_linebreak|phasesix_markup|replace_wiki_tags:page.world }}
-            </div>
-            {% if user.is_superuser %}
-              <a href="{% url 'admin:worlds_wikipage_change' page.id %}"
-                 style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
-            {% endif %}
-          </div>
-        {% endfor %}
-      </div>
+      {% include "worlds/_wiki_page_index.html" with pages=object.wikipage_set.all %}
     </div>
   </div>
 

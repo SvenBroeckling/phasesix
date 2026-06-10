@@ -1,5 +1,6 @@
 {% load i18n characters_extras rules_extras thumbnail static %}
 
+<div class="world-sidebar">
 <div class="row">
   <div class="col-12">
     <div class="input-group">
@@ -22,4 +23,5 @@
   <div class="col-12 wiki-links-search-target">
     {% include 'worlds/sidebar/_search_links.html' with pages=object.world.wikipage_set.all %}
   </div>
+</div>
 </div>

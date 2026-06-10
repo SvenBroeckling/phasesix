@@ -1,0 +1,49 @@
+{% load i18n rules_extras thumbnail %}
+
+{% if pages %}
+  <section class="wiki-page-index mt-5" aria-labelledby="wiki-page-index-title">
+    <div class="wiki-page-index-heading">
+      <span></span>
+      <h2 id="wiki-page-index-title">{% trans "Discover" %}</h2>
+      <span></span>
+    </div>
+
+    <div class="wiki-page-index-grid">
+      {% for page in pages %}
+        <article class="wiki-page-index-card">
+          <a class="wiki-page-index-visual"
+             href="{% url 'world:wiki_page' world_slug=page.world.slug slug=page.slug %}"
+             aria-label="{{ page }}">
+            {% if page.image %}
+              {% thumbnail page.image "800x450" crop="center" as im %}
+                <img src="{{ im.url }}" alt="{{ page }}">
+              {% endthumbnail %}
+            {% else %}
+              <span class="wiki-page-index-sigil" aria-hidden="true">
+                <i class="gi gi-delapouite-book-cover"></i>
+              </span>
+            {% endif %}
+            <span class="wiki-page-index-shade"></span>
+            <h3>{{ page }}</h3>
+          </a>
+
+          <div class="wiki-page-index-excerpt">
+            {{ page.text|to_first_linebreak|phasesix_markup|replace_wiki_tags:page.world }}
+          </div>
+
+          <a class="wiki-page-index-link"
+             href="{% url 'world:wiki_page' world_slug=page.world.slug slug=page.slug %}"
+             aria-label="{% trans 'Discover' %}: {{ page }}">
+            <span aria-hidden="true"></span>
+            <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
+          </a>
+
+          {% if user.is_superuser %}
+            <a class="wiki-page-index-admin"
+               href="{% url 'admin:worlds_wikipage_change' page.id %}">admin</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

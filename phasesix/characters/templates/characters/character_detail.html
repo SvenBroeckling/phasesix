@@ -46,12 +46,12 @@
   <div class="d-none" id="room-url">{% ws_room_url object.ws_room_name %}</div>
   <audio class="d-none" id="room-audio" src="{% static 'roll.mp3' %}"></audio>
 
-  <div data-app="characters" class="row">
+  <div data-app="characters" class="row character-sheet">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include 'characters/_navigation.html' with object=object may_edit=may_edit %}
     </div>
 
-    <div class="col-12 col-xl-9">
+    <div class="col-12 col-xl-9 character-sheet-content">
 
       {% if not object.created_by %}
         <div class="alert alert-danger" role="alert">

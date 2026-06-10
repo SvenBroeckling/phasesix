@@ -27,7 +27,7 @@
   </div>
 
   <div id="details-{{ element.id }}" class="collapse">
-    <div class="rounded p-3 my-2 small border">
+    <div class="rounded p-3 my-2 small border plot-element-details">
 
       {% if element.player_summary and may_edit %}
         <div class="mb-3">
@@ -49,7 +49,7 @@
           <div class="d-flex flex-wrap gap-2">
             {% for handout in element.handouts.all %}
               <button type="button"
-                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
                       data-sidebar-right-title="{{ handout.name }}"
                       data-sidebar-right-url="{% url 'campaigns:xhr_handout_sidebar' campaign_pk=object.id pk=handout.id %}">
                 {% if handout.image %}
@@ -78,7 +78,7 @@
           <div class="d-flex flex-wrap gap-2">
             {% for character in element.npc.all %}
               <button type="button"
-                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
                       data-sidebar-right-title="{{ character.name }}"
                       data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=character.id sidebar_template='character' %}">
                 {% if character.image %}
@@ -107,7 +107,7 @@
           <div class="d-flex flex-wrap gap-2">
             {% for foe in element.foes.all %}
               <button type="button"
-                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
                       data-sidebar-right-title="{{ foe.name }}"
                       data-sidebar-right-url="{% url 'campaigns:xhr_plot_foe_sidebar' campaign_pk=object.id pk=foe.id %}">
                 <div style="width: 140px;">
@@ -129,7 +129,7 @@
           <div class="d-flex flex-wrap gap-2">
             {% for loc in element.locations.all %}
               <button type="button"
-                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center"
+                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
                       data-sidebar-right-title="{{ loc.name }}"
                       data-sidebar-right-url="{% url 'campaigns:xhr_location_sidebar' campaign_pk=object.id pk=loc.id %}">
                 {% if loc.image %}

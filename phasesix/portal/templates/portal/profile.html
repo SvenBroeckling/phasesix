@@ -33,12 +33,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
+  <div class="row profile-sheet">
     <div class="col-12 col-xl-3 d-none d-xl-block">
       {% include "portal/_navigation.html" with object=object %}
     </div>
 
-    <div class="col-12 col-xl-9">
+    <div class="col-12 col-xl-9 profile-sheet-content">
       <div class="tab-content">
 
         <div class="tab-pane fade show active" id="characters-tab-pane" role="tabpanel" tabindex="0">
@@ -48,7 +48,7 @@
               <div class="col-12 col-sm-6 col-md-4 mb-3">
                 {% create_character_url as create_url %}
                 <a href="{{ create_url }}">
-                  <div class="card d-flex justify-content-center align-items-center mb-2 h-100">
+                  <div class="card d-flex justify-content-center align-items-center mb-2 h-100 profile-create-card">
                     <i class="fas fa-plus fa-2x"></i>
                     <span class="invite-text">{% trans "Create Character" %}</span>
                   </div>
@@ -81,7 +81,7 @@
               {% create_campaign_url as create_url %}
               <div class="col-12 col-md-6 mb-3">
                 <a href="{{ create_url }}">
-                  <div class="card d-flex justify-content-center align-items-center mb-2 h-100">
+                  <div class="card d-flex justify-content-center align-items-center mb-2 h-100 profile-create-card">
                     <i class="fas fa-plus fa-2x"></i>
                     <span class="invite-text">{% trans "Create Campaign" %}</span>
                   </div>
@@ -98,8 +98,8 @@
         </div>
 
         <div class="tab-pane fade" id="settings-tab-pane" role="tabpanel" tabindex="0">
-          <div class="row">
-            <div class="card mb-4">
+          <div class="row profile-settings">
+            <div class="card mb-4 profile-settings-card">
               <div class="card-body py-4">
                 <h3 class="mb-2">{% trans "Profile Settings" %}</h3>
                 <form method="post" enctype="multipart/form-data">
@@ -117,11 +117,11 @@
         </div>
 
         <div class="tab-pane fade" id="more-tab-pane" role="tabpanel" tabindex="0">
-          <div class="row">
+          <div class="row profile-more">
 
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2025 %}" class="no-decoration">
-                <div class="position-relative profile-cta">
+                <div class="position-relative profile-cta atmospheric-profile-cta">
                   <div class="ratio ratio-16x9">
                     <img src="{% static "img/wrapup_2025.png" %}" alt="wrapup"
                          class="rounded object-fit-cover">
@@ -133,7 +133,7 @@
 
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2024 %}" class="no-decoration">
-                <div class="position-relative profile-cta">
+                <div class="position-relative profile-cta atmospheric-profile-cta">
                   <div class="ratio ratio-16x9">
                     <img src="{% static "img/profile_cta_images/profile_wrapup_2024.png" %}" alt="wrapup"
                          class="rounded object-fit-cover">
@@ -145,7 +145,7 @@
 
             <div class="col-12 col-md-6 mb-3">
               <a href="{% url "portal:wrapup" pk=object.user.id year=2023 %}" class="no-decoration">
-                <div class="position-relative profile-cta">
+                <div class="position-relative profile-cta atmospheric-profile-cta">
                   <div class="ratio ratio-16x9">
                     <img src="{% static "img/profile_cta_images/profile_wrapup_2023.png" %}" alt="wrapup"
                          class="rounded object-fit-cover">

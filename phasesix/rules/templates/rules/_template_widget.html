@@ -1,19 +1,40 @@
 {% load i18n characters_extras rules_extras %}
-<div class="card mb-3 template
+{% with is_magic=template.is_magic_template allows_priest=template.has_allows_priest_action %}
+<article class="catalog-card mb-3 template
   {% if template.is_mastery %}border-danger{% endif %}
-  {% if template.is_magic_template %}border-warning{% endif %}
-  {% if template.has_allows_priest_action %}border-success{% endif %}">
-  <div class="card-body position-relative">
-    <h4 class="mb-0">{{ template }}</h4>
+  {% if is_magic %}border-warning{% endif %}
+  {% if allows_priest %}border-success{% endif %}">
+  <div class="catalog-card-visual">
+    <span class="catalog-card-sigil" aria-hidden="true">
+      {% if is_magic %}
+        <i class="gi gi-lorc-magic-swirl"></i>
+      {% elif template.is_mastery %}
+        <i class="gi gi-lorc-crossed-swords"></i>
+      {% else %}
+        <i class="gi gi-delapouite-book-cover"></i>
+      {% endif %}
+    </span>
+    <span class="catalog-card-shade"></span>
+    <div class="catalog-card-heading">
+      <span class="catalog-card-type">{{ template.category }}</span>
+      <h3>{{ template }}</h3>
+    </div>
+  </div>
+
+  <div class="catalog-card-body">
     {% include "homebrew/_made_by_label.html" with creator=template.created_by extra_class="mb-2" %}
-    <span
-      class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ template.cost }}</span>
 
     {% if template.rules %}
-      <p>{{ template.rules|phasesix_markup }}</p>
+      <div class="catalog-card-description">{{ template.rules|phasesix_markup }}</div>
     {% endif %}
 
-    {% if template.has_allows_priest_action %}
+    <div class="catalog-card-meta">
+      <span title="{% trans 'cost' %}"><i class="fas fa-star"></i>{{ template.cost }}</span>
+      {% if template.is_mastery %}<span><i class="gi gi-lorc-crossed-swords"></i>{% trans "is mastery" %}</span>{% endif %}
+      {% if is_magic %}<span><i class="gi gi-lorc-fairy-wand"></i>{% trans "Magic" %}</span>{% endif %}
+    </div>
+
+    {% if allows_priest %}
       <p class="text-success">
         {% trans "Allows to perform the acts of a priest." %}
       </p>
@@ -22,7 +43,7 @@
     {% modifier_widget template.templatemodifier_set.all %}
 
     {% if template.quote %}
-      <p class="text-muted pt-3"><i>
+      <p class="catalog-card-quote"><i>
         {{ template.quote }}{% if template.quote_author %}<br>- {{ template.quote_author }}{% endif %}</i></p>
     {% endif %}
 
@@ -37,12 +58,12 @@
       <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type="template" %}"
             data-fetch-form="true"
             data-fetch-form-event-after="refresh-fragments"
-            class="float-end" method="post">
+            class="catalog-card-action" method="post">
         {% csrf_token %}
         <input type="hidden" name="object_id" value="{{ template.id }}">
         <input type="hidden" name="action" value="add">
         <button type="submit"
-                class="btn btn-sm btn-primary m-2"
+                class="btn btn-sm btn-primary"
                 {% if template.cost > character.reputation_available %}disabled{% endif %}
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}">
@@ -52,8 +73,8 @@
     {% endif %}
 
     {% if user.is_superuser %}
-      <a href="{% url 'admin:rules_template_change' template.id %}"
-         style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+      <a class="catalog-card-admin" href="{% url 'admin:rules_template_change' template.id %}">admin</a>
     {% endif %}
   </div>
-</div>
+</article>
+{% endwith %}

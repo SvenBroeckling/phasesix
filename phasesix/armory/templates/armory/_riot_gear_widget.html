@@ -1,17 +1,42 @@
 {% load armory_extras %}
 {% load i18n characters_extras rules_extras thumbnail %}
 
-<div class="card mb-3">
+<article class="catalog-card mb-3">
+  <div class="catalog-card-visual">
+    <span class="catalog-card-sigil" aria-hidden="true">
+      {% if riot_gear.type.is_shield %}
+        <i class="gi gi-lorc-shield-reflect"></i>
+      {% else %}
+        <i class="gi gi-delapouite-viking-helmet"></i>
+      {% endif %}
+    </span>
+    <span class="catalog-card-shade"></span>
+    <div class="catalog-card-heading">
+      <span class="catalog-card-type">{{ riot_gear.type }}</span>
+      <h3>{{ riot_gear }}</h3>
+    </div>
+  </div>
 
-  <div class="card-body">
-    <h4 class="mb-0">{{ riot_gear }}</h4>
+  <div class="catalog-card-body">
     {% include "homebrew/_made_by_label.html" with creator=riot_gear.created_by extra_class="mb-2" %}
-    <span class="fs-5 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0"><i
-      class="fas fa-coins"></i> {{ riot_gear.price|floatformat:0 }}</span>
+    <div class="catalog-card-description">{{ riot_gear.description|phasesix_markup }}</div>
 
-    <p>
-      {{ riot_gear.description|phasesix_markup }}
-    </p>
+    <div class="catalog-card-meta">
+      <span title="{% trans 'Encumbrance' %}">
+        <i class="fas fa-weight"></i>{{ riot_gear.encumbrance }}
+      </span>
+      <span title="{% trans 'Weight' %}">
+        <i class="fas fa-weight-hanging"></i>{{ riot_gear.weight|floatformat:-2 }}
+      </span>
+      <span title="{% trans 'Price' %}">
+        <i class="fas fa-coins"></i>{{ riot_gear.price|floatformat:0 }}
+      </span>
+      {% if riot_gear.type.is_shield %}
+        <span title="{% trans 'Cover' %}">
+          <i class="fas fa-shield-alt"></i>{{ riot_gear.shield_cover }}+
+        </span>
+      {% endif %}
+    </div>
 
     {% if riot_gear.riotgearmodifier_set.exists %}
       <div class="mb-3">
@@ -19,23 +44,15 @@
       </div>
     {% endif %}
 
-    <div class="mb-3">
-      {% trans 'Encumbrance' %}: {% color_value_span riot_gear.encumbrance 5 invert=True %}<br>
-    </div>
-
-    {% if riot_gear.type.is_shield %}
-      <i class="fas fa-shield-alt fa-fw"></i> {% trans 'Cover' %}:
-      {% color_value_span riot_gear.shield_cover 6 invert=True %}+<br>
-    {% else %}
+    {% if not riot_gear.type.is_shield %}
       <span class="w-100 fs-3">
         {% riot_gear_protection_display riot_gear %}
       </span>
-      <br>
     {% endif %}
 
     {% if character %}
       {% with currency_unit=character.common_currency_unit %}
-        <div class="dropdown float-end">
+        <div class="dropdown catalog-card-action">
           <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                   aria-expanded="false"
                   data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Added' %}">
@@ -89,8 +106,7 @@
     {% endif %}
 
     {% if user.is_superuser %}
-      <a href="{% url 'admin:armory_riotgear_change' riot_gear.id %}"
-         style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+      <a class="catalog-card-admin" href="{% url 'admin:armory_riotgear_change' riot_gear.id %}">admin</a>
     {% endif %}
   </div>
-</div>
+</article>

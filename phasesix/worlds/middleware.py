@@ -7,6 +7,7 @@ class WorldFromDomainNameMiddleware:
 
     @staticmethod
     def _get_world(request):
+        print(request.headers['host'])
         try:
             return World.objects.get(
                 dns_domain_name=request.headers["x-forwarded-host"]
@@ -19,4 +20,5 @@ class WorldFromDomainNameMiddleware:
 
     def __call__(self, request):
         request.world = self._get_world(request)
+        print(request.world)
         return self.get_response(request)

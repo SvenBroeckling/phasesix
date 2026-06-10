@@ -1,61 +1,59 @@
-{% load i18n characters_extras rules_extras %}
-<div class="card spell-selection-card mb-3">
+{% load i18n characters_extras rules_extras thumbnail %}
+<article class="catalog-card spell-selection-card mb-3">
 
   {% if not character %}
     <a class="stretched-link" href="{% url 'magic:basespell_detail' pk=basespell.id %}"></a>
   {% endif %}
 
-  <div class="card-body position-relative">
-    <h4 class="mb-0">{{ basespell }}</h4>
-    {% include "homebrew/_made_by_label.html" with creator=basespell.created_by extra_class="mb-2" %}
-    <span
-      class="fs-4 position-absolute badge bg-primary-subtle rounded mt-2 me-2 top-0 end-0">{{ basespell.spell_point_cost }}</span>
-    <small class="text-muted">{{ basespell.variant }} - {{ basespell.type }}</small>
-
-    {% if basespell.is_ritual %}
-      <span class="text-muted text-center">{% trans 'Ritual' %}</span>
+  <div class="catalog-card-visual">
+    {% if basespell.origin.image %}
+      {% thumbnail basespell.origin.image "800x450" crop="center" as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ basespell.origin }}">
+      {% endthumbnail %}
+    {% else %}
+      <span class="catalog-card-sigil" aria-hidden="true"><i class="gi gi-lorc-magic-swirl"></i></span>
     {% endif %}
+    <span class="catalog-card-shade"></span>
+    <div class="catalog-card-heading">
+      <span class="catalog-card-type">{{ basespell.origin }} - {{ basespell.variant }}</span>
+      <h3>{{ basespell }}</h3>
+    </div>
+  </div>
 
-    <p>
-      {{ basespell.rules|phasesix_markup }}
-    </p>
-
-    <i class="fas fa-book-open fa-fw"></i> {% trans 'Origin' %}: {{ basespell.origin }}<br>
-    <i
-      class="fas fa-dice-five fa-fw"></i> {% trans 'Spell Casting' %}: {{ basespell.type.reference_attribute.name }}<br>
-    <i class="gi-lorc-fairy-wand"></i> {% trans 'Arcana' %}:
-    {% for a in basespell.arcana_cost|to_range %}<i class="gi-lorc-fairy-wand text-warning"></i>{% endfor %}<br>
-    <i class="fas fa-arrows-alt-h fa-fw"></i> {% trans 'Range' %}: {% color_value_span basespell.range 4 %}<br>
-    <i class="fas fa-circle fa-fw"></i> {% trans 'Shape' %}: {{ basespell.shape|default:"-" }}<br>
-    <i class="fas fa-hourglass fa-fw"></i> {% trans 'Actions' %}: {% color_value_span basespell.actions 3 invert=True %}<br>
+  <div class="catalog-card-body">
+    {% include "homebrew/_made_by_label.html" with creator=basespell.created_by extra_class="mb-2" %}
+    <div class="catalog-card-description">{{ basespell.rules|phasesix_markup }}</div>
 
     {% trans "Instant" as t_duration %}
-    <i class="fas fa-hourglass fa-fw"></i> {% trans 'Duration' %}: {{ basespell.duration|default:t_duration }}
-    {% if basespell.duration %}{{ basespell.get_duration_unit_display }}{% endif %}
-    {% if basespell.needs_concentration %}
-      <small><i>({% trans "Needs concentration" %})</i></small>{% endif %}<br>
-
-    <div class="w-100">
-      {% if character %}
-        <form action="{% url "characters:xhr_character_objects" pk=character.id object_type="spell" %}"
-              data-fetch-form="true"
-              data-fetch-form-event-after="refresh-character-magic"
-              class="float-end" method="post">
-          {% csrf_token %}
-          <input type="hidden" name="object_id" value="{{ basespell.id }}">
-          <button type="submit"
-                  class="btn btn-sm btn-primary m-2"
-                  data-danger="{% trans 'Not possible' %}"
-                  data-success="{% trans 'Learned' %}">
-            {% trans 'Learn' %}
-          </button>
-        </form>
-      {% endif %}
+    <div class="catalog-card-meta">
+      <span title="{% trans 'Spell Casting' %}"><i class="fas fa-dice-five"></i>{{ basespell.type.reference_attribute.name }}</span>
+      <span title="{% trans 'Arcana' %}"><i class="gi gi-lorc-fairy-wand"></i>{{ basespell.arcana_cost }}</span>
+      <span title="{% trans 'Range' %}"><i class="fas fa-arrows-alt-h"></i>{{ basespell.range }}</span>
+      <span title="{% trans 'Actions' %}"><i class="fas fa-hourglass"></i>{{ basespell.actions }}</span>
+      <span title="{% trans 'Duration' %}">
+        <i class="far fa-clock"></i>{{ basespell.duration|default:t_duration }}
+        {% if basespell.duration %}{{ basespell.get_duration_unit_display }}{% endif %}
+      </span>
+      <span title="{% trans 'Spell Point Cost' %}"><i class="gi gi-delapouite-book-cover"></i>{{ basespell.spell_point_cost }}</span>
+      {% if basespell.is_ritual %}<span><i class="fas fa-book-open"></i>{% trans 'Ritual' %}</span>{% endif %}
+      {% if basespell.needs_concentration %}<span><i class="fas fa-eye"></i>{% trans "Needs concentration" %}</span>{% endif %}
     </div>
 
+    {% if character %}
+      <form action="{% url "characters:xhr_character_objects" pk=character.id object_type="spell" %}"
+            data-fetch-form="true" data-fetch-form-event-after="refresh-character-magic"
+            class="catalog-card-action" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="object_id" value="{{ basespell.id }}">
+        <button type="submit" class="btn btn-sm btn-primary"
+                data-danger="{% trans 'Not possible' %}" data-success="{% trans 'Learned' %}">
+          {% trans 'Learn' %}
+        </button>
+      </form>
+    {% endif %}
+
     {% if user.is_superuser %}
-      <a href="{% url 'admin:magic_basespell_change' basespell.id %}"
-         style="position: absolute; bottom: 2px; right: 2px; font-size: xx-small">admin</a>
+      <a class="catalog-card-admin" href="{% url 'admin:magic_basespell_change' basespell.id %}">admin</a>
     {% endif %}
   </div>
-</div>
+</article>

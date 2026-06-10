@@ -1,6 +1,6 @@
 {% load i18n characters_extras %}
 
-<ul class="nav nav-tabs justify-content-center" role="tablist">
+<ul class="nav nav-tabs atmospheric-tabs justify-content-center" role="tablist">
   {% for stc in spell_template_categories %}
     <li class="{% if forloop.first %}active{% endif %} nav-item">
       <a class="nav-link" href="#stc{{ stc.id }}" aria-controls="home" role="tab"

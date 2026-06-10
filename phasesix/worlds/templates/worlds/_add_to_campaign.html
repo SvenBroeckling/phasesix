@@ -1,7 +1,7 @@
 {% load campaign_extras %}
 {% load i18n %}
 {% if request.user.is_authenticated and request.user.campaign_set.exists and object.foe %}
-  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split mt-3 w-100"
+  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split mt-3 w-100 world-campaign-action"
           data-bs-toggle="dropdown" aria-expanded="false">
     <span class="visually-hidden">{% trans "Toggle Dropdown" %}</span>
     {% trans "Campaign" %}

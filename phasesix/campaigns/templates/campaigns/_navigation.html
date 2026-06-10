@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load portal_extras %}
-<div class="list-group mb-3">
+<div class="list-group atmospheric-navigation mb-3">
   <a
     class="py-3 navigation-link active pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
     data-bs-toggle="tab"
@@ -51,7 +51,7 @@
 </div>
 
 {% if may_edit %}
-  <div class="list-group mb-3">
+  <div class="list-group atmospheric-navigation mb-3">
     <div class="list-group-item py-3"
          data-sidebar-right-title="{{ object }}"
          data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}"

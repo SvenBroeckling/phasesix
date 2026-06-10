@@ -6,7 +6,7 @@
 {% load i18n %}
 {% load portal_extras %}
 
-<ul class="list-group mb-3">
+<ul class="list-group atmospheric-navigation mb-3">
   <li class="list-group-item">
     <i class="fas fa-fw fa-hourglass text-info" data-bs-toggle="popover" data-bs-trigger="hover"
        title="{% trans 'Actions' %}"
@@ -21,7 +21,7 @@
   </li>
 </ul>
 
-<div class="list-group mb-3">
+<div class="list-group atmospheric-navigation mb-3">
   <a
     class="active py-3 navigation-link pointer list-group-item list-group-item-action d-flex justify-content-between align-items-center"
     data-bs-toggle="tab"
@@ -181,7 +181,7 @@
   </a>
 </div>
 
-<div class="list-group mb-3">
+<div class="list-group atmospheric-navigation mb-3">
   <span class="list-group-item py-3"
         data-sidebar-right-title="{% trans 'Character' %}"
         data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="character" %}"

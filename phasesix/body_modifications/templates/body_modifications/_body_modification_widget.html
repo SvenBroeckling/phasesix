@@ -1,65 +1,92 @@
 {% load rules_extras %}
 {% load characters_extras %}
-{% load i18n armory_extras body_modification_extras %}
+{% load i18n armory_extras body_modification_extras thumbnail %}
 
-<div class="card mb-3 border-{% rarity_color_class body_modification.rarity %}">
-  <div class="card-body position-relative">
-    <h4 class="mb-0">{{ body_modification }}</h4>
-    <small class="text-muted">{{ body_modification.get_rarity_display }}</small>
+<article class="body-modification-card mb-3">
+  <div class="body-modification-card-visual">
+    {% if body_modification.image %}
+      {% thumbnail body_modification.image "800x450" crop="center" as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ body_modification }}">
+      {% endthumbnail %}
+    {% else %}
+      <span class="body-modification-card-sigil" aria-hidden="true">
+        <i class="gi gi-lorc-mechanical-arm"></i>
+      </span>
+    {% endif %}
+    <span class="body-modification-card-shade"></span>
+    <div class="body-modification-card-heading">
+      <span class="body-modification-card-type">
+        {{ body_modification.type }} · {{ body_modification.get_rarity_display }}
+      </span>
+      <h3>{{ body_modification }}</h3>
+    </div>
+  </div>
+
+  <div class="body-modification-card-body">
     {% include "homebrew/_made_by_label.html" with creator=body_modification.created_by extra_class="mb-2" %}
 
-    {% with currency_unit=character.common_currency_unit %}
-      <div class="mt-3">
-        <i class="{{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }} me-1"></i>
-        {{ body_modification.price }}
-      </div>
-    {% endwith %}
-
-    <div class="mt-1 d-flex align-items-center">
-      <i class="gi gi-lorc-power-lightning text-warning me-1"></i>
-      {% energy_display body_modification.energy_consumption_ma %}
+    <div class="body-modification-card-meta">
+      <span title="{% trans 'Price' %}">
+        {% if character %}
+          {% with currency_unit=character.common_currency_unit %}
+            <i class="{{ currency_unit.fa_icon_class }} {{ currency_unit.color_class }}"></i>
+          {% endwith %}
+        {% else %}
+          <i class="fas fa-coins"></i>
+        {% endif %}
+        {{ body_modification.price|floatformat:0 }}
+      </span>
+      <span title="{% trans 'Energy' %}">
+        <i class="gi gi-lorc-power-lightning text-warning"></i>
+        {% energy_display body_modification.energy_consumption_ma %}
+      </span>
+      <span title="{% trans 'Biostrain' %}">
+        <i class="gi gi-lorc-broken-heart text-danger"></i>
+        {% bio_strain_display body_modification.bio_strain %}
+      </span>
+      {% if body_modification.charges %}
+        <span title="{% trans 'Charges' %}">
+          <i class="gi gi-lorc-bolt-shield text-info"></i>
+          {{ body_modification.charges }}
+        </span>
+      {% endif %}
+      {% if body_modification.activation == "a" %}
+        <span title="{% trans 'Must be activated' %}">
+          <i class="gi gi-guard13007-play-button text-success"></i>
+          {% trans 'Active' %}
+        </span>
+      {% endif %}
     </div>
-
-    <div class="mt-1 d-flex align-items-center">
-      <i class="gi gi-lorc-broken-heart text-danger me-1"></i>
-      {% bio_strain_display body_modification.bio_strain %}
-    </div>
-
-    {% if body_modification.charges %}
-      <div class="mt-1 d-flex align-items-center">
-        <i class="gi gi-lorc-bolt-shield text-info me-1"></i>
-        {{ body_modification.charges }} {% trans 'charges' %}
-      </div>
-    {% endif %}
-
-    {% if body_modification.activation == "a" %}
-      <div class="mt-1 d-flex align-items-center">
-        <i class="gi gi-guard13007-play-button text-success me-1"></i>
-        {% trans 'Must be activated' %}
-      </div>
-    {% endif %}
 
     {% if body_modification.description %}
-      <p class="mt-2">
+      <div class="body-modification-card-description">
         {{ body_modification.description|phasesix_markup }}
-      </p>
+      </div>
     {% endif %}
 
     {% if body_modification.rules %}
-      <p class="mt-2">
+      <div class="body-modification-card-rules">
         {{ body_modification.rules|phasesix_markup }}
-      </p>
+      </div>
     {% endif %}
 
-    <div class="mb-3">
-      {% for sl in body_modification.bodymodificationsocketlocation_set.all %}
-        <span class="badge bg-dark">
-      <i class="gi gi-delapouite-plug"></i>
-        {{ sl.socket_location }}
-         {{ sl.socket_amount }}
-      </span>
-      {% endfor %}
-    </div>
+    {% if body_modification.quote %}
+      <blockquote class="body-modification-card-quote">
+        {{ body_modification.quote }}
+        {% if body_modification.quote_author %}<footer>{{ body_modification.quote_author }}</footer>{% endif %}
+      </blockquote>
+    {% endif %}
+
+    {% if body_modification.bodymodificationsocketlocation_set.exists %}
+      <div class="body-modification-card-sockets">
+        {% for sl in body_modification.bodymodificationsocketlocation_set.all %}
+          <span>
+            <i class="{{ sl.socket_location.gi_icon_class|default:'gi gi-delapouite-plug' }}" aria-hidden="true"></i>
+            {{ sl.socket_location }} · {{ sl.socket_amount }}
+          </span>
+        {% endfor %}
+      </div>
+    {% endif %}
 
     {% if body_modification.bodymodificationmodifier_set.exists %}
       <div class="mb-3">
@@ -68,31 +95,28 @@
     {% endif %}
 
     {% if character %}
-      <div class="dropdown float-end mt-2">
+      <div class="dropdown body-modification-card-action">
         <button class="btn btn-sm btn-primary dropdown-toggle d-flex align-items-center"
                 type="button"
-                id="socketDropdown"
+                id="socket-dropdown-{{ body_modification.id }}"
                 data-danger="{% trans 'Not possible' %}"
                 data-success="{% trans 'Added' %}"
-                data-bs-toggle="dropdown" aria-expanded="false">
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
           <i class="gi gi-delapouite-plug me-1"></i>
           {% trans 'Add' %}
         </button>
-        <ul class="dropdown-menu" aria-labelledby="socketDropdown">
+        <ul class="dropdown-menu" aria-labelledby="socket-dropdown-{{ body_modification.id }}">
           {% for sl in body_modification.bodymodificationsocketlocation_set.all %}
             <li>
-              <form
-                action="{% url 'characters:xhr_character_objects' pk=character.id object_type='body_modification' %}"
-                data-fetch-form="true"
-                data-fetch-form-event-after="refresh-character-body_modifications"
-                method="post">
+              <form action="{% url 'characters:xhr_character_objects' pk=character.id object_type='body_modification' %}"
+                    data-fetch-form="true"
+                    data-fetch-form-event-after="refresh-character-body_modifications"
+                    method="post">
                 {% csrf_token %}
                 <input type="hidden" name="object_id" value="{{ body_modification.id }}">
                 <input type="hidden" name="socket_location_pk" value="{{ sl.socket_location.id }}">
-                <button class="dropdown-item"
-                        type="submit">
-                  {{ sl.socket_location }}
-                </button>
+                <button class="dropdown-item" type="submit">{{ sl.socket_location }}</button>
               </form>
             </li>
           {% endfor %}
@@ -101,8 +125,8 @@
     {% endif %}
 
     {% if user.is_superuser %}
-      <a href="{% url 'admin:body_modifications_bodymodification_change' body_modification.id %}"
-         style="position: absolute; bottom: 2px; left: 2px; font-size: xx-small">admin</a>
+      <a class="body-modification-card-admin"
+         href="{% url 'admin:body_modifications_bodymodification_change' body_modification.id %}">admin</a>
     {% endif %}
   </div>
-</div>
+</article>

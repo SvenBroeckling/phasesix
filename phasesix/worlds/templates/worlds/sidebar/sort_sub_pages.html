@@ -1,6 +1,6 @@
 {% load i18n characters_extras rules_extras thumbnail static %}
 
-<div class="row">
+<div class="row world-sidebar world-sort-pages">
   <div class="col-12">
     <p>
       {% blocktrans %}
@@ -12,7 +12,7 @@
   <div data-url="{% url 'worlds:xhr_update_wiki_page_sort_order' pk=object.id model=model %}"
        class="col-12 mt-3 subpages-container wiki-link-sortable">
     {% for page in sub_pages %}
-      <div class="card mb-2 pointer" data-pk="{{ page.id }}">
+      <div class="card mb-2 pointer world-sidebar-card" data-pk="{{ page.id }}">
         <div class="card-header">
           {{ page }}
         </div>
