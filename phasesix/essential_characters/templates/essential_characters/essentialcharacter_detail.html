@@ -1,58 +1,157 @@
 {% extends "base.html" %}
-{% load i18n static essential_extras %}
+{% load i18n static essential_extras portal_extras %}
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
-{% block extraheader %}<link rel="stylesheet" href="{% static 'essential_characters/essential.css' %}">{% endblock %}
-{% block content %}
-  <article class="essential-sheet">
-    <header class="d-flex justify-content-between align-items-start mb-4">
-      <div>
-        <small class="text-primary">{% trans "Tirakan Essential" %}</small>
+{% block opengraph %}
+  {% image_url object as image %}
+  {% include "shared/opengraph.html" with og_title=object og_description=object.concept|default:brand_description|striptags|truncatechars:200 og_image_path=image %}
+{% endblock %}
+{% block header %}
+  {% backdrop_image_url object "1900x600" as backdrop_image %}
+  {% image_url object "600x600" as character_image %}
+  <header class="in-page-header essential-detail-hero{% if backdrop_image %} has-backdrop{% endif %}">
+    {% if backdrop_image %}
+      <div class="in-page-header-backdrop"
+           style="background-image: url('{{ backdrop_image }}')"
+           aria-hidden="true"></div>
+    {% endif %}
+    <div class="in-page-header-shade" aria-hidden="true"></div>
+    <div class="container in-page-header-container">
+      <div class="in-page-header-content">
         <h1>{{ object }}</h1>
-        <p class="text-secondary">{% trans "Player" %}: {{ object.created_by.username }}</p>
-        <p>{{ object.concept }}</p>
+        <div class="in-page-header-subtitle">{{ object.concept }}</div>
       </div>
-      {% if user.is_authenticated and object.created_by == user %}<a class="btn btn-outline-primary" href="{% url 'essential_characters:edit' slug=object.slug %}">{% trans "Edit" %}</a>{% endif %}
-    </header>
-    <div class="row g-4">
-      <section class="col-12 col-lg-4"><h2>{% trans "Marks" %}</h2><p>{{ object.ancestry }}<br>{{ object.path }}<br>{{ object.bond }}</p></section>
-      <section class="col-12 col-lg-4"><h2>{% trans "Conditions" %}</h2><p>{% trans "Wounds" %}: {{ object.wounds }}/{{ object.wound_threshold }}<br>{% trans "Burden" %}: {{ object.burden }}/{{ object.burden_threshold }}<br>{% trans "Omen" %}: {{ object.omen }}/{{ object.omen_max }}<br>{% trans "Arkana" %}: {{ object.arkana }}/{{ object.arkana_max }}<br>{% trans "Favor" %}: {{ object.favor }}/{{ object.favor_max }}</p></section>
-      <section class="col-12 col-lg-4"><h2>{% trans "Derived values" %}</h2><p>{% trans "Initiative" %}: {{ object.initiative }}<br>{% trans "Faith" %}: {{ object.faith_level }}<br>{% trans "Magic" %}: {{ object.magic_level }}<br>{% trans "Invocation" %}: {{ object.invocation_value }}</p></section>
-      <section class="col-12 col-lg-6"><h2>{% trans "Attributes" %}</h2>
+
+      {% if character_image %}
+        <a class="in-page-header-image toggle-lightbox"
+           href="{% image_url object "1400" %}"
+           data-caption="{{ object }}"
+           aria-label="{% trans "Open image" %}">
+          <img src="{{ character_image }}" alt="{{ object }}">
+        </a>
+      {% else %}
+        <div class="in-page-header-image essential-detail-silhouette" aria-label="{% trans "No character image" %}">
+          <i class="fas fa-user" aria-hidden="true"></i>
+        </div>
+      {% endif %}
+    </div>
+  </header>
+{% endblock %}
+{% block content %}
+  <article class="essential-detail character-sheet-content">
+    <section class="card essential-panel essential-identity-panel">
+      <div class="essential-read"><span>{% trans "Birth date" %}</span><strong>{{ object.birth_date|default:"-" }}</strong></div>
+      <div class="essential-read"><span>{% trans "Century" %}</span><strong>{{ object.century }}</strong></div>
+      <div class="essential-read">
+        <span>{% trans "Campaign" %}</span>
+        <strong>
+          {% if object.pc_or_npc_campaign %}
+            <a href="{{ object.pc_or_npc_campaign.get_absolute_url }}">{{ object.pc_or_npc_campaign }}</a>
+          {% elif object.plot %}
+            {{ object.plot }}
+          {% else %}
+            -
+          {% endif %}
+        </strong>
+      </div>
+      <div class="essential-read"><span>{% trans "Player" %}</span><strong>{{ object.created_by.username }}</strong></div>
+      <div class="essential-read essential-read-wide"><span>{% trans "Oath or debt" %}</span><strong>{{ object.oath_or_debt|default:"-"|linebreaksbr }}</strong></div>
+    </section>
+
+    <div class="essential-summary-grid">
+      <section class="card essential-panel">
+        <h2>{% trans "Marks" %}</h2>
+        <div class="essential-read-list">
+          <div class="essential-read"><span>{% trans "Ancestry" %}</span><strong>{{ object.ancestry|default:"-" }}</strong></div>
+          <div class="essential-read"><span>{% trans "Path" %}</span><strong>{{ object.path|default:"-" }}</strong></div>
+          <div class="essential-read"><span>{% trans "Bond" %}</span><strong>{{ object.bond|default:"-" }}</strong></div>
+        </div>
+      </section>
+      <section class="card essential-panel">
+        <h2>{% trans "Conditions" %}</h2>
+        {% essential_condition_rows object as condition_rows %}
+        {% for row in condition_rows %}
+          {% include "essential_characters/_readonly_rank_row.html" with label=row.label value=row.value options=row.options %}
+        {% endfor %}
+      </section>
+      <section class="card essential-panel">
+        <h2>{% trans "Derived values" %}</h2>
+        <div class="essential-derived-grid">
+          <div class="essential-read"><span>{% trans "Initiative" %}</span><strong>{{ object.initiative }}</strong></div>
+          <div class="essential-read"><span>{% trans "Faith" %}</span><strong>{{ object.faith_level }}</strong></div>
+          <div class="essential-read"><span>{% trans "Magic" %}</span><strong>{{ object.magic_level }}</strong></div>
+          <div class="essential-read"><span>{% trans "Invocation" %}</span><strong>{{ object.invocation_value }}</strong></div>
+          <div class="essential-read"><span>{% trans "Favor limit" %}</span><strong>{{ object.favor_limit }}</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="card essential-panel">
+      <h2>{% trans "Attributes" %}</h2>
+      <div class="essential-attribute-grid">
         {% essential_attribute_rows object as attribute_rows %}
         {% essential_rank_options as attribute_options %}
         {% for row in attribute_rows %}
           {% include "essential_characters/_readonly_rank_row.html" with label=row.label value=row.value target=row.target options=attribute_options %}
         {% endfor %}
-      </section>
-      <section class="col-12 col-lg-6"><h2>{% trans "Skills" %}</h2>
+      </div>
+    </section>
+
+    <div class="essential-detail-two-column">
+      <section class="card essential-panel">
+        <h2>{% trans "Skills" %}</h2>
         {% essential_rank_options as skill_options %}
         {% for assignment in object.essentialcharacterskill_set.all %}
           {% include "essential_characters/_readonly_rank_row.html" with label=assignment.name value=assignment.rank options=skill_options %}
+        {% empty %}
+          <p class="text-secondary mb-0">-</p>
         {% endfor %}
       </section>
-      <section class="col-12 col-lg-6"><h2>{% trans "Equipment" %}</h2>
-        <h3>{% trans "Weapons" %}</h3>
-        {% for weapon in object.weapons.all %}
-          <p><strong>{{ weapon }}</strong><br>{{ weapon.essential_damage }} · {{ weapon.essential_range }} · {{ weapon.essential_grip }}<br>{{ weapon.essential_properties }}</p>
-        {% empty %}<p class="text-secondary">-</p>{% endfor %}
-        <h3>{% trans "Armor" %}</h3>
-        {% for armor in object.armor.all %}
-          <p><strong>{{ armor }}</strong><br>{{ armor.essential_protection }} · {{ armor.essential_load }} · {{ armor.essential_sealing }}<br>{{ armor.essential_properties }}</p>
-        {% empty %}<p class="text-secondary">-</p>{% endfor %}
-        <h3>{% trans "Items" %}</h3>
-        <p>{% for item in object.items.all %}{{ item }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</p>
+      <section class="card essential-panel">
+        <h2>{% trans "Equipment" %}</h2>
+        <div class="essential-resource-group">
+          <h3>{% trans "Weapons" %}</h3>
+          {% for weapon in object.weapons.all %}
+            <div class="essential-resource"><strong>{{ weapon }}</strong><span>{{ weapon.essential_damage|default:"-" }} · {{ weapon.essential_range|default:"-" }} · {{ weapon.essential_grip|default:"-" }}</span>{% if weapon.essential_properties %}<small>{{ weapon.essential_properties }}</small>{% endif %}</div>
+          {% empty %}<p class="text-secondary">-</p>{% endfor %}
+        </div>
+        <div class="essential-resource-group">
+          <h3>{% trans "Armor" %}</h3>
+          {% for armor in object.armor.all %}
+            <div class="essential-resource"><strong>{{ armor }}</strong><span>{{ armor.essential_protection|default:"-" }} · {{ armor.essential_load|default:"-" }} · {{ armor.essential_sealing|default:"-" }}</span>{% if armor.essential_properties %}<small>{{ armor.essential_properties }}</small>{% endif %}</div>
+          {% empty %}<p class="text-secondary">-</p>{% endfor %}
+        </div>
+        <div class="essential-resource-group">
+          <h3>{% trans "Items" %}</h3>
+          <p class="mb-0">{% for item in object.items.all %}{{ item }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</p>
+        </div>
       </section>
-      <section class="col-12 col-lg-6"><h2>{% trans "Supernatural access" %}</h2>
-        <h3>{% trans "Magic aspects" %}</h3>
-        {% for aspect in object.magic_aspects.all %}
-          <p><strong>{{ aspect }}</strong><br>{{ aspect.essential_description }}</p>
-        {% empty %}<p class="text-secondary">-</p>{% endfor %}
-        <h3>{% trans "Spells" %}</h3>
-        {% for spell in object.spells.all %}
-          <p><strong>{{ spell }}</strong><br>{{ spell.rules|linebreaksbr }}</p>
-        {% empty %}<p class="text-secondary">-</p>{% endfor %}
-      </section>
-      <section class="col-12"><h2>{% trans "Notes" %}</h2>{{ object.notes|linebreaks }}</section>
     </div>
+
+    <section class="card essential-panel">
+      <h2>{% trans "Magic and belief" %}</h2>
+      <div class="essential-detail-two-column">
+        <div>
+          <div class="essential-read mb-3"><span>{% trans "Focus" %}</span><strong>{{ object.focus|default:"-" }}</strong></div>
+          <div class="essential-read"><span>{% trans "Regeneration ritual" %}</span><strong>{{ object.regeneration_ritual|default:"-"|linebreaksbr }}</strong></div>
+        </div>
+        <div>
+          <div class="essential-resource-group">
+            <h3>{% trans "Magic aspects" %}</h3>
+            {% for aspect in object.magic_aspects.all %}
+              <div class="essential-resource"><strong>{{ aspect }}</strong>{% if aspect.essential_description %}<small>{{ aspect.essential_description }}</small>{% endif %}</div>
+            {% empty %}<p class="text-secondary">-</p>{% endfor %}
+          </div>
+          <div class="essential-resource-group">
+            <h3>{% trans "Spells" %}</h3>
+            {% for spell in object.spells.all %}
+              <div class="essential-resource"><strong>{{ spell }}</strong>{% if spell.rules %}<small>{{ spell.rules|linebreaksbr }}</small>{% endif %}</div>
+            {% empty %}<p class="text-secondary">-</p>{% endfor %}
+          </div>
+        </div>
+      </div>
+      {% if object.notes %}
+        <div class="essential-notes"><h3>{% trans "Notes" %}</h3>{{ object.notes|linebreaks }}</div>
+      {% endif %}
+    </section>
   </article>
 {% endblock %}

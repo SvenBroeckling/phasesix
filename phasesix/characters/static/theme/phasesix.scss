@@ -12,7 +12,7 @@ $font-family-sans-serif:
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 650;
 
-/* Theme build marker: 2026-06-11 branded image lightbox controls - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-11 essential character detail integration - update in all theme entrypoints after any SCSS change. */
 
 $primary: #4f8fdb;
 $secondary: #74859a;
@@ -64,7 +64,7 @@ $phasesix-panel-cards:
     ".profile-sheet-content .campaign-list-widget-container",
     ".profile-sheet-content .profile-create-card",
     ".profile-sheet-content .atmospheric-profile-cta",
-    ".profile-sheet-content .profile-settings-card";
+    ".profile-sheet-content .profile-settings-card", ".essential-panel";
 
 #{join($phasesix-panel-cards, (), comma)} {
     border-radius: $border-radius-lg;

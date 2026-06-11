@@ -11,7 +11,7 @@ $font-family-sans-serif:
     sans-serif !default;
 $headings-font-family: "Morris Roman", system-ui;
 
-/* Theme build marker: 2026-06-11 branded image lightbox controls - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-11 essential character detail integration - update in all theme entrypoints after any SCSS change. */
 
 $primary: #9f784f;
 $secondary: #66615b;
@@ -106,7 +106,7 @@ $tirakan-ornament-cards:
     ".profile-sheet-content .campaign-list-widget-container",
     ".profile-sheet-content .profile-create-card",
     ".profile-sheet-content .atmospheric-profile-cta",
-    ".profile-sheet-content .profile-settings-card";
+    ".profile-sheet-content .profile-settings-card", ".essential-panel";
 
 #{join($tirakan-ornament-cards, (), comma)} {
     &::before,
