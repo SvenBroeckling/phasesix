@@ -2,7 +2,7 @@ $font-size-base: 1.05rem;
 $font-family-sans-serif: "Noto Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $headings-font-family: 'Oxanium', system-ui;
 
-/* Theme build marker: 2026-06-11 - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-11 compact in-page header - update in all theme entrypoints after any SCSS change. */
 
 $blue: #267e89;
 $red: #af5fb6;
@@ -14,3 +14,14 @@ $body-tertiary-bg-dark: #0E1113;
 
 @import '../vendor/bootstrap/scss/bootstrap.scss';
 @import 'generic';
+
+.in-page-header {
+  .in-page-header-content {
+    border-left-width: 1px;
+    box-shadow: -0.35rem 0 0 -0.3rem rgba(var(--bs-primary-rgb), 0.45);
+  }
+
+  .in-page-header-image {
+    clip-path: polygon(0.7rem 0, 100% 0, 100% calc(100% - 0.7rem), calc(100% - 0.7rem) 100%, 0 100%, 0 0.7rem);
+  }
+}

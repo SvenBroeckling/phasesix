@@ -70,31 +70,33 @@
 
 {% block header %}
   {% backdrop_image_url object "1900x600" as backdrop_image %}
-  {% if backdrop_image %}
-    <header class="bg-black py-3 header-with-overlay mb-3"
-            style="background: url({{ backdrop_image }}) no-repeat; background-size: cover">
-  {% else %}
-    <header class="bg-black py-3 header-with-overlay"
-            style="background: url({% static "img/header-background.png" %}) no-repeat; background-size: cover">
-  {% endif %}
-<div class="overlay"></div>
-<div class="container px-4 px-lg-5 py-3 py-lg-5 my-5">
-  <div class="text-center text-white">
-    <h1 class="display-4 fw-bolder">{% block in_page_title %}{{ brand_name }}{% endblock %}</h1>
-    <p class="lead fw-normal text-white-50 mb-0">
-      {% block in_page_subtitle %}{% trans "Free online pen and paper rpg" %}{% endblock %}</p>
-  </div>
-
   {% image_url object "600x600" as image %}
-  {% if image %}
-    <a class="toggle-lightbox" href="{% image_url object "1400" %}">
-      <img class="border border-2 border-black header-image"
-           src="{{ image }}"
-           alt="{% trans "Profile image" %}">
-    </a>
+  {% if backdrop_image %}
+    <header class="in-page-header has-backdrop">
+      <div class="in-page-header-backdrop"
+           style="background-image: url('{{ backdrop_image }}')"
+           aria-hidden="true"></div>
+  {% else %}
+    <header class="in-page-header">
   {% endif %}
-</div>
-</header>
+      <div class="in-page-header-shade" aria-hidden="true"></div>
+      <div class="container in-page-header-container">
+        <div class="in-page-header-content">
+          <h1>{% block in_page_title %}{{ brand_name }}{% endblock %}</h1>
+          <div class="in-page-header-subtitle">
+            {% block in_page_subtitle %}{% trans "Free online pen and paper rpg" %}{% endblock %}
+          </div>
+        </div>
+
+        {% if image %}
+          <a class="in-page-header-image toggle-lightbox"
+             href="{% image_url object "1400" %}"
+             aria-label="{% trans "Open image" %}">
+            <img src="{{ image }}" alt="{{ object|default:brand_name }}">
+          </a>
+        {% endif %}
+      </div>
+    </header>
 {% endblock %}
 
 {% block raw_content %}{% endblock %}

@@ -12,7 +12,7 @@ $font-family-sans-serif:
 $headings-font-family: $font-family-sans-serif;
 $headings-font-weight: 650;
 
-/* Theme build marker: 2026-06-11 - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-11 compact in-page header - update in all theme entrypoints after any SCSS change. */
 
 $primary: #4f8fdb;
 $secondary: #74859a;
@@ -43,6 +43,12 @@ $border-radius-lg: 0.65rem;
 @import "generic";
 
 /* PhaseSix is the clean, system-neutral toolkit brand. */
+
+.in-page-header {
+    --in-page-header-image-radius: #{$border-radius-lg};
+
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
+}
 
 $phasesix-panel-cards:
     ".catalog-card", ".item-card", ".foe-card", ".wiki-page-index-card",

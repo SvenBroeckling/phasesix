@@ -11,7 +11,7 @@ $font-family-sans-serif:
     sans-serif !default;
 $headings-font-family: "Morris Roman", system-ui;
 
-/* Theme build marker: 2026-06-11 - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-11 compact in-page header - update in all theme entrypoints after any SCSS change. */
 
 $primary: #9f784f;
 $secondary: #66615b;
@@ -36,6 +36,37 @@ $link-hover-color-dark: #d6b98f;
 
 @import "../vendor/bootstrap/scss/bootstrap.scss";
 @import "generic";
+
+.in-page-header {
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        z-index: 2;
+        width: 5rem;
+        height: 1.8rem;
+        border-top: 1px solid rgba(var(--bs-primary-rgb), 0.45);
+        border-left: 1px solid rgba(var(--bs-primary-rgb), 0.3);
+        border-radius: 2rem 0 0;
+        pointer-events: none;
+    }
+
+    &::before {
+        top: 0.65rem;
+        left: 0.65rem;
+        transform: rotate(-3deg);
+    }
+
+    &::after {
+        right: 0.65rem;
+        bottom: 0.65rem;
+        transform: rotate(177deg);
+    }
+
+    .in-page-header-image {
+        --in-page-header-image-radius: 48% 48% 0.35rem 0.35rem;
+    }
+}
 
 $tirakan-ornament-cards:
     ".catalog-card", ".item-card", ".foe-card", ".wiki-page-index-card",
