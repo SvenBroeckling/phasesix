@@ -8,3 +8,278 @@
   box-shadow: 0 1rem 3rem rgba(var(--bs-black-rgb), .2);
 }
 .essential-sheet h1, .essential-sheet h2 { color: var(--bs-primary); }
+
+.essential-wizard {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.essential-wizard-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .65rem;
+}
+
+.essential-step-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+}
+
+.essential-step-dot {
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid rgba(var(--bs-primary-rgb), .4);
+  border-radius: 50%;
+  color: var(--bs-secondary-color);
+  background: var(--bs-body-bg);
+  font-size: .8rem;
+  text-decoration: none;
+}
+
+a.essential-step-dot.reached,
+.essential-step-dot.active {
+  color: var(--bs-body-bg);
+  border-color: var(--bs-primary);
+  background: var(--bs-primary);
+}
+
+.essential-derived-preview {
+  padding: clamp(1rem, 2vw, 1.75rem);
+  border: 1px solid rgba(var(--bs-primary-rgb), .2);
+  border-radius: var(--bs-border-radius);
+  background: var(--bs-body-bg);
+}
+
+.essential-wizard-fields-attributes {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.essential-wizard-fields-attributes > .mb-3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 0 !important;
+  padding: 1.25rem .25rem;
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), .2);
+}
+
+.essential-wizard fieldset.mb-3 {
+  min-width: 0;
+}
+
+.essential-wizard-fields-attributes .form-label {
+  margin-bottom: 0;
+  color: var(--bs-emphasis-color);
+  font-size: 1.2rem;
+  font-weight: 650;
+}
+
+.essential-wizard-fields-skills {
+  display: grid;
+}
+
+.essential-wizard-fields-marks .essential-mark-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.essential-mark-summary {
+  min-height: 24rem;
+  border-color: rgba(var(--bs-primary-rgb), .25);
+  background: var(--bs-tertiary-bg);
+  box-shadow: 0 .75rem 2rem rgba(var(--bs-black-rgb), .12);
+  transition: opacity .15s, border-color .15s, box-shadow .15s;
+}
+
+.essential-mark-summary.is-loading {
+  opacity: .55;
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 .15rem rgba(var(--bs-primary-rgb), .12);
+}
+
+.essential-mark-summary h3 {
+  color: var(--bs-emphasis-color);
+}
+
+.essential-mark-description {
+  color: var(--bs-secondary-color);
+}
+
+.essential-mark-details {
+  display: grid;
+  gap: 1rem;
+}
+
+.essential-mark-details div {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(var(--bs-primary-rgb), .18);
+}
+
+.essential-mark-details dt {
+  margin-bottom: .25rem;
+  color: var(--bs-emphasis-color);
+}
+
+.essential-mark-details dd {
+  margin-bottom: 0;
+}
+
+.essential-skill-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: end;
+  gap: 1.5rem;
+  padding: 1rem .25rem;
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), .2);
+}
+
+.essential-skill-row .mb-3 {
+  margin-bottom: 0 !important;
+}
+
+.essential-skill-row > .mb-3:last-child div.essential-rank-input {
+  flex-wrap: nowrap;
+}
+
+.essential-rank-circle > input[type="radio"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  appearance: none !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  white-space: nowrap !important;
+}
+
+div.essential-rank-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+}
+
+div.essential-rank-input > div {
+  display: contents;
+}
+
+.essential-wizard-fields-attributes div.essential-rank-input {
+  display: grid;
+  grid-template-columns: repeat(4, 3.5rem);
+  gap: .75rem;
+}
+
+.essential-rank-circle {
+  position: relative;
+  display: inline-grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
+  border: 1px solid rgba(var(--bs-primary-rgb), .4);
+  border-radius: 50%;
+  color: var(--bs-secondary-color);
+  background: var(--bs-body-bg);
+  box-shadow: 0 .2rem .65rem rgba(var(--bs-black-rgb), .18);
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform .15s, border-color .15s, box-shadow .15s, color .15s, background .15s;
+}
+
+.essential-wizard .essential-rank-circle {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.1rem;
+}
+
+.essential-rank-circle:hover {
+  transform: translateY(-.1rem);
+  border-color: var(--bs-primary);
+  color: var(--bs-primary);
+  box-shadow:
+    0 0 0 .15rem rgba(var(--bs-primary-rgb), .13),
+    0 .35rem 1rem rgba(var(--bs-black-rgb), .3);
+}
+
+.essential-rank-circle:has(input:checked),
+.essential-rank-circle.selected {
+  color: var(--bs-white);
+  border-color: var(--bs-primary);
+  background: var(--bs-primary);
+  box-shadow:
+    0 0 0 .12rem rgba(var(--bs-primary-rgb), .3),
+    0 .35rem 1rem rgba(var(--bs-primary-rgb), .28);
+}
+
+.essential-rank-circle:has(input:focus-visible) {
+  outline: .2rem solid rgba(var(--bs-primary-rgb), .5);
+  outline-offset: .2rem;
+}
+
+.essential-rank-circle.disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.essential-derived-preview strong,
+.essential-derived-preview span,
+.essential-readonly-rank-row strong,
+.essential-readonly-rank-row small {
+  display: block;
+}
+
+.essential-readonly-rank-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .65rem 0;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.essential-readonly-ranks {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.essential-readonly-ranks .essential-rank-circle {
+  cursor: default;
+}
+
+@media (max-width: 767.98px) {
+  .essential-mark-summary {
+    min-height: auto;
+  }
+
+  .essential-skill-row {
+    grid-template-columns: 1fr;
+  }
+
+  .essential-wizard-fields-attributes > .mb-3 {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .essential-wizard-fields-attributes div.essential-rank-input {
+    grid-template-columns: repeat(4, 3.25rem);
+  }
+
+  .essential-wizard .essential-rank-circle {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .essential-readonly-rank-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

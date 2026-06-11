@@ -14,9 +14,10 @@
         {% if may_edit %}
           <a href="{{ object.invite_link }}"
              class="btn btn-sm btn-outline-primary campaign-link d-inline-flex align-items-center gap-2"
+             data-title="{% trans "Invite Player" %}"
              data-msg="{% trans "Invite link copied" %}">
-            <i class="fas fa-user-plus"></i>
-            {% trans "Invite Player" %}
+            <i class="fas fa-user-plus invite-icon" aria-hidden="true"></i>
+            <span class="invite-text" aria-live="polite">{% trans "Invite Player" %}</span>
           </a>
         {% endif %}
       </div>

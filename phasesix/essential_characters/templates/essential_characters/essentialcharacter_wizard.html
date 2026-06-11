@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 i18n static %}
+{% block title %}{% trans "Create Tirakan Essential character" %} - {{ block.super }}{% endblock %}
+{% block extraheader %}<link rel="stylesheet" href="{% static 'essential_characters/essential.css' %}">{% endblock %}
+{% block javascript %}<script src="{% static 'essential_characters/essential_wizard.js' %}"></script>{% endblock %}
+
+{% block in_page_title %}{{ step_label }}{% endblock %}
+{% block in_page_subtitle %}
+  <div class="essential-wizard-hero">
+    <div>{{ step_description }}</div>
+    <div class="essential-step-dots" aria-label="{% trans 'Creation progress' %}">
+      {% for step in step_navigation %}
+        {% if step.reached %}
+          <a href="{{ step.url }}"
+             class="essential-step-dot{% if step.active %} active{% else %} reached{% endif %}"
+             aria-current="{% if step.active %}step{% else %}false{% endif %}"
+             title="{{ step.label }}">{{ forloop.counter }}</a>
+        {% else %}
+          <span class="essential-step-dot" title="{{ step.label }}">{{ forloop.counter }}</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="small">{% blocktrans %}Step {{ step_number }} of {{ total_steps }}{% endblocktrans %}</div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <form method="post" class="essential-wizard" data-step="{{ wizard.steps.current }}">
+    {% csrf_token %}
+    {{ wizard.management_form }}
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    {% if wizard.steps.current == "attributes" or wizard.steps.current == "skills" %}
+      <div class="d-flex justify-content-end mb-4">
+        <button type="button" class="btn btn-sm btn-outline-primary" data-essential-randomize>{% trans "Randomize" %}</button>
+      </div>
+    {% endif %}
+
+    <div class="essential-wizard-fields essential-wizard-fields-{{ wizard.steps.current }}">
+      {% if skill_rows %}
+        {% for name_field, rank_field in skill_rows %}
+          <div class="essential-skill-row">
+            {% bootstrap_field name_field %}
+            {% include "essential_characters/_rank_field.html" with field=rank_field hide_label=True %}
+          </div>
+        {% endfor %}
+      {% elif wizard.steps.current == "attributes" %}
+        {% for field in form %}
+          {% include "essential_characters/_rank_field.html" with field=field %}
+        {% endfor %}
+      {% elif wizard.steps.current == "marks" %}
+        <div class="row g-4">
+          {% for field in form %}
+            <div class="col-12 col-lg-4 essential-mark-column">
+              {% bootstrap_field field layout="floating" wrapper_class="mb-3" %}
+              <section id="summary-{{ field.id_for_label }}"
+                       class="card flex-grow-1 essential-mark-summary"
+                       aria-live="polite"
+                       data-error-message="{% trans 'Could not load mark details.' %}">
+                <div class="card-body">
+                  <p class="text-body-secondary mb-0">{% trans "Choose a mark to see its details." %}</p>
+                </div>
+              </section>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        {% for field in form %}
+          {% bootstrap_field field %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if derived_preview and wizard.steps.current != "marks" %}
+      <aside class="essential-derived-preview mt-4">
+        <h3>{% trans "Derived preview" %}</h3>
+        <div class="row g-2">
+          {% for label, value in derived_preview.items %}
+            <div class="col-6 col-md-3"><span>{{ label|capfirst }}</span><strong>{{ value }}</strong></div>
+          {% endfor %}
+        </div>
+      </aside>
+    {% endif %}
+
+    <footer class="d-flex justify-content-between gap-3 mt-5 pt-3 border-top">
+      {% if previous_step_url %}
+        <a class="btn btn-outline-secondary" href="{{ previous_step_url }}">{% trans "Back" %}</a>
+      {% else %}<span></span>{% endif %}
+      <button class="btn btn-primary" type="submit">
+        {% if wizard.steps.next %}{% trans "Continue" %}{% else %}{% trans "Create character" %}{% endif %}
+      </button>
+    </footer>
+  </form>
+{% endblock %}

@@ -4,14 +4,17 @@ from essential_characters.definitions import ANCESTRIES, BONDS, PATHS
 
 
 def seed_marks(apps, schema_editor):
-    for model_name, names in (
+    for model_name, definitions in (
         ("EssentialAncestry", ANCESTRIES),
         ("EssentialPath", PATHS),
         ("EssentialBond", BONDS),
     ):
         model = apps.get_model("essential_characters", model_name)
-        for name in names:
-            model.objects.get_or_create(name=name)
+        for definition in definitions:
+            model.objects.update_or_create(
+                name_de=definition["name_de"],
+                defaults=definition,
+            )
 
 
 class Migration(migrations.Migration):

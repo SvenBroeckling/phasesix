@@ -3,14 +3,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     body.on("click", "[data-app='campaigns'] .campaign-link", function (e) {
         let elem = $(this);
-        let text = $(this).find(".invite-text");
-        let orig_text = text.text();
-        copyTextToClipboard(elem.attr("href"));
-
-        text.text(elem.data("msg"));
-        setTimeout(() => text.text(orig_text), 2000);
+        let text = elem.find(".invite-text");
+        let icon = elem.find(".invite-icon");
+        let origText = text.data("original-text") || text.text();
 
         e.preventDefault();
+        copyTextToClipboard(elem.attr("href"));
+
+        clearTimeout(elem.data("feedback-timeout"));
+        text.data("original-text", origText);
+        text.text(elem.data("msg"));
+        icon.removeClass("fa-user-plus").addClass("fa-check");
+        elem.removeClass("btn-outline-primary").addClass("btn-success");
+
+        Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT);
+        Toast.setMaxCount(5);
+        Toast.create({
+            title: elem.data("title"),
+            message: elem.data("msg"),
+            status: TOAST_STATUS.SUCCESS,
+            timeout: 5000,
+        });
+
+        elem.data(
+            "feedback-timeout",
+            setTimeout(() => {
+                text.text(origText);
+                icon.removeClass("fa-check").addClass("fa-user-plus");
+                elem.removeClass("btn-success").addClass("btn-outline-primary");
+            }, 2500),
+        );
+
         return false;
     });
 

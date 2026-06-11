@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 i18n static %}
 {% block title %}{% trans "Tirakan Essential character" %} - {{ block.super }}{% endblock %}
-{% block css %}<link rel="stylesheet" href="{% static 'essential_characters/essential.css' %}">{% endblock %}
+{% block extraheader %}<link rel="stylesheet" href="{% static 'essential_characters/essential.css' %}">{% endblock %}
 {% block content %}
   <form method="post" enctype="multipart/form-data" class="essential-sheet">
     {% csrf_token %}

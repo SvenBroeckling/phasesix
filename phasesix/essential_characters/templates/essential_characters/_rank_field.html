@@ -1,0 +1,6 @@
+<fieldset class="mb-3">
+  <legend class="form-label{% if hide_label %} visually-hidden{% endif %}">{{ field.label }}</legend>
+  {{ field }}
+  {% if field.errors %}<div class="invalid-feedback d-block">{{ field.errors }}</div>{% endif %}
+  {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+</fieldset>

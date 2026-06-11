@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "django_registration",
     "django_extensions",
     "django_bootstrap5",
+    "formtools",
     "cachalot",
     "bootyprint",
     "reversion",

@@ -1,0 +1,38 @@
+{% load i18n %}
+<div class="card-body">
+  {% if mark %}
+    <div class="text-uppercase text-body-secondary small fw-semibold mb-1">{{ mark_type_label }}</div>
+    <h3 class="h4 mb-3">{{ mark }}</h3>
+    {% if mark.description %}
+      <p class="essential-mark-description">{{ mark.description|linebreaksbr }}</p>
+    {% endif %}
+    <dl class="essential-mark-details mb-0">
+      {% if mark.benefit %}
+        <div>
+          <dt>{% trans "Benefit" %}</dt>
+          <dd>{{ mark.benefit|linebreaksbr }}</dd>
+        </div>
+      {% endif %}
+      {% if mark.vulnerability %}
+        <div>
+          <dt>{% trans "Vulnerability" %}</dt>
+          <dd>{{ mark.vulnerability|linebreaksbr }}</dd>
+        </div>
+      {% endif %}
+      {% if mark_type == "path" and mark.facet %}
+        <div>
+          <dt>{% trans "Path facet" %}</dt>
+          <dd>{{ mark.facet|linebreaksbr }}</dd>
+        </div>
+      {% endif %}
+      {% if mark_type != "bond" and mark.skills %}
+        <div>
+          <dt>{% trans "Skills" %}</dt>
+          <dd>{{ mark.skills|linebreaksbr }}</dd>
+        </div>
+      {% endif %}
+    </dl>
+  {% else %}
+    <p class="text-body-secondary mb-0">{% trans "Choose a mark to see its details." %}</p>
+  {% endif %}
+</div>

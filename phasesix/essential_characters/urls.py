@@ -4,7 +4,15 @@ from . import views
 app_name = "essential_characters"
 
 urlpatterns = [
-    path("new/", views.EssentialCharacterCreateView.as_view(), name="create"),
+    path("marks/summary/", views.mark_summary, name="mark_summary"),
+    path(
+        "new/",
+        views.EssentialCharacterCreateWizard.as_view(
+            views.WIZARD_FORMS,
+            condition_dict={"supernatural": views.show_supernatural_step},
+        ),
+        name="create",
+    ),
     path("<slug:slug>/", views.EssentialCharacterDetailView.as_view(), name="detail"),
     path("<slug:slug>/edit/", views.EssentialCharacterUpdateView.as_view(), name="edit"),
 ]

@@ -1,0 +1,12 @@
+{% load i18n %}
+<div class="essential-readonly-rank-row">
+  <div>
+    <strong>{{ label }}</strong>
+    {% if target %}<small>{% trans "Target" %} {{ target }}</small>{% endif %}
+  </div>
+  <div class="essential-readonly-ranks" aria-label="{{ label }}: {{ value }}">
+    {% for option in options %}
+      <span class="essential-rank-circle{% if option == value %} selected{% endif %}">{{ option }}</span>
+    {% endfor %}
+  </div>
+</div>

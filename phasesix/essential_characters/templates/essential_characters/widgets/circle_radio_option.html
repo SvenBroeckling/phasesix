@@ -1,0 +1,4 @@
+{% if widget.wrap_label %}<label class="essential-rank-circle{% if widget.attrs.disabled %} disabled{% endif %}"{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>{% endif %}
+  {% include "django/forms/widgets/input.html" %}
+  <span>{{ widget.label }}</span>
+{% if widget.wrap_label %}</label>{% endif %}
