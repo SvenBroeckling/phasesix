@@ -8,6 +8,7 @@ from django.core.files.storage import default_storage
 from django.db import models, transaction
 from django.apps import apps
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import get_thumbnail
 
@@ -44,6 +45,12 @@ class CampaignQuerySet(models.QuerySet):
 
 
 class Campaign(ModelWithImage):
+    RULESET_PHASESIX = "phasesix"
+    RULESET_ESSENTIAL = "tirakan_essential"
+    RULESET_CHOICES = (
+        (RULESET_PHASESIX, _("PhaseSix")),
+        (RULESET_ESSENTIAL, _("Tirakan Essential")),
+    )
     VISIBILITY_CHOICES = (
         ("G", _("GM Only")),
         ("A", _("All")),
@@ -61,6 +68,9 @@ class Campaign(ModelWithImage):
 
     slug = models.SlugField(_("slug"), max_length=220)
     name = models.CharField(_("name"), max_length=80)
+    ruleset = models.CharField(
+        _("ruleset"), max_length=24, choices=RULESET_CHOICES, default=RULESET_PHASESIX
+    )
     ingame_act_date = models.CharField(
         _("in game act date"), max_length=40, blank=True, null=True
     )
@@ -181,9 +191,32 @@ class Campaign(ModelWithImage):
             "-created_at",
         )
 
+    def clean(self):
+        super().clean()
+        if (
+            self.ruleset == self.RULESET_ESSENTIAL
+            and self.world_extension_id
+            and self.world_extension.identifier != "tirakan"
+        ):
+            raise ValidationError({"ruleset": _("Tirakan Essential requires the Tirakan world.")})
+        if self.pk:
+            previous = Campaign.objects.filter(pk=self.pk).values_list("ruleset", flat=True).first()
+            if previous and previous != self.ruleset:
+                has_content = (
+                    self.character_set.exists()
+                    or self.npc_set.exists()
+                    or self.essentialcharacter_set.exists()
+                    or self.essential_npc_set.exists()
+                    or self.scene_set.exists()
+                    or hasattr(self, "plot")
+                )
+                if has_content:
+                    raise ValidationError({"ruleset": _("The ruleset cannot be changed after content was assigned.")})
+
     def save(self, **kwargs):
         if not self.slug:
             unique_slugify(self, str(self.name))
+        self.clean()
         super().save(**kwargs)
 
     def __str__(self):
@@ -238,6 +271,7 @@ class Campaign(ModelWithImage):
         with transaction.atomic():
             clone = Campaign(
                 name=self.name,
+                ruleset=self.ruleset,
                 ingame_act_date=self.ingame_act_date,
                 image=_copy_field_file(self.image),
                 image_copyright=self.image_copyright,
@@ -282,6 +316,12 @@ class Campaign(ModelWithImage):
                 new_npc = npc.clone(new_npc_campaign=clone)
                 npc_map[npc.id] = new_npc
 
+            EssentialCharacter = apps.get_model("essential_characters", "EssentialCharacter")
+            essential_npc_map = {}
+            for npc in EssentialCharacter.objects.filter(npc_campaign=self):
+                new_npc = npc.clone(new_npc_campaign=clone)
+                essential_npc_map[npc.id] = new_npc
+
             for scene in self.scene_set.all():
                 new_scene = Scene.objects.create(
                     campaign=clone, name=scene.name, text=scene.text
@@ -290,6 +330,9 @@ class Campaign(ModelWithImage):
                 for npc in scene.npc.all():
                     if npc.id in npc_map:
                         new_scene.npc.add(npc_map[npc.id])
+                for npc in scene.essential_npc.all():
+                    if npc.id in essential_npc_map:
+                        new_scene.essential_npc.add(essential_npc_map[npc.id])
 
                 # Clone handouts
                 for handout in scene.handout_set.all():
@@ -304,7 +347,7 @@ class Campaign(ModelWithImage):
             Plot = apps.get_model("plots", "Plot")
             plot = Plot.objects.filter(campaign=self).first()
             if plot:
-                plot.clone(campaign=clone, npc_map=npc_map)
+                plot.clone(campaign=clone, npc_map=npc_map, essential_npc_map=essential_npc_map)
 
             return clone
 
@@ -337,6 +380,9 @@ class Scene(models.Model):
     text = models.TextField(_("text"), blank=True, null=True)
 
     npc = models.ManyToManyField("characters.Character")
+    essential_npc = models.ManyToManyField(
+        "essential_characters.EssentialCharacter", blank=True, related_name="essential_scenes"
+    )
 
 
 class Handout(ModelWithImage):

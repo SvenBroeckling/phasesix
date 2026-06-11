@@ -23,6 +23,7 @@ from campaigns.forms import (
 from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
+from essential_characters.models import EssentialCharacter
 from plots.models import Plot, PlotElement, Handout, Location, _copy_field_file
 from rules.models import Extension, Foe
 from worlds.models import WikiPage
@@ -130,13 +131,23 @@ class CreateCampaignDataView(CreateView):
         "currency_map",
         "seed_money",
         "starting_template_points",
+        "ruleset",
     )
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        world = Extension.objects.get(pk=self.kwargs["world_pk"])
+        if world.identifier != "tirakan":
+            form.fields.pop("ruleset", None)
+        return form
 
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.created_by = self.request.user
         obj.epoch_extension = Extension.objects.get(pk=self.kwargs["epoch_pk"])
         obj.world_extension = Extension.objects.get(pk=self.kwargs["world_pk"])
+        if obj.world_extension.identifier != "tirakan":
+            obj.ruleset = Campaign.RULESET_PHASESIX
         plot_pk = self.request.GET.get("plot_pk")
         if plot_pk:
             plot = get_object_or_404(
@@ -146,10 +157,11 @@ class CreateCampaignDataView(CreateView):
             if (
                 plot.world_extension_id != obj.world_extension_id
                 or plot.epoch_extension_id != obj.epoch_extension_id
+                or plot.ruleset != obj.ruleset
             ):
                 form.add_error(
                     None,
-                    _("Selected plot does not match the chosen world or epoch."),
+                    _("Selected plot does not match the chosen world, epoch, or ruleset."),
                 )
                 return self.form_invalid(form)
             if plot.image:
@@ -174,6 +186,7 @@ class CreateCampaignDataView(CreateView):
                 world_extension=obj.world_extension,
                 created_by=self.request.user,
                 campaign=obj,
+                ruleset=obj.ruleset,
             )
             plot.extensions.set(obj.extensions.all())
             PlotElement.objects.create(
@@ -253,6 +266,7 @@ class XhrCampaignFragmentView(DetailView):
                 epoch_extension=self.object.epoch_extension,
                 cloned_from__isnull=True,
                 campaign__isnull=True,
+                ruleset=self.object.ruleset,
             ).order_by("name")
         return context
 
@@ -268,6 +282,8 @@ class XhrCampaignPlotPreviewView(View):
         plot = get_object_or_404(Plot, id=kwargs["plot_pk"])
         if plot.campaign_id and plot.campaign_id != campaign.id:
             raise PermissionDenied()
+        if plot.ruleset != campaign.ruleset:
+            raise PermissionDenied()
         return render(
             request,
             "campaigns/modals/plot_preview.html",
@@ -282,6 +298,8 @@ class XhrAssignCampaignPlotView(View):
             raise PermissionDenied()
         plot = get_object_or_404(Plot, id=kwargs["plot_pk"])
         if plot.cloned_from_id or plot.campaign_id:
+            raise PermissionDenied()
+        if plot.ruleset != campaign.ruleset:
             raise PermissionDenied()
         existing_plot = Plot.objects.filter(campaign=campaign).first()
         if existing_plot:
@@ -300,6 +318,7 @@ class XhrRemoveCampaignPlotView(View):
             Handout.objects.filter(plotelement__plot=plot).delete()
             Location.objects.filter(plotelement__plot=plot).delete()
             Character.objects.filter(plotelement__plot=plot).delete()
+            EssentialCharacter.objects.filter(essential_plot_elements__plot=plot).delete()
             plot.delete()
         return JsonResponse({"status": "ok"})
 
@@ -343,6 +362,26 @@ class XhrRemoveCharacterView(View):
         campaign = Campaign.objects.get(id=kwargs["pk"])
         if campaign.may_edit(request.user):
             character = Character.objects.get(id=kwargs["character_pk"])
+            character.campaign = None
+            character.npc_campaign = None
+            character.save()
+        return JsonResponse({"status": "ok"})
+
+
+class XhrSwitchEssentialCharacterNPCView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["pk"], ruleset=Campaign.RULESET_ESSENTIAL)
+        if campaign.may_edit(request.user):
+            character = get_object_or_404(EssentialCharacter, id=kwargs["character_pk"])
+            character.switch_pc_npc_campaign()
+        return JsonResponse({"status": "ok"})
+
+
+class XhrRemoveEssentialCharacterView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["pk"], ruleset=Campaign.RULESET_ESSENTIAL)
+        if campaign.may_edit(request.user):
+            character = get_object_or_404(EssentialCharacter, id=kwargs["character_pk"])
             character.campaign = None
             character.npc_campaign = None
             character.save()
@@ -409,8 +448,10 @@ class XhrSidebarView(BaseSidebarView):
         if self.kwargs["sidebar_template"] == "npc":
             plot = Plot.objects.filter(campaign=self.object).first()
             if plot:
+                model = EssentialCharacter if self.object.ruleset == Campaign.RULESET_ESSENTIAL else Character
+                relation = "essential_plot_elements__plot" if model is EssentialCharacter else "plotelement__plot"
                 context["characters"] = (
-                    Character.objects.filter(plotelement__plot=plot)
+                    model.objects.filter(**{relation: plot})
                     .distinct()
                     .order_by("name")
                 )
@@ -520,9 +561,10 @@ class XhrSelectNPCView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["characters"] = Character.objects.filter(
-            created_by=self.request.user
-        ).exclude(id__in=self.object.npc_set.all())
+        if self.object.ruleset == Campaign.RULESET_ESSENTIAL:
+            context["characters"] = EssentialCharacter.objects.filter(created_by=self.request.user).exclude(id__in=self.object.essential_npc_set.all())
+        else:
+            context["characters"] = Character.objects.filter(created_by=self.request.user).exclude(id__in=self.object.npc_set.all())
         context["campaign"] = self.object
         return context
 
@@ -533,15 +575,16 @@ class CloneNPCView(View):
         if not campaign.may_edit(request.user):
             raise PermissionDenied()
 
-        character = get_object_or_404(Character, pk=kwargs["character_pk"])
+        model = EssentialCharacter if campaign.ruleset == Campaign.RULESET_ESSENTIAL else Character
+        character = get_object_or_404(model, pk=kwargs["character_pk"])
         character.clone(new_npc_campaign=campaign)
         return render(
             request,
             "campaigns/fragments/select_npc.html",
             {
-                "characters": Character.objects.filter(
-                    created_by=self.request.user
-                ).exclude(id__in=campaign.npc_set.all()),
+                "characters": model.objects.filter(created_by=self.request.user).exclude(
+                    id__in=campaign.essential_npc_set.all() if model is EssentialCharacter else campaign.npc_set.all()
+                ),
                 "campaign": campaign,
             },
         )
@@ -553,7 +596,10 @@ class AssignNPCView(View):
         if not campaign.may_edit(request.user):
             raise PermissionDenied()
 
-        character = get_object_or_404(Character, pk=kwargs["character_pk"])
+        model = EssentialCharacter if campaign.ruleset == Campaign.RULESET_ESSENTIAL else Character
+        character = get_object_or_404(model, pk=kwargs["character_pk"])
+        if model is EssentialCharacter and character.campaign_id:
+            raise PermissionDenied()
         character.npc_campaign = campaign
         character.save()
         messages.success(request, _("NPC assigned to this campaign."))
@@ -561,9 +607,9 @@ class AssignNPCView(View):
             request,
             "campaigns/fragments/select_npc.html",
             {
-                "characters": Character.objects.filter(
-                    created_by=self.request.user
-                ).exclude(id__in=campaign.npc_set.all()),
+                "characters": model.objects.filter(created_by=self.request.user).exclude(
+                    id__in=campaign.essential_npc_set.all() if model is EssentialCharacter else campaign.npc_set.all()
+                ),
                 "campaign": campaign,
             },
         )

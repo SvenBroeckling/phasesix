@@ -17,6 +17,7 @@ urlpatterns = [
     path("feeds/modified_admin/", LatestModifiedAdmin()),
     path("api/", include("api.urls", namespace="api")),
     path("", include("characters.urls", namespace="characters")),
+    path("essential/", include("essential_characters.urls", namespace="essential_characters")),
     path("admin/", admin.site.urls),
     path(
         "contact/", TemplateView.as_view(template_name="contact.html"), name="contact"

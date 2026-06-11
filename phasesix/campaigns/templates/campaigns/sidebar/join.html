@@ -8,8 +8,13 @@
     </p>
 
     {% if user.is_authenticated %}
+      {% if object.ruleset == "tirakan_essential" %}
+      <a href="{% url 'essential_characters:create' %}?campaign={{ object.id }}"
+         class="btn btn-primary">{% trans 'Create a new Essential character' %}</a>
+      {% else %}
       <a href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="pc" %}"
          class="btn btn-primary">{% trans 'Create a new character' %}</a>
+      {% endif %}
     {% else %}
       {% url 'login' as login_url %}
       {% url 'django_registration_register' as register_url %}

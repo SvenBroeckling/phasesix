@@ -40,6 +40,11 @@
             </a>
           </div>
         {% endif %}
+        {% if object.ruleset == "tirakan_essential" %}
+          {% for c in object.essentialcharacter_set.all %}
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2"><a href="{{ c.get_absolute_url }}" class="text-decoration-none"><div class="card h-100 campaign-cast-card"><div class="card-body"><div class="small fw-semibold text-truncate">{{ c }}</div><small class="text-primary">Essential</small></div></div></a></div>
+          {% endfor %}
+        {% else %}
         {% for c in object.character_set.all %}
           <div class="col-6 col-sm-4 col-md-3 col-lg-2">
             <a href=""
@@ -58,6 +63,7 @@
             </a>
           </div>
         {% endfor %}
+        {% endif %}
       </div>
     </div>
   {% endif %}

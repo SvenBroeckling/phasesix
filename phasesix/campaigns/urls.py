@@ -89,6 +89,8 @@ urlpatterns = [
         views.XhrSwitchCharacterNPCView.as_view(),
         name="xhr_switch_npc",
     ),
+    path("remove_essential_character/<int:pk>/<int:character_pk>", views.XhrRemoveEssentialCharacterView.as_view(), name="xhr_remove_essential_character"),
+    path("switch_essential_npc/<int:pk>/<int:character_pk>", views.XhrSwitchEssentialCharacterNPCView.as_view(), name="xhr_switch_essential_npc"),
     path(
         "add_foe/<int:pk>/<int:foe_pk>",
         views.XhrAddFoeToCampaignView.as_view(),

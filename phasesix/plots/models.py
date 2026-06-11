@@ -3,6 +3,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.db import models, transaction
 from django.utils.translation import gettext as _
+from django.core.exceptions import ValidationError
 from transmeta import TransMeta
 import os
 import uuid
@@ -31,7 +32,14 @@ def _copy_field_file(field_file):
 
 
 class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
+    RULESET_PHASESIX = "phasesix"
+    RULESET_ESSENTIAL = "tirakan_essential"
+    RULESET_CHOICES = (
+        (RULESET_PHASESIX, _("PhaseSix")),
+        (RULESET_ESSENTIAL, _("Tirakan Essential")),
+    )
     name = models.CharField(_("name"), max_length=128)
+    ruleset = models.CharField(_("ruleset"), max_length=24, choices=RULESET_CHOICES, default=RULESET_PHASESIX)
     language = models.CharField(
         _("language"), max_length=4, default="en", choices=settings.LANGUAGES
     )
@@ -85,6 +93,17 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         verbose_name = _("plot")
         verbose_name_plural = _("plots")
 
+    def clean(self):
+        super().clean()
+        if self.ruleset == self.RULESET_ESSENTIAL and self.world_extension_id and self.world_extension.identifier != "tirakan":
+            raise ValidationError({"ruleset": _("Tirakan Essential requires the Tirakan world.")})
+        if self.campaign_id and self.ruleset != self.campaign.ruleset:
+            raise ValidationError({"ruleset": _("Plot and campaign rulesets must match.")})
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        return super().save(*args, **kwargs)
+
     @property
     def root_elements(self):
         return (
@@ -94,11 +113,13 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
             .all()
         )
 
-    def clone(self, campaign=None, npc_map=None):
+    def clone(self, campaign=None, npc_map=None, essential_npc_map=None):
         npc_map = npc_map or {}
+        essential_npc_map = essential_npc_map or {}
         with transaction.atomic():
             clone = Plot.objects.create(
                 name=self.name,
+                ruleset=self.ruleset,
                 language=self.language,
                 player_abstract=self.player_abstract,
                 gm_description=self.gm_description,
@@ -114,7 +135,7 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
             elements = list(
                 self.plotelement_set.all()
                 .select_related("parent")
-                .prefetch_related("handouts", "locations", "npc", "foes")
+                .prefetch_related("handouts", "locations", "npc", "essential_npc", "foes")
             )
             element_map = {}
             for element in elements:
@@ -171,6 +192,14 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                 if new_npcs:
                     new_element.npc.set(new_npcs)
 
+                new_essential_npcs = []
+                for npc in element.essential_npc.all():
+                    if npc.id not in essential_npc_map:
+                        essential_npc_map[npc.id] = npc.clone(plot=clone, new_npc_campaign=campaign)
+                    new_essential_npcs.append(essential_npc_map[npc.id])
+                if new_essential_npcs:
+                    new_element.essential_npc.set(new_essential_npcs)
+
                 if element.foes.exists():
                     new_element.foes.set(element.foes.all())
 
@@ -219,6 +248,11 @@ class PlotElement(models.Model, metaclass=TransMeta):
     player_summary = models.TextField(_("player summary"), blank=True, null=True)
 
     npc = models.ManyToManyField("characters.Character", blank=True)
+    essential_npc = models.ManyToManyField(
+        "essential_characters.EssentialCharacter",
+        blank=True,
+        related_name="essential_plot_elements",
+    )
     foes = models.ManyToManyField("rules.Foe", blank=True)
     handouts = models.ManyToManyField(Handout, blank=True)
     locations = models.ManyToManyField(Location, blank=True)

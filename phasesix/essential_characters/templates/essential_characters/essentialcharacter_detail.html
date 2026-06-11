@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{{ object }} - {{ block.super }}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'essential_characters/essential.css' %}">{% endblock %}
+{% block content %}
+  <article class="essential-sheet">
+    <header class="d-flex justify-content-between align-items-start mb-4">
+      <div><small class="text-primary">{% trans "Tirakan Essential" %}</small><h1>{{ object }}</h1><p>{{ object.concept }}</p></div>
+      {% if user.is_authenticated and object.created_by == user %}<a class="btn btn-outline-primary" href="{% url 'essential_characters:edit' slug=object.slug %}">{% trans "Edit" %}</a>{% endif %}
+    </header>
+    <div class="row g-4">
+      <section class="col-12 col-lg-4"><h2>{% trans "Marks" %}</h2><p>{{ object.ancestry|default:object.ancestry_custom }}<br>{{ object.path|default:object.path_custom }}<br>{{ object.bond|default:object.bond_custom }}</p></section>
+      <section class="col-12 col-lg-4"><h2>{% trans "Conditions" %}</h2><p>{% trans "Wounds" %}: {{ object.wounds }}/{{ object.wound_threshold }}<br>{% trans "Burden" %}: {{ object.burden }}/{{ object.burden_threshold }}<br>{% trans "Omen" %}: {{ object.omen }}/{{ object.omen_max }}<br>{% trans "Arkana" %}: {{ object.arkana }}/{{ object.arkana_max }}<br>{% trans "Favor" %}: {{ object.favor }}/{{ object.favor_max }}</p></section>
+      <section class="col-12 col-lg-4"><h2>{% trans "Derived values" %}</h2><p>{% trans "Initiative" %}: {{ object.initiative }}<br>{% trans "Faith" %}: {{ object.faith_level }}<br>{% trans "Magic" %}: {{ object.magic_level }}<br>{% trans "Invocation" %}: {{ object.invocation_value }}</p></section>
+      <section class="col-12 col-lg-6"><h2>{% trans "Attributes" %}</h2><div class="row">{% for value in object.attribute_values %}<span class="col-6">{{ value }}</span>{% endfor %}</div></section>
+      <section class="col-12 col-lg-6"><h2>{% trans "Skills" %}</h2>{% for assignment in object.essentialcharacterskill_set.all %}<p>{{ assignment.skill }}: {{ assignment.rank }}</p>{% endfor %}</section>
+      <section class="col-12"><h2>{% trans "Notes" %}</h2>{{ object.notes|linebreaks }}</section>
+    </div>
+  </article>
+{% endblock %}

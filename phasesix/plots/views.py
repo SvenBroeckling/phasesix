@@ -23,6 +23,7 @@ from plots.models import Plot, PlotElement, Handout, Location
 from campaigns.models import Campaign
 from plots.openai import PlotOpenAIService
 from characters.models import Character
+from essential_characters.models import EssentialCharacter
 from rules.models import Foe, Extension
 
 logger = logging.getLogger(__name__)
@@ -138,6 +139,7 @@ class XhrCreatePlotView(CreateView):
             form.instance.is_homebrew = False
         if campaign:
             form.instance.campaign = campaign
+            form.instance.ruleset = campaign.ruleset
             if not form.instance.world_extension_id:
                 form.instance.world_extension = campaign.world_extension
             if not form.instance.epoch_extension_id:
@@ -454,15 +456,18 @@ class XhrSelectPlotNpcView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         plot = self.object.plot
+        model = EssentialCharacter if plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        relation = "essential_plot_elements__plot" if model is EssentialCharacter else "plotelement__plot"
+        current = self.object.essential_npc if model is EssentialCharacter else self.object.npc
         assigned_characters = (
-            Character.objects.filter(plotelement__plot=plot)
+            model.objects.filter(**{relation: plot})
             .distinct()
-            .exclude(id__in=self.object.npc.all())
+            .exclude(id__in=current.all())
         )
         context["assigned_characters"] = assigned_characters
         context["characters"] = (
-            Character.objects.filter(created_by=self.request.user)
-            .exclude(id__in=self.object.npc.all())
+            model.objects.filter(created_by=self.request.user)
+            .exclude(id__in=current.all())
             .exclude(id__in=assigned_characters.values_list("id", flat=True))
         )
         return context
@@ -491,42 +496,45 @@ class XhrSelectPlotFoeView(DetailView):
 class AddPlotNpcView(View):
     def post(self, request, *args, **kwargs):
         plot_element = get_object_or_404(PlotElement, id=kwargs["pk"])
-        character = get_object_or_404(Character, id=kwargs["character_pk"])
+        model = EssentialCharacter if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        character = get_object_or_404(model, id=kwargs["character_pk"])
 
         if character.created_by_id != request.user.id:
             raise PermissionDenied()
 
         clone = character.clone(plot=plot_element.plot)
-        plot_element.npc.add(clone)
+        (plot_element.essential_npc if model is EssentialCharacter else plot_element.npc).add(clone)
         return JsonResponse({"status": "ok"})
 
 
 class AssignPlotNpcView(View):
     def post(self, request, *args, **kwargs):
         plot_element = get_object_or_404(PlotElement, id=kwargs["pk"])
-        character = get_object_or_404(Character, id=kwargs["character_pk"])
+        model = EssentialCharacter if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        character = get_object_or_404(model, id=kwargs["character_pk"])
 
         if character.plot_id != plot_element.plot_id:
             raise PermissionDenied()
         if character.created_by_id != request.user.id:
             raise PermissionDenied()
 
-        plot_element.npc.add(character)
+        (plot_element.essential_npc if model is EssentialCharacter else plot_element.npc).add(character)
         return JsonResponse({"status": "ok"})
 
 
 class DeletePlotNpcView(View):
     def post(self, request, *args, **kwargs):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
-        character = get_object_or_404(Character, id=self.kwargs["pk"])
+        model = EssentialCharacter if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        character = get_object_or_404(model, id=self.kwargs["pk"])
 
         if character.created_by_id != request.user.id:
             raise PermissionDenied()
 
-        plot_element.npc.remove(character)
+        (plot_element.essential_npc if model is EssentialCharacter else plot_element.npc).remove(character)
         if (
             character.plot_id == plot_element.plot_id
-            and not character.plotelement_set.exists()
+            and not (character.essential_plot_elements.exists() if model is EssentialCharacter else character.plotelement_set.exists())
         ):
             character.delete()
         return JsonResponse({"status": "ok"})

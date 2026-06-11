@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     "eventstream",
     "modals_sidebars",
     "characters",
+    "essential_characters",
     "rulebook",
     "forum",
     "portal",

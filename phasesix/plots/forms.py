@@ -11,6 +11,7 @@ class PlotForm(forms.ModelForm):
         model = Plot
         fields = (
             "name",
+            "ruleset",
             "epoch_extension",
             "world_extension",
             "extensions",
