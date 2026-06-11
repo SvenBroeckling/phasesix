@@ -1,16 +1,185 @@
 $font-size-base: 1.05rem;
-$font-family-sans-serif: "Noto Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
-$headings-font-family: 'Oxanium', system-ui;
+$font-family-sans-serif:
+    "Noto Sans",
+    -apple-system,
+    system-ui,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif !default;
+$headings-font-family: $font-family-sans-serif;
+$headings-font-weight: 650;
 
-/* Last update: atmospheric components */
+/* Theme build marker: 2026-06-11 - update in all theme entrypoints after any SCSS change. */
 
-$blue: #267e89;
-$red: #af5fb6;
-$orange: #f3cd94;
-$cyan: #3db7e8;
-$green: #6eb35a;
-$body-bg-dark: #0E1217;
-$body-tertiary-bg-dark: #0E1113;
+$primary: #4f8fdb;
+$secondary: #74859a;
 
-@import '../vendor/bootstrap/scss/bootstrap.scss';
-@import 'generic';
+$blue: #4f8fdb;
+$red: #c76572;
+$orange: #d99055;
+$yellow: #d0a94b;
+$cyan: #55a9c6;
+$green: #62a978;
+
+$body-color-dark: #d8e1eb;
+$body-bg-dark: #0c1118;
+$body-secondary-bg-dark: #141c26;
+$body-tertiary-bg-dark: #111923;
+$body-emphasis-color-dark: #f2f7fc;
+$border-color-dark: #2b3949;
+$border-color-translucent-dark: rgba(#b9d6f5, 0.14);
+$headings-color-dark: #edf5fc;
+$link-color-dark: #80b8f2;
+$link-hover-color-dark: #acd4fb;
+
+$border-radius: 0.45rem;
+$border-radius-sm: 0.3rem;
+$border-radius-lg: 0.65rem;
+
+@import "../vendor/bootstrap/scss/bootstrap.scss";
+@import "generic";
+
+/* PhaseSix is the clean, system-neutral toolkit brand. */
+
+$phasesix-panel-cards:
+    ".catalog-card", ".item-card", ".foe-card", ".wiki-page-index-card",
+    ".world-card", ".rulebook-volume", ".body-modification-card",
+    ".material-overview-card", ".index-avatar-card", ".index-create-card",
+    ".index-lore-card",
+    ".profile-sheet-content .character-list-widget-container",
+    ".profile-sheet-content .campaign-list-widget-container",
+    ".profile-sheet-content .profile-create-card",
+    ".profile-sheet-content .atmospheric-profile-cta",
+    ".profile-sheet-content .profile-settings-card";
+
+#{join($phasesix-panel-cards, (), comma)} {
+    border-radius: $border-radius-lg;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(var(--bs-white-rgb), 0.035),
+            transparent 42%
+        ),
+        var(--bs-tertiary-bg);
+    box-shadow:
+        inset 0 1px 0 rgba(var(--bs-white-rgb), 0.035),
+        0 0.65rem 1.8rem rgba(var(--bs-black-rgb), 0.2);
+
+    &::before,
+    &::after {
+        display: none;
+    }
+}
+
+.catalog-card-visual,
+.item-card-visual,
+.foe-card-visual,
+.wiki-page-index-visual,
+.world-card-visual,
+.rulebook-volume-visual,
+.body-modification-card-visual,
+.index-lore-card > .card-img-top,
+.index-lore-card > .index-lore-sigil {
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+}
+
+.atmospheric-main-navigation {
+    border-right: 0;
+    border-left: 0;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(var(--bs-primary-rgb), 0.055) 50%,
+            transparent
+        ),
+        rgba(var(--bs-body-bg-rgb), 0.97);
+    box-shadow: 0 0.45rem 1.5rem rgba(var(--bs-black-rgb), 0.22);
+
+    .nav-link,
+    .dropdown-menu,
+    .dropdown-menu img,
+    .dropdown-menu .rounded-pill {
+        border-radius: $border-radius !important;
+    }
+}
+
+.atmospheric-navigation,
+.atmospheric-tabs,
+.modal .nav-tabs,
+.modal .nav-pills,
+.offcanvas .nav-tabs,
+.offcanvas .nav-pills,
+.modal-content.atmospheric-modal,
+.page-modal .modal-content,
+.offcanvas.atmospheric-modal {
+    border-radius: $border-radius-lg;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(var(--bs-white-rgb), 0.025),
+            transparent 42%
+        ),
+        var(--bs-tertiary-bg);
+    box-shadow:
+        inset 0 1px 0 rgba(var(--bs-white-rgb), 0.035),
+        0 0.65rem 1.8rem rgba(var(--bs-black-rgb), 0.18);
+}
+
+.atmospheric-navigation {
+    &::before,
+    &::after {
+        display: none;
+    }
+
+    > .list-group-item {
+        border-radius: $border-radius-sm !important;
+    }
+}
+
+.atmospheric-tabs,
+.modal .nav-tabs,
+.modal .nav-pills,
+.offcanvas .nav-tabs,
+.offcanvas .nav-pills {
+    .nav-link {
+        border-radius: $border-radius-sm;
+    }
+}
+
+.atmospheric-index-hero {
+    background:
+        radial-gradient(
+            circle at 76% 38%,
+            rgba(var(--bs-primary-rgb), 0.17),
+            transparent 36%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bs-body-bg) 0%,
+            rgba(var(--bs-primary-rgb), 0.045) 50%,
+            rgba(var(--bs-primary-rgb), 0.11) 100%
+        );
+
+    &::before,
+    &::after {
+        display: none;
+    }
+}
+
+.atmospheric-index-section-title {
+    letter-spacing: -0.025em;
+}
+
+.catalog-card-heading h3,
+.item-card-heading h3,
+.foe-card-heading h3,
+.wiki-page-index-visual h3,
+.world-card-visual h2,
+.rulebook-volume-heading h2,
+.body-modification-card-heading h3 {
+    letter-spacing: -0.02em;
+}

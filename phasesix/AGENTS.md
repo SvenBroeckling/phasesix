@@ -85,15 +85,25 @@ card or navigation variants.
 
 ### Brand Themes
 
-The default PhaseSix brand is served at `http://localhost:8000`; the Tirakan
-brand is selected for `http://tr.localhost:8000` by `worlds/middleware.py`.
-Shared atmospheric components must work for both brands, while Tirakan may add
-restrained dark-fantasy decoration through Tirakan-only overrides.
+The default PhaseSix brand is served when no world matches the request domain.
+`worlds/middleware.py` selects configured world brands, including Tirakan and
+Nexus, from their database-backed domain names. Shared atmospheric components
+must work for all three brands, while each theme entrypoint may add restrained
+brand-specific overrides.
 
-- Treat `characters/static/theme/phasesix.scss` and
+- Treat `characters/static/theme/phasesix.scss`,
+  `characters/static/theme/nexus.scss`, and
   `characters/static/theme/tirakan.scss` as the source of truth for each
-  brand's Bootstrap palette. Use Bootstrap CSS variables in shared partials so
-  changing a theme palette updates all atmospheric elements.
+  brand's Bootstrap palette and brand-specific presentation. Use Bootstrap CSS
+  variables in shared partials so changing a theme palette updates all
+  atmospheric elements.
+- Keep PhaseSix clean, polished, and system-neutral. It is the common toolkit
+  for every RPG setting, using clear blue accents, cool navy-gray surfaces,
+  ordinary sans-serif typography, softer corners, and subtle layered panels.
+  Avoid setting-specific fantasy or science-fiction decoration.
+- Keep Nexus futuristic and alien. Use its Oxanium headings, cyan/teal base,
+  purple accents, sharp geometry, and atmospheric glow to distinguish it from
+  the neutral PhaseSix toolkit.
 - Keep Tirakan warm but subdued: use a near-black neutral background,
   charcoal foreground panels, muted ember-gold primary accents, and restrained
   secondary colors. Avoid saturated orange embers and broadly brown-tinted
@@ -108,11 +118,17 @@ restrained dark-fantasy decoration through Tirakan-only overrides.
   Use a mostly opaque `--bs-body-bg-rgb` surface, a small amount of restrained
   primary tint, and a light backdrop blur. Keep this treatment Tirakan-only
   unless the other brand explicitly needs it.
+- Each theme entrypoint contains a `Theme build marker` comment. Whenever any
+  imported SCSS partial or theme-specific SCSS changes, update that marker in
+  all three entrypoints. This changes their source timestamps/content so
+  `collectstatic` recompiles every theme instead of serving stale generated
+  CSS.
 
-After UI style changes, compile both active themes:
+After UI style changes, compile all three active themes:
 
 - `uv run python -c "import sass; sass.compile(filename='characters/static/theme/tirakan.scss', include_paths=['characters/static/theme'])"`
 - `uv run python -c "import sass; sass.compile(filename='characters/static/theme/phasesix.scss', include_paths=['characters/static/theme'])"`
+- `uv run python -c "import sass; sass.compile(filename='characters/static/theme/nexus.scss', include_paths=['characters/static/theme'])"`
 
 ## Testing Guidelines
 
