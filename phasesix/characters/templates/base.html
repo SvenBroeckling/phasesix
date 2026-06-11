@@ -91,6 +91,7 @@
         {% if image %}
           <a class="in-page-header-image toggle-lightbox"
              href="{% image_url object "1400" %}"
+             data-caption="{{ object|default:brand_name }}"
              aria-label="{% trans "Open image" %}">
             <img src="{{ image }}" alt="{{ object|default:brand_name }}">
           </a>

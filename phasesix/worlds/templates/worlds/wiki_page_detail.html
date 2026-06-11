@@ -38,7 +38,10 @@
       {% with img=object.get_image %}
         {% if img %}
           {% thumbnail img.image '1024' as im %}
-            <a class="d-none d-lg-block toggle-lightbox" href="{{ img.image.url }}" data-gallery="{{ object.slug }}">
+            <a class="d-none d-lg-block toggle-lightbox"
+               href="{{ img.image.url }}"
+               data-gallery="{{ object.slug }}"
+               data-caption="{{ object }}">
               <img class="rounded img-fluid w-25 float-start me-3 mb-2 world-article-image" src="{{ im.url }}"
                    alt="{{ object }}"/>
             </a>

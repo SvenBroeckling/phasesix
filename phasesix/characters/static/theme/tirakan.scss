@@ -11,7 +11,7 @@ $font-family-sans-serif:
     sans-serif !default;
 $headings-font-family: "Morris Roman", system-ui;
 
-/* Theme build marker: 2026-06-11 compact in-page header - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-11 branded image lightbox controls - update in all theme entrypoints after any SCSS change. */
 
 $primary: #9f784f;
 $secondary: #66615b;
@@ -36,6 +36,35 @@ $link-hover-color-dark: #d6b98f;
 
 @import "../vendor/bootstrap/scss/bootstrap.scss";
 @import "generic";
+
+.lightbox {
+    --lightbox-control-radius: 1.5rem 0.35rem;
+
+    .modal-content::before,
+    .modal-content::after {
+        content: "";
+        position: absolute;
+        z-index: 3;
+        width: 7rem;
+        height: 2.5rem;
+        border-top: 1px solid rgba(var(--bs-primary-rgb), 0.48);
+        border-left: 1px solid rgba(var(--bs-primary-rgb), 0.3);
+        border-radius: 2.5rem 0 0;
+        pointer-events: none;
+    }
+
+    .modal-content::before {
+        top: 0.7rem;
+        left: 0.7rem;
+        transform: rotate(-3deg);
+    }
+
+    .modal-content::after {
+        right: 0.7rem;
+        bottom: 0.7rem;
+        transform: rotate(177deg);
+    }
+}
 
 .in-page-header {
     &::before,
