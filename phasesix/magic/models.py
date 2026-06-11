@@ -66,6 +66,10 @@ class SpellType(ModelWithImage, metaclass=TransMeta):
 
 class SpellOrigin(SearchableCardListMixin, ModelWithImage, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=30)
+    essential_enabled = models.BooleanField(_("essential enabled"), default=False)
+    essential_description = models.CharField(
+        _("essential description"), max_length=500, blank=True, null=True
+    )
     fa_icon_class = models.CharField(
         _("FA Icon Class"), max_length=30, default="fas fa-book"
     )
@@ -119,6 +123,7 @@ class BaseSpell(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
         blank=True,
         verbose_name=_("created by"),
     )
+    essential_enabled = models.BooleanField(_("essential enabled"), default=False)
 
     spell_point_cost = models.IntegerField(_("spell point cost"))
     arcana_cost = models.IntegerField(_("arcana cost"), default=1)

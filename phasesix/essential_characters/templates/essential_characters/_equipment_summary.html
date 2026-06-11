@@ -1,0 +1,27 @@
+{% load i18n %}
+<div class="card-body">
+  {% for resource in resources %}
+    <div{% if not forloop.last %} class="mb-4"{% endif %}>
+      <h3 class="h4 mb-3">{{ resource }}</h3>
+      {% if resource_type == "weapon" %}
+        <dl class="essential-mark-details mb-0">
+          <div><dt>{% trans "Damage" %}</dt><dd>{{ resource.essential_damage|default:"-" }}</dd></div>
+          <div><dt>{% trans "Range" %}</dt><dd>{{ resource.essential_range|default:"-" }}</dd></div>
+          <div><dt>{% trans "Grip" %}</dt><dd>{{ resource.essential_grip|default:"-" }}</dd></div>
+          <div><dt>{% trans "Properties" %}</dt><dd>{{ resource.essential_properties|default:"-" }}</dd></div>
+        </dl>
+      {% elif resource_type == "armor" %}
+        <dl class="essential-mark-details mb-0">
+          <div><dt>{% trans "Protection" %}</dt><dd>{{ resource.essential_protection|default:"-" }}</dd></div>
+          <div><dt>{% trans "Load" %}</dt><dd>{{ resource.essential_load|default:"-" }}</dd></div>
+          <div><dt>{% trans "Sealing" %}</dt><dd>{{ resource.essential_sealing|default:"-" }}</dd></div>
+          <div><dt>{% trans "Properties" %}</dt><dd>{{ resource.essential_properties|default:"-" }}</dd></div>
+        </dl>
+      {% elif resource.description %}
+        <p class="mb-0">{{ resource.description|linebreaksbr }}</p>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p class="text-body-secondary mb-0">{% trans "Choose equipment to see its details." %}</p>
+  {% endfor %}
+</div>

@@ -27,6 +27,7 @@ class BaseSpellAdmin(ModelAdmin):
         "origin",
         "type",
         "variant",
+        "essential_enabled",
     )
     list_editable = (
         "spell_point_cost",
@@ -46,9 +47,11 @@ class BaseSpellAdmin(ModelAdmin):
         "spell_point_cost",
         "actions",
         "arcana_cost",
+        "essential_enabled",
     )
     fields = (
         ("name_de", "name_en"),
+        "essential_enabled",
         ("created_by", "is_homebrew", "homebrew_campaign", "keep_as_homebrew"),
         ("origin", "type", "variant", "shape"),
         ("spell_point_cost", "arcana_cost", "range"),
@@ -97,7 +100,14 @@ class BaseSpellInline(TabularInline):
 
 @admin.register(SpellOrigin)
 class SpellOriginAdmin(ModelAdmin):
-    list_display = ("name_de", "name_en")
+    list_display = ("name_de", "name_en", "essential_enabled")
+    fields = (
+        ("name_de", "name_en"),
+        "essential_enabled",
+        "essential_description",
+        ("fa_icon_class", "image"),
+        ("image_copyright", "image_copyright_url"),
+    )
     inlines = [BaseSpellInline]
 
 

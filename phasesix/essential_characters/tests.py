@@ -1,27 +1,40 @@
 from django.contrib.auth import get_user_model
+from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.http import QueryDict
 from django.template.loader import render_to_string
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
+from django.utils.functional import Promise
 from django.utils.translation import override
+from unfold.admin import ModelAdmin
+
+from armory.models import Item, RiotGear, Weapon, WeaponType
+from magic.models import BaseSpell, SpellOrigin
 
 from .definitions import ANCESTRIES, BONDS, PATHS
 from .forms import (
     AttributesForm,
     ConceptForm,
+    EquipmentForm,
     EssentialCharacterForm,
     MarksForm,
     SkillsForm,
 )
-from .models import EssentialAncestry, EssentialBond, EssentialCharacter, EssentialPath
+from .models import (
+    EssentialAncestry,
+    EssentialBond,
+    EssentialCharacter,
+    EssentialCharacterSkill,
+    EssentialPath,
+)
 from .rules import (
     CENTURY_LEVELS,
     magic_slots,
     valid_attribute_distribution,
     valid_skill_distribution,
 )
-from .views import EssentialCharacterCreateWizard
+from .views import EssentialCharacterCreateWizard, WIZARD_FORMS
 
 
 class EssentialRuleTests(SimpleTestCase):
@@ -86,6 +99,11 @@ class EssentialRuleTests(SimpleTestCase):
         form = ConceptForm()
         self.assertNotIn("player_name", form.fields)
         self.assertNotIn("image", form.fields)
+        self.assertNotIn("notes", form.fields)
+        self.assertIn("oath_or_debt", form.fields)
+
+    def test_wizard_has_no_separate_oath_step(self):
+        self.assertNotIn("oath", dict(WIZARD_FORMS))
 
     def test_marks_form_requires_predefined_marks(self):
         form = MarksForm()
@@ -99,6 +117,19 @@ class EssentialRuleTests(SimpleTestCase):
             form.fields["ancestry"].widget.attrs["hx-target"],
             "#summary-id_ancestry",
         )
+
+    def test_equipment_form_loads_preview_for_each_field(self):
+        form = EquipmentForm()
+
+        for name, field in form.fields.items():
+            self.assertEqual(
+                field.widget.attrs["hx-get"],
+                reverse("essential_characters:equipment_summary"),
+            )
+            self.assertEqual(
+                field.widget.attrs["hx-target"],
+                f"#summary-id_{name}",
+            )
 
     def test_mark_models_expose_translated_fields(self):
         self.assertEqual(
@@ -165,6 +196,115 @@ class EssentialRuleTests(SimpleTestCase):
         form = EssentialCharacterForm()
         self.assertIn("image", form.fields)
         self.assertNotIn("player_name", form.fields)
+
+    def test_character_uses_direct_catalog_relations(self):
+        related_models = {
+            "weapons": Weapon,
+            "armor": RiotGear,
+            "items": Item,
+            "magic_aspects": SpellOrigin,
+            "spells": BaseSpell,
+        }
+        for field_name, model in related_models.items():
+            field = EssentialCharacter._meta.get_field(field_name)
+            self.assertIs(field.remote_field.model, model)
+            self.assertIs(
+                field.remote_field.through._meta.auto_created, EssentialCharacter
+            )
+
+    def test_essential_catalog_fields_are_prefixed_and_nullable(self):
+        for model in (Item, Weapon, RiotGear, SpellOrigin, BaseSpell):
+            self.assertFalse(model._meta.get_field("essential_enabled").default)
+        for model, fields in (
+            (
+                Weapon,
+                (
+                    "essential_damage",
+                    "essential_range",
+                    "essential_grip",
+                    "essential_properties",
+                ),
+            ),
+            (
+                RiotGear,
+                (
+                    "essential_protection",
+                    "essential_load",
+                    "essential_sealing",
+                    "essential_properties",
+                ),
+            ),
+            (SpellOrigin, ("essential_description",)),
+        ):
+            for field_name in fields:
+                self.assertTrue(model._meta.get_field(field_name).null)
+
+    def test_bounded_essential_text_uses_char_fields(self):
+        for model, fields in (
+            (
+                EssentialAncestry,
+                (
+                    "name_de",
+                    "description_de",
+                    "benefit_de",
+                    "vulnerability_de",
+                    "skills_de",
+                ),
+            ),
+            (
+                EssentialPath,
+                (
+                    "name_de",
+                    "description_de",
+                    "benefit_de",
+                    "vulnerability_de",
+                    "facet_de",
+                    "skills_de",
+                ),
+            ),
+            (
+                EssentialBond,
+                ("name_de", "description_de", "benefit_de", "vulnerability_de"),
+            ),
+            (EssentialCharacter, ("name", "birth_date", "concept", "focus")),
+            (Weapon, ("essential_properties",)),
+            (RiotGear, ("essential_properties",)),
+            (SpellOrigin, ("essential_description",)),
+        ):
+            for field_name in fields:
+                self.assertEqual(
+                    model._meta.get_field(field_name).get_internal_type(), "CharField"
+                )
+
+    def test_essential_fields_have_translatable_verbose_names(self):
+        models = (
+            EssentialAncestry,
+            EssentialPath,
+            EssentialBond,
+            EssentialCharacter,
+            EssentialCharacterSkill,
+        )
+        for model in models:
+            for field in model._meta.get_fields():
+                if field.auto_created:
+                    continue
+                self.assertIsInstance(field._verbose_name, Promise)
+
+    def test_skill_is_direct_free_text_assignment(self):
+        self.assertEqual(
+            [field.name for field in EssentialCharacterSkill._meta.fields],
+            ["id", "character", "name", "rank"],
+        )
+
+    def test_essential_admins_use_unfold_model_admin(self):
+        for model in (
+            EssentialAncestry,
+            EssentialBond,
+            EssentialCharacter,
+            EssentialCharacterSkill,
+            EssentialPath,
+        ):
+            self.assertIsInstance(admin.site._registry[model], ModelAdmin)
 
     def test_wizard_step_url_preserves_query_parameters(self):
         wizard = EssentialCharacterCreateWizard()
@@ -253,6 +393,45 @@ class EssentialMarkSummaryTests(TestCase):
         response = self.client.get(
             reverse("essential_characters:mark_summary"),
             {"marks-unknown": self.path.pk},
+        )
+
+        self.assertEqual(response.status_code, 400)
+
+
+class EssentialEquipmentSummaryTests(TestCase):
+    def setUp(self):
+        self.client.force_login(
+            get_user_model().objects.create_user(username="equipment-user")
+        )
+        weapon_type = WeaponType.objects.create(name_de="Nahkampf", name_en="Melee")
+        self.weapon = Weapon.objects.create(
+            name_de="Schwert",
+            name_en="Sword",
+            type=weapon_type,
+            weight=1,
+            price=10,
+            essential_enabled=True,
+            essential_damage="2",
+            essential_range="Nahkampf",
+            essential_grip="10",
+            essential_properties="Ausgewogen",
+        )
+
+    def test_equipment_summary_returns_selected_equipment_details(self):
+        response = self.client.get(
+            reverse("essential_characters:equipment_summary"),
+            {"equipment-primary_weapon": self.weapon.pk},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.weapon.name)
+        self.assertContains(response, self.weapon.essential_damage)
+        self.assertContains(response, self.weapon.essential_properties)
+
+    def test_equipment_summary_rejects_unknown_equipment_type(self):
+        response = self.client.get(
+            reverse("essential_characters:equipment_summary"),
+            {"equipment-unknown": self.weapon.pk},
         )
 
         self.assertEqual(response.status_code, 400)

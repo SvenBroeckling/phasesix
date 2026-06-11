@@ -11,13 +11,13 @@ from formtools.wizard.views import SessionWizardView
 
 from campaigns.models import Campaign
 from plots.models import Plot
+from armory.models import Item, RiotGear, Weapon
 from .forms import (
     AttributesForm,
     ConceptForm,
     EquipmentForm,
     EssentialCharacterForm,
     MarksForm,
-    OathForm,
     SkillsForm,
     SupernaturalForm,
 )
@@ -25,22 +25,16 @@ from .models import (
     EssentialAncestry,
     EssentialBond,
     EssentialCharacter,
-    EssentialCharacterArmor,
-    EssentialCharacterItem,
     EssentialCharacterSkill,
-    EssentialCharacterSpell,
-    EssentialCharacterWeapon,
     EssentialPath,
-    EssentialSkill,
 )
-from .rules import ATTRIBUTES, CENTURY_LEVELS, magic_slots
+from .rules import ATTRIBUTES, magic_slots
 
 WIZARD_FORMS = (
     ("concept", ConceptForm),
     ("attributes", AttributesForm),
     ("marks", MarksForm),
     ("skills", SkillsForm),
-    ("oath", OathForm),
     ("equipment", EquipmentForm),
     ("supernatural", SupernaturalForm),
 )
@@ -49,17 +43,17 @@ WIZARD_STEP_LABELS = {
     "attributes": _("Attributes"),
     "marks": _("Marks"),
     "skills": _("Skills"),
-    "oath": _("Oath or debt"),
     "equipment": _("Equipment"),
     "supernatural": _("Supernatural access"),
 }
 WIZARD_STEP_DESCRIPTIONS = {
-    "concept": _("Give your character a name, concept, birth date, and century."),
+    "concept": _(
+        "Give your character a name, concept, oath or debt, birth date, and century."
+    ),
     "attributes": _("Choose one attribute at 3, two at 2, three at 1, and two at 0."),
     "marks": _("Choose ancestry, path, and bond."),
     "skills": _("Choose one skill at rank 3, three at rank 2, and five at rank 1."),
-    "oath": _("Describe the oath or debt that drives your character."),
-    "equipment": _("Choose shared equipment with an Essential profile."),
+    "equipment": _("Choose equipment enabled for Tirakan Essential."),
     "supernatural": _("Choose the supernatural access granted by Gift."),
 }
 
@@ -108,6 +102,43 @@ def mark_summary(request):
             "mark": mark,
             "mark_type": mark_type,
             "mark_type_label": mark_labels[mark_type],
+        },
+    )
+
+
+@login_required
+def equipment_summary(request):
+    equipment_models = {
+        "primary_weapon": ("weapon", Weapon),
+        "secondary_weapon": ("weapon", Weapon),
+        "armor": ("armor", RiotGear),
+        "items": ("items", Item),
+    }
+    field_name = next(
+        (
+            name
+            for name in equipment_models
+            if any(key == name or key.endswith(f"-{name}") for key in request.GET)
+        ),
+        None,
+    )
+    if not field_name:
+        return HttpResponseBadRequest()
+
+    resource_type, model = equipment_models[field_name]
+    key = next(
+        key
+        for key in request.GET
+        if key == field_name or key.endswith(f"-{field_name}")
+    )
+    values = [value for value in request.GET.getlist(key) if value]
+    resources = model.objects.filter(pk__in=values, essential_enabled=True)
+    return render(
+        request,
+        "essential_characters/_equipment_summary.html",
+        {
+            "resources": resources,
+            "resource_type": resource_type,
         },
     )
 
@@ -236,19 +267,13 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
                 (form[f"skill_{index}_name"], form[f"skill_{index}_rank"])
                 for index in range(9)
             ]
-        attributes = self.get_cleaned_data_for_step("attributes") or {}
-        concept = self.get_cleaned_data_for_step("concept") or {}
-        if attributes and concept:
-            faith, magic = CENTURY_LEVELS[concept.get("century", 1)]
-            context["derived_preview"] = {
-                "wounds": 3 + attributes["body"],
-                "burden": 5 + attributes["will"] // 2,
-                "initiative": 30 + attributes["dexterity"] * 10,
-                "faith": faith,
-                "magic": magic,
-                "arkana": 3 + attributes["mind"],
-                "favor": 3 + attributes["will"],
+        if self.steps.current == "supernatural":
+            context["essential_spell_origins"] = {
+                str(spell.pk): str(spell.origin_id or "")
+                for spell in form.fields["spells"].queryset
             }
+        attributes = self.get_cleaned_data_for_step("attributes") or {}
+        if attributes:
             context["magic_slots"] = magic_slots(attributes["gift"])
         return context
 
@@ -267,7 +292,6 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
             path=data.get("path"),
             bond=data.get("bond"),
             oath_or_debt=data.get("oath_or_debt", ""),
-            notes=data.get("notes", ""),
             focus=data.get("focus", ""),
             regeneration_ritual=data.get("regeneration_ritual", ""),
             **{attribute: data[attribute] for attribute in ATTRIBUTES},
@@ -278,25 +302,16 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
         character.save()
 
         for name, rank in data["skills"]:
-            skill, _ = EssentialSkill.objects.get_or_create(name=name)
             EssentialCharacterSkill.objects.create(
-                character=character, skill=skill, rank=rank
+                character=character, name=name, rank=rank
             )
-        for slot in ("primary", "secondary"):
-            profile = data.get(f"{slot}_weapon")
-            if profile:
-                EssentialCharacterWeapon.objects.create(
-                    character=character, profile=profile, slot=slot
-                )
-        if data.get("armor_profile"):
-            EssentialCharacterArmor.objects.create(
-                character=character, profile=data["armor_profile"]
-            )
-        for item in data.get("item_profiles", ()):
-            EssentialCharacterItem.objects.create(character=character, item=item)
-        character.magic_aspects.set(data.get("magic_aspect_profiles", ()))
-        for profile in data.get("spell_profiles", ()):
-            EssentialCharacterSpell.objects.create(character=character, profile=profile)
+        character.weapons.set(
+            filter(None, (data.get("primary_weapon"), data.get("secondary_weapon")))
+        )
+        character.armor.set(filter(None, (data.get("armor"),)))
+        character.items.set(data.get("items", ()))
+        character.magic_aspects.set(data.get("magic_aspects", ()))
+        character.spells.set(data.get("spells", ()))
         character.validate_assignments()
         return HttpResponseRedirect(character.get_absolute_url())
 
@@ -318,7 +333,7 @@ class EssentialCharacterUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        assignments = self.object.essentialcharacterskill_set.select_related("skill")
-        initial["skill_names"] = "\n".join(a.skill.name for a in assignments)
+        assignments = self.object.essentialcharacterskill_set.all()
+        initial["skill_names"] = "\n".join(a.name for a in assignments)
         initial["skill_ranks"] = "\n".join(str(a.rank) for a in assignments)
         return initial

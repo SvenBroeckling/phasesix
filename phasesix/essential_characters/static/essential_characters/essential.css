@@ -84,12 +84,12 @@ a.essential-step-dot.reached,
   display: grid;
 }
 
-.essential-wizard-fields-marks .essential-mark-column {
+.essential-preview-column {
   display: flex;
   flex-direction: column;
 }
 
-.essential-mark-summary {
+.essential-preview-card {
   min-height: 24rem;
   border-color: rgba(var(--bs-primary-rgb), .25);
   background: var(--bs-tertiary-bg);
@@ -97,13 +97,13 @@ a.essential-step-dot.reached,
   transition: opacity .15s, border-color .15s, box-shadow .15s;
 }
 
-.essential-mark-summary.is-loading {
+.essential-preview-card.is-loading {
   opacity: .55;
   border-color: var(--bs-primary);
   box-shadow: 0 0 0 .15rem rgba(var(--bs-primary-rgb), .12);
 }
 
-.essential-mark-summary h3 {
+.essential-preview-card h3 {
   color: var(--bs-emphasis-color);
 }
 
@@ -256,7 +256,7 @@ div.essential-rank-input > div {
 }
 
 @media (max-width: 767.98px) {
-  .essential-mark-summary {
+  .essential-preview-card {
     min-height: auto;
   }
 

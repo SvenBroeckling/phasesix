@@ -39,7 +39,9 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         (RULESET_ESSENTIAL, _("Tirakan Essential")),
     )
     name = models.CharField(_("name"), max_length=128)
-    ruleset = models.CharField(_("ruleset"), max_length=24, choices=RULESET_CHOICES, default=RULESET_PHASESIX)
+    ruleset = models.CharField(
+        _("ruleset"), max_length=24, choices=RULESET_CHOICES, default=RULESET_PHASESIX
+    )
     language = models.CharField(
         _("language"), max_length=4, default="en", choices=settings.LANGUAGES
     )
@@ -95,10 +97,18 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
 
     def clean(self):
         super().clean()
-        if self.ruleset == self.RULESET_ESSENTIAL and self.world_extension_id and self.world_extension.identifier != "tirakan":
-            raise ValidationError({"ruleset": _("Tirakan Essential requires the Tirakan world.")})
+        if (
+            self.ruleset == self.RULESET_ESSENTIAL
+            and self.world_extension_id
+            and self.world_extension.identifier != "tirakan"
+        ):
+            raise ValidationError(
+                {"ruleset": _("Tirakan Essential requires the Tirakan world.")}
+            )
         if self.campaign_id and self.ruleset != self.campaign.ruleset:
-            raise ValidationError({"ruleset": _("Plot and campaign rulesets must match.")})
+            raise ValidationError(
+                {"ruleset": _("Plot and campaign rulesets must match.")}
+            )
 
     def save(self, *args, **kwargs):
         self.clean()
@@ -135,7 +145,9 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
             elements = list(
                 self.plotelement_set.all()
                 .select_related("parent")
-                .prefetch_related("handouts", "locations", "npc", "essential_npc", "foes")
+                .prefetch_related(
+                    "handouts", "locations", "npc", "essential_npc", "foes"
+                )
             )
             element_map = {}
             for element in elements:
@@ -195,7 +207,9 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                 new_essential_npcs = []
                 for npc in element.essential_npc.all():
                     if npc.id not in essential_npc_map:
-                        essential_npc_map[npc.id] = npc.clone(plot=clone, new_npc_campaign=campaign)
+                        essential_npc_map[npc.id] = npc.clone(
+                            plot=clone, new_npc_campaign=campaign
+                        )
                     new_essential_npcs.append(essential_npc_map[npc.id])
                 if new_essential_npcs:
                     new_element.essential_npc.set(new_essential_npcs)
@@ -250,6 +264,7 @@ class PlotElement(models.Model, metaclass=TransMeta):
     npc = models.ManyToManyField("characters.Character", blank=True)
     essential_npc = models.ManyToManyField(
         "essential_characters.EssentialCharacter",
+        verbose_name=_("essential NPCs"),
         blank=True,
         related_name="essential_plot_elements",
     )

@@ -1,14 +1,21 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
+
 from .models import (
-    EssentialAncestry, EssentialArmorProfile, EssentialBond, EssentialCharacter,
-    EssentialCharacterArmor, EssentialCharacterItem, EssentialCharacterSkill,
-    EssentialCharacterSpell, EssentialCharacterWeapon, EssentialMagicAspectProfile,
-    EssentialPath, EssentialSkill, EssentialSpellProfile, EssentialWeaponProfile,
+    EssentialAncestry,
+    EssentialBond,
+    EssentialCharacter,
+    EssentialCharacterSkill,
+    EssentialPath,
 )
 
-admin.site.register([
-    EssentialAncestry, EssentialArmorProfile, EssentialBond, EssentialCharacter,
-    EssentialCharacterArmor, EssentialCharacterItem, EssentialCharacterSkill,
-    EssentialCharacterSpell, EssentialCharacterWeapon, EssentialMagicAspectProfile,
-    EssentialPath, EssentialSkill, EssentialSpellProfile, EssentialWeaponProfile,
-])
+admin.site.register(
+    [
+        EssentialAncestry,
+        EssentialBond,
+        EssentialCharacter,
+        EssentialCharacterSkill,
+        EssentialPath,
+    ],
+    ModelAdmin,
+)

@@ -4,21 +4,15 @@ from django.urls import reverse_lazy
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
+from armory.models import Item, RiotGear, Weapon
+from magic.models import BaseSpell, SpellOrigin
+
 from .models import (
     EssentialAncestry,
-    EssentialArmorProfile,
     EssentialBond,
     EssentialCharacter,
-    EssentialCharacterArmor,
-    EssentialCharacterItem,
     EssentialCharacterSkill,
-    EssentialCharacterSpell,
-    EssentialCharacterWeapon,
-    EssentialMagicAspectProfile,
     EssentialPath,
-    EssentialSkill,
-    EssentialSpellProfile,
-    EssentialWeaponProfile,
 )
 from .rules import (
     ATTRIBUTES,
@@ -98,6 +92,9 @@ class CircleRadioSelect(forms.RadioSelect):
 class ConceptForm(forms.Form):
     name = forms.CharField(max_length=80)
     concept = forms.CharField(widget=forms.Textarea(attrs={"rows": 3}))
+    oath_or_debt = forms.CharField(
+        required=False, widget=forms.Textarea(attrs={"rows": 5})
+    )
     birth_date = forms.CharField(
         max_length=40,
         required=False,
@@ -198,29 +195,34 @@ class SkillsForm(forms.Form):
         return cleaned
 
 
-class OathForm(forms.Form):
-    oath_or_debt = forms.CharField(
-        required=False, widget=forms.Textarea(attrs={"rows": 5})
-    )
-    notes = forms.CharField(required=False, widget=forms.Textarea(attrs={"rows": 5}))
-
-
 class EquipmentForm(forms.Form):
     primary_weapon = forms.ModelChoiceField(
-        queryset=EssentialWeaponProfile.objects.all(), required=False
+        queryset=Weapon.objects.filter(essential_enabled=True), required=False
     )
     secondary_weapon = forms.ModelChoiceField(
-        queryset=EssentialWeaponProfile.objects.all(), required=False
+        queryset=Weapon.objects.filter(essential_enabled=True), required=False
     )
-    armor_profile = forms.ModelChoiceField(
-        queryset=EssentialArmorProfile.objects.all(), required=False
+    armor = forms.ModelChoiceField(
+        queryset=RiotGear.objects.filter(essential_enabled=True), required=False
     )
-    item_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialCharacter._meta.get_field(
-            "items"
-        ).remote_field.model.objects.all(),
+    items = forms.ModelMultipleChoiceField(
+        queryset=Item.objects.filter(essential_enabled=True),
         required=False,
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            target = f"#summary-{self[name].id_for_label}"
+            field.widget.attrs.update(
+                {
+                    "hx-get": reverse_lazy("essential_characters:equipment_summary"),
+                    "hx-trigger": "change, load",
+                    "hx-target": target,
+                    "hx-swap": "innerHTML",
+                    "hx-indicator": target,
+                }
+            )
 
 
 class SupernaturalForm(forms.Form):
@@ -228,11 +230,11 @@ class SupernaturalForm(forms.Form):
     regeneration_ritual = forms.CharField(
         required=False, widget=forms.Textarea(attrs={"rows": 4})
     )
-    magic_aspect_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialMagicAspectProfile.objects.all(), required=False
+    magic_aspects = forms.ModelMultipleChoiceField(
+        queryset=SpellOrigin.objects.filter(essential_enabled=True), required=False
     )
-    spell_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialSpellProfile.objects.all(), required=False
+    spells = forms.ModelMultipleChoiceField(
+        queryset=BaseSpell.objects.filter(essential_enabled=True), required=False
     )
 
     def __init__(self, *args, gift=0, **kwargs):
@@ -242,13 +244,13 @@ class SupernaturalForm(forms.Form):
     def clean(self):
         cleaned = super().clean()
         slots = magic_slots(self.gift)
-        aspects = cleaned.get("magic_aspect_profiles", ())
-        spells = cleaned.get("spell_profiles", ())
+        aspects = cleaned.get("magic_aspects", ())
+        spells = cleaned.get("spells", ())
         if len(aspects) > slots["aspects"] or len(spells) > slots["spells"]:
             raise ValidationError(
                 _("The supernatural selections exceed the slots granted by Gift.")
             )
-        if any(spell.aspect_id and spell.aspect not in aspects for spell in spells):
+        if any(spell.origin_id and spell.origin not in aspects for spell in spells):
             raise ValidationError(
                 _("Selected spells must belong to a selected magic aspect.")
             )
@@ -260,23 +262,21 @@ class EssentialCharacterForm(forms.ModelForm):
 
     skill_names = forms.CharField(widget=forms.Textarea(attrs={"rows": 9}))
     skill_ranks = forms.CharField(widget=forms.Textarea(attrs={"rows": 9}))
-    weapon_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialWeaponProfile.objects.all(), required=False
+    weapons = forms.ModelMultipleChoiceField(
+        queryset=Weapon.objects.filter(essential_enabled=True), required=False
     )
-    armor_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialArmorProfile.objects.all(), required=False
+    armor = forms.ModelMultipleChoiceField(
+        queryset=RiotGear.objects.filter(essential_enabled=True), required=False
     )
-    item_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialCharacter._meta.get_field(
-            "items"
-        ).remote_field.model.objects.all(),
+    items = forms.ModelMultipleChoiceField(
+        queryset=Item.objects.filter(essential_enabled=True),
         required=False,
     )
-    magic_aspect_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialMagicAspectProfile.objects.all(), required=False
+    magic_aspects = forms.ModelMultipleChoiceField(
+        queryset=SpellOrigin.objects.filter(essential_enabled=True), required=False
     )
-    spell_profiles = forms.ModelMultipleChoiceField(
-        queryset=EssentialSpellProfile.objects.all(), required=False
+    spells = forms.ModelMultipleChoiceField(
+        queryset=BaseSpell.objects.filter(essential_enabled=True), required=False
     )
 
     class Meta:
@@ -307,6 +307,11 @@ class EssentialCharacterForm(forms.ModelForm):
         )
         for attribute in ATTRIBUTES:
             self.fields[attribute].widget = CircleRadioSelect(choices=RANK_CHOICES)
+        if self.instance.pk:
+            for field_name in ("weapons", "armor", "items", "magic_aspects", "spells"):
+                self.fields[field_name].initial = getattr(
+                    self.instance, field_name
+                ).all()
 
     def clean(self):
         cleaned = super().clean()
@@ -333,11 +338,19 @@ class EssentialCharacterForm(forms.ModelForm):
             raise ValidationError(_("Skills must be unique."))
         slots = magic_slots(cleaned.get("gift", 0))
         if (
-            len(cleaned.get("magic_aspect_profiles", ())) > slots["aspects"]
-            or len(cleaned.get("spell_profiles", ())) > slots["spells"]
+            len(cleaned.get("magic_aspects", ())) > slots["aspects"]
+            or len(cleaned.get("spells", ())) > slots["spells"]
         ):
             raise ValidationError(
                 _("The supernatural selections exceed the slots granted by Gift.")
+            )
+        aspects = cleaned.get("magic_aspects", ())
+        if any(
+            spell.origin_id and spell.origin not in aspects
+            for spell in cleaned.get("spells", ())
+        ):
+            raise ValidationError(
+                _("Selected spells must belong to a selected magic aspect.")
             )
         cleaned["_skills"] = list(zip(names, ranks))
         return cleaned
@@ -350,24 +363,13 @@ class EssentialCharacterForm(forms.ModelForm):
             return character
         character.save()
         EssentialCharacterSkill.objects.filter(character=character).delete()
-        EssentialCharacterWeapon.objects.filter(character=character).delete()
-        EssentialCharacterArmor.objects.filter(character=character).delete()
-        EssentialCharacterItem.objects.filter(character=character).delete()
-        EssentialCharacterSpell.objects.filter(character=character).delete()
         for name, rank in self.cleaned_data["_skills"]:
-            skill, _ = EssentialSkill.objects.get_or_create(name=name)
             EssentialCharacterSkill.objects.create(
-                character=character, skill=skill, rank=rank
+                character=character, name=name, rank=rank
             )
-        for profile in self.cleaned_data["weapon_profiles"]:
-            EssentialCharacterWeapon.objects.create(
-                character=character, profile=profile, slot="primary"
-            )
-        for profile in self.cleaned_data["armor_profiles"]:
-            EssentialCharacterArmor.objects.create(character=character, profile=profile)
-        for item in self.cleaned_data["item_profiles"]:
-            EssentialCharacterItem.objects.create(character=character, item=item)
-        character.magic_aspects.set(self.cleaned_data["magic_aspect_profiles"])
-        for profile in self.cleaned_data["spell_profiles"]:
-            EssentialCharacterSpell.objects.create(character=character, profile=profile)
+        character.weapons.set(self.cleaned_data["weapons"])
+        character.armor.set(self.cleaned_data["armor"])
+        character.items.set(self.cleaned_data["items"])
+        character.magic_aspects.set(self.cleaned_data["magic_aspects"])
+        character.spells.set(self.cleaned_data["spells"])
         return character

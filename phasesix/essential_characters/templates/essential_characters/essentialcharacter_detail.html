@@ -27,8 +27,30 @@
       <section class="col-12 col-lg-6"><h2>{% trans "Skills" %}</h2>
         {% essential_rank_options as skill_options %}
         {% for assignment in object.essentialcharacterskill_set.all %}
-          {% include "essential_characters/_readonly_rank_row.html" with label=assignment.skill value=assignment.rank options=skill_options %}
+          {% include "essential_characters/_readonly_rank_row.html" with label=assignment.name value=assignment.rank options=skill_options %}
         {% endfor %}
+      </section>
+      <section class="col-12 col-lg-6"><h2>{% trans "Equipment" %}</h2>
+        <h3>{% trans "Weapons" %}</h3>
+        {% for weapon in object.weapons.all %}
+          <p><strong>{{ weapon }}</strong><br>{{ weapon.essential_damage }} · {{ weapon.essential_range }} · {{ weapon.essential_grip }}<br>{{ weapon.essential_properties }}</p>
+        {% empty %}<p class="text-secondary">-</p>{% endfor %}
+        <h3>{% trans "Armor" %}</h3>
+        {% for armor in object.armor.all %}
+          <p><strong>{{ armor }}</strong><br>{{ armor.essential_protection }} · {{ armor.essential_load }} · {{ armor.essential_sealing }}<br>{{ armor.essential_properties }}</p>
+        {% empty %}<p class="text-secondary">-</p>{% endfor %}
+        <h3>{% trans "Items" %}</h3>
+        <p>{% for item in object.items.all %}{{ item }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</p>
+      </section>
+      <section class="col-12 col-lg-6"><h2>{% trans "Supernatural access" %}</h2>
+        <h3>{% trans "Magic aspects" %}</h3>
+        {% for aspect in object.magic_aspects.all %}
+          <p><strong>{{ aspect }}</strong><br>{{ aspect.essential_description }}</p>
+        {% empty %}<p class="text-secondary">-</p>{% endfor %}
+        <h3>{% trans "Spells" %}</h3>
+        {% for spell in object.spells.all %}
+          <p><strong>{{ spell }}</strong><br>{{ spell.rules|linebreaksbr }}</p>
+        {% empty %}<p class="text-secondary">-</p>{% endfor %}
       </section>
       <section class="col-12"><h2>{% trans "Notes" %}</h2>{{ object.notes|linebreaks }}</section>
     </div>

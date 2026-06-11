@@ -35,6 +35,7 @@ class WeaponAdmin(ModelAdmin):
         "name_de",
         "name_en",
         "price",
+        "essential_enabled",
     )
     list_filter = (
         ShortDescriptionListFilter,
@@ -42,6 +43,7 @@ class WeaponAdmin(ModelAdmin):
         "is_homebrew",
         "type",
         "extensions",
+        "essential_enabled",
     )
     search_fields = "name_en", "name_de"
     inlines = [WeaponKeywordInline]
@@ -65,6 +67,13 @@ class WeaponAdmin(ModelAdmin):
                         "description_en",
                     ),
                     ("image", "image_copyright", "image_copyright_url"),
+                    (
+                        "essential_enabled",
+                        "essential_damage",
+                        "essential_range",
+                        "essential_grip",
+                    ),
+                    "essential_properties",
                 )
             },
         ),
@@ -121,6 +130,7 @@ class RiotGearAdmin(ModelAdmin):
         "concealment",
         "shield_cover",
         "weight",
+        "essential_enabled",
     )
     list_editable = (
         "weight",
@@ -130,7 +140,13 @@ class RiotGearAdmin(ModelAdmin):
         "concealment",
     )
     inlines = [RiotGearProtectionInline, RiotGearModifierInline]
-    list_filter = (ShortDescriptionListFilter, "is_homebrew", "extensions", "type")
+    list_filter = (
+        ShortDescriptionListFilter,
+        "is_homebrew",
+        "essential_enabled",
+        "extensions",
+        "type",
+    )
     filter_horizontal = ("extensions",)
     search_fields = "name_de", "name_en"
     fieldsets = [
@@ -144,6 +160,13 @@ class RiotGearAdmin(ModelAdmin):
                     ("shield_cover",),
                     ("concealment", "encumbrance"),
                     ("description_de", "description_en"),
+                    (
+                        "essential_enabled",
+                        "essential_protection",
+                        "essential_load",
+                        "essential_sealing",
+                    ),
+                    "essential_properties",
                 )
             },
         ),
@@ -191,6 +214,7 @@ class ItemAdmin(ModelAdmin):
         "skill",
         "concealment",
         "usable_in_combat",
+        "essential_enabled",
     )
     list_editable = (
         "concealment",
@@ -200,7 +224,12 @@ class ItemAdmin(ModelAdmin):
         "usable_in_combat",
         "skill",
     )
-    list_filter = (ShortDescriptionListFilter, "type", "extensions")
+    list_filter = (
+        ShortDescriptionListFilter,
+        "essential_enabled",
+        "type",
+        "extensions",
+    )
     filter_horizontal = ("extensions",)
     search_fields = ("name_de", "name_en", "description_de", "description_en")
     fieldsets = [
@@ -218,6 +247,7 @@ class ItemAdmin(ModelAdmin):
                     "brewing_effect",
                     "dice_roll_string",
                     ("image", "image_copyright", "image_copyright_url"),
+                    "essential_enabled",
                 ),
             },
         ),

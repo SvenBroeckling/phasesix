@@ -5,6 +5,7 @@ app_name = "essential_characters"
 
 urlpatterns = [
     path("marks/summary/", views.mark_summary, name="mark_summary"),
+    path("equipment/summary/", views.equipment_summary, name="equipment_summary"),
     path(
         "new/",
         views.EssentialCharacterCreateWizard.as_view(

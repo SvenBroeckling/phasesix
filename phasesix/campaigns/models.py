@@ -198,9 +198,15 @@ class Campaign(ModelWithImage):
             and self.world_extension_id
             and self.world_extension.identifier != "tirakan"
         ):
-            raise ValidationError({"ruleset": _("Tirakan Essential requires the Tirakan world.")})
+            raise ValidationError(
+                {"ruleset": _("Tirakan Essential requires the Tirakan world.")}
+            )
         if self.pk:
-            previous = Campaign.objects.filter(pk=self.pk).values_list("ruleset", flat=True).first()
+            previous = (
+                Campaign.objects.filter(pk=self.pk)
+                .values_list("ruleset", flat=True)
+                .first()
+            )
             if previous and previous != self.ruleset:
                 has_content = (
                     self.character_set.exists()
@@ -211,7 +217,13 @@ class Campaign(ModelWithImage):
                     or hasattr(self, "plot")
                 )
                 if has_content:
-                    raise ValidationError({"ruleset": _("The ruleset cannot be changed after content was assigned.")})
+                    raise ValidationError(
+                        {
+                            "ruleset": _(
+                                "The ruleset cannot be changed after content was assigned."
+                            )
+                        }
+                    )
 
     def save(self, **kwargs):
         if not self.slug:
@@ -316,7 +328,9 @@ class Campaign(ModelWithImage):
                 new_npc = npc.clone(new_npc_campaign=clone)
                 npc_map[npc.id] = new_npc
 
-            EssentialCharacter = apps.get_model("essential_characters", "EssentialCharacter")
+            EssentialCharacter = apps.get_model(
+                "essential_characters", "EssentialCharacter"
+            )
             essential_npc_map = {}
             for npc in EssentialCharacter.objects.filter(npc_campaign=self):
                 new_npc = npc.clone(new_npc_campaign=clone)
@@ -347,7 +361,9 @@ class Campaign(ModelWithImage):
             Plot = apps.get_model("plots", "Plot")
             plot = Plot.objects.filter(campaign=self).first()
             if plot:
-                plot.clone(campaign=clone, npc_map=npc_map, essential_npc_map=essential_npc_map)
+                plot.clone(
+                    campaign=clone, npc_map=npc_map, essential_npc_map=essential_npc_map
+                )
 
             return clone
 
@@ -381,7 +397,10 @@ class Scene(models.Model):
 
     npc = models.ManyToManyField("characters.Character")
     essential_npc = models.ManyToManyField(
-        "essential_characters.EssentialCharacter", blank=True, related_name="essential_scenes"
+        "essential_characters.EssentialCharacter",
+        verbose_name=_("essential NPCs"),
+        blank=True,
+        related_name="essential_scenes",
     )
 
 

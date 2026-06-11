@@ -90,6 +90,7 @@ class Item(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
 
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
+    essential_enabled = models.BooleanField(_("essential enabled"), default=False)
 
     type = models.ForeignKey(ItemType, verbose_name=_("type"), on_delete=models.CASCADE)
     is_container = models.BooleanField(_("is container"), default=False)
@@ -259,6 +260,19 @@ class Weapon(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
 
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
+    essential_enabled = models.BooleanField(_("essential enabled"), default=False)
+    essential_damage = models.CharField(
+        _("essential damage"), max_length=40, blank=True, null=True
+    )
+    essential_range = models.CharField(
+        _("essential range"), max_length=80, blank=True, null=True
+    )
+    essential_grip = models.CharField(
+        _("essential grip"), max_length=40, blank=True, null=True
+    )
+    essential_properties = models.CharField(
+        _("essential properties"), max_length=500, blank=True, null=True
+    )
     attack_modes = models.ManyToManyField(AttackMode, verbose_name=_("attack modes"))
 
     type = models.ForeignKey(
@@ -546,6 +560,19 @@ class RiotGear(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     )
     name = models.CharField(_("name"), max_length=256)
     description = models.TextField(_("description"), blank=True, null=True)
+    essential_enabled = models.BooleanField(_("essential enabled"), default=False)
+    essential_protection = models.CharField(
+        _("essential protection"), max_length=40, blank=True, null=True
+    )
+    essential_load = models.CharField(
+        _("essential load"), max_length=40, blank=True, null=True
+    )
+    essential_sealing = models.CharField(
+        _("essential sealing"), max_length=40, blank=True, null=True
+    )
+    essential_properties = models.CharField(
+        _("essential properties"), max_length=500, blank=True, null=True
+    )
     type = models.ForeignKey(
         RiotGearType, verbose_name=_("type"), on_delete=models.CASCADE
     )
