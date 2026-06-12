@@ -119,7 +119,8 @@
         <div class="col-12 col-md-3">
           <h5>{{ brand_name }}</h5>
           <ul class="list-unstyled">
-            <li><a href="{% url 'characters:create_character' %}">{% trans 'Create a character' %}</a></li>
+            {% create_character_url as create_url %}
+            <li><a href="{{ create_url }}">{% trans 'Create a character' %}</a></li>
             <li><a href="{% url 'rules:foe_list' %}">{% trans 'Foes' %}</a></li>
             <li><a href="{% url 'rulebook:download' %}">{% trans 'Rules' %}</a></li>
             <li><a href="{% url 'contact' %}">{% trans 'Privacy' %}</a></li>

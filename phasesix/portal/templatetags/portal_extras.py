@@ -2,6 +2,8 @@ from django.template import Library
 from django.template.loader import render_to_string
 from django.urls import reverse
 
+from characters.utils import is_tirakan_world, phasesix_character_creation_url
+
 register = Library()
 
 
@@ -53,30 +55,10 @@ def create_character_url(context):
     except AttributeError:
         world = None
 
-    if not world or not world.extension:
-        return reverse("characters:create_character")
+    if is_tirakan_world(world):
+        return reverse("characters:choose_character_ruleset")
 
-    if not world.extension.fixed_epoch:
-        return reverse(
-            "characters:create_character_epoch", kwargs={"world_pk": world.extension.id}
-        )
-
-    if not world.extension.fixed_extensions.exists():
-        return reverse(
-            "characters:create_character_extensions",
-            kwargs={
-                "world_pk": world.extension.id,
-                "epoch_pk": world.extension.fixed_epoch.id,
-            },
-        )
-
-    return reverse(
-        "characters:create_character_data",
-        kwargs={
-            "world_pk": world.extension.id,
-            "epoch_pk": world.extension.fixed_epoch.id,
-        },
-    )
+    return phasesix_character_creation_url(world)
 
 
 @register.simple_tag(takes_context=True)

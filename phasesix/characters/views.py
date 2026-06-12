@@ -58,7 +58,11 @@ from characters.models import (
     CharacterRecipe,
     CharacterQuirk,
 )
-from characters.utils import crit_successes
+from characters.utils import (
+    crit_successes,
+    is_tirakan_world,
+    phasesix_character_creation_url,
+)
 from magic.models import (
     SpellTemplateCategory,
     SpellTemplate,
@@ -553,6 +557,22 @@ class CreateCharacterView(TemplateView):
             Extension.objects.exclude(is_mandatory=True)
             .exclude(type__in=["e", "x"])
             .exclude(is_active=False)
+        )
+        return context
+
+
+class ChooseCharacterRulesetView(TemplateView):
+    template_name = "characters/choose_character_ruleset.html"
+
+    def get(self, request, *args, **kwargs):
+        if not is_tirakan_world(request.world):
+            return HttpResponseRedirect(phasesix_character_creation_url(request.world))
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["phasesix_creation_url"] = phasesix_character_creation_url(
+            self.request.world
         )
         return context
 

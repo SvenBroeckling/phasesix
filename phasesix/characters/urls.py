@@ -131,6 +131,11 @@ urlpatterns = [
         name="modify_stress",
     ),
     # new character
+    path(
+        "new/ruleset/",
+        views.ChooseCharacterRulesetView.as_view(),
+        name="choose_character_ruleset",
+    ),
     path("new/", views.CreateCharacterView.as_view(), name="create_character"),
     path(
         "new/<int:world_pk>/",

@@ -3,6 +3,38 @@ import os
 from PIL import Image
 from django.conf import settings
 from django.contrib.staticfiles import finders
+from django.urls import reverse
+
+
+def is_tirakan_world(world):
+    return bool(world and world.extension and world.extension.identifier == "tirakan")
+
+
+def phasesix_character_creation_url(world):
+    if not world or not world.extension:
+        return reverse("characters:create_character")
+
+    if not world.extension.fixed_epoch:
+        return reverse(
+            "characters:create_character_epoch", kwargs={"world_pk": world.extension.id}
+        )
+
+    if not world.extension.fixed_extensions.exists():
+        return reverse(
+            "characters:create_character_extensions",
+            kwargs={
+                "world_pk": world.extension.id,
+                "epoch_pk": world.extension.fixed_epoch.id,
+            },
+        )
+
+    return reverse(
+        "characters:create_character_data",
+        kwargs={
+            "world_pk": world.extension.id,
+            "epoch_pk": world.extension.fixed_epoch.id,
+        },
+    )
 
 
 def strip_newlines(value):
