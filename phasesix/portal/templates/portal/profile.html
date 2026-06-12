@@ -61,6 +61,11 @@
                 {% include 'characters/_character_list_widget.html' with character=character %}
               </div>
             {% endfor %}
+            {% for character in essential_pc_characters %}
+              <div class="col-12 col-sm-6 col-md-4 mb-3">
+                {% include 'essential_characters/_essential_character_list_widget.html' with character=character %}
+              </div>
+            {% endfor %}
           </div>
         </div>
 
@@ -69,6 +74,11 @@
             {% for character in object.user.character_set.npc|for_world:request.world %}
               <div class="col-12 col-sm-6 col-md-4 mb-3">
                 {% include 'characters/_character_list_widget.html' with character=character %}
+              </div>
+            {% endfor %}
+            {% for character in essential_npc_characters %}
+              <div class="col-12 col-sm-6 col-md-4 mb-3">
+                {% include 'essential_characters/_essential_character_list_widget.html' with character=character %}
               </div>
             {% endfor %}
           </div>
@@ -91,7 +101,7 @@
 
             {% for campaign in object.user.campaign_set.all|for_world:request.world %}
               <div class="col-12 col-md-6 mb-3">
-                {% include 'campaigns/_campaign_list_widget.html' with campaign=campaign %}
+                {% include 'campaigns/_campaign_list_widget.html' with campaign=campaign show_ruleset=True %}
               </div>
             {% endfor %}
           </div>

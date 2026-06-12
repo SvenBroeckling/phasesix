@@ -15,16 +15,19 @@
       </div>
       <div class="card-body mt-5">
         <h4>{{ campaign.name }}</h4>
+        {% if show_ruleset and campaign.ruleset == "tirakan_essential" %}
+          {% include "characters/_essential_ruleset_mark.html" %}
+        {% endif %}
 
         <div class="d-flex justify-content-start flex-wrap mt-2">
           {% if campaign.ruleset == "tirakan_essential" %}
-          {% for c in campaign.essentialcharacter_set.all %}
-            <span class="badge text-bg-primary">{{ c }}</span>
-          {% endfor %}
+            {% for c in campaign.essentialcharacter_set.all %}
+              <span class="badge text-bg-primary">{{ c }}</span>
+            {% endfor %}
           {% else %}
-          {% for c in campaign.character_set.all %}
-            <img src="{% image_url c geometry="40x40" crop="center" %}" alt="{{ c }}">
-          {% endfor %}
+            {% for c in campaign.character_set.all %}
+              <img src="{% image_url c geometry="40x40" crop="center" %}" alt="{{ c }}">
+            {% endfor %}
           {% endif %}
         </div>
       </div>

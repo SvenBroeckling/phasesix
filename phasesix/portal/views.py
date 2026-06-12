@@ -9,6 +9,8 @@ from django.views.generic import TemplateView, DetailView
 
 from campaigns.models import Roll, Campaign
 from characters.models import Character
+from characters.utils import is_tirakan_world
+from essential_characters.models import EssentialCharacter
 from portal.forms import ProfileSettingsForm
 from portal.models import Profile
 from worlds.models import WikiPage, WorldLeadImage, World
@@ -144,6 +146,13 @@ class ProfileView(DetailView):
         context = super().get_context_data(**kwargs)
         context["may_edit"] = self.request.user == self.object.user
         context["form"] = ProfileSettingsForm(instance=self.object)
+        essential_characters = EssentialCharacter.objects.none()
+        if is_tirakan_world(self.request.world):
+            essential_characters = EssentialCharacter.objects.filter(
+                created_by=self.object.user
+            )
+        context["essential_pc_characters"] = essential_characters.pc()
+        context["essential_npc_characters"] = essential_characters.npc()
         return context
 
     def post(self, request, *args, **kwargs):
