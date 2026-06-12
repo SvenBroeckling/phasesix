@@ -6,6 +6,11 @@ from campaigns import views
 app_name = "campaigns"
 
 urlpatterns = [
+    path(
+        "new/ruleset/",
+        login_required(views.ChooseCampaignRulesetView.as_view()),
+        name="choose_ruleset",
+    ),
     path("new/", login_required(views.CreateCampaignView.as_view()), name="create"),
     path(
         "new/world/",

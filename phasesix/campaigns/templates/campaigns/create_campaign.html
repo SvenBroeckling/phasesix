@@ -17,12 +17,12 @@
       <div class="col-12 col-md-6 col-lg-4">
         {% if extension.fixed_epoch %}
           {% if extension.fixed_extensions.exists %}
-            <a href="{% url 'campaigns:create_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
+            <a href="{% url 'campaigns:create_data' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}?ruleset={{ ruleset }}">
           {% else %}
-            <a href="{% url 'campaigns:create_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}">
+            <a href="{% url 'campaigns:create_extensions' world_pk=extension.id epoch_pk=extension.fixed_epoch.id %}?ruleset={{ ruleset }}">
           {% endif %}
         {% else %}
-          <a href="{% url 'campaigns:create_epoch' world_pk=extension.id %}">
+          <a href="{% url 'campaigns:create_epoch' world_pk=extension.id %}?ruleset={{ ruleset }}">
         {% endif %}
         <div class="card text-center create-epoch-card mb-4">
           {% thumbnail extension.image "1024" as im %}

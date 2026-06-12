@@ -16,7 +16,7 @@
   <div data-app="campaigns" class="row">
     {% for extension in extensions %}
       <div class="col-12 col-md-6 col-lg-4">
-        <a href="{% url 'campaigns:create_extensions' world_pk=world_pk epoch_pk=extension.id %}">
+        <a href="{% url 'campaigns:create_extensions' world_pk=world_pk epoch_pk=extension.id %}?ruleset={{ ruleset }}">
           <div class="card text-center create-epoch-card mb-4">
             {% thumbnail extension.image "1024" as im %}
               <div class="card-body" style="background-image: url({{ im.url }}); background-size: cover">

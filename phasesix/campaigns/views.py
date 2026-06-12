@@ -23,14 +23,38 @@ from campaigns.forms import (
 from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character
+from characters.utils import is_tirakan_world
 from essential_characters.models import EssentialCharacter
 from plots.models import Plot, PlotElement, Handout, Location, _copy_field_file
 from rules.models import Extension, Foe
 from worlds.models import WikiPage
 
 
+def campaign_creation_ruleset(request):
+    if (
+        is_tirakan_world(request.world)
+        and request.GET.get("ruleset") == Campaign.RULESET_ESSENTIAL
+    ):
+        return Campaign.RULESET_ESSENTIAL
+    return Campaign.RULESET_PHASESIX
+
+
+class ChooseCampaignRulesetView(TemplateView):
+    template_name = "campaigns/choose_campaign_ruleset.html"
+
+    def get(self, request, *args, **kwargs):
+        if not is_tirakan_world(request.world):
+            return HttpResponseRedirect(reverse("campaigns:create"))
+        return super().get(request, *args, **kwargs)
+
+
 class CreateCampaignView(TemplateView):
     template_name = "campaigns/create_campaign_start.html"
+
+    def get(self, request, *args, **kwargs):
+        if is_tirakan_world(request.world) and "ruleset" not in request.GET:
+            return HttpResponseRedirect(reverse("campaigns:choose_ruleset"))
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -41,12 +65,14 @@ class CreateCampaignView(TemplateView):
         plots = Plot.objects.filter(
             cloned_from__isnull=True,
             campaign__isnull=True,
+            ruleset=campaign_creation_ruleset(self.request),
         )
         if world_extension:
             plots = plots.filter(world_extension=world_extension)
             if world_extension.fixed_epoch:
                 plots = plots.filter(epoch_extension=world_extension.fixed_epoch)
         context["plots"] = plots.order_by("name")
+        context["ruleset"] = campaign_creation_ruleset(self.request)
         context["world_extension"] = world_extension
         if world_extension:
             if world_extension.fixed_epoch:
@@ -81,6 +107,7 @@ class CreateCampaignWorldView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["ruleset"] = campaign_creation_ruleset(self.request)
         context["extensions"] = (
             Extension.objects.exclude(is_mandatory=True)
             .exclude(type__in=["e", "x"])
@@ -94,6 +121,7 @@ class CreateCampaignEpochView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["ruleset"] = campaign_creation_ruleset(self.request)
         context["world_pk"] = self.kwargs["world_pk"]
         context["extensions"] = (
             Extension.objects.exclude(is_mandatory=True)
@@ -109,6 +137,7 @@ class CreateCampaignExtensionsView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["ruleset"] = campaign_creation_ruleset(self.request)
         context["world_pk"] = self.kwargs["world_pk"]
         context["epoch_pk"] = self.kwargs["epoch_pk"]
         context["extensions"] = (
@@ -125,20 +154,16 @@ class CreateCampaignDataView(CreateView):
         "name",
         "abstract",
         "ingame_act_date",
-        "character_visibility",
-        "npc_visibility",
-        "foe_visibility",
         "currency_map",
-        "seed_money",
         "starting_template_points",
-        "ruleset",
     )
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        world = Extension.objects.get(pk=self.kwargs["world_pk"])
-        if world.identifier != "tirakan":
-            form.fields.pop("ruleset", None)
+        if campaign_creation_ruleset(self.request) == Campaign.RULESET_ESSENTIAL:
+            form.fields.pop("starting_template_points", None)
+        if is_tirakan_world(self.request.world):
+            form.fields.pop("currency_map", None)
         return form
 
     def form_valid(self, form):
@@ -146,8 +171,9 @@ class CreateCampaignDataView(CreateView):
         obj.created_by = self.request.user
         obj.epoch_extension = Extension.objects.get(pk=self.kwargs["epoch_pk"])
         obj.world_extension = Extension.objects.get(pk=self.kwargs["world_pk"])
-        if obj.world_extension.identifier != "tirakan":
-            obj.ruleset = Campaign.RULESET_PHASESIX
+        obj.ruleset = campaign_creation_ruleset(self.request)
+        if is_tirakan_world(self.request.world):
+            obj.currency_map = self.request.world.extension.currency_map
         plot_pk = self.request.GET.get("plot_pk")
         if plot_pk:
             plot = get_object_or_404(

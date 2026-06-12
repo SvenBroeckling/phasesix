@@ -25,7 +25,7 @@
       {% else %}
         {% url "campaigns:create_data" world_pk=plot.world_extension.id epoch_pk=plot.epoch_extension.id as data_url %}
       {% endif %}
-      <a href="{{ data_url }}?plot_pk={{ plot.id }}{% if not plot.world_extension.fixed_extensions.exists %}{% for extension in plot.extensions.all %}&extensions={{ extension.id }}{% endfor %}{% endif %}">
+      <a href="{{ data_url }}?ruleset={{ ruleset }}&plot_pk={{ plot.id }}{% if not plot.world_extension.fixed_extensions.exists %}{% for extension in plot.extensions.all %}&extensions={{ extension.id }}{% endfor %}{% endif %}">
         <div class="plot-card rounded shadow-sm overflow-hidden transition position-relative">
           {% if plot.image %}
             {% thumbnail plot.image "600x400" crop="center" as im %}
@@ -41,7 +41,7 @@
         </div>
       </a>
     {% endfor %}
-    <a href="{{ own_plot_url }}">
+    <a href="{{ own_plot_url }}?ruleset={{ ruleset }}">
       <div class="plot-card pointer border border-2 border-dashed d-flex align-items-center justify-content-center">
         {% trans "Own plot" %}
       </div>

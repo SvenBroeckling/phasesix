@@ -31,6 +31,7 @@
     {% endfor %}
 
     <form action="{% url 'campaigns:create_data' epoch_pk=epoch_pk world_pk=world_pk %}" method="get">
+      <input type="hidden" name="ruleset" value="{{ ruleset }}">
       {% bootstrap_field form.extensions show_label=False %}
       <button type="submit" class="btn btn-primary btn-block mt-2">{% trans 'Choose Extensions' %}</button>
     </form>

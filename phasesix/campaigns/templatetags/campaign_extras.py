@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 
 from campaigns.models import Campaign
+from characters.utils import is_tirakan_world
 
 register = Library()
 
@@ -28,6 +29,8 @@ def int_with_sign(value):
 
 @register.simple_tag(takes_context=True)
 def create_campaign_url(context):
+    if is_tirakan_world(getattr(context["request"], "world", None)):
+        return reverse("campaigns:choose_ruleset")
     return reverse("campaigns:create")
 
 

@@ -168,19 +168,19 @@ class Campaign(ModelWithImage):
     seed_money = models.IntegerField(_("seed money"), default=2000)
 
     foe_visibility = models.CharField(
-        _("foe visibility"), max_length=1, default="A", choices=VISIBILITY_CHOICES
+        _("foe visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
     )
 
     npc_visibility = models.CharField(
-        _("npc visibility"), max_length=1, default="A", choices=VISIBILITY_CHOICES
+        _("npc visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
     )
 
     game_log_visibility = models.CharField(
-        _("game log visibility"), max_length=1, default="A", choices=VISIBILITY_CHOICES
+        _("game log visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
     )
 
     character_visibility = models.CharField(
-        _("character visibility"), max_length=1, default="A", choices=VISIBILITY_CHOICES
+        _("character visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
     )
 
     class Meta:
