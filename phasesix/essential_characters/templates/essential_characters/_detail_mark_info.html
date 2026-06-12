@@ -1,0 +1,14 @@
+{% load i18n %}
+<section class="essential-info-mark">
+  <div class="text-uppercase text-body-secondary small fw-semibold">{{ mark_type_label }}</div>
+  <h3>{{ mark|default:"-" }}</h3>
+  {% if mark %}
+    {% if mark.description %}<p>{{ mark.description|linebreaksbr }}</p>{% endif %}
+    <dl class="essential-info-list mb-0">
+      {% if mark.benefit %}<div><dt>{% trans "Benefit" %}</dt><dd>{{ mark.benefit|linebreaksbr }}</dd></div>{% endif %}
+      {% if mark.vulnerability %}<div><dt>{% trans "Vulnerability" %}</dt><dd>{{ mark.vulnerability|linebreaksbr }}</dd></div>{% endif %}
+      {% if show_facet and mark.facet %}<div><dt>{% trans "Path facet" %}</dt><dd>{{ mark.facet|linebreaksbr }}</dd></div>{% endif %}
+      {% if mark.skills %}<div><dt>{% trans "Skills" %}</dt><dd>{{ mark.skills|linebreaksbr }}</dd></div>{% endif %}
+    </dl>
+  {% endif %}
+</section>

@@ -14,6 +14,11 @@ urlpatterns = [
         ),
         name="create",
     ),
+    path(
+        "<slug:slug>/info/<str:section>/",
+        views.character_detail_info,
+        name="detail_info",
+    ),
     path("<slug:slug>/", views.EssentialCharacterDetailView.as_view(), name="detail"),
     path("<slug:slug>/edit/", views.EssentialCharacterUpdateView.as_view(), name="edit"),
 ]

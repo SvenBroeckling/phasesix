@@ -59,22 +59,52 @@
 
     <div class="essential-summary-grid">
       <section class="card essential-panel">
-        <h2>{% trans "Marks" %}</h2>
+        <div class="essential-panel-heading">
+          <h2>{% trans "Marks" %}</h2>
+          <button type="button"
+                  class="essential-info-button"
+                  data-modal-url="{% url 'essential_characters:detail_info' slug=object.slug section='marks' %}"
+                  data-modal-title="{% trans 'Marks' %}"
+                  data-modal-size-class="modal-lg"
+                  aria-label="{% trans 'About marks' %}">
+            <i class="fas fa-info" aria-hidden="true"></i>
+          </button>
+        </div>
         <div class="essential-read-list">
           <div class="essential-read"><span>{% trans "Ancestry" %}</span><strong>{{ object.ancestry|default:"-" }}</strong></div>
           <div class="essential-read"><span>{% trans "Path" %}</span><strong>{{ object.path|default:"-" }}</strong></div>
           <div class="essential-read"><span>{% trans "Bond" %}</span><strong>{{ object.bond|default:"-" }}</strong></div>
         </div>
       </section>
-      <section class="card essential-panel">
-        <h2>{% trans "Conditions" %}</h2>
+      <section class="card essential-panel essential-conditions-panel">
+        <div class="essential-panel-heading">
+          <h2>{% trans "Conditions" %}</h2>
+          <button type="button"
+                  class="essential-info-button"
+                  data-modal-url="{% url 'essential_characters:detail_info' slug=object.slug section='conditions' %}"
+                  data-modal-title="{% trans 'Conditions' %}"
+                  data-modal-size-class="modal-lg"
+                  aria-label="{% trans 'About conditions' %}">
+            <i class="fas fa-info" aria-hidden="true"></i>
+          </button>
+        </div>
         {% essential_condition_rows object as condition_rows %}
         {% for row in condition_rows %}
           {% include "essential_characters/_readonly_rank_row.html" with label=row.label value=row.value options=row.options %}
         {% endfor %}
       </section>
       <section class="card essential-panel">
-        <h2>{% trans "Derived values" %}</h2>
+        <div class="essential-panel-heading">
+          <h2>{% trans "Derived values" %}</h2>
+          <button type="button"
+                  class="essential-info-button"
+                  data-modal-url="{% url 'essential_characters:detail_info' slug=object.slug section='derived' %}"
+                  data-modal-title="{% trans 'Derived values' %}"
+                  data-modal-size-class="modal-lg"
+                  aria-label="{% trans 'About derived values' %}">
+            <i class="fas fa-info" aria-hidden="true"></i>
+          </button>
+        </div>
         <div class="essential-derived-grid">
           <div class="essential-read"><span>{% trans "Initiative" %}</span><strong>{{ object.initiative }}</strong></div>
           <div class="essential-read"><span>{% trans "Faith" %}</span><strong>{{ object.faith_level }}</strong></div>

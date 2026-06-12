@@ -11,7 +11,7 @@ $font-family-sans-serif:
     sans-serif !default;
 $headings-font-family: "Morris Roman", system-ui;
 
-/* Theme build marker: 2026-06-11 essential character detail integration - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-12 opaque Tirakan atmospheric modals - update in all theme entrypoints after any SCSS change. */
 
 $primary: #9f784f;
 $secondary: #66615b;
@@ -231,6 +231,7 @@ $tirakan-ornament-cards:
     border-color: rgba(var(--bs-primary-rgb), 0.32);
 }
 
+.modal-content.atmospheric-modal,
 .offcanvas.atmospheric-modal {
     background:
         linear-gradient(
@@ -241,6 +242,19 @@ $tirakan-ornament-cards:
         rgba(var(--bs-body-bg-rgb), 0.95);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+}
+
+.modal-content.atmospheric-modal {
+    box-shadow: 0 1rem 3rem rgba(var(--bs-black-rgb), 0.55);
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        background-color: rgba(var(--bs-body-bg-rgb), 0.22);
+    }
+}
+
+.offcanvas.atmospheric-modal {
     box-shadow: -1rem 0 3rem rgba(var(--bs-black-rgb), 0.55);
 
     .offcanvas-header,

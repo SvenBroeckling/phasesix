@@ -1,0 +1,58 @@
+{% load i18n %}
+<div class="essential-detail-info">
+  {% if section == "marks" %}
+    {% include "essential_characters/_detail_mark_info.html" with mark=object.ancestry mark_type_label=_("Ancestry") %}
+    {% include "essential_characters/_detail_mark_info.html" with mark=object.path mark_type_label=_("Path") show_facet=True %}
+    {% include "essential_characters/_detail_mark_info.html" with mark=object.bond mark_type_label=_("Bond") %}
+  {% elif section == "conditions" %}
+    <dl class="essential-info-list mb-0">
+      <div>
+        <dt>{% trans "Wounds" %} <span>{{ object.wounds }}/{{ object.wound_threshold }}</span></dt>
+        <dd>{% blocktrans %}Physical harm. The maximum is 3 plus Body.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Burden" %} <span>{{ object.burden }}/{{ object.burden_threshold }}</span></dt>
+        <dd>{% blocktrans %}Exhaustion and mental strain. The maximum is 5 plus half Will, rounded down.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Omen" %} <span>{{ object.omen }}/{{ object.omen_max }}</span></dt>
+        <dd>{% blocktrans %}A reserve for influencing fate. The maximum is 2 plus half the Faith level, rounded down.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Arkana" %} <span>{{ object.arkana }}/{{ object.arkana_max }}</span></dt>
+        <dd>{% blocktrans %}Arcane power available for magic. The maximum is 3 plus Mind.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Favor" %} <span>{{ object.favor }}/{{ object.favor_max }}</span></dt>
+        <dd>{% blocktrans %}Divine favor available for invocations. The maximum is 3 plus Will.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Corruption" %} <span>{{ object.corruption }}</span></dt>
+        <dd>{% blocktrans %}Lasting spiritual corruption accumulated through dark influences and transgressions.{% endblocktrans %}</dd>
+      </div>
+    </dl>
+  {% elif section == "derived" %}
+    <dl class="essential-info-list mb-0">
+      <div>
+        <dt>{% trans "Initiative" %} <span>{{ object.initiative }}</span></dt>
+        <dd>{% blocktrans with dexterity=object.dexterity %}30 + Dexterity × 10. Current Dexterity: {{ dexterity }}.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Faith" %} <span>{{ object.faith_level }}</span></dt>
+        <dd>{% blocktrans with century=object.century %}Faith level granted by century {{ century }}.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Magic" %} <span>{{ object.magic_level }}</span></dt>
+        <dd>{% blocktrans with century=object.century %}Magic level granted by century {{ century }}.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Invocation" %} <span>{{ object.invocation_value }}</span></dt>
+        <dd>{% blocktrans %}Faith level plus the rank of the first skill containing “Ritus” in its name.{% endblocktrans %}</dd>
+      </div>
+      <div>
+        <dt>{% trans "Favor limit" %} <span>{{ object.favor_limit }}</span></dt>
+        <dd>{% blocktrans with will=object.will %}1 plus half Will, rounded down. Current Will: {{ will }}.{% endblocktrans %}</dd>
+      </div>
+    </dl>
+  {% endif %}
+</div>

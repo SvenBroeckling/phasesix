@@ -143,6 +143,19 @@ def equipment_summary(request):
     )
 
 
+def character_detail_info(request, slug, section):
+    if section not in {"marks", "conditions", "derived"}:
+        return HttpResponseBadRequest()
+    return render(
+        request,
+        "essential_characters/_detail_info.html",
+        {
+            "object": get_object_or_404(EssentialCharacter, slug=slug),
+            "section": section,
+        },
+    )
+
+
 class EssentialCharacterDetailView(DetailView):
     model = EssentialCharacter
 
