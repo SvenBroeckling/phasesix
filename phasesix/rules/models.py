@@ -356,6 +356,19 @@ class Lineage(PhaseSixModel, metaclass=TransMeta):
 
     name = models.CharField(_("name"), max_length=80)
     description = models.TextField(_("description"), blank=True, null=True)
+    essential_enabled = models.BooleanField(_("essential enabled"), default=False)
+    essential_description = models.CharField(
+        _("essential description"), max_length=500, blank=True, null=True
+    )
+    essential_benefit = models.CharField(
+        _("essential benefit"), max_length=255, blank=True, null=True
+    )
+    essential_vulnerability = models.CharField(
+        _("essential vulnerability"), max_length=255, blank=True, null=True
+    )
+    essential_skills = models.CharField(
+        _("essential skills"), max_length=500, blank=True, null=True
+    )
 
     extensions = models.ManyToManyField("rules.Extension")
     template = models.ForeignKey(
@@ -397,7 +410,14 @@ class Lineage(PhaseSixModel, metaclass=TransMeta):
     base_sockets_right_leg = models.IntegerField(_("sockets right leg"), default=2)
 
     class Meta:
-        translate = ("name", "description")
+        translate = (
+            "name",
+            "description",
+            "essential_description",
+            "essential_benefit",
+            "essential_vulnerability",
+            "essential_skills",
+        )
         verbose_name = _("lineage")
         verbose_name_plural = _("lineages")
 
@@ -559,6 +579,22 @@ class Template(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     objects = TemplateQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=120)
+    essential_enabled = models.BooleanField(_("essential enabled"), default=False)
+    essential_description = models.CharField(
+        _("essential description"), max_length=500, blank=True, null=True
+    )
+    essential_benefit = models.CharField(
+        _("essential benefit"), max_length=255, blank=True, null=True
+    )
+    essential_vulnerability = models.CharField(
+        _("essential vulnerability"), max_length=255, blank=True, null=True
+    )
+    essential_facet = models.CharField(
+        _("essential facet"), max_length=255, blank=True, null=True
+    )
+    essential_skills = models.CharField(
+        _("essential skills"), max_length=500, blank=True, null=True
+    )
     extensions = models.ManyToManyField("rules.Extension")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -591,7 +627,15 @@ class Template(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     is_mastery = models.BooleanField(_("is mastery"), default=False)
 
     class Meta:
-        translate = ("name", "rules")
+        translate = (
+            "name",
+            "rules",
+            "essential_description",
+            "essential_benefit",
+            "essential_vulnerability",
+            "essential_facet",
+            "essential_skills",
+        )
         verbose_name = _("character template")
         verbose_name_plural = _("character templates")
         ordering = ("category__sort_order",)

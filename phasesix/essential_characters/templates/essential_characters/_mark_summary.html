@@ -3,32 +3,43 @@
   {% if mark %}
     <div class="text-uppercase text-body-secondary small fw-semibold mb-1">{{ mark_type_label }}</div>
     <h3 class="h4 mb-3">{{ mark }}</h3>
-    {% if mark.description %}
-      <p class="essential-mark-description">{{ mark.description|linebreaksbr }}</p>
-    {% endif %}
+    {% if mark_type == "bond" and mark.description %}<p class="essential-mark-description">{{ mark.description|linebreaksbr }}</p>{% endif %}
+    {% if mark_type != "bond" and mark.essential_description %}<p class="essential-mark-description">{{ mark.essential_description|linebreaksbr }}</p>{% endif %}
     <dl class="essential-mark-details mb-0">
-      {% if mark.benefit %}
+      {% if mark_type == "bond" and mark.benefit %}
         <div>
           <dt>{% trans "Benefit" %}</dt>
           <dd>{{ mark.benefit|linebreaksbr }}</dd>
         </div>
       {% endif %}
-      {% if mark.vulnerability %}
+      {% if mark_type != "bond" and mark.essential_benefit %}
+        <div>
+          <dt>{% trans "Benefit" %}</dt>
+          <dd>{{ mark.essential_benefit|linebreaksbr }}</dd>
+        </div>
+      {% endif %}
+      {% if mark_type == "bond" and mark.vulnerability %}
         <div>
           <dt>{% trans "Vulnerability" %}</dt>
           <dd>{{ mark.vulnerability|linebreaksbr }}</dd>
         </div>
       {% endif %}
-      {% if mark_type == "path" and mark.facet %}
+      {% if mark_type != "bond" and mark.essential_vulnerability %}
         <div>
-          <dt>{% trans "Path facet" %}</dt>
-          <dd>{{ mark.facet|linebreaksbr }}</dd>
+          <dt>{% trans "Vulnerability" %}</dt>
+          <dd>{{ mark.essential_vulnerability|linebreaksbr }}</dd>
         </div>
       {% endif %}
-      {% if mark_type != "bond" and mark.skills %}
+      {% if mark_type == "path" and mark.essential_facet %}
+        <div>
+          <dt>{% trans "Path facet" %}</dt>
+          <dd>{{ mark.essential_facet|linebreaksbr }}</dd>
+        </div>
+      {% endif %}
+      {% if mark_type != "bond" and mark.essential_skills %}
         <div>
           <dt>{% trans "Skills" %}</dt>
-          <dd>{{ mark.skills|linebreaksbr }}</dd>
+          <dd>{{ mark.essential_skills|linebreaksbr }}</dd>
         </div>
       {% endif %}
     </dl>

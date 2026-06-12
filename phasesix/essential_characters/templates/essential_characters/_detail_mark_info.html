@@ -3,12 +3,15 @@
   <div class="text-uppercase text-body-secondary small fw-semibold">{{ mark_type_label }}</div>
   <h3>{{ mark|default:"-" }}</h3>
   {% if mark %}
-    {% if mark.description %}<p>{{ mark.description|linebreaksbr }}</p>{% endif %}
+    {% if use_essential and mark.essential_description %}<p>{{ mark.essential_description|linebreaksbr }}</p>{% endif %}
+    {% if not use_essential and mark.description %}<p>{{ mark.description|linebreaksbr }}</p>{% endif %}
     <dl class="essential-info-list mb-0">
-      {% if mark.benefit %}<div><dt>{% trans "Benefit" %}</dt><dd>{{ mark.benefit|linebreaksbr }}</dd></div>{% endif %}
-      {% if mark.vulnerability %}<div><dt>{% trans "Vulnerability" %}</dt><dd>{{ mark.vulnerability|linebreaksbr }}</dd></div>{% endif %}
-      {% if show_facet and mark.facet %}<div><dt>{% trans "Path facet" %}</dt><dd>{{ mark.facet|linebreaksbr }}</dd></div>{% endif %}
-      {% if mark.skills %}<div><dt>{% trans "Skills" %}</dt><dd>{{ mark.skills|linebreaksbr }}</dd></div>{% endif %}
+      {% if use_essential and mark.essential_benefit %}<div><dt>{% trans "Benefit" %}</dt><dd>{{ mark.essential_benefit|linebreaksbr }}</dd></div>{% endif %}
+      {% if not use_essential and mark.benefit %}<div><dt>{% trans "Benefit" %}</dt><dd>{{ mark.benefit|linebreaksbr }}</dd></div>{% endif %}
+      {% if use_essential and mark.essential_vulnerability %}<div><dt>{% trans "Vulnerability" %}</dt><dd>{{ mark.essential_vulnerability|linebreaksbr }}</dd></div>{% endif %}
+      {% if not use_essential and mark.vulnerability %}<div><dt>{% trans "Vulnerability" %}</dt><dd>{{ mark.vulnerability|linebreaksbr }}</dd></div>{% endif %}
+      {% if show_facet and mark.essential_facet %}<div><dt>{% trans "Path facet" %}</dt><dd>{{ mark.essential_facet|linebreaksbr }}</dd></div>{% endif %}
+      {% if use_essential and mark.essential_skills %}<div><dt>{% trans "Skills" %}</dt><dd>{{ mark.essential_skills|linebreaksbr }}</dd></div>{% endif %}
     </dl>
   {% endif %}
 </section>

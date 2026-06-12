@@ -36,40 +36,18 @@ def _copy_file(field_file):
     )
 
 
-class EssentialMark(models.Model, metaclass=TransMeta):
+class EssentialBond(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=160, unique=True)
     description = models.CharField(_("description"), max_length=500, blank=True)
     benefit = models.CharField(_("benefit"), max_length=255, blank=True)
     vulnerability = models.CharField(_("vulnerability"), max_length=255, blank=True)
 
     class Meta:
-        abstract = True
         ordering = ("name_de",)
         translate = ("name", "description", "benefit", "vulnerability")
 
     def __str__(self):
         return self.name
-
-
-class EssentialAncestry(EssentialMark, metaclass=TransMeta):
-    skills = models.CharField(_("skills"), max_length=500, blank=True)
-
-    class Meta:
-        ordering = ("name_de",)
-        translate = ("skills",)
-
-
-class EssentialPath(EssentialMark, metaclass=TransMeta):
-    facet = models.CharField(_("facet"), max_length=255, blank=True)
-    skills = models.CharField(_("skills"), max_length=500, blank=True)
-
-    class Meta:
-        ordering = ("name_de",)
-        translate = ("facet", "skills")
-
-
-class EssentialBond(EssentialMark, metaclass=TransMeta):
-    pass
 
 
 class EssentialCharacterQuerySet(models.QuerySet):
@@ -147,14 +125,14 @@ class EssentialCharacter(ModelWithImage):
         related_name="essential_plot_npc_set",
     )
     ancestry = models.ForeignKey(
-        EssentialAncestry,
+        "rules.Lineage",
         verbose_name=_("ancestry"),
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
     )
     path = models.ForeignKey(
-        EssentialPath,
+        "rules.Template",
         verbose_name=_("path"),
         null=True,
         blank=True,

@@ -12,6 +12,7 @@ from formtools.wizard.views import SessionWizardView
 from campaigns.models import Campaign
 from plots.models import Plot
 from armory.models import Item, RiotGear, Weapon
+from rules.models import Lineage, Template
 from .forms import (
     AttributesForm,
     ConceptForm,
@@ -22,11 +23,9 @@ from .forms import (
     SupernaturalForm,
 )
 from .models import (
-    EssentialAncestry,
     EssentialBond,
     EssentialCharacter,
     EssentialCharacterSkill,
-    EssentialPath,
 )
 from .rules import ATTRIBUTES, magic_slots
 
@@ -66,8 +65,8 @@ def show_supernatural_step(wizard):
 @login_required
 def mark_summary(request):
     mark_models = {
-        "ancestry": EssentialAncestry,
-        "path": EssentialPath,
+        "ancestry": Lineage,
+        "path": Template,
         "bond": EssentialBond,
     }
     mark_labels = {
@@ -94,7 +93,10 @@ def mark_summary(request):
         ),
         "",
     )
-    mark = get_object_or_404(mark_models[mark_type], pk=mark_id) if mark_id else None
+    queryset = mark_models[mark_type].objects.all()
+    if mark_type != "bond":
+        queryset = queryset.filter(essential_enabled=True)
+    mark = get_object_or_404(queryset, pk=mark_id) if mark_id else None
     return render(
         request,
         "essential_characters/_mark_summary.html",
@@ -235,8 +237,12 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
             marks = self.get_cleaned_data_for_step("marks") or {}
             path = marks.get("path")
             suggestions = (
-                [value.strip() for value in path.skills.split(",") if value.strip()]
-                if path
+                [
+                    value.strip()
+                    for value in path.essential_skills.split(",")
+                    if value.strip()
+                ]
+                if path and path.essential_skills
                 else []
             )
             for index, name in enumerate(suggestions[:9]):

@@ -64,6 +64,7 @@ class TemplateAdmin(ModelAdmin):
     search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     list_display = (
         "name",
+        "essential_enabled",
         "cost",
         "category",
         "has_rules",
@@ -72,7 +73,7 @@ class TemplateAdmin(ModelAdmin):
         "has_quote",
     )
     list_editable = ("category", "cost", "show_rules_in_combat", "is_mastery")
-    list_filter = ("extensions", "category", "extensions")
+    list_filter = ("essential_enabled", "extensions", "category", "extensions")
     save_as = True
 
 
@@ -105,11 +106,12 @@ class LineageAdmin(ModelAdmin):
     list_display = (
         "name_de",
         "name_en",
+        "essential_enabled",
         "template_points",
         "template",
         "base_max_stress",
     )
-    list_editable = ("base_max_stress",)
+    list_editable = ("essential_enabled", "base_max_stress")
 
 
 @admin.register(StatusEffect)

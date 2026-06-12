@@ -1,8 +1,8 @@
 {% load i18n %}
 <div class="essential-detail-info">
   {% if section == "marks" %}
-    {% include "essential_characters/_detail_mark_info.html" with mark=object.ancestry mark_type_label=_("Ancestry") %}
-    {% include "essential_characters/_detail_mark_info.html" with mark=object.path mark_type_label=_("Path") show_facet=True %}
+    {% include "essential_characters/_detail_mark_info.html" with mark=object.ancestry mark_type_label=_("Ancestry") use_essential=True %}
+    {% include "essential_characters/_detail_mark_info.html" with mark=object.path mark_type_label=_("Path") use_essential=True show_facet=True %}
     {% include "essential_characters/_detail_mark_info.html" with mark=object.bond mark_type_label=_("Bond") %}
   {% elif section == "conditions" %}
     <dl class="essential-info-list mb-0">

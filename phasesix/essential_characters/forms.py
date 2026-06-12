@@ -6,13 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 from armory.models import Item, RiotGear, Weapon
 from magic.models import BaseSpell, SpellOrigin
+from rules.models import Lineage, Template
 
 from .models import (
-    EssentialAncestry,
     EssentialBond,
     EssentialCharacter,
     EssentialCharacterSkill,
-    EssentialPath,
 )
 from .rules import (
     ATTRIBUTES,
@@ -132,8 +131,12 @@ class AttributesForm(forms.Form):
 
 
 class MarksForm(forms.Form):
-    ancestry = forms.ModelChoiceField(queryset=EssentialAncestry.objects.all())
-    path = forms.ModelChoiceField(queryset=EssentialPath.objects.all())
+    ancestry = forms.ModelChoiceField(
+        queryset=Lineage.objects.filter(essential_enabled=True)
+    )
+    path = forms.ModelChoiceField(
+        queryset=Template.objects.filter(essential_enabled=True)
+    )
     bond = forms.ModelChoiceField(queryset=EssentialBond.objects.all())
 
     def __init__(self, *args, **kwargs):
@@ -155,9 +158,11 @@ class SkillsForm(forms.Form):
     def __init__(self, *args, path=None, **kwargs):
         super().__init__(*args, **kwargs)
         suggestions = []
-        if path and path.skills:
+        if path and path.essential_skills:
             suggestions = [
-                skill.strip() for skill in path.skills.split(",") if skill.strip()
+                skill.strip()
+                for skill in path.essential_skills.split(",")
+                if skill.strip()
             ]
         for index in range(SKILL_COUNT):
             self.fields[f"skill_{index}_name"] = forms.CharField(

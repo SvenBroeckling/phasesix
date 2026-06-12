@@ -11,8 +11,8 @@ from unfold.admin import ModelAdmin
 
 from armory.models import Item, RiotGear, Weapon, WeaponType
 from magic.models import BaseSpell, SpellOrigin
+from rules.models import Lineage, Template, TemplateCategory
 
-from .definitions import ANCESTRIES, BONDS, PATHS
 from .forms import (
     AttributesForm,
     ConceptForm,
@@ -22,11 +22,9 @@ from .forms import (
     SkillsForm,
 )
 from .models import (
-    EssentialAncestry,
     EssentialBond,
     EssentialCharacter,
     EssentialCharacterSkill,
-    EssentialPath,
 )
 from .rules import (
     CENTURY_LEVELS,
@@ -133,49 +131,40 @@ class EssentialRuleTests(SimpleTestCase):
 
     def test_mark_models_expose_translated_fields(self):
         self.assertEqual(
-            {field.name for field in EssentialAncestry._meta.fields}
+            {field.name for field in Lineage._meta.fields}
             & {
-                "name_de",
-                "name_en",
-                "description_de",
-                "description_en",
-                "benefit_de",
-                "benefit_en",
-                "vulnerability_de",
-                "vulnerability_en",
-                "skills_de",
-                "skills_en",
+                "essential_description_de",
+                "essential_description_en",
+                "essential_benefit_de",
+                "essential_benefit_en",
+                "essential_vulnerability_de",
+                "essential_vulnerability_en",
+                "essential_skills_de",
+                "essential_skills_en",
             },
             {
-                "name_de",
-                "name_en",
-                "description_de",
-                "description_en",
-                "benefit_de",
-                "benefit_en",
-                "vulnerability_de",
-                "vulnerability_en",
-                "skills_de",
-                "skills_en",
+                "essential_description_de",
+                "essential_description_en",
+                "essential_benefit_de",
+                "essential_benefit_en",
+                "essential_vulnerability_de",
+                "essential_vulnerability_en",
+                "essential_skills_de",
+                "essential_skills_en",
             },
         )
         self.assertTrue(
-            {"facet_de", "facet_en", "skills_de", "skills_en"}
-            <= {field.name for field in EssentialPath._meta.fields}
+            {
+                "essential_facet_de",
+                "essential_facet_en",
+                "essential_skills_de",
+                "essential_skills_en",
+            }
+            <= {field.name for field in Template._meta.fields}
         )
         self.assertNotIn(
             "skills_de", {field.name for field in EssentialBond._meta.fields}
         )
-
-    def test_mark_definitions_include_english_for_every_german_value(self):
-        self.assertEqual(
-            (len(ANCESTRIES), len(PATHS), len(BONDS)),
-            (31, 44, 37),
-        )
-        for definition in (*ANCESTRIES, *PATHS, *BONDS):
-            for field, value in definition.items():
-                if field.endswith("_de") and value:
-                    self.assertTrue(definition[field.removesuffix("_de") + "_en"])
 
     def test_birth_date_is_free_text_with_localized_month_suggestions(self):
         with override("de"):
@@ -199,6 +188,8 @@ class EssentialRuleTests(SimpleTestCase):
 
     def test_character_uses_direct_catalog_relations(self):
         related_models = {
+            "ancestry": Lineage,
+            "path": Template,
             "weapons": Weapon,
             "armor": RiotGear,
             "items": Item,
@@ -208,12 +199,21 @@ class EssentialRuleTests(SimpleTestCase):
         for field_name, model in related_models.items():
             field = EssentialCharacter._meta.get_field(field_name)
             self.assertIs(field.remote_field.model, model)
-            self.assertIs(
-                field.remote_field.through._meta.auto_created, EssentialCharacter
-            )
+            if field.many_to_many:
+                self.assertIs(
+                    field.remote_field.through._meta.auto_created, EssentialCharacter
+                )
 
     def test_essential_catalog_fields_are_prefixed_and_nullable(self):
-        for model in (Item, Weapon, RiotGear, SpellOrigin, BaseSpell):
+        for model in (
+            Lineage,
+            Template,
+            Item,
+            Weapon,
+            RiotGear,
+            SpellOrigin,
+            BaseSpell,
+        ):
             self.assertFalse(model._meta.get_field("essential_enabled").default)
         for model, fields in (
             (
@@ -242,24 +242,22 @@ class EssentialRuleTests(SimpleTestCase):
     def test_bounded_essential_text_uses_char_fields(self):
         for model, fields in (
             (
-                EssentialAncestry,
+                Lineage,
                 (
-                    "name_de",
-                    "description_de",
-                    "benefit_de",
-                    "vulnerability_de",
-                    "skills_de",
+                    "essential_description_de",
+                    "essential_benefit_de",
+                    "essential_vulnerability_de",
+                    "essential_skills_de",
                 ),
             ),
             (
-                EssentialPath,
+                Template,
                 (
-                    "name_de",
-                    "description_de",
-                    "benefit_de",
-                    "vulnerability_de",
-                    "facet_de",
-                    "skills_de",
+                    "essential_description_de",
+                    "essential_benefit_de",
+                    "essential_vulnerability_de",
+                    "essential_facet_de",
+                    "essential_skills_de",
                 ),
             ),
             (
@@ -278,8 +276,6 @@ class EssentialRuleTests(SimpleTestCase):
 
     def test_essential_fields_have_translatable_verbose_names(self):
         models = (
-            EssentialAncestry,
-            EssentialPath,
             EssentialBond,
             EssentialCharacter,
             EssentialCharacterSkill,
@@ -298,11 +294,9 @@ class EssentialRuleTests(SimpleTestCase):
 
     def test_essential_admins_use_unfold_model_admin(self):
         for model in (
-            EssentialAncestry,
             EssentialBond,
             EssentialCharacter,
             EssentialCharacterSkill,
-            EssentialPath,
         ):
             self.assertIsInstance(admin.site._registry[model], ModelAdmin)
 
@@ -361,19 +355,21 @@ class EssentialMarkSummaryTests(TestCase):
         self.client.force_login(
             get_user_model().objects.create_user(username="marks-user")
         )
-        self.path = EssentialPath.objects.create(
+        self.path = Template.objects.create(
             name_de="Gelehrter",
             name_en="Scholar",
-            description_de="Sucht nach Wissen.",
-            description_en="Seeks knowledge.",
-            benefit_de="Kennt Geschichten.",
-            benefit_en="Knows stories.",
-            vulnerability_de="Zögert bei Gewalt.",
-            vulnerability_en="Hesitates at violence.",
-            facet_de="Erkennt seltene Quellen.",
-            facet_en="Recognizes rare sources.",
-            skills_de="Geschichte, Mythen",
-            skills_en="History, Myths",
+            category=TemplateCategory.objects.create(name_de="Pfade", name_en="Paths"),
+            essential_enabled=True,
+            essential_description_de="Sucht nach Wissen.",
+            essential_description_en="Seeks knowledge.",
+            essential_benefit_de="Kennt Geschichten.",
+            essential_benefit_en="Knows stories.",
+            essential_vulnerability_de="Zögert bei Gewalt.",
+            essential_vulnerability_en="Hesitates at violence.",
+            essential_facet_de="Erkennt seltene Quellen.",
+            essential_facet_en="Recognizes rare sources.",
+            essential_skills_de="Geschichte, Mythen",
+            essential_skills_en="History, Myths",
         )
 
     def test_mark_summary_returns_selected_mark_details(self):
@@ -384,10 +380,10 @@ class EssentialMarkSummaryTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.path.name)
-        self.assertContains(response, self.path.benefit)
-        self.assertContains(response, self.path.vulnerability)
-        self.assertContains(response, self.path.facet)
-        self.assertContains(response, self.path.skills)
+        self.assertContains(response, self.path.essential_benefit)
+        self.assertContains(response, self.path.essential_vulnerability)
+        self.assertContains(response, self.path.essential_facet)
+        self.assertContains(response, self.path.essential_skills)
 
     def test_mark_summary_rejects_unknown_mark_type(self):
         response = self.client.get(
