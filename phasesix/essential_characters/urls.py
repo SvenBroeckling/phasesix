@@ -4,21 +4,39 @@ from . import views
 app_name = "essential_characters"
 
 urlpatterns = [
-    path("marks/summary/", views.mark_summary, name="mark_summary"),
-    path("equipment/summary/", views.equipment_summary, name="equipment_summary"),
+    path("marks/summary/", views.MarkSummaryView.as_view(), name="mark_summary"),
+    path(
+        "equipment/summary/",
+        views.EquipmentSummaryView.as_view(),
+        name="equipment_summary",
+    ),
+    path(
+        "supernatural/summary/",
+        views.SupernaturalSummaryView.as_view(),
+        name="supernatural_summary",
+    ),
     path(
         "new/",
         views.EssentialCharacterCreateWizard.as_view(
             views.WIZARD_FORMS,
-            condition_dict={"supernatural": views.show_supernatural_step},
+            condition_dict={
+                "supernatural": views.EssentialCharacterCreateWizard.show_supernatural_step
+            },
         ),
         name="create",
     ),
     path(
         "<slug:slug>/info/<str:section>/",
-        views.character_detail_info,
+        views.EssentialCharacterDetailInfoView.as_view(),
         name="detail_info",
     ),
+    path(
+        "<slug:slug>/image/",
+        views.EssentialCharacterImageView.as_view(),
+        name="change_image",
+    ),
     path("<slug:slug>/", views.EssentialCharacterDetailView.as_view(), name="detail"),
-    path("<slug:slug>/edit/", views.EssentialCharacterUpdateView.as_view(), name="edit"),
+    path(
+        "<slug:slug>/edit/", views.EssentialCharacterUpdateView.as_view(), name="edit"
+    ),
 ]

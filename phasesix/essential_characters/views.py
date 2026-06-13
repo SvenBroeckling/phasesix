@@ -1,26 +1,29 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, UpdateView
+from django.views import View
+from django.views.generic import DetailView, TemplateView, UpdateView
 from formtools.wizard.views import SessionWizardView
 
 from campaigns.models import Campaign
 from plots.models import Plot
 from armory.models import Item, RiotGear, Weapon
+from magic.models import BaseSpell, SpellOrigin
 from rules.models import Lineage, Template
 from .forms import (
     AttributesForm,
     ConceptForm,
     EquipmentForm,
     EssentialCharacterForm,
+    EssentialCharacterImageForm,
     MarksForm,
     SkillsForm,
     SupernaturalForm,
+    essential_item_queryset,
 )
 from .models import (
     EssentialBond,
@@ -57,13 +60,8 @@ WIZARD_STEP_DESCRIPTIONS = {
 }
 
 
-def show_supernatural_step(wizard):
-    attributes = wizard.get_cleaned_data_for_step("attributes") or {}
-    return attributes.get("gift", 0) > 0
-
-
-@login_required
-def mark_summary(request):
+class MarkSummaryView(LoginRequiredMixin, TemplateView):
+    template_name = "essential_characters/_mark_summary.html"
     mark_models = {
         "ancestry": Lineage,
         "path": Template,
@@ -74,96 +72,170 @@ def mark_summary(request):
         "path": _("Path"),
         "bond": _("Bond"),
     }
-    mark_type = next(
-        (
-            name
-            for name in mark_models
-            if any(key == name or key.endswith(f"-{name}") for key in request.GET)
-        ),
-        None,
-    )
-    if not mark_type:
-        return HttpResponseBadRequest()
 
-    mark_id = next(
-        (
-            value
-            for key, value in request.GET.items()
-            if key == mark_type or key.endswith(f"-{mark_type}")
-        ),
-        "",
-    )
-    queryset = mark_models[mark_type].objects.all()
-    if mark_type != "bond":
-        queryset = queryset.filter(essential_enabled=True)
-    mark = get_object_or_404(queryset, pk=mark_id) if mark_id else None
-    return render(
-        request,
-        "essential_characters/_mark_summary.html",
-        {
-            "mark": mark,
-            "mark_type": mark_type,
-            "mark_type_label": mark_labels[mark_type],
-        },
-    )
+    def get(self, request, *args, **kwargs):
+        mark_type = next(
+            (
+                name
+                for name in self.mark_models
+                if any(key == name or key.endswith(f"-{name}") for key in request.GET)
+            ),
+            None,
+        )
+        if not mark_type:
+            return HttpResponseBadRequest()
+
+        mark_id = next(
+            (
+                value
+                for key, value in request.GET.items()
+                if key == mark_type or key.endswith(f"-{mark_type}")
+            ),
+            "",
+        )
+        queryset = self.mark_models[mark_type].objects.all()
+        if mark_type != "bond":
+            queryset = queryset.filter(essential_enabled=True)
+        mark = get_object_or_404(queryset, pk=mark_id) if mark_id else None
+        return self.render_to_response(
+            {
+                "mark": mark,
+                "mark_type": mark_type,
+                "mark_type_label": self.mark_labels[mark_type],
+            }
+        )
 
 
-@login_required
-def equipment_summary(request):
+class EquipmentSummaryView(LoginRequiredMixin, TemplateView):
+    template_name = "essential_characters/_equipment_summary.html"
     equipment_models = {
         "primary_weapon": ("weapon", Weapon),
         "secondary_weapon": ("weapon", Weapon),
         "armor": ("armor", RiotGear),
         "items": ("items", Item),
     }
-    field_name = next(
-        (
-            name
-            for name in equipment_models
-            if any(key == name or key.endswith(f"-{name}") for key in request.GET)
-        ),
-        None,
-    )
-    if not field_name:
-        return HttpResponseBadRequest()
 
-    resource_type, model = equipment_models[field_name]
-    key = next(
-        key
-        for key in request.GET
-        if key == field_name or key.endswith(f"-{field_name}")
-    )
-    values = [value for value in request.GET.getlist(key) if value]
-    resources = model.objects.filter(pk__in=values, essential_enabled=True)
-    return render(
-        request,
-        "essential_characters/_equipment_summary.html",
-        {
-            "resources": resources,
-            "resource_type": resource_type,
-        },
-    )
+    def get(self, request, *args, **kwargs):
+        field_name = next(
+            (
+                name
+                for name in self.equipment_models
+                if any(key == name or key.endswith(f"-{name}") for key in request.GET)
+            ),
+            None,
+        )
+        if not field_name:
+            return HttpResponseBadRequest()
+
+        resource_type, model = self.equipment_models[field_name]
+        key = next(
+            key
+            for key in request.GET
+            if key == field_name or key.endswith(f"-{field_name}")
+        )
+        values = [value for value in request.GET.getlist(key) if value]
+        resources = (
+            essential_item_queryset().filter(pk__in=values)
+            if model is Item
+            else model.objects.filter(pk__in=values, essential_enabled=True)
+        )
+        return self.render_to_response(
+            {
+                "resources": resources,
+                "resource_type": resource_type,
+            }
+        )
 
 
-def character_detail_info(request, slug, section):
-    if section not in {"marks", "conditions", "derived"}:
-        return HttpResponseBadRequest()
-    return render(
-        request,
-        "essential_characters/_detail_info.html",
-        {
-            "object": get_object_or_404(EssentialCharacter, slug=slug),
-            "section": section,
-        },
-    )
+class SupernaturalSummaryView(LoginRequiredMixin, TemplateView):
+    template_name = "essential_characters/_supernatural_summary.html"
+
+    def get(self, request, *args, **kwargs):
+        field_name = next(
+            (
+                key.split("-")[-1]
+                for key in request.GET
+                if key.split("-")[-1].startswith(("magic_aspect_", "spell_"))
+            ),
+            None,
+        )
+        if not field_name:
+            return HttpResponseBadRequest()
+        key = next(key for key in request.GET if key.endswith(field_name))
+        value = request.GET.get(key)
+        context = {"origin": None, "spell": None}
+        if field_name.startswith("magic_aspect_"):
+            context["origin"] = (
+                get_object_or_404(SpellOrigin, pk=value) if value else None
+            )
+        else:
+            context["spell"] = (
+                get_object_or_404(BaseSpell.objects.select_related("origin"), pk=value)
+                if value
+                else None
+            )
+        return self.render_to_response(context)
+
+
+class EssentialCharacterDetailInfoView(TemplateView):
+    template_name = "essential_characters/_detail_info.html"
+    sections = {"marks", "conditions", "derived"}
+
+    def get(self, request, *args, **kwargs):
+        if self.kwargs["section"] not in self.sections:
+            return HttpResponseBadRequest()
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["object"] = get_object_or_404(
+            EssentialCharacter, slug=self.kwargs["slug"]
+        )
+        context["section"] = self.kwargs["section"]
+        return context
 
 
 class EssentialCharacterDetailView(DetailView):
     model = EssentialCharacter
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["may_edit"] = self.object.may_edit(self.request.user)
+        return context
+
+
+class EssentialCharacterImageView(LoginRequiredMixin, View):
+    def get_character(self):
+        character = get_object_or_404(EssentialCharacter, slug=self.kwargs["slug"])
+        if not character.may_edit(self.request.user):
+            raise PermissionDenied()
+        return character
+
+    def get(self, request, *args, **kwargs):
+        self.get_character()
+        return HttpResponseBadRequest()
+
+    def post(self, request, *args, **kwargs):
+        character = self.get_character()
+        if request.POST.get("remove_image"):
+            character.image = None
+            character.save(update_fields=["image", "modified_at"])
+        else:
+            form = EssentialCharacterImageForm(
+                request.POST, request.FILES, instance=character
+            )
+            if form.is_valid():
+                form.save()
+        return HttpResponseRedirect(character.get_absolute_url())
+
 
 class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
     template_name = "essential_characters/essentialcharacter_wizard.html"
+
+    @staticmethod
+    def show_supernatural_step(wizard):
+        attributes = wizard.get_cleaned_data_for_step("attributes") or {}
+        return attributes.get("gift", 0) > 0
 
     def get(self, request, *args, **kwargs):
         requested_step = request.GET.get("step")
@@ -287,10 +359,17 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
                 for index in range(9)
             ]
         if self.steps.current == "supernatural":
-            context["essential_spell_origins"] = {
-                str(spell.pk): str(spell.origin_id or "")
-                for spell in form.fields["spells"].queryset
-            }
+            slots = magic_slots(form.gift)
+            context["supernatural_text_fields"] = (
+                form["focus"],
+                form["regeneration_ritual"],
+            )
+            context["supernatural_aspect_fields"] = [
+                form[f"magic_aspect_{index}"] for index in range(slots["aspects"])
+            ]
+            context["supernatural_spell_fields"] = [
+                form[f"spell_{index}"] for index in range(slots["spells"])
+            ]
         attributes = self.get_cleaned_data_for_step("attributes") or {}
         if attributes:
             context["magic_slots"] = magic_slots(attributes["gift"])

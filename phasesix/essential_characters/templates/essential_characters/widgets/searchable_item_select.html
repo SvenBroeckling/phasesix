@@ -1,0 +1,30 @@
+{% load i18n %}
+<div class="essential-item-picker"
+     data-essential-item-picker
+     data-remove-label="{% trans 'Remove' %}">
+  <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} multiple>
+    {% for group_name, group_choices, group_index in widget.optgroups %}
+      {% if group_name %}<optgroup label="{{ group_name }}">{% endif %}
+      {% for option in group_choices %}
+        {% include option.template_name with widget=option %}
+      {% endfor %}
+      {% if group_name %}</optgroup>{% endif %}
+    {% endfor %}
+  </select>
+  <div class="input-group">
+    <input type="search"
+           class="form-control"
+           autocomplete="off"
+           placeholder="{% trans 'Search items' %}"
+           aria-label="{% trans 'Search items' %}"
+           data-essential-item-search>
+    <button type="button"
+            class="btn btn-primary"
+            data-essential-item-add
+            disabled>
+      <i class="fas fa-plus me-1" aria-hidden="true"></i>{% trans "Add" %}
+    </button>
+  </div>
+  <div class="essential-item-picker-options list-group" data-essential-item-options hidden></div>
+  <div class="essential-item-picker-selected mt-3" data-essential-item-selected></div>
+</div>

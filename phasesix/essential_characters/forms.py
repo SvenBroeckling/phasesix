@@ -1,12 +1,13 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import Item, RiotGear, Weapon
 from magic.models import BaseSpell, SpellOrigin
-from rules.models import Lineage, Template
+from rules.models import Extension, Lineage, Template
 
 from .models import (
     EssentialBond,
@@ -62,6 +63,14 @@ TIRAKAN_MONTH_NAMES = {
         "Wintermoon",
     ),
 }
+ESSENTIAL_ITEM_EXTENSION_IDENTIFIERS = ("tirakan", "middleages")
+
+
+def essential_item_queryset():
+    return Item.objects.filter(
+        Q(extensions__identifier__in=ESSENTIAL_ITEM_EXTENSION_IDENTIFIERS)
+        | Q(extensions__in=Extension.objects.filter(is_mandatory=True))
+    ).distinct()
 
 
 class TirakanBirthDateInput(forms.TextInput):
@@ -86,6 +95,30 @@ class CircleRadioSelect(forms.RadioSelect):
         attrs = kwargs.setdefault("attrs", {})
         attrs["class"] = f"{attrs.get('class', '')} essential-rank-input".strip()
         super().__init__(*args, **kwargs)
+
+
+class SearchableItemSelectMultiple(forms.SelectMultiple):
+    template_name = "essential_characters/widgets/searchable_item_select.html"
+
+    def __init__(self, *args, **kwargs):
+        attrs = kwargs.setdefault("attrs", {})
+        attrs["class"] = f"{attrs.get('class', '')} d-none".strip()
+        super().__init__(*args, **kwargs)
+
+
+class SearchableSpellSelect(forms.Select):
+    template_name = "essential_characters/widgets/searchable_spell_select.html"
+
+    def __init__(self, *args, **kwargs):
+        attrs = kwargs.setdefault("attrs", {})
+        attrs["class"] = f"{attrs.get('class', '')} d-none".strip()
+        super().__init__(*args, **kwargs)
+
+    def create_option(self, name, value, label, selected, index, **kwargs):
+        option = super().create_option(name, value, label, selected, index, **kwargs)
+        if value:
+            option["attrs"]["data-origin"] = str(value.instance.origin_id or "")
+        return option
 
 
 class ConceptForm(forms.Form):
@@ -211,13 +244,16 @@ class EquipmentForm(forms.Form):
         queryset=RiotGear.objects.filter(essential_enabled=True), required=False
     )
     items = forms.ModelMultipleChoiceField(
-        queryset=Item.objects.filter(essential_enabled=True),
+        queryset=essential_item_queryset(),
         required=False,
+        widget=SearchableItemSelectMultiple,
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for name, field in self.fields.items():
+            if name == "items":
+                continue
             target = f"#summary-{self[name].id_for_label}"
             field.widget.attrs.update(
                 {
@@ -235,30 +271,65 @@ class SupernaturalForm(forms.Form):
     regeneration_ritual = forms.CharField(
         required=False, widget=forms.Textarea(attrs={"rows": 4})
     )
-    magic_aspects = forms.ModelMultipleChoiceField(
-        queryset=SpellOrigin.objects.filter(essential_enabled=True), required=False
-    )
-    spells = forms.ModelMultipleChoiceField(
-        queryset=BaseSpell.objects.filter(essential_enabled=True), required=False
-    )
 
     def __init__(self, *args, gift=0, **kwargs):
         self.gift = gift
         super().__init__(*args, **kwargs)
+        slots = magic_slots(gift)
+        for index in range(slots["aspects"]):
+            name = f"magic_aspect_{index}"
+            self.fields[name] = forms.ModelChoiceField(
+                label=_("Magic aspect %(number)s") % {"number": index + 1},
+                queryset=SpellOrigin.objects.all(),
+                required=False,
+            )
+            target = f"#summary-{self[name].id_for_label}"
+            self.fields[name].widget.attrs.update(
+                {
+                    "hx-get": reverse_lazy("essential_characters:supernatural_summary"),
+                    "hx-trigger": "change, load",
+                    "hx-target": target,
+                    "hx-swap": "innerHTML",
+                    "hx-indicator": target,
+                }
+            )
+        for index in range(slots["spells"]):
+            name = f"spell_{index}"
+            self.fields[name] = forms.ModelChoiceField(
+                label=_("Spell %(number)s") % {"number": index + 1},
+                queryset=BaseSpell.objects.select_related("origin"),
+                required=False,
+                empty_label=_("Search spells"),
+                widget=SearchableSpellSelect,
+            )
+            target = f"#summary-{self[name].id_for_label}"
+            self.fields[name].widget.attrs.update(
+                {
+                    "hx-get": reverse_lazy("essential_characters:supernatural_summary"),
+                    "hx-trigger": "change, load",
+                    "hx-target": target,
+                    "hx-swap": "innerHTML",
+                    "hx-indicator": target,
+                }
+            )
 
     def clean(self):
         cleaned = super().clean()
         slots = magic_slots(self.gift)
-        aspects = cleaned.get("magic_aspects", ())
-        spells = cleaned.get("spells", ())
-        if len(aspects) > slots["aspects"] or len(spells) > slots["spells"]:
-            raise ValidationError(
-                _("The supernatural selections exceed the slots granted by Gift.")
-            )
-        if any(spell.origin_id and spell.origin not in aspects for spell in spells):
+        aspects = [
+            cleaned.get(f"magic_aspect_{index}") for index in range(slots["aspects"])
+        ]
+        spells = [cleaned.get(f"spell_{index}") for index in range(slots["spells"])]
+        aspects = [aspect for aspect in aspects if aspect]
+        spells = [spell for spell in spells if spell]
+        if len(set(aspects)) != len(aspects) or len(set(spells)) != len(spells):
+            raise ValidationError(_("Supernatural selections must be unique."))
+        if any(not spell.origin_id or spell.origin not in aspects for spell in spells):
             raise ValidationError(
                 _("Selected spells must belong to a selected magic aspect.")
             )
+        cleaned["magic_aspects"] = aspects
+        cleaned["spells"] = spells
         return cleaned
 
 
@@ -274,7 +345,7 @@ class EssentialCharacterForm(forms.ModelForm):
         queryset=RiotGear.objects.filter(essential_enabled=True), required=False
     )
     items = forms.ModelMultipleChoiceField(
-        queryset=Item.objects.filter(essential_enabled=True),
+        queryset=essential_item_queryset(),
         required=False,
     )
     magic_aspects = forms.ModelMultipleChoiceField(
@@ -378,3 +449,9 @@ class EssentialCharacterForm(forms.ModelForm):
         character.magic_aspects.set(self.cleaned_data["magic_aspects"])
         character.spells.set(self.cleaned_data["spells"])
         return character
+
+
+class EssentialCharacterImageForm(forms.ModelForm):
+    class Meta:
+        model = EssentialCharacter
+        fields = ("image",)

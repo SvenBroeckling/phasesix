@@ -8,6 +8,7 @@ from django.core.files.storage import default_storage
 from django.db import models, transaction
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
 from phasesix.models import ModelWithImage, image_upload_path
@@ -264,6 +265,11 @@ class EssentialCharacter(ModelWithImage):
 
     def get_absolute_url(self):
         return reverse("essential_characters:detail", kwargs={"slug": self.slug})
+
+    def get_image_url(self, geometry="180", crop="center"):
+        if self.image:
+            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+        return None
 
     @property
     def wound_threshold(self):

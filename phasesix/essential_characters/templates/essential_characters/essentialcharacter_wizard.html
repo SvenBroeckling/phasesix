@@ -51,10 +51,6 @@
       </button>
     </div>
 
-    {% if essential_spell_origins %}
-      {{ essential_spell_origins|json_script:"essential-spell-origins" }}
-    {% endif %}
-
     <div class="essential-wizard-fields essential-wizard-fields-{{ wizard.steps.current }}">
       {% if skill_rows %}
         {% for name_field, rank_field in skill_rows %}
@@ -87,13 +83,53 @@
         <div class="row g-4">
           {% for field in form %}
             <div class="col-12 col-lg-6 essential-preview-column">
+              {% if field.name == "items" %}
+                {% bootstrap_field field wrapper_class="mb-3" %}
+              {% else %}
+                {% bootstrap_field field layout="floating" wrapper_class="mb-3" %}
+              {% endif %}
+              {% if field.name != "items" %}
+                <section id="summary-{{ field.id_for_label }}"
+                         class="card flex-grow-1 essential-preview-card"
+                         aria-live="polite"
+                         data-error-message="{% trans 'Could not load equipment details.' %}">
+                  <div class="card-body">
+                    <p class="text-body-secondary mb-0">{% trans "Choose equipment to see its details." %}</p>
+                  </div>
+                </section>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% elif wizard.steps.current == "supernatural" %}
+        <div class="row g-4 mb-4">
+          {% for field in supernatural_text_fields %}
+            <div class="col-12 col-lg-6">{% bootstrap_field field layout="floating" wrapper_class="mb-0" %}</div>
+          {% endfor %}
+        </div>
+        <div class="row g-4">
+          {% for field in supernatural_aspect_fields %}
+            <div class="col-12 col-lg-6 essential-preview-column">
               {% bootstrap_field field layout="floating" wrapper_class="mb-3" %}
               <section id="summary-{{ field.id_for_label }}"
                        class="card flex-grow-1 essential-preview-card"
                        aria-live="polite"
-                       data-error-message="{% trans 'Could not load equipment details.' %}">
+                       data-error-message="{% trans 'Could not load supernatural details.' %}">
                 <div class="card-body">
-                  <p class="text-body-secondary mb-0">{% trans "Choose equipment to see its details." %}</p>
+                  <p class="text-body-secondary mb-0">{% trans "Choose a supernatural option to see its details." %}</p>
+                </div>
+              </section>
+            </div>
+          {% endfor %}
+          {% for field in supernatural_spell_fields %}
+            <div class="col-12 col-lg-6 essential-preview-column">
+              {% bootstrap_field field layout="floating" wrapper_class="mb-3" %}
+              <section id="summary-{{ field.id_for_label }}"
+                       class="card flex-grow-1 essential-preview-card"
+                       aria-live="polite"
+                       data-error-message="{% trans 'Could not load supernatural details.' %}">
+                <div class="card-body">
+                  <p class="text-body-secondary mb-0">{% trans "Choose a supernatural option to see its details." %}</p>
                 </div>
               </section>
             </div>

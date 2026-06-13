@@ -107,6 +107,56 @@ a.essential-step-dot.reached,
   color: var(--bs-emphasis-color);
 }
 
+.essential-item-picker {
+  position: relative;
+}
+
+.essential-spell-picker {
+  position: relative;
+}
+
+.form-floating > .essential-spell-picker .form-control {
+  min-height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+  padding-top: 1.625rem;
+  padding-bottom: .625rem;
+}
+
+.form-floating > .essential-spell-picker ~ label {
+  height: auto;
+  padding: .75rem;
+  color: rgba(var(--bs-body-color-rgb), .65);
+  pointer-events: none;
+  transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+  transform-origin: 0 0;
+}
+
+.essential-spell-picker-options,
+.essential-item-picker-options {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  left: 0;
+  max-height: 18rem;
+  overflow-y: auto;
+  box-shadow: 0 .75rem 2rem rgba(var(--bs-black-rgb), .35);
+}
+
+.essential-item-picker-selected {
+  display: grid;
+  gap: .5rem;
+}
+
+.essential-item-picker-selection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .65rem .75rem;
+  border: 1px solid rgba(var(--bs-primary-rgb), .25);
+  border-radius: var(--bs-border-radius);
+  background: var(--bs-tertiary-bg);
+}
+
 .essential-mark-description {
   color: var(--bs-secondary-color);
 }
@@ -128,6 +178,42 @@ a.essential-step-dot.reached,
 
 .essential-mark-details dd {
   margin-bottom: 0;
+}
+
+.essential-spell-rules > :last-child {
+  margin-bottom: 0;
+}
+
+.essential-spell-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem .5rem;
+}
+
+.essential-spell-metadata div {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid rgba(var(--bs-primary-rgb), .22);
+  border-radius: var(--bs-border-radius-sm);
+  background: var(--bs-body-bg);
+  font-size: .82rem;
+  line-height: 1.25;
+}
+
+.essential-spell-metadata dt,
+.essential-spell-metadata dd {
+  margin: 0;
+  padding: .3rem .45rem;
+}
+
+.essential-spell-metadata dt {
+  color: var(--bs-secondary-color);
+  background: rgba(var(--bs-primary-rgb), .08);
+  font-weight: 600;
+}
+
+.essential-spell-metadata dd {
+  color: var(--bs-emphasis-color);
 }
 
 .essential-skill-row {
