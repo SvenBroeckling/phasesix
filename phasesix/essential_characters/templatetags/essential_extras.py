@@ -29,31 +29,37 @@ def essential_rank_options(maximum=4):
 def essential_condition_rows(character):
     return [
         {
+            "name": "wounds",
             "label": gettext("Wounds"),
             "value": character.wounds,
             "options": range(character.wound_threshold + 1),
         },
         {
+            "name": "burden",
             "label": gettext("Burden"),
             "value": character.burden,
             "options": range(character.burden_threshold + 1),
         },
         {
+            "name": "omen",
             "label": gettext("Omen"),
             "value": character.omen,
             "options": range(character.omen_max + 1),
         },
         {
+            "name": "arkana",
             "label": gettext("Arkana"),
             "value": character.arkana,
             "options": range(character.arkana_max + 1),
         },
         {
+            "name": "favor",
             "label": gettext("Favor"),
             "value": character.favor,
             "options": range(character.favor_max + 1),
         },
         {
+            "name": "corruption",
             "label": gettext("Corruption"),
             "value": character.corruption,
             "options": range(max(6, character.corruption) + 1),

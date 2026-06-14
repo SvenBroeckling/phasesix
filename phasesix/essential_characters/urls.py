@@ -35,6 +35,21 @@ urlpatterns = [
         views.EssentialCharacterImageView.as_view(),
         name="change_image",
     ),
+    path(
+        "<slug:slug>/edit/<str:section>/",
+        views.EssentialCharacterEditSectionView.as_view(),
+        name="edit_section",
+    ),
+    path(
+        "<slug:slug>/condition/<str:condition>/",
+        views.EssentialCharacterConditionView.as_view(),
+        name="set_condition",
+    ),
+    path(
+        "<slug:slug>/edit-search/",
+        views.EssentialCharacterEditSearchView.as_view(),
+        name="edit_search",
+    ),
     path("<slug:slug>/", views.EssentialCharacterDetailView.as_view(), name="detail"),
     path(
         "<slug:slug>/edit/", views.EssentialCharacterUpdateView.as_view(), name="edit"

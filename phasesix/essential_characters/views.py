@@ -1,12 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.db.models import Q
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.generic import DetailView, TemplateView, UpdateView
+from django.views.generic import DetailView, FormView, TemplateView, UpdateView
 from formtools.wizard.views import SessionWizardView
 
 from campaigns.models import Campaign
@@ -16,10 +22,18 @@ from magic.models import BaseSpell, SpellOrigin
 from rules.models import Lineage, Template
 from .forms import (
     AttributesForm,
+    AjaxSearchSelectMultiple,
     ConceptForm,
     EquipmentForm,
     EssentialCharacterForm,
+    EssentialAttributesEditForm,
+    EssentialEquipmentEditForm,
     EssentialCharacterImageForm,
+    EssentialIdentityEditForm,
+    EssentialMarksEditForm,
+    EssentialNotesEditForm,
+    EssentialSkillsEditForm,
+    EssentialSupernaturalEditForm,
     MarksForm,
     SkillsForm,
     SupernaturalForm,
@@ -227,6 +241,142 @@ class EssentialCharacterImageView(LoginRequiredMixin, View):
             if form.is_valid():
                 form.save()
         return HttpResponseRedirect(character.get_absolute_url())
+
+
+class EssentialCharacterEditSectionView(LoginRequiredMixin, FormView):
+    template_name = "essential_characters/_edit_section_form.html"
+    sections = {
+        "identity": (EssentialIdentityEditForm, _("Identity")),
+        "marks": (EssentialMarksEditForm, _("Marks")),
+        "attributes": (EssentialAttributesEditForm, _("Attributes")),
+        "skills": (EssentialSkillsEditForm, _("Skills")),
+        "equipment": (EssentialEquipmentEditForm, _("Equipment")),
+        "supernatural": (EssentialSupernaturalEditForm, _("Magic and belief")),
+        "notes": (EssentialNotesEditForm, _("Notes")),
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        self.character = get_object_or_404(EssentialCharacter, slug=kwargs["slug"])
+        if not self.character.may_edit(request.user):
+            raise PermissionDenied()
+        if kwargs["section"] not in self.sections:
+            return HttpResponseBadRequest()
+        self.form_class, self.section_label = self.sections[kwargs["section"]]
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if self.kwargs["section"] == "skills":
+            kwargs["character"] = self.character
+        else:
+            kwargs["instance"] = self.character
+        return kwargs
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        search_url = reverse(
+            "essential_characters:edit_search", kwargs={"slug": self.character.slug}
+        )
+        for field in form.fields.values():
+            if isinstance(field.widget, AjaxSearchSelectMultiple):
+                field.widget.attrs["data-search-url"] = search_url
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["object"] = self.character
+        context["section"] = self.kwargs["section"]
+        context["section_label"] = self.section_label
+        if self.kwargs["section"] == "skills":
+            context["skill_rows"] = [
+                (
+                    context["form"][f"skill_{index}_name"],
+                    context["form"][f"skill_{index}_rank"],
+                )
+                for index in range(9)
+            ]
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        form.save()
+        condition_limits = {
+            "wounds": self.character.wound_threshold,
+            "burden": self.character.burden_threshold,
+            "omen": self.character.omen_max,
+            "arkana": self.character.arkana_max,
+            "favor": self.character.favor_max,
+        }
+        changed_conditions = []
+        for condition, limit in condition_limits.items():
+            if getattr(self.character, condition) > limit:
+                setattr(self.character, condition, limit)
+                changed_conditions.append(condition)
+        if changed_conditions:
+            self.character.save(update_fields=[*changed_conditions, "modified_at"])
+        return HttpResponseRedirect(self.character.get_absolute_url())
+
+
+class EssentialCharacterConditionView(LoginRequiredMixin, View):
+    condition_limits = {
+        "wounds": lambda character: character.wound_threshold,
+        "burden": lambda character: character.burden_threshold,
+        "omen": lambda character: character.omen_max,
+        "arkana": lambda character: character.arkana_max,
+        "favor": lambda character: character.favor_max,
+        "corruption": lambda character: max(6, character.corruption),
+    }
+
+    def post(self, request, *args, **kwargs):
+        character = get_object_or_404(EssentialCharacter, slug=kwargs["slug"])
+        if not character.may_edit(request.user):
+            raise PermissionDenied()
+        condition = kwargs["condition"]
+        if condition not in self.condition_limits:
+            return HttpResponseBadRequest()
+        try:
+            value = int(request.POST.get("value", ""))
+        except ValueError:
+            return HttpResponseBadRequest()
+        if not 0 <= value <= self.condition_limits[condition](character):
+            return HttpResponseBadRequest()
+        setattr(character, condition, value)
+        character.save(update_fields=[condition, "modified_at"])
+        return HttpResponse(status=204)
+
+
+class EssentialCharacterEditSearchView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        character = get_object_or_404(EssentialCharacter, slug=kwargs["slug"])
+        if not character.may_edit(request.user):
+            raise PermissionDenied()
+        search_type = request.GET.get("type")
+        query = request.GET.get("q", "").strip()
+        query_filter = Q(name_de__icontains=query) | Q(name_en__icontains=query)
+        querysets = {
+            "weapons": Weapon.objects.filter(essential_enabled=True),
+            "armor": RiotGear.objects.filter(essential_enabled=True),
+            "items": essential_item_queryset(),
+            "magic_aspects": SpellOrigin.objects.all(),
+            "spells": BaseSpell.objects.select_related("origin"),
+        }
+        if search_type not in querysets:
+            return HttpResponseBadRequest()
+        queryset = querysets[search_type]
+        if search_type == "spells":
+            origins = request.GET.getlist("origin")
+            queryset = (
+                queryset.filter(origin_id__in=origins) if origins else queryset.none()
+            )
+        results = []
+        for resource in queryset.filter(query_filter).distinct()[:12]:
+            meta = ""
+            if search_type in {"weapons", "armor", "items"}:
+                meta = str(resource.type)
+            elif search_type == "spells":
+                meta = str(resource.origin or "")
+            results.append({"id": resource.pk, "text": str(resource), "meta": meta})
+        return JsonResponse({"results": results})
 
 
 class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):

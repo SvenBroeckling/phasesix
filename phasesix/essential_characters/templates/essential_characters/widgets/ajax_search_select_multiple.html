@@ -1,0 +1,22 @@
+{% load i18n %}
+<div class="essential-ajax-picker"
+     data-essential-ajax-picker
+     data-search-type="{{ widget.search_type }}"
+     data-search-url="{{ widget.search_url }}"
+     data-remove-label="{% trans 'Remove' %}">
+  <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} multiple>
+    {% for group_name, group_choices, group_index in widget.optgroups %}
+      {% for option in group_choices %}
+        {% include option.template_name with widget=option %}
+      {% endfor %}
+    {% endfor %}
+  </select>
+  <input type="search"
+         class="form-control"
+         autocomplete="off"
+         placeholder="{% trans 'Search and add' %}"
+         aria-label="{% trans 'Search and add' %}"
+         data-essential-ajax-search>
+  <div class="essential-ajax-picker-results list-group" data-essential-ajax-results hidden></div>
+  <div class="essential-ajax-picker-selected" data-essential-ajax-selected></div>
+</div>

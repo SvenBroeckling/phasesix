@@ -6,7 +6,15 @@
   </div>
   <div class="essential-readonly-ranks" aria-label="{{ label }}: {{ value }}">
     {% for option in options %}
-      <span class="essential-rank-circle{% if option == value %} selected{% endif %}">{{ option }}</span>
+      {% if condition_name and may_edit %}
+        <button type="button"
+                class="essential-rank-circle{% if option == value %} selected{% endif %}"
+                data-essential-condition-url="{% url 'essential_characters:set_condition' slug=object.slug condition=condition_name %}"
+                data-essential-condition-value="{{ option }}"
+                aria-label="{{ label }}: {{ option }}">{{ option }}</button>
+      {% else %}
+        <span class="essential-rank-circle{% if option == value %} selected{% endif %}">{{ option }}</span>
+      {% endif %}
     {% endfor %}
   </div>
 </div>

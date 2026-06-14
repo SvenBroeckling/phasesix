@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.serializers.json import DjangoJSONEncoder
 from django.http import QueryDict
 from django.template.loader import render_to_string
 from django.test import SimpleTestCase, TestCase, override_settings
@@ -12,21 +13,24 @@ from django.utils.functional import Promise
 from django.utils.translation import override
 from unfold.admin import ModelAdmin
 
-from armory.models import Item, ItemType, RiotGear, Weapon, WeaponType
+from armory.models import Item, ItemType, RiotGear, RiotGearType, Weapon, WeaponType
 from magic.models import BaseSpell, SpellOrigin
 from rules.models import Extension, Lineage, Template, TemplateCategory
 
 from .forms import (
     AttributesForm,
+    CircleRadioSelect,
     ConceptForm,
     EquipmentForm,
     EssentialCharacterForm,
+    EssentialSkillsEditForm,
     MarksForm,
     SearchableItemSelectMultiple,
     SearchableSpellSelect,
     SkillsForm,
     SupernaturalForm,
 )
+from .api import PublicEssentialCharacterApiView
 from .models import (
     EssentialBond,
     EssentialCharacter,
@@ -43,6 +47,9 @@ from .views import (
     EssentialCharacterCreateWizard,
     EssentialCharacterDetailInfoView,
     EssentialCharacterDetailView,
+    EssentialCharacterConditionView,
+    EssentialCharacterEditSectionView,
+    EssentialCharacterEditSearchView,
     EssentialCharacterImageView,
     EssentialCharacterUpdateView,
     MarkSummaryView,
@@ -117,20 +124,28 @@ class EssentialRuleTests(SimpleTestCase):
             "create": EssentialCharacterCreateWizard,
             "detail_info": EssentialCharacterDetailInfoView,
             "change_image": EssentialCharacterImageView,
+            "edit_section": EssentialCharacterEditSectionView,
+            "edit_search": EssentialCharacterEditSearchView,
+            "set_condition": EssentialCharacterConditionView,
             "detail": EssentialCharacterDetailView,
             "edit": EssentialCharacterUpdateView,
+            "api:essential_character": PublicEssentialCharacterApiView,
         }
         kwargs_by_name = {
             "detail_info": {"slug": "joran", "section": "marks"},
             "change_image": {"slug": "joran"},
+            "edit_section": {"slug": "joran", "section": "marks"},
+            "edit_search": {"slug": "joran"},
+            "set_condition": {"slug": "joran", "condition": "wounds"},
             "detail": {"slug": "joran"},
             "edit": {"slug": "joran"},
+            "api:essential_character": {"character_hash": "joran"},
         }
 
         for name, view_class in view_classes.items():
             match = resolve(
                 reverse(
-                    f"essential_characters:{name}",
+                    name if name.startswith("api:") else f"essential_characters:{name}",
                     kwargs=kwargs_by_name.get(name),
                 )
             )
@@ -260,6 +275,27 @@ class EssentialRuleTests(SimpleTestCase):
         form = EssentialCharacterForm()
         self.assertIn("image", form.fields)
         self.assertNotIn("player_name", form.fields)
+
+    def test_detail_skill_editor_uses_circle_ranks_zero_through_four(self):
+        form = EssentialSkillsEditForm(
+            character=type(
+                "Character",
+                (),
+                {
+                    "essentialcharacterskill_set": type(
+                        "Assignments",
+                        (),
+                        {"all": lambda self: []},
+                    )()
+                },
+            )()
+        )
+
+        self.assertIsInstance(form.fields["skill_0_rank"].widget, CircleRadioSelect)
+        self.assertEqual(
+            list(form.fields["skill_0_rank"].choices),
+            [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)],
+        )
 
     def test_character_uses_direct_catalog_relations(self):
         related_models = {
@@ -425,6 +461,156 @@ class EssentialCharacterDerivedValueTests(SimpleTestCase):
             self.character.clean()
 
 
+class PublicEssentialCharacterApiTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        owner = get_user_model().objects.create_user(username="joran-player")
+        cls.character = EssentialCharacter.objects.create(
+            created_by=owner,
+            name="Joran Ashpath",
+            slug="joran-ashpath",
+            birth_date="17. Tag des Nebelmonds",
+            century=8,
+            concept="A sworn guardian",
+            oath_or_debt="Protect the last shrine.",
+            notes="Carries an old map.",
+            ancestry=Lineage.objects.create(
+                name_de="Gasdaria",
+                name_en="Gasdaria",
+                essential_enabled=True,
+            ),
+            path=Template.objects.create(
+                name_de="Paladin",
+                name_en="Paladin",
+                category=TemplateCategory.objects.create(
+                    name_de="Pfade", name_en="Paths"
+                ),
+                essential_enabled=True,
+            ),
+            bond=EssentialBond.objects.create(
+                name_de="Stimmen",
+                name_en="Voices",
+            ),
+            mind=2,
+            will=2,
+            instinct=1,
+            dexterity=3,
+            body=1,
+            presence=1,
+            gift=0,
+            perception=0,
+            wounds=1,
+            burden=2,
+            omen=3,
+            arkana=4,
+            favor=5,
+            corruption=1,
+        )
+        EssentialCharacterSkill.objects.create(
+            character=cls.character, name="Ritus", rank=2
+        )
+
+    def test_anonymous_get_returns_nextjs_compatible_character(self):
+        response = self.client.get(
+            reverse(
+                "api:essential_character",
+                kwargs={"character_hash": self.character.slug},
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Access-Control-Allow-Origin"], "*")
+        self.assertEqual(
+            response.json(),
+            {
+                "hash": "joran-ashpath",
+                "name": "Joran Ashpath",
+                "birthDate": "17. Tag des Nebelmonds",
+                "century": 8,
+                "campaign": None,
+                "playerName": "joran-player",
+                "concept": "A sworn guardian",
+                "ancestry": "Gasdaria",
+                "ancestryCustom": False,
+                "path": "Paladin",
+                "pathCustom": False,
+                "bond": "Stimmen",
+                "bondCustom": False,
+                "oathOrDebt": "Protect the last shrine.",
+                "mark": "keins",
+                "attributes": {
+                    "mind": 2,
+                    "will": 2,
+                    "instinct": 1,
+                    "dexterity": 3,
+                    "body": 1,
+                    "presence": 1,
+                    "gift": 0,
+                    "perception": 0,
+                },
+                "skills": [{"name": "Ritus", "rank": 2}],
+                "equipment": {
+                    "primaryWeapon": "",
+                    "secondaryWeapon": "",
+                    "armor": "",
+                    "items": [],
+                    "customWeapons": {},
+                    "customArmors": {},
+                },
+                "supernatural": {
+                    "focus": "",
+                    "regenerationRitual": "",
+                    "aspects": [],
+                    "spells": [],
+                },
+                "conditions": {
+                    "wounds": 1,
+                    "burden": 2,
+                    "omen": 3,
+                    "arkana": 4,
+                    "favor": 5,
+                    "corruption": 1,
+                },
+                "notes": "Carries an old map.",
+                "portraitOriginalName": None,
+                "portraitMimeType": None,
+                "portraitSize": None,
+                "portraitUpdatedAt": None,
+                "woundThreshold": 4,
+                "burdenThreshold": 6,
+                "initiative": 60,
+                "faithLevel": 4,
+                "magicLevel": 2,
+                "omenMax": 4,
+                "invocationValue": 6,
+                "favorLimit": 2,
+                "arkanaMax": 5,
+                "favorMax": 5,
+                "createdAt": DjangoJSONEncoder().default(self.character.created_at),
+                "updatedAt": DjangoJSONEncoder().default(self.character.modified_at),
+            },
+        )
+
+    def test_missing_character_and_options_include_public_cors_headers(self):
+        url = reverse(
+            "api:essential_character", kwargs={"character_hash": "does-not-exist"}
+        )
+
+        missing_response = self.client.get(url)
+        options_response = self.client.options(url)
+
+        self.assertEqual(missing_response.status_code, 404)
+        self.assertEqual(missing_response.json(), {"error": "Nicht gefunden"})
+        self.assertEqual(missing_response["Access-Control-Allow-Origin"], "*")
+        self.assertEqual(options_response.status_code, 204)
+        self.assertEqual(
+            options_response["Access-Control-Allow-Methods"], "GET, PATCH, OPTIONS"
+        )
+        self.assertEqual(
+            options_response["Access-Control-Allow-Headers"], "Content-Type"
+        )
+
+
 class EssentialCharacterImageTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -528,6 +714,80 @@ class EssentialCharacterImageTests(TestCase):
 
         self.assertEqual(response.status_code, 403)
 
+    def test_detail_shows_edit_controls_and_condition_actions_only_to_editor(self):
+        detail_url = self.character.get_absolute_url()
+        condition_url = reverse(
+            "essential_characters:set_condition",
+            kwargs={"slug": self.character.slug, "condition": "wounds"},
+        )
+        marks_url = reverse(
+            "essential_characters:edit_section",
+            kwargs={"slug": self.character.slug, "section": "marks"},
+        )
+
+        anonymous_response = self.client.get(detail_url)
+        self.client.force_login(self.owner)
+        owner_response = self.client.get(detail_url)
+
+        self.assertNotContains(anonymous_response, marks_url)
+        self.assertNotContains(anonymous_response, condition_url)
+        self.assertContains(owner_response, marks_url)
+        self.assertContains(owner_response, condition_url)
+
+    def test_owner_can_set_condition_directly(self):
+        self.client.force_login(self.owner)
+        response = self.client.post(
+            reverse(
+                "essential_characters:set_condition",
+                kwargs={"slug": self.character.slug, "condition": "wounds"},
+            ),
+            {"value": 2},
+        )
+
+        self.character.refresh_from_db()
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(self.character.wounds, 2)
+
+    def test_condition_update_checks_permissions_and_bounds(self):
+        condition_url = reverse(
+            "essential_characters:set_condition",
+            kwargs={"slug": self.character.slug, "condition": "wounds"},
+        )
+        self.client.force_login(self.other_user)
+        self.assertEqual(self.client.post(condition_url, {"value": 1}).status_code, 403)
+
+        self.client.force_login(self.owner)
+        self.assertEqual(
+            self.client.post(condition_url, {"value": 99}).status_code,
+            400,
+        )
+
+    def test_owner_can_open_and_submit_focused_edit_form(self):
+        self.client.force_login(self.owner)
+        notes_url = reverse(
+            "essential_characters:edit_section",
+            kwargs={"slug": self.character.slug, "section": "notes"},
+        )
+
+        self.assertContains(self.client.get(notes_url), "textarea")
+        response = self.client.post(notes_url, {"notes": "A changed note."})
+
+        self.character.refresh_from_db()
+        self.assertRedirects(response, self.character.get_absolute_url())
+        self.assertEqual(self.character.notes, "A changed note.")
+
+    def test_non_editor_cannot_open_focused_edit_form(self):
+        self.client.force_login(self.other_user)
+
+        response = self.client.get(
+            reverse(
+                "essential_characters:edit_section",
+                kwargs={"slug": self.character.slug, "section": "marks"},
+            )
+        )
+
+        self.assertEqual(response.status_code, 403)
+
 
 class EssentialMarkSummaryTests(TestCase):
     def setUp(self):
@@ -585,11 +845,26 @@ class EssentialEquipmentSummaryTests(TestCase):
             type=weapon_type,
             weight=1,
             price=10,
+            description_en="A balanced blade.",
             essential_enabled=True,
             essential_damage="2",
             essential_range="Nahkampf",
             essential_grip="10",
             essential_properties="Ausgewogen",
+        )
+        armor_type = RiotGearType.objects.create(name_de="Kleidung", name_en="Clothing")
+        self.armor = RiotGear.objects.create(
+            name_de="Ledermantel",
+            name_en="Leather coat",
+            type=armor_type,
+            weight=2,
+            price=15,
+            description_en="A reinforced leather coat.",
+            essential_enabled=True,
+            essential_protection="1",
+            essential_load="1",
+            essential_sealing="0",
+            essential_properties="Unauffällig",
         )
         self.item_type = ItemType.objects.create(name_de="Werkzeug", name_en="Tools")
         self.tirakan = Extension.objects.create(
@@ -643,6 +918,17 @@ class EssentialEquipmentSummaryTests(TestCase):
         self.assertContains(response, self.weapon.name)
         self.assertContains(response, self.weapon.essential_damage)
         self.assertContains(response, self.weapon.essential_properties)
+        self.assertContains(response, self.weapon.description)
+
+    def test_equipment_summary_returns_armor_description(self):
+        response = self.client.get(
+            reverse("essential_characters:equipment_summary"),
+            {"equipment-armor": self.armor.pk},
+        )
+
+        self.assertContains(response, self.armor.name)
+        self.assertContains(response, self.armor.essential_protection)
+        self.assertContains(response, self.armor.description)
 
     def test_equipment_summary_rejects_unknown_equipment_type(self):
         response = self.client.get(

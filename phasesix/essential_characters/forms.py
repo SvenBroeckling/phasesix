@@ -121,6 +121,30 @@ class SearchableSpellSelect(forms.Select):
         return option
 
 
+class AjaxSearchSelectMultiple(forms.SelectMultiple):
+    template_name = "essential_characters/widgets/ajax_search_select_multiple.html"
+
+    def __init__(self, *args, search_type, **kwargs):
+        self.search_type = search_type
+        attrs = kwargs.setdefault("attrs", {})
+        attrs["class"] = f"{attrs.get('class', '')} d-none".strip()
+        attrs["data-search-type"] = search_type
+        super().__init__(*args, **kwargs)
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        selected_values = {str(item) for item in value or ()}
+        for _, options, _ in context["widget"]["optgroups"]:
+            options[:] = [
+                option for option in options if str(option["value"]) in selected_values
+            ]
+        context["widget"]["search_type"] = self.search_type
+        context["widget"]["search_url"] = context["widget"]["attrs"].get(
+            "data-search-url", ""
+        )
+        return context
+
+
 class ConceptForm(forms.Form):
     name = forms.CharField(max_length=80)
     concept = forms.CharField(widget=forms.Textarea(attrs={"rows": 3}))
@@ -455,3 +479,166 @@ class EssentialCharacterImageForm(forms.ModelForm):
     class Meta:
         model = EssentialCharacter
         fields = ("image",)
+
+
+class EssentialIdentityEditForm(forms.ModelForm):
+    class Meta:
+        model = EssentialCharacter
+        fields = ("name", "concept", "birth_date", "century", "oath_or_debt")
+        widgets = {
+            "concept": forms.Textarea(attrs={"rows": 3}),
+            "oath_or_debt": forms.Textarea(attrs={"rows": 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["birth_date"].widget = TirakanBirthDateInput()
+
+
+class EssentialMarksEditForm(forms.ModelForm):
+    class Meta:
+        model = EssentialCharacter
+        fields = ("ancestry", "path", "bond")
+
+    ancestry = forms.ModelChoiceField(
+        queryset=Lineage.objects.filter(essential_enabled=True)
+    )
+    path = forms.ModelChoiceField(
+        queryset=Template.objects.filter(essential_enabled=True)
+    )
+    bond = forms.ModelChoiceField(queryset=EssentialBond.objects.all())
+
+
+class EssentialAttributesEditForm(forms.ModelForm):
+    class Meta:
+        model = EssentialCharacter
+        fields = ATTRIBUTES
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for attribute in ATTRIBUTES:
+            self.fields[attribute].widget = CircleRadioSelect(choices=RANK_CHOICES)
+
+    def clean(self):
+        cleaned = super().clean()
+        slots = magic_slots(cleaned.get("gift", self.instance.gift))
+        if (
+            self.instance.magic_aspects.count() > slots["aspects"]
+            or self.instance.spells.count() > slots["spells"]
+        ):
+            raise ValidationError(
+                _("The supernatural selections exceed the slots granted by Gift.")
+            )
+        return cleaned
+
+
+class EssentialSkillsEditForm(forms.Form):
+    def __init__(self, *args, character, **kwargs):
+        self.character = character
+        super().__init__(*args, **kwargs)
+        assignments = list(character.essentialcharacterskill_set.all())
+        for index in range(SKILL_COUNT):
+            assignment = assignments[index] if index < len(assignments) else None
+            self.fields[f"skill_{index}_name"] = forms.CharField(
+                label=_("Skill %(number)s") % {"number": index + 1},
+                initial=assignment.name if assignment else "",
+            )
+            self.fields[f"skill_{index}_rank"] = forms.TypedChoiceField(
+                label=_("Rank"),
+                choices=tuple((value, value) for value in range(5)),
+                coerce=int,
+                initial=assignment.rank if assignment else 1,
+                widget=CircleRadioSelect(
+                    choices=tuple((value, value) for value in range(5))
+                ),
+            )
+
+    def clean(self):
+        cleaned = super().clean()
+        names = [
+            cleaned.get(f"skill_{index}_name", "").strip()
+            for index in range(SKILL_COUNT)
+        ]
+        ranks = [cleaned.get(f"skill_{index}_rank") for index in range(SKILL_COUNT)]
+        if any(not name for name in names):
+            raise ValidationError(_("Enter all nine skills."))
+        if len(set(name.casefold() for name in names)) != len(names):
+            raise ValidationError(_("Skills must be unique."))
+        cleaned["skills"] = list(zip(names, ranks))
+        return cleaned
+
+    def save(self):
+        EssentialCharacterSkill.objects.filter(character=self.character).delete()
+        EssentialCharacterSkill.objects.bulk_create(
+            [
+                EssentialCharacterSkill(character=self.character, name=name, rank=rank)
+                for name, rank in self.cleaned_data["skills"]
+            ]
+        )
+
+
+class EssentialEquipmentEditForm(forms.ModelForm):
+    weapons = forms.ModelMultipleChoiceField(
+        queryset=Weapon.objects.filter(essential_enabled=True),
+        required=False,
+        widget=AjaxSearchSelectMultiple(search_type="weapons"),
+    )
+    armor = forms.ModelMultipleChoiceField(
+        queryset=RiotGear.objects.filter(essential_enabled=True),
+        required=False,
+        widget=AjaxSearchSelectMultiple(search_type="armor"),
+    )
+    items = forms.ModelMultipleChoiceField(
+        queryset=essential_item_queryset(),
+        required=False,
+        widget=AjaxSearchSelectMultiple(search_type="items"),
+    )
+
+    class Meta:
+        model = EssentialCharacter
+        fields = ("weapons", "armor", "items")
+
+
+class EssentialSupernaturalEditForm(forms.ModelForm):
+    magic_aspects = forms.ModelMultipleChoiceField(
+        queryset=SpellOrigin.objects.all(),
+        required=False,
+        widget=AjaxSearchSelectMultiple(search_type="magic_aspects"),
+    )
+    spells = forms.ModelMultipleChoiceField(
+        queryset=BaseSpell.objects.select_related("origin"),
+        required=False,
+        widget=AjaxSearchSelectMultiple(search_type="spells"),
+    )
+
+    class Meta:
+        model = EssentialCharacter
+        fields = (
+            "focus",
+            "regeneration_ritual",
+            "magic_aspects",
+            "spells",
+        )
+        widgets = {"regeneration_ritual": forms.Textarea(attrs={"rows": 4})}
+
+    def clean(self):
+        cleaned = super().clean()
+        slots = magic_slots(self.instance.gift)
+        aspects = cleaned.get("magic_aspects", ())
+        spells = cleaned.get("spells", ())
+        if len(aspects) > slots["aspects"] or len(spells) > slots["spells"]:
+            raise ValidationError(
+                _("The supernatural selections exceed the slots granted by Gift.")
+            )
+        if any(not spell.origin_id or spell.origin not in aspects for spell in spells):
+            raise ValidationError(
+                _("Selected spells must belong to a selected magic aspect.")
+            )
+        return cleaned
+
+
+class EssentialNotesEditForm(forms.ModelForm):
+    class Meta:
+        model = EssentialCharacter
+        fields = ("notes",)
+        widgets = {"notes": forms.Textarea(attrs={"rows": 8})}

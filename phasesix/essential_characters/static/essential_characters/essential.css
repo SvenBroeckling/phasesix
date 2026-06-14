@@ -180,6 +180,88 @@ a.essential-step-dot.reached,
   margin-bottom: 0;
 }
 
+.essential-equipment-summary {
+  padding: .15rem .15rem .25rem;
+}
+
+.essential-equipment-summary header {
+  margin-bottom: .9rem;
+  padding-bottom: .65rem;
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), .2);
+}
+
+.essential-equipment-summary header span {
+  display: block;
+  margin-bottom: .15rem;
+  color: var(--bs-secondary-color);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.essential-equipment-summary h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.essential-equipment-summary-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem 1.35rem;
+  margin: 0;
+  padding-bottom: .85rem;
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), .14);
+}
+
+.essential-equipment-summary-values div {
+  display: flex;
+  align-items: baseline;
+  gap: .4rem;
+}
+
+.essential-equipment-summary-values dt {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  color: var(--bs-primary);
+  font-size: .74rem;
+  font-weight: 700;
+}
+
+.essential-equipment-summary-values dd {
+  margin: 0;
+  color: var(--bs-emphasis-color);
+  font-size: .9rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.essential-equipment-summary-description,
+.essential-equipment-summary-properties {
+  padding-block: .85rem;
+  color: var(--bs-secondary-color);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+
+.essential-equipment-summary-description > :last-child {
+  margin-bottom: 0;
+}
+
+.essential-equipment-summary-properties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem .55rem;
+  padding-bottom: .1rem;
+  border-top: 1px solid rgba(var(--bs-primary-rgb), .13);
+}
+
+.essential-equipment-summary-properties strong {
+  color: var(--bs-primary);
+  font-size: .78rem;
+}
+
 .essential-spell-rules > :last-child {
   margin-bottom: 0;
 }

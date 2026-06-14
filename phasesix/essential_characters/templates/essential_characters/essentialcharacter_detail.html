@@ -73,6 +73,16 @@
 {% block content %}
   <article class="essential-detail character-sheet-content">
     <section class="card essential-panel essential-identity-panel">
+      {% if may_edit %}
+        <button type="button"
+                class="essential-edit-button essential-identity-edit"
+                data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='identity' %}"
+                data-modal-title="{% trans 'Edit identity' %}"
+                data-modal-refresh-after="true"
+                aria-label="{% trans 'Edit identity' %}">
+          <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+        </button>
+      {% endif %}
       <div class="essential-identity-fact">
         <i class="gi gi-delapouite-calendar" aria-hidden="true"></i>
         <div class="essential-read"><span>{% trans "Birth date" %}</span><strong>{{ object.birth_date|default:"-" }}</strong></div>
@@ -121,6 +131,16 @@
                   aria-label="{% trans 'About marks' %}">
             <i class="fas fa-info" aria-hidden="true"></i>
           </button>
+          {% if may_edit %}
+            <button type="button"
+                    class="essential-edit-button"
+                    data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='marks' %}"
+                    data-modal-title="{% trans 'Edit marks' %}"
+                    data-modal-refresh-after="true"
+                    aria-label="{% trans 'Edit marks' %}">
+              <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+            </button>
+          {% endif %}
         </div>
         <div class="essential-read-list">
           <div class="essential-read"><span>{% trans "Ancestry" %}</span><strong>{{ object.ancestry|default:"-" }}</strong></div>
@@ -142,7 +162,7 @@
         </div>
         {% essential_condition_rows object as condition_rows %}
         {% for row in condition_rows %}
-          {% include "essential_characters/_readonly_rank_row.html" with label=row.label value=row.value options=row.options %}
+          {% include "essential_characters/_readonly_rank_row.html" with label=row.label value=row.value options=row.options condition_name=row.name may_edit=may_edit object=object %}
         {% endfor %}
       </section>
       <section class="card essential-panel essential-derived-panel">
@@ -183,7 +203,19 @@
     </div>
 
     <section class="card essential-panel">
-      <h2>{% trans "Attributes" %}</h2>
+      <div class="essential-panel-heading">
+        <h2>{% trans "Attributes" %}</h2>
+        {% if may_edit %}
+          <button type="button"
+                  class="essential-edit-button"
+                  data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='attributes' %}"
+                  data-modal-title="{% trans 'Edit attributes' %}"
+                  data-modal-refresh-after="true"
+                  aria-label="{% trans 'Edit attributes' %}">
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+      </div>
       <div class="essential-attribute-grid">
         {% essential_attribute_rows object as attribute_rows %}
         {% essential_rank_options as attribute_options %}
@@ -195,7 +227,20 @@
 
     <div class="essential-detail-two-column">
       <section class="card essential-panel">
-        <h2>{% trans "Skills" %}</h2>
+        <div class="essential-panel-heading">
+          <h2>{% trans "Skills" %}</h2>
+          {% if may_edit %}
+            <button type="button"
+                    class="essential-edit-button"
+                    data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='skills' %}"
+                    data-modal-title="{% trans 'Edit skills' %}"
+                    data-modal-size-class="modal-lg"
+                    data-modal-refresh-after="true"
+                    aria-label="{% trans 'Edit skills' %}">
+              <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+            </button>
+          {% endif %}
+        </div>
         {% essential_rank_options as skill_options %}
         {% for assignment in object.essentialcharacterskill_set.all %}
           {% include "essential_characters/_readonly_rank_row.html" with label=assignment.name value=assignment.rank options=skill_options %}
@@ -204,7 +249,20 @@
         {% endfor %}
       </section>
       <section class="card essential-panel essential-equipment-panel">
-        <h2>{% trans "Equipment" %}</h2>
+        <div class="essential-panel-heading">
+          <h2>{% trans "Equipment" %}</h2>
+          {% if may_edit %}
+            <button type="button"
+                    class="essential-edit-button"
+                    data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='equipment' %}"
+                    data-modal-title="{% trans 'Edit equipment' %}"
+                    data-modal-size-class="modal-lg"
+                    data-modal-refresh-after="true"
+                    aria-label="{% trans 'Edit equipment' %}">
+              <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+            </button>
+          {% endif %}
+        </div>
         <div class="essential-equipment-section">
           <h3><i class="gi gi-delapouite-axe-sword" aria-hidden="true"></i>{% trans "Weapons" %}</h3>
           {% for weapon in object.weapons.all %}
@@ -259,7 +317,20 @@
     </div>
 
     <section class="card essential-panel essential-magic-panel">
-      <h2>{% trans "Magic and belief" %}</h2>
+      <div class="essential-panel-heading">
+        <h2>{% trans "Magic and belief" %}</h2>
+        {% if may_edit %}
+          <button type="button"
+                  class="essential-edit-button"
+                  data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='supernatural' %}"
+                  data-modal-title="{% trans 'Edit magic and belief' %}"
+                  data-modal-size-class="modal-lg"
+                  data-modal-refresh-after="true"
+                  aria-label="{% trans 'Edit magic and belief' %}">
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+      </div>
       <div class="essential-magic-practices">
         <div class="essential-magic-practice">
           <i class="fas fa-bullseye" aria-hidden="true"></i>
@@ -317,8 +388,23 @@
           {% empty %}<p class="text-secondary mb-0">-</p>{% endfor %}
         </div>
       </div>
-      {% if object.notes %}
-        <div class="essential-notes"><h3>{% trans "Notes" %}</h3><div class="essential-markup">{{ object.notes|phasesix_markup }}</div></div>
+      {% if object.notes or may_edit %}
+        <div class="essential-notes">
+          <div class="essential-section-heading">
+            <h3>{% trans "Notes" %}</h3>
+            {% if may_edit %}
+              <button type="button"
+                      class="essential-edit-button"
+                      data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='notes' %}"
+                      data-modal-title="{% trans 'Edit notes' %}"
+                      data-modal-refresh-after="true"
+                      aria-label="{% trans 'Edit notes' %}">
+                <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+              </button>
+            {% endif %}
+          </div>
+          <div class="essential-markup">{{ object.notes|default:"-"|phasesix_markup }}</div>
+        </div>
       {% endif %}
     </section>
   </article>
