@@ -1,0 +1,20 @@
+{% load django_bootstrap5 i18n %}
+<form method="post"
+      action="{% url 'essential_characters:custom_mark_create' mark_type=mark_type %}{% if campaign %}?campaign={{ campaign.pk }}{% endif %}"
+      data-essential-custom-mark-form
+      data-mark-type="{{ mark_type }}">
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+  {% endif %}
+  {% bootstrap_form form layout="floating" %}
+  {% if request.user.is_staff and not openai_configured %}
+    <p class="small text-body-secondary">{% trans "OpenAI translation is unavailable because no API key is configured." %}</p>
+  {% endif %}
+  <div class="d-flex justify-content-end mt-4">
+    <button class="btn btn-primary" type="submit">
+      <span class="form-submit-spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+      {% blocktrans with mark=mark_type_label %}Create {{ mark }}{% endblocktrans %}
+    </button>
+  </div>
+</form>

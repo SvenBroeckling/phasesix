@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.db.models import Q
+from django.conf import settings
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
@@ -19,13 +20,16 @@ from campaigns.models import Campaign
 from plots.models import Plot
 from armory.models import Item, RiotGear, Weapon
 from magic.models import BaseSpell, SpellOrigin
-from rules.models import Lineage, Template
+from rules.models import Extension, Lineage, Template
 from .forms import (
     AttributesForm,
     AjaxSearchSelectMultiple,
     ConceptForm,
     EquipmentForm,
     EssentialCharacterForm,
+    EssentialCustomMarkForm,
+    EssentialAddSkillForm,
+    EssentialCustomEquipmentForm,
     EssentialAttributesEditForm,
     EssentialEquipmentEditForm,
     EssentialCharacterImageForm,
@@ -38,6 +42,8 @@ from .forms import (
     SkillsForm,
     SupernaturalForm,
     essential_item_queryset,
+    essential_equipment_queryset,
+    essential_mark_queryset,
 )
 from .models import (
     EssentialBond,
@@ -45,6 +51,7 @@ from .models import (
     EssentialCharacterSkill,
 )
 from .rules import ATTRIBUTES, magic_slots
+from .openai import translate_custom_mark
 
 WIZARD_FORMS = (
     ("concept", ConceptForm),
@@ -107,9 +114,10 @@ class MarkSummaryView(LoginRequiredMixin, TemplateView):
             ),
             "",
         )
-        queryset = self.mark_models[mark_type].objects.all()
-        if mark_type != "bond":
-            queryset = queryset.filter(essential_enabled=True)
+        campaign = self._campaign_from_request()
+        queryset = essential_mark_queryset(
+            self.mark_models[mark_type], user=request.user, campaign=campaign
+        )
         mark = get_object_or_404(queryset, pk=mark_id) if mark_id else None
         return self.render_to_response(
             {
@@ -118,6 +126,328 @@ class MarkSummaryView(LoginRequiredMixin, TemplateView):
                 "mark_type_label": self.mark_labels[mark_type],
             }
         )
+
+    def _campaign_from_request(self):
+        campaign_id = self.request.GET.get("campaign")
+        if not campaign_id:
+            return None
+        return get_object_or_404(
+            Campaign, pk=campaign_id, ruleset=Campaign.RULESET_ESSENTIAL
+        )
+
+
+class EssentialCustomMarkCreateView(LoginRequiredMixin, FormView):
+    template_name = "essential_characters/_custom_mark_form.html"
+    form_class = EssentialCustomMarkForm
+    mark_models = {
+        "ancestry": Lineage,
+        "path": Template,
+        "bond": EssentialBond,
+    }
+    mark_labels = {
+        "ancestry": _("Ancestry"),
+        "path": _("Path"),
+        "bond": _("Bond"),
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        if kwargs["mark_type"] not in self.mark_models:
+            return HttpResponseBadRequest()
+        self.campaign = self.get_campaign()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_campaign(self):
+        campaign_id = self.request.GET.get("campaign")
+        if not campaign_id:
+            return None
+        campaign = get_object_or_404(
+            Campaign, pk=campaign_id, ruleset=Campaign.RULESET_ESSENTIAL
+        )
+        if campaign.world_extension.identifier != "tirakan":
+            raise PermissionDenied()
+        return campaign
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(mark_type=self.kwargs["mark_type"], user=self.request.user)
+        return kwargs
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        if "translate_with_openai" in form.fields and not settings.OPENAI_API_KEY:
+            form.fields["translate_with_openai"].disabled = True
+            form.fields["translate_with_openai"].initial = False
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["mark_type"] = self.kwargs["mark_type"]
+        context["mark_type_label"] = self.mark_labels[self.kwargs["mark_type"]]
+        context["campaign"] = self.campaign
+        context["openai_configured"] = bool(settings.OPENAI_API_KEY)
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        values = {
+            key: form.cleaned_data.get(key, "")
+            for key in (
+                "name",
+                "description",
+                "benefit",
+                "vulnerability",
+                "skills",
+                "facet",
+            )
+            if key in form.fields
+        }
+        if self.request.user.is_staff and form.cleaned_data.get(
+            "translate_with_openai"
+        ):
+            try:
+                localized = translate_custom_mark(values)
+            except Exception:
+                form.add_error(None, _("Translation failed. Please try again."))
+                return self.form_invalid(form)
+        else:
+            localized = {"de": values, "en": values}
+
+        for language in ("de", "en"):
+            localized.setdefault(language, {})
+            for key, value in values.items():
+                localized[language].setdefault(key, value)
+
+        try:
+            with transaction.atomic():
+                obj = self._create_mark(localized)
+        except IntegrityError:
+            form.add_error("name", _("A mark with this name already exists."))
+            return self.form_invalid(form)
+        except ValueError as error:
+            form.add_error(None, str(error))
+            return self.form_invalid(form)
+        return JsonResponse(
+            {"id": obj.pk, "label": str(obj), "mark_type": self.kwargs["mark_type"]}
+        )
+
+    def _localized_fields(self, localized, field_map):
+        return {
+            f"{model_field}_{language}": localized.get(language, {}).get(
+                input_field, ""
+            )
+            for input_field, model_field in field_map.items()
+            for language in ("de", "en")
+        }
+
+    def _create_mark(self, localized):
+        common = {
+            "created_by": self.request.user,
+            "is_homebrew": True,
+            "homebrew_campaign": self.campaign,
+        }
+        mark_type = self.kwargs["mark_type"]
+        if mark_type == "bond":
+            fields = self._localized_fields(
+                localized,
+                {
+                    "name": "name",
+                    "description": "description",
+                    "benefit": "benefit",
+                    "vulnerability": "vulnerability",
+                },
+            )
+            return EssentialBond.objects.create(**common, **fields)
+
+        fields = self._localized_fields(
+            localized,
+            {
+                "name": "name",
+                "description": "essential_description",
+                "benefit": "essential_benefit",
+                "vulnerability": "essential_vulnerability",
+                "skills": "essential_skills",
+                **({"facet": "essential_facet"} if mark_type == "path" else {}),
+            },
+        )
+        if mark_type == "ancestry":
+            obj = Lineage.objects.create(essential_enabled=True, **common, **fields)
+        else:
+            category = (
+                Template.objects.filter(essential_enabled=True)
+                .values_list("category", flat=True)
+                .first()
+            )
+            if not category:
+                raise ValueError(
+                    "No template category is available for Essential paths."
+                )
+            obj = Template.objects.create(
+                essential_enabled=True, category_id=category, **common, **fields
+            )
+        obj.extensions.set(
+            Extension.objects.filter(identifier__in=("tirakan", "middleages"))
+        )
+        return obj
+
+
+class EssentialAddSkillView(LoginRequiredMixin, FormView):
+    template_name = "essential_characters/_add_skill_form.html"
+    form_class = EssentialAddSkillForm
+
+    def form_valid(self, form):
+        return JsonResponse(
+            {
+                "name": form.cleaned_data["name"],
+                "rank": form.cleaned_data["rank"],
+            }
+        )
+
+
+class EssentialCustomEquipmentCreateView(LoginRequiredMixin, FormView):
+    template_name = "essential_characters/_custom_equipment_form.html"
+    form_class = EssentialCustomEquipmentForm
+    equipment_models = {
+        "weapon": Weapon,
+        "armor": RiotGear,
+        "item": Item,
+    }
+    equipment_labels = {
+        "weapon": _("Weapon"),
+        "armor": _("Armor"),
+        "item": _("Item"),
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        if kwargs["equipment_type"] not in self.equipment_models:
+            return HttpResponseBadRequest()
+        self.campaign = self.get_campaign()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_campaign(self):
+        campaign_id = self.request.GET.get("campaign")
+        if not campaign_id:
+            return None
+        campaign = get_object_or_404(
+            Campaign, pk=campaign_id, ruleset=Campaign.RULESET_ESSENTIAL
+        )
+        if campaign.world_extension.identifier != "tirakan":
+            raise PermissionDenied()
+        return campaign
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(
+            equipment_type=self.kwargs["equipment_type"], user=self.request.user
+        )
+        return kwargs
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        if "translate_with_openai" in form.fields and not settings.OPENAI_API_KEY:
+            form.fields["translate_with_openai"].disabled = True
+            form.fields["translate_with_openai"].initial = False
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["equipment_type"] = self.kwargs["equipment_type"]
+        context["equipment_type_label"] = self.equipment_labels[
+            self.kwargs["equipment_type"]
+        ]
+        context["campaign"] = self.campaign
+        context["openai_configured"] = bool(settings.OPENAI_API_KEY)
+        return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        localized = {
+            "de": {
+                "name": form.cleaned_data["name"],
+                "description": form.cleaned_data["description"],
+            },
+            "en": {
+                "name": form.cleaned_data["name"],
+                "description": form.cleaned_data["description"],
+            },
+        }
+        if self.request.user.is_staff and form.cleaned_data.get(
+            "translate_with_openai"
+        ):
+            try:
+                localized = translate_custom_mark(localized["de"])
+            except Exception:
+                form.add_error(None, _("Translation failed. Please try again."))
+                return self.form_invalid(form)
+        for language in ("de", "en"):
+            localized.setdefault(language, {})
+            localized[language].setdefault("name", form.cleaned_data["name"])
+            localized[language].setdefault(
+                "description", form.cleaned_data["description"]
+            )
+        obj = self._create_equipment(form.cleaned_data, localized)
+        target = self.request.GET.get("target", "")
+        valid_targets = {
+            "weapon": {"primary_weapon", "secondary_weapon"},
+            "armor": {"armor"},
+            "item": {"items"},
+        }
+        if target not in valid_targets[self.kwargs["equipment_type"]]:
+            target = next(iter(valid_targets[self.kwargs["equipment_type"]]))
+        return JsonResponse(
+            {
+                "id": obj.pk,
+                "label": str(obj),
+                "equipment_type": self.kwargs["equipment_type"],
+                "target": target,
+            }
+        )
+
+    def _create_equipment(self, data, localized):
+        common = {
+            "created_by": self.request.user,
+            "is_homebrew": True,
+            "homebrew_campaign": self.campaign,
+            "essential_enabled": True,
+            "name_de": localized["de"]["name"],
+            "name_en": localized["en"]["name"],
+            "description_de": localized["de"]["description"],
+            "description_en": localized["en"]["description"],
+            "type": data["type"],
+        }
+        equipment_type = self.kwargs["equipment_type"]
+        if equipment_type == "weapon":
+            obj = Weapon.objects.create(
+                **common,
+                weight=0,
+                price=0,
+                essential_damage=data["damage"],
+                essential_range=data["range"],
+                essential_grip=data["grip"],
+                essential_properties=data["properties"],
+            )
+        elif equipment_type == "armor":
+            obj = RiotGear.objects.create(
+                **common,
+                encumbrance=0,
+                concealment=0,
+                weight=0,
+                price=0,
+                essential_protection=data["protection"],
+                essential_load=data["load"],
+                essential_sealing=data["sealing"],
+                essential_properties=data["properties"],
+            )
+        else:
+            obj = Item.objects.create(
+                **common,
+                weight=0,
+                price=0,
+                concealment=0,
+            )
+        obj.extensions.set(
+            Extension.objects.filter(identifier__in=("tirakan", "middleages"))
+        )
+        return obj
 
 
 class EquipmentSummaryView(LoginRequiredMixin, TemplateView):
@@ -148,16 +478,24 @@ class EquipmentSummaryView(LoginRequiredMixin, TemplateView):
             if key == field_name or key.endswith(f"-{field_name}")
         )
         values = [value for value in request.GET.getlist(key) if value]
-        resources = (
-            essential_item_queryset().filter(pk__in=values)
-            if model is Item
-            else model.objects.filter(pk__in=values, essential_enabled=True)
-        )
+        resources = essential_equipment_queryset(
+            model,
+            user=request.user,
+            campaign=self._campaign_from_request(),
+        ).filter(pk__in=values)
         return self.render_to_response(
             {
                 "resources": resources,
                 "resource_type": resource_type,
             }
+        )
+
+    def _campaign_from_request(self):
+        campaign_id = self.request.GET.get("campaign")
+        if not campaign_id:
+            return None
+        return get_object_or_404(
+            Campaign, pk=campaign_id, ruleset=Campaign.RULESET_ESSENTIAL
         )
 
 
@@ -270,6 +608,9 @@ class EssentialCharacterEditSectionView(LoginRequiredMixin, FormView):
             kwargs["character"] = self.character
         else:
             kwargs["instance"] = self.character
+        if self.kwargs["section"] == "marks":
+            kwargs["user"] = self.request.user
+            kwargs["campaign"] = self.character.campaign or self.character.npc_campaign
         return kwargs
 
     def get_form(self, form_class=None):
@@ -473,9 +814,15 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
 
     def get_form_kwargs(self, step=None):
         kwargs = super().get_form_kwargs(step)
+        if step == "marks":
+            kwargs["user"] = self.request.user
+            kwargs["campaign"] = self.get_campaign()
         if step == "skills":
             marks = self.get_cleaned_data_for_step("marks") or {}
             kwargs["path"] = marks.get("path")
+        if step == "equipment":
+            kwargs["user"] = self.request.user
+            kwargs["campaign"] = self.get_campaign()
         if step == "supernatural":
             attributes = self.get_cleaned_data_for_step("attributes") or {}
             kwargs["gift"] = attributes.get("gift", 0)
@@ -503,6 +850,7 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
         context["previous_step_url"] = (
             self.get_step_url(self.steps.prev) if self.steps.prev else None
         )
+        context["campaign"] = self.get_campaign()
         if self.steps.current == "skills":
             context["skill_rows"] = [
                 (form[f"skill_{index}_name"], form[f"skill_{index}_rank"])
@@ -549,10 +897,7 @@ class EssentialCharacterCreateWizard(LoginRequiredMixin, SessionWizardView):
         character.favor = character.favor_max
         character.save()
 
-        for name, rank in data["skills"]:
-            EssentialCharacterSkill.objects.create(
-                character=character, name=name, rank=rank
-            )
+        EssentialCharacterSkill.replace_for_character(character, data["skills"])
         character.weapons.set(
             filter(None, (data.get("primary_weapon"), data.get("secondary_weapon")))
         )

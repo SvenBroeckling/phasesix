@@ -11,6 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import get_thumbnail
 from transmeta import TransMeta
 
+from homebrew.models import HomebrewModel, HomebrewQuerySet
 from phasesix.models import ModelWithImage, image_upload_path
 from worlds.unique_slugify import unique_slugify
 from .rules import (
@@ -37,8 +38,17 @@ def _copy_file(field_file):
     )
 
 
-class EssentialBond(models.Model, metaclass=TransMeta):
+class EssentialBond(HomebrewModel, metaclass=TransMeta):
+    objects = HomebrewQuerySet.as_manager()
+
     name = models.CharField(_("name"), max_length=160, unique=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("created by"),
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )
     description = models.CharField(_("description"), max_length=500, blank=True)
     benefit = models.CharField(_("benefit"), max_length=255, blank=True)
     vulnerability = models.CharField(_("vulnerability"), max_length=255, blank=True)
@@ -300,7 +310,10 @@ class EssentialCharacter(ModelWithImage):
     @property
     def invocation_value(self):
         rite = (
-            self.essentialcharacterskill_set.filter(name__icontains="ritus")
+            self.essentialcharacterskill_set.filter(
+                models.Q(name_de__icontains="ritus")
+                | models.Q(name_en__icontains="rite")
+            )
             .values_list("rank", flat=True)
             .first()
             or 0
@@ -332,7 +345,10 @@ class EssentialCharacter(ModelWithImage):
             clone.save()
             for assignment in self.essentialcharacterskill_set.all():
                 EssentialCharacterSkill.objects.create(
-                    character=clone, name=assignment.name, rank=assignment.rank
+                    character=clone,
+                    name_de=assignment.name_de,
+                    name_en=assignment.name_en,
+                    rank=assignment.rank,
                 )
             clone.magic_aspects.set(self.magic_aspects.all())
             clone.spells.set(self.spells.all())
@@ -342,7 +358,7 @@ class EssentialCharacter(ModelWithImage):
             return clone
 
 
-class EssentialCharacterSkill(models.Model):
+class EssentialCharacterSkill(models.Model, metaclass=TransMeta):
     character = models.ForeignKey(
         EssentialCharacter, verbose_name=_("character"), on_delete=models.CASCADE
     )
@@ -350,12 +366,36 @@ class EssentialCharacterSkill(models.Model):
     rank = models.PositiveSmallIntegerField(_("rank"), default=1)
 
     class Meta:
-        ordering = ("name",)
+        ordering = ("name_de",)
+        translate = ("name",)
         constraints = [
             models.UniqueConstraint(
-                fields=("character", "name"), name="unique_essential_character_skill"
-            )
+                fields=("character", "name_de"),
+                name="unique_essential_character_skill_de",
+            ),
+            models.UniqueConstraint(
+                fields=("character", "name_en"),
+                name="unique_essential_character_skill_en",
+            ),
         ]
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def replace_for_character(cls, character, skills):
+        from .openai import translate_skill_names
+
+        translated_names = translate_skill_names([name for name, _rank in skills])
+        cls.objects.filter(character=character).delete()
+        cls.objects.bulk_create(
+            [
+                cls(
+                    character=character,
+                    name_de=translated["de"],
+                    name_en=translated["en"],
+                    rank=rank,
+                )
+                for translated, (_name, rank) in zip(translated_names, skills)
+            ]
+        )

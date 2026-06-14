@@ -362,6 +362,97 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target.matches('[name*="-magic_aspect_"]')) updateSpellOptions();
     if (event.target.matches('[name*="-spell_"]')) updateSpellOptions();
   });
+
+  document.addEventListener("submit", async (event) => {
+    const form = event.target.closest("[data-essential-custom-mark-form]");
+    if (!form) return;
+    event.preventDefault();
+    const submit = form.querySelector('[type="submit"]');
+    const spinner = form.querySelector(".form-submit-spinner");
+    submit?.setAttribute("disabled", "");
+    spinner?.classList.remove("d-none");
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "X-CSRFToken": document.body.dataset.csrfToken },
+      });
+      const contentType = response.headers.get("content-type") || "";
+      if (!response.ok || !contentType.includes("application/json")) {
+        document.getElementById("modal_body").innerHTML = await response.text();
+        htmx.process(document.getElementById("modal_body"));
+        return;
+      }
+      const mark = await response.json();
+      const select = field(mark.mark_type);
+      const option = new Option(mark.label, mark.id, true, true);
+      select.add(option);
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      document.dispatchEvent(new Event("modal-hide"));
+    } finally {
+      submit?.removeAttribute("disabled");
+      spinner?.classList.add("d-none");
+    }
+  });
+
+  document.addEventListener("submit", async (event) => {
+    const form = event.target.closest("[data-essential-add-skill-form]");
+    if (!form) return;
+    event.preventDefault();
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { "X-CSRFToken": document.body.dataset.csrfToken },
+    });
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok || !contentType.includes("application/json")) {
+      document.getElementById("modal_body").innerHTML = await response.text();
+      htmx.process(document.getElementById("modal_body"));
+      return;
+    }
+    const skill = await response.json();
+    const emptyName = Array.from(wizard.querySelectorAll('[name*="-skill_"][name$="_name"]'))
+      .find((input) => !input.value.trim());
+    if (!emptyName) {
+      const trigger = wizard.querySelector("[data-no-empty-skill-message]");
+      window.alert(trigger?.dataset.noEmptySkillMessage || "All skill rows are filled.");
+      return;
+    }
+    const index = emptyName.name.match(/skill_(\d+)_name$/)?.[1];
+    setValue(emptyName, skill.name);
+    const rank = wizard.querySelector(`[name$="-skill_${index}_rank"][value="${skill.rank}"]`);
+    if (rank) {
+      rank.checked = true;
+      renderCircles();
+    }
+    document.dispatchEvent(new Event("modal-hide"));
+    emptyName.focus();
+  });
+
+  document.addEventListener("submit", async (event) => {
+    const form = event.target.closest("[data-essential-custom-equipment-form]");
+    if (!form) return;
+    event.preventDefault();
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { "X-CSRFToken": document.body.dataset.csrfToken },
+    });
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok || !contentType.includes("application/json")) {
+      document.getElementById("modal_body").innerHTML = await response.text();
+      htmx.process(document.getElementById("modal_body"));
+      return;
+    }
+    const equipment = await response.json();
+    const select = field(equipment.target);
+    const option = new Option(equipment.label, equipment.id, true, true);
+    select.add(option);
+    if (equipment.target === "items") option.selected = true;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+    document.dispatchEvent(new Event("modal-hide"));
+  });
+
   wizard.querySelectorAll("[data-essential-item-picker]").forEach(initializeItemPicker);
   wizard.querySelectorAll("[data-essential-spell-picker]").forEach(initializeSpellPicker);
   updateSpellOptions();

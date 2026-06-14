@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalElement = document.getElementById("image-focus-modal");
     if (!toggle || !modalElement) return;
 
+    const hasEditableImage = document.querySelector('[data-focal-editor="true"]');
+    toggle.hidden = !hasEditableImage;
+    if (!hasEditableImage) return;
+
     const modal = new bootstrap.Modal(modalElement);
     const editor = modalElement.querySelector(".image-focus-editor");
     const image = editor.querySelector("img");

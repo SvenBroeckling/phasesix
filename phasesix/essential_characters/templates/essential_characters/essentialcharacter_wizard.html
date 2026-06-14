@@ -59,6 +59,15 @@
             {% include "essential_characters/_rank_field.html" with field=rank_field hide_label=True %}
           </div>
         {% endfor %}
+        <div class="d-flex justify-content-end mt-4">
+          <button type="button"
+                  class="btn btn-outline-primary"
+                  data-modal-url="{% url 'essential_characters:add_skill' %}"
+                  data-modal-title="{% trans 'Add skill' %}"
+                  data-no-empty-skill-message="{% trans 'All skill rows already have a name. Edit a row directly to replace it.' %}">
+            <i class="fas fa-plus me-1" aria-hidden="true"></i>{% trans "Add skill" %}
+          </button>
+        </div>
       {% elif wizard.steps.current == "attributes" %}
         {% for field in form %}
           {% include "essential_characters/_rank_field.html" with field=field %}
@@ -67,7 +76,16 @@
         <div class="row g-4">
           {% for field in form %}
             <div class="col-12 col-lg-4 essential-preview-column">
-              {% bootstrap_field field layout="floating" wrapper_class="mb-3" %}
+              <div class="d-flex align-items-start gap-2 mb-3">
+                <div class="flex-grow-1">{% bootstrap_field field layout="floating" wrapper_class="mb-0" %}</div>
+                <button type="button"
+                        class="btn btn-outline-primary essential-mark-add"
+                        data-modal-url="{% url 'essential_characters:custom_mark_create' mark_type=field.name %}{% if campaign %}?campaign={{ campaign.pk }}{% endif %}"
+                        data-modal-title="{% blocktrans with mark=field.label %}Create custom {{ mark }}{% endblocktrans %}"
+                        aria-label="{% blocktrans with mark=field.label %}Create custom {{ mark }}{% endblocktrans %}">
+                  <i class="fas fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
               <section id="summary-{{ field.id_for_label }}"
                        class="card flex-grow-1 essential-preview-card essential-mark-summary"
                        aria-live="polite"
@@ -85,8 +103,29 @@
             <div class="col-12 col-lg-6 essential-preview-column">
               {% if field.name == "items" %}
                 {% bootstrap_field field wrapper_class="mb-3" %}
+                <div class="d-flex justify-content-end mb-3">
+                  <button type="button"
+                          class="btn btn-outline-primary"
+                          data-modal-url="{% url 'essential_characters:custom_equipment_create' equipment_type='item' %}?target={{ field.name }}{% if campaign %}&amp;campaign={{ campaign.pk }}{% endif %}"
+                          data-modal-title="{% trans 'Create custom item' %}">
+                    <i class="fas fa-plus me-1" aria-hidden="true"></i>{% trans "Create item" %}
+                  </button>
+                </div>
               {% else %}
-                {% bootstrap_field field layout="floating" wrapper_class="mb-3" %}
+                <div class="d-flex align-items-start gap-2 mb-3">
+                  <div class="flex-grow-1">{% bootstrap_field field layout="floating" wrapper_class="mb-0" %}</div>
+                  <button type="button"
+                          class="btn btn-outline-primary essential-mark-add"
+                          {% if field.name == "armor" %}
+                            data-modal-url="{% url 'essential_characters:custom_equipment_create' equipment_type='armor' %}?target={{ field.name }}{% if campaign %}&amp;campaign={{ campaign.pk }}{% endif %}"
+                            data-modal-title="{% trans 'Create custom armor' %}"
+                          {% else %}
+                            data-modal-url="{% url 'essential_characters:custom_equipment_create' equipment_type='weapon' %}?target={{ field.name }}{% if campaign %}&amp;campaign={{ campaign.pk }}{% endif %}"
+                            data-modal-title="{% trans 'Create custom weapon' %}"
+                          {% endif %}>
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                  </button>
+                </div>
               {% endif %}
               {% if field.name != "items" %}
                 <section id="summary-{{ field.id_for_label }}"

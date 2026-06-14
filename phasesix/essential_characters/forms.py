@@ -5,7 +5,14 @@ from django.urls import reverse_lazy
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
-from armory.models import Item, RiotGear, Weapon
+from armory.models import (
+    Item,
+    ItemType,
+    RiotGear,
+    RiotGearType,
+    Weapon,
+    WeaponType,
+)
 from magic.models import BaseSpell, SpellOrigin
 from rules.models import Extension, Lineage, Template
 
@@ -66,11 +73,39 @@ TIRAKAN_MONTH_NAMES = {
 ESSENTIAL_ITEM_EXTENSION_IDENTIFIERS = ("tirakan", "middleages")
 
 
+def essential_mark_queryset(model, *, user=None, campaign=None):
+    queryset = (
+        model.objects.filter(essential_enabled=True)
+        if model is not EssentialBond
+        else model.objects.all()
+    )
+    visibility = Q(is_homebrew=False)
+    if user and user.is_authenticated:
+        visibility |= Q(created_by=user)
+    if campaign:
+        visibility |= Q(homebrew_campaign=campaign)
+    return queryset.filter(visibility).distinct()
+
+
 def essential_item_queryset():
     return Item.objects.filter(
         Q(extensions__identifier__in=ESSENTIAL_ITEM_EXTENSION_IDENTIFIERS)
         | Q(extensions__in=Extension.objects.filter(is_mandatory=True))
     ).distinct()
+
+
+def essential_equipment_queryset(model, *, user=None, campaign=None):
+    queryset = (
+        essential_item_queryset()
+        if model is Item
+        else model.objects.filter(essential_enabled=True)
+    )
+    visibility = Q(is_homebrew=False)
+    if user and user.is_authenticated:
+        visibility |= Q(created_by=user)
+    if campaign:
+        visibility |= Q(homebrew_campaign=campaign)
+    return queryset.filter(visibility).distinct()
 
 
 class TirakanBirthDateInput(forms.TextInput):
@@ -196,13 +231,25 @@ class MarksForm(forms.Form):
     )
     bond = forms.ModelChoiceField(queryset=EssentialBond.objects.all())
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, campaign=None, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["ancestry"].queryset = essential_mark_queryset(
+            Lineage, user=user, campaign=campaign
+        )
+        self.fields["path"].queryset = essential_mark_queryset(
+            Template, user=user, campaign=campaign
+        )
+        self.fields["bond"].queryset = essential_mark_queryset(
+            EssentialBond, user=user, campaign=campaign
+        )
         for name, field in self.fields.items():
             target = f"#summary-{self[name].id_for_label}"
+            summary_url = reverse_lazy("essential_characters:mark_summary")
+            if campaign:
+                summary_url = f"{summary_url}?campaign={campaign.pk}"
             field.widget.attrs.update(
                 {
-                    "hx-get": reverse_lazy("essential_characters:mark_summary"),
+                    "hx-get": summary_url,
                     "hx-trigger": "change, load",
                     "hx-target": target,
                     "hx-swap": "innerHTML",
@@ -273,15 +320,30 @@ class EquipmentForm(forms.Form):
         widget=SearchableItemSelectMultiple,
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, campaign=None, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["primary_weapon"].queryset = essential_equipment_queryset(
+            Weapon, user=user, campaign=campaign
+        )
+        self.fields["secondary_weapon"].queryset = essential_equipment_queryset(
+            Weapon, user=user, campaign=campaign
+        )
+        self.fields["armor"].queryset = essential_equipment_queryset(
+            RiotGear, user=user, campaign=campaign
+        )
+        self.fields["items"].queryset = essential_equipment_queryset(
+            Item, user=user, campaign=campaign
+        )
         for name, field in self.fields.items():
             if name == "items":
                 continue
             target = f"#summary-{self[name].id_for_label}"
+            summary_url = reverse_lazy("essential_characters:equipment_summary")
+            if campaign:
+                summary_url = f"{summary_url}?campaign={campaign.pk}"
             field.widget.attrs.update(
                 {
-                    "hx-get": reverse_lazy("essential_characters:equipment_summary"),
+                    "hx-get": summary_url,
                     "hx-trigger": "change, load",
                     "hx-target": target,
                     "hx-swap": "innerHTML",
@@ -462,11 +524,9 @@ class EssentialCharacterForm(forms.ModelForm):
         if not commit:
             return character
         character.save()
-        EssentialCharacterSkill.objects.filter(character=character).delete()
-        for name, rank in self.cleaned_data["_skills"]:
-            EssentialCharacterSkill.objects.create(
-                character=character, name=name, rank=rank
-            )
+        EssentialCharacterSkill.replace_for_character(
+            character, self.cleaned_data["_skills"]
+        )
         character.weapons.set(self.cleaned_data["weapons"])
         character.armor.set(self.cleaned_data["armor"])
         character.items.set(self.cleaned_data["items"])
@@ -507,6 +567,56 @@ class EssentialMarksEditForm(forms.ModelForm):
         queryset=Template.objects.filter(essential_enabled=True)
     )
     bond = forms.ModelChoiceField(queryset=EssentialBond.objects.all())
+
+    def __init__(self, *args, user=None, campaign=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["ancestry"].queryset = essential_mark_queryset(
+            Lineage, user=user, campaign=campaign
+        )
+        self.fields["path"].queryset = essential_mark_queryset(
+            Template, user=user, campaign=campaign
+        )
+        self.fields["bond"].queryset = essential_mark_queryset(
+            EssentialBond, user=user, campaign=campaign
+        )
+
+
+class EssentialCustomMarkForm(forms.Form):
+    name = forms.CharField(label=_("Name"), max_length=160)
+    description = forms.CharField(
+        label=_("Description"), max_length=500, widget=forms.Textarea(attrs={"rows": 3})
+    )
+    benefit = forms.CharField(label=_("Benefit"), max_length=255)
+    vulnerability = forms.CharField(label=_("Vulnerability"), max_length=255)
+    skills = forms.CharField(
+        label=_("Skills"),
+        max_length=500,
+        required=False,
+        help_text=_("Comma-separated skill suggestions."),
+    )
+    facet = forms.CharField(label=_("Path facet"), max_length=255, required=False)
+    translate_with_openai = forms.BooleanField(
+        label=_("Translate German and English with OpenAI"),
+        required=False,
+        initial=True,
+    )
+
+    def __init__(self, *args, mark_type, user, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mark_type = mark_type
+        self.fields["name"].max_length = {
+            "ancestry": 80,
+            "path": 120,
+            "bond": 160,
+        }[mark_type]
+        self.fields["name"].widget.attrs["maxlength"] = self.fields["name"].max_length
+        if mark_type == "bond":
+            self.fields.pop("skills")
+            self.fields.pop("facet")
+        elif mark_type == "ancestry":
+            self.fields.pop("facet")
+        if not user.is_staff:
+            self.fields.pop("translate_with_openai")
 
 
 class EssentialAttributesEditForm(forms.ModelForm):
@@ -568,13 +678,67 @@ class EssentialSkillsEditForm(forms.Form):
         return cleaned
 
     def save(self):
-        EssentialCharacterSkill.objects.filter(character=self.character).delete()
-        EssentialCharacterSkill.objects.bulk_create(
-            [
-                EssentialCharacterSkill(character=self.character, name=name, rank=rank)
-                for name, rank in self.cleaned_data["skills"]
-            ]
+        EssentialCharacterSkill.replace_for_character(
+            self.character, self.cleaned_data["skills"]
         )
+
+
+class EssentialAddSkillForm(forms.Form):
+    name = forms.CharField(label=_("Name"), max_length=160)
+    rank = forms.TypedChoiceField(
+        label=_("Rank"),
+        choices=((1, 1), (2, 2), (3, 3)),
+        coerce=int,
+        initial=1,
+        widget=CircleRadioSelect,
+    )
+
+
+class EssentialCustomEquipmentForm(forms.Form):
+    name = forms.CharField(label=_("Name"), max_length=256)
+    description = forms.CharField(
+        label=_("Description"),
+        required=False,
+        widget=forms.Textarea(attrs={"rows": 3}),
+    )
+    type = forms.ModelChoiceField(label=_("Type"), queryset=ItemType.objects.none())
+    damage = forms.CharField(label=_("Damage"), max_length=40, required=False)
+    range = forms.CharField(label=_("Range"), max_length=80, required=False)
+    grip = forms.CharField(label=_("Grip"), max_length=40, required=False)
+    protection = forms.CharField(label=_("Protection"), max_length=40, required=False)
+    load = forms.CharField(label=_("Load"), max_length=40, required=False)
+    sealing = forms.CharField(label=_("Sealing"), max_length=40, required=False)
+    properties = forms.CharField(label=_("Properties"), max_length=500, required=False)
+    translate_with_openai = forms.BooleanField(
+        label=_("Translate German and English with OpenAI"),
+        required=False,
+        initial=True,
+    )
+
+    def __init__(self, *args, equipment_type, user, **kwargs):
+        super().__init__(*args, **kwargs)
+        if equipment_type == "weapon":
+            self.fields["type"].queryset = WeaponType.objects.all()
+            for name in ("protection", "load", "sealing"):
+                self.fields.pop(name)
+        elif equipment_type == "armor":
+            self.fields["type"].queryset = RiotGearType.objects.all()
+            for name in ("damage", "range", "grip"):
+                self.fields.pop(name)
+        else:
+            self.fields["type"].queryset = ItemType.objects.all()
+            for name in (
+                "damage",
+                "range",
+                "grip",
+                "protection",
+                "load",
+                "sealing",
+                "properties",
+            ):
+                self.fields.pop(name)
+        if not user.is_staff:
+            self.fields.pop("translate_with_openai")
 
 
 class EssentialEquipmentEditForm(forms.ModelForm):

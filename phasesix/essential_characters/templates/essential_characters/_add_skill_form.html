@@ -1,0 +1,14 @@
+{% load django_bootstrap5 i18n %}
+<form method="post"
+      action="{% url 'essential_characters:add_skill' %}"
+      data-essential-add-skill-form>
+  {% csrf_token %}
+  {% bootstrap_field form.name layout="floating" %}
+  {% include "essential_characters/_rank_field.html" with field=form.rank %}
+  <div class="d-flex justify-content-end mt-4">
+    <button class="btn btn-primary" type="submit">
+      <span class="form-submit-spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+      {% trans "Add skill" %}
+    </button>
+  </div>
+</form>

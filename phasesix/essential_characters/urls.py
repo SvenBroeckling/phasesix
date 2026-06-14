@@ -6,6 +6,17 @@ app_name = "essential_characters"
 urlpatterns = [
     path("marks/summary/", views.MarkSummaryView.as_view(), name="mark_summary"),
     path(
+        "marks/custom/<str:mark_type>/",
+        views.EssentialCustomMarkCreateView.as_view(),
+        name="custom_mark_create",
+    ),
+    path("skills/add/", views.EssentialAddSkillView.as_view(), name="add_skill"),
+    path(
+        "equipment/custom/<str:equipment_type>/",
+        views.EssentialCustomEquipmentCreateView.as_view(),
+        name="custom_equipment_create",
+    ),
+    path(
         "equipment/summary/",
         views.EquipmentSummaryView.as_view(),
         name="equipment_summary",

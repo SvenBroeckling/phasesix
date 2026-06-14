@@ -1,4 +1,5 @@
 import tempfile
+from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.contrib import admin
@@ -15,6 +16,7 @@ from unfold.admin import ModelAdmin
 
 from armory.models import Item, ItemType, RiotGear, RiotGearType, Weapon, WeaponType
 from magic.models import BaseSpell, SpellOrigin
+from homebrew.models import HomebrewModel
 from rules.models import Extension, Lineage, Template, TemplateCategory
 
 from .forms import (
@@ -44,7 +46,10 @@ from .rules import (
 )
 from .views import (
     EquipmentSummaryView,
+    EssentialAddSkillView,
     EssentialCharacterCreateWizard,
+    EssentialCustomEquipmentCreateView,
+    EssentialCustomMarkCreateView,
     EssentialCharacterDetailInfoView,
     EssentialCharacterDetailView,
     EssentialCharacterConditionView,
@@ -119,6 +124,9 @@ class EssentialRuleTests(SimpleTestCase):
     def test_urls_use_class_based_views(self):
         view_classes = {
             "mark_summary": MarkSummaryView,
+            "custom_mark_create": EssentialCustomMarkCreateView,
+            "custom_equipment_create": EssentialCustomEquipmentCreateView,
+            "add_skill": EssentialAddSkillView,
             "equipment_summary": EquipmentSummaryView,
             "supernatural_summary": SupernaturalSummaryView,
             "create": EssentialCharacterCreateWizard,
@@ -132,6 +140,8 @@ class EssentialRuleTests(SimpleTestCase):
             "api:essential_character": PublicEssentialCharacterApiView,
         }
         kwargs_by_name = {
+            "custom_mark_create": {"mark_type": "bond"},
+            "custom_equipment_create": {"equipment_type": "weapon"},
             "detail_info": {"slug": "joran", "section": "marks"},
             "change_image": {"slug": "joran"},
             "edit_section": {"slug": "joran", "section": "marks"},
@@ -255,6 +265,8 @@ class EssentialRuleTests(SimpleTestCase):
         self.assertNotIn(
             "skills_de", {field.name for field in EssentialBond._meta.fields}
         )
+        self.assertIn(HomebrewModel, EssentialBond.__mro__)
+        self.assertIn(HomebrewModel, Lineage.__mro__)
 
     def test_birth_date_is_free_text_with_localized_month_suggestions(self):
         with override("de"):
@@ -400,7 +412,7 @@ class EssentialRuleTests(SimpleTestCase):
     def test_skill_is_direct_free_text_assignment(self):
         self.assertEqual(
             [field.name for field in EssentialCharacterSkill._meta.fields],
-            ["id", "character", "name", "rank"],
+            ["id", "character", "name_de", "name_en", "rank"],
         )
 
     def test_essential_admins_use_unfold_model_admin(self):
@@ -507,7 +519,7 @@ class PublicEssentialCharacterApiTests(TestCase):
             corruption=1,
         )
         EssentialCharacterSkill.objects.create(
-            character=cls.character, name="Ritus", rank=2
+            character=cls.character, name_de="Ritus", name_en="Rite", rank=2
         )
 
     def test_anonymous_get_returns_nextjs_compatible_character(self):
@@ -833,6 +845,169 @@ class EssentialMarkSummaryTests(TestCase):
         self.assertEqual(response.status_code, 400)
 
 
+class EssentialCustomMarkTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username="mark-author")
+        self.other_user = get_user_model().objects.create_user(username="other-author")
+        self.client.force_login(self.user)
+        category = TemplateCategory.objects.create(name_de="Pfade", name_en="Paths")
+        Template.objects.create(
+            name_de="Vorlage",
+            name_en="Template",
+            category=category,
+            essential_enabled=True,
+        )
+        self.payload = {
+            "name": "Eigene Marke",
+            "description": "Eine eigene Beschreibung.",
+            "benefit": "Ein eigener Vorteil.",
+            "vulnerability": "Eine eigene Schwäche.",
+            "skills": "Wissen, Auftreten",
+            "facet": "Ein eigenes Facettenspiel.",
+        }
+
+    def test_custom_marks_are_created_as_player_homebrew(self):
+        models = {
+            "ancestry": Lineage,
+            "path": Template,
+            "bond": EssentialBond,
+        }
+
+        for mark_type, model in models.items():
+            with self.subTest(mark_type=mark_type):
+                response = self.client.post(
+                    reverse(
+                        "essential_characters:custom_mark_create",
+                        kwargs={"mark_type": mark_type},
+                    ),
+                    self.payload,
+                )
+
+                self.assertEqual(response.status_code, 200)
+                obj = model.objects.get(pk=response.json()["id"])
+                self.assertTrue(obj.is_homebrew)
+                self.assertEqual(obj.created_by, self.user)
+                self.assertEqual(obj.name_de, self.payload["name"])
+                self.assertEqual(obj.name_en, self.payload["name"])
+
+    def test_player_homebrew_is_only_visible_to_its_author(self):
+        response = self.client.post(
+            reverse(
+                "essential_characters:custom_mark_create",
+                kwargs={"mark_type": "bond"},
+            ),
+            self.payload,
+        )
+        bond = EssentialBond.objects.get(pk=response.json()["id"])
+
+        self.assertIn(bond, MarksForm(user=self.user).fields["bond"].queryset)
+        self.assertNotIn(bond, MarksForm(user=self.other_user).fields["bond"].queryset)
+
+    @override_settings(OPENAI_API_KEY="configured")
+    @patch("essential_characters.views.translate_custom_mark")
+    def test_staff_can_translate_custom_mark_into_both_languages(self, translate):
+        self.user.is_staff = True
+        self.user.save(update_fields=["is_staff"])
+        translate.return_value = {
+            "de": {
+                "name": "Eigene Bindung",
+                "description": "Beschreibung",
+                "benefit": "Vorteil",
+                "vulnerability": "Schwäche",
+            },
+            "en": {
+                "name": "Custom Bond",
+                "description": "Description",
+                "benefit": "Benefit",
+                "vulnerability": "Vulnerability",
+            },
+        }
+
+        response = self.client.post(
+            reverse(
+                "essential_characters:custom_mark_create",
+                kwargs={"mark_type": "bond"},
+            ),
+            {**self.payload, "translate_with_openai": "on"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        bond = EssentialBond.objects.get(pk=response.json()["id"])
+        self.assertEqual(bond.name_de, "Eigene Bindung")
+        self.assertEqual(bond.name_en, "Custom Bond")
+        translate.assert_called_once()
+
+    def test_openai_translation_control_is_staff_only(self):
+        response = self.client.get(
+            reverse(
+                "essential_characters:custom_mark_create",
+                kwargs={"mark_type": "bond"},
+            )
+        )
+        self.assertNotContains(response, "translate_with_openai")
+
+
+class EssentialSkillTranslationTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username="skill-author")
+        self.client.force_login(self.user)
+        self.character = EssentialCharacter.objects.create(
+            created_by=self.user,
+            name="Skill Tester",
+            century=1,
+            ancestry=Lineage.objects.create(
+                name_de="Mensch", name_en="Human", essential_enabled=True
+            ),
+            path=Template.objects.create(
+                name_de="Pfad",
+                name_en="Path",
+                category=TemplateCategory.objects.create(
+                    name_de="Pfade", name_en="Paths"
+                ),
+                essential_enabled=True,
+            ),
+            bond=EssentialBond.objects.create(name_de="Bund", name_en="Bond"),
+            mind=3,
+            will=2,
+            instinct=2,
+            dexterity=1,
+            body=1,
+            presence=1,
+            gift=0,
+            perception=0,
+        )
+
+    @patch("essential_characters.openai.translate_skill_names")
+    def test_replace_for_character_stores_both_translated_names(self, translate):
+        translate.return_value = [
+            {"de": "Heimlichkeit", "en": "Stealth"},
+            {"de": "Wissen", "en": "Knowledge"},
+        ]
+
+        EssentialCharacterSkill.replace_for_character(
+            self.character, [("Stealth", 3), ("Wissen", 2)]
+        )
+
+        skills = EssentialCharacterSkill.objects.order_by("rank")
+        self.assertEqual(
+            {(skill.name_de, skill.name_en, skill.rank) for skill in skills},
+            {
+                ("Heimlichkeit", "Stealth", 3),
+                ("Wissen", "Knowledge", 2),
+            },
+        )
+        translate.assert_called_once_with(["Stealth", "Wissen"])
+
+    def test_add_skill_modal_accepts_name_and_rank(self):
+        response = self.client.post(
+            reverse("essential_characters:add_skill"),
+            {"name": "Heimlichkeit", "rank": 3},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {"name": "Heimlichkeit", "rank": 3})
+
+
 class EssentialEquipmentSummaryTests(TestCase):
     def setUp(self):
         self.client.force_login(
@@ -953,3 +1128,119 @@ class EssentialEquipmentSummaryTests(TestCase):
         )
 
         self.assertNotContains(response, self.other_item.name)
+
+
+class EssentialCustomEquipmentTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username="equipment-author")
+        self.other_user = get_user_model().objects.create_user(username="other-author")
+        self.client.force_login(self.user)
+        Extension.objects.create(
+            name_de="Tirakan", name_en="Tirakan", identifier="tirakan"
+        )
+        self.types = {
+            "weapon": WeaponType.objects.create(name_de="Nahkampf", name_en="Melee"),
+            "armor": RiotGearType.objects.create(
+                name_de="Kleidung", name_en="Clothing"
+            ),
+            "item": ItemType.objects.create(name_de="Werkzeug", name_en="Tools"),
+        }
+
+    def test_creates_and_returns_each_homebrew_equipment_type(self):
+        cases = {
+            "weapon": (
+                Weapon,
+                {
+                    "damage": "2",
+                    "range": "Nahkampf",
+                    "grip": "10",
+                    "properties": "Ausgewogen",
+                },
+                "secondary_weapon",
+            ),
+            "armor": (
+                RiotGear,
+                {
+                    "protection": "1",
+                    "load": "1",
+                    "sealing": "0",
+                    "properties": "Unauffällig",
+                },
+                "armor",
+            ),
+            "item": (Item, {}, "items"),
+        }
+
+        for equipment_type, (model, details, target) in cases.items():
+            with self.subTest(equipment_type=equipment_type):
+                response = self.client.post(
+                    reverse(
+                        "essential_characters:custom_equipment_create",
+                        kwargs={"equipment_type": equipment_type},
+                    )
+                    + f"?target={target}",
+                    {
+                        "name": f"Custom {equipment_type}",
+                        "description": "Custom description",
+                        "type": self.types[equipment_type].pk,
+                        **details,
+                    },
+                )
+
+                self.assertEqual(response.status_code, 200)
+                obj = model.objects.get(pk=response.json()["id"])
+                self.assertTrue(obj.is_homebrew)
+                self.assertTrue(obj.essential_enabled)
+                self.assertEqual(obj.created_by, self.user)
+                self.assertEqual(response.json()["target"], target)
+
+    def test_private_homebrew_equipment_is_only_visible_to_author(self):
+        response = self.client.post(
+            reverse(
+                "essential_characters:custom_equipment_create",
+                kwargs={"equipment_type": "weapon"},
+            ),
+            {
+                "name": "Private blade",
+                "description": "",
+                "type": self.types["weapon"].pk,
+            },
+        )
+        weapon = Weapon.objects.get(pk=response.json()["id"])
+
+        self.assertIn(
+            weapon, EquipmentForm(user=self.user).fields["primary_weapon"].queryset
+        )
+        self.assertNotIn(
+            weapon,
+            EquipmentForm(user=self.other_user).fields["primary_weapon"].queryset,
+        )
+
+    @override_settings(OPENAI_API_KEY="configured")
+    @patch("essential_characters.views.translate_custom_mark")
+    def test_staff_can_translate_custom_equipment(self, translate):
+        self.user.is_staff = True
+        self.user.save(update_fields=["is_staff"])
+        translate.return_value = {
+            "de": {"name": "Langschwert", "description": "Eine lange Klinge."},
+            "en": {"name": "Longsword", "description": "A long blade."},
+        }
+
+        response = self.client.post(
+            reverse(
+                "essential_characters:custom_equipment_create",
+                kwargs={"equipment_type": "weapon"},
+            ),
+            {
+                "name": "Langschwert",
+                "description": "Eine lange Klinge.",
+                "type": self.types["weapon"].pk,
+                "translate_with_openai": "on",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        weapon = Weapon.objects.get(pk=response.json()["id"])
+        self.assertEqual(weapon.name_de, "Langschwert")
+        self.assertEqual(weapon.name_en, "Longsword")
+        translate.assert_called_once()
