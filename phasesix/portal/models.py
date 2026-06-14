@@ -45,6 +45,8 @@ class Profile(ModelWithImage):
     backdrop_copyright_url = models.CharField(
         _("image copyright url"), max_length=150, blank=True, null=True
     )
+    backdrop_image_focal_x = models.PositiveSmallIntegerField(default=50)
+    backdrop_image_focal_y = models.PositiveSmallIntegerField(default=50)
 
     bio = models.TextField(_("bio"), blank=True, null=True)
 
@@ -96,7 +98,9 @@ class Profile(ModelWithImage):
 
     def get_image_url(self, geometry="180", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",
@@ -107,7 +111,10 @@ class Profile(ModelWithImage):
     def get_backdrop_image_url(self, geometry="1800", crop="center"):
         if self.backdrop_image:
             return get_thumbnail(
-                self.backdrop_image, geometry, crop=crop, quality=99
+                self.backdrop_image,
+                geometry,
+                crop=self.get_image_crop(crop, "backdrop_image"),
+                quality=99,
             ).url
         return static_thumbnail(
             f"img/header-background.png",

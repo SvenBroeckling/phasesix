@@ -243,7 +243,9 @@ class Chapter(
 
     def get_backdrop_image_url(self, geometry="1800x500", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
     @property
     def text(self):

@@ -6,11 +6,13 @@
     <div class="card character-list-item h-100 position-relative">
       <img src="{% backdrop_image_url character "800x800" %}" alt="{{ character }}"
            class="card-img-top object-fit-cover"
+           {% if character.backdrop_image %}{% focal_image_attrs character "backdrop_image" %}{% endif %}
            style="height:120px;">
       <div class="d-flex align-items-center hover-pointer"
            style="position:absolute; left:32px; top:32px">
         <img class="img-fluid rounded float-start me-3 border-3 border-black"
              src="{% image_url character "120x120" %}"
+             {% focal_image_attrs character %}
              alt="{{ character.name }}">
       </div>
 

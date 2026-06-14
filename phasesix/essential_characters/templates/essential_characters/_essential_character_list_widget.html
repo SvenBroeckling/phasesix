@@ -1,4 +1,4 @@
-{% load i18n thumbnail %}
+{% load i18n portal_extras thumbnail %}
 
 <div class="character-list-widget-container h-100 position-relative">
   <a class="character-list-widget" href="{{ character.get_absolute_url }}">
@@ -8,9 +8,11 @@
       </div>
       <div class="d-flex align-items-center hover-pointer profile-character-portrait">
         {% if character.image %}
-          {% thumbnail character.image "120x120" crop="center" as im %}
+          {% focal_crop character as image_crop %}
+          {% thumbnail character.image "120x120" crop=image_crop as im %}
             <img class="img-fluid float-start me-3 border-3 border-black"
                  src="{{ im.url }}"
+                 {% focal_image_attrs character %}
                  alt="{{ character.name }}">
           {% endthumbnail %}
         {% else %}

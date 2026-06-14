@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n portal_extras %}
 
 {% block title %}{% trans "Worlds" %} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{% trans "Worlds" %}{% endblock %}
@@ -21,7 +21,9 @@
              href="{% url "worlds:detail" slug=world.slug %}"
              aria-label="{{ world }}">
             {% if world.get_image %}
-              <img src="{{ world.get_image.image.url }}" alt="{{ world }}">
+              {% focal_position world as image_position %}
+              <img src="{{ world.get_image.image.url }}" alt="{{ world }}"
+                   style="object-position: {{ image_position }}" {% focal_image_attrs world %}>
             {% else %}
               <span class="world-card-sigil" aria-hidden="true">
                 <i class="gi gi-delapouite-book-cover"></i>

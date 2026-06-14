@@ -36,6 +36,7 @@ class VehicleType(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
         related_name="vehicle_types",
         verbose_name=_("extensions"),
     )
+
     class Meta:
         translate = ("name", "description")
         verbose_name = _("vehicle type")
@@ -105,7 +106,9 @@ class MountPoint(HomebrewModel, metaclass=TransMeta):
         return f"{self.name} ({self.get_mount_type_display()}, {self.get_size_display()}, {self.get_direction_display()})"
 
 
-class VehicleMachinery(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
+class VehicleMachinery(
+    HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta
+):
     """Represents equipment, weapons, or systems that can be mounted on a vehicle"""
 
     image_upload_to = "vehicle_machinery_images"
@@ -162,7 +165,9 @@ class VehicleMachinery(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=T
     def get_image_url(self, geometry="180", crop="center"):
         """Get image URL with thumbnailing"""
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",
@@ -334,7 +339,9 @@ class Vehicle(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta)
     def get_image_url(self, geometry="180", crop="center"):
         """Get image URL with thumbnailing"""
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",

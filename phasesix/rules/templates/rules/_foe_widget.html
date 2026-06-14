@@ -3,7 +3,7 @@
 <article class="foe-card mb-3">
   <div class="foe-card-visual">
     {% if foe.image %}
-      <img src="{% image_url foe "800x450" crop="center" %}" alt="{{ foe.name }}">
+      <img src="{% image_url foe "800x450" crop="center" %}" alt="{{ foe.name }}" {% focal_image_attrs foe %}>
     {% else %}
       <span class="foe-card-sigil" aria-hidden="true">
         <i class="gi gi-lorc-monster-grasp"></i>

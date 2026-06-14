@@ -6,6 +6,11 @@ from portal import views
 app_name = "portal"
 
 urlpatterns = [
+    path(
+        "xhr/image-focal-point",
+        views.UpdateImageFocalPointView.as_view(),
+        name="update_image_focal_point",
+    ),
     path("profile/<slug:slug>", views.ProfileView.as_view(), name="profile"),
     path("sidebar/search", views.SidebarSearchView.as_view(), name="search"),
     path(

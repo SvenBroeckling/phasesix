@@ -35,9 +35,11 @@
             <div class="text-center my-2 mx-1">
               <a href="{{ mp.0.get_absolute_url }}" class="no-decoration no-link-colors">
                 {% if mp.0.image %}
-                  {% thumbnail mp.0.image "400x400" crop="center" as im %}
+                  {% focal_crop mp.0 as image_crop %}
+                  {% thumbnail mp.0.image "400x400" crop=image_crop as im %}
                     <img class="img-fluid rounded float-start me-3"
                          src="{{ im.url }}"
+                         {% focal_image_attrs mp.0 %}
                          alt="{{ mp.0.name }}">
                   {% endthumbnail %}
                 {% else %}

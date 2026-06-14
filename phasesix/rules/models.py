@@ -846,7 +846,9 @@ class Foe(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
 
     def get_image_url(self, geometry="180", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",

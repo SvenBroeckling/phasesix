@@ -9,7 +9,12 @@ from transmeta import TransMeta
 
 from characters.utils import static_thumbnail
 from homebrew.models import HomebrewModel, HomebrewQuerySet
-from phasesix.models import ModelWithImage, PhaseSixModel, image_upload_path
+from phasesix.models import (
+    ImageFocalPointMixin,
+    ModelWithImage,
+    PhaseSixModel,
+    image_upload_path,
+)
 from worlds.unique_slugify import unique_slugify
 
 
@@ -144,7 +149,12 @@ class World(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         image = self.get_image()
 
         if image:
-            return get_thumbnail(image["image"], geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                image["image"],
+                geometry,
+                crop=image["focal_point"] if crop == "center" else crop,
+                quality=99,
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",
@@ -158,6 +168,7 @@ class World(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                 "image": self.image,
                 "copyright": self.image_copyright,
                 "copyright_url": self.image_copyright_url,
+                "focal_point": self.get_image_focal_point(),
             }
         else:
             return None
@@ -171,7 +182,7 @@ class World(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         return static(self.scss_file)
 
 
-class WorldLeadImage(models.Model):
+class WorldLeadImage(ImageFocalPointMixin):
     world = models.ForeignKey("worlds.World", on_delete=models.CASCADE)
     image = models.ImageField(_("image"), upload_to="world_lead_images", max_length=256)
     character = models.ForeignKey(
@@ -276,7 +287,12 @@ class WikiPage(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         image = self.get_image()
 
         if image:
-            return get_thumbnail(image["image"], geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                image["image"],
+                geometry,
+                crop=image["focal_point"] if crop == "center" else crop,
+                quality=99,
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",
@@ -286,7 +302,9 @@ class WikiPage(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
 
     def get_backdrop_image_url(self, geometry="1800x500", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
         return None
 
     def get_image(self):
@@ -295,6 +313,7 @@ class WikiPage(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                 "image": self.image,
                 "copyright": self.image_copyright,
                 "copyright_url": self.image_copyright_url,
+                "focal_point": self.get_image_focal_point(),
             }
         if self.parent and self.parent.image:
             return self.parent.get_image()

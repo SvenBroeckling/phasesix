@@ -1,10 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
+from django.db import models
 from django.db.models import Q, Count
 from django.db.models.functions import Trunc, Length
-from django.shortcuts import redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.templatetags.static import static
+from django.views import View
 from django.views.generic import TemplateView, DetailView
 
 from campaigns.models import Roll, Campaign
@@ -14,6 +18,44 @@ from essential_characters.models import EssentialCharacter
 from portal.forms import ProfileSettingsForm
 from portal.models import Profile
 from worlds.models import WikiPage, WorldLeadImage, World
+
+
+class UpdateImageFocalPointView(View):
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise PermissionDenied()
+
+        content_type = get_object_or_404(
+            ContentType,
+            app_label=request.POST.get("app_label"),
+            model=request.POST.get("model"),
+        )
+        model = content_type.model_class()
+        if model is None:
+            return JsonResponse({"error": "Unsupported model."}, status=400)
+        obj = get_object_or_404(model, pk=request.POST.get("pk"))
+        field_name = request.POST.get("field_name", "image")
+
+        try:
+            image_field = model._meta.get_field(field_name)
+            model._meta.get_field(f"{field_name}_focal_x")
+            model._meta.get_field(f"{field_name}_focal_y")
+            x = int(request.POST.get("x"))
+            y = int(request.POST.get("y"))
+        except (models.FieldDoesNotExist, TypeError, ValueError):
+            return JsonResponse({"error": "Unsupported image field."}, status=400)
+
+        if not isinstance(image_field, models.ImageField) or not getattr(
+            obj, field_name, None
+        ):
+            return JsonResponse({"error": "Unsupported image field."}, status=400)
+        if not 0 <= x <= 100 or not 0 <= y <= 100:
+            return JsonResponse({"error": "Invalid focal point."}, status=400)
+
+        setattr(obj, f"{field_name}_focal_x", x)
+        setattr(obj, f"{field_name}_focal_y", y)
+        obj.save(update_fields=[f"{field_name}_focal_x", f"{field_name}_focal_y"])
+        return JsonResponse({"x": x, "y": y})
 
 
 class IndexView(TemplateView):

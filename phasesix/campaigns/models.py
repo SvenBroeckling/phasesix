@@ -96,6 +96,8 @@ class Campaign(ModelWithImage):
     backdrop_copyright_url = models.CharField(
         _("image copyright url"), max_length=150, blank=True, null=True
     )
+    backdrop_image_focal_x = models.PositiveSmallIntegerField(default=50)
+    backdrop_image_focal_y = models.PositiveSmallIntegerField(default=50)
     abstract = models.TextField(_("abstract"), blank=True, null=True)
 
     created_by = models.ForeignKey(
@@ -262,7 +264,9 @@ class Campaign(ModelWithImage):
 
     def get_image_url(self, geometry="180", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",
@@ -271,12 +275,18 @@ class Campaign(ModelWithImage):
         )
 
     def get_backdrop_image_url(self, geometry="600x160", crop="center"):
+        source = self.epoch_extension
         image = self.epoch_extension.image
         if self.world_extension.image:
+            source = self.world_extension
             image = self.world_extension.image
         if self.backdrop_image:
+            source = self
             image = self.backdrop_image
 
+        if crop == "center" and hasattr(source, "get_image_crop"):
+            field_name = "backdrop_image" if source is self else "image"
+            crop = source.get_image_crop(crop, field_name)
         return get_thumbnail(image, geometry, crop=crop, quality=99).url
 
     def clone(self):
@@ -288,10 +298,14 @@ class Campaign(ModelWithImage):
                 image=_copy_field_file(self.image),
                 image_copyright=self.image_copyright,
                 image_copyright_url=self.image_copyright_url,
+                image_focal_x=self.image_focal_x,
+                image_focal_y=self.image_focal_y,
                 may_appear_on_start_page=self.may_appear_on_start_page,
                 backdrop_image=_copy_field_file(self.backdrop_image),
                 backdrop_copyright=self.backdrop_copyright,
                 backdrop_copyright_url=self.backdrop_copyright_url,
+                backdrop_image_focal_x=self.backdrop_image_focal_x,
+                backdrop_image_focal_y=self.backdrop_image_focal_y,
                 abstract=self.abstract,
                 created_by=self.created_by,
                 is_favorite=self.is_favorite,
@@ -354,6 +368,8 @@ class Campaign(ModelWithImage):
                         scene=new_scene,
                         name=handout.name,
                         image=_copy_field_file(handout.image),
+                        image_focal_x=handout.image_focal_x,
+                        image_focal_y=handout.image_focal_y,
                         image_copyright=handout.image_copyright,
                         image_copyright_url=handout.image_copyright_url,
                     )

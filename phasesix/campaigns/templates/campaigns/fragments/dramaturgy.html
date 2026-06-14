@@ -92,8 +92,9 @@
                   <div class="card shadow-sm overflow-hidden h-100 campaign-plot-card">
                     <div class="position-relative" style="height: 360px;">
                       {% if plot.image %}
-                        {% thumbnail plot.image "600x900" crop="center" as im %}
-                          <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+                        {% focal_crop plot as image_crop %}
+                        {% thumbnail plot.image "600x900" crop=image_crop as im %}
+                          <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover" {% focal_image_attrs plot %}>
                           <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
                             <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
                             <div class="text-white text-truncate opacity-75 small">{{ plot.world_extension }}</div>
@@ -147,8 +148,9 @@
             <div class="card shadow-sm overflow-hidden h-100 campaign-plot-card">
               <div class="position-relative" style="height: 360px;">
                 {% if plot.image %}
-                  {% thumbnail plot.image "600x900" crop="center" as im %}
-                    <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+                  {% focal_crop plot as image_crop %}
+                  {% thumbnail plot.image "600x900" crop=image_crop as im %}
+                    <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover" {% focal_image_attrs plot %}>
                     <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
                       <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
                       <div class="text-white text-truncate opacity-75 small">{{ plot.world_extension }}</div>

@@ -1,4 +1,4 @@
-{% load thumbnail %}
+{% load portal_extras thumbnail %}
 {% load world_extras %}
 {% load characters_extras %}
 {% load i18n %}
@@ -8,10 +8,11 @@
     <div class="list-group-item p-0 overflow-hidden border-bottom-0"
          style="background-image: url({{ im.url }});
                  background-repeat: no-repeat;
-                 background-position: center;
+                 background-position: {% focal_position object.world %};
                  height: 80px;
                  min-height: 100%;
-                 background-size: cover;">
+                 background-size: cover;"
+           {% focal_image_attrs object.world %}>
     </div>
   {% endthumbnail %}
 
