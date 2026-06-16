@@ -1,10 +1,11 @@
-{% load i18n characters_extras rules_extras thumbnail armory_extras %}
+{% load i18n characters_extras portal_extras rules_extras thumbnail armory_extras %}
 
 <article class="catalog-card mb-3">
   <div class="catalog-card-visual">
     {% if weapon.image %}
-      {% thumbnail weapon.image "800x450" crop="center" as thumb %}
-        <img src="{{ thumb.url }}" alt="{{ weapon }}">
+      {% focal_crop weapon as image_crop %}
+      {% thumbnail weapon.image "800x450" crop=image_crop as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ weapon }}" {% focal_image_attrs weapon %}>
       {% endthumbnail %}
     {% else %}
       <span class="catalog-card-sigil" aria-hidden="true"><i class="gi gi-delapouite-axe-sword"></i></span>

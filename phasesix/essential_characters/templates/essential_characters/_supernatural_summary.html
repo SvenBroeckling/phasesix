@@ -1,0 +1,24 @@
+{% load i18n rules_extras %}
+<div class="card-body">
+  {% if origin %}
+    <h3 class="h4 mb-3">{{ origin }}</h3>
+    <p class="mb-0">{{ origin.essential_description|default:"-"|linebreaksbr }}</p>
+  {% elif spell %}
+    {% trans "Instant" as instant %}
+    <h3 class="h4 mb-3">{{ spell }}</h3>
+    <div class="essential-spell-rules mb-3">{{ spell.rules|phasesix_markup }}</div>
+    <dl class="essential-spell-metadata mb-0">
+      <div><dt>{% trans "Origin" %}</dt><dd>{{ spell.origin|default:"-" }}</dd></div>
+      <div><dt>{% trans "Spell point cost" %}</dt><dd>{{ spell.spell_point_cost }}</dd></div>
+      <div><dt>{% trans "Arcana cost" %}</dt><dd>{{ spell.arcana_cost }}</dd></div>
+      <div><dt>{% trans "Range" %}</dt><dd>{{ spell.range }}</dd></div>
+      <div><dt>{% trans "Actions" %}</dt><dd>{{ spell.actions }}</dd></div>
+      <div><dt>{% trans "Duration" %}</dt><dd>{{ spell.duration|default:instant }}{% if spell.duration %} {{ spell.get_duration_unit_display }}{% endif %}</dd></div>
+      {% if spell.needs_concentration %}<div><dt>{% trans "Needs concentration" %}</dt><dd>{% trans "Yes" %}</dd></div>{% endif %}
+      {% if spell.is_ritual %}<div><dt>{% trans "Ritual" %}</dt><dd>{% trans "Yes" %}</dd></div>{% endif %}
+      {% if spell.essential_enabled %}<div><dt>{% trans "Essential enabled" %}</dt><dd>{% trans "Yes" %}</dd></div>{% endif %}
+    </dl>
+  {% else %}
+    <p class="text-body-secondary mb-0">{% trans "Choose a supernatural option to see its details." %}</p>
+  {% endif %}
+</div>

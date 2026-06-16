@@ -1,0 +1,47 @@
+{% load django_bootstrap5 i18n %}
+<form method="post"
+      class="essential-edit-form"
+      action="{% url 'essential_characters:edit_section' slug=object.slug section=section %}"
+      data-fetch-form="true"
+      data-fetch-form-close="modal"
+      data-fetch-form-event-after="essential-character-refresh">
+  {% csrf_token %}
+  {% if section == "attributes" %}
+    <div class="row g-3">
+      {% for field in form %}
+        <div class="col-12 col-md-6">
+          {% include "essential_characters/_rank_field.html" with field=field %}
+        </div>
+      {% endfor %}
+    </div>
+  {% elif section == "skills" %}
+    <div class="essential-edit-skill-list">
+      {% for name_field, rank_field in skill_rows %}
+        <div class="essential-edit-skill-row">
+          {% bootstrap_field name_field layout="floating" wrapper_class="mb-0" %}
+          {% include "essential_characters/_rank_field.html" with field=rank_field hide_label=True %}
+        </div>
+      {% endfor %}
+    </div>
+  {% elif section == "equipment" or section == "supernatural" %}
+    {% for field in form %}
+      {% if field.name == "focus" or field.name == "regeneration_ritual" %}
+        {% bootstrap_field field layout="floating" wrapper_class="mb-4" %}
+      {% else %}
+        <div class="mb-4">
+          <div class="form-label text-body-emphasis fw-semibold">{{ field.label }}</div>
+          {{ field }}
+          {% if field.errors %}<div class="invalid-feedback d-block">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% bootstrap_form form layout="floating" %}
+  {% endif %}
+  <div class="d-flex justify-content-end mt-4">
+    <button class="btn btn-primary" type="submit">
+      <span class="form-submit-spinner spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+      {% trans "Save" %}
+    </button>
+  </div>
+</form>

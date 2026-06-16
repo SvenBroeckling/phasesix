@@ -100,6 +100,76 @@
       letter-spacing: 0.08em;
     }
 
+    .user-profile-link {
+      margin-bottom: 0.15rem;
+      padding: 0.7rem 0.75rem;
+      border: 1px solid rgba(var(--bs-primary-rgb), 0.3);
+      border-left-width: 1px;
+      color: var(--bs-body-color);
+      background:
+        linear-gradient(135deg, rgba(var(--bs-primary-rgb), 0.18), rgba(var(--bs-primary-rgb), 0.035)),
+        rgba(var(--bs-black-rgb), 0.12);
+      box-shadow: inset 0 1px 0 rgba(var(--bs-white-rgb), 0.035);
+
+      &:hover,
+      &:focus {
+        padding-left: 0.75rem;
+        color: var(--bs-body-color);
+        border-color: rgba(var(--bs-primary-rgb), 0.58);
+        background:
+          linear-gradient(135deg, rgba(var(--bs-primary-rgb), 0.26), rgba(var(--bs-primary-rgb), 0.07)),
+          rgba(var(--bs-black-rgb), 0.12);
+
+        .user-profile-link-icon {
+          color: var(--bs-white);
+          border-color: rgba(var(--bs-primary-rgb), 0.72);
+          background: rgba(var(--bs-primary-rgb), 0.24);
+          box-shadow: 0 0 0.8rem rgba(var(--bs-primary-rgb), 0.22);
+        }
+
+        .user-profile-link-arrow {
+          color: var(--bs-primary);
+          transform: translateX(0.15rem);
+        }
+      }
+    }
+
+    .user-profile-link-icon {
+      flex: 0 0 2.4rem;
+      width: 2.4rem;
+      height: 2.4rem;
+      border: 1px solid rgba(var(--bs-primary-rgb), 0.44);
+      color: rgba(var(--bs-primary-rgb), 0.92);
+      background: rgba(var(--bs-primary-rgb), 0.12);
+      font-size: 1.25rem;
+      transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .user-profile-link-name {
+      overflow: hidden;
+      color: var(--bs-body-color);
+      font-weight: 600;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-profile-link-copy {
+      min-width: 0;
+    }
+
+    .user-profile-link-label {
+      color: var(--bs-secondary-color);
+      font-size: 0.78rem;
+      line-height: 1.25;
+    }
+
+    .user-profile-link-arrow {
+      color: rgba(var(--bs-primary-rgb), 0.62);
+      font-size: 0.7rem;
+      transition: color 150ms ease, transform 150ms ease;
+    }
+
     img,
     .rounded-pill {
       border-color: rgba(var(--bs-primary-rgb), 0.32) !important;

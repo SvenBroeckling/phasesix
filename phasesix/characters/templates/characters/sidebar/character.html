@@ -1,10 +1,11 @@
-{% load i18n django_bootstrap5 thumbnail static %}
+{% load i18n django_bootstrap5 portal_extras thumbnail static %}
 
 <div class="row">
   <div class="col-12 mb-3 mt-2">
     {% if object.image %}
-      {% thumbnail object.image "600x600" crop="center" as im %}
-        <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}">
+      {% focal_crop object as image_crop %}
+      {% thumbnail object.image "600x600" crop=image_crop as im %}
+        <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}" {% focal_image_attrs object %}>
       {% endthumbnail %}
     {% else %}
       <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"

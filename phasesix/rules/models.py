@@ -351,10 +351,21 @@ class Extension(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         return self.name
 
 
-class Lineage(PhaseSixModel, metaclass=TransMeta):
-    objects = ExtensionSelectQuerySet.as_manager()
+class LineageQuerySet(HomebrewQuerySet, ExtensionSelectQuerySet):
+    pass
+
+
+class Lineage(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
+    objects = LineageQuerySet.as_manager()
 
     name = models.CharField(_("name"), max_length=80)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        verbose_name=_("created by"),
+        null=True,
+        blank=True,
+    )
     description = models.TextField(_("description"), blank=True, null=True)
     essential_enabled = models.BooleanField(_("essential enabled"), default=False)
     essential_description = models.CharField(
@@ -846,7 +857,9 @@ class Foe(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
 
     def get_image_url(self, geometry="180", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",

@@ -60,6 +60,7 @@
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
       data-csrf-token="{{ csrf_token }}"
+      data-focal-update-url="{% url 'portal:update_image_focal_point' %}"
       data-event-source-url="{{ event_source_url }}?user={{ user.id }}"
       data-auth="true">
 
@@ -67,15 +68,53 @@
 
 {% site_modal %}
 {% sidebar_right %}
+{% if user.is_staff %}
+  <button type="button"
+          class="btn btn-primary image-focus-mode-toggle"
+          aria-pressed="false"
+          title="{% trans 'Adjust image focus' %}">
+    <i class="fas fa-crosshairs" aria-hidden="true"></i>
+    <span>{% trans "Adjust image focus" %}</span>
+  </button>
+  <div class="modal fade" id="image-focus-modal" tabindex="-1" aria-labelledby="image-focus-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content atmospheric-modal">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="image-focus-modal-title">{% trans "Adjust image focus" %}</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans 'Close' %}"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-body-secondary">{% trans "Click the most important point in the image." %}</p>
+          <div class="image-focus-editor" tabindex="0">
+            <img src="" alt="{% trans 'Image focus preview' %}">
+            <span class="image-focus-marker" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="button" class="btn btn-primary image-focus-save">{% trans "Save" %}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
 
 {% block header %}
   {% backdrop_image_url object "1900x600" as backdrop_image %}
   {% image_url object "600x600" as image %}
   {% if backdrop_image %}
     <header class="in-page-header has-backdrop">
-      <div class="in-page-header-backdrop"
-           style="background-image: url('{{ backdrop_image }}')"
-           aria-hidden="true"></div>
+      {% if object.backdrop_image %}
+        <div class="in-page-header-backdrop"
+             style="background-image: url('{{ backdrop_image }}'); background-position: {% focal_position object 'backdrop_image' %}"
+             {% focal_image_attrs object "backdrop_image" %}
+             aria-hidden="true"></div>
+      {% else %}
+        <div class="in-page-header-backdrop"
+             style="background-image: url('{{ backdrop_image }}'); background-position: {% focal_position object %}"
+             {% focal_image_attrs object %}
+             aria-hidden="true"></div>
+      {% endif %}
   {% else %}
     <header class="in-page-header">
   {% endif %}
@@ -93,7 +132,7 @@
              href="{% image_url object "1400" %}"
              data-caption="{{ object|default:brand_name }}"
              aria-label="{% trans "Open image" %}">
-            <img src="{{ image }}" alt="{{ object|default:brand_name }}">
+            <img src="{{ image }}" alt="{{ object|default:brand_name }}" {% focal_image_attrs object %}>
           </a>
         {% endif %}
       </div>
@@ -171,6 +210,7 @@
   <script src="{% static 'js/searchable_object_card_list.js' %}?2"></script>
   <script src="{% static 'js/clipboard.js' %}"></script>
   <script src="{% static 'js/portal.js' %}"></script>
+  <script src="{% static 'js/image_focus_editor.js' %}"></script>
   <script src="{% static "plots/js/plot_editor.js" %}"></script>
 {% endcompress %}
 

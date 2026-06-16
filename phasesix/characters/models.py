@@ -29,7 +29,7 @@ from characters.utils import static_thumbnail
 from horror.models import Quirk, QuirkModifier
 from magic.models import SpellTemplateModifier, SpellOrigin
 from pantheon.models import PriestAction
-from phasesix.models import PhaseSixModel, ModelWithImage
+from phasesix.models import ImageFocalPointMixin, PhaseSixModel, ModelWithImage
 from rules.models import Extension, Skill, Template, TemplateCategory, TemplateModifier
 from worlds.unique_slugify import unique_slugify
 
@@ -144,6 +144,8 @@ class Character(ModelWithImage, PhaseSixModel):
     backdrop_copyright_url = models.CharField(
         _("image copyright url"), max_length=150, blank=True, null=True
     )
+    backdrop_image_focal_x = models.PositiveSmallIntegerField(default=50)
+    backdrop_image_focal_y = models.PositiveSmallIntegerField(default=50)
 
     pronoun = models.ForeignKey(
         Pronoun,
@@ -263,7 +265,9 @@ class Character(ModelWithImage, PhaseSixModel):
 
     def get_image_url(self, geometry="180", crop="center"):
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
 
         return static_thumbnail(
             f"img/silhouette.png",
@@ -274,9 +278,13 @@ class Character(ModelWithImage, PhaseSixModel):
     def get_backdrop_image_url(self, geometry="1800x500", crop="center"):
         if self.backdrop_image:
             return get_thumbnail(
-                self.backdrop_image, geometry, crop=crop, quality=99
+                self.backdrop_image,
+                geometry,
+                crop=self.get_image_crop(crop, "backdrop_image"),
+                quality=99,
             ).url
         if self.get_epoch().image:
+            crop = self.get_epoch().get_image_crop(crop)
             return get_thumbnail(
                 self.get_epoch().image, geometry, crop=crop, quality=99
             ).url
@@ -297,9 +305,13 @@ class Character(ModelWithImage, PhaseSixModel):
                 image=_copy_field_file(self.image),
                 image_copyright=self.image_copyright,
                 image_copyright_url=self.image_copyright_url,
+                image_focal_x=self.image_focal_x,
+                image_focal_y=self.image_focal_y,
                 backdrop_image=_copy_field_file(self.backdrop_image),
                 backdrop_copyright=self.backdrop_copyright,
                 backdrop_copyright_url=self.backdrop_copyright_url,
+                backdrop_image_focal_x=self.backdrop_image_focal_x,
+                backdrop_image_focal_y=self.backdrop_image_focal_y,
                 pronoun=self.pronoun,
                 created_by=self.created_by,
                 is_favorite=self.is_favorite,
@@ -448,6 +460,8 @@ class Character(ModelWithImage, PhaseSixModel):
                     name=foe.name,
                     is_familiar=foe.is_familiar,
                     image=_copy_field_file(foe.image),
+                    image_focal_x=foe.image_focal_x,
+                    image_focal_y=foe.image_focal_y,
                 )
 
             for recipe in self.characterrecipe_set.all():
@@ -1815,7 +1829,7 @@ class CharacterNote(models.Model):
         return self.character.may_edit(user)
 
 
-class CharacterFoe(models.Model):
+class CharacterFoe(ImageFocalPointMixin):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     foe = models.ForeignKey("rules.Foe", on_delete=models.CASCADE)
     health = models.IntegerField(_("health"), default=0)
@@ -1845,7 +1859,9 @@ class CharacterFoe(models.Model):
     def get_image_url(self, geometry="180", crop="center"):
         # Prefer custom image if available; otherwise fall back to the base Foe image
         if self.image:
-            return get_thumbnail(self.image, geometry, crop=crop, quality=99).url
+            return get_thumbnail(
+                self.image, geometry, crop=self.get_image_crop(crop), quality=99
+            ).url
         return self.foe.get_image_url(geometry, crop)
 
     @property

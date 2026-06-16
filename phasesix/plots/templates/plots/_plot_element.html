@@ -95,7 +95,8 @@
                   <img src="{{ handout.image.url }}"
                        alt="{{ handout.name }}"
                        class="img-thumbnail w-100"
-                       style="height: 100px; object-fit: cover;">
+                       style="height: 100px; object-fit: cover; object-position: {% focal_position handout %};"
+                       {% focal_image_attrs handout %}>
                 </div>
               {% else %}
                 <div class="border rounded d-flex align-items-center justify-content-center bg-light"
@@ -134,7 +135,8 @@
                   <img src="{{ character.image.url }}"
                        alt="{{ character.name }}"
                        class="img-thumbnail w-100"
-                       style="height: 100px; object-fit: cover;">
+                       style="height: 100px; object-fit: cover; object-position: {% focal_position character %};"
+                       {% focal_image_attrs character %}>
                 </div>
               {% else %}
                 <div class="border rounded d-flex align-items-center justify-content-center bg-light"
@@ -172,7 +174,8 @@
                 <img src="{% image_url foe "140x140" crop="center" %}"
                      alt="{{ foe.name }}"
                      class="rounded border w-100"
-                     style="height: 140px; object-fit: cover;">
+                     style="height: 140px; object-fit: cover;"
+                     {% focal_image_attrs foe %}>
               </div>
               <div class="small mt-1 text-break" style="width: 140px;">{{ foe.name }}</div>
             </button>
@@ -206,7 +209,8 @@
                   <img src="{{ loc.image.url }}"
                        alt="{{ loc.name }}"
                        class="img-thumbnail w-100"
-                       style="height: 100px; object-fit: cover;">
+                       style="height: 100px; object-fit: cover; object-position: {% focal_position loc %};"
+                       {% focal_image_attrs loc %}>
                 </div>
               {% else %}
                 <div class="border rounded d-flex align-items-center justify-content-center bg-light"

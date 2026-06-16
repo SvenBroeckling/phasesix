@@ -1,4 +1,4 @@
-{% load django_bootstrap5 i18n %}
+{% load django_bootstrap5 i18n portal_extras %}
 
 <div class="container-fluid">
   {% if not object %}
@@ -61,7 +61,8 @@
                     <img src="{{ location.image.url }}"
                          alt="{{ location.name }}"
                          class="img-thumbnail w-100"
-                         style="height: 100px; object-fit: cover;">
+                         style="height: 100px; object-fit: cover; object-position: {% focal_position location %};"
+                         {% focal_image_attrs location %}>
                   </div>
                 {% else %}
                   <div class="border rounded d-flex align-items-center justify-content-center bg-light"

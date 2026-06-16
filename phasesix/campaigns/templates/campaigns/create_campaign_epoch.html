@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n thumbnail %}
+{% load i18n portal_extras thumbnail %}
 
 {% block title %}{% trans 'Create Campaign' %} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{% trans "Choose an epoch" %}{% endblock %}
@@ -19,7 +19,9 @@
         <a href="{% url 'campaigns:create_extensions' world_pk=world_pk epoch_pk=extension.id %}?ruleset={{ ruleset }}">
           <div class="card text-center create-epoch-card mb-4">
             {% thumbnail extension.image "1024" as im %}
-              <div class="card-body" style="background-image: url({{ im.url }}); background-size: cover">
+              <div class="card-body"
+                   style="background-image: url({{ im.url }}); background-size: cover; background-position: {% focal_position extension %}"
+                   {% focal_image_attrs extension %}>
             {% endthumbnail %}
             <div class="card-text w-100 p-5">
               <h5 class="text-center p-0 m-0">{{ extension }}</h5>

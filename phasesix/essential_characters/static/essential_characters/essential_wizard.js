@@ -94,7 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function selectableOptions(select, predicate = () => true) {
     if (!select) return [];
-    return Array.from(select.options).filter((option) => option.value && predicate(option));
+    return Array.from(select.options).filter(
+      (option) => option.value && !option.disabled && predicate(option),
+    );
   }
 
   function randomizeSelect(select, excludedValues = []) {
@@ -145,19 +147,186 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function randomizeSupernatural() {
+    const aspects = Array.from(wizard.querySelectorAll('[name*="-magic_aspect_"]'));
+    const spells = Array.from(wizard.querySelectorAll('[name*="-spell_"]'));
+    spells.forEach((select) => setValue(select, ""));
+    aspects.forEach((select, index) => {
+      randomizeSelect(select, aspects.slice(0, index).map((aspect) => aspect.value));
+    });
+    updateSpellOptions();
+    spells.forEach((select) => randomizeSelect(select));
     setValue(field("focus"), randomItem(randomText.foci));
     setValue(field("regeneration_ritual"), randomItem(randomText.rituals));
+  }
 
-    const spellOriginsElement = document.querySelector("#essential-spell-origins");
-    const spellOrigins = spellOriginsElement ? JSON.parse(spellOriginsElement.textContent) : {};
-    const aspectCount = Number(wizard.dataset.aspectSlots);
-    const spellCount = Number(wizard.dataset.spellSlots);
-    const selectedAspects = randomizeMultipleSelect(field("magic_aspects"), aspectCount);
-    randomizeMultipleSelect(
-      field("spells"),
-      spellCount,
-      (option) => selectedAspects.includes(spellOrigins[option.value]),
-    );
+  function initializeItemPicker(picker) {
+    const select = picker.querySelector("select");
+    const search = picker.querySelector("[data-essential-item-search]");
+    const addButton = picker.querySelector("[data-essential-item-add]");
+    const optionsContainer = picker.querySelector("[data-essential-item-options]");
+    const selectedContainer = picker.querySelector("[data-essential-item-selected]");
+    let pendingOption = null;
+
+    function availableOptions() {
+      const query = search.value.trim().toLocaleLowerCase();
+      return Array.from(select.options)
+        .filter((option) => !option.selected)
+        .filter((option) => !query || option.text.toLocaleLowerCase().includes(query))
+        .slice(0, 8);
+    }
+
+    function renderOptions() {
+      const options = availableOptions();
+      optionsContainer.replaceChildren();
+      optionsContainer.hidden = options.length === 0;
+      options.forEach((option) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "list-group-item list-group-item-action";
+        button.textContent = option.text;
+        button.addEventListener("click", () => {
+          pendingOption = option;
+          search.value = option.text;
+          addButton.disabled = false;
+          optionsContainer.hidden = true;
+          search.focus();
+        });
+        optionsContainer.append(button);
+      });
+    }
+
+    function renderSelected() {
+      selectedContainer.replaceChildren();
+      Array.from(select.selectedOptions).forEach((option) => {
+        const row = document.createElement("div");
+        row.className = "essential-item-picker-selection";
+
+        const label = document.createElement("span");
+        label.textContent = option.text;
+
+        const removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "btn btn-sm btn-outline-danger";
+        removeButton.setAttribute("aria-label", `${picker.dataset.removeLabel}: ${option.text}`);
+        removeButton.innerHTML = '<i class="fas fa-times" aria-hidden="true"></i>';
+        removeButton.addEventListener("click", () => {
+          option.selected = false;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+
+        row.append(label, removeButton);
+        selectedContainer.append(row);
+      });
+    }
+
+    function resetSearch() {
+      pendingOption = null;
+      search.value = "";
+      addButton.disabled = true;
+      optionsContainer.hidden = true;
+    }
+
+    search.addEventListener("input", () => {
+      pendingOption = null;
+      addButton.disabled = true;
+      renderOptions();
+    });
+    search.addEventListener("focus", renderOptions);
+    search.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") resetSearch();
+      if (event.key === "Enter" && pendingOption) {
+        event.preventDefault();
+        addButton.click();
+      }
+    });
+    addButton.addEventListener("click", () => {
+      if (!pendingOption) return;
+      pendingOption.selected = true;
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      resetSearch();
+    });
+    select.addEventListener("change", () => {
+      renderSelected();
+      renderOptions();
+    });
+    document.addEventListener("click", (event) => {
+      if (!picker.contains(event.target)) optionsContainer.hidden = true;
+    });
+    renderSelected();
+  }
+
+  function selectedOriginValues() {
+    return Array.from(wizard.querySelectorAll('[name*="-magic_aspect_"]'))
+      .map((select) => select.value)
+      .filter(Boolean);
+  }
+
+  function updateSpellOptions() {
+    const origins = selectedOriginValues();
+    const selects = Array.from(wizard.querySelectorAll("[data-essential-spell-picker] select"));
+    selects.forEach((select) => {
+      const otherValues = selects
+        .filter((other) => other !== select)
+        .map((other) => other.value)
+        .filter(Boolean);
+      Array.from(select.options).forEach((option) => {
+        if (!option.value) return;
+        option.disabled =
+          !origins.includes(option.dataset.origin) || otherValues.includes(option.value);
+      });
+      if (select.selectedOptions[0]?.disabled) setValue(select, "");
+      select.dispatchEvent(new CustomEvent("essential:spell-options-updated"));
+    });
+  }
+
+  function initializeSpellPicker(picker) {
+    const select = picker.querySelector("select");
+    const search = picker.querySelector("[data-essential-spell-search]");
+    const optionsContainer = picker.querySelector("[data-essential-spell-options]");
+
+    function renderOptions() {
+      const query = search.value.trim().toLocaleLowerCase();
+      const options = Array.from(select.options)
+        .filter((option) => option.value && !option.disabled)
+        .filter((option) => !query || option.text.toLocaleLowerCase().includes(query))
+        .slice(0, 8);
+      optionsContainer.replaceChildren();
+      optionsContainer.hidden = options.length === 0;
+      options.forEach((option) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "list-group-item list-group-item-action";
+        button.textContent = option.text;
+        button.addEventListener("click", () => {
+          setValue(select, option.value);
+          search.value = option.text;
+          optionsContainer.hidden = true;
+        });
+        optionsContainer.append(button);
+      });
+    }
+
+    function syncSearch() {
+      search.value = select.value ? select.selectedOptions[0]?.text || "" : "";
+      optionsContainer.hidden = true;
+    }
+
+    search.addEventListener("input", renderOptions);
+    search.addEventListener("focus", renderOptions);
+    search.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        syncSearch();
+        search.blur();
+      }
+    });
+    select.addEventListener("change", syncSearch);
+    select.addEventListener("essential:spell-options-updated", () => {
+      if (document.activeElement === search) renderOptions();
+    });
+    document.addEventListener("click", (event) => {
+      if (!picker.contains(event.target)) optionsContainer.hidden = true;
+    });
+    syncSearch();
   }
 
   const randomizers = {
@@ -170,12 +339,12 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   wizard.addEventListener("htmx:beforeRequest", (event) => {
-    if (!event.target.matches(".essential-wizard-fields-marks select, .essential-wizard-fields-equipment select")) return;
+    if (!event.target.matches(".essential-wizard-fields-marks select, .essential-wizard-fields-equipment select, .essential-wizard-fields-supernatural select")) return;
     document.querySelector(event.target.getAttribute("hx-target"))?.classList.add("is-loading");
   });
 
   wizard.addEventListener("htmx:afterRequest", (event) => {
-    if (!event.target.matches(".essential-wizard-fields-marks select, .essential-wizard-fields-equipment select")) return;
+    if (!event.target.matches(".essential-wizard-fields-marks select, .essential-wizard-fields-equipment select, .essential-wizard-fields-supernatural select")) return;
     const summary = document.querySelector(event.target.getAttribute("hx-target"));
     summary?.classList.remove("is-loading");
     if (summary && !event.detail.successful) {
@@ -190,6 +359,102 @@ document.addEventListener("DOMContentLoaded", () => {
 
   wizard.addEventListener("change", (event) => {
     if (event.target.matches("input.essential-rank-input")) renderCircles();
+    if (event.target.matches('[name*="-magic_aspect_"]')) updateSpellOptions();
+    if (event.target.matches('[name*="-spell_"]')) updateSpellOptions();
   });
+
+  document.addEventListener("submit", async (event) => {
+    const form = event.target.closest("[data-essential-custom-mark-form]");
+    if (!form) return;
+    event.preventDefault();
+    const submit = form.querySelector('[type="submit"]');
+    const spinner = form.querySelector(".form-submit-spinner");
+    submit?.setAttribute("disabled", "");
+    spinner?.classList.remove("d-none");
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "X-CSRFToken": document.body.dataset.csrfToken },
+      });
+      const contentType = response.headers.get("content-type") || "";
+      if (!response.ok || !contentType.includes("application/json")) {
+        document.getElementById("modal_body").innerHTML = await response.text();
+        htmx.process(document.getElementById("modal_body"));
+        return;
+      }
+      const mark = await response.json();
+      const select = field(mark.mark_type);
+      const option = new Option(mark.label, mark.id, true, true);
+      select.add(option);
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      document.dispatchEvent(new Event("modal-hide"));
+    } finally {
+      submit?.removeAttribute("disabled");
+      spinner?.classList.add("d-none");
+    }
+  });
+
+  document.addEventListener("submit", async (event) => {
+    const form = event.target.closest("[data-essential-add-skill-form]");
+    if (!form) return;
+    event.preventDefault();
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { "X-CSRFToken": document.body.dataset.csrfToken },
+    });
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok || !contentType.includes("application/json")) {
+      document.getElementById("modal_body").innerHTML = await response.text();
+      htmx.process(document.getElementById("modal_body"));
+      return;
+    }
+    const skill = await response.json();
+    const emptyName = Array.from(wizard.querySelectorAll('[name*="-skill_"][name$="_name"]'))
+      .find((input) => !input.value.trim());
+    if (!emptyName) {
+      const trigger = wizard.querySelector("[data-no-empty-skill-message]");
+      window.alert(trigger?.dataset.noEmptySkillMessage || "All skill rows are filled.");
+      return;
+    }
+    const index = emptyName.name.match(/skill_(\d+)_name$/)?.[1];
+    setValue(emptyName, skill.name);
+    const rank = wizard.querySelector(`[name$="-skill_${index}_rank"][value="${skill.rank}"]`);
+    if (rank) {
+      rank.checked = true;
+      renderCircles();
+    }
+    document.dispatchEvent(new Event("modal-hide"));
+    emptyName.focus();
+  });
+
+  document.addEventListener("submit", async (event) => {
+    const form = event.target.closest("[data-essential-custom-equipment-form]");
+    if (!form) return;
+    event.preventDefault();
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { "X-CSRFToken": document.body.dataset.csrfToken },
+    });
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok || !contentType.includes("application/json")) {
+      document.getElementById("modal_body").innerHTML = await response.text();
+      htmx.process(document.getElementById("modal_body"));
+      return;
+    }
+    const equipment = await response.json();
+    const select = field(equipment.target);
+    const option = new Option(equipment.label, equipment.id, true, true);
+    select.add(option);
+    if (equipment.target === "items") option.selected = true;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+    document.dispatchEvent(new Event("modal-hide"));
+  });
+
+  wizard.querySelectorAll("[data-essential-item-picker]").forEach(initializeItemPicker);
+  wizard.querySelectorAll("[data-essential-spell-picker]").forEach(initializeSpellPicker);
+  updateSpellOptions();
   renderCircles();
 });

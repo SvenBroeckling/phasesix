@@ -23,7 +23,10 @@ directory; collected static files and uploads are stored in `static_files/` and
 - `uv run manage.py test`: run the complete Django test suite.
 - `uv run manage.py makemigrations --check --dry-run`: verify model changes have
   matching migrations.
-- `uv run black .`: format Python code.
+- `git diff --relative --name-only --diff-filter=ACMR -- '*.py' | xargs -r -n1 env UV_CACHE_DIR=/tmp/uv-cache uv run --no-sync black --fast --target-version py313`:
+  format changed Python files. Keep `xargs -n1`; passing multiple files to Black
+  can hang after formatting when its process pool shuts down in restricted
+  automation environments. Ruff is not installed in this project.
 
 ## Coding Style & Naming Conventions
 

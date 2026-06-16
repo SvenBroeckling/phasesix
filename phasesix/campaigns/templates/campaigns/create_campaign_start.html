@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n thumbnail %}
+{% load i18n portal_extras thumbnail %}
 
 {% block title %}{% trans "Create Campaign" %} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{% trans "Choose a plot" %}{% endblock %}
@@ -28,8 +28,9 @@
       <a href="{{ data_url }}?ruleset={{ ruleset }}&plot_pk={{ plot.id }}{% if not plot.world_extension.fixed_extensions.exists %}{% for extension in plot.extensions.all %}&extensions={{ extension.id }}{% endfor %}{% endif %}">
         <div class="plot-card rounded shadow-sm overflow-hidden transition position-relative">
           {% if plot.image %}
-            {% thumbnail plot.image "600x400" crop="center" as im %}
-              <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover">
+            {% focal_crop plot as image_crop %}
+            {% thumbnail plot.image "600x400" crop=image_crop as im %}
+              <img src="{{ im.url }}" alt="{{ plot.name }}" class="w-100 h-100 object-fit-cover" {% focal_image_attrs plot %}>
               <div class="position-absolute bottom-0 start-0 w-100 p-2 bg-dark bg-opacity-50">
                 <h5 class="m-0 text-white text-truncate">{{ plot.name }}</h5>
                 <div class="text-white text-truncate opacity-75 small">{{ plot.world_extension }}</div>

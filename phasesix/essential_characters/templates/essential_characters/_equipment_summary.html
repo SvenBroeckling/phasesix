@@ -1,26 +1,34 @@
-{% load i18n %}
+{% load i18n rules_extras %}
 <div class="card-body">
   {% for resource in resources %}
-    <div{% if not forloop.last %} class="mb-4"{% endif %}>
-      <h3 class="h4 mb-3">{{ resource }}</h3>
+    <article class="essential-equipment-summary{% if not forloop.last %} mb-3{% endif %}">
+      <header>
+        <span>{{ resource.type }}</span>
+        <h3>{{ resource }}</h3>
+      </header>
       {% if resource_type == "weapon" %}
-        <dl class="essential-mark-details mb-0">
-          <div><dt>{% trans "Damage" %}</dt><dd>{{ resource.essential_damage|default:"-" }}</dd></div>
-          <div><dt>{% trans "Range" %}</dt><dd>{{ resource.essential_range|default:"-" }}</dd></div>
-          <div><dt>{% trans "Grip" %}</dt><dd>{{ resource.essential_grip|default:"-" }}</dd></div>
-          <div><dt>{% trans "Properties" %}</dt><dd>{{ resource.essential_properties|default:"-" }}</dd></div>
+        <dl class="essential-equipment-summary-values">
+          <div><dt><i class="fas fa-fist-raised" aria-hidden="true"></i>{% trans "Damage" %}</dt><dd>{{ resource.essential_damage|default:"-" }}</dd></div>
+          <div><dt><i class="fas fa-arrows-alt-h" aria-hidden="true"></i>{% trans "Range" %}</dt><dd>{{ resource.essential_range|default:"-" }}</dd></div>
+          <div><dt><i class="fas fa-hand-rock" aria-hidden="true"></i>{% trans "Grip" %}</dt><dd>{{ resource.essential_grip|default:"-" }}</dd></div>
         </dl>
       {% elif resource_type == "armor" %}
-        <dl class="essential-mark-details mb-0">
-          <div><dt>{% trans "Protection" %}</dt><dd>{{ resource.essential_protection|default:"-" }}</dd></div>
-          <div><dt>{% trans "Load" %}</dt><dd>{{ resource.essential_load|default:"-" }}</dd></div>
-          <div><dt>{% trans "Sealing" %}</dt><dd>{{ resource.essential_sealing|default:"-" }}</dd></div>
-          <div><dt>{% trans "Properties" %}</dt><dd>{{ resource.essential_properties|default:"-" }}</dd></div>
+        <dl class="essential-equipment-summary-values">
+          <div><dt><i class="fas fa-shield-alt" aria-hidden="true"></i>{% trans "Protection" %}</dt><dd>{{ resource.essential_protection|default:"-" }}</dd></div>
+          <div><dt><i class="fas fa-weight-hanging" aria-hidden="true"></i>{% trans "Load" %}</dt><dd>{{ resource.essential_load|default:"-" }}</dd></div>
+          <div><dt><i class="fas fa-lock" aria-hidden="true"></i>{% trans "Sealing" %}</dt><dd>{{ resource.essential_sealing|default:"-" }}</dd></div>
         </dl>
-      {% elif resource.description %}
-        <p class="mb-0">{{ resource.description|linebreaksbr }}</p>
       {% endif %}
-    </div>
+      {% if resource.description %}
+        <div class="essential-equipment-summary-description">{{ resource.description|phasesix_markup }}</div>
+      {% endif %}
+      {% if resource.essential_properties %}
+        <div class="essential-equipment-summary-properties">
+          <strong>{% trans "Properties" %}</strong>
+          <span>{{ resource.essential_properties }}</span>
+        </div>
+      {% endif %}
+    </article>
   {% empty %}
     <p class="text-body-secondary mb-0">{% trans "Choose equipment to see its details." %}</p>
   {% endfor %}

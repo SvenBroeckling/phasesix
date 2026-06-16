@@ -1,4 +1,4 @@
-{% load i18n rules_extras thumbnail %}
+{% load i18n portal_extras rules_extras thumbnail %}
 
 {% if pages %}
   <section class="wiki-page-index mt-5" aria-labelledby="wiki-page-index-title">
@@ -15,8 +15,9 @@
              href="{% url 'world:wiki_page' world_slug=page.world.slug slug=page.slug %}"
              aria-label="{{ page }}">
             {% if page.image %}
-              {% thumbnail page.image "800x450" crop="center" as im %}
-                <img src="{{ im.url }}" alt="{{ page }}">
+              {% focal_crop page as image_crop %}
+              {% thumbnail page.image "800x450" crop=image_crop as im %}
+                <img src="{{ im.url }}" alt="{{ page }}" {% focal_image_attrs page %}>
               {% endthumbnail %}
             {% else %}
               <span class="wiki-page-index-sigil" aria-hidden="true">

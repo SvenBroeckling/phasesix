@@ -89,6 +89,11 @@ a.essential-step-dot.reached,
   flex-direction: column;
 }
 
+.essential-mark-add {
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+}
+
 .essential-preview-card {
   min-height: 24rem;
   border-color: rgba(var(--bs-primary-rgb), .25);
@@ -105,6 +110,56 @@ a.essential-step-dot.reached,
 
 .essential-preview-card h3 {
   color: var(--bs-emphasis-color);
+}
+
+.essential-item-picker {
+  position: relative;
+}
+
+.essential-spell-picker {
+  position: relative;
+}
+
+.form-floating > .essential-spell-picker .form-control {
+  min-height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+  padding-top: 1.625rem;
+  padding-bottom: .625rem;
+}
+
+.form-floating > .essential-spell-picker ~ label {
+  height: auto;
+  padding: .75rem;
+  color: rgba(var(--bs-body-color-rgb), .65);
+  pointer-events: none;
+  transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+  transform-origin: 0 0;
+}
+
+.essential-spell-picker-options,
+.essential-item-picker-options {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  left: 0;
+  max-height: 18rem;
+  overflow-y: auto;
+  box-shadow: 0 .75rem 2rem rgba(var(--bs-black-rgb), .35);
+}
+
+.essential-item-picker-selected {
+  display: grid;
+  gap: .5rem;
+}
+
+.essential-item-picker-selection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .65rem .75rem;
+  border: 1px solid rgba(var(--bs-primary-rgb), .25);
+  border-radius: var(--bs-border-radius);
+  background: var(--bs-tertiary-bg);
 }
 
 .essential-mark-description {
@@ -128,6 +183,124 @@ a.essential-step-dot.reached,
 
 .essential-mark-details dd {
   margin-bottom: 0;
+}
+
+.essential-equipment-summary {
+  padding: .15rem .15rem .25rem;
+}
+
+.essential-equipment-summary header {
+  margin-bottom: .9rem;
+  padding-bottom: .65rem;
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), .2);
+}
+
+.essential-equipment-summary header span {
+  display: block;
+  margin-bottom: .15rem;
+  color: var(--bs-secondary-color);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.essential-equipment-summary h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.essential-equipment-summary-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem 1.35rem;
+  margin: 0;
+  padding-bottom: .85rem;
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), .14);
+}
+
+.essential-equipment-summary-values div {
+  display: flex;
+  align-items: baseline;
+  gap: .4rem;
+}
+
+.essential-equipment-summary-values dt {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  color: var(--bs-primary);
+  font-size: .74rem;
+  font-weight: 700;
+}
+
+.essential-equipment-summary-values dd {
+  margin: 0;
+  color: var(--bs-emphasis-color);
+  font-size: .9rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.essential-equipment-summary-description,
+.essential-equipment-summary-properties {
+  padding-block: .85rem;
+  color: var(--bs-secondary-color);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+
+.essential-equipment-summary-description > :last-child {
+  margin-bottom: 0;
+}
+
+.essential-equipment-summary-properties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem .55rem;
+  padding-bottom: .1rem;
+  border-top: 1px solid rgba(var(--bs-primary-rgb), .13);
+}
+
+.essential-equipment-summary-properties strong {
+  color: var(--bs-primary);
+  font-size: .78rem;
+}
+
+.essential-spell-rules > :last-child {
+  margin-bottom: 0;
+}
+
+.essential-spell-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem .5rem;
+}
+
+.essential-spell-metadata div {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid rgba(var(--bs-primary-rgb), .22);
+  border-radius: var(--bs-border-radius-sm);
+  background: var(--bs-body-bg);
+  font-size: .82rem;
+  line-height: 1.25;
+}
+
+.essential-spell-metadata dt,
+.essential-spell-metadata dd {
+  margin: 0;
+  padding: .3rem .45rem;
+}
+
+.essential-spell-metadata dt {
+  color: var(--bs-secondary-color);
+  background: rgba(var(--bs-primary-rgb), .08);
+  font-weight: 600;
+}
+
+.essential-spell-metadata dd {
+  color: var(--bs-emphasis-color);
 }
 
 .essential-skill-row {

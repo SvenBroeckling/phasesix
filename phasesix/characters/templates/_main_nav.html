@@ -103,10 +103,16 @@
             <ul style="width:300px; max-height:calc(100vh - 120px); overflow-x:hidden; overflow-y:auto;"
                 class="dropdown-menu dropdown-menu-end shadow">
               <li>
-                <a class="dropdown-item d-flex w-100 flex-column gap-2 pb-2"
+                <a class="dropdown-item user-profile-link d-flex align-items-center gap-3"
                    href="{{ user.profile.get_absolute_url }}">
-                  <span
-                    class="d-flex justify-content-center fw-semibold p-1 border rounded-pill">{% trans "Show profile" %}</span>
+                  <span class="user-profile-link-icon d-flex align-items-center justify-content-center">
+                    <i class="fas fa-user-circle" aria-hidden="true"></i>
+                  </span>
+                  <span class="user-profile-link-copy d-flex flex-column flex-grow-1">
+                    <span class="user-profile-link-name">{{ request.user|capfirst }}</span>
+                    <span class="user-profile-link-label">{% trans "Show profile" %}</span>
+                  </span>
+                  <i class="fas fa-chevron-right user-profile-link-arrow" aria-hidden="true"></i>
                 </a>
               </li>
 

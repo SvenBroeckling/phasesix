@@ -1,10 +1,11 @@
 {% load thumbnail %}
 {% load rules_extras %}
-{% load i18n %}
+{% load i18n portal_extras %}
 
 <div class="d-flex align-items-start">
-  {% thumbnail plot.image "800x400" crop="center" as im %}
-    <img src="{{ im.url }}" alt="{{ plot }}" class="flex-shrink-0" style="width: 33.333%; object-fit: cover;">
+  {% focal_crop plot as image_crop %}
+  {% thumbnail plot.image "800x400" crop=image_crop as im %}
+    <img src="{{ im.url }}" alt="{{ plot }}" class="flex-shrink-0" style="width: 33.333%; object-fit: cover;" {% focal_image_attrs plot %}>
   {% endthumbnail %}
   <div class="flex-grow-1 ps-3">
     <div class="text-uppercase text-muted small">{% trans "Player description" %}</div>

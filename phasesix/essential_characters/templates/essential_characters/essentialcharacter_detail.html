@@ -1,19 +1,18 @@
 {% extends "base.html" %}
-{% load i18n static essential_extras portal_extras %}
+{% load i18n static essential_extras portal_extras rules_extras %}
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
+{% block javascript %}<script src="{% static 'essential_characters/essential_detail.js' %}"></script>{% endblock %}
 {% block opengraph %}
   {% image_url object as image %}
   {% include "shared/opengraph.html" with og_title=object og_description=object.concept|default:brand_description|striptags|truncatechars:200 og_image_path=image %}
 {% endblock %}
+
 {% block header %}
-  {% backdrop_image_url object "1900x600" as backdrop_image %}
   {% image_url object "600x600" as character_image %}
-  <header class="in-page-header essential-detail-hero{% if backdrop_image %} has-backdrop{% endif %}">
-    {% if backdrop_image %}
-      <div class="in-page-header-backdrop"
-           style="background-image: url('{{ backdrop_image }}')"
-           aria-hidden="true"></div>
-    {% endif %}
+  <header class="in-page-header essential-detail-hero has-backdrop">
+    <div class="in-page-header-backdrop essential-detail-map"
+         style="background-image: url('{% static "essential_characters/img/tirakan_map.jpg" %}')"
+         aria-hidden="true"></div>
     <div class="in-page-header-shade" aria-hidden="true"></div>
     <div class="container in-page-header-container">
       <div class="in-page-header-content">
@@ -21,40 +20,103 @@
         <div class="in-page-header-subtitle">{{ object.concept }}</div>
       </div>
 
-      {% if character_image %}
-        <a class="in-page-header-image toggle-lightbox"
-           href="{% image_url object "1400" %}"
-           data-caption="{{ object }}"
-           aria-label="{% trans "Open image" %}">
-          <img src="{{ character_image }}" alt="{{ object }}">
-        </a>
-      {% else %}
-        <div class="in-page-header-image essential-detail-silhouette" aria-label="{% trans "No character image" %}">
-          <i class="fas fa-user" aria-hidden="true"></i>
-        </div>
-      {% endif %}
+      <div class="essential-detail-portrait">
+        {% if character_image %}
+          <a class="in-page-header-image toggle-lightbox"
+             href="{% image_url object "1400" %}"
+             data-caption="{{ object }}"
+             aria-label="{% trans "Open image" %}">
+            <img src="{{ character_image }}" alt="{{ object }}">
+          </a>
+        {% else %}
+          <div class="in-page-header-image essential-detail-silhouette" aria-label="{% trans "No character image" %}">
+            <i class="fas fa-user" aria-hidden="true"></i>
+          </div>
+        {% endif %}
+        {% if may_edit and request.user.is_authenticated %}
+          <form class="essential-detail-image-actions"
+                action="{% url 'essential_characters:change_image' slug=object.slug %}"
+                method="post"
+                enctype="multipart/form-data">
+            {% csrf_token %}
+            <button class="essential-detail-image-action"
+                    type="button"
+                    title="{% trans 'Upload image' %}"
+                    aria-label="{% trans 'Upload image' %}"
+                    data-essential-image-picker>
+              <i class="fas fa-camera" aria-hidden="true"></i>
+            </button>
+            <input class="visually-hidden"
+                   id="essential-character-image"
+                   type="file"
+                   name="image"
+                   accept="image/*"
+                   data-essential-image-input>
+            {% if object.image %}
+              <button class="essential-detail-image-action essential-detail-image-remove"
+                      type="submit"
+                      name="remove_image"
+                      value="1"
+                      title="{% trans 'Remove image' %}"
+                      aria-label="{% trans 'Remove image' %}"
+                      data-essential-image-remove
+                      data-confirm-message="{% trans 'Remove image?' %}">
+                <i class="fas fa-times" aria-hidden="true"></i>
+              </button>
+            {% endif %}
+          </form>
+        {% endif %}
+      </div>
     </div>
   </header>
 {% endblock %}
 {% block content %}
   <article class="essential-detail character-sheet-content">
     <section class="card essential-panel essential-identity-panel">
-      <div class="essential-read"><span>{% trans "Birth date" %}</span><strong>{{ object.birth_date|default:"-" }}</strong></div>
-      <div class="essential-read"><span>{% trans "Century" %}</span><strong>{{ object.century }}</strong></div>
-      <div class="essential-read">
-        <span>{% trans "Campaign" %}</span>
-        <strong>
-          {% if object.pc_or_npc_campaign %}
-            <a href="{{ object.pc_or_npc_campaign.get_absolute_url }}">{{ object.pc_or_npc_campaign }}</a>
-          {% elif object.plot %}
-            {{ object.plot }}
-          {% else %}
-            -
-          {% endif %}
-        </strong>
+      {% if may_edit %}
+        <button type="button"
+                class="essential-edit-button essential-identity-edit"
+                data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='identity' %}"
+                data-modal-title="{% trans 'Edit identity' %}"
+                data-modal-refresh-after="true"
+                aria-label="{% trans 'Edit identity' %}">
+          <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+        </button>
+      {% endif %}
+      <div class="essential-identity-fact">
+        <i class="gi gi-delapouite-calendar" aria-hidden="true"></i>
+        <div class="essential-read"><span>{% trans "Birth date" %}</span><strong>{{ object.birth_date|default:"-" }}</strong></div>
       </div>
-      <div class="essential-read"><span>{% trans "Player" %}</span><strong>{{ object.created_by.username }}</strong></div>
-      <div class="essential-read essential-read-wide"><span>{% trans "Oath or debt" %}</span><strong>{{ object.oath_or_debt|default:"-"|linebreaksbr }}</strong></div>
+      <div class="essential-identity-fact">
+        <i class="gi gi-delapouite-ages" aria-hidden="true"></i>
+        <div class="essential-read"><span>{% trans "Century" %}</span><strong>{{ object.century }}</strong></div>
+      </div>
+      <div class="essential-identity-fact">
+        <i class="fas fa-flag" aria-hidden="true"></i>
+        <div class="essential-read">
+          <span>{% trans "Campaign" %}</span>
+          <strong>
+            {% if object.pc_or_npc_campaign %}
+              <a href="{{ object.pc_or_npc_campaign.get_absolute_url }}">{{ object.pc_or_npc_campaign }}</a>
+            {% elif object.plot %}
+              {{ object.plot }}
+            {% else %}
+              -
+            {% endif %}
+          </strong>
+        </div>
+      </div>
+      <div class="essential-identity-fact">
+        <i class="fas fa-user" aria-hidden="true"></i>
+        <div class="essential-read"><span>{% trans "Player" %}</span><strong>{{ object.created_by.username }}</strong></div>
+      </div>
+      <div class="essential-identity-oath">
+        <i class="gi gi-delapouite-contract" aria-hidden="true"></i>
+        <div class="essential-read">
+          <span>{% trans "Oath or debt" %}</span>
+          <strong>{{ object.oath_or_debt|default:"-"|linebreaksbr }}</strong>
+        </div>
+      </div>
     </section>
 
     <div class="essential-summary-grid">
@@ -69,6 +131,16 @@
                   aria-label="{% trans 'About marks' %}">
             <i class="fas fa-info" aria-hidden="true"></i>
           </button>
+          {% if may_edit %}
+            <button type="button"
+                    class="essential-edit-button"
+                    data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='marks' %}"
+                    data-modal-title="{% trans 'Edit marks' %}"
+                    data-modal-refresh-after="true"
+                    aria-label="{% trans 'Edit marks' %}">
+              <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+            </button>
+          {% endif %}
         </div>
         <div class="essential-read-list">
           <div class="essential-read"><span>{% trans "Ancestry" %}</span><strong>{{ object.ancestry|default:"-" }}</strong></div>
@@ -90,10 +162,10 @@
         </div>
         {% essential_condition_rows object as condition_rows %}
         {% for row in condition_rows %}
-          {% include "essential_characters/_readonly_rank_row.html" with label=row.label value=row.value options=row.options %}
+          {% include "essential_characters/_readonly_rank_row.html" with label=row.label value=row.value options=row.options condition_name=row.name may_edit=may_edit object=object %}
         {% endfor %}
       </section>
-      <section class="card essential-panel">
+      <section class="card essential-panel essential-derived-panel">
         <div class="essential-panel-heading">
           <h2>{% trans "Derived values" %}</h2>
           <button type="button"
@@ -106,17 +178,44 @@
           </button>
         </div>
         <div class="essential-derived-grid">
-          <div class="essential-read"><span>{% trans "Initiative" %}</span><strong>{{ object.initiative }}</strong></div>
-          <div class="essential-read"><span>{% trans "Faith" %}</span><strong>{{ object.faith_level }}</strong></div>
-          <div class="essential-read"><span>{% trans "Magic" %}</span><strong>{{ object.magic_level }}</strong></div>
-          <div class="essential-read"><span>{% trans "Invocation" %}</span><strong>{{ object.invocation_value }}</strong></div>
-          <div class="essential-read"><span>{% trans "Favor limit" %}</span><strong>{{ object.favor_limit }}</strong></div>
+          <div class="essential-derived-value essential-derived-primary">
+            <i class="gi gi-delapouite-dice-target" aria-hidden="true"></i>
+            <div><span>{% trans "Initiative" %}</span><strong>{{ object.initiative }}</strong></div>
+          </div>
+          <div class="essential-derived-value">
+            <i class="gi gi-delapouite-prayer-beads" aria-hidden="true"></i>
+            <div><span>{% trans "Faith level" %}</span><strong>{{ object.faith_level }}</strong></div>
+          </div>
+          <div class="essential-derived-value">
+            <i class="gi gi-lorc-magic-swirl" aria-hidden="true"></i>
+            <div><span>{% trans "Magic level" %}</span><strong>{{ object.magic_level }}</strong></div>
+          </div>
+          <div class="essential-derived-value">
+            <i class="gi gi-delapouite-star-altar" aria-hidden="true"></i>
+            <div><span>{% trans "Invocation" %}</span><strong>{{ object.invocation_value }}</strong></div>
+          </div>
+          <div class="essential-derived-value">
+            <i class="gi gi-lorc-holy-grail" aria-hidden="true"></i>
+            <div><span>{% trans "Favor limit" %}</span><strong>{{ object.favor_limit }}</strong></div>
+          </div>
         </div>
       </section>
     </div>
 
     <section class="card essential-panel">
-      <h2>{% trans "Attributes" %}</h2>
+      <div class="essential-panel-heading">
+        <h2>{% trans "Attributes" %}</h2>
+        {% if may_edit %}
+          <button type="button"
+                  class="essential-edit-button"
+                  data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='attributes' %}"
+                  data-modal-title="{% trans 'Edit attributes' %}"
+                  data-modal-refresh-after="true"
+                  aria-label="{% trans 'Edit attributes' %}">
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+      </div>
       <div class="essential-attribute-grid">
         {% essential_attribute_rows object as attribute_rows %}
         {% essential_rank_options as attribute_options %}
@@ -128,7 +227,20 @@
 
     <div class="essential-detail-two-column">
       <section class="card essential-panel">
-        <h2>{% trans "Skills" %}</h2>
+        <div class="essential-panel-heading">
+          <h2>{% trans "Skills" %}</h2>
+          {% if may_edit %}
+            <button type="button"
+                    class="essential-edit-button"
+                    data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='skills' %}"
+                    data-modal-title="{% trans 'Edit skills' %}"
+                    data-modal-size-class="modal-lg"
+                    data-modal-refresh-after="true"
+                    aria-label="{% trans 'Edit skills' %}">
+              <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+            </button>
+          {% endif %}
+        </div>
         {% essential_rank_options as skill_options %}
         {% for assignment in object.essentialcharacterskill_set.all %}
           {% include "essential_characters/_readonly_rank_row.html" with label=assignment.name value=assignment.rank options=skill_options %}
@@ -136,51 +248,163 @@
           <p class="text-secondary mb-0">-</p>
         {% endfor %}
       </section>
-      <section class="card essential-panel">
-        <h2>{% trans "Equipment" %}</h2>
-        <div class="essential-resource-group">
-          <h3>{% trans "Weapons" %}</h3>
+      <section class="card essential-panel essential-equipment-panel">
+        <div class="essential-panel-heading">
+          <h2>{% trans "Equipment" %}</h2>
+          {% if may_edit %}
+            <button type="button"
+                    class="essential-edit-button"
+                    data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='equipment' %}"
+                    data-modal-title="{% trans 'Edit equipment' %}"
+                    data-modal-size-class="modal-lg"
+                    data-modal-refresh-after="true"
+                    aria-label="{% trans 'Edit equipment' %}">
+              <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+            </button>
+          {% endif %}
+        </div>
+        <div class="essential-equipment-section">
+          <h3><i class="gi gi-delapouite-axe-sword" aria-hidden="true"></i>{% trans "Weapons" %}</h3>
           {% for weapon in object.weapons.all %}
-            <div class="essential-resource"><strong>{{ weapon }}</strong><span>{{ weapon.essential_damage|default:"-" }} · {{ weapon.essential_range|default:"-" }} · {{ weapon.essential_grip|default:"-" }}</span>{% if weapon.essential_properties %}<small>{{ weapon.essential_properties }}</small>{% endif %}</div>
+            <article class="essential-equipment-card">
+              <header>
+                <div>
+                  <span>{{ weapon.type }}</span>
+                  <h4>{{ weapon }}</h4>
+                </div>
+              </header>
+              <dl class="essential-equipment-values">
+                <div><dt>{% trans "Damage" %}</dt><dd>{{ weapon.essential_damage|default:"-" }}</dd></div>
+                <div><dt>{% trans "Range" %}</dt><dd>{{ weapon.essential_range|default:"-" }}</dd></div>
+                <div><dt>{% trans "Grip" %}</dt><dd>{{ weapon.essential_grip|default:"-" }}</dd></div>
+              </dl>
+              {% if weapon.description %}<div class="essential-markup essential-equipment-description">{{ weapon.description|phasesix_markup }}</div>{% endif %}
+              {% if weapon.essential_properties %}
+                <div class="essential-equipment-properties"><strong>{% trans "Properties" %}</strong><span>{{ weapon.essential_properties }}</span></div>
+              {% endif %}
+            </article>
           {% empty %}<p class="text-secondary">-</p>{% endfor %}
         </div>
-        <div class="essential-resource-group">
-          <h3>{% trans "Armor" %}</h3>
+        <div class="essential-equipment-section">
+          <h3><i class="gi gi-delapouite-viking-helmet" aria-hidden="true"></i>{% trans "Armor" %}</h3>
           {% for armor in object.armor.all %}
-            <div class="essential-resource"><strong>{{ armor }}</strong><span>{{ armor.essential_protection|default:"-" }} · {{ armor.essential_load|default:"-" }} · {{ armor.essential_sealing|default:"-" }}</span>{% if armor.essential_properties %}<small>{{ armor.essential_properties }}</small>{% endif %}</div>
+            <article class="essential-equipment-card">
+              <header>
+                <div>
+                  <span>{{ armor.type }}</span>
+                  <h4>{{ armor }}</h4>
+                </div>
+              </header>
+              <dl class="essential-equipment-values">
+                <div><dt>{% trans "Protection" %}</dt><dd>{{ armor.essential_protection|default:"-" }}</dd></div>
+                <div><dt>{% trans "Load" %}</dt><dd>{{ armor.essential_load|default:"-" }}</dd></div>
+                <div><dt>{% trans "Sealing" %}</dt><dd>{{ armor.essential_sealing|default:"-" }}</dd></div>
+              </dl>
+              {% if armor.description %}<div class="essential-markup essential-equipment-description">{{ armor.description|phasesix_markup }}</div>{% endif %}
+              {% if armor.essential_properties %}
+                <div class="essential-equipment-properties"><strong>{% trans "Properties" %}</strong><span>{{ armor.essential_properties }}</span></div>
+              {% endif %}
+            </article>
           {% empty %}<p class="text-secondary">-</p>{% endfor %}
         </div>
-        <div class="essential-resource-group">
-          <h3>{% trans "Items" %}</h3>
-          <p class="mb-0">{% for item in object.items.all %}{{ item }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</p>
+        <div class="essential-equipment-section">
+          <h3><i class="fas fa-toolbox" aria-hidden="true"></i>{% trans "Items" %}</h3>
+          <div class="essential-equipment-items">
+            {% for item in object.items.all %}<span>{{ item }}</span>{% empty %}<p class="text-secondary mb-0">-</p>{% endfor %}
+          </div>
         </div>
       </section>
     </div>
 
-    <section class="card essential-panel">
-      <h2>{% trans "Magic and belief" %}</h2>
-      <div class="essential-detail-two-column">
-        <div>
-          <div class="essential-read mb-3"><span>{% trans "Focus" %}</span><strong>{{ object.focus|default:"-" }}</strong></div>
-          <div class="essential-read"><span>{% trans "Regeneration ritual" %}</span><strong>{{ object.regeneration_ritual|default:"-"|linebreaksbr }}</strong></div>
-        </div>
-        <div>
-          <div class="essential-resource-group">
-            <h3>{% trans "Magic aspects" %}</h3>
-            {% for aspect in object.magic_aspects.all %}
-              <div class="essential-resource"><strong>{{ aspect }}</strong>{% if aspect.essential_description %}<small>{{ aspect.essential_description }}</small>{% endif %}</div>
-            {% empty %}<p class="text-secondary">-</p>{% endfor %}
+    <section class="card essential-panel essential-magic-panel">
+      <div class="essential-panel-heading">
+        <h2>{% trans "Magic and belief" %}</h2>
+        {% if may_edit %}
+          <button type="button"
+                  class="essential-edit-button"
+                  data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='supernatural' %}"
+                  data-modal-title="{% trans 'Edit magic and belief' %}"
+                  data-modal-size-class="modal-lg"
+                  data-modal-refresh-after="true"
+                  aria-label="{% trans 'Edit magic and belief' %}">
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+      </div>
+      <div class="essential-magic-practices">
+        <div class="essential-magic-practice">
+          <i class="fas fa-bullseye" aria-hidden="true"></i>
+          <div>
+            <span>{% trans "Focus" %}</span>
+            <strong>{{ object.focus|default:"-" }}</strong>
           </div>
-          <div class="essential-resource-group">
-            <h3>{% trans "Spells" %}</h3>
-            {% for spell in object.spells.all %}
-              <div class="essential-resource"><strong>{{ spell }}</strong>{% if spell.rules %}<small>{{ spell.rules|linebreaksbr }}</small>{% endif %}</div>
-            {% empty %}<p class="text-secondary">-</p>{% endfor %}
+        </div>
+        <div class="essential-magic-practice">
+          <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          <div>
+            <span>{% trans "Regeneration ritual" %}</span>
+            <div class="essential-markup">{{ object.regeneration_ritual|default:"-"|phasesix_markup }}</div>
           </div>
         </div>
       </div>
-      {% if object.notes %}
-        <div class="essential-notes"><h3>{% trans "Notes" %}</h3>{{ object.notes|linebreaks }}</div>
+
+      <div class="essential-magic-section">
+        <h3><i class="fas fa-compass" aria-hidden="true"></i>{% trans "Magic aspects" %}</h3>
+        <div class="essential-aspect-grid">
+          {% for aspect in object.magic_aspects.all %}
+            <article class="essential-aspect-card">
+              <div class="essential-magic-sigil"><i class="{{ aspect.fa_icon_class|default:'fas fa-book' }}" aria-hidden="true"></i></div>
+              <div>
+                <h4>{{ aspect }}</h4>
+                {% if aspect.essential_description %}<div class="essential-markup">{{ aspect.essential_description|phasesix_markup }}</div>{% endif %}
+              </div>
+            </article>
+          {% empty %}<p class="text-secondary mb-0">-</p>{% endfor %}
+        </div>
+      </div>
+
+      <div class="essential-magic-section">
+        <h3><i class="fas fa-book-open" aria-hidden="true"></i>{% trans "Spells" %}</h3>
+        <div class="essential-spell-list">
+          {% for spell in object.spells.all %}
+            {% trans "Instant" as instant %}
+            <article class="essential-detail-spell">
+              <header>
+                <div><h4>{{ spell }}</h4><span>{{ spell.origin|default:"-" }}</span></div>
+                <div class="essential-detail-spell-stats">
+                  <span title="{% trans 'Spell point cost' %}"><i class="fas fa-star" aria-hidden="true"></i>{{ spell.spell_point_cost }}</span>
+                  <span title="{% trans 'Arcana cost' %}"><i class="fas fa-magic" aria-hidden="true"></i>{{ spell.arcana_cost }}</span>
+                  <span title="{% trans 'Range' %}"><i class="fas fa-arrows-alt-h" aria-hidden="true"></i>{{ spell.range }}</span>
+                  <span title="{% trans 'Actions' %}"><i class="fas fa-hourglass-half" aria-hidden="true"></i>{{ spell.actions }}</span>
+                </div>
+              </header>
+              {% if spell.rules %}<div class="essential-markup essential-detail-spell-rules">{{ spell.rules|phasesix_markup }}</div>{% endif %}
+              <footer>
+                <span><i class="far fa-clock" aria-hidden="true"></i>{{ spell.duration|default:instant }}{% if spell.duration %} {{ spell.get_duration_unit_display }}{% endif %}</span>
+                {% if spell.needs_concentration %}<span><i class="fas fa-eye" aria-hidden="true"></i>{% trans "Needs concentration" %}</span>{% endif %}
+                {% if spell.is_ritual %}<span><i class="fas fa-book" aria-hidden="true"></i>{% trans "Ritual" %}</span>{% endif %}
+              </footer>
+            </article>
+          {% empty %}<p class="text-secondary mb-0">-</p>{% endfor %}
+        </div>
+      </div>
+      {% if object.notes or may_edit %}
+        <div class="essential-notes">
+          <div class="essential-section-heading">
+            <h3>{% trans "Notes" %}</h3>
+            {% if may_edit %}
+              <button type="button"
+                      class="essential-edit-button"
+                      data-modal-url="{% url 'essential_characters:edit_section' slug=object.slug section='notes' %}"
+                      data-modal-title="{% trans 'Edit notes' %}"
+                      data-modal-refresh-after="true"
+                      aria-label="{% trans 'Edit notes' %}">
+                <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+              </button>
+            {% endif %}
+          </div>
+          <div class="essential-markup">{{ object.notes|default:"-"|phasesix_markup }}</div>
+        </div>
       {% endif %}
     </section>
   </article>

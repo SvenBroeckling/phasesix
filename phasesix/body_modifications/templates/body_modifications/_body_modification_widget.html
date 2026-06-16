@@ -1,12 +1,13 @@
 {% load rules_extras %}
 {% load characters_extras %}
-{% load i18n armory_extras body_modification_extras thumbnail %}
+{% load i18n armory_extras body_modification_extras portal_extras thumbnail %}
 
 <article class="body-modification-card mb-3">
   <div class="body-modification-card-visual">
     {% if body_modification.image %}
-      {% thumbnail body_modification.image "800x450" crop="center" as thumb %}
-        <img src="{{ thumb.url }}" alt="{{ body_modification }}">
+      {% focal_crop body_modification as image_crop %}
+      {% thumbnail body_modification.image "800x450" crop=image_crop as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ body_modification }}" {% focal_image_attrs body_modification %}>
       {% endthumbnail %}
     {% else %}
       <span class="body-modification-card-sigil" aria-hidden="true">

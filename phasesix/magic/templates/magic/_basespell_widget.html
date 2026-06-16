@@ -1,4 +1,4 @@
-{% load i18n characters_extras rules_extras thumbnail %}
+{% load i18n characters_extras portal_extras rules_extras thumbnail %}
 <article class="catalog-card spell-selection-card mb-3">
 
   {% if not character %}
@@ -7,8 +7,9 @@
 
   <div class="catalog-card-visual">
     {% if basespell.origin.image %}
-      {% thumbnail basespell.origin.image "800x450" crop="center" as thumb %}
-        <img src="{{ thumb.url }}" alt="{{ basespell.origin }}">
+      {% focal_crop basespell.origin as image_crop %}
+      {% thumbnail basespell.origin.image "800x450" crop=image_crop as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ basespell.origin }}" {% focal_image_attrs basespell.origin %}>
       {% endthumbnail %}
     {% else %}
       <span class="catalog-card-sigil" aria-hidden="true"><i class="gi gi-lorc-magic-swirl"></i></span>

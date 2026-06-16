@@ -1,0 +1,19 @@
+{% load i18n %}
+<div class="essential-spell-picker" data-essential-spell-picker>
+  <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+    {% for group_name, group_choices, group_index in widget.optgroups %}
+      {% if group_name %}<optgroup label="{{ group_name }}">{% endif %}
+      {% for option in group_choices %}
+        {% include option.template_name with widget=option %}
+      {% endfor %}
+      {% if group_name %}</optgroup>{% endif %}
+    {% endfor %}
+  </select>
+  <input type="search"
+         class="form-control"
+         autocomplete="off"
+         placeholder="{% trans 'Search spells' %}"
+         aria-label="{% trans 'Search spells' %}"
+         data-essential-spell-search>
+  <div class="essential-spell-picker-options list-group" data-essential-spell-options hidden></div>
+</div>

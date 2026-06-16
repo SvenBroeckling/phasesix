@@ -9,7 +9,7 @@ import os
 import uuid
 
 from homebrew.models import HomebrewModel
-from phasesix.models import ModelWithImage, PhaseSixModel
+from phasesix.models import ImageFocalPointMixin, ModelWithImage, PhaseSixModel
 
 
 def _copy_field_file(field_file):
@@ -134,6 +134,8 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                 player_abstract=self.player_abstract,
                 gm_description=self.gm_description,
                 image=_copy_field_file(self.image),
+                image_focal_x=self.image_focal_x,
+                image_focal_y=self.image_focal_y,
                 epoch_extension=self.epoch_extension,
                 world_extension=self.world_extension,
                 cloned_from=self,
@@ -177,6 +179,8 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                             name=handout.name,
                             description=handout.description,
                             image=_copy_field_file(handout.image),
+                            image_focal_x=handout.image_focal_x,
+                            image_focal_y=handout.image_focal_y,
                         )
                     new_handouts.append(handout_map[handout.id])
                 if new_handouts:
@@ -189,6 +193,8 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                             name=location.name,
                             description=location.description,
                             image=_copy_field_file(location.image),
+                            image_focal_x=location.image_focal_x,
+                            image_focal_y=location.image_focal_y,
                         )
                     new_locations.append(location_map[location.id])
                 if new_locations:
@@ -220,7 +226,7 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
             return clone
 
 
-class Location(models.Model, metaclass=TransMeta):
+class Location(ImageFocalPointMixin, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=128)
     description = models.TextField(_("description"))
     image = models.ImageField(
@@ -235,7 +241,7 @@ class Location(models.Model, metaclass=TransMeta):
         return self.name
 
 
-class Handout(models.Model, metaclass=TransMeta):
+class Handout(ImageFocalPointMixin, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=128)
     description = models.TextField(_("description"))
     image = models.ImageField(

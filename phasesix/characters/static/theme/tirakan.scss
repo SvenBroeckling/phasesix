@@ -120,6 +120,8 @@ $tirakan-ornament-cards:
     &::before,
     &::after {
         content: "";
+        position: absolute;
+        z-index: 2;
         display: block;
         width: 2.8rem;
         height: 1.4rem;
@@ -130,6 +132,7 @@ $tirakan-ornament-cards:
         background: transparent;
         box-shadow: -0.35rem -0.2rem 0 -0.3rem rgba(var(--bs-primary-rgb), 0.38);
         opacity: 0.78;
+        pointer-events: none;
     }
 
     &::before {

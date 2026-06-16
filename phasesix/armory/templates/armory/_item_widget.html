@@ -1,11 +1,12 @@
 {% load armory_extras %}
-{% load i18n characters_extras rules_extras thumbnail %}
+{% load i18n characters_extras portal_extras rules_extras thumbnail %}
 
 <article class="item-card mb-3">
   <div class="item-card-visual">
     {% if item.image %}
-      {% thumbnail item.image "800x450" crop="center" as thumb %}
-        <img src="{{ thumb.url }}" alt="{{ item }}">
+      {% focal_crop item as image_crop %}
+      {% thumbnail item.image "800x450" crop=image_crop as thumb %}
+        <img src="{{ thumb.url }}" alt="{{ item }}" {% focal_image_attrs item %}>
       {% endthumbnail %}
     {% else %}
       <span class="item-card-sigil" aria-hidden="true">
