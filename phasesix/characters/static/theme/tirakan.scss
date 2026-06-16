@@ -11,7 +11,7 @@ $font-family-sans-serif:
     sans-serif !default;
 $headings-font-family: "Morris Roman", system-ui;
 
-/* Theme build marker: 2026-06-12 Essential profile ruleset marks - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-16 Material back link styling - update in all theme entrypoints after any SCSS change. */
 
 $primary: #9f784f;
 $secondary: #66615b;
@@ -64,6 +64,14 @@ $link-hover-color-dark: #d6b98f;
         bottom: 0.7rem;
         transform: rotate(177deg);
     }
+}
+
+.material-back-link {
+    border-radius: 1.5rem 0.35rem;
+}
+
+.material-back-link i {
+    border-radius: 1rem 0.25rem;
 }
 
 .in-page-header {

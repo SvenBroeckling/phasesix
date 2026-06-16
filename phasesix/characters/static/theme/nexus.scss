@@ -2,7 +2,7 @@ $font-size-base: 1.05rem;
 $font-family-sans-serif: "Noto Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $headings-font-family: 'Oxanium', system-ui;
 
-/* Theme build marker: 2026-06-12 Essential profile ruleset marks - update in all theme entrypoints after any SCSS change. */
+/* Theme build marker: 2026-06-16 Material back link styling - update in all theme entrypoints after any SCSS change. */
 
 $blue: #267e89;
 $red: #af5fb6;
@@ -30,6 +30,11 @@ $body-tertiary-bg-dark: #0E1113;
       0 0 3.5rem rgba(var(--bs-primary-rgb), 0.18),
       0 1.5rem 5rem rgba(var(--bs-black-rgb), 0.8);
   }
+}
+
+.material-back-link,
+.material-back-link i {
+  clip-path: polygon(0.45rem 0, 100% 0, 100% calc(100% - 0.45rem), calc(100% - 0.45rem) 100%, 0 100%, 0 0.45rem);
 }
 
 .in-page-header {

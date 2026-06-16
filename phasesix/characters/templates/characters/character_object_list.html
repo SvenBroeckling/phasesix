@@ -16,10 +16,11 @@
 {% endblock %}
 
 {% block content %}
-  <div data-app="characters" class="mb-4">
+  <div data-app="characters" class="material-page-actions">
     <a href="{% url "armory:material_overview" %}"
-       class="btn btn-outline-secondary d-none d-md-inline-flex align-items-center">
-      <i class="fas fa-arrow-left me-2"></i>{% trans "Back to the material page" %}
+       class="material-back-link">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      <span>{% trans "Back to the material page" %}</span>
     </a>
   </div>
   {% searchable_object_card_list character_object %}
