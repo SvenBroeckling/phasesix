@@ -66,6 +66,12 @@ class Profile(ModelWithImage):
         default=False,
     )
 
+    settings_show_image_focus_button = models.BooleanField(
+        _("show image focus button"),
+        help_text=_("Show the staff-only button for adjusting image focus points."),
+        default=False,
+    )
+
     settings_language_preference = models.CharField(
         _("language preference"),
         max_length=2,

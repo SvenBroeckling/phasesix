@@ -10,6 +10,7 @@ class ProfileSettingsForm(forms.ModelForm):
         fields = (
             "settings_protection_display",
             "settings_language_preference",
+            "settings_show_image_focus_button",
             "bio",
             "image",
             "backdrop_image",

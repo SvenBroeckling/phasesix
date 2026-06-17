@@ -38,11 +38,11 @@
         <dd>{% blocktrans with dexterity=object.dexterity %}30 + Dexterity × 10. Current Dexterity: {{ dexterity }}.{% endblocktrans %}</dd>
       </div>
       <div>
-        <dt>{% trans "Faith" %} <span>{{ object.faith_level }}</span></dt>
+        <dt>{% trans "Faith level" %} <span>{{ object.faith_level }}</span></dt>
         <dd>{% blocktrans with century=object.century %}Faith level granted by century {{ century }}.{% endblocktrans %}</dd>
       </div>
       <div>
-        <dt>{% trans "Magic" %} <span>{{ object.magic_level }}</span></dt>
+        <dt>{% trans "Magic level" %} <span>{{ object.magic_level }}</span></dt>
         <dd>{% blocktrans with century=object.century %}Magic level granted by century {{ century }}.{% endblocktrans %}</dd>
       </div>
       <div>
