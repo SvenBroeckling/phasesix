@@ -20,6 +20,7 @@ from body_modifications.models import BodyModificationType
 from horror.models import QuirkCategory
 from magic.models import SpellOrigin, SpellTemplateCategory
 from portal.models import Profile
+from potions.models import RecipeCategory
 from rulebook.models import WorldBook, BOOK_VARIANTS
 from rules.models import TemplateCategory, FoeType, Extension
 from worlds.models import World
@@ -50,6 +51,7 @@ class DumpApiView(ApiKeyView):
             "quirks": QuirkCategory,
             "body_modifications": BodyModificationType,
             "foes": FoeType,
+            "recipes": RecipeCategory,
         }
         qs = model_map[kwargs["model"]].objects.all()
 

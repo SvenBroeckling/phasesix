@@ -21,6 +21,11 @@ class RecipeDifficulty(models.Model, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def as_dict(self):
+        return {
+            "name": self.name,
+        }
+
 
 class RecipeQuerySet(ExtensionSelectQuerySet, HomebrewQuerySet):
     pass
@@ -40,8 +45,19 @@ class RecipeCategory(SearchableCardListMixin, PhaseSixModel, metaclass=TransMeta
     def __str__(self):
         return self.name
 
-    def child_item_qs(self):
-        return self.recipe_set.all()
+    def child_item_qs(self, extension_qs=None):
+        if extension_qs is not None:
+            return self.recipe_set.for_extensions(extension_qs).distinct()
+        return self.recipe_set.distinct()
+
+    def as_dict(self, extension_qs=None):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "objects": [
+                obj.as_dict() for obj in self.child_item_qs(extension_qs=extension_qs)
+            ],
+        }
 
 
 class Recipe(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
@@ -76,6 +92,22 @@ class Recipe(HomebrewModel, PhaseSixModel, metaclass=TransMeta):
     def __str__(self):
         return self.name
 
+    def as_dict(self):
+        return {
+            "extensions": [
+                {"name": e.name, "identifier": e.identifier, "icon": e.fa_icon_latex}
+                for e in self.extensions.all()
+            ],
+            "name": self.name,
+            "description": self.description,
+            "category": self.category.name,
+            "difficulty": self.difficulty.name,
+            "expected_amount": self.expected_amount,
+            "ingredients": [
+                ingredient.as_dict() for ingredient in self.recipeingredient_set.all()
+            ],
+        }
+
 
 class RecipeIngredientUnit(models.Model, metaclass=TransMeta):
     name = models.CharField(_("name"), max_length=256)
@@ -87,6 +119,11 @@ class RecipeIngredientUnit(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def as_dict(self):
+        return {
+            "name": self.name,
+        }
 
 
 class RecipeIngredient(models.Model):
@@ -100,3 +137,12 @@ class RecipeIngredient(models.Model):
         blank=True,
         null=True,
     )
+
+    def as_dict(self):
+        return {
+            "ingredient": self.ingredient.name,
+            "ingredient_type": self.ingredient.type.name,
+            "ingredient_description": self.ingredient.description,
+            "quantity": self.quantity,
+            "unit": self.unit.name if self.unit else None,
+        }
