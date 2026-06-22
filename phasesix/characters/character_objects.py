@@ -332,4 +332,4 @@ class RecipeObject(CharacterObject):
 
     def add(self, pk):
         obj = Recipe.objects.get(id=pk)
-        self.character.characterrecipe_set.create(recipe=obj)
+        self.character.characterrecipe_set.get_or_create(recipe=obj)

@@ -1,21 +1,59 @@
 {% load characters_extras %}
 {% load i18n %}
-{% if object.extension_enabled.magic and object.is_magical %}
-  {% if may_edit %}
-    <div class="row">
+
+{% if object.extension_enabled.potions %}
+  {% with character_recipes=object.characterrecipe_set.with_recipe_details %}
+    <div class="row mb-3">
       <div class="col-12">
-        <button class="btn btn-primary float-end mb-2"
-                data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="recipe" %}"
-                data-modal-size-class="modal-xl"
-                data-modal-event-after="refresh-character-recipes"
-                data-modal-title="{% trans 'Learn a recipe' %}">
-          <i class="gi gi-lorc-potion-ball text-warning"></i> {% trans "Learn a recipe" %}
-        </button>
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-start gap-2">
+              <div class="flex-grow-1">
+                <h2 class="h4 mb-1">{% trans "Recipes" %}</h2>
+                <p class="text-muted mb-0">
+                  {% blocktrans %}
+                    Learn recipes, track ingredients in your equipment, brew prepared doses, and spend them during play.
+                  {% endblocktrans %}
+                </p>
+              </div>
+              {% if may_edit %}
+                <button class="btn btn-primary btn-sm flex-shrink-0"
+                        data-modal-url="{% url 'characters:xhr_character_objects' pk=object.id object_type="recipe" %}"
+                        data-modal-size-class="modal-xl"
+                        data-modal-event-after="refresh-character-recipes"
+                        data-modal-title="{% trans 'Learn a recipe' %}">
+                  <i class="gi gi-lorc-potion-ball text-warning"></i> {% trans "Learn" %}
+                </button>
+              {% endif %}
+            </div>
+
+            <div class="row text-center mt-3">
+              <div class="col-4">
+                <div class="h4 mb-0">{{ character_recipes.count }}</div>
+                <small class="text-muted">{% trans "Known" %}</small>
+              </div>
+              <div class="col-4">
+                <div class="h4 mb-0">{{ character_recipes.prepared_recipe_amount }}</div>
+                <small class="text-muted">{% trans "Prepared" %}</small>
+              </div>
+              <div class="col-4">
+                <div class="h4 mb-0">{{ character_recipes.brewable_recipe_count }}</div>
+                <small class="text-muted">{% trans "Brewable" %}</small>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  {% endif %}
 
-  <div class="column-container column-layout-2">
-    {% include 'characters/includes/character_recipe_cards.html' %}
+    <div class="column-container column-layout-2">
+      {% include 'characters/includes/character_recipe_cards.html' %}
+    </div>
+  {% endwith %}
+{% else %}
+  <div class="card">
+    <div class="card-body">
+      {% trans "Recipes are not enabled for this character." %}
+    </div>
   </div>
 {% endif %}

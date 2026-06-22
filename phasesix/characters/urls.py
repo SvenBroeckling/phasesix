@@ -130,6 +130,17 @@ urlpatterns = [
         views.CharacterModifyStressView.as_view(),
         name="modify_stress",
     ),
+    # recipes
+    path(
+        "recipe/<int:pk>/<str:mode>/",
+        views.CharacterRecipeActionView.as_view(),
+        name="recipe_action",
+    ),
+    path(
+        "recipe/<int:pk>/<str:mode>/<int:ingredient_pk>/",
+        views.CharacterRecipeActionView.as_view(),
+        name="recipe_ingredient_action",
+    ),
     # new character
     path(
         "new/ruleset/",

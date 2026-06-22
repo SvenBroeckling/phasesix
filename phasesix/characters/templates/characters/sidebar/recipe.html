@@ -4,7 +4,23 @@
   <div class="row">
     <div class="col-12">
 
-      <div class="btn-group w-100">
+      <div class="btn-group w-100 mb-2">
+        <button
+          data-action-trigger-event-after="refresh-character-recipes,refresh-character-gear,sidebar-right-refresh"
+          data-action-trigger-url="{% url 'characters:recipe_action' pk=object.id mode='brew' %}"
+          class="btn btn-sm btn-primary {% if not object.can_brew %}disabled{% endif %}">
+          <i class="gi gi-lorc-cauldron"></i> {% trans 'Brew' %}
+          {% if object.expected_amount > 1 %}({{ object.expected_amount }}){% endif %}
+        </button>
+        <button
+          data-action-trigger-event-after="refresh-character-recipes,sidebar-right-refresh"
+          data-action-trigger-url="{% url 'characters:recipe_action' pk=object.id mode='use' %}"
+          class="btn btn-sm btn-success {% if object.prepared_amount <= 0 %}disabled{% endif %}">
+          <i class="fas fa-flask fa-fw"></i> {% trans 'Use' %}
+        </button>
+      </div>
+
+      <div class="btn-group w-100 mb-2">
         <button
           data-action-trigger-event-after="refresh-character-recipes,sidebar-right-hide"
           data-action-trigger-url="{% url 'characters:xhr_character_objects' pk=object.character.id object_type="recipe" %}?object_id={{ object.id }}"
@@ -19,20 +35,66 @@
 
 <div class="row">
   <div class="col-12">
+    <div class="h5 mt-2 mb-3">
+      {% trans "Prepared" %}: {{ object.prepared_amount }}
+    </div>
+
+    {% if object.recipe.recipeingredient_set.exists %}
+      <h4>{% trans "Ingredients" %}</h4>
+      <div class="list-group mb-3">
+        {% for row in object.ingredient_status %}
+          <div class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ row.ingredient.ingredient }}</strong><br>
+                <small class="text-muted">
+                  {{ row.ingredient.quantity }} {{ row.ingredient.unit }}
+                </small>
+              </div>
+              <span class="{% if row.missing %}text-warning{% else %}text-success{% endif %}">
+                {{ row.available }}/{{ row.ingredient.quantity }}
+              </span>
+            </div>
+            {% if may_edit %}
+              <div class="btn-group btn-group-sm w-100 mt-2">
+                <button
+                  data-action-trigger-event-after="refresh-character-recipes,refresh-character-gear,sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'characters:recipe_ingredient_action' pk=object.id mode='remove_ingredient' ingredient_pk=row.ingredient.id %}"
+                  class="btn btn-warning {% if row.available <= 0 %}disabled{% endif %}">
+                  <i class="fas fa-minus fa-fw"></i> {% trans "Spend" %}
+                </button>
+                <button
+                  data-action-trigger-event-after="refresh-character-recipes,refresh-character-gear,sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'characters:recipe_ingredient_action' pk=object.id mode='add_ingredient' ingredient_pk=row.ingredient.id %}"
+                  class="btn btn-success">
+                  <i class="fas fa-plus fa-fw"></i> {% trans "Gather" %}
+                </button>
+              </div>
+              <div class="btn-group btn-group-sm w-100 mt-1">
+                <button
+                  data-action-trigger-event-after="refresh-character-recipes,refresh-character-gear,sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'characters:recipe_ingredient_action' pk=object.id mode='empty_ingredient' ingredient_pk=row.ingredient.id %}"
+                  class="btn btn-outline-warning {% if row.available <= 0 %}disabled{% endif %}">
+                  <i class="fas fa-angle-double-down fa-fw"></i> {% trans "To min" %}
+                </button>
+                <button
+                  data-action-trigger-event-after="refresh-character-recipes,refresh-character-gear,sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'characters:recipe_ingredient_action' pk=object.id mode='fill_ingredient' ingredient_pk=row.ingredient.id %}"
+                  class="btn btn-outline-success {% if not row.missing %}disabled{% endif %}">
+                  <i class="fas fa-angle-double-up fa-fw"></i> {% trans "To max" %}
+                </button>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <small class="text-muted">{{ object.recipe.difficulty }}</small>
 
     <p class="mt-2">
       {{ object.recipe.description|phasesix_markup }}
     </p>
-
-    {% if object.recipe.recipeingredient_set.exists %}
-      <h4>{% trans "Ingredients" %}</h4>
-      <ul>
-        {% for ingredient in object.recipe.recipeingredient_set.all %}
-          <li>{{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
   </div>
 </div>
 

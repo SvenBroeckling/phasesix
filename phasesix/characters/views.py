@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.core.mail import mail_admins
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_object_or_404
@@ -69,6 +70,7 @@ from magic.models import (
 )
 from pantheon.models import Entity, PriestAction
 from plots.models import PlotElement
+from potions.models import RecipeIngredient
 from rules.models import (
     Extension,
     Template,
@@ -1342,6 +1344,43 @@ class CharacterModifyAttitudeView(View):
             elif self.kwargs["mode"] == "use":
                 character.attitude -= 5
             character.save()
+        return JsonResponse({"status": "ok"})
+
+
+class CharacterRecipeActionView(View):
+    def post(self, request, *args, **kwargs):
+        character_recipe = get_object_or_404(CharacterRecipe, id=kwargs["pk"])
+        if not character_recipe.may_edit(request.user):
+            raise PermissionDenied()
+
+        mode = kwargs["mode"]
+        if mode == "brew":
+            with transaction.atomic():
+                character_recipe = CharacterRecipe.objects.select_for_update().get(
+                    id=character_recipe.id
+                )
+                if not character_recipe.brew():
+                    return JsonResponse({"status": "not_possible"}, status=400)
+        elif mode == "use":
+            if not character_recipe.use_prepared():
+                return JsonResponse({"status": "not_possible"}, status=400)
+        else:
+            ingredient = get_object_or_404(
+                RecipeIngredient,
+                id=kwargs["ingredient_pk"],
+                recipe=character_recipe.recipe,
+            )
+            if mode == "add_ingredient":
+                character_recipe.add_ingredient(ingredient)
+            elif mode == "remove_ingredient":
+                character_recipe.remove_ingredient(ingredient)
+            elif mode == "fill_ingredient":
+                character_recipe.fill_ingredient(ingredient)
+            elif mode == "empty_ingredient":
+                character_recipe.empty_ingredient(ingredient)
+            else:
+                raise Http404("Invalid recipe action")
+
         return JsonResponse({"status": "ok"})
 
 

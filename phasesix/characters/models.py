@@ -1869,9 +1869,31 @@ class CharacterFoe(ImageFocalPointMixin):
         return self.max_health - self.health
 
 
+class CharacterRecipeQuerySet(models.QuerySet):
+    def with_recipe_details(self):
+        return self.select_related("recipe", "recipe__difficulty").prefetch_related(
+            "recipe__recipeingredient_set",
+            "recipe__recipeingredient_set__ingredient",
+            "recipe__recipeingredient_set__unit",
+        )
+
+    def prepared_recipe_amount(self):
+        return self.aggregate(total=Coalesce(Sum("prepared_amount"), Value(0)))["total"]
+
+    def brewable_recipe_count(self):
+        return sum(
+            1
+            for character_recipe in self.with_recipe_details()
+            if character_recipe.can_brew
+        )
+
+
 class CharacterRecipe(models.Model):
+    objects = CharacterRecipeQuerySet.as_manager()
+
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     recipe = models.ForeignKey("potions.Recipe", on_delete=models.CASCADE)
+    prepared_amount = models.PositiveIntegerField(_("prepared amount"), default=0)
 
     class Meta:
         ordering = ("recipe__name_de",)
@@ -1883,3 +1905,116 @@ class CharacterRecipe(models.Model):
 
     def may_edit(self, user):
         return self.character.may_edit(user)
+
+    @property
+    def expected_amount(self):
+        return self.recipe.expected_amount or 1
+
+    def ingredient_quantity_available(self, ingredient):
+        return (
+            self.character.characteritem_set.filter(
+                item=ingredient.ingredient
+            ).aggregate(total=Coalesce(Sum("quantity"), Value(0)))["total"]
+            or 0
+        )
+
+    @property
+    def ingredient_status(self):
+        return [
+            {
+                "ingredient": ingredient,
+                "available": self.ingredient_quantity_available(ingredient),
+                "missing": max(
+                    ingredient.quantity
+                    - self.ingredient_quantity_available(ingredient),
+                    0,
+                ),
+            }
+            for ingredient in self.recipe.recipeingredient_set.select_related(
+                "ingredient", "unit"
+            )
+        ]
+
+    @property
+    def missing_ingredients(self):
+        return [row for row in self.ingredient_status if row["missing"] > 0]
+
+    @property
+    def can_brew(self):
+        return not self.missing_ingredients
+
+    def add_ingredient(self, ingredient):
+        obj = self.character.characteritem_set.filter(
+            item=ingredient.ingredient,
+            in_container=None,
+        ).last()
+        if obj is None:
+            obj = self.character.characteritem_set.create(
+                item=ingredient.ingredient,
+                in_container=None,
+                quantity=0,
+            )
+        obj.quantity += 1
+        obj.save()
+
+    def remove_ingredient(self, ingredient):
+        return self.remove_ingredient_quantity(ingredient, 1)
+
+    def remove_ingredient_quantity(self, ingredient, quantity):
+        qs = self.character.characteritem_set.filter(item=ingredient.ingredient)
+        remaining = quantity
+        for obj in qs.order_by("-id"):
+            if remaining <= 0:
+                break
+            used = min(obj.quantity, remaining)
+            obj.quantity -= used
+            remaining -= used
+            if obj.quantity <= 0:
+                obj.delete()
+            else:
+                obj.save()
+        return remaining < quantity
+
+    def fill_ingredient(self, ingredient):
+        missing = max(
+            ingredient.quantity - self.ingredient_quantity_available(ingredient), 0
+        )
+        for _ in range(missing):
+            self.add_ingredient(ingredient)
+        return missing
+
+    def empty_ingredient(self, ingredient):
+        available = self.ingredient_quantity_available(ingredient)
+        quantity = min(available, ingredient.quantity)
+        self.remove_ingredient_quantity(ingredient, quantity)
+        return quantity
+
+    def brew(self):
+        if not self.can_brew:
+            return False
+
+        for ingredient in self.recipe.recipeingredient_set.select_related("ingredient"):
+            remaining = ingredient.quantity
+            for obj in self.character.characteritem_set.filter(
+                item=ingredient.ingredient
+            ).order_by("-id"):
+                if remaining <= 0:
+                    break
+                used = min(obj.quantity, remaining)
+                obj.quantity -= used
+                remaining -= used
+                if obj.quantity <= 0:
+                    obj.delete()
+                else:
+                    obj.save()
+
+        self.prepared_amount += self.expected_amount
+        self.save(update_fields=["prepared_amount"])
+        return True
+
+    def use_prepared(self):
+        if self.prepared_amount <= 0:
+            return False
+        self.prepared_amount -= 1
+        self.save(update_fields=["prepared_amount"])
+        return True

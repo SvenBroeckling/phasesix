@@ -3,14 +3,21 @@
 {% load characters_extras %}
 {% load i18n %}
 
-{% for character_recipe in object.characterrecipe_set.all %}
+{% for character_recipe in character_recipes %}
   <div class="card mb-4"
        data-sidebar-right-title="{{ character_recipe.recipe.name }}"
        data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=character_recipe.id sidebar_template="recipe" %}">
 
     <div class="card-body">
-      <h4 class="mb-0">{{ character_recipe.recipe.name }}</h4>
-      <small class="text-muted">{{ character_recipe.recipe.difficulty }}</small>
+      <div class="d-flex align-items-start gap-2">
+        <div class="flex-grow-1">
+          <h4 class="mb-0">{{ character_recipe.recipe.name }}</h4>
+          <small class="text-muted">{{ character_recipe.recipe.difficulty }}</small>
+        </div>
+        <span class="badge text-bg-primary">
+          {{ character_recipe.prepared_amount }} {% trans "prepared" %}
+        </span>
+      </div>
       {% include "homebrew/_made_by_label.html" with creator=character_recipe.recipe.created_by extra_class="mb-2" %}
 
       <p class="mt-2">
@@ -18,12 +25,35 @@
       </p>
 
       {% if character_recipe.recipe.recipeingredient_set.exists %}
-        <h4>{% trans "Ingredients" %}</h4>
-        <ul>
-          {% for ingredient in character_recipe.recipe.recipeingredient_set.all %}
-            <li>{{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient }}</li>
+        <h5>{% trans "Ingredients" %}</h5>
+        <ul class="list-group list-group-flush mb-3">
+          {% for row in character_recipe.ingredient_status %}
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              <span>
+                {{ row.ingredient.quantity }} {{ row.ingredient.unit }} {{ row.ingredient.ingredient }}
+              </span>
+              <span class="{% if row.missing %}text-warning{% else %}text-success{% endif %}">
+                {{ row.available }}/{{ row.ingredient.quantity }}
+              </span>
+            </li>
           {% endfor %}
         </ul>
+      {% endif %}
+
+      {% if may_edit %}
+        <div class="btn-group w-100">
+          <button class="btn btn-sm btn-primary {% if not character_recipe.can_brew %}disabled{% endif %}"
+                  data-action-trigger-event-after="refresh-character-recipes,refresh-character-gear,sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'characters:recipe_action' pk=character_recipe.id mode='brew' %}">
+            <i class="gi gi-lorc-cauldron"></i> {% trans "Brew" %}
+            {% if character_recipe.expected_amount > 1 %}({{ character_recipe.expected_amount }}){% endif %}
+          </button>
+          <button class="btn btn-sm btn-success {% if character_recipe.prepared_amount <= 0 %}disabled{% endif %}"
+                  data-action-trigger-event-after="refresh-character-recipes,sidebar-right-refresh"
+                  data-action-trigger-url="{% url 'characters:recipe_action' pk=character_recipe.id mode='use' %}">
+            <i class="fas fa-flask fa-fw"></i> {% trans "Use" %}
+          </button>
+        </div>
       {% endif %}
     </div>
   </div>
