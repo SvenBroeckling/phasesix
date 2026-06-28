@@ -230,7 +230,7 @@ class ItemAdmin(ModelAdmin):
         "type",
         "extensions",
     )
-    filter_horizontal = ("extensions",)
+    filter_horizontal = ("extensions", "brewing_effects")
     search_fields = ("name_de", "name_en", "description_de", "description_en")
     fieldsets = [
         (
@@ -244,7 +244,7 @@ class ItemAdmin(ModelAdmin):
                     "extensions",
                     ("description_en", "description_de"),
                     ("skill", "attribute", "knowledge"),
-                    "brewing_effect",
+                    "brewing_effects",
                     "dice_roll_string",
                     ("image", "image_copyright", "image_copyright_url"),
                     "essential_enabled",

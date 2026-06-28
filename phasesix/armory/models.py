@@ -110,8 +110,8 @@ class Item(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         on_delete=models.SET_NULL,
     )
 
-    brewing_effect = models.ForeignKey(
-        ItemBrewingEffect, on_delete=models.CASCADE, blank=True, null=True
+    brewing_effects = models.ManyToManyField(
+        ItemBrewingEffect, verbose_name=_("brewing effects"), blank=True
     )
 
     charges = models.IntegerField(_("charges"), null=True, blank=True)
