@@ -30,18 +30,53 @@
 
 .constructed-template {
   cursor: pointer;
+  position: relative;
 }
 
-.constructed-template.disabled div.card {
+.constructed-template.disabled div.card,
+.constructed-template.disabled .catalog-card {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.constructed-template.selected div.card {
-  border: 2px solid $success;
+.constructed-template-selected-indicator {
+  display: none;
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 5;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.65rem;
+  color: $white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(var(--bs-success-rgb), 0.94);
+  border: 1px solid rgba(var(--bs-white-rgb), 0.45);
+  box-shadow: 0 0.45rem 1.25rem rgba(var(--bs-black-rgb), 0.45);
 }
 
-.constructed-template.notenoughpoints div.card {
+.constructed-template.selected .constructed-template-selected-indicator {
+  display: inline-flex;
+}
+
+.constructed-template.selected div.card,
+.constructed-template.selected .catalog-card {
+  border-color: $success;
+  box-shadow:
+    inset 0 0 0 2px rgba(var(--bs-success-rgb), 0.95),
+    0 0 0 1px rgba(var(--bs-success-rgb), 0.45),
+    0 1rem 2.6rem rgba(var(--bs-success-rgb), 0.22);
+}
+
+.constructed-template.selected .catalog-card::before,
+.constructed-template.selected .catalog-card::after {
+  border-color: rgba(var(--bs-success-rgb), 0.95);
+}
+
+.constructed-template.notenoughpoints div.card,
+.constructed-template.notenoughpoints .catalog-card {
   background-color: $danger;
 }
-

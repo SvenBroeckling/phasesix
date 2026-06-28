@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 07:13+0000\n"
-"PO-Revision-Date: 2026-06-17 11:04+0200\n"
+"POT-Creation-Date: 2026-06-28 14:33+0000\n"
+"PO-Revision-Date: 2026-06-28 16:36+0200\n"
 "Last-Translator: Sven <sven@broeckling.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -188,8 +188,8 @@ msgstr "Legendär"
 #: magic/models.py:226 magic/models.py:250 pantheon/models.py:23
 #: pantheon/models.py:56 pantheon/models.py:95 plots/models.py:41
 #: plots/models.py:230 plots/models.py:245 plots/models.py:265
-#: potions/models.py:14 potions/models.py:30 potions/models.py:57
-#: potions/models.py:81 rules/models.py:295 rules/models.py:361
+#: potions/models.py:14 potions/models.py:35 potions/models.py:73
+#: potions/models.py:113 rules/models.py:295 rules/models.py:361
 #: rules/models.py:444 rules/models.py:464 rules/models.py:495
 #: rules/models.py:525 rules/models.py:592 rules/models.py:733
 #: rules/models.py:748 rules/models.py:773 rules/models.py:801
@@ -208,7 +208,7 @@ msgstr "Name"
 #: campaigns/models.py:445 characters/models.py:79 characters/models.py:109
 #: essential_characters/models.py:52 horror/models.py:46 pantheon/models.py:24
 #: pantheon/models.py:64 plots/models.py:231 plots/models.py:246
-#: potions/models.py:31 potions/models.py:58 rules/models.py:297
+#: potions/models.py:36 potions/models.py:74 rules/models.py:297
 #: rules/models.py:369 rules/models.py:446 rules/models.py:465
 #: rules/models.py:497 rules/models.py:540 vehicles/models.py:28
 #: vehicles/models.py:56 vehicles/models.py:116 vehicles/models.py:183
@@ -219,7 +219,7 @@ msgstr "Beschreibung"
 #: armory/models.py:45 armory/models.py:194 armory/models.py:331
 #: armory/models.py:480 armory/models.py:518 armory/models.py:676
 #: characters/models.py:1823 pantheon/models.py:25 pantheon/models.py:66
-#: plots/models.py:280 potions/models.py:32 rules/models.py:311
+#: plots/models.py:280 potions/models.py:37 rules/models.py:311
 #: rules/models.py:735 worlds/models.py:99 worlds/models.py:256
 msgid "ordering"
 msgstr "Sortierung"
@@ -279,11 +279,15 @@ msgstr "Verborgenheit"
 #: body_modifications/models.py:121 campaigns/models.py:104
 #: characters/models.py:158 essential_characters/models.py:47
 #: essential_characters/models.py:101 magic/models.py:124 pantheon/models.py:45
-#: pantheon/models.py:88 plots/models.py:81 potions/models.py:65
+#: pantheon/models.py:88 plots/models.py:81 potions/models.py:81
 #: rules/models.py:365 rules/models.py:613 rules/models.py:796
 #: worlds/models.py:39 worlds/models.py:220 worlds/models.py:355
 msgid "created by"
 msgstr "Erzeugt von"
+
+#: armory/models.py:114
+msgid "brewing effects"
+msgstr "Braueffekte"
 
 #: armory/models.py:117 body_modifications/models.py:79
 #: rulebook/templates/rulebook/pdf/appendix/body_modifications.html:46
@@ -558,7 +562,7 @@ msgstr "Seltenheit"
 #: armory/templates/armory/_riot_gear_widget.html:28 characters/forms.py:99
 #: characters/templates/characters/sidebar/item.html:180
 #: characters/templates/characters/sidebar/riot_gear.html:102
-#: characters/views.py:807
+#: characters/views.py:809
 #: rulebook/templates/rulebook/pdf/appendix/items.html:17
 #: rulebook/templates/rulebook/pdf/appendix/riot_gear.html:17
 msgid "Weight"
@@ -1558,7 +1562,7 @@ msgid "Additional rule sets enabled for this campaign"
 msgstr "Zusätzliche aktivierte Regelerweiterungen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:37
-#: characters/forms.py:75 characters/views.py:859
+#: characters/forms.py:75 characters/views.py:861
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
@@ -1567,7 +1571,7 @@ msgid "Defines the monetary system used"
 msgstr "Definiert das monetäre System, welches benutzt wird"
 
 #: campaigns/templates/campaigns/fragments/settings.html:46
-#: characters/forms.py:78 characters/views.py:830
+#: characters/forms.py:78 characters/views.py:832
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -2115,14 +2119,14 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:64 characters/views.py:791
+#: characters/forms.py:64 characters/views.py:793
 #: essential_characters/forms.py:585 essential_characters/forms.py:687
 #: essential_characters/forms.py:698 forum/forms.py:6
 #: plots/templates/plots/fragments/properties.html:51
 msgid "Name"
 msgstr "Name"
 
-#: characters/forms.py:66 characters/views.py:815
+#: characters/forms.py:66 characters/views.py:817
 msgid "Pronouns"
 msgstr "Pronomen"
 
@@ -2131,11 +2135,11 @@ msgstr "Pronomen"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:98 characters/views.py:798
+#: characters/forms.py:98 characters/views.py:800
 msgid "Size"
 msgstr "Größe"
 
-#: characters/forms.py:100 characters/views.py:824
+#: characters/forms.py:100 characters/views.py:826
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -2151,7 +2155,7 @@ msgstr "Gottheit"
 #: characters/forms.py:107 characters/forms.py:113
 #: characters/templates/characters/fragments/pantheon.html:11
 #: characters/templates/characters/sidebar/grace.html:66
-#: characters/views.py:848
+#: characters/views.py:850
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -2345,7 +2349,7 @@ msgstr "Sortierung"
 msgid "custom name"
 msgstr "Benutzerdefinierter Name"
 
-#: characters/models.py:1812 potions/models.py:95
+#: characters/models.py:1812 potions/models.py:132
 msgid "quantity"
 msgstr "Menge"
 
@@ -2373,12 +2377,17 @@ msgstr "Charakter Gegner"
 msgid "character foes"
 msgstr "Charakter Gegner"
 
-#: characters/models.py:1878
+#: characters/models.py:1896
+msgid "prepared amount"
+msgstr "Vorbereitete Menge"
+
+#: characters/models.py:1900
 msgid "Recipe"
 msgstr "Rezept"
 
-#: characters/models.py:1879
+#: characters/models.py:1901
 #: characters/templates/characters/_navigation.html:82
+#: characters/templates/characters/fragments/recipes.html:12
 msgid "Recipes"
 msgstr "Rezepte"
 
@@ -2538,7 +2547,6 @@ msgstr "Kampf"
 #: characters/templates/characters/_navigation.html:110
 #: characters/templates/characters/fragments/magic.html:8
 #: characters/templates/characters/fragments/magic.html:18
-#: essential_characters/templates/essential_characters/_detail_info.html:45
 #: rules/templates/rules/_template_widget.html:34
 msgid "Magic"
 msgstr "Magie"
@@ -2697,6 +2705,10 @@ msgstr "Charakter fertigstellen"
 #: characters/templates/characters/create_character_constructed.html:39
 msgid "Preview"
 msgstr "Vorschau"
+
+#: characters/templates/characters/create_character_constructed.html:76
+msgid "Selected"
+msgstr "Ausgewählt"
 
 #: characters/templates/characters/create_character_extensions.html:7
 #: characters/templates/characters/create_character_extensions.html:11
@@ -3384,10 +3396,43 @@ msgstr "Deine Gunst ist"
 msgid "Read description"
 msgstr "Beschreibung lesen"
 
-#: characters/templates/characters/fragments/recipes.html:11
-#: characters/templates/characters/fragments/recipes.html:12
+#: characters/templates/characters/fragments/recipes.html:14
+msgid ""
+"\n"
+"                    Learn recipes, track ingredients in your equipment, brew "
+"prepared doses, and spend them during play.\n"
+"                  "
+msgstr ""
+"\n"
+"Lerne Rezepte, verwalte Zutaten in deiner Ausrüstung, braue Tränke und setze "
+"sie im Spiel ein."
+
+#: characters/templates/characters/fragments/recipes.html:24
 msgid "Learn a recipe"
 msgstr "Rezept lernen"
+
+#: characters/templates/characters/fragments/recipes.html:25
+#: magic/templates/magic/_basespell_widget.html:51
+#: potions/templates/potions/_recipe_widget.html:38
+msgid "Learn"
+msgstr "Lernen"
+
+#: characters/templates/characters/fragments/recipes.html:33
+msgid "Known"
+msgstr ""
+
+#: characters/templates/characters/fragments/recipes.html:37
+#: characters/templates/characters/sidebar/recipe.html:39
+msgid "Prepared"
+msgstr ""
+
+#: characters/templates/characters/fragments/recipes.html:41
+msgid "Brewable"
+msgstr "Ist braubar"
+
+#: characters/templates/characters/fragments/recipes.html:56
+msgid "Recipes are not enabled for this character."
+msgstr "Rezepte sind für diesen Charakter nicht aktiviert."
 
 #: characters/templates/characters/fragments/status.html:6
 #: characters/templates/characters/fragments/status.html:9
@@ -3408,21 +3453,35 @@ msgstr "Individueller Wurf"
 msgid "On Body"
 msgstr "Am Körper"
 
-#: characters/templates/characters/includes/character_recipe_cards.html:21
-#: characters/templates/characters/sidebar/recipe.html:29
+#: characters/templates/characters/includes/character_recipe_cards.html:18
+msgid "prepared"
+msgstr ""
+
+#: characters/templates/characters/includes/character_recipe_cards.html:28
+#: characters/templates/characters/sidebar/recipe.html:43
 #: potions/templates/potions/_recipe_widget.html:18
 msgid "Ingredients"
 msgstr "Zutaten"
 
-#: characters/templates/characters/includes/character_recipe_cards.html:35
+#: characters/templates/characters/includes/character_recipe_cards.html:48
+#: characters/templates/characters/sidebar/recipe.html:12
+msgid "Brew"
+msgstr ""
+
+#: characters/templates/characters/includes/character_recipe_cards.html:54
+#: characters/templates/characters/sidebar/recipe.html:19
+msgid "Use"
+msgstr "Benutzen"
+
+#: characters/templates/characters/includes/character_recipe_cards.html:65
 msgid "Learn Recipe"
 msgstr "Rezept lernen"
 
-#: characters/templates/characters/includes/character_recipe_cards.html:41
+#: characters/templates/characters/includes/character_recipe_cards.html:71
 msgid "No brewing recipes."
 msgstr "Keine Braurezepte."
 
-#: characters/templates/characters/includes/character_recipe_cards.html:43
+#: characters/templates/characters/includes/character_recipe_cards.html:73
 msgid "Click to add a recipe"
 msgstr "Klicke, um ein Rezept hinzuzufügen"
 
@@ -4313,11 +4372,27 @@ msgstr ""
 "   "
 
 #: characters/templates/characters/sidebar/quirk.html:13
-#: characters/templates/characters/sidebar/recipe.html:13
+#: characters/templates/characters/sidebar/recipe.html:29
 #: characters/templates/characters/sidebar/spell.html:32
 #: characters/templates/characters/sidebar/template.html:13
 msgid "Forget"
 msgstr "Vergessen"
+
+#: characters/templates/characters/sidebar/recipe.html:64
+msgid "Spend"
+msgstr "Verbrauchen"
+
+#: characters/templates/characters/sidebar/recipe.html:70
+msgid "Gather"
+msgstr ""
+
+#: characters/templates/characters/sidebar/recipe.html:78
+msgid "To min"
+msgstr ""
+
+#: characters/templates/characters/sidebar/recipe.html:84
+msgid "To max"
+msgstr ""
 
 #: characters/templates/characters/sidebar/reputation.html:6
 msgid ""
@@ -4706,57 +4781,57 @@ msgstr ""
 "href=\"%(t_contact_url)s\">Kontaktseite</a>.\n"
 "      "
 
-#: characters/views.py:111
+#: characters/views.py:113
 msgid "Character cloned. You are now viewing the duplicate."
 msgstr "Charakter geklont. Du siehst nun die Kopie."
 
-#: characters/views.py:132
+#: characters/views.py:134
 msgid "Random fill failed. Please try again later."
 msgstr "Zufällige Befüllung fehlgeschlagen. Bitte versuche es später erneut."
 
-#: characters/views.py:139
+#: characters/views.py:141
 #, python-format
 msgid "Random fill complete. Added: %(summary)s"
 msgstr "Zufällige Befüllung abgeschlossen. Hinzugefügt: %(summary)s"
 
-#: characters/views.py:142
+#: characters/views.py:144
 msgid "Random fill complete. No changes were added."
 msgstr ""
 "Zufällige Befüllung abgeschlossen. Es wurden keine Änderungen hinzugefügt."
 
-#: characters/views.py:161
+#: characters/views.py:163
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:284
+#: characters/views.py:286
 msgid "Rest wound roll"
 msgstr "Rastwundenwurf"
 
-#: characters/views.py:285
+#: characters/views.py:287
 msgid "Wound roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:300
+#: characters/views.py:302
 msgid "Rest arcana roll"
 msgstr "Rastarkanawurf"
 
-#: characters/views.py:301
+#: characters/views.py:303
 msgid "Arcana roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:315
+#: characters/views.py:317
 msgid "Rest resolve dread"
 msgstr "Grauen auflösen"
 
-#: characters/views.py:316
+#: characters/views.py:318
 msgid "Resolve dread roll"
 msgstr "Grauen auflösen Wurf"
 
-#: characters/views.py:792
+#: characters/views.py:794
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:817
+#: characters/views.py:819
 msgid ""
 "At several places in the interface, your character will be referred to using "
 "their pronouns. Choose the pronouns that best describe your character."
@@ -4764,11 +4839,11 @@ msgstr ""
 "An verschiedenen Stellen wird dein Charakter mit Pronomen angesprochen. "
 "Wähle die Pronomen, die am besten passen."
 
-#: characters/views.py:825
+#: characters/views.py:827
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:832
+#: characters/views.py:834
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -4781,7 +4856,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:850
+#: characters/views.py:852
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -4798,7 +4873,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:861
+#: characters/views.py:863
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -4808,7 +4883,7 @@ msgstr ""
 "Verfügung stehen. \n"
 "     Sie wird normalerweise von der Kampagne oder der Welt vorgegeben."
 
-#: characters/views.py:1411 characters/views.py:1418
+#: characters/views.py:1450 characters/views.py:1457
 msgid "Not possible."
 msgstr "Nicht möglich."
 
@@ -5409,13 +5484,19 @@ msgstr ""
 "30 + Geschick × 10. Dein aktueller Geschickswert beträgt %(dexterity)s."
 
 #: essential_characters/templates/essential_characters/_detail_info.html:41
-msgid "Faith"
-msgstr "Glaube"
+#: essential_characters/templates/essential_characters/essentialcharacter_detail.html:187
+msgid "Faith level"
+msgstr "Glaubensniveau"
 
 #: essential_characters/templates/essential_characters/_detail_info.html:42
 #, python-format
 msgid "Faith level granted by century %(century)s."
 msgstr "Durch das Jahrhundert %(century)s gewährtes Glaubensniveau."
+
+#: essential_characters/templates/essential_characters/_detail_info.html:45
+#: essential_characters/templates/essential_characters/essentialcharacter_detail.html:191
+msgid "Magic level"
+msgstr "Magieniveau"
 
 #: essential_characters/templates/essential_characters/_detail_info.html:46
 #, python-format
@@ -5554,14 +5635,6 @@ msgstr "Abgeleitete Werte"
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:176
 msgid "About derived values"
 msgstr "Über abgeleitete Werte"
-
-#: essential_characters/templates/essential_characters/essentialcharacter_detail.html:187
-msgid "Faith level"
-msgstr "Glaubensniveau"
-
-#: essential_characters/templates/essential_characters/essentialcharacter_detail.html:191
-msgid "Magic level"
-msgstr "Magieniveau"
 
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:212
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:214
@@ -6114,11 +6187,6 @@ msgstr "Zauberpunkte Kosten"
 #: potions/templates/potions/_recipe_widget.html:37
 msgid "Learned"
 msgstr "Gelernt"
-
-#: magic/templates/magic/_basespell_widget.html:51
-#: potions/templates/potions/_recipe_widget.html:38
-msgid "Learn"
-msgstr "Lernen"
 
 #: magic/views.py:14
 msgid "Spell Origins"
@@ -6784,39 +6852,39 @@ msgstr "Rezeptschwierigkeit"
 msgid "recipe difficulties"
 msgstr "Rezeptschwierigkeiten"
 
-#: potions/models.py:37
+#: potions/models.py:42
 msgid "recipe category"
 msgstr "Rezeptkategorie"
 
-#: potions/models.py:38
+#: potions/models.py:43
 msgid "recipe categories"
 msgstr "Rezeptkategorien"
 
-#: potions/models.py:54
+#: potions/models.py:70
 msgid "difficulty"
 msgstr "Schwierigkeit"
 
-#: potions/models.py:60
+#: potions/models.py:76
 msgid "expected amount"
 msgstr "Erwartete Menge"
 
-#: potions/models.py:73
+#: potions/models.py:89
 msgid "recipe"
 msgstr "Rezept"
 
-#: potions/models.py:74
+#: potions/models.py:90
 msgid "recipes"
 msgstr "Rezepte"
 
-#: potions/models.py:85
+#: potions/models.py:117
 msgid "recipe ingredient unit"
 msgstr "Rezeptzutateneinheit"
 
-#: potions/models.py:86
+#: potions/models.py:118
 msgid "recipe ingredient units"
 msgstr "Rezeptzutateneinheiten"
 
-#: potions/models.py:98
+#: potions/models.py:135
 msgid "unit"
 msgstr "Einheit"
 
@@ -8287,6 +8355,9 @@ msgstr "Keine Welten verfügbar."
 msgid "You do not have permission to edit this world."
 msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
+#~ msgid "Faith"
+#~ msgstr "Glaube"
+
 #~ msgid "Profile image"
 #~ msgstr "Profilbild"
 
@@ -8982,16 +9053,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #~ msgid "Your campaigns"
 #~ msgstr "Deine Kampagnen"
 
-#~ msgid ""
-#~ "\n"
-#~ "                    These are the campaigns you either lead or play in.\n"
-#~ "                "
-#~ msgstr ""
-#~ "\n"
-#~ "                    Dies sind die Kampagnen, die du entweder leitest, "
-#~ "oder in denen du spielst.\n"
-#~ "                "
-
 #, python-format
 #~ msgid ""
 #~ "\n"
@@ -9260,9 +9321,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid "Change Stance"
 #~ msgstr "Stellung ändern"
-
-#~ msgid "Expend"
-#~ msgstr "Verbrauchen"
 
 #~ msgid "dominant attribute"
 #~ msgstr "Dominantes Attribut"
@@ -9619,9 +9677,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid "Mind Skills"
 #~ msgstr "Geistige Fertigkeiten"
-
-#~ msgid "Use"
-#~ msgstr "Benutzen"
 
 #~ msgid "Steal"
 #~ msgstr "Stehlen"
