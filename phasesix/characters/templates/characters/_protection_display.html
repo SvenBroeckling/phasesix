@@ -12,6 +12,9 @@
   {% for i in rgp.available_protection|to_range %}
     {% protection_type_symbol rgp.riot_gear_protection.protection_type size_class="" %}
   {% endfor %}
+  {% for i in rgp.used_protection|to_range %}
+    {% protection_type_symbol rgp.riot_gear_protection.protection_type size_class="" color_class="text-secondary opacity-50" %}
+  {% endfor %}
 {% empty %}
   {% trans "- no available protection -" %}
 {% endfor %}
