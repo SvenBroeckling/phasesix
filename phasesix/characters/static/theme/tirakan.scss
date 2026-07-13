@@ -11,7 +11,7 @@ $font-family-sans-serif:
     sans-serif !default;
 $headings-font-family: "Morris Roman", system-ui;
 
-/* Theme build marker: 2026-07-13 Collectstatic refresh for start-page hero styles. */
+/* Theme build marker: 2026-07-13 Tirakan start-page CTA baseline. */
 
 $primary: #9f784f;
 $secondary: #66615b;
@@ -202,6 +202,12 @@ $tirakan-ornament-cards:
         right: 1rem;
         bottom: 1rem;
         transform: rotate(176deg);
+    }
+}
+
+@media (min-width: 992px) {
+    .atmospheric-index-hero-content {
+        align-self: end;
     }
 }
 
