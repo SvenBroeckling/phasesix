@@ -9,6 +9,7 @@
 .atmospheric-index-hero {
   position: relative;
   overflow: hidden;
+  padding-bottom: 0 !important;
   border-bottom: 1px solid rgba(var(--bs-primary-rgb), 0.38);
   background:
     radial-gradient(circle at 78% 45%, rgba(var(--bs-primary-rgb), 0.18), transparent 38%),
@@ -54,15 +55,16 @@
   .btn {
     border-radius: 0;
   }
+
+  > .container {
+    padding-bottom: 0 !important;
+  }
 }
 
 .atmospheric-index-lead-image {
   max-height: 34rem;
-  border: 1px solid rgba(var(--bs-primary-rgb), 0.42);
-  border-radius: 0 !important;
   object-fit: cover;
   filter: saturate(0.76) contrast(1.1);
-  box-shadow: inset 0 0 0 1px rgba(var(--bs-white-rgb), 0.03), 0 1rem 3rem rgba(var(--bs-black-rgb), 0.45);
 }
 
 .atmospheric-index-section {
