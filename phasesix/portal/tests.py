@@ -10,6 +10,14 @@ from portal.models import Profile
 from portal.views import ProfileView
 
 
+class IndexTitleTests(TestCase):
+    def test_default_domain_index_title_does_not_include_none(self):
+        response = self.client.get(reverse("index"), HTTP_HOST="phasesix.org")
+
+        self.assertContains(response, "<title>Phase Six</title>", html=True)
+        self.assertNotContains(response, " - None")
+
+
 class ProfileEssentialCharacterContextTests(SimpleTestCase):
     def setUp(self):
         self.factory = RequestFactory()

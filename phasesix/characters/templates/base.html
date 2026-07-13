@@ -26,7 +26,7 @@
     {% endif %}
   {% endcompress %}
 
-  <title>{% block title %}{{ brand_name }}{% endblock %} - {{ request.world }}</title>
+  <title>{% block title %}{{ brand_name }}{% endblock %}{% if request.world %} - {{ request.world }}{% endif %}</title>
 
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:site" content="@phasesix_rpg"/>
