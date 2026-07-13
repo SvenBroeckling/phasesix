@@ -33,7 +33,7 @@
 
   <header class="container-fluid hero atmospheric-index-hero py-5">
     <div class="container py-3">
-      <div class="row align-items-center align-items-lg-end">
+      <div class="row align-items-center">
         <div class="col-12 col-lg-6 text-center text-lg-start">
           <img class="display-logo mb-3" src="{{ brand_logo }}" alt="{% trans "Logo" %}">
           <h1 class="display-5 mb-2">{{ brand_name }}</h1>
@@ -49,7 +49,7 @@
           </div>
         </div>
         {% if lead_image %}
-          <div class="col-12 col-lg-6 mt-4 mt-lg-0 d-flex align-items-center justify-content-center">
+          <div class="col-12 col-lg-6 mt-4 mt-lg-0 d-flex align-items-center align-self-lg-end justify-content-center">
             {% if lead_image.character %}
               <a href="{{ lead_image.character.get_absolute_url }}" class="d-inline-block">
             {% endif %}
