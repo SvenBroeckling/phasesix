@@ -121,11 +121,11 @@ brand-specific overrides.
   Use a mostly opaque `--bs-body-bg-rgb` surface, a small amount of restrained
   primary tint, and a light backdrop blur. Keep this treatment Tirakan-only
   unless the other brand explicitly needs it.
-- Each theme entrypoint contains a `Theme build marker` comment. Whenever any
-  imported SCSS partial or theme-specific SCSS changes, update that marker in
-  all three entrypoints. This changes their source timestamps/content so
-  `collectstatic` recompiles every theme instead of serving stale generated
-  CSS.
+- Each theme entrypoint contains a `Theme build marker` comment. For every SCSS
+  change, including imported partials, update that comment in
+  `phasesix.scss`, `nexus.scss`, and `tirakan.scss`. This changes their source
+  timestamps/content so `collectstatic` recompiles every theme instead of
+  serving stale generated CSS.
 
 After UI style changes, compile all three active themes:
 
