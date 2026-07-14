@@ -28,6 +28,7 @@ class WorldAdmin(ModelAdmin):
     list_filter = ("is_active",)
     search_fields = ("name_de", "name_en")
     inlines = [WorldLeadImageInline]
+    list_editable = ("is_active", "ordering")
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), "slug", ("is_active", "is_default", "ordering"), ("extension", "show_in_worlds_overview"))}),
         (_("Brand"), {"fields": (("brand_name_de", "brand_name_en"), ("brand_claim_de", "brand_claim_en"), "brand_logo", "scss_file")}),

@@ -16,6 +16,8 @@ class ChapterAdmin(ModelAdmin):
         "image",
     )
     list_editable = ("number", "identifier")
+    list_filter = ("book", "is_homebrew")
+    search_fields = ("name_de", "name_en", "identifier")
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("book", "number", "identifier"), "fa_icon_class", ("rules_file_de", "rules_file_en"))}),
         (_("Image"), {"fields": ("image", ("image_copyright", "image_copyright_url"), ("image_focal_x", "image_focal_y")), "classes": ("collapse",)}),
@@ -27,6 +29,8 @@ class ChapterAdmin(ModelAdmin):
 class WorldBookAdmin(ModelAdmin):
     list_display = "world", "book", "book_title", "ordering"
     list_editable = ("ordering",)
+    list_filter = ("world", "book")
+    search_fields = ("book_title_de", "book_title_en", "book_claim_de", "book_claim_en", "description_de", "description_en")
     filter_horizontal = ("disabled_chapters",)
     fieldsets = [
         (None, {"fields": (("world", "book", "ordering"), ("book_title_de", "book_title_en"), ("book_claim_de", "book_claim_en"), ("description_de", "description_en"), "disabled_chapters")}),

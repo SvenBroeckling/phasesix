@@ -203,6 +203,7 @@ class ItemTypeAdmin(ModelAdmin):
 
 @admin.register(ItemBrewingEffect)
 class ItemBrewingEffectAdmin(ModelAdmin):
+    list_display = ("name_de", "name_en")
     fieldsets = [(None, {"fields": (("name_de", "name_en"),)})]
 
 
@@ -342,6 +343,8 @@ class CurrencyMapUnitInline(TabularInline):
 @admin.register(CurrencyMap)
 class CurrencyMapAdmin(ModelAdmin):
     inlines = [CurrencyMapUnitInline]
+    list_display = ("name",)
+    search_fields = ("name",)
     fieldsets = [(None, {"fields": ("name",)})]
 
 

@@ -13,11 +13,15 @@ from potions.models import (
 
 @admin.register(RecipeDifficulty)
 class RecipeDifficultyAdmin(ModelAdmin):
+    list_display = ("name_de", "name_en")
+    search_fields = ("name_de", "name_en")
     fieldsets = [(None, {"fields": (("name_de", "name_en"),)})]
 
 
 @admin.register(RecipeIngredientUnit)
 class RecipeIngredientUnitAdmin(ModelAdmin):
+    list_display = ("name_de", "name_en")
+    search_fields = ("name_de", "name_en")
     fieldsets = [(None, {"fields": (("name_de", "name_en"),)})]
 
 
@@ -29,14 +33,19 @@ class RecipeIngredientInline(TabularInline):
 
 @admin.register(RecipeCategory)
 class RecipeCategoryAdmin(ModelAdmin):
+    list_display = ("name_de", "name_en", "ordering")
+    list_editable = ("ordering",)
+    search_fields = ("name_de", "name_en", "description_de", "description_en")
     fieldsets = [(None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), "ordering")})]
 
 
 @admin.register(Recipe)
 class RecipeAdmin(ModelAdmin):
-    list_display = ("name_de", "name_en", "category", "expected_amount")
+    list_display = ("name_de", "name_en", "category", "difficulty", "expected_amount")
     filter_horizontal = ("extensions",)
     search_fields = ("name_de", "name_en", "description_de", "description_en")
+    list_editable = ("category", "difficulty", "expected_amount")
+    list_filter = ("category", "difficulty", "extensions", "is_homebrew")
     inlines = [RecipeIngredientInline]
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), ("category", "difficulty", "expected_amount"), "extensions")}),

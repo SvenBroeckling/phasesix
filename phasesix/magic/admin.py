@@ -68,6 +68,7 @@ class SpellTemplateAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "category", "spell_point_cost")
     list_editable = "category", "spell_point_cost"
     list_filter = "spell_point_cost", "category"
+    search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     inlines = [SpellTemplateModifierInline]
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("category", "spell_point_cost"))}),
@@ -79,6 +80,7 @@ class SpellTemplateAdmin(ModelAdmin):
 class SpellTypeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "image", "reference_attribute")
     list_editable = ("reference_attribute",)
+    search_fields = ("name_de", "name_en")
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), "reference_attribute", "fa_icon_class")} ),
         (_("Image"), {"fields": ("image", ("image_copyright", "image_copyright_url"), ("image_focal_x", "image_focal_y")), "classes": ("collapse",)}),
@@ -94,6 +96,8 @@ class BaseSpellInline(TabularInline):
 @admin.register(SpellOrigin)
 class SpellOriginAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "essential_enabled")
+    list_editable = ("essential_enabled",)
+    search_fields = ("name_de", "name_en", "essential_description")
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), "fa_icon_class", "essential_enabled", "essential_description")}),
         (_("Image"), {"fields": ("image", ("image_copyright", "image_copyright_url"), ("image_focal_x", "image_focal_y")), "classes": ("collapse",)}),

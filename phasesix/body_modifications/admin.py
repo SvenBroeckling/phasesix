@@ -14,11 +14,15 @@ from portal.admin import ShortDescriptionListFilter, ShortRulesListFilter
 
 @admin.register(SocketLocation)
 class LocationAdmin(ModelAdmin):
+    list_display = ("name_de", "name_en", "identifier", "gi_icon_class")
+    list_editable = ("identifier", "gi_icon_class")
     fieldsets = [(None, {"fields": (("name_de", "name_en"), ("identifier", "gi_icon_class"))})]
 
 
 @admin.register(BodyModificationType)
 class BodyModificationTypeAdmin(ModelAdmin):
+    list_display = ("name_de", "name_en", "image")
+    search_fields = ("name_de", "name_en")
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"),)}),
         (_("Image"), {"fields": ("image", ("image_copyright", "image_copyright_url"), ("image_focal_x", "image_focal_y")), "classes": ("collapse",)}),

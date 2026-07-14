@@ -8,6 +8,9 @@ from pantheon.models import Entity, PriestAction, PriestActionRoll, EntityCatego
 @admin.register(Entity)
 class EntityAdmin(ModelAdmin):
     list_display = "name_de", "name_en", "wiki_page"
+    list_editable = ("wiki_page",)
+    list_filter = ("category", "extensions", "is_homebrew")
+    search_fields = ("name_de", "name_en", "short_name_de", "short_name_en", "description_de", "description_en")
     filter_horizontal = ("extensions",)
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("short_name_de", "short_name_en"), ("description_de", "description_en"), ("category", "wiki_page", "ordering"), "extensions")}),
@@ -24,6 +27,8 @@ class PriestActionRollInline(TabularInline):
 class PriestActionAdmin(ModelAdmin):
     list_display = "name_de", "name_en", "grace_cost", "work_type"
     list_editable = "grace_cost", "work_type"
+    list_filter = ("work_type", "is_homebrew")
+    search_fields = ("name_de", "name_en", "rules_de", "rules_en")
     inlines = [PriestActionRollInline]
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("grace_cost", "work_type"), ("rules_de", "rules_en"), ("quote", "quote_author"))}),

@@ -103,6 +103,8 @@ class TemplateCategoryAdmin(ModelAdmin):
         "sort_order",
     )
     list_editable = ("bg_color_class", "fg_color_class", "sort_order")
+    search_fields = ("name_de", "name_en", "description_de", "description_en")
+    list_filter = ("allow_for_reputation", "allow_at_character_creation")
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"))}),
         (_("Presentation"), {"fields": (("bg_color_class", "fg_color_class"), "sort_order")}),
@@ -181,6 +183,8 @@ class TemplateAdmin(ModelAdmin):
 class AttributeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "kind")
     list_editable = ("kind",)
+    search_fields = ("name_de", "name_en", "identifier", "description_de", "description_en")
+    list_filter = ("kind",)
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), "identifier", "kind", ("description_de", "description_en"))}),
     ]
@@ -196,6 +200,8 @@ class SkillAdmin(ModelAdmin):
         "reference_attribute_2",
     )
     list_editable = ("kind", "reference_attribute_1", "reference_attribute_2")
+    search_fields = ("name_de", "name_en", "description_de", "description_en")
+    list_filter = ("kind", "is_magical", "extensions")
     filter_horizontal = ("extensions",)
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), ("kind", "is_magical"), ("reference_attribute_1", "reference_attribute_2"), "extensions")}),
@@ -206,6 +212,8 @@ class SkillAdmin(ModelAdmin):
 class KnowledgeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "skill")
     list_editable = ("skill",)
+    search_fields = ("name_de", "name_en", "description_de", "description_en")
+    list_filter = ("skill", "extensions")
     filter_horizontal = ("extensions",)
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), "skill", "extensions")}),
@@ -297,6 +305,8 @@ class LineageAdmin(ModelAdmin):
 class StatusEffectAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "fa_icon_class", "is_active")
     list_editable = ("is_active",)
+    search_fields = ("name_de", "name_en", "rules_de", "rules_en")
+    list_filter = ("is_active", "color_class", "extensions")
     filter_horizontal = ("extensions",)
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), ("rules_de", "rules_en"), ("is_active", "ordering"), ("fa_icon_class", "color_class"), "extensions")}),

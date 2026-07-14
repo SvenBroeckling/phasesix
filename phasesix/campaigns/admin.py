@@ -36,6 +36,10 @@ class PlotInline(StackedInline):
 @admin.register(Campaign)
 class CampaignAdmin(ModelAdmin):
     inlines = [PlotInline]
+    list_display = ("name", "ruleset", "world_extension", "epoch_extension", "may_appear_on_start_page", "roll_on_site", "created_by")
+    list_editable = ("ruleset", "may_appear_on_start_page", "roll_on_site")
+    list_filter = ("ruleset", "world_extension", "epoch_extension", "may_appear_on_start_page", "roll_on_site")
+    search_fields = ("name", "abstract")
     filter_horizontal = ("extensions", "forbidden_templates")
     fieldsets = [
         (None, {"fields": ("name", "slug", "ruleset", ("epoch_extension", "world_extension"), "extensions", "forbidden_templates", ("ingame_act_date", "may_appear_on_start_page"))}),

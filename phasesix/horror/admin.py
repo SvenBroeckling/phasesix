@@ -18,6 +18,7 @@ class QuirkAdmin(ModelAdmin):
         ShortDescriptionListFilter,
         "category",
     )
+    search_fields = ("name_de", "name_en", "description_de", "description_en", "positive_effects_de", "positive_effects_en", "negative_effects_de", "negative_effects_en")
     fieldsets = [
         (None, {"fields": (("name_de", "name_en"), "category", ("description_de", "description_en"), ("positive_effects_de", "positive_effects_en"), ("negative_effects_de", "negative_effects_en"))}),
         (_("Homebrew"), {"fields": (("is_homebrew", "keep_as_homebrew"), ("homebrew_campaign", "homebrew_character")), "classes": ("collapse",)}),

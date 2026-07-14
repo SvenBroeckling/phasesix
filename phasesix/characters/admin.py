@@ -21,6 +21,7 @@ class PronounAdmin(ModelAdmin):
         "copula_verb_de",
         "copula_verb_en",
     )
+    search_fields = ("nominative_de", "nominative_en", "dative_de", "dative_en")
     fieldsets = [(None, {"fields": (("nominative_de", "nominative_en"), ("dative_de", "dative_en"), ("possessive_de", "possessive_en"), ("copula_verb_de", "copula_verb_en"))})]
 
 
