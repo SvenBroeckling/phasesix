@@ -14,3 +14,4 @@ class PadAdmin(ModelAdmin):
     list_filter = ("campaign", "created_by", "created_at")
     search_fields = ("id",)
     inlines = [PadObjectInline]
+    fieldsets = [(None, {"fields": (("created_by", "campaign"),)})]

@@ -109,6 +109,10 @@ class ProtectionTypeAdmin(ModelAdmin):
         "icon_class",
     )
     list_editable = ("ordering", "color_class", "icon_class", "letter_de", "letter_en")
+    fieldsets = [
+        (None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"))}),
+        (_("Display"), {"fields": (("letter_de", "letter_en"), ("color_class", "icon_class"), "ordering")}),
+    ]
 
 
 class RiotGearProtectionInline(TabularInline):
@@ -194,11 +198,12 @@ class RiotGearAdmin(ModelAdmin):
 class ItemTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
+    fieldsets = [(None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), "ordering")})]
 
 
 @admin.register(ItemBrewingEffect)
 class ItemBrewingEffectAdmin(ModelAdmin):
-    pass
+    fieldsets = [(None, {"fields": (("name_de", "name_en"),)})]
 
 
 @admin.register(Item)
@@ -275,17 +280,20 @@ class ItemAdmin(ModelAdmin):
 class WeaponTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
+    fieldsets = [(None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), "ordering")})]
 
 
 @admin.register(RiotGearType)
 class RiotGearTypeAdmin(ModelAdmin):
     list_display = ("name_en", "name_de", "ordering")
     list_editable = ("ordering",)
+    fieldsets = [(None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), ("is_shield", "ordering"))})]
 
 
 @admin.register(WeaponModificationType)
 class WeaponModificationTypeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "unique_equip")
+    fieldsets = [(None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), "unique_equip")})]
 
 
 class WeapomModificationKeywordInline(TabularInline):
@@ -324,6 +332,7 @@ class WeaponModificationAdmin(ModelAdmin):
 class AttackModeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "dice_bonus")
     list_editable = ("dice_bonus",)
+    fieldsets = [(None, {"fields": (("name_de", "name_en"), ("dice_bonus", "capacity_consumed"))})]
 
 
 class CurrencyMapUnitInline(TabularInline):
@@ -333,6 +342,7 @@ class CurrencyMapUnitInline(TabularInline):
 @admin.register(CurrencyMap)
 class CurrencyMapAdmin(ModelAdmin):
     inlines = [CurrencyMapUnitInline]
+    fieldsets = [(None, {"fields": ("name",)})]
 
 
 @admin.register(CurrencyMapUnit)
@@ -347,6 +357,7 @@ class CurrencyMapUnitAdmin(ModelAdmin):
     )
     list_editable = ("name_en", "ordering", "is_common", "value")
     list_filter = ("currency_map", "is_common")
+    fieldsets = [(None, {"fields": ("currency_map", ("name_de", "name_en"), ("value", "ordering"), ("is_common", "color_class"), "fa_icon_class")})]
 
 
 @admin.register(Keyword)
@@ -360,3 +371,7 @@ class KeywordAdmin(ModelAdmin):
         "show_in_summary",
     )
     list_editable = ("ordering", "is_rare", "is_evergreen", "show_in_summary")
+    fieldsets = [
+        (None, {"fields": (("name_de", "name_en"), "identifier", ("description_de", "description_en"))}),
+        (_("Display"), {"fields": (("is_rare", "is_evergreen"), ("show_in_dice_rolls", "show_in_summary"), "ordering")}),
+    ]

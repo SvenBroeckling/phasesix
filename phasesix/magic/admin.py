@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline
 
 from magic.models import (
@@ -49,23 +50,13 @@ class BaseSpellAdmin(ModelAdmin):
         "arcana_cost",
         "essential_enabled",
     )
-    fields = (
-        ("name_de", "name_en"),
-        "essential_enabled",
-        ("created_by", "is_homebrew", "homebrew_campaign", "keep_as_homebrew"),
-        ("origin", "type", "variant", "shape"),
-        ("spell_point_cost", "arcana_cost", "range"),
-        "is_ritual",
-        (
-            "actions",
-            "duration_de",
-            "duration_en",
-            "duration_unit",
-            "needs_concentration",
-        ),
-        ("rules_de", "rules_en"),
-        ("quote", "quote_author"),
-    )
+    fieldsets = [
+        (None, {"fields": (("name_de", "name_en"), ("origin", "type", "variant", "shape"), ("spell_point_cost", "arcana_cost", "range"), "is_ritual")}),
+        (_("Casting"), {"fields": (("actions", "duration_de", "duration_en", "duration_unit", "needs_concentration"),)}),
+        (_("Rules"), {"fields": (("rules_de", "rules_en"), ("quote", "quote_author"))}),
+        (_("Essential character"), {"fields": ("essential_enabled",), "classes": ("collapse",)}),
+        (_("Homebrew"), {"fields": (("is_homebrew", "keep_as_homebrew"), "created_by", "homebrew_campaign"), "classes": ("collapse",)}),
+    ]
 
 
 class SpellTemplateModifierInline(TabularInline):
@@ -78,18 +69,20 @@ class SpellTemplateAdmin(ModelAdmin):
     list_editable = "category", "spell_point_cost"
     list_filter = "spell_point_cost", "category"
     inlines = [SpellTemplateModifierInline]
-    fields = (
-        ("name_de", "name_en"),
-        ("category", "spell_point_cost"),
-        ("rules_de", "rules_en"),
-        ("quote", "quote_author"),
-    )
+    fieldsets = [
+        (None, {"fields": (("name_de", "name_en"), ("category", "spell_point_cost"))}),
+        (_("Rules"), {"fields": (("rules_de", "rules_en"), ("quote", "quote_author"))}),
+    ]
 
 
 @admin.register(SpellType)
 class SpellTypeAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "image", "reference_attribute")
     list_editable = ("reference_attribute",)
+    fieldsets = [
+        (None, {"fields": (("name_de", "name_en"), "reference_attribute", "fa_icon_class")} ),
+        (_("Image"), {"fields": ("image", ("image_copyright", "image_copyright_url"), ("image_focal_x", "image_focal_y")), "classes": ("collapse",)}),
+    ]
 
 
 class BaseSpellInline(TabularInline):
@@ -101,13 +94,10 @@ class BaseSpellInline(TabularInline):
 @admin.register(SpellOrigin)
 class SpellOriginAdmin(ModelAdmin):
     list_display = ("name_de", "name_en", "essential_enabled")
-    fields = (
-        ("name_de", "name_en"),
-        "essential_enabled",
-        "essential_description",
-        ("fa_icon_class", "image"),
-        ("image_copyright", "image_copyright_url"),
-    )
+    fieldsets = [
+        (None, {"fields": (("name_de", "name_en"), "fa_icon_class", "essential_enabled", "essential_description")}),
+        (_("Image"), {"fields": ("image", ("image_copyright", "image_copyright_url"), ("image_focal_x", "image_focal_y")), "classes": ("collapse",)}),
+    ]
     inlines = [BaseSpellInline]
 
 

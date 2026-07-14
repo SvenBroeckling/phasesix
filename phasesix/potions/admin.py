@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline
 
 from potions.models import (
@@ -12,12 +13,12 @@ from potions.models import (
 
 @admin.register(RecipeDifficulty)
 class RecipeDifficultyAdmin(ModelAdmin):
-    pass
+    fieldsets = [(None, {"fields": (("name_de", "name_en"),)})]
 
 
 @admin.register(RecipeIngredientUnit)
 class RecipeIngredientUnitAdmin(ModelAdmin):
-    pass
+    fieldsets = [(None, {"fields": (("name_de", "name_en"),)})]
 
 
 class RecipeIngredientInline(TabularInline):
@@ -28,7 +29,7 @@ class RecipeIngredientInline(TabularInline):
 
 @admin.register(RecipeCategory)
 class RecipeCategoryAdmin(ModelAdmin):
-    pass
+    fieldsets = [(None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), "ordering")})]
 
 
 @admin.register(Recipe)
@@ -37,3 +38,7 @@ class RecipeAdmin(ModelAdmin):
     filter_horizontal = ("extensions",)
     search_fields = ("name_de", "name_en", "description_de", "description_en")
     inlines = [RecipeIngredientInline]
+    fieldsets = [
+        (None, {"fields": (("name_de", "name_en"), ("description_de", "description_en"), ("category", "difficulty", "expected_amount"), "extensions")}),
+        (_("Homebrew"), {"fields": (("is_homebrew", "keep_as_homebrew"), "created_by", ("homebrew_campaign", "homebrew_character")), "classes": ("collapse",)}),
+    ]

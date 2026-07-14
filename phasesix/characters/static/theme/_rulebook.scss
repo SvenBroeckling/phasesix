@@ -50,7 +50,7 @@
 .rulebook-volume-visual {
   position: relative;
   display: flex;
-  min-height: 26rem;
+  aspect-ratio: 210 / 297;
   align-items: end;
   overflow: hidden;
   border-bottom: 1px solid var(--rulebook-border);
@@ -157,11 +157,5 @@
     margin-bottom: 1rem;
     color: rgba(var(--bs-primary-rgb), 0.65);
     font-size: 4rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .rulebook-volume-visual {
-    min-height: 22rem;
   }
 }

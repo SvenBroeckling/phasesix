@@ -59,7 +59,7 @@ class UserAdmin(ModelAdmin, BaseUserAdmin):
 
 
 class GroupAdmin(ModelAdmin, BaseGroupAdmin):
-    pass
+    fieldsets = [(None, {"fields": ("name", "permissions")})]
 
 
 admin.site.unregister(User)
@@ -72,3 +72,10 @@ admin.site.register(Group, GroupAdmin)
 class ProfileAdmin(ModelAdmin):
     list_display = ("user", "may_use_ai", "created_at", "updated_at")
     list_filter = ("may_use_ai",)
+    fieldsets = [
+        (None, {"fields": ("user", "slug", "bio", "api_key", "may_use_ai")}),
+        (_("Preferences"), {"fields": (("settings_protection_display", "settings_reduce_images"), ("settings_show_image_focus_button", "settings_language_preference"))}),
+        (_("Profile image"), {"fields": ("image", ("image_copyright", "image_copyright_url"), ("image_focal_x", "image_focal_y")), "classes": ("collapse",)}),
+        (_("Backdrop image"), {"fields": ("backdrop_image", ("backdrop_copyright", "backdrop_copyright_url"), ("backdrop_image_focal_x", "backdrop_image_focal_y")), "classes": ("collapse",)}),
+        (_("Last wiki image"), {"fields": (("last_wiki_image_copyright", "last_wiki_image_copyright_url"),), "classes": ("collapse",)}),
+    ]
