@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from bootyprint.views import PDFTemplateResponse
 from django import forms
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.staticfiles import finders
 from django.core.exceptions import PermissionDenied
 from django.core.mail import mail_admins
 from django.db import transaction
@@ -81,6 +84,7 @@ from rules.models import (
     TemplateCategory,
     Knowledge,
 )
+from worlds.models import World
 
 
 def user_may_use_ai(user):
@@ -1318,6 +1322,26 @@ class CharacterPDFView(DetailView):
     model = Character
     response_class = PDFTemplateResponse
     template_name = "characters/pdf/character_pdf.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        campaign = self.object.effective_campaign
+        world = None
+
+        if campaign is not None:
+            world = World.objects.filter(extension=campaign.world_extension).first()
+
+        pdf_background = (
+            world.pdf_background
+            if world is not None
+            else "img/pdf_backgrounds/phasesix-background.png"
+        )
+        background_path = finders.find(pdf_background)
+        context["pdf_background_url"] = (
+            Path(background_path).as_uri() if background_path else pdf_background
+        )
+        context["pdf_notes"] = self.object.characternote_set.filter(is_private=False)
+        return context
 
 
 # Pantheon

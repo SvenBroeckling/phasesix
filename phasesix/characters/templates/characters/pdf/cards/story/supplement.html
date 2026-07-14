@@ -1,0 +1,35 @@
+{% load i18n rules_extras %}
+
+{% if object.characterfoe_set.exists %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{% trans "Pets" %}</h5>
+    <div class="card-body">
+      {% for foe in object.characterfoe_set.all %}<div class="pdf-list-entry">{{ foe }}</div>{% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if object.characterstatuseffect_set.exists %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{% trans "Status effects" %}</h5>
+    <div class="card-body">
+      {% for status in object.characterstatuseffect_set.all %}
+        <div class="pdf-list-entry">{{ status.status_effect }}{% if status.base_value %}: {{ status.base_value }}{% endif %}</div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if pdf_notes %}
+  <div class="card card-inlay">
+    <h5 class="card-title">{% trans "Notes" %}</h5>
+    <div class="card-body">
+      {% for note in pdf_notes %}
+        <div class="pdf-list-entry">
+          {% if note.subject %}<strong>{{ note.subject }}</strong>{% endif %}
+          {{ note.text|phasesix_markup }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

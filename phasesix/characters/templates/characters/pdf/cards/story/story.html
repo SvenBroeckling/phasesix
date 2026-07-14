@@ -1,0 +1,47 @@
+{% load i18n rules_extras %}
+
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans "Description" %}</h5>
+  <div class="card-body">
+    {% if object.description %}
+      {{ object.description|phasesix_markup }}
+    {% else %}
+      <span class="text-muted">{% trans "No description yet." %}</span>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans "Profile" %}</h5>
+  <div class="card-body">
+    {% if object.date_of_birth %}<div>{% trans "Birthdate" %}: {{ object.date_of_birth }}</div>{% endif %}
+    {% if object.size %}<div>{% trans "Height" %}: {{ object.size }}</div>{% endif %}
+    {% if object.weight %}<div>{% trans "Weight" %}: {{ object.weight }}</div>{% endif %}
+    {% if object.pronoun %}<div>{{ object.pronoun }}</div>{% endif %}
+  </div>
+</div>
+
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans "Languages" %}</h5>
+  <div class="card-body">
+    {% for character_language in object.characterlanguage_set.all %}
+      <div class="pdf-list-entry">{{ character_language.language }}</div>
+    {% empty %}
+      <span class="text-muted">{% trans "No languages." %}</span>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="card card-inlay mb-3">
+  <h5 class="card-title">{% trans "Contacts" %}</h5>
+  <div class="card-body">
+    {% for contact in object.contact_set.all %}
+      <div class="pdf-list-entry">
+        <strong>{{ contact.name }}</strong>{% if contact.occupation %} — {{ contact.occupation }}{% endif %}
+        {% if contact.description %}<div>{{ contact.description|phasesix_markup }}</div>{% endif %}
+      </div>
+    {% empty %}
+      <span class="text-muted">{% trans "No contacts." %}</span>
+    {% endfor %}
+  </div>
+</div>

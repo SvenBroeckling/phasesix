@@ -13,7 +13,9 @@
   <style>
     {% font_kits %}
     :root {
-      --page-margin: 10mm;
+      --sheet-content-margin-x: 16mm;
+      --sheet-content-margin-top: 12mm;
+      --sheet-content-margin-bottom: 12mm;
       --primary: #3f51b5;
       --secondary: #2196f3;
       --font-size-base: 12px;
@@ -21,11 +23,117 @@
       --font-family-base: 'Oxanium';
     }
 
+    @page {
+      margin: 0;
+      background: url("{{ pdf_background_url }}") center / cover no-repeat;
+    }
+
+    body {
+      background-color: transparent;
+    }
+
     .page {
-      page-break-inside: avoid;
-      page-break-after: always;
-      height: 100vh;
+      position: relative;
+      break-after: page;
+      padding: var(--sheet-content-margin-top) var(--sheet-content-margin-x) var(--sheet-content-margin-bottom);
+      width: 210mm;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: var(--sheet-content-margin-top) var(--sheet-content-margin-x) var(--sheet-content-margin-bottom);
+      border: 1px solid rgba(20, 35, 35, 0.62);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+      z-index: 0;
+    }
+
+    .page > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page:last-child {
+      break-after: auto;
+    }
+
+    .card {
+      break-inside: avoid;
+    }
+
+    .card-inlay {
+      background: transparent;
+      border-color: rgba(20, 35, 35, 0.68);
+      box-shadow: none;
+    }
+
+    .card-inlay .card-title {
+      display: none;
+    }
+
+    .card-inlay .card-body {
+      padding-top: 0.65rem;
+    }
+
+    .background-page {
+      font-size: 10px;
+      line-height: 1.3;
+    }
+
+    .pdf-list-entry {
+      break-inside: avoid;
+      border-bottom: 1px solid currentColor;
+      padding: 0.35rem 0 0.5rem;
+    }
+
+    .pdf-list-entry h5 {
+      margin-bottom: 0.2rem;
+      font-size: 1.1em;
+    }
+
+    .pdf-list-entry p {
+      margin-bottom: 0.25rem;
+    }
+
+    .template-grid-row {
+      break-inside: avoid;
+    }
+
+    .gear-layout {
+      flex-wrap: nowrap;
+    }
+
+    .gear-items {
+      font-size: 10px;
+    }
+
+    .gear-items .card-body {
+      padding: 0.35rem 0.5rem;
+    }
+
+    .gear-items .table {
+      margin-bottom: 0;
+    }
+
+    .summary-layout {
+      display: table;
       width: 100%;
+      table-layout: fixed;
+    }
+
+    .summary-layout > .summary-base,
+    .summary-layout > .summary-main {
+      display: table-cell;
+      float: none;
+      vertical-align: top;
+    }
+
+    .summary-layout > .summary-base {
+      width: 25%;
+    }
+
+    .summary-layout > .summary-main {
+      width: 75%;
     }
   </style>
 </head>
@@ -71,9 +179,9 @@
     </div>
   </header>
 
-  <div class="row">
+  <div class="row summary-layout">
     <!-- Base values column -->
-    <div class="col-3">
+    <div class="col-3 summary-base">
       {% if object.image %}
         <img src="{{ object.image.path }}" alt="{{ object }}" class="img-fluid">
       {% endif %}
@@ -94,7 +202,7 @@
     </div>
 
     <!-- Main column -->
-    <div class="col-9">
+    <div class="col-9 summary-main">
       <div class="row mb-3">
         <div class="col-6">
           {% include "characters/pdf/cards/overview/persona.html" %}
@@ -129,19 +237,39 @@
 </div>
 
 <div class="page">
-  <div class="columns-2">
-    {% include 'characters/pdf/cards/gear/weapons.html' %}
-    {% include 'characters/pdf/cards/gear/armour.html' %}
-    {% include 'characters/pdf/cards/gear/items.html' %}
+  <div class="row gear-layout">
+    <div class="col-7">
+      {% include 'characters/pdf/cards/gear/weapons.html' %}
+    </div>
+    <div class="col-5">
+      {% include 'characters/pdf/cards/gear/armour.html' %}
+      {% include 'characters/pdf/cards/story/story.html' %}
+    </div>
   </div>
 </div>
 
+{% if object.characteritem_set.exists %}
+  <div class="page">
+    <div class="row">
+      <div class="col-7 gear-items">
+        {% include 'characters/pdf/cards/gear/items.html' %}
+      </div>
+      <div class="col-5">
+        {% include 'characters/pdf/cards/story/supplement.html' %}
+      </div>
+    </div>
+  </div>
+{% endif %}
 
 {% if object.extension_enabled.magic and object.characterspell_set.exists %}
   <div class="page">
-    <div class="columns-3">
-      {% include 'characters/pdf/cards/magic/spells.html' %}
-    </div>
+    {% include 'characters/pdf/cards/magic/spells.html' %}
+  </div>
+{% endif %}
+
+{% if object.extension_enabled.bodymod or object.extension_enabled.horror or object.extension_enabled.pantheon or object.extension_enabled.potions %}
+  <div class="page">
+    {% include 'characters/pdf/cards/extensions/extensions.html' %}
   </div>
 {% endif %}
 
@@ -155,11 +283,7 @@
 {% endif %}
 {% endcomment %}
 
-<div class="page">
-  <div class="columns-3">
-    {% include 'characters/pdf/cards/background/background.html' %}
-  </div>
-</div>
+{% include 'characters/pdf/cards/background/background.html' %}
 
 </body>
 </html>

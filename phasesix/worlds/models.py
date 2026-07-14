@@ -29,6 +29,11 @@ class World(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         ("theme/tirakan.scss", "theme/tirakan.scss"),
         ("theme/nexus.scss", "theme/nexus.scss"),
     )
+    PDF_BACKGROUND_CHOICES = (
+        ("img/pdf_backgrounds/phasesix-background.png", "PhaseSix"),
+        ("img/pdf_backgrounds/tirakan-background.png", "Tirakan"),
+        ("img/pdf_backgrounds/nexus-background.png", "Nexus"),
+    )
     image_upload_to = "world_images"
 
     created_by = models.ForeignKey(
@@ -94,6 +99,12 @@ class World(ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         max_length=40,
         choices=SCSS_FILE_CHOICES,
         default="theme/phasesix.scss",
+    )
+    pdf_background = models.CharField(
+        _("PDF background"),
+        max_length=80,
+        choices=PDF_BACKGROUND_CHOICES,
+        default="img/pdf_backgrounds/phasesix-background.png",
     )
 
     ordering = models.IntegerField(_("ordering"), default=100)

@@ -2,12 +2,16 @@
 {% load i18n rules_extras %}
 
 {% for template in object.charactertemplate_set.all %}
-  <div class="card card-inlay mb-3">
-    <h5 class="card-title">{{ template.template }}</h5>
-    <div class="card-body">
-      <p>
-        {{ template.template.rules|phasesix_markup }}
-      </p>
+  {% if forloop.counter0|divisibleby:16 %}
+    {% if not forloop.first %}</div></div>{% endif %}
+    <div class="page background-page">
+      <div class="background-list">
+  {% endif %}
+  {% if forloop.counter0|divisibleby:2 %}<div class="row template-grid-row">{% endif %}
+  <div class="col-6">
+    <section class="pdf-list-entry">
+      <h5>{{ template.template }}</h5>
+      <p>{{ template.template.rules|phasesix_markup }}</p>
       {% with all_modifiers=template.template.templatemodifier_set.all %}
         {% for mod in all_modifiers %}
           {% if mod.aspect %}
@@ -40,6 +44,12 @@
           {% endif %}
         {% endfor %}
       {% endwith %}
-    </div>
+    </section>
+  </div>
+  {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
+  {% if forloop.last %}</div></div>{% endif %}
+{% empty %}
+  <div class="page background-page">
+    <div class="background-list text-muted">{% trans "No background templates." %}</div>
   </div>
 {% endfor %}

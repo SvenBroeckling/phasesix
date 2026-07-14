@@ -1,0 +1,70 @@
+{% load characters_extras i18n rules_extras %}
+
+{% if object.extension_enabled.bodymod %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{% trans "Body modifications" %}</h5>
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-6">{% trans "Biostrain" %}: <strong>{{ object.bio_strain }}</strong></div>
+        <div class="col-6">{% trans "Energy" %}: <strong>+{{ object.energy_produced }} / -{{ object.energy_consumed }} mA</strong></div>
+      </div>
+      {% for modification in object.characterbodymodification_set.all %}
+        <div class="pdf-list-entry">
+          <strong>{{ modification.body_modification }}</strong>
+          {% if modification.body_modification.description %}
+            <span class="text-muted">— {{ modification.body_modification.description|phasesix_markup }}</span>
+          {% endif %}
+        </div>
+      {% empty %}
+        <span class="text-muted">{% trans "No body modifications." %}</span>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if object.extension_enabled.horror %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{% trans "Horror" %}</h5>
+    <div class="card-body">
+      <p>{% trans "Stress" %}: {{ object.stress }} / {{ object.max_stress }}</p>
+      {% for character_quirk in object.characterquirk_set.all %}
+        <div class="pdf-list-entry">
+          <strong>{{ character_quirk.quirk }}</strong>
+          <div>{{ character_quirk.quirk.description|phasesix_markup }}</div>
+          {% if character_quirk.quirk.positive_effects %}
+            <div class="text-success">{{ character_quirk.quirk.positive_effects|phasesix_markup }}</div>
+          {% endif %}
+          {% if character_quirk.quirk.negative_effects %}
+            <div class="text-danger">{{ character_quirk.quirk.negative_effects|phasesix_markup }}</div>
+          {% endif %}
+        </div>
+      {% empty %}
+        <span class="text-muted">{% trans "No quirks." %}</span>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if object.extension_enabled.pantheon %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{% trans "Belief" %}</h5>
+    <div class="card-body">
+      <p>{% trans "Attitude" %}: <strong>{{ object.attitude }}</strong></p>
+      {% if object.is_priest %}<p>{% trans "Grace" %}: <strong>{{ object.grace }}</strong></p>{% endif %}
+      {% if object.entity %}<p><strong>{{ object.entity }}</strong></p>{% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% if object.extension_enabled.potions %}
+  <div class="card card-inlay mb-3">
+    <h5 class="card-title">{% trans "Recipes" %}</h5>
+    <div class="card-body">
+      {% for recipe in object.characterrecipe_set.all %}
+        <div class="pdf-list-entry"><strong>{{ recipe.recipe }}</strong></div>
+      {% empty %}
+        <span class="text-muted">{% trans "No recipes." %}</span>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
