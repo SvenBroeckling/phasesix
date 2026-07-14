@@ -7,6 +7,11 @@ app_name = "characters"
 urlpatterns = [
     path("character/<slug:slug>", views.CharacterDetailView.as_view(), name="detail"),
     path(
+        "character/<slug:slug>/add-to-start-page",
+        views.AddCharacterToStartPageView.as_view(),
+        name="add_to_start_page",
+    ),
+    path(
         "character/<slug:slug>/clone",
         views.CloneCharacterView.as_view(),
         name="clone",

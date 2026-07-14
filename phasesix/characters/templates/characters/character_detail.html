@@ -32,6 +32,13 @@
             {% trans "Edit character" %}
           </button>
         {% endif %}
+        {% if user.is_superuser %}
+          <a class="btn btn-outline-primary btn-sm"
+             href="{% url 'characters:add_to_start_page' slug=object.slug %}">
+            <i class="fas fa-home" aria-hidden="true"></i>
+            {% trans "Add to start page" %}
+          </a>
+        {% endif %}
       </nav>
     </div>
   </div>

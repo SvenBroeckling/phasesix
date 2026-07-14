@@ -43,6 +43,7 @@ from characters.forms import (
     CreateCharacterExtensionsForm,
     ContactForm,
     CharacterFoeForm,
+    AddCharacterToStartPageForm,
 )
 from characters.models import (
     Character,
@@ -85,6 +86,7 @@ from rules.models import (
     Knowledge,
 )
 from worlds.models import World
+from characters.openai import CharacterLeadImageService
 
 
 def user_may_use_ai(user):
@@ -103,6 +105,49 @@ class CharacterDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["may_edit"] = self.object.may_edit(self.request.user)
         return context
+
+
+class AddCharacterToStartPageView(View):
+    template_name = "characters/add_to_start_page.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+        self.character = get_object_or_404(Character, slug=kwargs["slug"])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return self.render_form(AddCharacterToStartPageForm())
+
+    def post(self, request, *args, **kwargs):
+        form = AddCharacterToStartPageForm(request.POST)
+        if not form.is_valid():
+            return self.render_form(form)
+
+        try:
+            CharacterLeadImageService(
+                character=self.character, world=form.cleaned_data["world"]
+            ).create()
+        except ValueError as exc:
+            form.add_error(None, gettext(str(exc)))
+            return self.render_form(form)
+        except Exception:
+            messages.error(
+                request,
+                _("The start page image could not be created. Please try again later."),
+            )
+            return HttpResponseRedirect(self.character.get_absolute_url())
+
+        messages.success(request, _("The character was added to the start page."))
+        return HttpResponseRedirect(self.character.get_absolute_url())
+
+    def render_form(self, form):
+        return self.render_to_response({"form": form, "character": self.character})
+
+    def render_to_response(self, context):
+        from django.shortcuts import render
+
+        return render(self.request, self.template_name, context)
 
 
 class CloneCharacterView(View):

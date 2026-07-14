@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 %}
+
+{% block title %}{% trans "Add to start page" %} - {{ character }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{% trans "Add to start page" %}{% endblock %}
+{% block in_page_subtitle %}{{ character }}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12 col-md-7 col-lg-5">
+      <p>{% trans "Choose the world where this character should appear on the start page. The character image will be processed to remove its background." %}</p>
+      <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-magic" aria-hidden="true"></i>
+          {% trans "Add to start page" %}
+        </button>
+        <a class="btn btn-outline-secondary" href="{{ character.get_absolute_url }}">{% trans "Cancel" %}</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

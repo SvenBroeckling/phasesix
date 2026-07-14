@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
 from armory.models import CurrencyMap
@@ -6,6 +7,15 @@ from characters.models import Character, Pronoun, Contact, CharacterFoe
 from pantheon.models import Entity
 from portal.widgets import BootstrapTextarea
 from rules.models import Lineage, Extension
+from worlds.models import World
+
+
+class AddCharacterToStartPageForm(forms.Form):
+    world = forms.ModelChoiceField(
+        queryset=World.objects.filter(Q(is_active=True) | Q(is_default=True)),
+        empty_label=None,
+        label=_("World"),
+    )
 
 
 class CharacterFoeForm(forms.ModelForm):

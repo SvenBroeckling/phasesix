@@ -1,7 +1,11 @@
 import json
 import logging
+from base64 import b64decode
+from mimetypes import guess_type
+from pathlib import Path
 
 from django.conf import settings
+from django.core.files.base import ContentFile
 from django.db import transaction
 from django.db.models import Q
 from openai import OpenAI
@@ -13,9 +17,60 @@ from horror.models import Quirk
 from magic.models import BaseSpell
 from potions.models import Recipe
 from rules.models import Extension, Foe, Template
-from worlds.models import Language
+from worlds.models import Language, WorldLeadImage
 
 logger = logging.getLogger(__name__)
+
+
+class CharacterLeadImageService:
+    """Create a transparent start-page image from a character portrait."""
+
+    def __init__(self, character, world):
+        self.character = character
+        self.world = world
+
+    def create(self):
+        if not self.character.image:
+            raise ValueError("This character does not have an image.")
+        if not settings.OPENAI_API_KEY:
+            raise ValueError("OpenAI API key is not configured.")
+
+        client = OpenAI(api_key=settings.OPENAI_API_KEY)
+        try:
+            self.character.image.open("rb")
+            response = client.images.edit(
+                model=settings.OPENAI_IMAGE_MODEL,
+                image=(
+                    Path(self.character.image.name).name,
+                    self.character.image.read(),
+                    guess_type(self.character.image.name)[0]
+                    or "application/octet-stream",
+                ),
+                prompt=(
+                    "Remove the entire background from this character portrait. "
+                    "Keep the character unchanged and return only the character "
+                    "on a transparent background."
+                ),
+                background="transparent",
+                output_format="png",
+            )
+            image_data = response.data[0].b64_json
+            if not image_data:
+                raise ValueError("OpenAI did not return an image.")
+        except Exception:
+            logger.exception(
+                "OpenAI background removal failed for character=%s",
+                self.character.pk,
+            )
+            raise
+        finally:
+            self.character.image.close()
+
+        filename = f"{Path(self.character.image.name).stem}-lead.png"
+        lead_image = WorldLeadImage(world=self.world, character=self.character)
+        lead_image.image.save(filename, ContentFile(b64decode(image_data)), save=False)
+        lead_image.save()
+        return lead_image
 
 
 class CharacterRandomFillService:
