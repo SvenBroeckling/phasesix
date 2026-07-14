@@ -2,6 +2,72 @@
 {% load static django_bootstrap5 i18n characters_extras rules_extras thumbnail %}
 
 {% block title %}{{ object }} - {{ block.super }}{% endblock %}
+{% block in_page_title %}{{ object }}{% endblock %}
+{% block in_page_subtitle %}{% trans 'Edit page' %}{% endblock %}
+
+{% block page_actions %}
+  {% if may_edit %}
+    <div class="page-actions-bar">
+      <div class="container py-2">
+        <nav class="page-actions-nav" aria-label="{% trans 'Page actions' %}">
+          <button type="submit" form="wiki-page-form" class="btn btn-success btn-sm">
+            <i class="fas fa-save" aria-hidden="true"></i>
+            {% trans 'Save' %}
+          </button>
+
+          <div class="dropdown">
+            <button class="btn btn-outline-primary btn-sm dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              <i class="gi gi-lorc-gears" aria-hidden="true"></i>
+              {% trans 'Actions' %}
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+              <button type="button"
+                      class="dropdown-item"
+                      data-sidebar-right-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
+                      data-sidebar-right-title="{% trans 'Page images' %}">
+                <i class="fas fa-image fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Images' %}
+              </button>
+              <button type="button"
+                      class="dropdown-item"
+                      data-sidebar-right-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
+                      data-sidebar-right-title="{% trans 'Insert Link' %}">
+                <i class="fas fa-link fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Insert Link' %}
+              </button>
+              <div class="dropdown-divider"></div>
+              <a href=""
+                 data-message="{% trans 'Automatically create links? This will change the text in both languages.' %}"
+                 data-status-text="{% trans 'Creating links..' %}"
+                 data-url="{% url 'worlds:xhr_auto_tag' pk=object.id %}"
+                 class="dropdown-item autotag-link">
+                <i class="fas fa-magic fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Create Links automatically' %}
+              </a>
+              <a href=""
+                 data-message="{% trans 'Copied' %}"
+                 data-language="de"
+                 class="dropdown-item copy-text-without-links">
+                <i class="fas fa-copy fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Copy german text without links' %}
+              </a>
+              <a href=""
+                 data-message="{% trans 'Copied' %}"
+                 data-language="en"
+                 class="dropdown-item copy-text-without-links">
+                <i class="fas fa-copy fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Copy english text without links' %}
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
 
 {% block opengraph %}
   {% if object.image %}
@@ -15,66 +81,18 @@
 
 {% block content %}
   <div data-app="worlds" class="world-editor">
-    <form action="" method="post" class="wiki_page_form world-editor-form">
+    <form id="wiki-page-form" action="" method="post" class="wiki_page_form world-editor-form">
       {% csrf_token %}
-      <div class="row mt-2 world-editor-toolbar">
+
+      <div class="row">
         <div class="col-12">
-          {% if may_edit %}
-            <button
-              type="submit"
-              class="btn btn-success float-end"
-              title="{% trans 'Save' %}"><i class="fa fa-save"></i><span
-              class="d-none d-md-inline"> {% trans 'Save' %}</span></button>
-            <button type="button"
-                    data-sidebar-right-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="images" %}"
-                    data-sidebar-right-title="{% trans 'Page images' %}"
-                    class="btn btn-primary float-end me-1">
-              <i class="fa fa-image"></i><span class="d-none d-md-inline"> {% trans 'Images' %}</span>
+          <div class="nav nav-underline atmospheric-tabs world-editor-language-tabs mb-3" id="myTab" role="tablist">
+            <button class="nav-link active" id="text-de-tab" data-bs-toggle="tab" data-bs-target="#text-de"
+                    type="button" role="tab" aria-controls="text-de" aria-selected="true">{% trans 'German' %}
             </button>
-            <div class="btn-group me-1 float-end">
-              <button class="btn btn-primary"
-                      data-sidebar-right-url="{% url 'worlds:xhr_sidebar' slug=object.slug sidebar_template="links" %}"
-                      data-sidebar-right-title="{% trans 'Insert Link' %}"
-                      role="button"><i class="fas fa-plus"></i><span
-                class="d-none d-md-inline"> {% trans 'Links' %}</span></button>
-              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                      data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
-              </button>
-
-              <div class="dropdown-menu">
-                <a
-                  href=""
-                  data-message="{% trans 'Automatically create links? This will change the text in both languages.' %}"
-                  data-status-text="{% trans 'Creating links..' %}"
-                  data-url="{% url 'worlds:xhr_auto_tag' pk=object.id %}"
-                  class="dropdown-item autotag-link">{% trans 'Create Links automatically' %}</a>
-                <a
-                  href=""
-                  data-message="{% trans 'Copied' %}"
-                  data-language="de"
-                  class="dropdown-item copy-text-without-links">{% trans 'Copy german text without links' %}</a>
-                <a
-                  href=""
-                  data-message="{% trans 'Copied' %}"
-                  data-language="en"
-                  class="dropdown-item copy-text-without-links">{% trans 'Copy english text without links' %}</a>
-              </div>
-            </div>
-          {% endif %}
-          <h1 class="h2 float-start">{{ object }}</h1>
-        </div>
-      </div>
-
-      <div class="row mt-4">
-        <div class="col-12">
-          <div class="nav nav-underline atmospheric-tabs mb-2" id="myTab" role="tablist">
-            <a class="nav-link active" id="text-de-tab" data-bs-toggle="tab" data-bs-target="#text-de"
-               type="button" role="tab" aria-controls="text-de" aria-selected="true">{% trans 'German' %}
-            </a>
-            <a class="nav-link" id="text-en-tab" data-bs-toggle="tab" data-bs-target="#text-en"
-               type="button" role="tab" aria-controls="text-en" aria-selected="false">{% trans 'English' %}
-            </a>
+            <button class="nav-link" id="text-en-tab" data-bs-toggle="tab" data-bs-target="#text-en"
+                    type="button" role="tab" aria-controls="text-en" aria-selected="false">{% trans 'English' %}
+            </button>
           </div>
 
           <div class="tab-content" id="text-tab-content">

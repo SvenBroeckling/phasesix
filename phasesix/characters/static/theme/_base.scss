@@ -99,6 +99,41 @@ span.background-image-copyright {
   }
 }
 
+.page-actions-bar {
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), 0.24);
+  background:
+    linear-gradient(90deg, rgba(var(--bs-primary-rgb), 0.08), transparent 38%),
+    var(--bs-tertiary-bg);
+
+  + main {
+    padding-top: 2rem !important;
+  }
+}
+
+.page-actions-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-actions-bar .container {
+    overflow-x: auto;
+  }
+
+  .page-actions-nav {
+    flex-wrap: nowrap;
+    min-width: max-content;
+  }
+}
+
 .in-page-header-image {
   position: relative;
   display: block;

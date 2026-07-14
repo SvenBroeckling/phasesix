@@ -1,89 +1,93 @@
 {% load i18n django_bootstrap5 portal_extras thumbnail static %}
 
-<div class="row">
-  <div class="col-12 mb-3 mt-2">
+<div class="character-management-sidebar">
+  <figure class="character-management-portrait">
     {% if object.image %}
       {% focal_crop object as image_crop %}
       {% thumbnail object.image "600x600" crop=image_crop as im %}
-        <img class="rounded img-fluid" src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}" {% focal_image_attrs object %}>
+        <img src="{{ MEDIA_URL }}{{ im.url }}" alt="{{ object.name }}" {% focal_image_attrs object %}>
       {% endthumbnail %}
     {% else %}
-      <img class="rounded img-fluid" width="600" height="600" src="{% static 'img/silhuette.png' %}"
-           alt="{{ object.name }}">
+      <img width="600" height="600" src="{% static 'img/silhuette.png' %}" alt="{{ object.name }}">
     {% endif %}
-  </div>
-</div>
+  </figure>
 
-<div class="row mb-4">
-  <div class="col-12">
-    <a href="{% url 'characters:pdf' slug=object.slug %}" class="btn btn-primary w-100">{% trans 'Download PDF' %}</a>
-  </div>
-  <div class="col-12">
-    <form method="post" action="{% url 'characters:clone' slug=object.slug %}">
+  <section class="character-management-section">
+    <div class="character-management-section-heading">
+      <div class="text-uppercase text-muted small">{% trans 'Profile' %}</div>
+      <h3>{% trans 'Edit character' %}</h3>
+    </div>
+    <form action="{% url 'characters:change_image' pk=object.id %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      <button class="btn btn-secondary mt-2 w-100">
-        {% trans "Clone character" %}
+      {% bootstrap_form character_form %}
+      <button class="btn btn-primary w-100 mt-2" type="submit">
+        <i class="fas fa-save me-2" aria-hidden="true"></i>
+        {% trans 'Save changes' %}
       </button>
     </form>
-    {% if may_edit and request.user.is_authenticated and request.user.is_staff and request.user.profile.may_use_ai %}
+  </section>
+
+  <section class="character-management-section">
+    <div class="character-management-section-heading">
+      <div class="text-uppercase text-muted small">{% trans 'Utilities' %}</div>
+      <h3>{% trans 'Character copies' %}</h3>
+    </div>
+    <form method="post" action="{% url 'characters:clone' slug=object.slug %}">
+      {% csrf_token %}
+      <button class="btn btn-outline-primary w-100" type="submit">
+        <i class="far fa-copy me-2" aria-hidden="true"></i>
+        {% trans 'Clone character' %}
+      </button>
+    </form>
+
+    {% if request.user.is_authenticated and request.user.is_staff and request.user.profile.may_use_ai %}
       <form method="post" action="{% url 'characters:fill_randomly' pk=object.id %}"
+            class="mt-2"
             data-loading-form="character-fill-random"
             data-confirm-message="{% trans 'This will modify the character and should only be used for NPCs. Continue?' %}">
         {% csrf_token %}
-        <button class="btn btn-warning mt-2 w-100" data-loading-button>
+        <button class="btn btn-warning w-100" data-loading-button>
           <span class="spinner-border spinner-border-sm me-2 d-none"
                 role="status"
                 aria-hidden="true"
                 data-loading-spinner></span>
-          {% trans "Fill randomly" %}
+          <i class="fas fa-random me-2" aria-hidden="true"></i>
+          {% trans 'Fill randomly' %}
         </button>
       </form>
     {% endif %}
-    {% if object.cloned_from %}
-      <div class="alert alert-info mt-2">
-        {% trans 'Cloned from:' %} <a href="{% url 'characters:detail' slug=object.cloned_from.slug %}">{{ object.cloned_from.name }}</a>
-      </div>
-    {% endif %}
-    {% if object.clones.all %}
-      <div class="mt-2">
-        <strong>{% trans 'Cloned characters:' %}</strong>
-        <ul class="list-unstyled">
-          {% for clone in object.clones.all %}
-            <li><a href="{% url 'characters:detail' slug=clone.slug %}">{{ clone.name }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
-  </div>
 
-</div>
-
-{% if may_edit %}
-  <div class="row">
-    <div class="col-12">
-      <form action="{% url 'characters:change_image' pk=character.id %}" method="post"
-            enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form character_form %}
-        {% if may_edit and request.user.is_authenticated %}
-          <button class="btn btn-primary btn-sm w-100 mb-1 mt-3 float-end"
-                  type="submit">{% trans 'Save' %}</button>
+    {% if object.cloned_from or object.clones.all %}
+      <div class="character-management-copy-list">
+        {% if object.cloned_from %}
+          <div class="small text-muted">{% trans 'Cloned from' %}</div>
+          <a href="{% url 'characters:detail' slug=object.cloned_from.slug %}">{{ object.cloned_from.name }}</a>
         {% endif %}
-      </form>
-    </div>
-  </div>
-
-  {% if may_edit and request.user.is_authenticated %}
-    <div class="row">
-      <div class="col-12">
-        <button class="btn btn-danger btn-sm w-100"
-                type="button"
-                hx-post="{% url 'characters:xhr_delete' pk=object.id %}"
-                hx-confirm="{% trans 'Delete character' %}: {{ object }}?"
-                hx-swap="none">
-          <i class="far fa-times fa-fw text-danger"></i> {% trans 'Delete Character' %}
-        </button>
+        {% if object.clones.all %}
+          <div class="small text-muted {% if object.cloned_from %}mt-3{% endif %}">{% trans 'Cloned characters' %}</div>
+          <ul class="list-unstyled mb-0">
+            {% for clone in object.clones.all %}
+              <li><a href="{% url 'characters:detail' slug=clone.slug %}">{{ clone.name }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </div>
+    {% endif %}
+  </section>
+
+  <section class="character-management-section character-management-danger">
+    <div class="character-management-section-heading">
+      <div class="text-uppercase text-danger small">{% trans 'Danger zone' %}</div>
+      <h3>{% trans 'Delete character' %}</h3>
     </div>
-  {% endif %}
-{% endif %}
+    <p class="small text-muted">{% trans 'This permanently removes the character and its associated data.' %}</p>
+    <button class="btn btn-outline-danger w-100"
+            type="button"
+            hx-post="{% url 'characters:xhr_delete' pk=object.id %}"
+            hx-confirm="{% trans 'Delete character' %}: {{ object }}?"
+            hx-swap="none">
+      <i class="far fa-times fa-fw me-2" aria-hidden="true"></i>
+      {% trans 'Delete character' %}
+    </button>
+  </section>
+</div>

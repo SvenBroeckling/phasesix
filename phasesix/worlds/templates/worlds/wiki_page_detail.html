@@ -6,6 +6,10 @@
 {% block in_page_title %}{{ object }}{% endblock %}
 {% block in_page_subtitle %}{{ object.text|to_first_linebreak|replace_wiki_tags:object.world }}{% endblock %}
 
+{% block page_actions %}
+  {% include 'worlds/_page_actions.html' with object=object may_edit=may_edit %}
+{% endblock %}
+
 {% block bottom_nav %}
   {% bottom_navigation_button "worlds/_navigation.html" %}
 {% endblock %}

@@ -1,0 +1,73 @@
+{% load i18n %}
+
+{% if may_edit %}
+  <div class="page-actions-bar">
+    <div class="container py-2">
+      <nav class="page-actions-nav" aria-label="{% trans 'Page actions' %}">
+        {% if object.is_world %}
+          <a class="btn btn-primary btn-sm"
+             data-modal-url="{% url 'world:xhr_create_wiki_page' world_pk=world.id %}"
+             data-modal-size-class="modal-xl"
+             data-modal-refresh-after="true"
+             data-modal-title="{% trans 'Create Wiki Page' %}"
+             href="">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+            {% trans 'Create Page' %}
+          </a>
+        {% else %}
+          <a class="btn btn-primary btn-sm"
+             href="{% url 'world:edit_text' world_slug=object.world.slug slug=object.slug %}">
+            <i class="fas fa-pen" aria-hidden="true"></i>
+            {% trans 'Edit' %}
+          </a>
+        {% endif %}
+
+        <div class="dropdown">
+          <button class="btn btn-outline-primary btn-sm dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+            <i class="gi gi-lorc-gears" aria-hidden="true"></i>
+            {% trans 'Actions' %}
+          </button>
+          <div class="dropdown-menu dropdown-menu-end">
+            {% if object.is_world %}
+              <button type="button"
+                      class="dropdown-item"
+                      data-sidebar-right-url="{% url 'worlds:xhr_world_sort_sidebar' slug=world.slug sidebar_template="sort_sub_pages" %}"
+                      data-sidebar-right-event-show="attach-sortables"
+                      data-sidebar-right-title="{% trans 'Sort Subpages' %}">
+                <i class="fas fa-sort fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Sort Subpages' %}
+              </button>
+            {% else %}
+              <a class="dropdown-item"
+                 data-modal-url="{% url 'world:xhr_create_wiki_page' world_pk=object.world.id parent_pk=object.id %}"
+                 data-modal-size-class="modal-xl"
+                 data-modal-refresh-after="true"
+                 data-modal-title="{% trans 'Create Wiki Page' %}"
+                 href="">
+                <i class="fas fa-plus fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Create Subpage' %}
+              </a>
+              <button type="button"
+                      class="dropdown-item"
+                      data-sidebar-right-url="{% url 'worlds:xhr_wiki_page_sort_sidebar' slug=object.slug sidebar_template="sort_sub_pages" %}"
+                      data-sidebar-right-event-show="attach-sortables"
+                      data-sidebar-right-title="{% trans 'Sort Subpages' %}">
+                <i class="fas fa-sort fa-fw me-2" aria-hidden="true"></i>
+                {% trans 'Sort Subpages' %}
+              </button>
+              {% if user.is_superuser %}
+                <a class="dropdown-item" href="{% url 'admin:worlds_wikipage_change' object.id %}">
+                  <i class="fas fa-lock fa-fw me-2" aria-hidden="true"></i>
+                  {% trans 'Admin' %}
+                </a>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+{% endif %}

@@ -10,6 +10,7 @@ from django.urls import resolve, reverse
 from campaigns.models import Campaign
 from campaigns.templatetags.campaign_extras import create_campaign_url
 from campaigns.views import (
+    CampaignDetailView,
     ChooseCampaignRulesetView,
     CreateCampaignDataView,
     CreateCampaignView,
@@ -158,3 +159,23 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
 
         self.assertNotIn("currency_map", form.fields)
         self.assertIn("starting_template_points", form.fields)
+
+    def test_campaign_invite_link_uses_the_request_host(self):
+        request = self.factory.get("/", secure=True, HTTP_HOST="tr.localhost:8000")
+        request.user = AnonymousUser()
+        campaign = SimpleNamespace(
+            slug="la-dame-blanche-2",
+            campaign_hash="invite-hash",
+            may_edit=Mock(return_value=False),
+        )
+        view = CampaignDetailView()
+        view.request = request
+        view.kwargs = {}
+        view.object = campaign
+
+        context = view.get_context_data()
+
+        self.assertEqual(
+            context["invite_link"],
+            "https://tr.localhost:8000/campaigns/la-dame-blanche-2/invite/invite-hash",
+        )

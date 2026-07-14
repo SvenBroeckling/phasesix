@@ -10,6 +10,10 @@
 {% block in_page_title %}{{ world }}{% endblock %}
 {% block in_page_subtitle %}{% endblock %}
 
+{% block page_actions %}
+  {% include 'worlds/_page_actions.html' with object=object may_edit=may_edit %}
+{% endblock %}
+
 {% block opengraph %}
   {% if world.get_image %}
     {% include "shared/opengraph.html" with og_title=world og_description=world.description_1|default:brand_description|striptags|truncatechars:200 og_image_path=world.get_image.image.url %}

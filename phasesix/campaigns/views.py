@@ -251,6 +251,12 @@ class CampaignDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["may_join"] = self.kwargs.get("hash", "") == self.object.campaign_hash
         context["may_edit"] = self.object.may_edit(self.request.user)
+        context["invite_link"] = self.request.build_absolute_uri(
+            reverse(
+                "campaigns:detail",
+                kwargs={"slug": self.object.slug, "hash": self.object.campaign_hash},
+            )
+        )
         return context
 
 

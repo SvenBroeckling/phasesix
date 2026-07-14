@@ -14,6 +14,29 @@
   {% endif %}
 {% endblock %}
 
+{% block page_actions %}
+  <div class="page-actions-bar">
+    <div class="container py-2">
+      <nav class="page-actions-nav" aria-label="{% trans 'Page actions' %}">
+        <a class="btn btn-outline-primary btn-sm"
+           href="{% url 'characters:pdf' slug=object.slug %}">
+          <i class="fas fa-file-pdf" aria-hidden="true"></i>
+          {% trans "Download PDF" %}
+        </a>
+        {% if may_edit %}
+          <button type="button"
+                  class="btn btn-primary btn-sm"
+                  data-sidebar-right-title="{% trans 'Edit character' %}"
+                  data-sidebar-right-url="{% url 'characters:xhr_sidebar' pk=object.id sidebar_template="character" %}">
+            <i class="gi gi-lorc-fountain-pen" aria-hidden="true"></i>
+            {% trans "Edit character" %}
+          </button>
+        {% endif %}
+      </nav>
+    </div>
+  </div>
+{% endblock %}
+
 {% block opengraph %}
   {% image_url object as image %}
   {% include "shared/opengraph.html" with og_title=object og_description=object.description|default:object.lineage|default:brand_description|striptags|truncatechars:200 og_image_path=image %}

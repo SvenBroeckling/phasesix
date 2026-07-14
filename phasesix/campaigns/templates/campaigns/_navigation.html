@@ -49,18 +49,3 @@
     </div>
   </a>
 </div>
-
-{% if may_edit %}
-  <div class="list-group atmospheric-navigation mb-3">
-    <div class="list-group-item py-3"
-         data-sidebar-right-title="{{ object }}"
-         data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}"
-         role="button">
-
-      <div class="d-flex align-items-center">
-        <i class="fas fa-fw fa-dice-d6"></i>
-        <span class="ms-3 d-block d-lg-block">{% trans "Roll" %}</span>
-      </div>
-    </div>
-  </div>
-{% endif %}

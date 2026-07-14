@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     let body = $("body");
 
-    body.on("click", "[data-app='campaigns'] .campaign-link", function (e) {
+    body.on("click", ".campaign-link", function (e) {
         let elem = $(this);
         let text = elem.find(".invite-text");
         let icon = elem.find(".invite-icon");

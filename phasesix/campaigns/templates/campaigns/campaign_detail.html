@@ -6,6 +6,44 @@
 {% block in_page_title %}{{ object }}{% endblock %}
 {% block in_page_subtitle %}{% trans 'A campaign by' %} {{ object.created_by }}{% endblock %}
 
+{% block page_actions %}
+  {% if may_edit or may_join %}
+    <div class="page-actions-bar">
+      <div class="container py-2">
+        <nav class="page-actions-nav" aria-label="{% trans 'Page actions' %}">
+          {% if may_join %}
+            <button type="button"
+                    class="btn btn-success btn-sm"
+                    data-sidebar-right-title="{% trans 'Join campaign' %}"
+                    data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}">
+              <i class="fas fa-dice-five" aria-hidden="true"></i>
+              {% trans 'Join campaign' %}
+            </button>
+          {% endif %}
+
+          {% if may_edit %}
+          <a href="{{ invite_link }}"
+             class="btn btn-outline-primary btn-sm campaign-link"
+             data-title="{% trans 'Invite Player' %}"
+             data-msg="{% trans 'Invite link copied' %}">
+            <i class="fas fa-user-plus invite-icon" aria-hidden="true"></i>
+            <span class="invite-text" aria-live="polite">{% trans 'Invite Player' %}</span>
+          </a>
+
+          <button type="button"
+                  class="btn btn-primary btn-sm"
+                  data-sidebar-right-title="{{ object }}"
+                  data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="roll" %}">
+            <i class="fas fa-fw fa-dice-d6" aria-hidden="true"></i>
+            {% trans "Roll dice" %}
+          </button>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
 {% block opengraph %}
   {% image_url object as image %}
   {% include "shared/opengraph.html" with og_title=object og_description=object.description|default:object|default:brand_description|striptags|truncatechars:200 og_image_path=image %}
@@ -47,25 +85,6 @@
     <div class="col-12 col-xl-9 campaign-sheet-content">
       <div class="tab-content">
         <div class="tab-pane fade active show" id="v-overview" role="tabpanel">
-          {% if may_join %}
-            <div class="card mb-4">
-              <div class="card-body py-3">
-                <div class="d-flex align-items-center justify-content-start gap-3">
-                  <i class="gi gi-cathelineau-swordwoman fs-1"></i>
-                  <div>
-                    {% trans "You have been invited to join this campaign. Create a new character to join the campaign." %}<br>
-                    <a href=""
-                       data-sidebar-right-title="{% trans 'Join campaign' %}"
-                       data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"
-                       class="btn btn-success mt-2"><i
-                      class="fas fa-dice-five"></i> {% trans 'Join campaign' %}</a>
-                  </div>
-                </div>
-                <br>
-              </div>
-            </div>
-          {% endif %}
-
           <div
             hx-trigger="intersect,refresh-fragments from:document,refresh-campaign-dramaturgy from:document"
             hx-get="{% url 'campaigns:xhr_campaign_fragment' pk=object.id fragment_template="dramaturgy" %}">

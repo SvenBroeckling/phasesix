@@ -6,20 +6,11 @@
 <div class="d-flex flex-column gap-4 campaign-dramaturgy">
   {% if may_edit or object.character_visibility == "A" %}
     <div>
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 campaign-section-heading">
+      <div class="d-flex flex-wrap align-items-center gap-2 mb-3 campaign-section-heading">
         <div>
           <div class="text-uppercase text-muted small">{% trans "Characters" %}</div>
           <div class="fw-semibold">{% trans "Campaign cast" %}</div>
         </div>
-        {% if may_edit %}
-          <a href="{{ object.invite_link }}"
-             class="btn btn-sm btn-outline-primary campaign-link d-inline-flex align-items-center gap-2"
-             data-title="{% trans "Invite Player" %}"
-             data-msg="{% trans "Invite link copied" %}">
-            <i class="fas fa-user-plus invite-icon" aria-hidden="true"></i>
-            <span class="invite-text" aria-live="polite">{% trans "Invite Player" %}</span>
-          </a>
-        {% endif %}
       </div>
       <div class="row g-3">
         {% if object.plot %}
