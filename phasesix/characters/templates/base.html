@@ -68,15 +68,7 @@
 
 {% site_modal %}
 {% sidebar_right %}
-{% if user.is_staff and user.profile.settings_show_image_focus_button %}
-  <button type="button"
-          class="btn btn-primary image-focus-mode-toggle"
-          aria-pressed="false"
-          aria-label="{% trans 'Adjust image focus' %}"
-          title="{% trans 'Adjust image focus' %}">
-    <i class="fas fa-crosshairs" aria-hidden="true"></i>
-    <span class="visually-hidden">{% trans "Adjust image focus" %}</span>
-  </button>
+{% if user.is_staff %}
   <div class="modal fade" id="image-focus-modal" tabindex="-1" aria-labelledby="image-focus-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content atmospheric-modal">

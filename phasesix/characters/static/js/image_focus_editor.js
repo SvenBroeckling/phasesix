@@ -24,8 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.addEventListener("click", () => {
         const active = document.body.classList.toggle("image-focus-mode");
         toggle.setAttribute("aria-pressed", active ? "true" : "false");
-        toggle.classList.toggle("btn-warning", active);
-        toggle.classList.toggle("btn-primary", !active);
+        toggle.classList.toggle("active", active);
     });
 
     document.addEventListener("click", (event) => {

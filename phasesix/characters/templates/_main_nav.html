@@ -100,8 +100,7 @@
               <i class="fas fa-user"></i>
               <span class="d-none d-md-inline">{{ request.user|capfirst }}</span>
             </button>
-            <ul style="width:300px; max-height:calc(100vh - 120px); overflow-x:hidden; overflow-y:auto;"
-                class="dropdown-menu dropdown-menu-end shadow">
+            <ul class="dropdown-menu dropdown-menu-end shadow user-menu">
               <li>
                 <a class="dropdown-item user-profile-link d-flex align-items-center gap-3"
                    href="{{ user.profile.get_absolute_url }}">
@@ -124,6 +123,7 @@
               <li>
                 <a class="dropdown-item d-flex align-items-center gap-3"
                    href="{{ create_url }}">
+                  <i class="fas fa-user-plus fa-fw" aria-hidden="true"></i>
                   {% trans "Create character" %}
                 </a>
               </li>
@@ -131,6 +131,7 @@
                 {% create_campaign_url as create_url %}
                 <a class="dropdown-item d-flex align-items-center gap-3"
                    href="{{ create_url }}">
+                  <i class="fas fa-flag fa-fw" aria-hidden="true"></i>
                   {% trans "Create campaign" %}
                 </a>
               </li>
@@ -150,7 +151,7 @@
                     <img width="25" height="25" class="rounded"
                          src="{{ image }}"
                          alt="{% trans "Character image" %}">
-                    {{ character }}
+                    <span class="user-menu-item-name" title="{{ character }}">{{ character }}</span>
                   </a>
                 </li>
               {% endfor %}
@@ -170,7 +171,7 @@
                     <img width="25" height="25" class="rounded"
                          src="{{ image }}"
                          alt="{% trans "Campaign image" %}">
-                    {{ campaign }}
+                    <span class="user-menu-item-name" title="{{ campaign }}">{{ campaign }}</span>
                   </a>
                 </li>
               {% endfor %}
@@ -180,20 +181,34 @@
                   <hr class="dropdown-divider">
                 </li>
                 <li>
+                  <span class="dropdown-header fw-semibold fs-6">{% trans "Staff tools" %}</span>
+                </li>
+                <li>
+                  <button type="button"
+                          class="dropdown-item d-flex align-items-center gap-3 image-focus-mode-toggle"
+                          aria-pressed="false">
+                    <i class="fas fa-crosshairs fa-fw" aria-hidden="true"></i>
+                    {% trans "Adjust image focus" %}
+                  </button>
+                </li>
+                <li>
                   <a class="dropdown-item d-flex align-items-center gap-3"
                      href="{% url "admin:index" %}">
+                    <i class="fas fa-user-shield fa-fw" aria-hidden="true"></i>
                     {% trans "Admin" %}
                   </a>
                 </li>
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-3"
                      href="{% url "curators_desk:dashboard" %}">
+                    <i class="fas fa-feather-alt fa-fw" aria-hidden="true"></i>
                     {% trans "Curators Desk" %}
                   </a>
                 </li>
                 <li>
                   <a class="dropdown-item d-flex align-items-center gap-3"
                      href="{% url "plots:list_plots" %}">
+                    <i class="fas fa-map-marked-alt fa-fw" aria-hidden="true"></i>
                     {% trans "Plot editor" %}
                   </a>
                 </li>
@@ -207,7 +222,9 @@
                    hx-swap="none"
                    hx-on::after-request="window.location='/'"
                    class="dropdown-item d-flex align-items-center gap-3"
-                   href="">{% trans "Logout" %}
+                   href="">
+                  <i class="fas fa-sign-out-alt fa-fw" aria-hidden="true"></i>
+                  {% trans "Logout" %}
                 </a>
               </li>
             </ul>
