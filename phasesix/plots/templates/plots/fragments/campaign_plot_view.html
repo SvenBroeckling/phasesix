@@ -9,7 +9,7 @@
      hx-trigger="refresh-plot from:document"
      hx-swap="outerHTML">
   <div class="sortable" data-parent-id="root">
-    {% for element in plot.root_elements %}
+    {% for element in root_elements|default:plot.root_elements %}
       {% include 'campaigns/plot/_plot_element.html' with element=element object=campaign %}
     {% empty %}
       <div class="text-muted fst-italic">{% trans 'No plot elements yet.' %}</div>

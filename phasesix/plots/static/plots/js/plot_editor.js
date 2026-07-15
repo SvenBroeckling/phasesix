@@ -114,6 +114,118 @@
             $icon.toggleClass("fa-chevron-down fa-chevron-right");
         });
 
+        $(document).on("click", "[data-plot-writing-focus]", function () {
+            var $button = $(this);
+            var targetId = $button.attr("data-plot-writing-focus");
+            var $textarea = $("#" + targetId);
+            var $details = $button.closest(".plot-element-details");
+            var isFocused = $textarea
+                .closest(".col-12")
+                .hasClass("plot-writing-active");
+
+            $details.toggleClass("plot-writing-focus", !isFocused);
+            $details
+                .find(".plot-writing-active")
+                .removeClass("plot-writing-active");
+            $details.find("[data-plot-writing-focus]").attr("aria-pressed", "false");
+            if (!isFocused) {
+                $textarea.closest(".col-12").addClass("plot-writing-active");
+                $button.attr("aria-pressed", "true");
+                $textarea.trigger("focus");
+            }
+        });
+
+        function replaceIcon($control, iconName) {
+            var $icon = $control.find("i, svg").first();
+            if (window.FontAwesome && window.FontAwesome.icon) {
+                $icon.replaceWith(
+                    window.FontAwesome
+                        .icon({ prefix: "fas", iconName: iconName })
+                        .html.join(""),
+                );
+                return;
+            }
+            $icon.attr("class", "fas fa-" + iconName);
+        }
+
+        function setVisibilityIcon($control, visibility) {
+            var iconName;
+            if (visibility === "G") {
+                iconName = "lock";
+            } else if (visibility === "P") {
+                iconName = "users";
+            } else {
+                iconName = "globe";
+            }
+            replaceIcon($control, iconName);
+        }
+
+        document.addEventListener("plot-visibility-updated", function (event) {
+            var data = event.detail.data;
+            var $element = $(
+                '.plot-element-container[data-element-id="' + data.element_id + '"]',
+            );
+            if (!$element.length) {
+                return;
+            }
+
+            $element.find("[data-plot-visibility-field]").each(function () {
+                var $control = $(this);
+                var visibility = data.visibility[
+                    $control.attr("data-plot-visibility-field")
+                ];
+                if (visibility) {
+                    setVisibilityIcon($control, visibility);
+                    $control.attr(
+                        "title",
+                        data.visibility_labels[
+                            $control.attr("data-plot-visibility-field")
+                        ],
+                    );
+                    $control.attr("aria-label", $control.attr("title"));
+                }
+            });
+
+            var visibilityValues = Object.values(data.visibility);
+            var highestVisibility = visibilityValues.includes("A")
+                ? "A"
+                : visibilityValues.includes("P")
+                  ? "P"
+                  : "G";
+            $element.find("[data-plot-visibility-summary]").each(function () {
+                setVisibilityIcon($(this), highestVisibility);
+            });
+        });
+
+        document.addEventListener("plot-element-created", function (event) {
+            var data = event.detail.data;
+            var $editor = $(
+                '[data-plot-editor-id="' + data.plot_id + '"]',
+            );
+            var $parent = $editor
+                .first()
+                .find(
+                    '.sortable[data-parent-id="' + data.parent_id + '"]',
+                )
+                .first();
+            if (!$parent.length) {
+                return;
+            }
+
+            $parent.prepend(data.element_html);
+            initSortable();
+
+            var detailsId = "details-" + data.element_id;
+            var details = document.getElementById(detailsId);
+            if (details) {
+                details.classList.add("show");
+                $('[data-bs-target="#' + detailsId + '"]').attr(
+                    "aria-expanded",
+                    "true",
+                );
+            }
+        });
+
         const STORAGE_KEY = "openPlotElements";
         const CHILDREN_STORAGE_KEY = "collapsedPlotViewerChildren";
 
@@ -280,7 +392,10 @@
                 }
                 initSortable();
             }
-            if (url.indexOf("xhr_campaign_plot_view") !== -1) {
+            if (
+                url.indexOf("xhr_campaign_plot_view") !== -1 ||
+                url.indexOf("xhr_campaign_plot_element") !== -1
+            ) {
                 if (evt.detail && evt.detail.target) {
                     restoreCollapseState($(evt.detail.target));
                     restoreChildrenCollapseState($(evt.detail.target));

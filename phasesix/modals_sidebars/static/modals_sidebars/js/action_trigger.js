@@ -38,9 +38,44 @@ const actionTriggerListener = (event) => {
                     "X-CSRFToken":
                         document.querySelector("body").dataset.csrfToken,
                 },
-            }).then((response) => {
-                dispatch(eventAfter);
-            });
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Action request failed");
+                    }
+                    const responseEvent =
+                        actionTrigger.dataset.actionTriggerResponseEvent;
+                    if (!responseEvent) {
+                        return null;
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data !== null) {
+                        document.dispatchEvent(
+                            new CustomEvent(
+                                actionTrigger.dataset.actionTriggerResponseEvent,
+                                {
+                                    detail: { data: data, trigger: actionTrigger },
+                                },
+                            ),
+                        );
+                    }
+                    dispatch(eventAfter);
+                })
+                .catch((error) => {
+                    console.error("Action request failed", error);
+                })
+                .finally(() => {
+                    if (spinner) {
+                        spinner.classList.add("d-none");
+                    }
+                    if ("disabled" in actionTrigger) {
+                        actionTrigger.disabled = false;
+                    } else {
+                        actionTrigger.classList.remove("disabled");
+                    }
+                });
         }
     }
 };

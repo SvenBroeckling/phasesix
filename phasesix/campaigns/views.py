@@ -18,7 +18,6 @@ from django.views.generic import (
 from campaigns.forms import (
     CampaignSettingsIntegrationForm,
     CampaignSettingsGameForm,
-    CampaignSettingsVisibilityForm,
 )
 from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
@@ -187,7 +186,9 @@ class CreateCampaignDataView(CreateView):
             ):
                 form.add_error(
                     None,
-                    _("Selected plot does not match the chosen world, epoch, or ruleset."),
+                    _(
+                        "Selected plot does not match the chosen world, epoch, or ruleset."
+                    ),
                 )
                 return self.form_invalid(form)
             if plot.image:
@@ -350,7 +351,9 @@ class XhrRemoveCampaignPlotView(View):
             Handout.objects.filter(plotelement__plot=plot).delete()
             Location.objects.filter(plotelement__plot=plot).delete()
             Character.objects.filter(plotelement__plot=plot).delete()
-            EssentialCharacter.objects.filter(essential_plot_elements__plot=plot).delete()
+            EssentialCharacter.objects.filter(
+                essential_plot_elements__plot=plot
+            ).delete()
             plot.delete()
         return JsonResponse({"status": "ok"})
 
@@ -402,7 +405,9 @@ class XhrRemoveCharacterView(View):
 
 class XhrSwitchEssentialCharacterNPCView(View):
     def post(self, request, *args, **kwargs):
-        campaign = get_object_or_404(Campaign, id=kwargs["pk"], ruleset=Campaign.RULESET_ESSENTIAL)
+        campaign = get_object_or_404(
+            Campaign, id=kwargs["pk"], ruleset=Campaign.RULESET_ESSENTIAL
+        )
         if campaign.may_edit(request.user):
             character = get_object_or_404(EssentialCharacter, id=kwargs["character_pk"])
             character.switch_pc_npc_campaign()
@@ -411,7 +416,9 @@ class XhrSwitchEssentialCharacterNPCView(View):
 
 class XhrRemoveEssentialCharacterView(View):
     def post(self, request, *args, **kwargs):
-        campaign = get_object_or_404(Campaign, id=kwargs["pk"], ruleset=Campaign.RULESET_ESSENTIAL)
+        campaign = get_object_or_404(
+            Campaign, id=kwargs["pk"], ruleset=Campaign.RULESET_ESSENTIAL
+        )
         if campaign.may_edit(request.user):
             character = get_object_or_404(EssentialCharacter, id=kwargs["character_pk"])
             character.campaign = None
@@ -451,10 +458,7 @@ class XhrCampaignSettingsView(UpdateView):
             return CampaignSettingsIntegrationForm
         elif self.kwargs["mode"] == "game":
             return CampaignSettingsGameForm
-        elif self.kwargs["mode"] == "visibility":
-            return CampaignSettingsVisibilityForm
-        else:
-            raise Exception(f"Unknown mode: {self.kwargs['mode']}")
+        raise Exception(f"Unknown mode: {self.kwargs['mode']}")
 
 
 class BaseSidebarView(DetailView):
@@ -480,10 +484,34 @@ class XhrSidebarView(BaseSidebarView):
         if self.kwargs["sidebar_template"] == "npc":
             plot = Plot.objects.filter(campaign=self.object).first()
             if plot:
-                model = EssentialCharacter if self.object.ruleset == Campaign.RULESET_ESSENTIAL else Character
-                relation = "essential_plot_elements__plot" if model is EssentialCharacter else "plotelement__plot"
+                model = (
+                    EssentialCharacter
+                    if self.object.ruleset == Campaign.RULESET_ESSENTIAL
+                    else Character
+                )
+                element_relation = (
+                    "essential_plot_elements__plot"
+                    if model is EssentialCharacter
+                    else "plotelement__plot"
+                )
+                visibility_relation = (
+                    "essential_plot_elements__npc_visibility__in"
+                    if model is EssentialCharacter
+                    else "plotelement__npc_visibility__in"
+                )
+                visible_to = (
+                    ("G", "P", "A")
+                    if self.object.may_edit(self.request.user)
+                    else (
+                        ("P", "A")
+                        if self.object.is_player(self.request.user)
+                        else ("A",)
+                    )
+                )
                 context["characters"] = (
-                    model.objects.filter(**{relation: plot})
+                    model.objects.filter(
+                        **{element_relation: plot, visibility_relation: visible_to}
+                    )
                     .distinct()
                     .order_by("name")
                 )
@@ -513,11 +541,35 @@ class XhrCharacterSidebarView(BaseSidebarView):
         context["may_edit"] = (
             campaign.may_edit(self.request.user) if campaign else False
         )
+        if campaign:
+            if self.object.plot_id:
+                visible_to = (
+                    ("G", "P", "A")
+                    if campaign.may_edit(self.request.user)
+                    else ("P", "A") if campaign.is_player(self.request.user) else ("A",)
+                )
+                context["may_view"] = PlotElement.objects.filter(
+                    plot=self.object.plot,
+                    npc=self.object,
+                    npc_visibility__in=visible_to,
+                ).exists()
+            else:
+                context["may_view"] = True
+            if not context["may_view"]:
+                raise PermissionDenied()
+        else:
+            context["may_view"] = False
         return context
 
 
 class XhrFoeSidebarView(BaseSidebarView):
     model = CampaignFoe
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not self.object.campaign.may_edit(self.request.user):
+            raise PermissionDenied()
+        return context
 
 
 class XhrPlotHandoutSidebarView(DetailView):
@@ -525,8 +577,15 @@ class XhrPlotHandoutSidebarView(DetailView):
     template_name = "campaigns/sidebar/handout.html"
 
     def get_queryset(self):
+        campaign = get_object_or_404(Campaign, id=self.kwargs["campaign_pk"])
+        visible_to = (
+            ("G", "P", "A")
+            if campaign.may_edit(self.request.user)
+            else (("P", "A") if campaign.is_player(self.request.user) else ("A",))
+        )
         return Handout.objects.filter(
-            plotelement__plot__campaign_id=self.kwargs["campaign_pk"]
+            plotelement__plot__campaign=campaign,
+            plotelement__handouts_visibility__in=visible_to,
         ).distinct()
 
     def get_context_data(self, **kwargs):
@@ -542,8 +601,15 @@ class XhrPlotLocationSidebarView(DetailView):
     template_name = "campaigns/sidebar/location.html"
 
     def get_queryset(self):
+        campaign = get_object_or_404(Campaign, id=self.kwargs["campaign_pk"])
+        visible_to = (
+            ("G", "P", "A")
+            if campaign.may_edit(self.request.user)
+            else (("P", "A") if campaign.is_player(self.request.user) else ("A",))
+        )
         return Location.objects.filter(
-            plotelement__plot__campaign_id=self.kwargs["campaign_pk"]
+            plotelement__plot__campaign=campaign,
+            plotelement__locations_visibility__in=visible_to,
         ).distinct()
 
     def get_context_data(self, **kwargs):
@@ -559,8 +625,15 @@ class XhrPlotFoeSidebarView(DetailView):
     template_name = "campaigns/sidebar/plot_foe.html"
 
     def get_queryset(self):
+        campaign = get_object_or_404(Campaign, id=self.kwargs["campaign_pk"])
+        visible_to = (
+            ("G", "P", "A")
+            if campaign.may_edit(self.request.user)
+            else (("P", "A") if campaign.is_player(self.request.user) else ("A",))
+        )
         return Foe.objects.filter(
-            plotelement__plot__campaign_id=self.kwargs["campaign_pk"]
+            plotelement__plot__campaign=campaign,
+            plotelement__foes_visibility__in=visible_to,
         ).distinct()
 
     def get_context_data(self, **kwargs):
@@ -594,9 +667,13 @@ class XhrSelectNPCView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.object.ruleset == Campaign.RULESET_ESSENTIAL:
-            context["characters"] = EssentialCharacter.objects.filter(created_by=self.request.user).exclude(id__in=self.object.essential_npc_set.all())
+            context["characters"] = EssentialCharacter.objects.filter(
+                created_by=self.request.user
+            ).exclude(id__in=self.object.essential_npc_set.all())
         else:
-            context["characters"] = Character.objects.filter(created_by=self.request.user).exclude(id__in=self.object.npc_set.all())
+            context["characters"] = Character.objects.filter(
+                created_by=self.request.user
+            ).exclude(id__in=self.object.npc_set.all())
         context["campaign"] = self.object
         return context
 
@@ -607,15 +684,25 @@ class CloneNPCView(View):
         if not campaign.may_edit(request.user):
             raise PermissionDenied()
 
-        model = EssentialCharacter if campaign.ruleset == Campaign.RULESET_ESSENTIAL else Character
+        model = (
+            EssentialCharacter
+            if campaign.ruleset == Campaign.RULESET_ESSENTIAL
+            else Character
+        )
         character = get_object_or_404(model, pk=kwargs["character_pk"])
         character.clone(new_npc_campaign=campaign)
         return render(
             request,
             "campaigns/fragments/select_npc.html",
             {
-                "characters": model.objects.filter(created_by=self.request.user).exclude(
-                    id__in=campaign.essential_npc_set.all() if model is EssentialCharacter else campaign.npc_set.all()
+                "characters": model.objects.filter(
+                    created_by=self.request.user
+                ).exclude(
+                    id__in=(
+                        campaign.essential_npc_set.all()
+                        if model is EssentialCharacter
+                        else campaign.npc_set.all()
+                    )
                 ),
                 "campaign": campaign,
             },
@@ -628,7 +715,11 @@ class AssignNPCView(View):
         if not campaign.may_edit(request.user):
             raise PermissionDenied()
 
-        model = EssentialCharacter if campaign.ruleset == Campaign.RULESET_ESSENTIAL else Character
+        model = (
+            EssentialCharacter
+            if campaign.ruleset == Campaign.RULESET_ESSENTIAL
+            else Character
+        )
         character = get_object_or_404(model, pk=kwargs["character_pk"])
         if model is EssentialCharacter and character.campaign_id:
             raise PermissionDenied()
@@ -639,8 +730,14 @@ class AssignNPCView(View):
             request,
             "campaigns/fragments/select_npc.html",
             {
-                "characters": model.objects.filter(created_by=self.request.user).exclude(
-                    id__in=campaign.essential_npc_set.all() if model is EssentialCharacter else campaign.npc_set.all()
+                "characters": model.objects.filter(
+                    created_by=self.request.user
+                ).exclude(
+                    id__in=(
+                        campaign.essential_npc_set.all()
+                        if model is EssentialCharacter
+                        else campaign.npc_set.all()
+                    )
                 ),
                 "campaign": campaign,
             },
@@ -651,7 +748,8 @@ class XhrCampaignGameLogView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        return Roll.objects.filter(campaign_id=self.kwargs["campaign_pk"])
+        campaign = get_object_or_404(Campaign, id=self.kwargs["campaign_pk"])
+        return Roll.objects.filter(campaign=campaign)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

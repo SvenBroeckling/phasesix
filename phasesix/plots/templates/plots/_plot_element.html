@@ -17,33 +17,23 @@
                 <span class="fw-semibold">{{ element.name }}</span>
             </span>
     </div>
-    <div class="d-flex align-items-center gap-2">
-      <button data-modal-url="{% url "plots:update_plot_element" pk=element.id %}"
-              data-modal-event-after="refresh-plot"
-              data-modal-title="{% trans 'Edit plot element' %}"
-              data-modal-size-class="modal-xl"
+    <div class="plot-editor-actions">
+      <button data-action-trigger-url="{% url "plots:quick_create_plot_child" plot_pk=object.id parent_pk=element.id %}"
+              data-action-trigger-response-event="plot-element-created"
+              class="btn btn-sm plot-editor-action"
               type="button"
-              class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
-              title="{% trans 'Edit summary' %}">
-        <i class="fa fa-pen me-1"></i> {% trans 'Edit' %}
-      </button>
-      <button data-modal-url="{% url "plots:create_plot_element" plot_pk=object.id %}?parent_pk={{ element.id }}"
-              data-modal-event-after="refresh-plot"
-              data-modal-title="{% trans 'Create plot element' %}"
-              class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
-              type="button"
-              title="{% trans 'Create element' %}">
-        <i class="fa fa-plus me-1"></i>
-        {% trans 'Element' %}
+              title="{% trans 'Create element' %}"
+              aria-label="{% trans 'Create element' %}">
+        <i class="fas fa-plus" aria-hidden="true"></i>
       </button>
       <button type="button"
-              class="btn btn-sm btn-outline-danger rounded-pill d-flex align-items-center justify-content-center"
+              class="btn btn-sm plot-editor-action plot-editor-action-delete"
               data-action-trigger-url="{% url "plots:delete_plot_element" pk=element.id %}"
               data-action-trigger-confirm="{% trans "Delete this plot element? Children will be moved to its parent." %}"
               data-action-trigger-event-after="refresh-plot"
-              title="{% trans "Delete element" %}">
-        <i class="fa fa-trash me-1"></i>
-        {% trans "Delete" %}
+              title="{% trans "Delete element" %}"
+              aria-label="{% trans "Delete element" %}">
+        <i class="fas fa-trash" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -51,24 +41,56 @@
   <div id="details-{{ element.id }}" class="collapse">
     <div class="rounded p-3 my-2 small border">
 
-      {% if element.player_summary %}
+      <form action="{% url 'plots:update_plot_element' pk=element.id %}"
+            data-fetch-form="true"
+            data-fetch-form-event-after="refresh-plot"
+            method="post"
+            class="plot-element-inline-form mb-4">
+        {% csrf_token %}
         <div class="mb-3">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
-          </div>
-          {% trans "None" as none_text %}
-          <div class="text-body">{{ element.player_summary|phasesix_markup }}</div>
+          <label class="form-label fw-semibold text-uppercase text-muted" for="element-name-{{ element.id }}">{% trans 'Name' %}</label>
+          <input id="element-name-{{ element.id }}"
+                 class="form-control form-control-sm"
+                 name="name"
+                 value="{{ element.name }}"
+                 required>
         </div>
-      {% endif %}
-
-      {% if element.gm_notes %}
-        <div class="mb-3">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between gap-2">
+              <label class="form-label fw-semibold text-uppercase text-muted" for="element-player-summary-{{ element.id }}">{% trans 'Player summary' %}</label>
+              <button type="button"
+                      class="btn btn-sm btn-link p-0"
+                      data-plot-writing-focus="element-player-summary-{{ element.id }}"
+                      title="{% trans 'Focus writing' %}"
+                      aria-label="{% trans 'Focus writing' %}"
+                      aria-pressed="false"><i class="fas fa-expand-alt" aria-hidden="true"></i></button>
+            </div>
+            <textarea id="element-player-summary-{{ element.id }}"
+                      class="form-control form-control-sm"
+                      name="player_summary"
+                      rows="12">{{ element.player_summary|default_if_none:"" }}</textarea>
           </div>
-          <div class="text-body">{{ element.gm_notes|phasesix_markup }}</div>
+          <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between gap-2">
+              <label class="form-label fw-semibold text-uppercase text-muted" for="element-gm-notes-{{ element.id }}">{% trans 'GM notes' %}</label>
+              <button type="button"
+                      class="btn btn-sm btn-link p-0"
+                      data-plot-writing-focus="element-gm-notes-{{ element.id }}"
+                      title="{% trans 'Focus writing' %}"
+                      aria-label="{% trans 'Focus writing' %}"
+                      aria-pressed="false"><i class="fas fa-expand-alt" aria-hidden="true"></i></button>
+            </div>
+            <textarea id="element-gm-notes-{{ element.id }}"
+                      class="form-control form-control-sm"
+                      name="gm_notes"
+                      rows="12">{{ element.gm_notes|default_if_none:"" }}</textarea>
+          </div>
         </div>
-      {% endif %}
+        <div class="d-flex justify-content-end mt-2">
+          <button type="submit" class="btn btn-sm btn-primary">{% trans 'Save changes' %}</button>
+        </div>
+      </form>
 
       {# Handouts #}
       <div class="mb-3">

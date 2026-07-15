@@ -11,7 +11,7 @@
         <button type="button"
                 class="btn btn-outline-danger"
                 data-action-trigger-url="{% url 'plots:delete_plot_foe' plot_element_pk=plot_element.id pk=object.id %}"
-                data-action-trigger-event-after="refresh-plot,modal-hide">
+                data-action-trigger-event-after="refresh-campaign-plot-element-{{ plot_element.id }},modal-hide">
           {% trans "Remove" %}
         </button>
       </div>

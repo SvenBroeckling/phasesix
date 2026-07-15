@@ -1,6 +1,10 @@
 {% load i18n rules_extras portal_extras %}
+{% if may_edit or element.may_view_any %}
 <div class="plot-element-container"
-     data-element-id="{{ element.id }}">
+     data-element-id="{{ element.id }}"
+     hx-get="{% url 'plots:xhr_campaign_plot_element' campaign_pk=object.id pk=element.id %}"
+     hx-trigger="refresh-campaign-plot-element-{{ element.id }} from:document"
+     hx-swap="outerHTML">
   <div class="plot-bar d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-2">
       {% if element.children.exists %}
@@ -24,28 +28,40 @@
         <span class="fw-semibold">{{ element.name }}</span>
       </span>
     </div>
+    <span class="text-muted"
+          data-plot-visibility-summary
+          title="{% trans 'Highest section visibility' %}"
+          aria-label="{% trans 'Highest section visibility' %}">
+      {% if element.player_summary_visibility == 'A' or element.gm_notes_visibility == 'A' or element.npc_visibility == 'A' or element.handouts_visibility == 'A' or element.foes_visibility == 'A' or element.locations_visibility == 'A' %}
+        <i class="fas fa-globe" aria-hidden="true"></i>
+      {% elif element.player_summary_visibility == 'P' or element.gm_notes_visibility == 'P' or element.npc_visibility == 'P' or element.handouts_visibility == 'P' or element.foes_visibility == 'P' or element.locations_visibility == 'P' %}
+        <i class="fas fa-users" aria-hidden="true"></i>
+      {% else %}
+        <i class="fas fa-lock" aria-hidden="true"></i>
+      {% endif %}
+    </span>
   </div>
 
   <div id="details-{{ element.id }}" class="collapse">
     <div class="rounded p-3 my-2 small border plot-element-details">
 
-      {% if element.player_summary and may_edit %}
+      {% if element.player_summary and element.may_view_player_summary %}
         <div class="mb-3">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Player summary' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1"><span>{% trans 'Player summary' %}</span>{% if may_edit %}{% include 'campaigns/plot/_visibility_control.html' with visibility_field='player_summary_visibility' visibility=element.player_summary_visibility visibility_label=element.get_player_summary_visibility_display %}{% endif %}</div>
           <div class="text-body">{{ element.player_summary|phasesix_markup }}</div>
         </div>
       {% endif %}
 
-      {% if element.gm_notes %}
+      {% if element.gm_notes and element.may_view_gm_notes %}
         <div class="mb-3">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'GM notes' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1"><span>{% trans 'GM notes' %}</span>{% if may_edit %}{% include 'campaigns/plot/_visibility_control.html' with visibility_field='gm_notes_visibility' visibility=element.gm_notes_visibility visibility_label=element.get_gm_notes_visibility_display %}{% endif %}</div>
           <div class="text-body">{{ element.gm_notes|phasesix_markup }}</div>
         </div>
       {% endif %}
 
-      {% if element.handouts.exists %}
+      {% if element.handouts.exists and element.may_view_handouts %}
         <div class="mb-3">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Handouts' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1"><span>{% trans 'Handouts' %}</span>{% if may_edit %}{% include 'campaigns/plot/_visibility_control.html' with visibility_field='handouts_visibility' visibility=element.handouts_visibility visibility_label=element.get_handouts_visibility_display %}{% endif %}</div>
           <div class="d-flex flex-wrap gap-2">
             {% for handout in element.handouts.all %}
               <button type="button"
@@ -74,61 +90,65 @@
       {% endif %}
 
       {% if element.npc.exists %}
-        <div class="mb-3">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
-          <div class="d-flex flex-wrap gap-2">
-            {% for character in element.npc.all %}
-              <button type="button"
-                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
-                      data-sidebar-right-title="{{ character.name }}"
-                      data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=character.id sidebar_template='character' %}">
-                {% if character.image %}
-                  <div style="width: 140px;">
-                    <img src="{{ character.image.url }}"
-                         alt="{{ character.name }}"
-                         class="img-thumbnail w-100"
-                         style="height: 100px; object-fit: cover; object-position: {% focal_position character %};"
-                         {% focal_image_attrs character %}>
-                  </div>
-                {% else %}
-                  <div class="border rounded d-flex align-items-center justify-content-center bg-light"
-                       style="width: 140px; height: 100px;">
-                    <span class="text-muted small">{{ character.name }}</span>
-                  </div>
-                {% endif %}
-                <div class="small mt-1 text-break" style="width: 140px;">{{ character.name }}</div>
-              </button>
-            {% endfor %}
+        {% if element.may_view_npc %}
+          <div class="mb-3">
+            <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1"><span>{% trans 'NPC' %}</span>{% if may_edit %}{% include 'campaigns/plot/_visibility_control.html' with visibility_field='npc_visibility' visibility=element.npc_visibility visibility_label=element.get_npc_visibility_display %}{% endif %}</div>
+            <div class="d-flex flex-wrap gap-2">
+              {% for character in element.npc.all %}
+                <button type="button"
+                        class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
+                        data-sidebar-right-title="{{ character.name }}"
+                        data-sidebar-right-url="{% url 'campaigns:xhr_character_sidebar' pk=character.id sidebar_template='character' %}">
+                  {% if character.image %}
+                    <div style="width: 140px;">
+                      <img src="{{ character.image.url }}"
+                           alt="{{ character.name }}"
+                           class="img-thumbnail w-100"
+                           style="height: 100px; object-fit: cover; object-position: {% focal_position character %};"
+                           {% focal_image_attrs character %}>
+                    </div>
+                  {% else %}
+                    <div class="border rounded d-flex align-items-center justify-content-center bg-light"
+                         style="width: 140px; height: 100px;">
+                      <span class="text-muted small">{{ character.name }}</span>
+                    </div>
+                  {% endif %}
+                  <div class="small mt-1 text-break" style="width: 140px;">{{ character.name }}</div>
+                </button>
+              {% endfor %}
+            </div>
           </div>
-        </div>
+        {% endif %}
       {% endif %}
 
       {% if element.foes.exists %}
-        <div class="mb-3">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Foes' %}</div>
-          <div class="d-flex flex-wrap gap-2">
-            {% for foe in element.foes.all %}
-              <button type="button"
-                      class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
-                      data-sidebar-right-title="{{ foe.name }}"
-                      data-sidebar-right-url="{% url 'campaigns:xhr_plot_foe_sidebar' campaign_pk=object.id pk=foe.id %}">
-                <div style="width: 140px;">
-                  <img src="{% image_url foe "140x140" crop="center" %}"
-                       alt="{{ foe.name }}"
-                       class="img-thumbnail w-100"
-                       style="height: 140px; object-fit: cover;"
-                       {% focal_image_attrs foe %}>
-                </div>
-                <div class="small mt-1 text-break" style="width: 140px;">{{ foe.name }}</div>
-              </button>
-            {% endfor %}
+        {% if element.may_view_foes %}
+          <div class="mb-3">
+            <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1"><span>{% trans 'Foes' %}</span>{% if may_edit %}{% include 'campaigns/plot/_visibility_control.html' with visibility_field='foes_visibility' visibility=element.foes_visibility visibility_label=element.get_foes_visibility_display %}{% endif %}</div>
+            <div class="d-flex flex-wrap gap-2">
+              {% for foe in element.foes.all %}
+                <button type="button"
+                        class="btn p-0 border-0 bg-transparent d-flex flex-column align-items-center text-center plot-reference-card"
+                        data-sidebar-right-title="{{ foe.name }}"
+                        data-sidebar-right-url="{% url 'campaigns:xhr_plot_foe_sidebar' campaign_pk=object.id pk=foe.id %}">
+                  <div style="width: 140px;">
+                    <img src="{% image_url foe "140x140" crop="center" %}"
+                         alt="{{ foe.name }}"
+                         class="img-thumbnail w-100"
+                         style="height: 140px; object-fit: cover;"
+                         {% focal_image_attrs foe %}>
+                  </div>
+                  <div class="small mt-1 text-break" style="width: 140px;">{{ foe.name }}</div>
+                </button>
+              {% endfor %}
+            </div>
           </div>
-        </div>
+        {% endif %}
       {% endif %}
 
-      {% if element.locations.exists %}
+      {% if element.locations.exists and element.may_view_locations %}
         <div>
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Locations' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1"><span>{% trans 'Locations' %}</span>{% if may_edit %}{% include 'campaigns/plot/_visibility_control.html' with visibility_field='locations_visibility' visibility=element.locations_visibility visibility_label=element.get_locations_visibility_display %}{% endif %}</div>
           <div class="d-flex flex-wrap gap-2">
             {% for loc in element.locations.all %}
               <button type="button"
@@ -168,3 +188,8 @@
     </div>
   {% endif %}
 </div>
+{% else %}
+  {% for child in element.children.all %}
+    {% include 'campaigns/plot/_plot_element.html' with element=child %}
+  {% endfor %}
+{% endif %}

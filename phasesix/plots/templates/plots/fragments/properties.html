@@ -3,54 +3,50 @@
   <div class="card-body">
     <div class="d-flex flex-column gap-2 mb-3">
       <h5 class="card-title mb-0">{% trans 'Plot' %}</h5>
-      <div class="d-flex flex-column flex-sm-row flex-wrap align-items-stretch align-items-sm-center gap-2">
+      <div class="plot-editor-properties-actions">
         {% if request.user.is_authenticated and request.user.profile.may_use_ai %}
           <button
-            class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-3 order-sm-1"
+            class="btn btn-sm plot-editor-property-action"
             data-modal-url="{% url "plots:create_plot_from_description" pk=object.id %}"
             data-modal-event-after="refresh-plot"
             data-modal-size-class="modal-xl"
             data-modal-title="{% trans "Create from description" %}"
-            title="{% trans "Create from description" %}">
-            <i class="fas fa-pen me-1"></i>
-            {% trans "Create from description" %}
+            title="{% trans "Create from description" %}"
+            aria-label="{% trans "Create from description" %}">
+            <i class="fas fa-magic" aria-hidden="true"></i>
           </button>
         {% endif %}
         <button
-          class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-1 order-sm-3"
-          data-modal-url="{% url "plots:create_plot_element" plot_pk=object.id %}"
-          data-modal-event-after="refresh-plot"
-          data-modal-title="{% trans 'Create plot element' %}"
-          title="{% trans "Add Element" %}">
-          <i class="fas fa-plus me-1"></i>
-          {% trans "Add Element" %}
+          class="btn btn-sm plot-editor-property-action"
+          data-action-trigger-url="{% url "plots:quick_create_plot_element" plot_pk=object.id %}"
+          data-action-trigger-response-event="plot-element-created"
+          title="{% trans "Add Element" %}"
+          aria-label="{% trans "Add Element" %}">
+          <i class="fas fa-plus" aria-hidden="true"></i>
         </button>
-        <button
-          class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-2 order-sm-2"
-          data-modal-url="{% url "plots:update_plot" pk=object.id %}"
-          data-modal-event-after="refresh-plot"
-          data-modal-size-class="modal-xl"
-          data-modal-title="{% trans "Edit plot" %}"
-          title="{% trans "Edit plot" %}">
-          <i class="fas fa-pen me-1"></i>
-          {% trans "Edit plot" %}
-        </button>
-      {% if plot.campaign %}
+      {% if object.campaign %}
         <button type="button"
-                class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 order-1 order-sm-3"
+                class="btn btn-sm plot-editor-property-action plot-editor-action-delete"
                 data-modal-url="{% url 'campaigns:xhr_remove_plot_modal' pk=object.campaign.id %}"
                 data-modal-title="{% trans 'Remove plot' %}"
-                data-modal-size-class="modal-sm">
-          <i class="fas fa-trash me-1"></i>
-          {% trans "Remove plot" %}
+                data-modal-size-class="modal-sm"
+                title="{% trans 'Remove plot' %}"
+                aria-label="{% trans 'Remove plot' %}">
+          <i class="fas fa-trash" aria-hidden="true"></i>
         </button>
       {% endif %}
       </div>
     </div>
-    <div class="mb-3">
-      <div class="fw-semibold">{% trans 'Name' %}</div>
-      <div>{{ object.name }}</div>
-    </div>
+    <form action="{% url 'plots:inline_update_plot' pk=object.id %}"
+          data-fetch-form="true"
+          data-fetch-form-event-after="refresh-plot"
+          method="post"
+          class="plot-inline-form">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label fw-semibold" for="plot-name-{{ object.id }}">{% trans 'Name' %}</label>
+        <input id="plot-name-{{ object.id }}" class="form-control form-control-sm" name="name" value="{{ object.name }}" required>
+      </div>
     <div class="mb-3">
       <div class="fw-semibold">{% trans 'Language' %}</div>
       <div>{{ object.get_language_display }}</div>
@@ -73,13 +69,15 @@
         {% endfor %}
       </div>
     </div>
-    <div class="mb-3">
-      <div class="fw-semibold">{% trans 'Player abstract' %}</div>
-      <div>{{ object.player_abstract|linebreaksbr }}</div>
-    </div>
-    <div class="mb-3">
-      <div class="fw-semibold">{% trans 'GM Description' %}</div>
-      <div>{{ object.gm_description|linebreaksbr }}</div>
-    </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold" for="plot-player-abstract-{{ object.id }}">{% trans 'Player abstract' %}</label>
+        <textarea id="plot-player-abstract-{{ object.id }}" class="form-control form-control-sm" name="player_abstract" rows="5">{{ object.player_abstract }}</textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold" for="plot-gm-description-{{ object.id }}">{% trans 'GM Description' %}</label>
+        <textarea id="plot-gm-description-{{ object.id }}" class="form-control form-control-sm" name="gm_description" rows="7">{{ object.gm_description }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-sm btn-primary w-100">{% trans 'Save plot' %}</button>
+    </form>
   </div>
 </div>

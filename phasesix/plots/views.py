@@ -1,13 +1,12 @@
 from django.core.exceptions import PermissionDenied
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.db import transaction
 from django.db.models import F, Q
 from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, FormView
+from django.views.generic import CreateView, DetailView, UpdateView, FormView
 from django.utils.translation import gettext as _
 import logging
 
@@ -28,6 +27,37 @@ from rules.models import Foe, Extension
 
 logger = logging.getLogger(__name__)
 
+PLOT_ELEMENT_VISIBILITY_FIELDS = (
+    "player_summary_visibility",
+    "gm_notes_visibility",
+    "npc_visibility",
+    "handouts_visibility",
+    "foes_visibility",
+    "locations_visibility",
+)
+
+
+def prepare_campaign_plot_elements(elements, campaign, user):
+    for element in elements:
+        for field in PLOT_ELEMENT_VISIBILITY_FIELDS:
+            setattr(
+                element,
+                f"may_view_{field.removesuffix('_visibility')}",
+                element.may_view(user, campaign, field),
+            )
+        children = list(element.children.all())
+        prepare_campaign_plot_elements(children, campaign, user)
+        element.may_view_any = campaign.may_edit(user) or any(
+            (
+                bool(element.player_summary) and element.may_view_player_summary,
+                bool(element.gm_notes) and element.may_view_gm_notes,
+                element.npc.exists() and element.may_view_npc,
+                element.foes.exists() and element.may_view_foes,
+                element.handouts.exists() and element.may_view_handouts,
+                element.locations.exists() and element.may_view_locations,
+            )
+        )
+
 
 def user_may_use_ai(user):
     return bool(
@@ -38,7 +68,6 @@ def user_may_use_ai(user):
     )
 
 
-@method_decorator(csrf_exempt, name="dispatch")
 class XhrReorderPlotElementView(View):
     def post(self, request, *args, **kwargs):
         parent_id = request.POST.get("parent_id")
@@ -55,26 +84,6 @@ class XhrReorderPlotElementView(View):
             )
 
         return JsonResponse({"status": "ok"})
-
-
-class PlotEditorView(DetailView):
-    template_name = "plots/plot_editor.html"
-    model = Plot
-
-
-class PlotListView(ListView):
-    model = Plot
-    template_name = "plots/plot_list.html"
-
-    def get_queryset(self):
-        return (
-            super()
-            .get_queryset()
-            .filter(
-                cloned_from__isnull=True,
-                campaign__isnull=True,
-            )
-        )
 
 
 class XhrPlotFragmentView(DetailView):
@@ -95,13 +104,126 @@ class XhrCampaignPlotViewFragment(View):
         campaign = get_object_or_404(Campaign, id=kwargs["campaign_pk"])
         if plot.campaign_id != campaign.id:
             raise PermissionDenied()
-        if not campaign.may_edit(request.user):
-            raise PermissionDenied()
+        root_elements = self._set_element_visibility(plot, campaign, request.user)
         return render(
             request,
             "plots/fragments/campaign_plot_view.html",
-            {"plot": plot, "campaign": campaign},
+            {
+                "plot": plot,
+                "campaign": campaign,
+                "root_elements": root_elements,
+                "may_edit": campaign.may_edit(request.user),
+            },
         )
+
+    def _set_element_visibility(self, plot, campaign, user):
+        root_elements = plot.root_elements
+        prepare_campaign_plot_elements(root_elements, campaign, user)
+        return root_elements
+
+
+class XhrCampaignPlotElementView(View):
+    def get(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["campaign_pk"])
+        element = get_object_or_404(
+            PlotElement, id=kwargs["pk"], plot__campaign=campaign
+        )
+        prepare_campaign_plot_elements([element], campaign, request.user)
+        return render(
+            request,
+            "campaigns/plot/_plot_element.html",
+            {
+                "element": element,
+                "object": campaign,
+                "may_edit": campaign.may_edit(request.user),
+            },
+        )
+
+
+class XhrPlotElementVisibilityView(View):
+    visibility_fields = PLOT_ELEMENT_VISIBILITY_FIELDS
+    visibility_cycle = {"G": "P", "P": "A", "A": "G"}
+
+    def post(self, request, *args, **kwargs):
+        element = get_object_or_404(PlotElement, id=kwargs["pk"])
+        campaign = element.plot.campaign
+        if campaign is None or not campaign.may_edit(request.user):
+            raise PermissionDenied()
+
+        field = kwargs["visibility_field"]
+        action = kwargs["action"]
+        if action in {"show-all", "hide-all"}:
+            value = "A" if action == "show-all" else "G"
+            PlotElement.objects.filter(id=element.id).update(
+                **{
+                    visibility_field: value
+                    for visibility_field in self.visibility_fields
+                }
+            )
+        elif field in self.visibility_fields and action == "cycle":
+            setattr(element, field, self.visibility_cycle[getattr(element, field)])
+            element.save(update_fields=[field])
+        else:
+            raise PermissionDenied()
+        element.refresh_from_db(fields=self.visibility_fields)
+        return JsonResponse(
+            {
+                "status": "ok",
+                "element_id": element.id,
+                "visibility": {
+                    visibility_field: getattr(element, visibility_field)
+                    for visibility_field in self.visibility_fields
+                },
+                "visibility_labels": {
+                    visibility_field: getattr(
+                        element, f"get_{visibility_field}_display"
+                    )()
+                    for visibility_field in self.visibility_fields
+                },
+            }
+        )
+
+
+class XhrQuickCreatePlotElementView(View):
+    def post(self, request, *args, **kwargs):
+        plot = get_object_or_404(Plot, id=kwargs["plot_pk"])
+        parent = None
+        if self.kwargs.get("parent_pk"):
+            parent = get_object_or_404(
+                PlotElement, id=self.kwargs["parent_pk"], plot=plot
+            )
+        PlotElement.objects.filter(plot=plot, parent=parent).update(
+            ordering=F("ordering") + 1
+        )
+        element = PlotElement.objects.create(
+            plot=plot,
+            parent=parent,
+            name=_("New plot element"),
+            ordering=0,
+        )
+        return JsonResponse(
+            {
+                "status": "ok",
+                "plot_id": plot.id,
+                "parent_id": parent.id if parent else "root",
+                "element_id": element.id,
+                "element_html": render_to_string(
+                    "plots/_plot_element.html",
+                    {"element": element, "object": plot},
+                    request=request,
+                ),
+            }
+        )
+
+
+class XhrInlineUpdatePlotView(View):
+    def post(self, request, *args, **kwargs):
+        plot = get_object_or_404(Plot, id=kwargs["pk"])
+        plot.name = request.POST["name"]
+        plot.player_abstract = request.POST.get("player_abstract", "")
+        plot.gm_description = request.POST.get("gm_description", "")
+        plot.save(update_fields=["name", "player_abstract", "gm_description"])
+        return HttpResponseRedirect(plot.campaign.get_absolute_url())
 
 
 class XhrCreatePlotView(CreateView):
@@ -115,7 +237,7 @@ class XhrCreatePlotView(CreateView):
     def _get_campaign(self):
         campaign_pk = self.request.GET.get("campaign_pk")
         if not campaign_pk:
-            return None
+            raise PermissionDenied()
         campaign = get_object_or_404(Campaign, id=campaign_pk)
         if not campaign.may_edit(self.request.user):
             raise PermissionDenied()
@@ -124,12 +246,11 @@ class XhrCreatePlotView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         campaign = self._get_campaign()
-        if campaign:
-            context["campaign"] = campaign
-            context["post_url"] = (
-                reverse("plots:create_plot") + "?campaign_pk=" + str(campaign.id)
-            )
-            context["fetch_form_event_after"] = "refresh-campaign-dramaturgy"
+        context["campaign"] = campaign
+        context["post_url"] = (
+            reverse("plots:create_plot") + "?campaign_pk=" + str(campaign.id)
+        )
+        context["fetch_form_event_after"] = "refresh-campaign-dramaturgy"
         return context
 
     def form_valid(self, form):
@@ -137,19 +258,14 @@ class XhrCreatePlotView(CreateView):
         if self.request.user.is_authenticated:
             form.instance.created_by = self.request.user
             form.instance.is_homebrew = False
-        if campaign:
-            form.instance.campaign = campaign
-            form.instance.ruleset = campaign.ruleset
-            if not form.instance.world_extension_id:
-                form.instance.world_extension = campaign.world_extension
-            if not form.instance.epoch_extension_id:
-                form.instance.epoch_extension = campaign.epoch_extension
+        form.instance.campaign = campaign
+        form.instance.ruleset = campaign.ruleset
+        if not form.instance.world_extension_id:
+            form.instance.world_extension = campaign.world_extension
+        if not form.instance.epoch_extension_id:
+            form.instance.epoch_extension = campaign.epoch_extension
         response = super().form_valid(form)
-        if (
-            campaign
-            and not self.object.cloned_from_id
-            and not self.object.plotelement_set.exists()
-        ):
+        if not self.object.cloned_from_id and not self.object.plotelement_set.exists():
             PlotElement.objects.create(
                 plot=self.object,
                 name=_("How to edit this plot"),
@@ -160,23 +276,7 @@ class XhrCreatePlotView(CreateView):
         return response
 
     def get_success_url(self):
-        return reverse("plots:plot_editor", kwargs={"pk": self.object.pk})
-
-
-class XhrUpdatePlotView(UpdateView):
-    model = Plot
-    template_name = "plots/xhr_plot_modal.html"
-    form_class = PlotForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["post_url"] = reverse(
-            "plots:update_plot", kwargs={"pk": self.object.pk}
-        )
-        return context
-
-    def get_success_url(self):
-        return reverse("plots:plot_editor", kwargs={"pk": self.object.pk})
+        return self.object.campaign.get_absolute_url()
 
 
 class XhrCreatePlotFromDescriptionView(FormView):
@@ -223,7 +323,7 @@ class XhrCreatePlotFromDescriptionView(FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("plots:plot_editor", kwargs={"pk": self.plot.pk})
+        return self.plot.campaign.get_absolute_url()
 
 
 class XhrCreatePlotElementView(CreateView):
@@ -250,7 +350,7 @@ class XhrCreatePlotElementView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("plots:plot_editor", kwargs={"pk": self.kwargs["plot_pk"]})
+        return Plot.objects.get(id=self.kwargs["plot_pk"]).campaign.get_absolute_url()
 
 
 class XhrUpdatePlotElementView(UpdateView):
@@ -258,18 +358,8 @@ class XhrUpdatePlotElementView(UpdateView):
     template_name = "plots/xhr_plot_element_modal.html"
     form_class = PlotElementForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["post_url"] = reverse(
-            "plots:update_plot_element", kwargs={"pk": self.object.pk}
-        )
-        context["delete_url"] = reverse(
-            "plots:delete_plot_element", kwargs={"pk": self.object.pk}
-        )
-        return context
-
     def get_success_url(self):
-        return reverse("plots:plot_editor", kwargs={"pk": self.kwargs["pk"]})
+        return self.object.plot.campaign.get_absolute_url()
 
 
 class DeletePlotElementView(View):
@@ -333,7 +423,7 @@ class XhrCreateHandoutView(CreateView):
 
     def get_success_url(self):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
-        return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
+        return plot_element.plot.campaign.get_absolute_url()
 
 
 class XhrUpdateHandoutView(UpdateView):
@@ -353,7 +443,7 @@ class XhrUpdateHandoutView(UpdateView):
 
     def get_success_url(self):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
-        return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
+        return plot_element.plot.campaign.get_absolute_url()
 
 
 class DeleteHandoutView(View):
@@ -404,7 +494,7 @@ class XhrCreateLocationView(CreateView):
 
     def get_success_url(self):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
-        return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
+        return plot_element.plot.campaign.get_absolute_url()
 
 
 class XhrUpdateLocationView(UpdateView):
@@ -424,7 +514,7 @@ class XhrUpdateLocationView(UpdateView):
 
     def get_success_url(self):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
-        return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
+        return plot_element.plot.campaign.get_absolute_url()
 
 
 class DeleteLocationView(View):
@@ -456,9 +546,19 @@ class XhrSelectPlotNpcView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         plot = self.object.plot
-        model = EssentialCharacter if plot.ruleset == Plot.RULESET_ESSENTIAL else Character
-        relation = "essential_plot_elements__plot" if model is EssentialCharacter else "plotelement__plot"
-        current = self.object.essential_npc if model is EssentialCharacter else self.object.npc
+        model = (
+            EssentialCharacter if plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        )
+        relation = (
+            "essential_plot_elements__plot"
+            if model is EssentialCharacter
+            else "plotelement__plot"
+        )
+        current = (
+            self.object.essential_npc
+            if model is EssentialCharacter
+            else self.object.npc
+        )
         assigned_characters = (
             model.objects.filter(**{relation: plot})
             .distinct()
@@ -496,21 +596,33 @@ class XhrSelectPlotFoeView(DetailView):
 class AddPlotNpcView(View):
     def post(self, request, *args, **kwargs):
         plot_element = get_object_or_404(PlotElement, id=kwargs["pk"])
-        model = EssentialCharacter if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        model = (
+            EssentialCharacter
+            if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL
+            else Character
+        )
         character = get_object_or_404(model, id=kwargs["character_pk"])
 
         if character.created_by_id != request.user.id:
             raise PermissionDenied()
 
         clone = character.clone(plot=plot_element.plot)
-        (plot_element.essential_npc if model is EssentialCharacter else plot_element.npc).add(clone)
+        (
+            plot_element.essential_npc
+            if model is EssentialCharacter
+            else plot_element.npc
+        ).add(clone)
         return JsonResponse({"status": "ok"})
 
 
 class AssignPlotNpcView(View):
     def post(self, request, *args, **kwargs):
         plot_element = get_object_or_404(PlotElement, id=kwargs["pk"])
-        model = EssentialCharacter if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        model = (
+            EssentialCharacter
+            if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL
+            else Character
+        )
         character = get_object_or_404(model, id=kwargs["character_pk"])
 
         if character.plot_id != plot_element.plot_id:
@@ -518,23 +630,36 @@ class AssignPlotNpcView(View):
         if character.created_by_id != request.user.id:
             raise PermissionDenied()
 
-        (plot_element.essential_npc if model is EssentialCharacter else plot_element.npc).add(character)
+        (
+            plot_element.essential_npc
+            if model is EssentialCharacter
+            else plot_element.npc
+        ).add(character)
         return JsonResponse({"status": "ok"})
 
 
 class DeletePlotNpcView(View):
     def post(self, request, *args, **kwargs):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
-        model = EssentialCharacter if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL else Character
+        model = (
+            EssentialCharacter
+            if plot_element.plot.ruleset == Plot.RULESET_ESSENTIAL
+            else Character
+        )
         character = get_object_or_404(model, id=self.kwargs["pk"])
 
         if character.created_by_id != request.user.id:
             raise PermissionDenied()
 
-        (plot_element.essential_npc if model is EssentialCharacter else plot_element.npc).remove(character)
-        if (
-            character.plot_id == plot_element.plot_id
-            and not (character.essential_plot_elements.exists() if model is EssentialCharacter else character.plotelement_set.exists())
+        (
+            plot_element.essential_npc
+            if model is EssentialCharacter
+            else plot_element.npc
+        ).remove(character)
+        if character.plot_id == plot_element.plot_id and not (
+            character.essential_plot_elements.exists()
+            if model is EssentialCharacter
+            else character.plotelement_set.exists()
         ):
             character.delete()
         return JsonResponse({"status": "ok"})
@@ -576,7 +701,7 @@ class XhrUpdatePlotNpcView(UpdateView):
 
     def get_success_url(self):
         plot_element = get_object_or_404(PlotElement, id=self.kwargs["plot_element_pk"])
-        return reverse("plots:plot_editor", kwargs={"pk": plot_element.plot.pk})
+        return plot_element.plot.campaign.get_absolute_url()
 
 
 class XhrUpdatePlotFoeView(DetailView):

@@ -4,6 +4,7 @@ from unittest.mock import Mock
 from django.contrib.auth.models import AnonymousUser
 from django.forms import modelform_factory
 from django.template import Context
+from django.template.loader import get_template
 from django.test import RequestFactory, SimpleTestCase
 from django.urls import resolve, reverse
 
@@ -117,20 +118,17 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
     def test_campaign_data_form_does_not_expose_ruleset(self):
         self.assertNotIn("ruleset", CreateCampaignDataView.fields)
 
-    def test_campaign_data_form_hides_visibility_and_seed_money(self):
-        self.assertNotIn("character_visibility", CreateCampaignDataView.fields)
-        self.assertNotIn("npc_visibility", CreateCampaignDataView.fields)
-        self.assertNotIn("foe_visibility", CreateCampaignDataView.fields)
+    def test_campaign_data_form_hides_seed_money(self):
         self.assertNotIn("seed_money", CreateCampaignDataView.fields)
 
-    def test_campaign_visibility_defaults_to_gm_only(self):
-        for field_name in (
-            "character_visibility",
-            "npc_visibility",
-            "foe_visibility",
-            "game_log_visibility",
-        ):
-            self.assertEqual(Campaign._meta.get_field(field_name).default, "G")
+    def test_campaign_visibility_fields_are_removed(self):
+        campaign_fields = {field.name for field in Campaign._meta.get_fields()}
+
+        self.assertNotIn("character_visibility", campaign_fields)
+        self.assertNotIn("game_log_visibility", campaign_fields)
+        self.assertNotIn("plot_visibility", campaign_fields)
+        self.assertNotIn("npc_visibility", campaign_fields)
+        self.assertNotIn("foe_visibility", campaign_fields)
 
     def test_essential_campaign_form_hides_currency_and_career_points(self):
         request = self.factory.get("/", {"ruleset": Campaign.RULESET_ESSENTIAL})
@@ -179,3 +177,87 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
             context["invite_link"],
             "https://tr.localhost:8000/campaigns/la-dame-blanche-2/invite/invite-hash",
         )
+
+    def test_empty_homebrew_notice_is_shown_to_anonymous_visitors(self):
+        request = self.factory.get("/")
+        request.user = AnonymousUser()
+        empty_relation = SimpleNamespace(exists=lambda: False, all=lambda: [])
+        campaign = SimpleNamespace(
+            homebrew_armory_item_set=empty_relation,
+            homebrew_armory_weapon_set=empty_relation,
+            homebrew_armory_riotgear_set=empty_relation,
+            homebrew_magic_basespell_set=empty_relation,
+            homebrew_worlds_language_set=empty_relation,
+            homebrew_horror_quirk_set=empty_relation,
+            homebrew_rules_template_set=empty_relation,
+            homebrew_rules_foe_set=empty_relation,
+        )
+
+        content = get_template("campaigns/fragments/homebrew.html").render(
+            {"request": request, "object": campaign, "may_edit": False}
+        )
+
+        self.assertIn("No homebrew exists for this campaign yet.", content)
+
+    def test_attached_plot_shows_npc_list_to_anonymous_visitors(self):
+        request = self.factory.get("/")
+        request.user = AnonymousUser()
+        empty_relation = SimpleNamespace(exists=lambda: False, all=lambda: [])
+        campaign = SimpleNamespace(
+            id=1,
+            plot=SimpleNamespace(id=1, player_abstract="", root_elements=[]),
+            ruleset=Campaign.RULESET_PHASESIX,
+            character_set=empty_relation,
+            essentialcharacter_set=empty_relation,
+        )
+
+        content = get_template("campaigns/fragments/dramaturgy.html").render(
+            {
+                "request": request,
+                "object": campaign,
+                "may_edit": False,
+            }
+        )
+
+        self.assertIn('data-sidebar-right-url="/campaigns/sidebar/1/npc"', content)
+
+    def test_character_cast_is_shown_to_anonymous_visitors(self):
+        request = self.factory.get("/")
+        request.user = AnonymousUser()
+        empty_relation = SimpleNamespace(exists=lambda: True, all=lambda: [])
+        campaign = SimpleNamespace(
+            id=1,
+            plot=None,
+            ruleset=Campaign.RULESET_PHASESIX,
+            character_set=empty_relation,
+            essentialcharacter_set=empty_relation,
+        )
+
+        content = get_template("campaigns/fragments/dramaturgy.html").render(
+            {
+                "request": request,
+                "object": campaign,
+                "may_edit": False,
+            }
+        )
+
+        self.assertIn("campaign-section-heading", content)
+
+    def test_attached_plot_loads_for_anonymous_visitors(self):
+        request = self.factory.get("/")
+        request.user = AnonymousUser()
+        campaign = SimpleNamespace(
+            id=1,
+            plot=SimpleNamespace(id=1, root_elements=[]),
+        )
+
+        content = get_template("campaigns/fragments/dramaturgy.html").render(
+            {
+                "request": request,
+                "object": campaign,
+                "may_edit": False,
+            }
+        )
+
+        self.assertIn('hx-get="/plots/xhr_campaign_plot_view/1/1"', content)
+        self.assertIn('hx-trigger="load"', content)

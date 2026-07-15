@@ -159,6 +159,12 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
                     name=element.name,
                     gm_notes=element.gm_notes,
                     player_summary=element.player_summary,
+                    player_summary_visibility=element.player_summary_visibility,
+                    gm_notes_visibility=element.gm_notes_visibility,
+                    npc_visibility=element.npc_visibility,
+                    handouts_visibility=element.handouts_visibility,
+                    foes_visibility=element.foes_visibility,
+                    locations_visibility=element.locations_visibility,
                     ordering=element.ordering,
                 )
 
@@ -257,6 +263,12 @@ class Handout(ImageFocalPointMixin, metaclass=TransMeta):
 
 
 class PlotElement(models.Model, metaclass=TransMeta):
+    VISIBILITY_CHOICES = (
+        ("G", _("GM Only")),
+        ("P", _("GM and Players")),
+        ("A", _("All")),
+    )
+
     plot = models.ForeignKey(Plot, verbose_name=_("Plot"), on_delete=models.CASCADE)
     parent = models.ForeignKey(
         "self", on_delete=models.CASCADE, related_name="children", null=True, blank=True
@@ -266,6 +278,33 @@ class PlotElement(models.Model, metaclass=TransMeta):
 
     gm_notes = models.TextField(_("GM notes"), blank=True, null=True)
     player_summary = models.TextField(_("player summary"), blank=True, null=True)
+    player_summary_visibility = models.CharField(
+        _("player summary visibility"),
+        max_length=1,
+        default="G",
+        choices=VISIBILITY_CHOICES,
+    )
+    gm_notes_visibility = models.CharField(
+        _("GM notes visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
+    )
+    npc_visibility = models.CharField(
+        _("NPC visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
+    )
+    handouts_visibility = models.CharField(
+        _("handouts visibility"),
+        max_length=1,
+        default="G",
+        choices=VISIBILITY_CHOICES,
+    )
+    foes_visibility = models.CharField(
+        _("foes visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
+    )
+    locations_visibility = models.CharField(
+        _("locations visibility"),
+        max_length=1,
+        default="G",
+        choices=VISIBILITY_CHOICES,
+    )
 
     npc = models.ManyToManyField("characters.Character", blank=True)
     essential_npc = models.ManyToManyField(
@@ -284,3 +323,11 @@ class PlotElement(models.Model, metaclass=TransMeta):
 
     def __str__(self):
         return self.name
+
+    def may_view(self, user, campaign, visibility_field):
+        visibility = getattr(self, visibility_field)
+        return (
+            campaign.may_edit(user)
+            or visibility == "A"
+            or (visibility == "P" and campaign.is_player(user))
+        )

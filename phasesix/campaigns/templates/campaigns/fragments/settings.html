@@ -71,57 +71,6 @@
     {% endif %}
   </div>
 
-  <div class="col-12 mt-2">
-    <h3>{% trans "Visibility" %}</h3>
-    <hr>
-
-    <div class="d-flex">
-      <div>
-        <div>{% trans 'Character Visibility' %}</div>
-        <div class="text-muted small">{% trans "Who can see player characters" %}</div>
-      </div>
-      <div class="flex-grow-1 text-end">{{ object.get_character_visibility_display }}</div>
-    </div>
-    <hr>
-
-    <div class="d-flex">
-      <div>
-        <div>{% trans 'NPC Visibility' %}</div>
-        <div class="text-muted small">{% trans "Who can see non-player characters" %}</div>
-      </div>
-      <div class="flex-grow-1 text-end">{{ object.get_npc_visibility_display }}</div>
-    </div>
-    <hr>
-
-    <div class="d-flex">
-      <div>
-        <div>{% trans 'Foe Visibility' %}</div>
-        <div class="text-muted small">{% trans "Who can see enemies and opponents" %}</div>
-      </div>
-      <div class="flex-grow-1 text-end">{{ object.get_foe_visibility_display }}</div>
-    </div>
-    <hr>
-
-    <div class="d-flex">
-      <div>
-        <div>{% trans 'Game Log Visibility' %}</div>
-        <div class="text-muted small">{% trans "Who can access the game history" %}</div>
-      </div>
-      <div class="flex-grow-1 text-end">{{ object.get_game_log_visibility_display }}</div>
-    </div>
-    <hr>
-
-    {% if may_edit %}
-      <div class="d-flex justify-content-end">
-        <button
-          data-modal-url="{% url 'campaigns:xhr_campaign_settings' pk=object.id mode='visibility' %}"
-          data-modal-title="{% trans 'Edit settings' %}"
-          data-modal-event-after="refresh-fragments"
-          class="btn btn-primary">{% trans 'Edit' %}</button>
-      </div>
-    {% endif %}
-  </div>
-
 
   <div class="col-12 mt-2">
     <h3>{% trans "Integrations" %}</h3>

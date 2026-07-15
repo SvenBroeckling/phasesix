@@ -9,7 +9,7 @@
 </div>
 
 <div class="row">
-  {% if may_edit or object.campaign.character_visibility == 'A' %}
+  {% if may_edit %}
     {% if object.foe.wiki_page %}
       <div class="col-12">
         <a class="btn btn-primary w-100 btn-sm mb-2"
@@ -55,11 +55,7 @@
           <button
             data-dice-roll="{{ action.skill }}d6"
             data-dice-header="{{ object.foe.name }}: {{ action.name }}"
-            {% if object.campaign.foe_visibility == "A" %}
             data-dice-description="{{ action.effect }}"
-            {% else %}
-            data-dice-description=""
-            {% endif %}
             data-dice-campaign="{{ object.campaign.id }}"
             class="btn btn-sm dice-roll btn-primary mt-2">{% trans "Roll" %} ({{ action.skill }}{% trans "d6" %})
           </button>

@@ -1,0 +1,10 @@
+{% load i18n %}
+<button type="button"
+        class="btn btn-sm btn-link p-0 text-muted"
+        data-action-trigger-url="{% url 'plots:plot_element_visibility' pk=element.id visibility_field=visibility_field action='cycle' %}"
+        data-action-trigger-response-event="plot-visibility-updated"
+        data-plot-visibility-field="{{ visibility_field }}"
+        title="{{ visibility_label }}"
+        aria-label="{{ visibility_label }}">
+  {% if visibility == 'G' %}<i class="fas fa-lock" aria-hidden="true"></i>{% elif visibility == 'P' %}<i class="fas fa-users" aria-hidden="true"></i>{% else %}<i class="fas fa-globe" aria-hidden="true"></i>{% endif %}
+</button>

@@ -18,7 +18,9 @@
     </div>
 
     <div data-plot-mode="view">
-      {% include 'plots/fragments/campaign_plot_view.html' with plot=plot campaign=campaign %}
+      <div hx-get="{% url 'plots:xhr_campaign_plot_view' campaign_pk=campaign.id plot_pk=plot.id %}"
+           hx-trigger="load">
+      </div>
     </div>
 
     {% if may_edit %}

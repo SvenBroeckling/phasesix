@@ -51,11 +51,6 @@ class Campaign(ModelWithImage):
         (RULESET_PHASESIX, _("PhaseSix")),
         (RULESET_ESSENTIAL, _("Tirakan Essential")),
     )
-    VISIBILITY_CHOICES = (
-        ("G", _("GM Only")),
-        ("A", _("All")),
-    )
-
     objects = CampaignQuerySet.as_manager()
     image_upload_to = "campaign_images"
     image = models.ImageField(
@@ -169,22 +164,6 @@ class Campaign(ModelWithImage):
     currency_map = models.ForeignKey("armory.CurrencyMap", on_delete=models.CASCADE)
     seed_money = models.IntegerField(_("seed money"), default=2000)
 
-    foe_visibility = models.CharField(
-        _("foe visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
-    )
-
-    npc_visibility = models.CharField(
-        _("npc visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
-    )
-
-    game_log_visibility = models.CharField(
-        _("game log visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
-    )
-
-    character_visibility = models.CharField(
-        _("character visibility"), max_length=1, default="G", choices=VISIBILITY_CHOICES
-    )
-
     class Meta:
         verbose_name = _("Campaign")
         verbose_name_plural = _("Campaigns")
@@ -243,6 +222,14 @@ class Campaign(ModelWithImage):
         if self.created_by == user:
             return True
         return False
+
+    def is_player(self, user):
+        if not user or not user.is_authenticated:
+            return False
+        return (
+            self.character_set.filter(created_by=user).exists()
+            or self.essentialcharacter_set.filter(created_by=user).exists()
+        )
 
     @property
     def extension_string(self):
@@ -318,10 +305,6 @@ class Campaign(ModelWithImage):
                 discord_webhook_url=self.discord_webhook_url,
                 currency_map=self.currency_map,
                 seed_money=self.seed_money,
-                foe_visibility=self.foe_visibility,
-                npc_visibility=self.npc_visibility,
-                game_log_visibility=self.game_log_visibility,
-                character_visibility=self.character_visibility,
                 cloned_from=self,
             )
             clone.slug = None

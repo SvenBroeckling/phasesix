@@ -2,11 +2,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import path
 
 from .views import (
-    PlotEditorView,
-    PlotListView,
     XhrCreatePlotView,
     XhrCreatePlotFromDescriptionView,
-    XhrUpdatePlotView,
     XhrCreatePlotElementView,
     XhrUpdatePlotElementView,
     DeletePlotElementView,
@@ -29,30 +26,23 @@ from .views import (
     XhrUpdatePlotFoeView,
     XhrPlotFragmentView,
     XhrCampaignPlotViewFragment,
+    XhrCampaignPlotElementView,
+    XhrPlotElementVisibilityView,
+    XhrQuickCreatePlotElementView,
+    XhrInlineUpdatePlotView,
     XhrReorderPlotElementView,
 )
 
 app_name = "plots"
 
 urlpatterns = [
-    path("", staff_member_required(PlotListView.as_view()), name="list_plots"),
     path(
         "create", staff_member_required(XhrCreatePlotView.as_view()), name="create_plot"
-    ),
-    path(
-        "<int:pk>/edit",
-        staff_member_required(XhrUpdatePlotView.as_view()),
-        name="update_plot",
     ),
     path(
         "<int:pk>/from-description",
         staff_member_required(XhrCreatePlotFromDescriptionView.as_view()),
         name="create_plot_from_description",
-    ),
-    path(
-        "<int:pk>/editor",
-        staff_member_required(PlotEditorView.as_view()),
-        name="plot_editor",
     ),
     path(
         "xhr_plot_fragment/<int:pk>/<fragment_template>",
@@ -61,8 +51,33 @@ urlpatterns = [
     ),
     path(
         "xhr_campaign_plot_view/<int:campaign_pk>/<int:plot_pk>",
-        staff_member_required(XhrCampaignPlotViewFragment.as_view()),
+        XhrCampaignPlotViewFragment.as_view(),
         name="xhr_campaign_plot_view",
+    ),
+    path(
+        "xhr_campaign_plot_element/<int:campaign_pk>/<int:pk>",
+        XhrCampaignPlotElementView.as_view(),
+        name="xhr_campaign_plot_element",
+    ),
+    path(
+        "plot_element/<int:pk>/visibility/<str:visibility_field>/<str:action>",
+        XhrPlotElementVisibilityView.as_view(),
+        name="plot_element_visibility",
+    ),
+    path(
+        "<int:plot_pk>/plot_element/quick-create",
+        staff_member_required(XhrQuickCreatePlotElementView.as_view()),
+        name="quick_create_plot_element",
+    ),
+    path(
+        "<int:plot_pk>/plot_element/<int:parent_pk>/quick-create",
+        staff_member_required(XhrQuickCreatePlotElementView.as_view()),
+        name="quick_create_plot_child",
+    ),
+    path(
+        "<int:pk>/inline-update",
+        staff_member_required(XhrInlineUpdatePlotView.as_view()),
+        name="inline_update_plot",
     ),
     path(
         "xhr_reorder_plot_element",

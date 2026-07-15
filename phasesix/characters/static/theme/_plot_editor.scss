@@ -213,4 +213,85 @@
     .plot-bar .text-muted {
         color: rgba(255, 255, 255, 0.75) !important;
     }
+
+    .plot-editor-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        margin-left: 0.75rem;
+    }
+
+    .plot-editor-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+        color: var(--bs-secondary-color);
+        background: rgba(var(--bs-white-rgb), 0.04);
+        border: 1px solid rgba(var(--bs-white-rgb), 0.12);
+        border-radius: 0.4rem;
+    }
+
+    .plot-editor-action:hover,
+    .plot-editor-action:focus-visible {
+        color: var(--bs-primary);
+        background: rgba(var(--bs-primary-rgb), 0.12);
+        border-color: rgba(var(--bs-primary-rgb), 0.55);
+        box-shadow: 0 0 0 0.15rem rgba(var(--bs-primary-rgb), 0.15);
+    }
+
+    .plot-editor-action-delete:hover,
+    .plot-editor-action-delete:focus-visible {
+        color: var(--bs-danger);
+        background: rgba(var(--bs-danger-rgb), 0.12);
+        border-color: rgba(var(--bs-danger-rgb), 0.55);
+        box-shadow: 0 0 0 0.15rem rgba(var(--bs-danger-rgb), 0.15);
+    }
+
+    .plot-editor-properties-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+    }
+
+    .plot-editor-property-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
+        color: var(--bs-secondary-color);
+        background: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        border-radius: 0.4rem;
+    }
+
+    .plot-editor-property-action:hover,
+    .plot-editor-property-action:focus-visible {
+        color: var(--bs-primary);
+        background: rgba(var(--bs-primary-rgb), 0.1);
+        border-color: rgba(var(--bs-primary-rgb), 0.5);
+    }
+
+    .plot-element-inline-form textarea {
+        resize: vertical;
+    }
+
+    .plot-element-details.plot-writing-focus {
+        > :not(.plot-element-inline-form) {
+            display: none;
+        }
+
+        .plot-element-inline-form > .mb-3,
+        .plot-element-inline-form .row > :not(.plot-writing-active) {
+            display: none;
+        }
+
+        .plot-element-inline-form textarea {
+            min-height: 28rem;
+        }
+    }
 }

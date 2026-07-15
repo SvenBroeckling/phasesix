@@ -19,7 +19,7 @@
       <form action="{{ post_url }}"
             data-fetch-form="true"
             data-fetch-form-close="modal"
-            data-fetch-form-event-after="refresh-plot"
+             data-fetch-form-event-after="refresh-campaign-plot-element-{{ plot_element.id }}"
             method="post"
             enctype="multipart/form-data">
         {% csrf_token %}
@@ -31,7 +31,7 @@
           <button type="button"
                   class="btn btn-outline-danger"
                   data-action-trigger-url="{% url 'plots:delete_plot_npc' plot_element_pk=plot_element.id pk=object.id %}"
-                  data-action-trigger-event-after="refresh-plot,modal-hide">
+                  data-action-trigger-event-after="refresh-campaign-plot-element-{{ plot_element.id }},modal-hide">
             {% trans "Delete" %}
           </button>
         </div>

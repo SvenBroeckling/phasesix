@@ -41,17 +41,6 @@ class CampaignSettingsGameForm(forms.ModelForm):
         )
 
 
-class CampaignSettingsVisibilityForm(forms.ModelForm):
-    class Meta:
-        model = Campaign
-        fields = (
-            "character_visibility",
-            "foe_visibility",
-            "npc_visibility",
-            "game_log_visibility",
-        )
-
-
 class SceneForm(forms.ModelForm):
     class Meta:
         model = Scene

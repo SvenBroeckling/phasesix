@@ -2,6 +2,12 @@
 {% load i18n %}
 <div class="column-container column-layout-3 campaign-homebrew">
 
+  {% if not request.user.is_authenticated and not object.homebrew_armory_item_set.exists and not object.homebrew_armory_weapon_set.exists and not object.homebrew_armory_riotgear_set.exists and not object.homebrew_magic_basespell_set.exists and not object.homebrew_worlds_language_set.exists and not object.homebrew_horror_quirk_set.exists and not object.homebrew_rules_template_set.exists and not object.homebrew_rules_foe_set.exists %}
+    <div class="alert alert-secondary column-span-full mb-2" role="status">
+      {% trans "No homebrew exists for this campaign yet." %}
+    </div>
+  {% endif %}
+
   {% if may_edit %}
     <div class="dropdown mb-2">
       <div class="card hover-cta pointer"
