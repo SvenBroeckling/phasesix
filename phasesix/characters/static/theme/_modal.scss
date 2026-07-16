@@ -27,6 +27,46 @@
     overflow-y: auto;
 }
 
+.searchable-object-card-list-filters {
+    .searchable-object-card-list-search {
+        .input-group-text,
+        .form-control {
+            border-color: rgba(var(--bs-primary-rgb), 0.28);
+            background: rgba(var(--bs-primary-rgb), 0.06);
+        }
+
+        .input-group-text {
+            color: rgba(var(--bs-primary-rgb), 0.82);
+        }
+
+        .form-control {
+            color: var(--bs-body-color);
+            box-shadow: none;
+
+            &::placeholder {
+                color: var(--bs-secondary-color);
+            }
+
+            &:focus {
+                border-color: rgba(var(--bs-primary-rgb), 0.72);
+                background: rgba(var(--bs-primary-rgb), 0.1);
+                box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.13);
+            }
+        }
+    }
+
+    .atmospheric-tabs {
+        background: linear-gradient(145deg, rgba(var(--bs-primary-rgb), 0.06), transparent 70%);
+    }
+}
+
+/* A modal sidebar leaves too little space for two catalog cards at tablet widths. */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .searchable-object-card-list-grid {
+        column-count: 1;
+    }
+}
+
 .modal-fullscreen .btn-close {
     background-color: $secondary !important;
 }
