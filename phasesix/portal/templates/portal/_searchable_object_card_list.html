@@ -5,11 +5,12 @@
 {% load i18n static %}
 
 {% with category_qs_exists=character_object.category_qs.exists homebrew_qs_exists=character_object.get_homebrew_qs.exists %}
-  <div class="row">
-    <div class="col-12 col-md-4 col-lg-3 sticky-top align-self-start bg-body py-2 py-md-0 navbar-nav-scroll">
+  <div class="row searchable-object-card-list">
+    <div class="searchable-object-card-list-filters col-12 col-md-4 col-lg-3 sticky-top align-self-start py-2 py-md-0 navbar-nav-scroll">
 
       {% if category_qs_exists %}
-        <div class="input-group input-group-sm mb-3">
+        <div class="input-group input-group-sm searchable-object-card-list-search mb-3">
+          <span class="input-group-text" aria-hidden="true"><i class="fas fa-search"></i></span>
           <input type="text" class="form-control search-objects-input" placeholder="{% trans 'Search' %}">
         </div>
 
@@ -89,7 +90,7 @@
                data-rel="#nav-item-homebrew"
                class="tab-pane searchable-object-card-list-tab-pane"
                id="category-homebrew">
-            <div class="column-container column-layout-2">
+            <div class="column-container column-layout-2 searchable-object-card-list-grid">
               {% for object in character_object.get_homebrew_qs %}
                 <div class="searchable-object-card">
                   {% object_widget object character=character_object.character add_button=add_button %}
@@ -104,7 +105,7 @@
                data-rel="#nav-item-{{ category.id }}"
                class="tab-pane searchable-object-card-list-tab-pane {% if forloop.first %}active{% endif %}"
                id="category-{{ category.id }}">
-            <div class="column-container column-layout-2">
+            <div class="column-container column-layout-2 searchable-object-card-list-grid">
               {% for object in category.child_item_qs.distinct|for_extensions:character_object.get_extension_qs|without_homebrew %}
                 <div class="searchable-object-card">
                   {% object_widget object character=character_object.character add_button=add_button %}
