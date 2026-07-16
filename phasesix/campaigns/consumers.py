@@ -8,8 +8,11 @@ from django.conf import settings
 from django.template.loader import render_to_string
 
 from campaigns.models import Campaign, Roll
+from characters.models import Character
 from campaigns.templatetags.campaign_extras import int_with_sign
 from characters.dice import roll
+from plots.models import Handout, Location
+from rules.models import Foe
 
 
 def _send_roll_link_to_channel(ctx, roll_string, header):
@@ -154,6 +157,12 @@ class DiceConsumer(WebsocketConsumer):
         "pad_object_update",
         "pad_object_delete",
     }
+    reveal_models = {
+        "show_npc": Character,
+        "show_handout": Handout,
+        "show_location": Location,
+        "show_foe": Foe,
+    }
 
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
@@ -191,6 +200,33 @@ class DiceConsumer(WebsocketConsumer):
                 },
             )
 
+        if message_type in self.reveal_models:
+            self.show_plot_item(message_type, data)
+
+    def show_plot_item(self, message_type, data):
+        campaign = Campaign.objects.filter(id=data.get("campaign")).first()
+        if (
+            campaign is None
+            or campaign.ws_room_name != self.room_name
+            or not campaign.may_edit(self.scope["user"])
+        ):
+            return
+
+        model = self.reveal_models[message_type]
+        item = model.objects.filter(
+            id=data.get("item"), plotelement__plot__campaign=campaign
+        ).first()
+        if item is None or not item.image:
+            return
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_name,
+            {
+                "type": "plot_item_reveal",
+                "message": {"image_url": item.image.url, "name": item.name},
+            },
+        )
+
     # group receive
     def dice_roll(self, event):
         self.send(text_data=json.dumps(event))
@@ -198,11 +234,26 @@ class DiceConsumer(WebsocketConsumer):
     def tale_spire_roll_link(self, event):
         self.send(text_data=json.dumps(event))
 
+    def plot_item_reveal(self, event):
+        self.send(text_data=json.dumps({"type": "plot_item_reveal", **event}))
+
     def pad_object_create(self, event):
-        self.send(text_data=json.dumps({"type": "pad_object_create", "payload": event["message"]}))
+        self.send(
+            text_data=json.dumps(
+                {"type": "pad_object_create", "payload": event["message"]}
+            )
+        )
 
     def pad_object_update(self, event):
-        self.send(text_data=json.dumps({"type": "pad_object_update", "payload": event["message"]}))
+        self.send(
+            text_data=json.dumps(
+                {"type": "pad_object_update", "payload": event["message"]}
+            )
+        )
 
     def pad_object_delete(self, event):
-        self.send(text_data=json.dumps({"type": "pad_object_delete", "payload": event["message"]}))
+        self.send(
+            text_data=json.dumps(
+                {"type": "pad_object_delete", "payload": event["message"]}
+            )
+        )

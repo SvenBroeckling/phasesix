@@ -137,6 +137,11 @@ urlpatterns = [
         name="xhr_character_sidebar",
     ),
     path(
+        "npc/<int:campaign_pk>/<int:character_pk>/add_to_contacts",
+        views.XhrAddNpcToPlayerContactsView.as_view(),
+        name="xhr_add_npc_to_player_contacts",
+    ),
+    path(
         "sidebar/foe/<int:pk>/<sidebar_template>",
         views.XhrFoeSidebarView.as_view(),
         name="xhr_foe_sidebar",

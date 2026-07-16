@@ -21,7 +21,7 @@ from campaigns.forms import (
 )
 from campaigns.models import Campaign, CampaignFoe, Roll
 from characters.forms import CreateCharacterExtensionsForm
-from characters.models import Character
+from characters.models import Character, Contact
 from characters.utils import is_tirakan_world
 from essential_characters.models import EssentialCharacter
 from plots.models import Plot, PlotElement, Handout, Location, _copy_field_file
@@ -560,6 +560,32 @@ class XhrCharacterSidebarView(BaseSidebarView):
         else:
             context["may_view"] = False
         return context
+
+
+class XhrAddNpcToPlayerContactsView(View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, id=kwargs["campaign_pk"])
+        if not campaign.may_edit(request.user):
+            raise PermissionDenied()
+
+        npc = get_object_or_404(
+            Character.objects.filter(
+                id=kwargs["character_pk"], plotelement__plot__campaign=campaign
+            ).distinct()
+        )
+        for character in campaign.character_set.all():
+            Contact.objects.get_or_create(
+                character=character,
+                name=npc.name,
+                defaults={"description": npc.description},
+            )
+
+        return HttpResponse(
+            '<button class="btn btn-outline-primary w-100 btn-sm mb-2" disabled>'
+            '<i class="fas fa-user-check fa-fw"></i> '
+            + str(_("Added to player contacts"))
+            + "</button>"
+        )
 
 
 class XhrFoeSidebarView(BaseSidebarView):

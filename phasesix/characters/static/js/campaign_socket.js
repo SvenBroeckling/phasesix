@@ -26,6 +26,10 @@ $(function () {
             window.location = data.message.url
             return
         }
+        if (data.type === 'plot_item_reveal') {
+            showPlayerReveal(data.message)
+            return
+        }
         if (data.type !== 'dice_roll') {
             return
         } else {
@@ -67,4 +71,37 @@ $(function () {
         }
         socket.send(JSON.stringify(data))
     })
+
+    $('body').on('click', '.show-to-players', function () {
+        const elem = $(this)
+        socket.send(JSON.stringify({
+            type: elem.data('show-command'),
+            campaign: elem.data('show-campaign'),
+            item: elem.data('show-item')
+        }))
+    })
+
+    function showPlayerReveal(reveal) {
+        let modalElement = document.getElementById('player-reveal-modal')
+        if (!modalElement) {
+            modalElement = document.createElement('div')
+            modalElement.id = 'player-reveal-modal'
+            modalElement.className = 'modal fade'
+            modalElement.tabIndex = -1
+            modalElement.setAttribute('aria-label', reveal.name)
+            modalElement.setAttribute('aria-hidden', 'true')
+            modalElement.innerHTML = `
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content atmospheric-modal border-0 bg-transparent">
+                        <img class="img-fluid rounded" style="max-height: 85vh; object-fit: contain;" alt="">
+                    </div>
+                </div>`
+            document.body.appendChild(modalElement)
+        }
+
+        const image = modalElement.querySelector('img')
+        image.src = reveal.image_url
+        image.alt = reveal.name
+        bootstrap.Modal.getOrCreateInstance(modalElement).show()
+    }
 })
