@@ -58,7 +58,10 @@
         <div class="row g-3">
           <div class="col-12">
             <div class="d-flex align-items-center justify-content-between gap-2">
-              <label class="form-label fw-semibold text-uppercase text-muted" for="element-player-summary-{{ element.id }}">{% trans 'Player summary' %}</label>
+              <div class="d-flex align-items-center gap-2">
+                <label class="form-label fw-semibold text-uppercase text-muted mb-0" for="element-player-summary-{{ element.id }}">{% trans 'Player summary' %}</label>
+                {% include 'campaigns/plot/_visibility_control.html' with visibility_field='player_summary_visibility' visibility=element.player_summary_visibility visibility_label=element.get_player_summary_visibility_display %}
+              </div>
               <button type="button"
                       class="btn btn-sm btn-link p-0"
                       data-plot-writing-focus="element-player-summary-{{ element.id }}"
@@ -73,7 +76,10 @@
           </div>
           <div class="col-12">
             <div class="d-flex align-items-center justify-content-between gap-2">
-              <label class="form-label fw-semibold text-uppercase text-muted" for="element-gm-notes-{{ element.id }}">{% trans 'GM notes' %}</label>
+              <div class="d-flex align-items-center gap-2">
+                <label class="form-label fw-semibold text-uppercase text-muted mb-0" for="element-gm-notes-{{ element.id }}">{% trans 'GM notes' %}</label>
+                {% include 'campaigns/plot/_visibility_control.html' with visibility_field='gm_notes_visibility' visibility=element.gm_notes_visibility visibility_label=element.get_gm_notes_visibility_display %}
+              </div>
               <button type="button"
                       class="btn btn-sm btn-link p-0"
                       data-plot-writing-focus="element-gm-notes-{{ element.id }}"
@@ -95,7 +101,10 @@
       {# Handouts #}
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Handouts' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1">
+            <span>{% trans 'Handouts' %}</span>
+            {% include 'campaigns/plot/_visibility_control.html' with visibility_field='handouts_visibility' visibility=element.handouts_visibility visibility_label=element.get_handouts_visibility_display %}
+          </div>
           <button data-modal-url="{% url "plots:create_handout" plot_element_pk=element.id %}"
                   data-modal-event-after="refresh-plot"
                   data-modal-title="{% trans 'Create handout' %}"
@@ -136,7 +145,10 @@
       {# NPC #}
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'NPC' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1">
+            <span>{% trans 'NPC' %}</span>
+            {% include 'campaigns/plot/_visibility_control.html' with visibility_field='npc_visibility' visibility=element.npc_visibility visibility_label=element.get_npc_visibility_display %}
+          </div>
           <button class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
                   type="button"
                   data-sidebar-right-url="{% url 'plots:select_plot_npc' pk=element.id %}"
@@ -176,7 +188,10 @@
       {# Foes #}
       <div class="mb-3">
         <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Foes' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1">
+            <span>{% trans 'Foes' %}</span>
+            {% include 'campaigns/plot/_visibility_control.html' with visibility_field='foes_visibility' visibility=element.foes_visibility visibility_label=element.get_foes_visibility_display %}
+          </div>
           <button class="btn btn-sm btn-secondary rounded-pill d-flex align-items-center justify-content-center"
                   type="button"
                   data-sidebar-right-url="{% url 'plots:select_plot_foe' pk=element.id %}"
@@ -209,7 +224,10 @@
       {# Locations #}
       <div>
         <div class="d-flex align-items-center justify-content-between">
-          <div class="fw-semibold text-uppercase text-muted mb-1">{% trans 'Locations' %}</div>
+          <div class="d-flex align-items-center gap-2 fw-semibold text-uppercase text-muted mb-1">
+            <span>{% trans 'Locations' %}</span>
+            {% include 'campaigns/plot/_visibility_control.html' with visibility_field='locations_visibility' visibility=element.locations_visibility visibility_label=element.get_locations_visibility_display %}
+          </div>
           <button data-modal-url="{% url "plots:create_location" plot_element_pk=element.id %}"
                   data-modal-event-after="refresh-plot"
                   data-modal-title="{% trans 'Create location' %}"
