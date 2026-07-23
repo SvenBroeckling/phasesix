@@ -6,6 +6,8 @@ from io import BytesIO
 import markdown
 from django.utils.text import slugify
 
+MODULE_FORMAT_VERSION = 2
+
 
 def module_id(campaign):
     return f"phasesix-campaign-{campaign.pk}"
@@ -28,7 +30,8 @@ class FoundryModule:
 
     @property
     def version(self):
-        return f"1.0.{self.plot.export_version}" if self.plot else "1.0.0"
+        export_version = self.plot.export_version if self.plot else 0
+        return f"{MODULE_FORMAT_VERSION}.0.{export_version}"
 
     @property
     def title(self):
@@ -108,7 +111,7 @@ class FoundryModule:
                             npc.pk,
                             npc.name,
                             "npc",
-                            npc.description,
+                            markdown.markdown(npc.description or ""),
                             self.asset_path(npc.image, "npc", npc.pk),
                             {"health": npc.health, "stress": npc.stress},
                         )
@@ -123,10 +126,16 @@ class FoundryModule:
                             npc.pk,
                             npc.name,
                             "character",
-                            "\n\n".join(
-                                part
-                                for part in (npc.concept, npc.oath_or_debt, npc.notes)
-                                if part
+                            markdown.markdown(
+                                "\n\n".join(
+                                    part
+                                    for part in (
+                                        npc.concept,
+                                        npc.oath_or_debt,
+                                        npc.notes,
+                                    )
+                                    if part
+                                )
                             ),
                             self.asset_path(npc.image, "character", npc.pk),
                             {"mind": npc.mind, "will": npc.will, "body": npc.body},
@@ -142,7 +151,7 @@ class FoundryModule:
                             foe.pk,
                             foe.name,
                             "foe",
-                            foe.short_description,
+                            markdown.markdown(foe.short_description or ""),
                             self.asset_path(foe.image, "foe", foe.pk),
                             foe.as_dict(),
                         )
@@ -173,6 +182,7 @@ class FoundryModule:
             "manifest": self.manifest_url,
             "download": self.download_url,
             "esmodules": ["scripts/main.mjs"],
+            "styles": ["styles/actor-sheet.css"],
             "languages": [{"lang": "en", "name": "English", "path": "lang/en.json"}],
             "documentTypes": {"Actor": {"phasesix": {"htmlFields": ["description"]}}},
         }
@@ -188,6 +198,7 @@ class FoundryModule:
             archive.writestr(root + "data/export.json", json.dumps(data))
             archive.writestr(root + "scripts/main.mjs", self.script())
             archive.writestr(root + "templates/actor-sheet.hbs", self.template())
+            archive.writestr(root + "styles/actor-sheet.css", self.styles())
             archive.writestr(root + "lang/en.json", json.dumps(self.translations()))
             for path, field_file in self.assets:
                 field_file.open("rb")
@@ -203,11 +214,41 @@ class FoundryModule:
 
     def template(self):
         return """<form class=\"phasesix-actor-sheet\" autocomplete=\"off\">
-  <header><img src=\"{{actor.img}}\" data-edit=\"img\"><input name=\"name\" value=\"{{actor.name}}\"></header>
-  <p><strong>{{actor.system.category}}</strong></p>
-  <label>Description<textarea name=\"system.description\">{{actor.system.description}}</textarea></label>
-  <label>Details<textarea disabled>{{details}}</textarea></label>
+  <header class=\"phasesix-actor-sheet__header\">
+    <img class=\"phasesix-actor-sheet__portrait\" src=\"{{actor.img}}\" data-edit=\"img\">
+    <div>
+      <input class=\"phasesix-actor-sheet__name\" name=\"name\" value=\"{{actor.name}}\">
+      <span class=\"phasesix-actor-sheet__category\">{{category}}</span>
+    </div>
+  </header>
+  <section class=\"phasesix-actor-sheet__section\">
+    <h2>Overview</h2>
+    <div class=\"phasesix-actor-sheet__description\">{{{description}}}</div>
+  </section>
+  {{#if details.length}}
+    <section class=\"phasesix-actor-sheet__section\">
+      <h2>Details</h2>
+      <dl class=\"phasesix-actor-sheet__details\">
+        {{#each details}}<div><dt>{{label}}</dt><dd>{{value}}</dd></div>{{/each}}
+      </dl>
+    </section>
+  {{/if}}
 </form>"""
+
+    def styles(self):
+        return """.phasesix-actor-sheet { color: var(--color-text-primary); padding: 1rem; }
+.phasesix-actor-sheet__header { align-items: center; border-bottom: 1px solid var(--color-border-light-primary); display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; }
+.phasesix-actor-sheet__portrait { border: 1px solid var(--color-border-highlight); border-radius: 4px; height: 96px; object-fit: cover; width: 96px; }
+.phasesix-actor-sheet__name { background: none; border: 0; color: var(--color-text-primary); font-family: var(--font-primary); font-size: 1.5rem; font-weight: 700; padding: 0; width: 100%; }
+.phasesix-actor-sheet__category { color: var(--color-text-secondary); display: block; font-size: .75rem; font-weight: 700; letter-spacing: .12em; margin-top: .35rem; text-transform: uppercase; }
+.phasesix-actor-sheet__section { margin-top: 1.25rem; }
+.phasesix-actor-sheet__section h2 { border-bottom: 1px solid var(--color-border-light-primary); font-size: .9rem; letter-spacing: .08em; margin: 0 0 .6rem; padding-bottom: .4rem; text-transform: uppercase; }
+.phasesix-actor-sheet__description { line-height: 1.5; }
+.phasesix-actor-sheet__description p:first-child { margin-top: 0; }
+.phasesix-actor-sheet__details { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: 0; }
+.phasesix-actor-sheet__details > div { background: color-mix(in srgb, var(--color-cool-3) 45%, transparent); border-left: 2px solid var(--color-border-highlight); min-height: 3.6rem; padding: .45rem .6rem; }
+.phasesix-actor-sheet__details dt { color: var(--color-text-secondary); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; }
+.phasesix-actor-sheet__details dd { font-size: .95rem; font-weight: 600; margin: .25rem 0 0; white-space: pre-line; }"""
 
     def script(self):
         return f"""const MODULE_ID = "{self.id}";
@@ -227,7 +268,17 @@ class PhaseSixActorData extends TypeDataModel {{
 class PhaseSixActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {{
   static DEFAULT_OPTIONS = {{ form: {{closeOnSubmit: false, submitOnChange: true}}, position: {{width: 520}} }};
   static PARTS = {{ form: {{template: `modules/${{MODULE_ID}}/templates/actor-sheet.hbs`}} }};
-  async _prepareContext(options) {{ const context = await super._prepareContext(options); context.actor = this.actor; context.details = JSON.stringify(this.actor.system.details, null, 2); return context; }}
+  async _prepareContext(options) {{
+    const context = await super._prepareContext(options);
+    context.actor = this.actor;
+    context.category = this.actor.system.category.charAt(0).toUpperCase() + this.actor.system.category.slice(1);
+    context.description = await TextEditor.enrichHTML(this.actor.system.description || "", {{async: true, relativeTo: this.actor, secrets: this.actor.isOwner}});
+    context.details = Object.entries(this.actor.system.details || {{}}).map(([key, value]) => ({{
+      label: key.replace(/_/g, " "),
+      value: Array.isArray(value) ? value.map(entry => typeof entry === "object" ? Object.values(entry).join(": ") : entry).join(" | ") : typeof value === "object" ? JSON.stringify(value) : String(value ?? "")
+    }}));
+    return context;
+  }}
 }}
 Hooks.once("init", () => {{
   CONFIG.Actor.dataModels[ACTOR_TYPE] = PhaseSixActorData;

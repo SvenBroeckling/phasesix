@@ -207,16 +207,20 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
             plot=SimpleNamespace(name="The Glass Road", export_version=7),
         )
 
-        manifest = FoundryModule(
+        module = FoundryModule(
             campaign,
             "https://example.test/module.json",
             "https://example.test/download.zip",
-        ).manifest()
+        )
+        manifest = module.manifest()
 
-        self.assertEqual(manifest["version"], "1.0.7")
+        self.assertEqual(manifest["version"], "2.0.7")
         self.assertEqual(manifest["title"], "The Glass Road")
         self.assertEqual(manifest["compatibility"]["minimum"], "14")
         self.assertIn("phasesix", manifest["documentTypes"]["Actor"])
+        self.assertEqual(manifest["styles"], ["styles/actor-sheet.css"])
+        self.assertIn("phasesix-actor-sheet__details", module.template())
+        self.assertIn("TextEditor.enrichHTML", module.script())
 
     def test_empty_homebrew_notice_is_shown_to_anonymous_visitors(self):
         request = self.factory.get("/")
