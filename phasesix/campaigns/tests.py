@@ -214,7 +214,7 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
         )
         manifest = module.manifest()
 
-        self.assertEqual(manifest["version"], "4.0.7")
+        self.assertEqual(manifest["version"], "5.0.7")
         self.assertEqual(manifest["title"], "The Glass Road")
         self.assertEqual(manifest["compatibility"]["minimum"], "14")
         self.assertIn("phasesix", manifest["documentTypes"]["Actor"])

@@ -6,7 +6,7 @@ from io import BytesIO
 import markdown
 from django.utils.text import slugify
 
-MODULE_FORMAT_VERSION = 4
+MODULE_FORMAT_VERSION = 5
 
 
 def module_id(campaign):
@@ -71,17 +71,40 @@ class FoundryModule:
         if not self.plot:
             return payload
 
-        elements = self.plot.plotelement_set.prefetch_related(
-            "npc",
-            "essential_npc",
-            "foes__resistances",
-            "foes__weaknesses",
-            "foes__foeaction_set",
-            "handouts",
-            "locations",
-        ).all()
-        seen = {"actors": set(), "items": set(), "scenes": set()}
+        elements = list(
+            self.plot.plotelement_set.prefetch_related(
+                "npc",
+                "essential_npc",
+                "foes__resistances",
+                "foes__weaknesses",
+                "foes__foeaction_set",
+                "handouts",
+                "locations",
+            ).all()
+        )
+        elements_by_parent = {}
         for element in elements:
+            elements_by_parent.setdefault(element.parent_id, []).append(element)
+
+        ordered_elements = []
+        visited_element_ids = set()
+
+        def walk(parent_id):
+            for element in elements_by_parent.get(parent_id, []):
+                if element.pk in visited_element_ids:
+                    continue
+                visited_element_ids.add(element.pk)
+                ordered_elements.append(element)
+                walk(element.pk)
+
+        walk(None)
+        # Include malformed or detached branches instead of silently omitting content.
+        ordered_elements.extend(
+            element for element in elements if element not in ordered_elements
+        )
+
+        seen = {"actors": set(), "items": set(), "scenes": set()}
+        for element in ordered_elements:
             if element.player_summary:
                 payload["journals"].append(
                     {
@@ -179,11 +202,25 @@ class FoundryModule:
                     continue
                 seen["scenes"].add(location.pk)
                 background = self.asset_path(location.image, "location", location.pk)
+                dimensions = {}
+                if location.image:
+                    dimensions = {
+                        "width": location.image.width,
+                        "height": location.image.height,
+                    }
                 payload["scenes"].append(
                     {
                         "_id": document_id("P6S", location.pk),
                         "name": location.name,
-                        "background": {"src": background or ""},
+                        **dimensions,
+                        "levels": [
+                            {
+                                "_id": document_id("P6L", location.pk),
+                                "name": "Ground",
+                                "elevation": {"bottom": 0, "top": 10},
+                                "background": {"src": background or ""},
+                            }
+                        ],
                         "flags": {self.id: {"source": f"location:{location.pk}"}},
                     }
                 )
@@ -339,6 +376,18 @@ async function importDocuments(pack, documents) {{
     if (existing) await existing.update(source); else await pack.documentClass.create(source, {{pack: pack.collection}});
   }}
 }}
+async function importScenes(pack, scenes) {{
+  for (const source of scenes) {{
+    const {{levels, ...sceneSource}} = source;
+    let scene = await pack.getDocument(source._id);
+    if (scene) await scene.update(sceneSource); else scene = await pack.documentClass.create(sceneSource, {{pack: pack.collection}});
+    const level = levels[0];
+    if (!level) continue;
+    const existingLevel = scene.firstLevel;
+    if (existingLevel) await scene.updateEmbeddedDocuments("Level", [{{...level, _id: existingLevel.id}}]);
+    else await scene.createEmbeddedDocuments("Level", [level], {{keepId: true}});
+  }}
+}}
 Hooks.once("ready", async () => {{
   if (!game.user.isGM) return;
   const exported = await (await fetch(`modules/${{MODULE_ID}}/data/export.json`)).json();
@@ -348,7 +397,8 @@ Hooks.once("ready", async () => {{
     const name = `${{MODULE_ID}}-${{kind}}`;
     let pack = game.packs.get(`world.${{name}}`);
     if (!pack) {{ await CompendiumCollection.createCompendium({{name, label, type, package: "world"}}); pack = game.packs.get(`world.${{name}}`); }}
-    await importDocuments(pack, exported[kind]);
+    if (kind === "scenes") await importScenes(pack, exported[kind]);
+    else await importDocuments(pack, exported[kind]);
   }}
   await game.settings.set(MODULE_ID, "importedRevision", game.modules.get(MODULE_ID).version);
   ui.notifications.info(`${{game.modules.get(MODULE_ID).title}} imported.`);
