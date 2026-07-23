@@ -3,7 +3,7 @@ from types import SimpleNamespace
 from django.test import SimpleTestCase
 from django.urls import Resolver404, resolve, reverse
 
-from plots.models import PlotElement
+from plots.models import Plot, PlotElement
 
 
 class PlotElementVisibilityTests(SimpleTestCase):
@@ -48,6 +48,9 @@ class PlotElementVisibilityTests(SimpleTestCase):
             ),
             "/plots/plot_element/1/visibility/npc_visibility/cycle",
         )
+
+    def test_plot_export_version_defaults_to_one(self):
+        self.assertEqual(Plot._meta.get_field("export_version").default, 1)
 
     def test_dedicated_plot_editor_routes_are_unavailable(self):
         with self.assertRaises(Resolver404):

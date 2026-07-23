@@ -254,6 +254,24 @@
             }
         }
 
+        function setAllEditorDetails($editor, action) {
+            const detailIds = $editor
+                .find('[id^="details-"].collapse')
+                .map(function () {
+                    return this.id;
+                })
+                .get();
+
+            $editor.find('[id^="details-"].collapse').each(function () {
+                bootstrap.Collapse.getOrCreateInstance(this)[action]();
+            });
+
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(action === "show" ? detailIds : []),
+            );
+        }
+
         function restoreCollapseState($container) {
             const openIds = getOpenIds();
             openIds.forEach(function (id) {
@@ -376,6 +394,14 @@
                 saveCollapsedChildrenId(this.id);
                 syncChildrenToggleIcons();
             }
+        });
+
+        $(document).on("click", "[data-plot-editor-expand-all]", function () {
+            setAllEditorDetails($(this).closest("[data-plot-editor-id]"), "show");
+        });
+
+        $(document).on("click", "[data-plot-editor-collapse-all]", function () {
+            setAllEditorDetails($(this).closest("[data-plot-editor-id]"), "hide");
         });
 
         // Restore state after HTMX swaps

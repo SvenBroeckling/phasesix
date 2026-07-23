@@ -19,6 +19,7 @@ from plots.forms import (
     PlotFromDescriptionForm,
 )
 from plots.models import Plot, PlotElement, Handout, Location
+from plots.signals import bump_export_versions
 from campaigns.models import Campaign
 from plots.openai import PlotOpenAIService
 from characters.models import Character
@@ -82,6 +83,12 @@ class XhrReorderPlotElementView(View):
             PlotElement.objects.filter(id=element_id).update(
                 parent=parent, ordering=index
             )
+
+        bump_export_versions(
+            PlotElement.objects.filter(id__in=element_ids).values_list(
+                "plot_id", flat=True
+            )
+        )
 
         return JsonResponse({"status": "ok"})
 
@@ -160,6 +167,7 @@ class XhrPlotElementVisibilityView(View):
                     for visibility_field in self.visibility_fields
                 }
             )
+            bump_export_versions([element.plot_id])
         elif field in self.visibility_fields and action == "cycle":
             setattr(element, field, self.visibility_cycle[getattr(element, field)])
             element.save(update_fields=[field])
@@ -195,6 +203,7 @@ class XhrQuickCreatePlotElementView(View):
         PlotElement.objects.filter(plot=plot, parent=parent).update(
             ordering=F("ordering") + 1
         )
+        bump_export_versions([plot.id])
         element = PlotElement.objects.create(
             plot=plot,
             parent=parent,

@@ -1,5 +1,6 @@
 from types import SimpleNamespace
 from unittest.mock import Mock
+from uuid import uuid4
 
 from django.contrib.auth.models import AnonymousUser
 from django.forms import modelform_factory
@@ -9,6 +10,7 @@ from django.test import RequestFactory, SimpleTestCase
 from django.urls import resolve, reverse
 
 from campaigns.models import Campaign
+from campaigns.foundry import FoundryModule
 from campaigns.templatetags.campaign_extras import create_campaign_url
 from campaigns.views import (
     CampaignDetailView,
@@ -177,6 +179,43 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
             context["invite_link"],
             "https://tr.localhost:8000/campaigns/la-dame-blanche-2/invite/invite-hash",
         )
+
+    def test_campaign_detail_exposes_a_foundry_manifest_for_attached_plots(self):
+        request = self.factory.get("/", secure=True, HTTP_HOST="tr.localhost:8000")
+        request.user = AnonymousUser()
+        campaign = SimpleNamespace(
+            slug="la-dame-blanche-2",
+            campaign_hash="invite-hash",
+            foundry_token=uuid4(),
+            plot=SimpleNamespace(),
+            may_edit=Mock(return_value=True),
+        )
+        view = CampaignDetailView()
+        view.request = request
+        view.kwargs = {}
+        view.object = campaign
+
+        context = view.get_context_data()
+
+        self.assertIn("/foundry/", context["foundry_manifest_link"])
+        self.assertTrue(context["foundry_manifest_link"].endswith("/module.json"))
+
+    def test_foundry_module_manifest_declares_v14_actor_type(self):
+        campaign = SimpleNamespace(
+            pk=42,
+            name="The Glass Road",
+            plot=SimpleNamespace(export_version=7),
+        )
+
+        manifest = FoundryModule(
+            campaign,
+            "https://example.test/module.json",
+            "https://example.test/download.zip",
+        ).manifest()
+
+        self.assertEqual(manifest["version"], "1.0.7")
+        self.assertEqual(manifest["compatibility"]["minimum"], "14")
+        self.assertIn("phasesix", manifest["documentTypes"]["Actor"])
 
     def test_empty_homebrew_notice_is_shown_to_anonymous_visitors(self):
         request = self.factory.get("/")

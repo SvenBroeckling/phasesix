@@ -21,8 +21,18 @@
             </button>
           {% endif %}
 
-          {% if may_edit %}
-          <a href="{{ invite_link }}"
+           {% if may_edit %}
+           {% if foundry_manifest_link %}
+           <a href="{{ foundry_manifest_link }}"
+              class="btn btn-outline-primary btn-sm campaign-link"
+              data-title="{% trans 'Foundry compendia' %}"
+              data-msg="{% trans 'Copied' %}">
+             <i class="fas fa-book-open invite-icon" aria-hidden="true"></i>
+             <span class="invite-text" aria-live="polite">{% trans 'Foundry compendia' %}</span>
+           </a>
+           {% endif %}
+
+           <a href="{{ invite_link }}"
              class="btn btn-outline-primary btn-sm campaign-link"
              data-title="{% trans 'Invite Player' %}"
              data-msg="{% trans 'Invite link copied' %}">

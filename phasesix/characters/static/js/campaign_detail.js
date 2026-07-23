@@ -6,14 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let text = elem.find(".invite-text");
         let icon = elem.find(".invite-icon");
         let origText = text.data("original-text") || text.text();
+        let origIcon = icon.data("original-icon") || icon.attr("class");
 
         e.preventDefault();
         copyTextToClipboard(elem.attr("href"));
 
         clearTimeout(elem.data("feedback-timeout"));
         text.data("original-text", origText);
+        icon.data("original-icon", origIcon);
         text.text(elem.data("msg"));
-        icon.removeClass("fa-user-plus").addClass("fa-check");
+        icon.attr("class", "fas fa-check invite-icon");
         elem.removeClass("btn-outline-primary").addClass("btn-success");
 
         Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_LEFT);
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "feedback-timeout",
             setTimeout(() => {
                 text.text(origText);
-                icon.removeClass("fa-check").addClass("fa-user-plus");
+                icon.attr("class", origIcon);
                 elem.removeClass("btn-success").addClass("btn-outline-primary");
             }, 2500),
         );

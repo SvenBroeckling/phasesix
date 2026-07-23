@@ -87,6 +87,7 @@ class Plot(HomebrewModel, ModelWithImage, PhaseSixModel, metaclass=TransMeta):
         blank=True,
         null=True,
     )
+    export_version = models.PositiveBigIntegerField(default=1)
 
     def __str__(self):
         return self.name

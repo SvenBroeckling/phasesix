@@ -5,9 +5,23 @@
        --plot-same-level-label: '{% trans "Same Level" %}';
        --plot-drop-children-label: '{% trans "Drop here for children" %}';"
      data-campaign-plot-storage-key="campaignPlotElements-{{ campaign.id }}"
-     hx-get="{% url 'plots:xhr_campaign_plot_view' campaign_pk=campaign.id plot_pk=plot.id %}"
-     hx-trigger="refresh-plot from:document"
-     hx-swap="outerHTML">
+      hx-get="{% url 'plots:xhr_campaign_plot_view' campaign_pk=campaign.id plot_pk=plot.id %}"
+      hx-trigger="refresh-plot from:document"
+      hx-swap="outerHTML">
+  <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+    <button type="button"
+            class="btn btn-outline-secondary btn-sm"
+            data-plot-collapse-all>
+      <i class="fas fa-compress-alt me-1" aria-hidden="true"></i>
+      {% trans "Collapse all" %}
+    </button>
+    <button type="button"
+            class="btn btn-outline-primary btn-sm"
+            data-plot-expand-all>
+      <i class="fas fa-expand-alt me-1" aria-hidden="true"></i>
+      {% trans "Expand all" %}
+    </button>
+  </div>
   <div class="sortable" data-parent-id="root">
     {% for element in root_elements|default:plot.root_elements %}
       {% include 'campaigns/plot/_plot_element.html' with element=element object=campaign %}

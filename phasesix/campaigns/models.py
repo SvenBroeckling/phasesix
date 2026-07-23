@@ -63,6 +63,7 @@ class Campaign(ModelWithImage):
 
     slug = models.SlugField(_("slug"), max_length=220)
     name = models.CharField(_("name"), max_length=80)
+    foundry_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     ruleset = models.CharField(
         _("ruleset"), max_length=24, choices=RULESET_CHOICES, default=RULESET_PHASESIX
     )

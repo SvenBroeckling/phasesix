@@ -47,6 +47,16 @@ urlpatterns = [
         views.CreateCampaignDataView.as_view(),
         name="create_data",
     ),
+    path(
+        "<slug:slug>/foundry/<uuid:token>/module.json",
+        views.FoundryManifestView.as_view(),
+        name="foundry_manifest",
+    ),
+    path(
+        "<slug:slug>/foundry/<uuid:token>/download.zip",
+        views.FoundryDownloadView.as_view(),
+        name="foundry_download",
+    ),
     path("<slug:slug>", views.CampaignDetailView.as_view(), name="detail"),
     path(
         "<slug:slug>/invite/<hash>",

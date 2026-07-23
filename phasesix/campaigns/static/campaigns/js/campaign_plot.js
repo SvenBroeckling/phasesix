@@ -58,6 +58,30 @@
             });
         }
 
+        function setAllCollapses($root, action) {
+            const storageKey = getStorageKey($root[0]);
+            const $collapses = $root.find(
+                '[id^="details-"].collapse, [data-plot-children-collapse].collapse',
+            );
+
+            $collapses.each(function () {
+                bootstrap.Collapse.getOrCreateInstance(this)[action]();
+            });
+
+            if (storageKey) {
+                const detailIds = $root
+                    .find('[id^="details-"].collapse')
+                    .map(function () {
+                        return this.id;
+                    })
+                    .get();
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify(action === "show" ? detailIds : []),
+                );
+            }
+        }
+
         $("[data-campaign-plot-storage-key]").each(function () {
             restoreCollapseState($(this));
         });
@@ -81,6 +105,14 @@
                 const storageKey = getStorageKey(container);
                 removeOpenId(storageKey, this.id);
             }
+        });
+
+        $(document).on("click", "[data-plot-expand-all]", function () {
+            setAllCollapses($(this).closest("[data-campaign-plot-storage-key]"), "show");
+        });
+
+        $(document).on("click", "[data-plot-collapse-all]", function () {
+            setAllCollapses($(this).closest("[data-campaign-plot-storage-key]"), "hide");
         });
 
         document.addEventListener("htmx:afterSettle", function (evt) {

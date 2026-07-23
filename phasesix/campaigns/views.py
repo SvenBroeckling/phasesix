@@ -1,7 +1,12 @@
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.http import (
+    JsonResponse,
+    HttpResponse,
+    HttpResponseRedirect,
+    StreamingHttpResponse,
+)
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -20,6 +25,7 @@ from campaigns.forms import (
     CampaignSettingsGameForm,
 )
 from campaigns.models import Campaign, CampaignFoe, Roll
+from campaigns.foundry import FoundryModule
 from characters.forms import CreateCharacterExtensionsForm
 from characters.models import Character, Contact
 from characters.utils import is_tirakan_world
@@ -258,7 +264,55 @@ class CampaignDetailView(DetailView):
                 kwargs={"slug": self.object.slug, "hash": self.object.campaign_hash},
             )
         )
+        if getattr(self.object, "plot", None):
+            context["foundry_manifest_link"] = self.request.build_absolute_uri(
+                reverse(
+                    "campaigns:foundry_manifest",
+                    kwargs={
+                        "slug": self.object.slug,
+                        "token": self.object.foundry_token,
+                    },
+                )
+            )
         return context
+
+
+class FoundryManifestView(View):
+    def get(self, request, slug, token, *args, **kwargs):
+        campaign = get_object_or_404(Campaign, slug=slug, foundry_token=token)
+        manifest_url = request.build_absolute_uri(
+            reverse("campaigns:foundry_manifest", kwargs={"slug": slug, "token": token})
+        )
+        download_url = request.build_absolute_uri(
+            reverse("campaigns:foundry_download", kwargs={"slug": slug, "token": token})
+        )
+        module = FoundryModule(campaign, manifest_url, download_url)
+        return JsonResponse(module.manifest())
+
+
+class FoundryDownloadView(View):
+    def get(self, request, slug, token, *args, **kwargs):
+        campaign = get_object_or_404(
+            Campaign.objects.select_related("plot"), slug=slug, foundry_token=token
+        )
+        manifest_url = request.build_absolute_uri(
+            reverse("campaigns:foundry_manifest", kwargs={"slug": slug, "token": token})
+        )
+        download_url = request.build_absolute_uri(
+            reverse("campaigns:foundry_download", kwargs={"slug": slug, "token": token})
+        )
+        module = FoundryModule(campaign, manifest_url, download_url)
+        archive = module.archive()
+
+        def chunks():
+            while chunk := archive.read(64 * 1024):
+                yield chunk
+
+        response = StreamingHttpResponse(chunks(), content_type="application/zip")
+        response["Content-Disposition"] = (
+            f'attachment; filename="{module.id}-{module.version}.zip"'
+        )
+        return response
 
 
 class CloneCampaignView(View):

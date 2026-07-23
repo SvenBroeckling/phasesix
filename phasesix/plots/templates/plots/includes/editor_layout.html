@@ -6,10 +6,25 @@
             --plot-same-level-label: '{% trans "Same Level" %}';
             --plot-drop-children-label: '{% trans "Drop here for children" %}';">
   <div class="row g-4">
-    <div class="col-12 col-lg-8"
-         hx-trigger="refresh-plot from:document"
-         hx-get="{% url 'plots:xhr_plot_fragment' pk=plot.id fragment_template="elements" %}">
-      {% include 'plots/fragments/elements.html' with object=plot %}
+    <div class="col-12 col-lg-8">
+      <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+        <button type="button"
+                class="btn btn-outline-secondary btn-sm"
+                data-plot-editor-collapse-all>
+          <i class="fas fa-compress-alt me-1" aria-hidden="true"></i>
+          {% trans "Collapse all" %}
+        </button>
+        <button type="button"
+                class="btn btn-outline-primary btn-sm"
+                data-plot-editor-expand-all>
+          <i class="fas fa-expand-alt me-1" aria-hidden="true"></i>
+          {% trans "Expand all" %}
+        </button>
+      </div>
+      <div hx-trigger="refresh-plot from:document"
+           hx-get="{% url 'plots:xhr_plot_fragment' pk=plot.id fragment_template="elements" %}">
+        {% include 'plots/fragments/elements.html' with object=plot %}
+      </div>
     </div>
     <div class="col-12 col-lg-4"
          hx-trigger="refresh-plot from:document"
