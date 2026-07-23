@@ -214,10 +214,11 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
         )
         manifest = module.manifest()
 
-        self.assertEqual(manifest["version"], "2.0.7")
+        self.assertEqual(manifest["version"], "4.0.7")
         self.assertEqual(manifest["title"], "The Glass Road")
         self.assertEqual(manifest["compatibility"]["minimum"], "14")
         self.assertIn("phasesix", manifest["documentTypes"]["Actor"])
+        self.assertIn("handout", manifest["documentTypes"]["Item"])
         self.assertEqual(manifest["styles"], ["styles/actor-sheet.css"])
         self.assertIn("phasesix-actor-sheet__details", module.template())
         self.assertIn("TextEditor.enrichHTML", module.script())

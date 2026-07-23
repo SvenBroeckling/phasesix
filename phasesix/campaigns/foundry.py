@@ -6,7 +6,7 @@ from io import BytesIO
 import markdown
 from django.utils.text import slugify
 
-MODULE_FORMAT_VERSION = 2
+MODULE_FORMAT_VERSION = 4
 
 
 def module_id(campaign):
@@ -67,7 +67,7 @@ class FoundryModule:
         }
 
     def documents(self):
-        payload = {"actors": [], "journals": [], "scenes": []}
+        payload = {"actors": [], "items": [], "journals": [], "scenes": []}
         if not self.plot:
             return payload
 
@@ -77,9 +77,10 @@ class FoundryModule:
             "foes__resistances",
             "foes__weaknesses",
             "foes__foeaction_set",
+            "handouts",
             "locations",
         ).all()
-        seen = {"actors": set(), "scenes": set()}
+        seen = {"actors": set(), "items": set(), "scenes": set()}
         for element in elements:
             if element.player_summary:
                 payload["journals"].append(
@@ -156,6 +157,23 @@ class FoundryModule:
                             foe.as_dict(),
                         )
                     )
+            for handout in element.handouts.all():
+                if handout.pk in seen["items"]:
+                    continue
+                seen["items"].add(handout.pk)
+                payload["items"].append(
+                    {
+                        "_id": document_id("P6H", handout.pk),
+                        "name": handout.name,
+                        "type": f"{self.id}.handout",
+                        "img": self.asset_path(handout.image, "handout", handout.pk)
+                        or "icons/svg/book.svg",
+                        "system": {
+                            "description": markdown.markdown(handout.description or "")
+                        },
+                        "flags": {self.id: {"source": f"handout:{handout.pk}"}},
+                    }
+                )
             for location in element.locations.all():
                 if location.pk in seen["scenes"]:
                     continue
@@ -184,7 +202,10 @@ class FoundryModule:
             "esmodules": ["scripts/main.mjs"],
             "styles": ["styles/actor-sheet.css"],
             "languages": [{"lang": "en", "name": "English", "path": "lang/en.json"}],
-            "documentTypes": {"Actor": {"phasesix": {"htmlFields": ["description"]}}},
+            "documentTypes": {
+                "Actor": {"phasesix": {"htmlFields": ["description"]}},
+                "Item": {"handout": {"htmlFields": ["description"]}},
+            },
         }
 
     def archive(self):
@@ -198,6 +219,9 @@ class FoundryModule:
             archive.writestr(root + "data/export.json", json.dumps(data))
             archive.writestr(root + "scripts/main.mjs", self.script())
             archive.writestr(root + "templates/actor-sheet.hbs", self.template())
+            archive.writestr(
+                root + "templates/handout-sheet.hbs", self.handout_template()
+            )
             archive.writestr(root + "styles/actor-sheet.css", self.styles())
             archive.writestr(root + "lang/en.json", json.dumps(self.translations()))
             for path, field_file in self.assets:
@@ -243,12 +267,21 @@ class FoundryModule:
 .phasesix-actor-sheet__category { color: var(--color-text-secondary); display: block; font-size: .75rem; font-weight: 700; letter-spacing: .12em; margin-top: .35rem; text-transform: uppercase; }
 .phasesix-actor-sheet__section { margin-top: 1.25rem; }
 .phasesix-actor-sheet__section h2 { border-bottom: 1px solid var(--color-border-light-primary); font-size: .9rem; letter-spacing: .08em; margin: 0 0 .6rem; padding-bottom: .4rem; text-transform: uppercase; }
-.phasesix-actor-sheet__description { line-height: 1.5; }
+.phasesix-actor-sheet__description { line-height: 1.5; max-height: 18rem; overflow-y: auto; padding-right: .5rem; }
 .phasesix-actor-sheet__description p:first-child { margin-top: 0; }
 .phasesix-actor-sheet__details { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: 0; }
 .phasesix-actor-sheet__details > div { background: color-mix(in srgb, var(--color-cool-3) 45%, transparent); border-left: 2px solid var(--color-border-highlight); min-height: 3.6rem; padding: .45rem .6rem; }
 .phasesix-actor-sheet__details dt { color: var(--color-text-secondary); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; }
 .phasesix-actor-sheet__details dd { font-size: .95rem; font-weight: 600; margin: .25rem 0 0; white-space: pre-line; }"""
+
+    def handout_template(self):
+        return """<form class=\"phasesix-actor-sheet\" autocomplete=\"off\">
+  <header class=\"phasesix-actor-sheet__header\">
+    <img class=\"phasesix-actor-sheet__portrait\" src=\"{{item.img}}\" data-edit=\"img\">
+    <div><input class=\"phasesix-actor-sheet__name\" name=\"name\" value=\"{{item.name}}\"><span class=\"phasesix-actor-sheet__category\">Handout</span></div>
+  </header>
+  <section class=\"phasesix-actor-sheet__section\"><div class=\"phasesix-actor-sheet__description\">{{{description}}}</div></section>
+</form>"""
 
     def script(self):
         return f"""const MODULE_ID = "{self.id}";
@@ -256,6 +289,7 @@ const ACTOR_TYPE = `${{MODULE_ID}}.phasesix`;
 const {{ TypeDataModel }} = foundry.abstract;
 const fields = foundry.data.fields;
 const {{ ActorSheetV2 }} = foundry.applications.sheets;
+const {{ ItemSheetV2 }} = foundry.applications.sheets;
 const {{ HandlebarsApplicationMixin }} = foundry.applications.api;
 
 class PhaseSixActorData extends TypeDataModel {{
@@ -280,9 +314,24 @@ class PhaseSixActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {{
     return context;
   }}
 }}
+class PhaseSixHandoutData extends TypeDataModel {{
+  static defineSchema() {{ return {{ description: new fields.HTMLField({{required: false, blank: true}}) }}; }}
+}}
+class PhaseSixHandoutSheet extends HandlebarsApplicationMixin(ItemSheetV2) {{
+  static DEFAULT_OPTIONS = {{ form: {{closeOnSubmit: false, submitOnChange: true}}, position: {{width: 520}} }};
+  static PARTS = {{ form: {{template: `modules/${{MODULE_ID}}/templates/handout-sheet.hbs`}} }};
+  async _prepareContext(options) {{
+    const context = await super._prepareContext(options);
+    context.item = this.item;
+    context.description = await TextEditor.enrichHTML(this.item.system.description || "", {{async: true, relativeTo: this.item, secrets: this.item.isOwner}});
+    return context;
+  }}
+}}
 Hooks.once("init", () => {{
   CONFIG.Actor.dataModels[ACTOR_TYPE] = PhaseSixActorData;
+  CONFIG.Item.dataModels[`${{MODULE_ID}}.handout`] = PhaseSixHandoutData;
   DocumentSheetConfig.registerSheet(Actor, MODULE_ID, PhaseSixActorSheet, {{types: [ACTOR_TYPE], makeDefault: true}});
+  DocumentSheetConfig.registerSheet(Item, MODULE_ID, PhaseSixHandoutSheet, {{types: [`${{MODULE_ID}}.handout`], makeDefault: true}});
 }});
 async function importDocuments(pack, documents) {{
   for (const source of documents) {{
@@ -295,7 +344,7 @@ Hooks.once("ready", async () => {{
   const exported = await (await fetch(`modules/${{MODULE_ID}}/data/export.json`)).json();
   const revision = game.settings.get(MODULE_ID, "importedRevision");
   if (revision === game.modules.get(MODULE_ID).version) return;
-  for (const [kind, type, label] of [["actors", "Actor", "Actors"], ["journals", "JournalEntry", "Plot journals"], ["scenes", "Scene", "Locations"]]) {{
+  for (const [kind, type, label] of [["actors", "Actor", "Actors"], ["items", "Item", "Handouts"], ["journals", "JournalEntry", "Plot journals"], ["scenes", "Scene", "Locations"]]) {{
     const name = `${{MODULE_ID}}-${{kind}}`;
     let pack = game.packs.get(`world.${{name}}`);
     if (!pack) {{ await CompendiumCollection.createCompendium({{name, label, type, package: "world"}}); pack = game.packs.get(`world.${{name}}`); }}

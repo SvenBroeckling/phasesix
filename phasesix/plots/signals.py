@@ -4,7 +4,7 @@ from django.dispatch import receiver
 
 from characters.models import Character
 from essential_characters.models import EssentialCharacter
-from plots.models import Location, Plot, PlotElement
+from plots.models import Handout, Location, Plot, PlotElement
 from rules.models import Foe, FoeAction
 
 
@@ -31,6 +31,7 @@ def bump_element_plot_version(sender, instance, **kwargs):
 @receiver(m2m_changed, sender=PlotElement.essential_npc.through)
 @receiver(m2m_changed, sender=PlotElement.foes.through)
 @receiver(m2m_changed, sender=PlotElement.locations.through)
+@receiver(m2m_changed, sender=PlotElement.handouts.through)
 def bump_element_relation_plot_version(sender, instance, action, **kwargs):
     if action.startswith("post_") or action == "pre_clear":
         bump_export_versions([instance.plot_id])
@@ -39,6 +40,12 @@ def bump_element_relation_plot_version(sender, instance, action, **kwargs):
 @receiver(post_save, sender=Location)
 @receiver(pre_delete, sender=Location)
 def bump_location_plot_versions(sender, instance, **kwargs):
+    bump_export_versions(related_plot_ids(instance, "plotelement_set"))
+
+
+@receiver(post_save, sender=Handout)
+@receiver(pre_delete, sender=Handout)
+def bump_handout_plot_versions(sender, instance, **kwargs):
     bump_export_versions(related_plot_ids(instance, "plotelement_set"))
 
 
