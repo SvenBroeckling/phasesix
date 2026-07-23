@@ -204,7 +204,7 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
         campaign = SimpleNamespace(
             pk=42,
             name="The Glass Road",
-            plot=SimpleNamespace(export_version=7),
+            plot=SimpleNamespace(name="The Glass Road", export_version=7),
         )
 
         manifest = FoundryModule(
@@ -214,6 +214,7 @@ class CampaignRulesetSelectionTests(SimpleTestCase):
         ).manifest()
 
         self.assertEqual(manifest["version"], "1.0.7")
+        self.assertEqual(manifest["title"], "The Glass Road")
         self.assertEqual(manifest["compatibility"]["minimum"], "14")
         self.assertIn("phasesix", manifest["documentTypes"]["Actor"])
 

@@ -4,6 +4,7 @@ import zipfile
 from io import BytesIO
 
 import markdown
+from django.utils.text import slugify
 
 
 def module_id(campaign):
@@ -28,6 +29,16 @@ class FoundryModule:
     @property
     def version(self):
         return f"1.0.{self.plot.export_version}" if self.plot else "1.0.0"
+
+    @property
+    def title(self):
+        if self.plot and self.plot.name != self.campaign.name:
+            return f"{self.plot.name} ({self.campaign.name})"
+        return self.plot.name if self.plot else self.campaign.name
+
+    @property
+    def filename(self):
+        return f"{slugify(self.title) or self.id}-{self.version}.zip"
 
     def asset_path(self, field_file, kind, pk):
         if not field_file:
@@ -154,7 +165,7 @@ class FoundryModule:
     def manifest(self):
         return {
             "id": self.id,
-            "title": f"{self.campaign.name} - PhaseSix",
+            "title": self.title,
             "description": "PhaseSix campaign material for Foundry VTT.",
             "version": self.version,
             "authors": [{"name": "PhaseSix"}],

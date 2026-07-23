@@ -309,9 +309,7 @@ class FoundryDownloadView(View):
                 yield chunk
 
         response = StreamingHttpResponse(chunks(), content_type="application/zip")
-        response["Content-Disposition"] = (
-            f'attachment; filename="{module.id}-{module.version}.zip"'
-        )
+        response["Content-Disposition"] = f'attachment; filename="{module.filename}"'
         return response
 
 
