@@ -18,61 +18,61 @@
 {% endblock %}
 
 {% block content %}
-  <div data-app="characters">
+  <div data-app="characters" class="character-details-flow">
     <form action="?{{ request.GET.urlencode }}" method="post" class="character-data-form"
           data-info-url="{% url 'characters:create_character_info' world_pk=world_pk epoch_pk=epoch_pk %}">
-      <div class="row">
-        {% csrf_token %}
-        <div class="col-12 col-md-6">
-          <div class="row">
-            <div class="col-12 col-md-8">
-              {% bootstrap_field form.name %}
-            </div>
-            <div class="col-12 col-md-4">
-              {% bootstrap_field form.pronoun %}
-            </div>
-            <div class="col-12">
-              {% bootstrap_field form.currency_map %}
-              {% bootstrap_field form.seed_money %}
-              {% bootstrap_field form.lineage %}
-              {% bootstrap_field form.epoch show_label=False %}
-              {% bootstrap_field form.world show_label=False %}
-              {% bootstrap_field form.extensions show_label=False %}
-            </div>
-            <div class="col-12 col-md-6">
-              {% bootstrap_field form.size %}
-            </div>
-            <div class="col-12 col-md-6">
-              {% bootstrap_field form.weight %}
-            </div>
-            <div class="col-12">
-              {% bootstrap_field form.date_of_birth %}
-            </div>
-            <div class="col-8">
-              {% bootstrap_field form.entity %}
-            </div>
-            <div class="col-4">
-              {% bootstrap_field form.attitude %}
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary w-100 mt-3">{% trans 'Create Character' %}</button>
-            </div>
-          </div>
+      {% csrf_token %}
+      <div class="character-details-panel">
+        <div class="visually-hidden">
+          {% bootstrap_field form.epoch show_label=False %}
+          {% bootstrap_field form.world show_label=False %}
+          {% bootstrap_field form.extensions show_label=False %}
         </div>
 
-        <div class="col-12 col-md-6 description">
-          <h4>{% trans 'Character information' %}</h4>
-          <p class="text-justify">
-            {% blocktrans %}
-              Enter some background information about your character here, which will make him more vivid and give him a
-              background.
-              <br><br>
-              In addition to the name, height and weight, you can choose the character's lineage. This gives him an
-              initial character template, which can assign some bonus stats and skills.
-            {% endblocktrans %}
-          </p>
+        <section class="character-details-section">
+          <h2>{% trans "Identity" %}</h2>
+          <div class="character-details-grid character-details-grid-identity">
+            <div>{% bootstrap_field form.name %}</div>
+            <div>{% bootstrap_field form.pronoun %}</div>
+            <div class="character-details-grid-full">{% bootstrap_field form.lineage %}</div>
+          </div>
+        </section>
+
+        <section class="character-details-section">
+          <h2>{% trans "Background" %}</h2>
+          <div class="character-details-grid">
+            <div>{% bootstrap_field form.date_of_birth %}</div>
+            <div>{% bootstrap_field form.size %}</div>
+            <div>{% bootstrap_field form.weight %}</div>
+          </div>
+        </section>
+
+        <section class="character-details-section">
+          <h2>{% trans "Starting resources" %}</h2>
+          <div class="character-details-grid">
+            <div>{% bootstrap_field form.currency_map %}</div>
+            <div>{% bootstrap_field form.seed_money %}</div>
+          </div>
+        </section>
+
+        <section class="character-details-section character-details-section-optional">
+          <h2>{% trans "Optional details" %}</h2>
+          <div class="character-details-grid character-details-grid-identity">
+            <div>{% bootstrap_field form.entity %}</div>
+            <div>{% bootstrap_field form.attitude %}</div>
+          </div>
+        </section>
+
+        <div class="character-details-submit">
+          <button type="submit" class="btn btn-primary">{% trans 'Create Character' %}<i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></button>
         </div>
       </div>
     </form>
+
+    <aside class="character-creation-info description" aria-live="polite">
+      <h2>{% trans 'Character information' %}</h2>
+      <p>{% trans "Choose a field to see helpful context while you create your character." %}</p>
+      <p>{% trans "Your lineage can grant an initial template with bonus stats and skills." %}</p>
+    </aside>
   </div>
 {% endblock %}

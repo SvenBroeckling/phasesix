@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
             );
             let was_selected = $(this).hasClass("selected");
             if (was_selected) {
-                option.removeAttr("selected");
-                $(this).removeClass("selected");
+                option.prop("selected", false);
+                $(this).removeClass("selected").attr("aria-pressed", "false");
             } else {
-                option.attr("selected", "selected");
-                $(this).addClass("selected");
+                option.prop("selected", true);
+                $(this).addClass("selected").attr("aria-pressed", "true");
             }
         },
     );
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             url,
             { field: event.target.name, value: event.target.value },
             function (data) {
-                $("div.description").html(data);
+                $(".description").html(data);
             },
         );
     }

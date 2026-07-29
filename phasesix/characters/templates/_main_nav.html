@@ -136,45 +136,55 @@
                 </a>
               </li>
 
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+              {% with characters=user.character_set.pc|slice:":4" campaigns=user.campaign_set.all|slice:":4" %}
+                {% if characters or campaigns %}
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                {% endif %}
 
-              <li>
-                <span class="dropdown-header fw-semibold fs-6">{% trans "Characters" %}</span>
-              </li>
-              {% for character in user.character_set.pc|slice:":4" %}
-                <li>
-                  <a class="dropdown-item d-flex align-items-center gap-3"
-                     href="{{ character.get_absolute_url }}">
-                    {% image_url character "50x50" as image %}
-                    <img width="25" height="25" class="rounded"
-                         src="{{ image }}"
-                         alt="{% trans "Character image" %}">
-                    <span class="user-menu-item-name" title="{{ character }}">{{ character }}</span>
-                  </a>
-                </li>
-              {% endfor %}
+                {% if characters %}
+                  <li>
+                    <span class="dropdown-header fw-semibold fs-6">{% trans "Characters" %}</span>
+                  </li>
+                  {% for character in characters %}
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center gap-3"
+                         href="{{ character.get_absolute_url }}">
+                        {% image_url character "50x50" as image %}
+                        <img width="25" height="25" class="rounded"
+                             src="{{ image }}"
+                             alt="{% trans "Character image" %}">
+                        <span class="user-menu-item-name" title="{{ character }}">{{ character }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                {% endif %}
 
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+                {% if characters and campaigns %}
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                {% endif %}
 
-              <li>
-                <span class="dropdown-header fw-semibold fs-6">{% trans "Campaigns" %}</span>
-              </li>
-              {% for campaign in user.campaign_set.all|slice:":4" %}
-                <li>
-                  <a class="dropdown-item d-flex align-items-center gap-3"
-                     href="{{ campaign.get_absolute_url }}">
-                    {% image_url campaign "50x50" as image %}
-                    <img width="25" height="25" class="rounded"
-                         src="{{ image }}"
-                         alt="{% trans "Campaign image" %}">
-                    <span class="user-menu-item-name" title="{{ campaign }}">{{ campaign }}</span>
-                  </a>
-                </li>
-              {% endfor %}
+                {% if campaigns %}
+                  <li>
+                    <span class="dropdown-header fw-semibold fs-6">{% trans "Campaigns" %}</span>
+                  </li>
+                  {% for campaign in campaigns %}
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center gap-3"
+                         href="{{ campaign.get_absolute_url }}">
+                        {% image_url campaign "50x50" as image %}
+                        <img width="25" height="25" class="rounded"
+                             src="{{ image }}"
+                             alt="{% trans "Campaign image" %}">
+                        <span class="user-menu-item-name" title="{{ campaign }}">{{ campaign }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
 
               {% if user.is_staff %}
                 <li>

@@ -13,7 +13,7 @@ from armory.models import CurrencyMap, Item, ItemType
 from characters.forms import AddCharacterToStartPageForm
 from characters.models import Character, CharacterItem, CharacterRecipe, Pronoun
 from characters.openai import CharacterLeadImageService
-from characters.views import ChooseCharacterRulesetView
+from characters.views import ChooseCharacterRulesetView, CreateCharacterInfoView
 from portal.templatetags.portal_extras import create_character_url
 from potions.models import (
     Recipe,
@@ -106,6 +106,20 @@ class CharacterRulesetSelectionTests(SimpleTestCase):
             ),
             fetch_redirect_response=False,
         )
+
+
+class CharacterCreationInfoTests(SimpleTestCase):
+    def test_pronoun_help_is_available_for_the_pronoun_field(self):
+        context = CreateCharacterInfoView().pronoun_info("")
+
+        self.assertTrue(context["title"])
+        self.assertTrue(context["description"])
+
+    def test_entity_help_explains_empty_selection(self):
+        context = CreateCharacterInfoView().entity_info("")
+
+        self.assertTrue(context["title"])
+        self.assertTrue(context["description"])
 
 
 class CharacterRecipeMechanicTests(TestCase):

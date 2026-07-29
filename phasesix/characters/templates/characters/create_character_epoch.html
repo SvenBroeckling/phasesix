@@ -13,24 +13,33 @@
 {% endblock %}
 
 {% block content %}
-  <div data-app="characters" class="row">
+  <div data-app="characters" class="character-creation-flow">
+    <div class="character-creation-grid">
     {% for extension in extensions %}
-      <div class="col-12 col-md-6 col-lg-4">
-        <a href="{% url 'characters:create_character_extensions' world_pk=world_pk epoch_pk=extension.id %}">
-          <div class="card text-center create-epoch-card mb-4">
-            {% thumbnail extension.image "1024" as im %}
-              <div class="card-body"
-                   style="background-image: url({{ im.url }}); background-size: cover; background-position: {% focal_position extension %}"
-                   {% focal_image_attrs extension %}>
-            {% endthumbnail %}
-            <div class="card-text w-100 p-5">
-              <h5 class="text-center p-0 m-0">{{ extension }}</h5>
-              <p class="text-center text-gray p-0 m-0">{{ extension.year_range }}</p>
-            </div>
-            </div>
-          </div>
+        <a class="creation-choice-card"
+           href="{% url 'characters:create_character_extensions' world_pk=world_pk epoch_pk=extension.id %}">
+          <span class="creation-choice-card-visual">
+            {% if extension.image %}
+              {% thumbnail extension.image "1024" as im %}
+                <img src="{{ im.url }}" alt="" style="object-position: {% focal_position extension %}" {% focal_image_attrs extension %}>
+              {% endthumbnail %}
+            {% else %}
+              <i class="{{ extension.fa_icon_class }} creation-choice-card-sigil" aria-hidden="true"></i>
+            {% endif %}
+          </span>
+          <span class="creation-choice-card-body">
+            <span class="creation-choice-card-type">{% trans "Epoch" %}</span>
+            <span class="creation-choice-card-title">{{ extension }}</span>
+            {% if extension.description %}
+              <span class="creation-choice-card-description">{{ extension.description|truncatewords:18 }}</span>
+            {% endif %}
+            <span class="creation-choice-card-footer">
+              {% if extension.year_range %}<span>{{ extension.year_range }}</span>{% endif %}
+              <span>{% trans "Choose epoch" %}<i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </span>
+          </span>
         </a>
-      </div>
     {% endfor %}
+    </div>
   </div>
 {% endblock %}

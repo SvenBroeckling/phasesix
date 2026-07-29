@@ -1,11 +1,11 @@
 {% load rules_extras thumbnail %}
-<h4>{{ title }}</h4>
+<h2>{{ title }}</h2>
 {% if image %}
   {% thumbnail image "512" as im %}
-    <img class="img-fluid mb-1" src="{{ im.url }}" alt="{{ title }}">
+    <img class="character-creation-info-image" src="{{ im.url }}" alt="{{ title }}">
   {% endthumbnail %}
 {% endif %}
 {% if lineage %}
-  {% template_widget lineage.template %}
+  <div class="character-creation-info-template">{% template_widget lineage.template %}</div>
 {% endif %}
-{{ description|phasesix_markup }}
+<div class="character-creation-info-copy">{{ description|phasesix_markup }}</div>

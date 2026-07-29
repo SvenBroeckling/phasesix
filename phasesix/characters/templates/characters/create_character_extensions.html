@@ -13,28 +13,46 @@
 {% endblock %}
 
 {% block content %}
-  <div data-app="characters" class="row">
-    {% for extension in extensions %}
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card text-center create-epoch-card create-extension-card mb-4 pointer"
-             data-extension-id="{{ extension.id }}">
-          {% thumbnail extension.image "1024" as im %}
-          <div class="card-body"
-                 style="background-image: url({{ im.url }}); background-size: cover; background-position: {% focal_position extension %}"
-                 {% focal_image_attrs extension %}>
-          {% endthumbnail %}
-          <div class="card-text w-100 p-5">
-            <h5 class="text-center p-0 m-0">{{ extension }}</h5>
-            <p class="text-center p-0 m-0">{{ extension.year_range }}</p>
-          </div>
-          </div>
-        </div>
+  <div data-app="characters" class="character-creation-flow">
+    <form class="character-extension-form"
+          action="{% url 'characters:create_character_data' epoch_pk=epoch_pk world_pk=world_pk %}"
+          method="get">
+      <div class="visually-hidden">
+        {% bootstrap_field form.extensions %}
       </div>
-    {% endfor %}
-
-    <form action="{% url 'characters:create_character_data' epoch_pk=epoch_pk world_pk=world_pk %}" method="get">
-      {% bootstrap_field form.extensions show_label=False %}
-      <button type="submit" class="btn btn-primary btn-block mt-2">{% trans 'Choose Extensions' %}</button>
+      <div class="character-creation-grid">
+        {% for extension in extensions %}
+          <button type="button"
+                  class="creation-choice-card create-extension-card"
+                  data-extension-id="{{ extension.id }}"
+                  aria-pressed="false">
+            <span class="creation-choice-card-visual">
+              {% if extension.image %}
+                {% thumbnail extension.image "1024" as im %}
+                  <img src="{{ im.url }}" alt="" style="object-position: {% focal_position extension %}" {% focal_image_attrs extension %}>
+                {% endthumbnail %}
+              {% else %}
+                <i class="{{ extension.fa_icon_class }} creation-choice-card-sigil" aria-hidden="true"></i>
+              {% endif %}
+            </span>
+            <span class="creation-choice-card-body">
+              <span class="creation-choice-card-type">{% trans "Optional extension" %}</span>
+              <span class="creation-choice-card-title">{{ extension }}</span>
+              {% if extension.description %}
+                <span class="creation-choice-card-description">{{ extension.description|truncatewords:18 }}</span>
+              {% endif %}
+              <span class="creation-choice-card-footer">
+                {% if extension.year_range %}<span>{{ extension.year_range }}</span>{% endif %}
+                <span class="creation-choice-card-select">{% trans "Select" %}<i class="fas fa-plus" aria-hidden="true"></i></span>
+              </span>
+            </span>
+          </button>
+        {% endfor %}
+      </div>
+      <div class="character-creation-actionbar">
+        <p class="mb-0 text-body-secondary">{% trans "Choose the optional books and rules you want to use." %}</p>
+        <button type="submit" class="btn btn-primary">{% trans "Continue to character details" %}<i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></button>
+      </div>
     </form>
   </div>
 {% endblock %}

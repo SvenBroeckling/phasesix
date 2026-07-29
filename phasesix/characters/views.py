@@ -827,9 +827,16 @@ class CreateCharacterInfoView(TemplateView):
             return {}
 
     def entity_info(self, value):
+        if not value:
+            return {
+                "title": gettext("Entity"),
+                "description": gettext(
+                    "Choose an entity if your character follows one. Leave this empty if they do not."
+                ),
+            }
         try:
             entity = Entity.objects.get(id=value)
-        except ValueError:
+        except (Entity.DoesNotExist, ValueError):
             return {}
         return {
             "title": entity.name,
@@ -847,21 +854,19 @@ class CreateCharacterInfoView(TemplateView):
         world = Extension.objects.get(id=self.kwargs["world_pk"]).world_set.latest("id")
         return {
             "title": gettext("Size"),
-            "description": gettext(
-                f"Enter the size of your character in {world.info_name_cm}."
-            ),
+            "description": gettext("Enter the size of your character in %(unit)s.")
+            % {"unit": world.info_name_cm},
         }
 
     def weight_info(self, value):
         world = Extension.objects.get(id=self.kwargs["world_pk"]).world_set.latest("id")
         return {
             "title": gettext("Weight"),
-            "description": gettext(
-                f"Enter the weight of your character in {world.info_name_kg}."
-            ),
+            "description": gettext("Enter the weight of your character in %(unit)s.")
+            % {"unit": world.info_name_kg},
         }
 
-    def pronouns_info(self, value):
+    def pronoun_info(self, value):
         return {
             "title": gettext("Pronouns"),
             "description": gettext(

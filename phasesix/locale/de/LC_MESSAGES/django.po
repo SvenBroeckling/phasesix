@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 13:45+0000\n"
+"POT-Creation-Date: 2026-07-29 22:27+0000\n"
 "PO-Revision-Date: 2026-06-28 16:36+0200\n"
 "Last-Translator: Sven <sven@broeckling.de>\n"
 "Language-Team: German\n"
@@ -570,7 +570,7 @@ msgstr "Seltenheit"
 #: characters/templates/characters/pdf/cards/story/story.html:19
 #: characters/templates/characters/sidebar/item.html:180
 #: characters/templates/characters/sidebar/riot_gear.html:102
-#: characters/views.py:858
+#: characters/views.py:864
 #: rulebook/templates/rulebook/pdf/appendix/items.html:17
 #: rulebook/templates/rulebook/pdf/appendix/riot_gear.html:17
 msgid "Weight"
@@ -1082,16 +1082,18 @@ msgstr "Geklont von"
 
 #: campaigns/models.py:118
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:92 characters/forms.py:97 plots/models.py:59
-#: plots/templates/plots/fragments/properties.html:55 rules/models.py:283
+#: characters/forms.py:92 characters/forms.py:97
+#: characters/templates/characters/create_character_epoch.html:31
+#: plots/models.py:59 plots/templates/plots/fragments/properties.html:55
+#: rules/models.py:283
 msgid "Epoch"
 msgstr "Epoche"
 
 #: campaigns/models.py:125
 #: campaigns/templates/campaigns/fragments/settings.html:10
 #: characters/forms.py:17 characters/templates/_main_nav.html:24
-#: plots/models.py:66 plots/templates/plots/fragments/properties.html:59
-#: rules/models.py:284
+#: characters/templates/characters/create_character.html:39 plots/models.py:66
+#: plots/templates/plots/fragments/properties.html:59 rules/models.py:284
 msgid "World"
 msgstr "Welt"
 
@@ -1150,7 +1152,7 @@ msgstr "Startkapital"
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: campaigns/models.py:170 characters/templates/_main_nav.html:164
+#: campaigns/models.py:170 characters/templates/_main_nav.html:172
 #: phasesix/settings.py:310 portal/templates/portal/_navigation.html:36
 msgid "Campaigns"
 msgstr "Kampagnen"
@@ -1398,7 +1400,6 @@ msgstr ""
 "hinzuzufügen."
 
 #: campaigns/templates/campaigns/create_campaign_extensions.html:38
-#: characters/templates/characters/create_character_extensions.html:37
 msgid "Choose Extensions"
 msgstr "Wähle Erweiterungen"
 
@@ -1426,7 +1427,7 @@ msgid "GM"
 msgstr "SL"
 
 #: campaigns/templates/campaigns/fragments/dramaturgy.html:11
-#: characters/templates/_main_nav.html:144 phasesix/settings.py:305
+#: characters/templates/_main_nav.html:148 phasesix/settings.py:305
 #: portal/templates/portal/_navigation.html:12
 msgid "Characters"
 msgstr "Charaktere"
@@ -1577,7 +1578,7 @@ msgid "Additional rule sets enabled for this campaign"
 msgstr "Zusätzliche aktivierte Regelerweiterungen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:37
-#: characters/forms.py:85 characters/views.py:910
+#: characters/forms.py:85 characters/views.py:915
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
@@ -1586,7 +1587,7 @@ msgid "Defines the monetary system used"
 msgstr "Definiert das monetäre System, welches benutzt wird"
 
 #: campaigns/templates/campaigns/fragments/settings.html:46
-#: characters/forms.py:88 characters/views.py:881
+#: characters/forms.py:88 characters/views.py:886
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -2079,7 +2080,6 @@ msgstr "Gegnernamen"
 #: campaigns/templates/campaigns/sidebar/search_foe.html:22
 #: characters/templates/_main_nav.html:70
 #: characters/templates/_main_nav.html:73
-#: characters/templates/characters/create_character_constructed.html:20
 #: plots/templates/plots/sidebar/select_foe.html:21
 #: portal/templates/portal/_searchable_object_card_list.html:14
 #: worlds/templates/worlds/sidebar/links.html:15
@@ -2153,7 +2153,7 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:74 characters/views.py:842
+#: characters/forms.py:74 characters/views.py:849
 #: essential_characters/forms.py:585 essential_characters/forms.py:687
 #: essential_characters/forms.py:698 forum/forms.py:6
 #: plots/templates/plots/_plot_element.html:51
@@ -2161,7 +2161,7 @@ msgstr "Phase Six letzte Aktualisierungen"
 msgid "Name"
 msgstr "Name"
 
-#: characters/forms.py:76 characters/views.py:866
+#: characters/forms.py:76 characters/views.py:871
 msgid "Pronouns"
 msgstr "Pronomen"
 
@@ -2170,11 +2170,11 @@ msgstr "Pronomen"
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:108 characters/views.py:849
+#: characters/forms.py:108 characters/views.py:856
 msgid "Size"
 msgstr "Größe"
 
-#: characters/forms.py:110 characters/views.py:875
+#: characters/forms.py:110 characters/views.py:880
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
@@ -2183,7 +2183,7 @@ msgstr "Geburtsdatum"
 msgid "None"
 msgstr "Keine"
 
-#: characters/forms.py:115
+#: characters/forms.py:115 characters/views.py:832
 msgid "Entity"
 msgstr "Gottheit"
 
@@ -2191,7 +2191,7 @@ msgstr "Gottheit"
 #: characters/templates/characters/fragments/pantheon.html:11
 #: characters/templates/characters/pdf/cards/extensions/extensions.html:52
 #: characters/templates/characters/sidebar/grace.html:66
-#: characters/views.py:899
+#: characters/views.py:904
 msgid "Attitude"
 msgstr "Gesinnung"
 
@@ -2459,36 +2459,36 @@ msgstr "Profil anzeigen"
 msgid "Create character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/_main_nav.html:153
+#: characters/templates/_main_nav.html:157
 msgid "Character image"
 msgstr "Charakterbild"
 
-#: characters/templates/_main_nav.html:173
+#: characters/templates/_main_nav.html:181
 msgid "Campaign image"
 msgstr "Kampagnenbild"
 
-#: characters/templates/_main_nav.html:184
+#: characters/templates/_main_nav.html:194
 msgid "Staff tools"
 msgstr ""
 
-#: characters/templates/_main_nav.html:191 characters/templates/base.html:76
+#: characters/templates/_main_nav.html:201 characters/templates/base.html:76
 msgid "Adjust image focus"
 msgstr "Bildfokus ausrichten"
 
-#: characters/templates/_main_nav.html:198
+#: characters/templates/_main_nav.html:208
 #: worlds/templates/worlds/_page_actions.html:64
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/_main_nav.html:205
+#: characters/templates/_main_nav.html:215
 msgid "Curators Desk"
 msgstr "Kuratorschreibtisch"
 
-#: characters/templates/_main_nav.html:220
+#: characters/templates/_main_nav.html:230
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/_main_nav.html:228 templates/registration/login.html:4
+#: characters/templates/_main_nav.html:238 templates/registration/login.html:4
 #: templates/registration/login.html:7 templates/registration/login.html:22
 msgid "Login"
 msgstr "Anmelden"
@@ -2599,6 +2599,7 @@ msgid "Belief"
 msgstr "Glaube"
 
 #: characters/templates/characters/_navigation.html:160
+#: characters/templates/characters/character_form.html:42
 msgid "Background"
 msgstr "Werdegang"
 
@@ -2669,7 +2670,7 @@ msgstr ""
 #: characters/templates/characters/character_form.html:4
 #: characters/templates/characters/character_form.html:5
 #: characters/templates/characters/character_form.html:15
-#: characters/templates/characters/character_form.html:58
+#: characters/templates/characters/character_form.html:67
 #: characters/templates/characters/choose_character_ruleset.html:4
 #: characters/templates/characters/choose_character_ruleset.html:5
 #: characters/templates/characters/create_character.html:4
@@ -2694,31 +2695,30 @@ msgstr "Erstelle einen Charakter für %(campaign_name)s."
 msgid "Give your character a name and some more information."
 msgstr "Gib deinem Charakter einen Namen und einige weitere Informationen."
 
-#: characters/templates/characters/character_form.html:64
+#: characters/templates/characters/character_form.html:33
+#: essential_characters/views.py:587
+msgid "Identity"
+msgstr "Identität"
+
+#: characters/templates/characters/character_form.html:51
+msgid "Starting resources"
+msgstr "Startressourcen"
+
+#: characters/templates/characters/character_form.html:59
+msgid "Optional details"
+msgstr "Optionale Angaben"
+
+#: characters/templates/characters/character_form.html:73
 msgid "Character information"
 msgstr "Charakterinformation"
 
-#: characters/templates/characters/character_form.html:66
-msgid ""
-"\n"
-"              Enter some background information about your character here, "
-"which will make him more vivid and give him a\n"
-"              background.\n"
-"              <br><br>\n"
-"              In addition to the name, height and weight, you can choose the "
-"character's lineage. This gives him an\n"
-"              initial character template, which can assign some bonus stats "
-"and skills.\n"
-"            "
-msgstr ""
-"\n"
-"     Gib hier einige Hintergrundinformationen zu deinem Charakter ein, die "
-"ihn lebendiger macht und ihm einen Rahmen gibt.\n"
-"     <br><br>\n"
-"    Zusätzlich zum Namen, der Größe und dem Gewicht kannst du die Abstammung "
-"des Charakters wählen. Diese gibt ihm eine anfängliche Charakterschablone, "
-"welche einige Bonuswerte und -fertigkeiten vergeben kann.\n"
-"     "
+#: characters/templates/characters/character_form.html:74
+msgid "Choose a field to see helpful context while you create your character."
+msgstr "Wähle ein Feld, um während der Charaktererstellung hilfreiche Hinweise zu erhalten."
+
+#: characters/templates/characters/character_form.html:75
+msgid "Your lineage can grant an initial template with bonus stats and skills."
+msgstr "Deine Abstammung kann eine anfängliche Schablone mit Bonuswerten und -fertigkeiten gewähren."
 
 #: characters/templates/characters/character_object_list.html:23
 #: rules/templates/rules/foetype_list.html:25
@@ -2738,6 +2738,10 @@ msgstr "Erstelle einen Charakter mit den vereinfachten Tirakan Regeln."
 msgid "Create a character using the full PhaseSix rules."
 msgstr "Erstelle einen Charakter mit den vollständigen PhaseSix Regeln."
 
+#: characters/templates/characters/create_character.html:46
+msgid "Choose world"
+msgstr "Wähle eine Welt"
+
 #: characters/templates/characters/create_character_constructed.html:5
 #: characters/templates/characters/create_character_constructed.html:10
 msgid "Select templates"
@@ -2752,26 +2756,40 @@ msgstr ""
 "Dies sind die Schablonen mit denen dein Charakter startet. Sie definieren "
 "alle Werte und Fähigkeiten deines Charakters."
 
-#: characters/templates/characters/create_character_constructed.html:25
+#: characters/templates/characters/create_character_constructed.html:19
+#: characters/templates/characters/create_character_constructed.html:22
+msgid "Search templates"
+msgstr "Schablonen suchen"
+
+#: characters/templates/characters/create_character_constructed.html:27
 msgid "Character Points"
 msgstr "Charakterpunkte"
 
-#: characters/templates/characters/create_character_constructed.html:27
+#: characters/templates/characters/create_character_constructed.html:29
 msgid "Excess points will become the new characters initial reputation."
 msgstr ""
 "Überschüssige Punkte werden die initiale Reputation des neuen Charakters."
 
-#: characters/templates/characters/create_character_constructed.html:35
+#: characters/templates/characters/create_character_constructed.html:37
 msgid "Finish Character"
 msgstr "Charakter fertigstellen"
 
-#: characters/templates/characters/create_character_constructed.html:39
-msgid "Preview"
-msgstr "Vorschau"
+#: characters/templates/characters/create_character_constructed.html:40
+msgid "Preview character"
+msgstr "Charaktervorschau"
 
-#: characters/templates/characters/create_character_constructed.html:76
+#: characters/templates/characters/create_character_constructed.html:46
+#: phasesix/settings.py:393
+msgid "Character templates"
+msgstr "Charakterschablonen"
+
+#: characters/templates/characters/create_character_constructed.html:73
 msgid "Selected"
 msgstr "Ausgewählt"
+
+#: characters/templates/characters/create_character_epoch.html:38
+msgid "Choose epoch"
+msgstr "Wähle eine Epoche"
 
 #: characters/templates/characters/create_character_extensions.html:7
 #: characters/templates/characters/create_character_extensions.html:11
@@ -2779,6 +2797,22 @@ msgid "Choose any number of additional extensions to add to your character."
 msgstr ""
 "Wähle eine beliebige Anzahl weiterer Erweiterungen, um sie Deinem Charakter "
 "hinzuzufügen."
+
+#: characters/templates/characters/create_character_extensions.html:39
+msgid "Optional extension"
+msgstr "Optionale Erweiterung"
+
+#: characters/templates/characters/create_character_extensions.html:46
+msgid "Select"
+msgstr "Auswählen"
+
+#: characters/templates/characters/create_character_extensions.html:53
+msgid "Choose the optional books and rules you want to use."
+msgstr "Wähle die optionalen Bücher und Regeln, die du verwenden möchtest."
+
+#: characters/templates/characters/create_character_extensions.html:54
+msgid "Continue to character details"
+msgstr "Weiter zu den Charakterdetails"
 
 #: characters/templates/characters/fragments/_body_modifications_socket_location.html:8
 msgid "Add Body Modification"
@@ -4996,11 +5030,27 @@ msgstr "Grauen auflösen"
 msgid "Resolve dread roll"
 msgstr "Grauen auflösen Wurf"
 
-#: characters/views.py:843
+#: characters/views.py:834
+msgid ""
+"Choose an entity if your character follows one. Leave this empty if they do "
+"not."
+msgstr "Wähle eine Gottheit, wenn dein Charakter einer folgt. Lass das Feld leer, wenn nicht."
+
+#: characters/views.py:850
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:868
+#: characters/views.py:857
+#, python-format
+msgid "Enter the size of your character in %(unit)s."
+msgstr "Gib die Größe deines Charakters in %(unit)s an."
+
+#: characters/views.py:865
+#, python-format
+msgid "Enter the weight of your character in %(unit)s."
+msgstr "Gib das Gewicht deines Charakters in %(unit)s an."
+
+#: characters/views.py:873
 msgid ""
 "At several places in the interface, your character will be referred to using "
 "their pronouns. Choose the pronouns that best describe your character."
@@ -5008,11 +5058,11 @@ msgstr ""
 "An verschiedenen Stellen wird dein Charakter mit Pronomen angesprochen. "
 "Wähle die Pronomen, die am besten passen."
 
-#: characters/views.py:876
+#: characters/views.py:881
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:883
+#: characters/views.py:888
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -5025,7 +5075,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:901
+#: characters/views.py:906
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -5042,7 +5092,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:912
+#: characters/views.py:917
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -5052,7 +5102,7 @@ msgstr ""
 "Verfügung stehen. \n"
 "     Sie wird normalerweise von der Kampagne oder der Welt vorgegeben."
 
-#: characters/views.py:1519 characters/views.py:1526
+#: characters/views.py:1524 characters/views.py:1531
 msgid "Not possible."
 msgstr "Nicht möglich."
 
@@ -5973,10 +6023,6 @@ msgstr "Eine Prägung mit dem Namen existiert bereits."
 msgid "Item"
 msgstr "Gegenstand"
 
-#: essential_characters/views.py:587
-msgid "Identity"
-msgstr "Identität"
-
 #: eventstream/apps.py:9
 msgid "Eventstream"
 msgstr "Eventstream"
@@ -6539,10 +6585,6 @@ msgstr "Gottheiten"
 #: phasesix/settings.py:388
 msgid "Lineages"
 msgstr "Abstammungen"
-
-#: phasesix/settings.py:393
-msgid "Character templates"
-msgstr "Charakterschablonen"
 
 #: phasesix/settings.py:398
 msgid "Book Chapters"
@@ -7640,7 +7682,9 @@ msgstr "Dein Konto ist jetzt aktiv."
 msgid ""
 "Your account is active. You can now return to the world and begin your "
 "character journey."
-msgstr "Dein Konto ist aktiv. Du kannst nun zur Welt zurückkehren und deine Charakterreise beginnen."
+msgstr ""
+"Dein Konto ist aktiv. Du kannst nun zur Welt zurückkehren und deine "
+"Charakterreise beginnen."
 
 #: templates/django_registration/activation_complete.html:34
 msgid "Explore the world"
@@ -7661,7 +7705,9 @@ msgstr "Willkommen bei %(brand)s"
 
 #: templates/django_registration/activation_email_body.html:6
 msgid "Activate your account to create characters and begin your adventures."
-msgstr "Aktiviere dein Konto, um Charaktere zu erstellen und deine Abenteuer zu beginnen."
+msgstr ""
+"Aktiviere dein Konto, um Charaktere zu erstellen und deine Abenteuer zu "
+"beginnen."
 
 #: templates/django_registration/activation_email_body.html:7
 #: templates/django_registration/activation_form.html:4
@@ -7758,13 +7804,6 @@ msgid "Thanks!"
 msgstr "Danke!"
 
 #: templates/django_registration/registration_complete.html:30
-#| msgid ""
-#| "\n"
-#| "                            Your registration is almost complete. Check "
-#| "your inbox for an activation mail and\n"
-#| "                            use the link inside to activate your "
-#| "account.\n"
-#| "                        "
 msgid ""
 "\n"
 "                Your registration is almost complete. Check your inbox for "
@@ -8724,6 +8763,31 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid ""
 #~ "\n"
+#~ "              Enter some background information about your character "
+#~ "here, which will make him more vivid and give him a\n"
+#~ "              background.\n"
+#~ "              <br><br>\n"
+#~ "              In addition to the name, height and weight, you can choose "
+#~ "the character's lineage. This gives him an\n"
+#~ "              initial character template, which can assign some bonus "
+#~ "stats and skills.\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "     Gib hier einige Hintergrundinformationen zu deinem Charakter ein, "
+#~ "die ihn lebendiger macht und ihm einen Rahmen gibt.\n"
+#~ "     <br><br>\n"
+#~ "    Zusätzlich zum Namen, der Größe und dem Gewicht kannst du die "
+#~ "Abstammung des Charakters wählen. Diese gibt ihm eine anfängliche "
+#~ "Charakterschablone, welche einige Bonuswerte und -fertigkeiten vergeben "
+#~ "kann.\n"
+#~ "     "
+
+#~ msgid "Preview"
+#~ msgstr "Vorschau"
+
+#~ msgid ""
+#~ "\n"
 #~ "                            Your account is now active.\n"
 #~ "                        "
 #~ msgstr ""
@@ -9108,10 +9172,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #, python-brace-format
 #~ msgid "Enter the size of your character in {world.info_name_cm}."
 #~ msgstr "Gib die Größe deines Charakters in {world.info_name_cm} an."
-
-#, python-brace-format
-#~ msgid "Enter the weight of your character in {world.info_name_kg}."
-#~ msgstr "Gib das Gewicht deines Charakters in {world.info_name_kg} an."
 
 #~ msgid "admin"
 #~ msgstr "admin"
