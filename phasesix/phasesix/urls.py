@@ -5,11 +5,16 @@ from django.urls import include
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 from django.views.static import serve
-from django_registration.backends.activation.views import RegistrationView
-
 from characters.feeds import LatestModifiedAdmin, LatestNewAdmin
 from portal.forms import CustomRegistrationForm
-from portal.views import IndexView
+from portal.views import (
+    ActivationCompleteView,
+    ActivationView,
+    IndexView,
+    PasswordResetView,
+    RegistrationCompleteView,
+    RegistrationView,
+)
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
@@ -17,7 +22,10 @@ urlpatterns = [
     path("feeds/modified_admin/", LatestModifiedAdmin()),
     path("api/", include("api.urls", namespace="api")),
     path("", include("characters.urls", namespace="characters")),
-    path("essential/", include("essential_characters.urls", namespace="essential_characters")),
+    path(
+        "essential/",
+        include("essential_characters.urls", namespace="essential_characters"),
+    ),
     path("admin/", admin.site.urls),
     path(
         "contact/", TemplateView.as_view(template_name="contact.html"), name="contact"
@@ -38,11 +46,31 @@ urlpatterns = [
     path("curators_desk/", include("curators_desk.urls", namespace="curators_desk")),
     path("plots/", include("plots.urls", namespace="plots")),
     path("", include("partypad.urls", namespace="partypad")),
+    path(
+        "accounts/password_reset/",
+        PasswordResetView.as_view(),
+        name="password_reset",
+    ),
     path("accounts/", include("django.contrib.auth.urls")),
     path(
         "accounts/register/",
         RegistrationView.as_view(form_class=CustomRegistrationForm),
         name="django_registration_register",
+    ),
+    path(
+        "accounts/activate/",
+        ActivationView.as_view(),
+        name="django_registration_activate",
+    ),
+    path(
+        "accounts/activate/complete/",
+        ActivationCompleteView.as_view(),
+        name="django_registration_activation_complete",
+    ),
+    path(
+        "accounts/register/complete/",
+        RegistrationCompleteView.as_view(),
+        name="django_registration_complete",
     ),
     path("accounts/", include("django_registration.backends.activation.urls")),
     path("i18n/", include("django.conf.urls.i18n")),

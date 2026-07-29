@@ -1,0 +1,16 @@
+{% load i18n %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+  <body style="margin:0;padding:0;background:{{ email_theme.background }}!important;color:{{ email_theme.text }}!important;font-family:Arial,sans-serif;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:{{ email_theme.background }};padding:32px 16px;">
+      <tr><td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:620px;background:{{ email_theme.surface }};border:1px solid {{ email_theme.primary }};">
+          <tr><td style="padding:32px 36px 12px;color:{{ email_theme.primary }};font-size:14px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;">{{ email_brand_name }}</td></tr>
+          <tr><td style="padding:16px 36px 36px;color:{{ email_theme.text }};font-size:16px;line-height:1.6;">
+            {% block email_content %}{% endblock %}
+          </td></tr>
+        </table>
+      </td></tr>
+    </table>
+  </body>
+</html>

@@ -1,1 +1,1 @@
-{% load i18n %}{% trans 'Welcome to Phase Six' %}
+{% load i18n %}{% blocktrans with brand=email_brand_name %}Welcome to {{ brand }}{% endblocktrans %}

@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.core.mail import send_mail
 from django.db import models
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+from portal.email import email_brand_context, send_templated_email
 
 FORUM_LANGUAGE_CHOICES = (
     ("de", _("German")),
@@ -77,19 +77,39 @@ class Thread(models.Model):
     def latest_post(self):
         return self.post_set.latest("created_at")
 
-    def notify_subscribers(self, post):
+    def notify_subscribers(self, post, request=None):
         subscribers = [s.user.email for s in self.threadsubscription_set.all()]
         subscribers += [s.user.email for s in self.board.boardsubscription_set.all()]
         subscribers = {s for s in subscribers if s}
+        context = {"post": post}
+        if request is not None:
+            context.update(email_brand_context(request))
+            context["thread_url"] = request.build_absolute_uri(self.get_absolute_url())
+        else:
+            context.update(
+                {
+                    "email_brand_name": "Phase Six",
+                    "email_theme": {
+                        "background": "#0c1118",
+                        "surface": "#141c26",
+                        "primary": "#4f8fdb",
+                        "text": "#edf5fc",
+                        "muted": "#b7c5d5",
+                    },
+                    "thread_url": f"{settings.BASE_URL}{self.get_absolute_url()}",
+                }
+            )
         for s in subscribers:
-            send_mail(
-                _("PhaseSix Forum: %(user)s answered to the thread %(thread)s")
+            send_templated_email(
+                _("%(brand)s Forum: %(user)s answered to the thread %(thread)s")
                 % {
+                    "brand": context["email_brand_name"],
                     "user": post.created_by,
                     "thread": self,
                 },
-                render_to_string("forum/subscription_notify_mail.html", {"post": post}),
-                settings.DEFAULT_FROM_EMAIL,
+                "forum/subscription_notify_mail.txt",
+                "forum/subscription_notify_mail.html",
+                context,
                 [s],
                 fail_silently=True,
             )

@@ -47,7 +47,7 @@ class BoardDetailView(FormMixin, DetailView):
             post = thread.post_set.create(
                 text=form.cleaned_data["text"], created_by=request.user
             )
-            thread.notify_subscribers(post)
+            thread.notify_subscribers(post, request=request)
             return HttpResponseRedirect(thread.get_absolute_url())
         else:
             return self.form_invalid(form)
@@ -64,11 +64,11 @@ class ThreadDetailView(FormMixin, DetailView):
             context["is_subscribed"] = self.object.threadsubscription_set.filter(
                 user=self.request.user
             ).exists()
-            context[
-                "is_subscribed_to_board"
-            ] = self.object.board.boardsubscription_set.filter(
-                user=self.request.user
-            ).exists()
+            context["is_subscribed_to_board"] = (
+                self.object.board.boardsubscription_set.filter(
+                    user=self.request.user
+                ).exists()
+            )
         return context
 
     def get(self, request, *args, **kwargs):
@@ -92,7 +92,7 @@ class ThreadDetailView(FormMixin, DetailView):
             post = obj.post_set.create(
                 text=form.cleaned_data["text"], created_by=request.user
             )
-            obj.notify_subscribers(post)
+            obj.notify_subscribers(post, request=request)
             return HttpResponseRedirect(obj.get_absolute_url())
         else:
             return self.form_invalid(form)

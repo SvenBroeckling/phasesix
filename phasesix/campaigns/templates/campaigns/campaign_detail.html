@@ -14,11 +14,16 @@
           {% if may_join %}
             <button type="button"
                     class="btn btn-success btn-sm"
-                    data-sidebar-right-title="{% trans 'Join campaign' %}"
-                    data-sidebar-right-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}">
+                    data-modal-title="{% trans 'Join campaign' %}"
+                    data-modal-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}">
               <i class="fas fa-dice-five" aria-hidden="true"></i>
               {% trans 'Join campaign' %}
             </button>
+
+            <span class="d-none"
+                  data-modal-auto-show
+                  data-modal-title="{% trans 'Join campaign' %}"
+                  data-modal-url="{% url 'campaigns:xhr_sidebar' pk=object.id sidebar_template="join" %}"></span>
           {% endif %}
 
            {% if may_edit %}

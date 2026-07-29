@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
@@ -33,6 +35,21 @@ from essential_characters.models import EssentialCharacter
 from plots.models import Plot, PlotElement, Handout, Location, _copy_field_file
 from rules.models import Extension, Foe
 from worlds.models import WikiPage
+
+
+def campaign_character_creation_url(campaign):
+    if campaign.ruleset == Campaign.RULESET_ESSENTIAL:
+        return f"{reverse('essential_characters:create')}?campaign={campaign.id}"
+    return reverse(
+        "characters:create_character_data",
+        kwargs={
+            "epoch_pk": campaign.epoch_extension.id,
+            "world_pk": campaign.world_extension.id,
+            "campaign_pk": campaign.id,
+            "hash": campaign.campaign_hash,
+            "type": "pc",
+        },
+    )
 
 
 def campaign_creation_ruleset(request):
@@ -525,6 +542,14 @@ class BaseSidebarView(DetailView):
             )
         except AttributeError:
             context["may_edit"] = self.object.may_edit(self.request.user)
+        if isinstance(self.object, Campaign):
+            creation_url = campaign_character_creation_url(self.object)
+            context["campaign_character_creation_url"] = creation_url
+            next_query = urlencode({"next": creation_url})
+            context["campaign_character_login_url"] = f"{reverse('login')}?{next_query}"
+            context["campaign_character_registration_url"] = (
+                f"{reverse('django_registration_register')}?{next_query}"
+            )
         return context
 
 

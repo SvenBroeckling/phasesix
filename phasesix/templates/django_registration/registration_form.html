@@ -39,6 +39,7 @@
             {% bootstrap_field form.email2 %}
           </div>
           {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.GET.next }}">
           <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
         </div>
       </form>

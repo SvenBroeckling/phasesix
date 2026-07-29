@@ -158,9 +158,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
     let siteModal = new SiteModal();
     window.siteModal = siteModal;
 
-    let modalTrigger = document.querySelector(
-        "[data-modal-auto-show-query-string]",
-    );
+    let modalTrigger = document.querySelector("[data-modal-auto-show]");
+    if (modalTrigger) {
+        siteModal.fillModalFromDataSet(modalTrigger.dataset);
+        siteModal.modal.show();
+        return;
+    }
+
+    modalTrigger = document.querySelector("[data-modal-auto-show-query-string]");
     if (
         modalTrigger &&
         window.location.search.includes(

@@ -1,0 +1,9 @@
+{% extends "emails/base.html" %}
+{% load i18n %}
+{% block email_content %}
+  <p>{% trans "Hello" %} {{ user }},</p>
+  <h1 style="margin:0 0 16px;color:{{ email_theme.text }};font-size:28px;line-height:1.2;">{% blocktrans with brand=email_brand_name %}Welcome to {{ brand }}{% endblocktrans %}</h1>
+  <p>{% trans "Activate your account to create characters and begin your adventures." %}</p>
+  <p style="margin:28px 0;"><a href="{{ activation_url }}" style="display:inline-block;padding:12px 20px;background:{{ email_theme.primary }};color:{{ email_theme.background }};font-weight:bold;text-decoration:none;">{% trans "Activate account" %}</a></p>
+  <p style="color:{{ email_theme.muted }};font-size:13px;">{% blocktrans with t_days=expiration_days %}This link expires in {{ t_days }} days.{% endblocktrans %}</p>
+{% endblock %}

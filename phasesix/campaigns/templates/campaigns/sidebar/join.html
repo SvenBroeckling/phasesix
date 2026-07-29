@@ -9,17 +9,15 @@
 
     {% if user.is_authenticated %}
       {% if object.ruleset == "tirakan_essential" %}
-      <a href="{% url 'essential_characters:create' %}?campaign={{ object.id }}"
+      <a href="{{ campaign_character_creation_url }}"
          class="btn btn-primary">{% trans 'Create a new Essential character' %}</a>
       {% else %}
-      <a href="{% url 'characters:create_character_data' epoch_pk=object.epoch_extension.id world_pk=object.world_extension.id campaign_pk=object.id hash=object.campaign_hash type="pc" %}"
+      <a href="{{ campaign_character_creation_url }}"
          class="btn btn-primary">{% trans 'Create a new character' %}</a>
       {% endif %}
     {% else %}
-      {% url 'login' as login_url %}
-      {% url 'django_registration_register' as register_url %}
       <p>
-        {% blocktrans with t_login=login_url t_register=register_url %}
+        {% blocktrans with t_login=campaign_character_login_url t_register=campaign_character_registration_url %}
           You have to be logged in to join a campaign. <a href="{{ t_login }}">Login</a> or
           <a href="{{ t_register }}">create an account</a> to join.
         {% endblocktrans %}

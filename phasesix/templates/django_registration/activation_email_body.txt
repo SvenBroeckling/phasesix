@@ -1,8 +1,8 @@
 {% load i18n %}{% trans 'Hello' %} {{ user }},
-{% blocktrans %}
-welcome to Phase Six! To activate your account and create characters use the following link:
+{% blocktrans with brand=email_brand_name %}
+welcome to {{ brand }}! To activate your account and create characters use the following link:
 {% endblocktrans %}
-https://phasesix.org{% url 'django_registration_activate' %}?activation_key={{ activation_key }}
+{{ activation_url }}
 {% blocktrans with t_days=expiration_days %}
 The link will expire in {{ t_days }} days.
 {% endblocktrans %}

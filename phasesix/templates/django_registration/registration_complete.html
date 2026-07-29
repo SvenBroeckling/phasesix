@@ -1,36 +1,85 @@
 {% extends 'base.html' %}
-{% load i18n static %}
+{% load i18n static thumbnail portal_extras %}
 
 {% block title %}{% trans 'Registration complete' %} - {{ block.super }}{% endblock %}
 
 {% block opengraph %}
   {% trans "Registration complete" as og_title %}
   {% blocktrans asvar og_description %}Your registration is almost complete. Check your inbox for an activation email.{% endblocktrans %}
-  {% static 'img/default-background.jpg' as og_image_path %}
-  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description og_image_path=og_image_path %}
+  {% if lead_image %}
+    {% with og_image_path=lead_image.image.url %}
+      {% include "shared/opengraph.html" with og_title=og_title og_description=og_description og_image_path=og_image_path %}
+    {% endwith %}
+  {% else %}
+    {% static 'img/default-background.jpg' as og_image_path %}
+    {% include "shared/opengraph.html" with og_title=og_title og_description=og_description og_image_path=og_image_path %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-    <div class="row mb-5 mt-5">
-        <div class="col-md-8 offset-md-2">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>{% trans 'Thanks!' %}</h1>
-                </div>
+  <section class="registration-complete-page">
+    <div class="container py-4 py-lg-5">
+      <div class="registration-complete-panel row g-0 align-items-stretch">
+        <div class="col-12 col-lg-6 d-flex">
+          <div class="registration-complete-content">
+            <div class="registration-complete-mark" aria-hidden="true">
+              <i class="fas fa-envelope-open-text"></i>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p>
-                        {% blocktrans %}
-                            Your registration is almost complete. Check your inbox for an activation mail and
-                            use the link inside to activate your account.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <img class="img-fluid" src="{% static 'img/default-background.jpg' %}" alt="{% trans 'Die' %}">
-                </div>
-            </div>
+            <h1>{% trans 'Thanks!' %}</h1>
+            <p class="lead mb-4">
+              {% blocktrans %}
+                Your registration is almost complete. Check your inbox for an activation mail and
+                use the link inside to activate your account.
+              {% endblocktrans %}
+            </p>
+            <ol class="registration-complete-steps">
+              <li>{% trans "Check your inbox" %}</li>
+              <li>{% trans "Open the activation link" %}</li>
+              <li>{% trans "Your character journey can begin." %}</li>
+            </ol>
+            {% if can_resend_activation_email %}
+              <form class="registration-complete-resend mt-4"
+                    action="{% url 'django_registration_complete' %}"
+                    method="post"
+                    data-registration-resend
+                    data-countdown-template="{{ resend_countdown_template }}"
+                    data-sent-message="{% trans 'A new activation email has been sent.' %}">
+                {% csrf_token %}
+                <button class="btn btn-outline-primary"
+                        type="submit"
+                        data-registration-resend-button>
+                  <i class="fas fa-paper-plane me-1" aria-hidden="true"></i>
+                  {% trans "Resend activation email" %}
+                </button>
+                <p class="registration-complete-resend-status mb-0 mt-2"
+                   aria-live="polite"
+                   data-registration-resend-status
+                   data-remaining-seconds="{{ resend_remaining_seconds }}"></p>
+              </form>
+            {% endif %}
+          </div>
         </div>
+        <div class="col-12 col-lg-6">
+          <div class="registration-complete-visual">
+            {% if lead_image %}
+              <img src="{{ lead_image.image.url }}"
+                   alt=""
+                   style="object-position: {{ lead_image.get_image_focal_point }}"
+                   {% focal_image_attrs lead_image %}
+                   width="{{ lead_image.image.width }}"
+                   height="{{ lead_image.image.height }}"
+                   loading="eager"
+                   decoding="async">
+            {% else %}
+              <i class="gi gi-delapouite-rolled-cloth" aria-hidden="true"></i>
+            {% endif %}
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+{% endblock %}
+
+{% block javascript %}
+  <script type="module" src="{% static 'portal/js/registration_complete.js' %}"></script>
 {% endblock %}

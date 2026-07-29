@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5 i18n static %}
+{% load django_bootstrap5 i18n static thumbnail portal_extras %}
 
 {% block title %}{% trans 'Activate account' %} - {{ block.super }}{% endblock %}
 
@@ -10,20 +10,41 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row mb-5 mt-5">
-    <div class="col-12 col-md-4 offset-md-4">
-      <div class="card card-cover shadow">
-        <div class="card-header">
-          {% trans "Activate account" %}
+  <section class="activation-page">
+    <div class="container py-4 py-lg-5">
+      <div class="registration-complete-panel row g-0 align-items-stretch">
+        <div class="col-12 col-lg-6 d-flex">
+          <div class="activation-page-content">
+            <div class="registration-complete-mark" aria-hidden="true">
+              <i class="fas fa-unlock-alt"></i>
+            </div>
+            <h1>{% trans "Activate account" %}</h1>
+            <p class="lead mb-4">{% trans "Confirm your account to continue to your character." %}</p>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ next }}">
+              {% bootstrap_form form layout="floating" %}
+              <button type="submit" class="btn btn-primary btn-lg w-100">{% trans 'Activate account' %}</button>
+            </form>
+          </div>
         </div>
-        <div class="card-body">
-          <form action="" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form layout="floating" %}
-            <button type="submit" class="btn btn-primary btn-lg w-100">{% trans 'Activate account' %}</button>
-          </form>
+        <div class="col-12 col-lg-6">
+          <div class="registration-complete-visual">
+            {% if lead_image %}
+              <img src="{{ lead_image.image.url }}"
+                   alt=""
+                   style="object-position: {{ lead_image.get_image_focal_point }}"
+                   {% focal_image_attrs lead_image %}
+                   width="{{ lead_image.image.width }}"
+                   height="{{ lead_image.image.height }}"
+                   loading="eager"
+                   decoding="async">
+            {% else %}
+              <i class="gi gi-delapouite-key-lock" aria-hidden="true"></i>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 {% endblock %}

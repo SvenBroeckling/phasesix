@@ -2,12 +2,23 @@ from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from django.contrib.auth.models import User
+from django.core import mail, signing
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import RequestFactory, SimpleTestCase, TestCase
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
+from django.utils import timezone
+from django_registration.backends.activation import REGISTRATION_SALT
 
 from portal.models import Profile
-from portal.views import ProfileView
+from portal.email import activation_url, email_brand_context
+from portal.views import (
+    ActivationView,
+    ActivationCompleteView,
+    PasswordResetView,
+    ProfileView,
+    RegistrationCompleteView,
+)
 
 
 class IndexTitleTests(TestCase):
@@ -61,6 +72,160 @@ class ProfileEssentialCharacterContextTests(SimpleTestCase):
         self.assertEqual(
             context["essential_npc_characters"],
             objects.none.return_value.npc.return_value,
+        )
+
+
+class RegistrationCompleteViewTests(SimpleTestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def request_with_session(self):
+        request = self.factory.post("/accounts/register/complete/")
+        SessionMiddleware(lambda request: None).process_request(request)
+        return request
+
+    def test_registration_complete_uses_an_image_from_the_active_world(self):
+        request = self.factory.get("/accounts/register/complete/")
+        SessionMiddleware(lambda request: None).process_request(request)
+        request.world = SimpleNamespace()
+        lead_image = SimpleNamespace()
+        view = RegistrationCompleteView()
+        view.setup(request)
+
+        with (
+            patch("portal.views.User.objects") as user_objects,
+            patch("portal.views.WorldLeadImage.objects") as objects,
+        ):
+            images = objects.all.return_value
+            images.filter.return_value.order_by.return_value.first.return_value = (
+                lead_image
+            )
+            user_objects.get.side_effect = User.DoesNotExist
+
+            context = view.get_context_data()
+
+        images.filter.assert_called_once_with(world=request.world)
+        self.assertEqual(context["lead_image"], lead_image)
+
+    def test_resend_activation_email_starts_a_new_cooldown(self):
+        request = self.request_with_session()
+        request.session["registration_email_sent_at"] = 0
+        request.META["HTTP_X_REQUESTED_WITH"] = "XMLHttpRequest"
+        view = RegistrationCompleteView()
+        view.setup(request)
+
+        with (
+            patch.object(view, "get_pending_user", return_value=Mock()),
+            patch("portal.views.RegistrationView.send_activation_email") as send_email,
+        ):
+            response = view.post(request)
+
+        self.assertEqual(response.status_code, 200)
+        send_email.assert_called_once()
+        self.assertLessEqual(
+            timezone.now().timestamp() - request.session["registration_email_sent_at"],
+            1,
+        )
+
+    def test_resend_activation_email_respects_the_cooldown(self):
+        request = self.request_with_session()
+        request.session["registration_email_sent_at"] = timezone.now().timestamp()
+        request.META["HTTP_X_REQUESTED_WITH"] = "XMLHttpRequest"
+        view = RegistrationCompleteView()
+        view.setup(request)
+
+        with (
+            patch.object(view, "get_pending_user", return_value=Mock()),
+            patch("portal.views.RegistrationView.send_activation_email") as send_email,
+        ):
+            response = view.post(request)
+
+        self.assertEqual(response.status_code, 429)
+        send_email.assert_not_called()
+
+
+class ActivationViewTests(SimpleTestCase):
+    @override_settings(ALLOWED_HOSTS=["testserver"])
+    def test_activation_page_uses_an_image_from_the_active_world(self):
+        request = RequestFactory().get("/accounts/activate/?activation_key=token")
+        request.world = SimpleNamespace()
+        lead_image = SimpleNamespace()
+        view = ActivationView()
+        view.setup(request)
+
+        with patch("portal.views.WorldLeadImage.objects") as objects:
+            images = objects.all.return_value
+            images.filter.return_value.order_by.return_value.first.return_value = (
+                lead_image
+            )
+
+            context = view.get_context_data()
+
+        images.filter.assert_called_once_with(world=request.world)
+        self.assertEqual(context["lead_image"], lead_image)
+
+
+class ActivationCompleteViewTests(SimpleTestCase):
+    def test_activation_complete_uses_an_image_from_the_active_world(self):
+        request = RequestFactory().get("/accounts/activate/complete/")
+        request.world = SimpleNamespace()
+        lead_image = SimpleNamespace()
+        view = ActivationCompleteView()
+        view.setup(request)
+
+        with patch("portal.views.WorldLeadImage.objects") as objects:
+            images = objects.all.return_value
+            images.filter.return_value.order_by.return_value.first.return_value = (
+                lead_image
+            )
+
+            context = view.get_context_data()
+
+        images.filter.assert_called_once_with(world=request.world)
+        self.assertEqual(context["lead_image"], lead_image)
+
+
+class EmailBrandingTests(SimpleTestCase):
+    @override_settings(ALLOWED_HOSTS=["tirakans-reiche.de"])
+    def test_email_branding_and_activation_url_use_the_request_world_domain(self):
+        request = RequestFactory().get(
+            "/accounts/register/", secure=True, HTTP_HOST="tirakans-reiche.de"
+        )
+        request.world = SimpleNamespace(
+            brand_name="Tirakan", extension=SimpleNamespace(identifier="tirakan")
+        )
+
+        context = email_brand_context(request)
+
+        self.assertEqual(context["email_brand_name"], "Tirakan")
+        self.assertEqual(context["email_theme"]["primary"], "#9f784f")
+        self.assertEqual(
+            activation_url(request, "activation-token", "/characters/new/"),
+            "https://tirakans-reiche.de/accounts/activate/?activation_key=activation-token&next=%2Fcharacters%2Fnew%2F",
+        )
+
+    @override_settings(ALLOWED_HOSTS=["tirakans-reiche.de"])
+    def test_password_reset_uses_the_request_domain_and_html_template_once(self):
+        request = RequestFactory().post(
+            "/accounts/password_reset/", secure=True, HTTP_HOST="tirakans-reiche.de"
+        )
+        request.world = SimpleNamespace(
+            brand_name="Tirakan", extension=SimpleNamespace(identifier="tirakan")
+        )
+        view = PasswordResetView()
+        view.setup(request)
+        form = Mock()
+
+        response = view.form_valid(form)
+
+        self.assertEqual(response.status_code, 302)
+        form.save.assert_called_once()
+        self.assertEqual(
+            form.save.call_args.kwargs["domain_override"], "tirakans-reiche.de"
+        )
+        self.assertEqual(
+            form.save.call_args.kwargs["html_email_template_name"],
+            "registration/password_reset_email_html.html",
         )
 
 
@@ -125,3 +290,47 @@ class ImageFocalPointTests(TestCase):
         response = self.client.post(self.url, self.payload)
 
         self.assertEqual(response.status_code, 400)
+
+
+class RegistrationContinuationTests(TestCase):
+    target_url = "/characters/create/invited-character/"
+
+    def test_registration_email_preserves_safe_next_url(self):
+        registration_url = reverse("django_registration_register")
+        response = self.client.post(
+            f"{registration_url}?next={self.target_url}",
+            {
+                "username": "new-invitee",
+                "email": "new-invitee@example.com",
+                "password1": "secure-password-123",
+                "password2": "secure-password-123",
+                "email2": "",
+                "next": self.target_url,
+            },
+            HTTP_HOST="phasesix.org",
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("django_registration_complete"),
+            fetch_redirect_response=False,
+        )
+        self.assertIn(
+            "&next=%2Fcharacters%2Fcreate%2Finvited-character%2F",
+            mail.outbox[0].body,
+        )
+
+    def test_activation_signs_in_and_redirects_to_safe_next_url(self):
+        user = User.objects.create_user("new-invitee", is_active=False)
+        activation_key = signing.dumps(user.username, salt=REGISTRATION_SALT)
+
+        response = self.client.post(
+            reverse("django_registration_activate"),
+            {"activation_key": activation_key, "next": self.target_url},
+            HTTP_HOST="phasesix.org",
+        )
+
+        self.assertRedirects(response, self.target_url, fetch_redirect_response=False)
+        user.refresh_from_db()
+        self.assertTrue(user.is_active)
+        self.assertEqual(str(user.pk), self.client.session["_auth_user_id"])

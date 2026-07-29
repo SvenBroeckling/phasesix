@@ -1,35 +1,57 @@
 {% extends 'base.html' %}
-{% load i18n static %}
+{% load i18n static thumbnail portal_extras %}
 
 {% block title %}{% trans 'Account activated' %} - {{ block.super }}{% endblock %}
 
 {% block opengraph %}
   {% trans "Account activated" as og_title %}
   {% blocktrans asvar og_description %}Your account is now active.{% endblocktrans %}
-  {% static 'img/default-background.jpg' as og_image_path %}
-  {% include "shared/opengraph.html" with og_title=og_title og_description=og_description og_image_path=og_image_path %}
+  {% if lead_image %}
+    {% with og_image_path=lead_image.image.url %}
+      {% include "shared/opengraph.html" with og_title=og_title og_description=og_description og_image_path=og_image_path %}
+    {% endwith %}
+  {% else %}
+    {% static 'img/default-background.jpg' as og_image_path %}
+    {% include "shared/opengraph.html" with og_title=og_title og_description=og_description og_image_path=og_image_path %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-    <div class="row mb-5 mt-5">
-        <div class="col-md-8 offset-md-2">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>{% trans 'Thanks!' %}</h1>
-                </div>
+  <section class="registration-complete-page">
+    <div class="container py-4 py-lg-5">
+      <div class="registration-complete-panel row g-0 align-items-stretch">
+        <div class="col-12 col-lg-6 d-flex">
+          <div class="registration-complete-content">
+            <div class="registration-complete-mark" aria-hidden="true">
+              <i class="fas fa-check"></i>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p>
-                        {% blocktrans %}
-                            Your account is now active.
-                        {% endblocktrans %}
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <img class="img-fluid" src="{% static 'img/default-background.jpg' %}" alt="{% trans 'Die' %}">
-                </div>
-            </div>
+            <h1>{% trans 'Account activated' %}</h1>
+            <p class="lead mb-4">
+              {% trans "Your account is active. You can now return to the world and begin your character journey." %}
+            </p>
+            <a class="btn btn-primary btn-lg" href="{% url 'index' %}">
+              <i class="fas fa-compass me-1" aria-hidden="true"></i>
+              {% trans "Explore the world" %}
+            </a>
+          </div>
         </div>
+        <div class="col-12 col-lg-6">
+          <div class="registration-complete-visual">
+            {% if lead_image %}
+              <img src="{{ lead_image.image.url }}"
+                   alt=""
+                   style="object-position: {{ lead_image.get_image_focal_point }}"
+                   {% focal_image_attrs lead_image %}
+                   width="{{ lead_image.image.width }}"
+                   height="{{ lead_image.image.height }}"
+                   loading="eager"
+                   decoding="async">
+            {% else %}
+              <i class="gi gi-delapouite-check-mark" aria-hidden="true"></i>
+            {% endif %}
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 {% endblock %}

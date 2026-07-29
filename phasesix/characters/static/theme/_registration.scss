@@ -1,0 +1,178 @@
+.registration-complete-page {
+  min-height: calc(100vh - 8rem);
+  min-height: calc(100dvh - 8rem);
+  display: flex;
+  align-items: center;
+}
+
+.activation-page {
+  min-height: calc(100vh - 8rem);
+  min-height: calc(100dvh - 8rem);
+  display: flex;
+  align-items: center;
+}
+
+.registration-complete-panel {
+  overflow: hidden;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.32);
+  border-radius: 0.8rem;
+  background:
+    linear-gradient(145deg, rgba(var(--bs-primary-rgb), 0.08), transparent 46%),
+    var(--bs-tertiary-bg);
+  box-shadow: 0 1.4rem 3.5rem rgba(var(--bs-black-rgb), 0.3);
+}
+
+.registration-complete-content {
+  width: 100%;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.activation-page-content {
+  width: 100%;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.registration-complete-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--bs-primary);
+  font-size: 1.35rem;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.6);
+  border-radius: 50%;
+  background: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+.registration-complete-content h1 {
+  margin-bottom: 1rem;
+  font-family: $headings-font-family;
+}
+
+.activation-page-content h1 {
+  margin-bottom: 1rem;
+  font-family: $headings-font-family;
+}
+
+.activation-page-content .lead {
+  color: var(--bs-secondary-color);
+  line-height: 1.7;
+}
+
+.activation-page-content .form-floating > label,
+.activation-page-content .form-label {
+  color: var(--bs-secondary-color);
+}
+
+.registration-complete-content .lead {
+  max-width: 32rem;
+  color: var(--bs-secondary-color);
+  line-height: 1.7;
+}
+
+.registration-complete-steps {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: registration-step;
+}
+
+.registration-complete-steps li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--bs-body-color);
+  counter-increment: registration-step;
+}
+
+.registration-complete-steps li::before {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  color: var(--bs-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  content: counter(registration-step);
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.45);
+  border-radius: 50%;
+}
+
+.registration-complete-resend {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(var(--bs-primary-rgb), 0.2);
+}
+
+.registration-complete-resend .btn:disabled {
+  color: var(--bs-secondary-color);
+  border-color: rgba(var(--bs-primary-rgb), 0.2);
+}
+
+.registration-complete-resend-status {
+  min-height: 1.5rem;
+  color: var(--bs-secondary-color);
+  font-size: 0.9rem;
+}
+
+.registration-complete-visual {
+  position: relative;
+  min-height: 20rem;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(var(--bs-primary-rgb), 0.27), transparent 42%),
+    var(--bs-body-bg);
+}
+
+.registration-complete-visual::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, var(--bs-tertiary-bg), transparent 22%, rgba(var(--bs-black-rgb), 0.12));
+  pointer-events: none;
+}
+
+.registration-complete-visual img {
+  width: 100%;
+  height: 100%;
+  min-height: 20rem;
+  object-fit: cover;
+  filter: saturate(0.8) contrast(1.06);
+}
+
+.registration-complete-visual > .gi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: rgba(var(--bs-primary-rgb), 0.8);
+  font-size: clamp(5rem, 13vw, 9rem);
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 991.98px) {
+  .registration-complete-page {
+    min-height: 0;
+  }
+
+  .activation-page {
+    min-height: 0;
+  }
+
+  .registration-complete-visual {
+    min-height: 15rem;
+  }
+
+  .registration-complete-visual::after {
+    background: linear-gradient(180deg, var(--bs-tertiary-bg), transparent 30%, rgba(var(--bs-black-rgb), 0.12));
+  }
+
+  .registration-complete-visual img {
+    min-height: 15rem;
+  }
+}

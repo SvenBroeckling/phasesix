@@ -1,20 +1,9 @@
-{% load i18n %}{% trans 'Hello,' %}
-{% blocktrans with user_t=post.created_by thread_t=post.thread.name %}
-{{ user_t }} wrote a post in the thread {{ thread_t }}. Use the link
-below the message text to answer the post.
-{% endblocktrans %}
-
------
-{{ post.text }}
------
-
-http://phasesix.org{% url 'forum:thread_detail' pk=post.thread.id %}
-
-{% blocktrans %}
-Unsubscribe the threads or boards in the phase six forums to unsubscribe
-from this emails.
-
-Cheers
-{% endblocktrans %}
-
-
+{% extends "emails/base.html" %}
+{% load i18n %}
+{% block email_content %}
+  <p>{% trans "Hello," %}</p>
+  <h1 style="margin:0 0 16px;color:{{ email_theme.text }};font-size:28px;line-height:1.2;">{{ post.thread.name }}</h1>
+  <p>{% blocktrans with user_t=post.created_by %}{{ user_t }} wrote a new post in this thread.{% endblocktrans %}</p>
+  <blockquote style="margin:24px 0;padding:16px;border-left:3px solid {{ email_theme.primary }};background:{{ email_theme.background }};color:{{ email_theme.muted }};white-space:pre-wrap;">{{ post.text }}</blockquote>
+  <p style="margin:28px 0;"><a href="{{ thread_url }}" style="display:inline-block;padding:12px 20px;background:{{ email_theme.primary }};color:{{ email_theme.background }};font-weight:bold;text-decoration:none;">{% trans "Open forum thread" %}</a></p>
+{% endblock %}

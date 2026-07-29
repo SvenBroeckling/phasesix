@@ -1,23 +1,213 @@
+from math import ceil
+
 from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.contrib.auth.views import PasswordResetView as BasePasswordResetView
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.db.models import Q, Count
 from django.db.models.functions import Trunc, Length
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.templatetags.static import static
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext as _
+from django.utils import timezone
 from django.views import View
 from django.views.generic import TemplateView, DetailView
+from django.views.generic.edit import FormView
+from django_registration.backends.activation.views import (
+    ActivationView as BaseActivationView,
+)
+from django_registration.backends.activation.views import (
+    RegistrationView as BaseRegistrationView,
+)
 
 from campaigns.models import Roll, Campaign
 from characters.models import Character
 from characters.utils import is_tirakan_world
 from essential_characters.models import EssentialCharacter
 from portal.forms import ProfileSettingsForm
+from portal.email import activation_url, email_brand_context, send_templated_email
 from portal.models import Profile
 from worlds.models import WikiPage, WorldLeadImage, World
+
+
+class RegistrationView(BaseRegistrationView):
+    """Preserve a safe on-site destination in an activation email."""
+
+    def get_next_url(self):
+        next_url = self.request.POST.get("next") or self.request.GET.get("next", "")
+        if url_has_allowed_host_and_scheme(
+            url=next_url,
+            allowed_hosts={self.request.get_host()},
+            require_https=self.request.is_secure(),
+        ):
+            return next_url
+        return ""
+
+    def get_email_context(self, activation_key):
+        context = super().get_email_context(activation_key)
+        context["next"] = self.get_next_url()
+        context.update(email_brand_context(self.request))
+        context["activation_url"] = activation_url(
+            self.request, activation_key, context["next"]
+        )
+        return context
+
+    def send_activation_email(self, user):
+        activation_key = self.get_activation_key(user)
+        context = self.get_email_context(activation_key)
+        context["user"] = user
+        subject = render_to_string(
+            self.email_subject_template, context=context, request=self.request
+        )
+        send_templated_email(
+            "".join(subject.splitlines()),
+            self.email_body_template,
+            "django_registration/activation_email_body.html",
+            context,
+            [user.email],
+        )
+
+    def register(self, form):
+        user = super().register(form)
+        self.request.session["registration_pending_user_id"] = user.pk
+        self.request.session["registration_email_sent_at"] = timezone.now().timestamp()
+        return user
+
+
+class ActivationView(BaseActivationView):
+    """Activate, sign in, and continue to a safe requested destination."""
+
+    def get_next_url(self):
+        next_url = self.request.POST.get("next") or self.request.GET.get("next", "")
+        if url_has_allowed_host_and_scheme(
+            url=next_url,
+            allowed_hosts={self.request.get_host()},
+            require_https=self.request.is_secure(),
+        ):
+            return next_url
+        return ""
+
+    def get_activation_data(self, request):
+        data = super().get_activation_data(request)
+        data["next"] = self.get_next_url()
+        return data
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["next"] = self.get_next_url()
+        lead_images = WorldLeadImage.objects.all()
+        if self.request.world is not None:
+            lead_images = lead_images.filter(world=self.request.world)
+        context["lead_image"] = lead_images.order_by("?").first()
+        return context
+
+    def activate(self, form):
+        user = super().activate(form)
+        login(self.request, user)
+        return user
+
+    def get_success_url(self, user=None):
+        return self.get_next_url() or super().get_success_url(user)
+
+
+class ActivationCompleteView(TemplateView):
+    template_name = "django_registration/activation_complete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        lead_images = WorldLeadImage.objects.all()
+        if self.request.world is not None:
+            lead_images = lead_images.filter(world=self.request.world)
+        context["lead_image"] = lead_images.order_by("?").first()
+        return context
+
+
+class PasswordResetView(BasePasswordResetView):
+    email_template_name = "registration/password_reset_email.html"
+    html_email_template_name = "registration/password_reset_email_html.html"
+    subject_template_name = "registration/password_reset_subject.txt"
+    success_url = reverse_lazy("password_reset_done")
+
+    def form_valid(self, form):
+        form.save(
+            domain_override=self.request.get_host(),
+            use_https=self.request.is_secure(),
+            from_email=self.from_email,
+            email_template_name=self.email_template_name,
+            html_email_template_name=self.html_email_template_name,
+            subject_template_name=self.subject_template_name,
+            token_generator=self.token_generator,
+            extra_email_context=email_brand_context(self.request),
+        )
+        return FormView.form_valid(self, form)
+
+
+class RegistrationCompleteView(TemplateView):
+    template_name = "django_registration/registration_complete.html"
+    resend_cooldown_seconds = 30
+
+    def get_pending_user(self):
+        user_id = self.request.session.get("registration_pending_user_id")
+        if not user_id:
+            return None
+        try:
+            return User.objects.get(pk=user_id, is_active=False)
+        except User.DoesNotExist:
+            return None
+
+    def get_resend_remaining_seconds(self):
+        sent_at = self.request.session.get("registration_email_sent_at")
+        if sent_at is None:
+            return 0
+        elapsed = timezone.now().timestamp() - float(sent_at)
+        return max(0, ceil(self.resend_cooldown_seconds - elapsed))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        lead_images = WorldLeadImage.objects.all()
+        if self.request.world is not None:
+            lead_images = lead_images.filter(world=self.request.world)
+        context["lead_image"] = lead_images.order_by("?").first()
+        context["can_resend_activation_email"] = self.get_pending_user() is not None
+        context["resend_remaining_seconds"] = self.get_resend_remaining_seconds()
+        context["resend_countdown_template"] = _(
+            "You can request another email in %(seconds)s seconds."
+        )
+        return context
+
+    def post(self, request, *args, **kwargs):
+        user = self.get_pending_user()
+        if user is None:
+            return HttpResponseRedirect(request.path)
+
+        remaining_seconds = self.get_resend_remaining_seconds()
+        if remaining_seconds:
+            return self.resend_response(remaining_seconds, status=429)
+
+        registration_view = RegistrationView()
+        registration_view.setup(request)
+        registration_view.send_activation_email(user)
+        request.session["registration_email_sent_at"] = timezone.now().timestamp()
+        return self.resend_response(self.resend_cooldown_seconds)
+
+    def resend_response(self, remaining_seconds, status=200):
+        if self.request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return JsonResponse({"remaining_seconds": remaining_seconds}, status=status)
+        if status == 200:
+            messages.success(self.request, _("A new activation email has been sent."))
+        else:
+            messages.info(
+                self.request,
+                _("Please wait before requesting another activation email."),
+            )
+        return HttpResponseRedirect(self.request.path)
 
 
 class UpdateImageFocalPointView(View):

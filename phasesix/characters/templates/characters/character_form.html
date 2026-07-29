@@ -3,7 +3,13 @@
 
 {% block title %}{% trans 'Create Character' %} - {{ block.super }}{% endblock %}
 {% block in_page_title %}{% trans "Create Character" %}{% endblock %}
-{% block in_page_subtitle %}{% trans "Give your character a name and some more information." %}{% endblock %}
+{% block in_page_subtitle %}
+  {% if campaign %}
+    {% blocktrans with campaign_name=campaign %}Create a character for {{ campaign_name }}.{% endblocktrans %}
+  {% else %}
+    {% trans "Give your character a name and some more information." %}
+  {% endif %}
+{% endblock %}
 
 {% block opengraph %}
   {% trans "Create Character" as og_title %}

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-28 14:33+0000\n"
+"POT-Creation-Date: 2026-07-29 13:45+0000\n"
 "PO-Revision-Date: 2026-06-28 16:36+0200\n"
 "Last-Translator: Sven <sven@broeckling.de>\n"
 "Language-Team: German\n"
@@ -17,13 +17,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 50.0\n"
 
-#: armory/admin.py:81 armory/admin.py:174 armory/admin.py:255
-#: body_modifications/admin.py:101
-#: campaigns/templates/campaigns/_navigation.html:24
-#: portal/templates/portal/_searchable_object_card_list.html:37
-#: rules/admin.py:196
+#: armory/admin.py:81 armory/admin.py:178 armory/admin.py:261
+#: body_modifications/admin.py:109
+#: campaigns/templates/campaigns/_navigation.html:24 horror/admin.py:24
+#: magic/admin.py:58 pantheon/admin.py:18 pantheon/admin.py:35
+#: plots/admin.py:38
+#: portal/templates/portal/_searchable_object_card_list.html:38
+#: potions/admin.py:52 rulebook/admin.py:24 rules/admin.py:169
+#: rules/admin.py:291 rules/admin.py:392 worlds/admin.py:274
 msgid "Homebrew"
 msgstr "Homebrew"
+
+#: armory/admin.py:114 armory/admin.py:379
+msgid "Display"
+msgstr ""
 
 #: armory/choices.py:4
 msgid "Cross Shield"
@@ -179,7 +186,7 @@ msgstr "Legendär"
 #: armory/models.py:478 armory/models.py:515 armory/models.py:561
 #: armory/models.py:644 armory/models.py:652 body_modifications/models.py:13
 #: body_modifications/models.py:28 body_modifications/models.py:111
-#: campaigns/models.py:70 campaigns/models.py:411 campaigns/models.py:433
+#: campaigns/models.py:65 campaigns/models.py:395 campaigns/models.py:417
 #: characters/models.py:71 characters/models.py:108 characters/models.py:1838
 #: essential_characters/models.py:44 essential_characters/models.py:86
 #: essential_characters/models.py:365 forum/models.py:38 forum/models.py:60
@@ -187,7 +194,7 @@ msgstr "Legendär"
 #: magic/models.py:32 magic/models.py:45 magic/models.py:68 magic/models.py:167
 #: magic/models.py:226 magic/models.py:250 pantheon/models.py:23
 #: pantheon/models.py:56 pantheon/models.py:95 plots/models.py:41
-#: plots/models.py:230 plots/models.py:245 plots/models.py:265
+#: plots/models.py:237 plots/models.py:252 plots/models.py:278
 #: potions/models.py:14 potions/models.py:35 potions/models.py:73
 #: potions/models.py:113 rules/models.py:295 rules/models.py:361
 #: rules/models.py:444 rules/models.py:464 rules/models.py:495
@@ -195,9 +202,9 @@ msgstr "Legendär"
 #: rules/models.py:748 rules/models.py:773 rules/models.py:801
 #: rules/models.py:891 vehicles/models.py:27 vehicles/models.py:55
 #: vehicles/models.py:115 vehicles/models.py:182 vehicles/models.py:224
-#: vehicles/models.py:432 worlds/models.py:55 worlds/models.py:223
-#: worlds/models.py:387 worlds/models.py:399 worlds/models.py:482
-#: worlds/models.py:517 worlds/models.py:538
+#: vehicles/models.py:432 worlds/models.py:60 worlds/models.py:234
+#: worlds/models.py:398 worlds/models.py:410 worlds/models.py:493
+#: worlds/models.py:528 worlds/models.py:549
 msgid "name"
 msgstr "Name"
 
@@ -205,9 +212,9 @@ msgstr "Name"
 #: armory/models.py:262 armory/models.py:322 armory/models.py:379
 #: armory/models.py:418 armory/models.py:479 armory/models.py:517
 #: armory/models.py:562 body_modifications/models.py:112
-#: campaigns/models.py:445 characters/models.py:79 characters/models.py:109
+#: campaigns/models.py:429 characters/models.py:79 characters/models.py:109
 #: essential_characters/models.py:52 horror/models.py:46 pantheon/models.py:24
-#: pantheon/models.py:64 plots/models.py:231 plots/models.py:246
+#: pantheon/models.py:64 plots/models.py:238 plots/models.py:253
 #: potions/models.py:36 potions/models.py:74 rules/models.py:297
 #: rules/models.py:369 rules/models.py:446 rules/models.py:465
 #: rules/models.py:497 rules/models.py:540 vehicles/models.py:28
@@ -219,8 +226,8 @@ msgstr "Beschreibung"
 #: armory/models.py:45 armory/models.py:194 armory/models.py:331
 #: armory/models.py:480 armory/models.py:518 armory/models.py:676
 #: characters/models.py:1823 pantheon/models.py:25 pantheon/models.py:66
-#: plots/models.py:280 potions/models.py:37 rules/models.py:311
-#: rules/models.py:735 worlds/models.py:99 worlds/models.py:256
+#: plots/models.py:320 potions/models.py:37 rules/models.py:311
+#: rules/models.py:735 worlds/models.py:110 worlds/models.py:267
 msgid "ordering"
 msgstr "Sortierung"
 
@@ -248,7 +255,7 @@ msgstr "Essential aktiviert"
 
 #: armory/models.py:95 armory/models.py:279 armory/models.py:577
 #: body_modifications/models.py:66 magic/models.py:147 rules/models.py:292
-#: rules/models.py:805 worlds/models.py:420
+#: rules/models.py:805 worlds/models.py:431
 msgid "type"
 msgstr "Typ"
 
@@ -276,12 +283,12 @@ msgid "concealment"
 msgstr "Verborgenheit"
 
 #: armory/models.py:107 armory/models.py:287 armory/models.py:556
-#: body_modifications/models.py:121 campaigns/models.py:104
+#: body_modifications/models.py:121 campaigns/models.py:100
 #: characters/models.py:158 essential_characters/models.py:47
 #: essential_characters/models.py:101 magic/models.py:124 pantheon/models.py:45
 #: pantheon/models.py:88 plots/models.py:81 potions/models.py:81
 #: rules/models.py:365 rules/models.py:613 rules/models.py:796
-#: worlds/models.py:39 worlds/models.py:220 worlds/models.py:355
+#: worlds/models.py:44 worlds/models.py:231 worlds/models.py:366
 msgid "created by"
 msgstr "Erzeugt von"
 
@@ -559,10 +566,11 @@ msgid "Rarity"
 msgstr "Seltenheit"
 
 #: armory/templates/armory/_item_widget.html:34
-#: armory/templates/armory/_riot_gear_widget.html:28 characters/forms.py:99
+#: armory/templates/armory/_riot_gear_widget.html:28 characters/forms.py:109
+#: characters/templates/characters/pdf/cards/story/story.html:19
 #: characters/templates/characters/sidebar/item.html:180
 #: characters/templates/characters/sidebar/riot_gear.html:102
-#: characters/views.py:809
+#: characters/views.py:858
 #: rulebook/templates/rulebook/pdf/appendix/items.html:17
 #: rulebook/templates/rulebook/pdf/appendix/riot_gear.html:17
 msgid "Weight"
@@ -635,10 +643,10 @@ msgstr "Hinzugefügt"
 #: characters/templates/characters/fragments/gear.html:43
 #: characters/templates/characters/sidebar/reputation.html:53
 #: essential_characters/templates/essential_characters/widgets/searchable_item_select.html:25
-#: plots/templates/plots/_plot_element.html:83
-#: plots/templates/plots/_plot_element.html:123
-#: plots/templates/plots/_plot_element.html:163
-#: plots/templates/plots/_plot_element.html:197
+#: plots/templates/plots/_plot_element.html:114
+#: plots/templates/plots/_plot_element.html:157
+#: plots/templates/plots/_plot_element.html:200
+#: plots/templates/plots/_plot_element.html:237
 #: rules/templates/rules/_foe_widget.html:43
 #: rules/templates/rules/_template_widget.html:70
 #: worlds/templates/worlds/_language_widget.html:31
@@ -655,15 +663,15 @@ msgstr "Kaufen"
 #: armory/templates/armory/material_overview.html:5
 #: armory/templates/armory/material_overview.html:6
 #: armory/templates/armory/material_overview.html:14
-#: characters/templates/_main_nav.html:52 characters/templates/base.html:170
+#: characters/templates/_main_nav.html:52 characters/templates/base.html:164
 msgid "Material"
 msgstr "Material"
 
 #: armory/templates/armory/_navigation.html:36
 #: armory/templates/armory/material_overview.html:30
-#: campaigns/templates/campaigns/plot/_plot_element.html:108
-#: characters/templates/base.html:164 phasesix/settings.py:408
-#: plots/templates/plots/_plot_element.html:157 rulebook/appendixes.py:126
+#: campaigns/templates/campaigns/plot/_plot_element.html:127
+#: characters/templates/base.html:158 phasesix/settings.py:408
+#: plots/templates/plots/_plot_element.html:192 rulebook/appendixes.py:126
 #: rules/templates/rules/foetype_list.html:7
 #: rules/templates/rules/foetype_list.html:8
 #: rules/templates/rules/foetype_list.html:12
@@ -672,14 +680,14 @@ msgstr "Gegner"
 
 #: armory/templates/armory/_navigation.html:46
 #: armory/templates/armory/material_overview.html:45
-#: characters/templates/base.html:172
+#: characters/templates/base.html:166
 #: rules/templates/rules/templatecategory_list.html:8
 msgid "Templates"
 msgstr "Schablonen"
 
 #: armory/templates/armory/_navigation.html:56
 #: armory/templates/armory/material_overview.html:60 armory/views.py:38
-#: characters/templates/base.html:174
+#: characters/templates/base.html:168
 #: characters/templates/characters/fragments/gear.html:36
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:311
 #: phasesix/settings.py:322 rulebook/appendixes.py:81
@@ -688,7 +696,7 @@ msgstr "Gegenstände"
 
 #: armory/templates/armory/_navigation.html:66
 #: armory/templates/armory/material_overview.html:75 armory/views.py:14
-#: characters/templates/base.html:173
+#: characters/templates/base.html:167
 #: characters/templates/characters/fragments/gear.html:20
 #: curators_desk/views.py:77
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:267
@@ -698,17 +706,17 @@ msgstr "Waffen"
 
 #: armory/templates/armory/_navigation.html:76
 #: armory/templates/armory/material_overview.html:90
-#: characters/templates/base.html:176
+#: characters/templates/base.html:170
 #: characters/templates/characters/pdf/cards/gear/armour.html:5
 msgid "Armour"
 msgstr "Rüstung"
 
 #: armory/templates/armory/_navigation.html:87
 #: armory/templates/armory/material_overview.html:106
-#: characters/templates/base.html:175 curators_desk/views.py:78
+#: characters/templates/base.html:169 curators_desk/views.py:78
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:367
 #: phasesix/settings.py:366 rulebook/appendixes.py:90
-#: worlds/templates/worlds/wiki_page_detail.html:89
+#: worlds/templates/worlds/wiki_page_detail.html:93
 msgid "Spells"
 msgstr "Zauber"
 
@@ -820,7 +828,10 @@ msgstr "Schutzausrüstung und Zubehör"
 msgid "All sorts of useful things"
 msgstr "Alle möglichen nützlichen Dinge"
 
-#: body_modifications/admin.py:88 forum/views.py:109 rules/admin.py:186
+#: body_modifications/admin.py:28 body_modifications/admin.py:95
+#: forum/views.py:109 magic/admin.py:86 magic/admin.py:103 pantheon/admin.py:17
+#: plots/admin.py:37 rulebook/admin.py:23 rules/admin.py:381 worlds/admin.py:78
+#: worlds/admin.py:165
 msgid "Image"
 msgstr "Bild"
 
@@ -903,6 +914,7 @@ msgid "body modification modifiers"
 msgstr "Körpermodifikationsmodifier"
 
 #: body_modifications/templates/body_modifications/_body_modification_widget.html:40
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:9
 #: characters/templates/characters/sidebar/biostrain.html:26
 #: characters/templates/characters/sidebar/body_modification.html:167
 msgid "Energy"
@@ -913,6 +925,7 @@ msgstr "Energie"
 #: characters/templates/characters/fragments/body_modifications.html:18
 #: characters/templates/characters/fragments/body_modifications.html:37
 #: characters/templates/characters/fragments/body_modifications.html:39
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:8
 #: characters/templates/characters/sidebar/biostrain.html:9
 #: characters/templates/characters/sidebar/biostrain.html:13
 #: characters/templates/characters/sidebar/biostrain.html:17
@@ -948,10 +961,37 @@ msgstr "Energieneutral"
 msgid "Things you can integrate into your body"
 msgstr "Dinge die du in deinen Körper integrieren kannst"
 
+#: campaigns/admin.py:36
+#: curators_desk/templates/curators_desk/_navigation.html:19
+msgid "Roll statistics"
+msgstr "Wurfstatistiken"
+
+#: campaigns/admin.py:98 campaigns/templates/campaigns/campaign_form.html:5
+#: campaigns/templates/campaigns/campaign_form.html:10
+msgid "Campaign settings"
+msgstr "Kampagneneinstellungen"
+
+#: campaigns/admin.py:107
+#: campaigns/templates/campaigns/fragments/settings.html:76
+msgid "Integrations"
+msgstr "Integrationen"
+
+#: campaigns/admin.py:117 rulebook/admin.py:38 rules/admin.py:66
+#: rules/admin.py:110
+#, fuzzy
+#| msgid "reputation"
+msgid "Presentation"
+msgstr "Reputation"
+
+#: campaigns/admin.py:132 characters/admin.py:49 worlds/admin.py:88
+#: worlds/admin.py:175
+msgid "Ownership"
+msgstr ""
+
 #: campaigns/forms.py:13
 #: campaigns/templates/campaigns/fragments/settings.html:28
-#: characters/forms.py:57 characters/forms.py:94 phasesix/settings.py:349
-#: phasesix/settings.py:383 plots/templates/plots/fragments/properties.html:67
+#: characters/forms.py:67 characters/forms.py:104 phasesix/settings.py:349
+#: phasesix/settings.py:383 plots/templates/plots/fragments/properties.html:63
 msgid "Extensions"
 msgstr "Erweiterungen"
 
@@ -970,40 +1010,32 @@ msgstr "Phase Six"
 msgid "Tirakan Essential"
 msgstr "Tirakan Essential"
 
-#: campaigns/models.py:55
-msgid "GM Only"
-msgstr "Nur SL"
-
-#: campaigns/models.py:56
-msgid "All"
-msgstr "Alle"
-
-#: campaigns/models.py:62 campaigns/models.py:427 characters/models.py:1841
+#: campaigns/models.py:57 campaigns/models.py:411 characters/models.py:1841
 #: essential_characters/models.py:93 forum/models.py:33 phasesix/models.py:48
-#: plots/models.py:52 plots/models.py:233 plots/models.py:248
-#: portal/models.py:21 worlds/models.py:187 worlds/models.py:337
+#: plots/models.py:52 plots/models.py:240 plots/models.py:255
+#: portal/models.py:21 worlds/models.py:198 worlds/models.py:348
 msgid "image"
 msgstr "Bild"
 
-#: campaigns/models.py:69 characters/models.py:107
+#: campaigns/models.py:64 characters/models.py:107
 #: essential_characters/models.py:85 portal/models.py:12 rules/models.py:803
-#: worlds/models.py:56 worlds/models.py:231 worlds/models.py:359
+#: worlds/models.py:61 worlds/models.py:242 worlds/models.py:370
 msgid "slug"
 msgstr "Slug"
 
-#: campaigns/models.py:72 plots/models.py:43
+#: campaigns/models.py:68 plots/models.py:43
 msgid "ruleset"
 msgstr "Regelsatz"
 
-#: campaigns/models.py:75
+#: campaigns/models.py:71
 msgid "in game act date"
 msgstr "Spieldatum"
 
-#: campaigns/models.py:79 characters/models.py:112
+#: campaigns/models.py:75 characters/models.py:112
 msgid "may appear on start page"
 msgstr "Darf auf der Startseite erscheinen"
 
-#: campaigns/models.py:81
+#: campaigns/models.py:77
 msgid ""
 "This campaign may appear on the anonymous start page (i.E. if it has only "
 "free images"
@@ -1011,82 +1043,83 @@ msgstr ""
 "Diese Kampagne darf auf der Startseite für anonyme Besucher erscheinen (hat "
 "z.B. nur freie Bilder)"
 
-#: campaigns/models.py:87 characters/models.py:135 portal/models.py:36
+#: campaigns/models.py:83 characters/models.py:135 portal/models.py:36
 msgid "backdrop image"
 msgstr "Hintergrundbild"
 
-#: campaigns/models.py:94 characters/models.py:142 phasesix/models.py:55
+#: campaigns/models.py:90 characters/models.py:142 phasesix/models.py:55
 #: portal/models.py:43
 msgid "image copyright"
 msgstr "Bild Copyright"
 
-#: campaigns/models.py:97 characters/models.py:145 phasesix/models.py:58
+#: campaigns/models.py:93 characters/models.py:145 phasesix/models.py:58
 #: portal/models.py:46
 msgid "image copyright url"
 msgstr "Bild Copyright URL"
 
-#: campaigns/models.py:101
+#: campaigns/models.py:97
 msgid "abstract"
 msgstr "Zusammenfassung"
 
-#: campaigns/models.py:106 campaigns/models.py:443 characters/models.py:1278
+#: campaigns/models.py:102 campaigns/models.py:427 characters/models.py:1278
 #: characters/models.py:1437 characters/models.py:1484
 #: characters/models.py:1819 essential_characters/models.py:104
 #: forum/models.py:21 forum/models.py:27 forum/models.py:31 forum/models.py:37
-#: forum/models.py:55 forum/models.py:99 phasesix/models.py:30
+#: forum/models.py:55 forum/models.py:119 phasesix/models.py:30
 #: portal/models.py:14
 msgid "created at"
 msgstr "Erzeugt am"
 
-#: campaigns/models.py:107 characters/models.py:165
+#: campaigns/models.py:103 characters/models.py:165
 #: essential_characters/models.py:106
 msgid "is favorite"
 msgstr "Ist Favorit"
 
-#: campaigns/models.py:111 characters/models.py:171
+#: campaigns/models.py:107 characters/models.py:171
 #: essential_characters/models.py:109 plots/models.py:75
 msgid "cloned from"
 msgstr "Geklont von"
 
-#: campaigns/models.py:122
+#: campaigns/models.py:118
 #: campaigns/templates/campaigns/fragments/settings.html:19
-#: characters/forms.py:82 characters/forms.py:87 plots/models.py:59
-#: plots/templates/plots/fragments/properties.html:59 rules/models.py:283
+#: characters/forms.py:92 characters/forms.py:97 plots/models.py:59
+#: plots/templates/plots/fragments/properties.html:55 rules/models.py:283
 msgid "Epoch"
 msgstr "Epoche"
 
-#: campaigns/models.py:129
+#: campaigns/models.py:125
 #: campaigns/templates/campaigns/fragments/settings.html:10
-#: characters/templates/_main_nav.html:24 plots/models.py:66
-#: plots/templates/plots/fragments/properties.html:63 rules/models.py:284
+#: characters/forms.py:17 characters/templates/_main_nav.html:24
+#: plots/models.py:66 plots/templates/plots/fragments/properties.html:59
+#: rules/models.py:284
 msgid "World"
 msgstr "Welt"
 
-#: campaigns/models.py:138
+#: campaigns/models.py:134
 msgid "additional starting career points"
 msgstr "Zusätzliche Werdegangspunkte"
 
-#: campaigns/models.py:143
+#: campaigns/models.py:139
 msgid "roll on site"
 msgstr "Auf dieser Plattform würfeln"
 
-#: campaigns/models.py:144
+#: campaigns/models.py:140
 msgid "Shows dice results on this platform."
 msgstr "Zeigt die Würfelergebnisse auf dieser Plattform an."
 
-#: campaigns/models.py:148
+#: campaigns/models.py:144
 msgid "discord integration"
 msgstr "Discord Integration"
 
-#: campaigns/models.py:149
+#: campaigns/models.py:145
 msgid "Enables the integration with discord. Requires a webhook url."
 msgstr "Aktiviert die Integration mit Discord. Benötigt eine Webhook URL."
 
-#: campaigns/models.py:153
+#: campaigns/models.py:149
 msgid "tale spire integration"
 msgstr "TaleSpire Integration"
 
-#: campaigns/models.py:155
+#: campaigns/models.py:151
 msgid ""
 "Enables TaleSpire integration. All roll links are generated so that the "
 "TaleSpire game is accessed."
@@ -1094,38 +1127,22 @@ msgstr ""
 "Aktiviert die Integration mit TaleSpire. Alle Würfelllinks werden so "
 "generiert, dass das TaleSpire Spiel angesprochen wird."
 
-#: campaigns/models.py:160
+#: campaigns/models.py:156
 msgid "discord webhook url"
 msgstr "Discord Webhook URL"
 
-#: campaigns/models.py:163
+#: campaigns/models.py:159
 msgid ""
 "Create a discord webhook and paste it's url here to display dice results."
 msgstr ""
 "Lege einen Discord Webhook an und kopiere seine URL hier herein, um "
 "Würfelergebnisse anzuzeigen."
 
-#: campaigns/models.py:170
+#: campaigns/models.py:166
 msgid "seed money"
 msgstr "Startkapital"
 
-#: campaigns/models.py:173
-msgid "foe visibility"
-msgstr "Gegnersichtbarkeit"
-
-#: campaigns/models.py:177
-msgid "npc visibility"
-msgstr "NSC Sichtbarkeit"
-
-#: campaigns/models.py:181
-msgid "game log visibility"
-msgstr "Spielprotokollsichtbarkeit"
-
-#: campaigns/models.py:185
-msgid "character visibility"
-msgstr "Charaktersichtbarkeit"
-
-#: campaigns/models.py:189 characters/models.py:192
+#: campaigns/models.py:169 characters/models.py:192
 #: curators_desk/templates/curators_desk/fragments/review_homebrew_table.html:10
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:97
 #: partypad/models.py:27 portal/templates/portal/sidebar/search_results.html:30
@@ -1133,91 +1150,91 @@ msgstr "Charaktersichtbarkeit"
 msgid "Campaign"
 msgstr "Kampagne"
 
-#: campaigns/models.py:190 characters/templates/_main_nav.html:163
+#: campaigns/models.py:170 characters/templates/_main_nav.html:164
 #: phasesix/settings.py:310 portal/templates/portal/_navigation.html:36
 msgid "Campaigns"
 msgstr "Kampagnen"
 
-#: campaigns/models.py:204 plots/models.py:106
+#: campaigns/models.py:184 plots/models.py:107
 msgid "Tirakan Essential requires the Tirakan world."
 msgstr "Tirakan Essential benötigt eine Tirakan Welt."
 
-#: campaigns/models.py:225
+#: campaigns/models.py:205
 msgid "The ruleset cannot be changed after content was assigned."
 msgstr ""
 "Der Regelsatz kann nicht geändert werden, nachdem Inhalte verändert wurden."
 
-#: campaigns/models.py:395 characters/models.py:216 characters/models.py:1835
-#: rules/models.py:811 worlds/models.py:423
+#: campaigns/models.py:379 characters/models.py:216 characters/models.py:1835
+#: rules/models.py:811 worlds/models.py:434
 msgid "health"
 msgstr "Lebenspunkte"
 
-#: campaigns/models.py:412 characters/models.py:1822 forum/models.py:104
-#: worlds/models.py:249
+#: campaigns/models.py:396 characters/models.py:1822 forum/models.py:124
+#: worlds/models.py:260
 msgid "text"
 msgstr "Text"
 
-#: campaigns/models.py:417 plots/models.py:273
+#: campaigns/models.py:401 plots/models.py:313
 msgid "essential NPCs"
 msgstr "Essential NSC"
 
-#: campaigns/models.py:444
+#: campaigns/models.py:428
 msgid "header"
 msgstr "Kopfzeile"
 
-#: campaigns/models.py:447
+#: campaigns/models.py:431
 msgid "roll string"
 msgstr "Würfelstring"
 
-#: campaigns/models.py:449
+#: campaigns/models.py:433
 msgid "results_csv"
 msgstr "Ergebniss csv"
 
-#: campaigns/models.py:451
+#: campaigns/models.py:435
 msgid "modifier"
 msgstr "Modifikator"
 
-#: campaigns/models.py:452 rules/models.py:26 worlds/models.py:432
+#: campaigns/models.py:436 rules/models.py:26 worlds/models.py:443
 msgid "minimum roll"
 msgstr "Mindestwurf"
 
-#: campaigns/models.py:455
+#: campaigns/models.py:439
 msgid "crit count"
 msgstr "Anzahl kritischer Erfolge"
 
-#: campaigns/models.py:456
+#: campaigns/models.py:440
 msgid "crit sum"
 msgstr "Summe kritischer Erfolge"
 
-#: campaigns/models.py:457
+#: campaigns/models.py:441
 msgid "exploded dice count"
 msgstr "Anzahl Exploding Dice"
 
-#: campaigns/models.py:458
+#: campaigns/models.py:442
 msgid "exploded dice sum"
 msgstr "Summe Exploding Dice"
 
-#: campaigns/models.py:459
+#: campaigns/models.py:443
 msgid "highest single roll"
 msgstr "Höchster einzelner Wurf"
 
-#: campaigns/models.py:460
+#: campaigns/models.py:444
 msgid "successes count"
 msgstr "Anzahl Erfolge"
 
-#: campaigns/models.py:461
+#: campaigns/models.py:445
 msgid "successes sum"
 msgstr "Summe Erfolge"
 
-#: campaigns/models.py:462
+#: campaigns/models.py:446
 msgid "fails count"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:463
+#: campaigns/models.py:447
 msgid "fails sum"
 msgstr "Anzahl Misserfolge"
 
-#: campaigns/models.py:464
+#: campaigns/models.py:448
 msgid "total sum"
 msgstr "Gesamtsumme"
 
@@ -1232,7 +1249,7 @@ msgid "Add to favorites"
 msgstr "Zu Favoriten hinzufügen"
 
 #: campaigns/templates/campaigns/_navigation.html:12
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:74
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:65
 msgid "Dramaturgy"
 msgstr "Dramaturgie"
 
@@ -1245,46 +1262,55 @@ msgstr "Statistiken"
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: campaigns/templates/campaigns/_navigation.html:62
-#: campaigns/templates/campaigns/sidebar/foe.html:64
-#: characters/templates/characters/sidebar/attribute.html:34
-#: characters/templates/characters/sidebar/body_modification.html:57
-#: characters/templates/characters/sidebar/body_modification.html:72
-#: characters/templates/characters/sidebar/body_modification.html:87
-#: characters/templates/characters/sidebar/body_modification.html:101
-#: characters/templates/characters/sidebar/foe.html:68
-#: characters/templates/characters/sidebar/item.html:66
-#: characters/templates/characters/sidebar/item.html:81
-#: characters/templates/characters/sidebar/item.html:94
-#: characters/templates/characters/sidebar/item.html:108
-#: characters/templates/characters/sidebar/knowledge.html:11
-#: characters/templates/characters/sidebar/priest_action.html:15
-#: characters/templates/characters/sidebar/priest_action.html:27
-#: characters/templates/characters/sidebar/skill.html:23
-msgid "Roll"
-msgstr "Wurf"
-
 #: campaigns/templates/campaigns/campaign_detail.html:7
 msgid "A campaign by"
 msgstr "Eine Kampagne von"
 
-#: campaigns/templates/campaigns/campaign_detail.html:32
-#: characters/templates/characters/character_detail.html:38
-msgid "Dice Log"
-msgstr "Würfe"
+#: campaigns/templates/campaigns/campaign_detail.html:13
+#: characters/templates/characters/character_detail.html:20
+#: worlds/templates/worlds/_page_actions.html:6
+#: worlds/templates/worlds/wiki_page_edit.html:12
+#, fuzzy
+#| msgid "base actions"
+msgid "Page actions"
+msgstr "Basisaktionen"
 
-#: campaigns/templates/campaigns/campaign_detail.html:56
-msgid ""
-"You have been invited to join this campaign. Create a new character to join "
-"the campaign."
-msgstr ""
-"Du wurdest eingeladen, dieser Kampagne beizutreten. Erstelle einen neuen "
-"Charakter, um beizutreten."
-
-#: campaigns/templates/campaigns/campaign_detail.html:58
-#: campaigns/templates/campaigns/campaign_detail.html:61
+#: campaigns/templates/campaigns/campaign_detail.html:17
+#: campaigns/templates/campaigns/campaign_detail.html:20
+#: campaigns/templates/campaigns/campaign_detail.html:25
 msgid "Join campaign"
 msgstr "Kampagne beitreten"
+
+#: campaigns/templates/campaigns/campaign_detail.html:33
+#: campaigns/templates/campaigns/campaign_detail.html:36
+msgid "Foundry compendia"
+msgstr ""
+
+#: campaigns/templates/campaigns/campaign_detail.html:34
+#: worlds/templates/worlds/wiki_page_edit.html:51
+#: worlds/templates/worlds/wiki_page_edit.html:58
+msgid "Copied"
+msgstr "Kopiert"
+
+#: campaigns/templates/campaigns/campaign_detail.html:42
+#: campaigns/templates/campaigns/campaign_detail.html:45
+msgid "Invite Player"
+msgstr "Spieler einladen"
+
+#: campaigns/templates/campaigns/campaign_detail.html:43
+msgid "Invite link copied"
+msgstr "Einladungslink kopiert"
+
+#: campaigns/templates/campaigns/campaign_detail.html:53
+#, fuzzy
+#| msgid "Roll Dice"
+msgid "Roll dice"
+msgstr "Würfeln"
+
+#: campaigns/templates/campaigns/campaign_detail.html:85
+#: characters/templates/characters/character_detail.html:68
+msgid "Dice Log"
+msgstr "Würfe"
 
 #: campaigns/templates/campaigns/campaign_form.html:4
 #: campaigns/templates/campaigns/choose_campaign_ruleset.html:4
@@ -1297,11 +1323,6 @@ msgstr "Kampagne beitreten"
 msgid "Create Campaign"
 msgstr "Kampagne erstellen"
 
-#: campaigns/templates/campaigns/campaign_form.html:5
-#: campaigns/templates/campaigns/campaign_form.html:10
-msgid "Campaign settings"
-msgstr "Kampagneneinstellungen"
-
 #: campaigns/templates/campaigns/campaign_form.html:7
 #: campaigns/templates/campaigns/campaign_form.html:11
 msgid ""
@@ -1312,7 +1333,7 @@ msgstr ""
 "Charakter, der für diese Kampagne erstellt wird."
 
 #: campaigns/templates/campaigns/campaign_form.html:21
-#: characters/templates/_main_nav.html:134
+#: characters/templates/_main_nav.html:135
 msgid "Create campaign"
 msgstr "Kampagne erstellen"
 
@@ -1405,7 +1426,7 @@ msgid "GM"
 msgstr "SL"
 
 #: campaigns/templates/campaigns/fragments/dramaturgy.html:11
-#: characters/templates/_main_nav.html:143 phasesix/settings.py:305
+#: characters/templates/_main_nav.html:144 phasesix/settings.py:305
 #: portal/templates/portal/_navigation.html:12
 msgid "Characters"
 msgstr "Charaktere"
@@ -1414,138 +1435,124 @@ msgstr "Charaktere"
 msgid "Campaign cast"
 msgstr "Besetzung der Kampagne"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:17
 #: campaigns/templates/campaigns/fragments/dramaturgy.html:20
-msgid "Invite Player"
-msgstr "Spieler einladen"
-
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:18
-msgid "Invite link copied"
-msgstr "Einladungslink kopiert"
-
 #: campaigns/templates/campaigns/fragments/dramaturgy.html:29
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:38
-#: campaigns/templates/campaigns/plot/_plot_element.html:78
+#: campaigns/templates/campaigns/plot/_plot_element.html:95
 #: characters/templates/characters/_character_list_widget.html:27
 #: essential_characters/templates/essential_characters/_essential_character_list_widget.html:35
-#: plots/templates/plots/_plot_element.html:117
+#: plots/templates/plots/_plot_element.html:149
 #: portal/templates/portal/_navigation.html:24
 msgid "NPC"
 msgstr "NSC"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:75
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:66
 msgid "Plot overview"
 msgstr "Abenteuerübersicht"
 
-#: plots/templates/plots/fragments/campaign_plot_view.html:17
-msgid "Collapse all"
-msgstr "Alle einklappen"
-
-#: plots/templates/plots/fragments/campaign_plot_view.html:23
-msgid "Expand all"
-msgstr "Alle ausklappen"
-
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:113
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:169
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:110
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:166
 msgid "Choose plot"
 msgstr "Wähle ein Abenteuer"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:120
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:176
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:117
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:173
 msgid "Preview plot"
 msgstr "Abenteuervorschau"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:132
-#: plots/templates/plots/plot_list.html:33
-#: plots/templates/plots/plot_list.html:37
-#: plots/templates/plots/plot_list.html:38
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:129
 msgid "Create plot"
 msgstr "Abenteuer erstellen"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:136
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:133
 msgid "Create your own plot"
 msgstr "Abenteuer erstellen"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:198
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:195
 msgid "Previous"
 msgstr "Vorheriges"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:204
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:201
 msgid "Next"
 msgstr "Weiter"
 
-#: campaigns/templates/campaigns/fragments/dramaturgy.html:209
+#: campaigns/templates/campaigns/fragments/dramaturgy.html:206
 msgid "No plot assigned yet."
 msgstr "Kein Abenteuer zugewiesen."
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:12
+#: campaigns/templates/campaigns/fragments/homebrew.html:7
+#, fuzzy
+#| msgid "The game world this campaign is set in"
+msgid "No homebrew exists for this campaign yet."
+msgstr "Die Spielwelt, in der diese Kampagne spielt"
+
+#: campaigns/templates/campaigns/fragments/homebrew.html:18
 msgid "Create custom object"
 msgstr "Individuelles Objekt erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:21
+#: campaigns/templates/campaigns/fragments/homebrew.html:27
 msgid "Create Item"
 msgstr "Gegenstand erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:22
+#: campaigns/templates/campaigns/fragments/homebrew.html:28
 #: essential_characters/templates/essential_characters/essentialcharacter_wizard.html:110
 msgid "Create custom item"
 msgstr "Individuellen Gegenstand erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:29
+#: campaigns/templates/campaigns/fragments/homebrew.html:35
 msgid "Create Weapon"
 msgstr "Waffe erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:30
+#: campaigns/templates/campaigns/fragments/homebrew.html:36
 #: essential_characters/templates/essential_characters/essentialcharacter_wizard.html:124
 msgid "Create custom weapon"
 msgstr "Individuelle Waffe erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:37
+#: campaigns/templates/campaigns/fragments/homebrew.html:43
 msgid "Create Armor"
 msgstr "Rüstung anlegen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:38
+#: campaigns/templates/campaigns/fragments/homebrew.html:44
 #: essential_characters/templates/essential_characters/essentialcharacter_wizard.html:121
 msgid "Create custom armor"
 msgstr "Individuelle Rüstung erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:45
+#: campaigns/templates/campaigns/fragments/homebrew.html:51
 msgid "Create Spell"
 msgstr "Zauber erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:46
+#: campaigns/templates/campaigns/fragments/homebrew.html:52
 msgid "Create custom spell"
 msgstr "Individuellen Zauber erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:53
+#: campaigns/templates/campaigns/fragments/homebrew.html:59
 msgid "Create Template"
 msgstr "Charakterschablone erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:54
+#: campaigns/templates/campaigns/fragments/homebrew.html:60
 msgid "Create custom template"
 msgstr "Individuelle Charakterschablone erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:61
+#: campaigns/templates/campaigns/fragments/homebrew.html:67
 msgid "Create Quirk"
 msgstr "Tick erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:62
+#: campaigns/templates/campaigns/fragments/homebrew.html:68
 msgid "Create custom quirk"
 msgstr "Individuellen Tick erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:69
+#: campaigns/templates/campaigns/fragments/homebrew.html:75
 msgid "Create Language"
 msgstr "Sprache erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:70
+#: campaigns/templates/campaigns/fragments/homebrew.html:76
 msgid "Create custom language"
 msgstr "Individuelle Sprache erstellen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:77
+#: campaigns/templates/campaigns/fragments/homebrew.html:83
 msgid "Create Foe"
 msgstr "Gegner anlegen"
 
-#: campaigns/templates/campaigns/fragments/homebrew.html:78
+#: campaigns/templates/campaigns/fragments/homebrew.html:84
 msgid "Create custom foe"
 msgstr "Individuellen Gegner erstellen"
 
@@ -1570,7 +1577,7 @@ msgid "Additional rule sets enabled for this campaign"
 msgstr "Zusätzliche aktivierte Regelerweiterungen"
 
 #: campaigns/templates/campaigns/fragments/settings.html:37
-#: characters/forms.py:75 characters/views.py:861
+#: characters/forms.py:85 characters/views.py:910
 msgid "Currency Map"
 msgstr "Währungstabelle"
 
@@ -1579,7 +1586,7 @@ msgid "Defines the monetary system used"
 msgstr "Definiert das monetäre System, welches benutzt wird"
 
 #: campaigns/templates/campaigns/fragments/settings.html:46
-#: characters/forms.py:78 characters/views.py:832
+#: characters/forms.py:88 characters/views.py:881
 msgid "Seed Money"
 msgstr "Startkapital"
 
@@ -1596,71 +1603,28 @@ msgid "Extra points for character creation"
 msgstr "Extrapunkte für die Charaktererschaffung"
 
 #: campaigns/templates/campaigns/fragments/settings.html:68
-#: campaigns/templates/campaigns/fragments/settings.html:118
-#: campaigns/templates/campaigns/fragments/settings.html:170
+#: campaigns/templates/campaigns/fragments/settings.html:119
 msgid "Edit settings"
 msgstr "Einstellungen bearbeiten"
 
 #: campaigns/templates/campaigns/fragments/settings.html:69
-#: campaigns/templates/campaigns/fragments/settings.html:120
-#: campaigns/templates/campaigns/fragments/settings.html:172
+#: campaigns/templates/campaigns/fragments/settings.html:121
 #: characters/templates/characters/fragments/description.html:37
 #: curators_desk/templates/curators_desk/fragments/review_homebrew_table.html:29
-#: plots/templates/plots/_plot_element.html:28
-#: worlds/templates/worlds/_navigation.html:26
+#: worlds/templates/worlds/_page_actions.html:21
 msgid "Edit"
 msgstr "Editieren"
 
-#: campaigns/templates/campaigns/fragments/settings.html:75
-msgid "Visibility"
-msgstr "Sichtbarkeit"
-
-#: campaigns/templates/campaigns/fragments/settings.html:80
-msgid "Character Visibility"
-msgstr "Charaktersichtbarkeit"
-
 #: campaigns/templates/campaigns/fragments/settings.html:81
-msgid "Who can see player characters"
-msgstr "Wer kann Spielercharaktere sehen"
-
-#: campaigns/templates/campaigns/fragments/settings.html:89
-msgid "NPC Visibility"
-msgstr "NSC Sichtbarkeit"
-
-#: campaigns/templates/campaigns/fragments/settings.html:90
-msgid "Who can see non-player characters"
-msgstr "Wer kann NPC sehen"
-
-#: campaigns/templates/campaigns/fragments/settings.html:98
-msgid "Foe Visibility"
-msgstr "Gegnersichtbarkeit"
-
-#: campaigns/templates/campaigns/fragments/settings.html:99
-msgid "Who can see enemies and opponents"
-msgstr "Wer kann Gegner sehen"
-
-#: campaigns/templates/campaigns/fragments/settings.html:107
-msgid "Game Log Visibility"
-msgstr "Spielprotokollsichtbarkeit"
-
-#: campaigns/templates/campaigns/fragments/settings.html:108
-msgid "Who can access the game history"
-msgstr "Wer kann auf das Spielprotokoll zugreifen"
-
-#: campaigns/templates/campaigns/fragments/settings.html:127
-msgid "Integrations"
-msgstr "Integrationen"
-
-#: campaigns/templates/campaigns/fragments/settings.html:132
 msgid "Phase Six Rolls"
 msgstr "Phase Six Würfel"
 
-#: campaigns/templates/campaigns/fragments/settings.html:133
+#: campaigns/templates/campaigns/fragments/settings.html:82
 msgid "Roll dice on this platform"
 msgstr "Würfe auf dieser Plattform anzeigen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:136
-#: campaigns/templates/campaigns/fragments/settings.html:161
+#: campaigns/templates/campaigns/fragments/settings.html:85
+#: campaigns/templates/campaigns/fragments/settings.html:110
 #: essential_characters/templates/essential_characters/_supernatural_summary.html:17
 #: essential_characters/templates/essential_characters/_supernatural_summary.html:18
 #: essential_characters/templates/essential_characters/_supernatural_summary.html:19
@@ -1668,24 +1632,24 @@ msgstr "Würfe auf dieser Plattform anzeigen"
 msgid "Yes"
 msgstr "Ja"
 
-#: campaigns/templates/campaigns/fragments/settings.html:136
-#: campaigns/templates/campaigns/fragments/settings.html:161 portal/admin.py:21
+#: campaigns/templates/campaigns/fragments/settings.html:85
+#: campaigns/templates/campaigns/fragments/settings.html:110 portal/admin.py:21
 msgid "No"
 msgstr "Nein"
 
-#: campaigns/templates/campaigns/fragments/settings.html:157
+#: campaigns/templates/campaigns/fragments/settings.html:106
 msgid "Discord Integration"
 msgstr "Discord Integration"
 
-#: campaigns/templates/campaigns/fragments/settings.html:158
+#: campaigns/templates/campaigns/fragments/settings.html:107
 msgid "Send dice roll results to Discord"
 msgstr "Sendet die Würfelergebnisse nach Discord"
 
-#: campaigns/templates/campaigns/fragments/settings.html:183
+#: campaigns/templates/campaigns/fragments/settings.html:132
 msgid "Clone campaign"
 msgstr "Kampagne klonen"
 
-#: campaigns/templates/campaigns/fragments/settings.html:186
+#: campaigns/templates/campaigns/fragments/settings.html:135
 #: campaigns/templates/campaigns/modals/clone_campaign.html:21
 msgid "Clone Campaign"
 msgstr "Kampagne klonen"
@@ -1744,7 +1708,8 @@ msgstr ""
 
 #: campaigns/templates/campaigns/modals/clone_campaign.html:17
 #: campaigns/templates/campaigns/modals/remove_plot.html:13
-#: characters/templates/base.html:95
+#: characters/templates/base.html:87
+#: characters/templates/characters/add_to_start_page.html:19
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -1758,30 +1723,30 @@ msgstr "SL Beschreibung"
 
 #: campaigns/templates/campaigns/modals/plot_preview.html:23
 #: plots/templates/plots/fragments/campaign_plot_view.html:3
-#: plots/templates/plots/includes/editor_layout.html:3
+#: plots/templates/plots/includes/editor_layout.html:4
 msgid "Same Level / Top Level"
 msgstr "Gleiche Ebene / Oberste Ebene"
 
 #: campaigns/templates/campaigns/modals/plot_preview.html:24
 #: plots/templates/plots/fragments/campaign_plot_view.html:4
-#: plots/templates/plots/includes/editor_layout.html:4
+#: plots/templates/plots/includes/editor_layout.html:5
 msgid "Move as Child"
 msgstr "Als Unterelement verschieben"
 
 #: campaigns/templates/campaigns/modals/plot_preview.html:25
 #: plots/templates/plots/fragments/campaign_plot_view.html:5
-#: plots/templates/plots/includes/editor_layout.html:5
+#: plots/templates/plots/includes/editor_layout.html:6
 msgid "Same Level"
 msgstr "Selbe Ebene"
 
 #: campaigns/templates/campaigns/modals/plot_preview.html:26
 #: plots/templates/plots/fragments/campaign_plot_view.html:6
-#: plots/templates/plots/includes/editor_layout.html:6
+#: plots/templates/plots/includes/editor_layout.html:7
 msgid "Drop here for children"
 msgstr "Hier ablegen für Unterelemente"
 
 #: campaigns/templates/campaigns/modals/plot_preview.html:31
-#: plots/templates/plots/fragments/campaign_plot_view.html:15
+#: plots/templates/plots/fragments/campaign_plot_view.html:29
 msgid "No plot elements yet."
 msgstr "Noch keine Abenteuerelemente."
 
@@ -1798,16 +1763,16 @@ msgstr ""
 "Orte und Handlungselemente. Dies kann nicht rückgängig gemacht werden."
 
 #: campaigns/templates/campaigns/modals/remove_plot.html:19
-#: plots/templates/plots/fragments/properties.html:42
-#: plots/templates/plots/fragments/properties.html:45
+#: plots/templates/plots/fragments/properties.html:31
+#: plots/templates/plots/fragments/properties.html:33
+#: plots/templates/plots/fragments/properties.html:34
 msgid "Remove plot"
 msgstr "Abenteuer entfernen"
 
 #: campaigns/templates/campaigns/modals/settings.html:12
-#: characters/templates/base.html:96
+#: characters/templates/base.html:88
 #: characters/templates/characters/modals/edit_description.html:9
 #: characters/templates/characters/modals/edit_foe.html:10
-#: characters/templates/characters/sidebar/character.html:70
 #: curators_desk/templates/curators_desk/fragments/review_homebrew_form.html:51
 #: essential_characters/templates/essential_characters/_edit_section_form.html:44
 #: plots/templates/plots/xhr_handout_modal.html:44
@@ -1817,37 +1782,43 @@ msgstr "Abenteuer entfernen"
 #: plots/templates/plots/xhr_plot_element_modal.html:22
 #: plots/templates/plots/xhr_plot_modal.html:35
 #: plots/templates/plots/xhr_plot_npc_modal.html:30
-#: worlds/templates/worlds/wiki_page_edit.html:26
-#: worlds/templates/worlds/wiki_page_edit.html:27
+#: worlds/templates/worlds/wiki_page_edit.html:15
 msgid "Save"
 msgstr "Speichern"
 
-#: campaigns/templates/campaigns/plot/_plot_element.html:14
+#: campaigns/templates/campaigns/plot/_plot_element.html:18
 msgid "Toggle children"
 msgstr "Unterelemente ein-/ausblenden"
 
-#: campaigns/templates/campaigns/plot/_plot_element.html:23
+#: campaigns/templates/campaigns/plot/_plot_element.html:27
 #: plots/templates/plots/_plot_element.html:16
 msgid "Show details"
 msgstr "Details anzeigen"
 
+#: campaigns/templates/campaigns/plot/_plot_element.html:33
 #: campaigns/templates/campaigns/plot/_plot_element.html:34
-#: plots/templates/plots/_plot_element.html:57
+#, fuzzy
+#| msgid "game log visibility"
+msgid "Highest section visibility"
+msgstr "Spielprotokollsichtbarkeit"
+
+#: campaigns/templates/campaigns/plot/_plot_element.html:50
+#: plots/templates/plots/_plot_element.html:62
 msgid "Player summary"
 msgstr "Spielerzusammenfassung"
 
-#: campaigns/templates/campaigns/plot/_plot_element.html:41 plots/models.py:267
-#: plots/templates/plots/_plot_element.html:67
+#: campaigns/templates/campaigns/plot/_plot_element.html:57 plots/models.py:280
+#: plots/templates/plots/_plot_element.html:80
 msgid "GM notes"
 msgstr "SL Notizen"
 
-#: campaigns/templates/campaigns/plot/_plot_element.html:48
-#: plots/templates/plots/_plot_element.html:76
+#: campaigns/templates/campaigns/plot/_plot_element.html:64
+#: plots/templates/plots/_plot_element.html:105
 msgid "Handouts"
 msgstr "Handouts"
 
-#: campaigns/templates/campaigns/plot/_plot_element.html:131
-#: plots/templates/plots/_plot_element.html:190
+#: campaigns/templates/campaigns/plot/_plot_element.html:151
+#: plots/templates/plots/_plot_element.html:228
 msgid "Locations"
 msgstr "Orte"
 
@@ -1895,12 +1866,13 @@ msgstr "Basisstress"
 #: characters/templates/characters/fragments/horror.html:23
 #: characters/templates/characters/fragments/horror.html:35
 #: characters/templates/characters/modals/rest.html:17
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:29
 #: characters/templates/characters/pdf/cards/overview/horror.html:4
 #: characters/templates/characters/pdf/cards/overview/horror.html:8
 #: characters/templates/characters/sidebar/horror.html:11
 #: characters/templates/characters/sidebar/horror.html:16
 #: characters/templates/characters/sidebar/horror.html:60
-#: characters/templates/characters/sidebar/horror.html:83
+#: characters/templates/characters/sidebar/horror.html:83 rules/admin.py:260
 #: rules/templates/rules/_foe_stat_block.html:47
 msgid "Stress"
 msgstr "Stress"
@@ -1937,19 +1909,34 @@ msgstr "Wiederholungswurf"
 msgid "Go to character"
 msgstr "Gehe zum Charakter"
 
-#: campaigns/templates/campaigns/sidebar/character.html:123
+#: campaigns/templates/campaigns/sidebar/character.html:127
+#: campaigns/templates/campaigns/sidebar/handout.html:26
+#: campaigns/templates/campaigns/sidebar/location.html:26
+#: campaigns/templates/campaigns/sidebar/plot_foe.html:20
+#, fuzzy
+#| msgid "Show older rolls"
+msgid "Show to players"
+msgstr "Ältere Würfe anzeigen"
+
+#: campaigns/templates/campaigns/sidebar/character.html:136
+#, fuzzy
+#| msgid "Add contact"
+msgid "Add to player contacts"
+msgstr "Kontakt hinzufügen"
+
+#: campaigns/templates/campaigns/sidebar/character.html:145
 msgid "Switch character NPC status?"
 msgstr "Charakter NSC Status ändern?"
 
-#: campaigns/templates/campaigns/sidebar/character.html:126
+#: campaigns/templates/campaigns/sidebar/character.html:148
 msgid "Switch NPC status"
 msgstr "NSC Status ändern"
 
-#: campaigns/templates/campaigns/sidebar/character.html:132
+#: campaigns/templates/campaigns/sidebar/character.html:154
 msgid "Remove character from campaign?"
 msgstr "Charakter aus der Kampagne entfernen?"
 
-#: campaigns/templates/campaigns/sidebar/character.html:134
+#: campaigns/templates/campaigns/sidebar/character.html:156
 #: campaigns/templates/campaigns/sidebar/foe.html:36
 msgid "Remove from campaign"
 msgstr "Aus der Kampagne entfernen"
@@ -1960,7 +1947,7 @@ msgid "Go to the wiki page"
 msgstr "Gehe zur Wikiseite"
 
 #: campaigns/templates/campaigns/sidebar/foe.html:26
-#: campaigns/templates/campaigns/sidebar/plot_foe.html:17
+#: campaigns/templates/campaigns/sidebar/plot_foe.html:27
 #: characters/templates/characters/fragments/combat.html:9
 #: characters/templates/characters/sidebar/foe.html:27
 #: essential_characters/templates/essential_characters/_detail_info.html:37
@@ -1969,21 +1956,21 @@ msgid "Initiative"
 msgstr "Initiative"
 
 #: campaigns/templates/campaigns/sidebar/foe.html:27
-#: campaigns/templates/campaigns/sidebar/plot_foe.html:18
+#: campaigns/templates/campaigns/sidebar/plot_foe.html:28
 #: characters/templates/characters/sidebar/foe.html:28
 msgid "Initiative (*Dexterity*d6)"
 msgstr "Initiative (Gewandtheit*w6)"
 
 #: campaigns/templates/campaigns/sidebar/foe.html:28
-#: campaigns/templates/campaigns/sidebar/plot_foe.html:19
+#: campaigns/templates/campaigns/sidebar/plot_foe.html:29
 #: characters/templates/characters/fragments/combat.html:12
 #: characters/templates/characters/sidebar/foe.html:30
 msgid "Roll Initiative"
 msgstr "Initiative würfeln"
 
 #: campaigns/templates/campaigns/sidebar/foe.html:29
-#: campaigns/templates/campaigns/sidebar/foe.html:64
-#: campaigns/templates/campaigns/sidebar/plot_foe.html:20
+#: campaigns/templates/campaigns/sidebar/foe.html:60
+#: campaigns/templates/campaigns/sidebar/plot_foe.html:30
 #: characters/templates/characters/fragments/combat.html:13
 #: characters/templates/characters/sidebar/body_modification.html:70
 #: characters/templates/characters/sidebar/body_modification.html:85
@@ -1995,6 +1982,24 @@ msgstr "Initiative würfeln"
 #: characters/templates/characters/sidebar/item.html:106
 msgid "d6"
 msgstr "W6"
+
+#: campaigns/templates/campaigns/sidebar/foe.html:60
+#: characters/templates/characters/sidebar/attribute.html:34
+#: characters/templates/characters/sidebar/body_modification.html:57
+#: characters/templates/characters/sidebar/body_modification.html:72
+#: characters/templates/characters/sidebar/body_modification.html:87
+#: characters/templates/characters/sidebar/body_modification.html:101
+#: characters/templates/characters/sidebar/foe.html:68
+#: characters/templates/characters/sidebar/item.html:66
+#: characters/templates/characters/sidebar/item.html:81
+#: characters/templates/characters/sidebar/item.html:94
+#: characters/templates/characters/sidebar/item.html:108
+#: characters/templates/characters/sidebar/knowledge.html:11
+#: characters/templates/characters/sidebar/priest_action.html:15
+#: characters/templates/characters/sidebar/priest_action.html:27
+#: characters/templates/characters/sidebar/skill.html:23
+msgid "Roll"
+msgstr "Wurf"
 
 #: campaigns/templates/campaigns/sidebar/handout.html:12
 #: campaigns/templates/campaigns/sidebar/location.html:12
@@ -2024,7 +2029,7 @@ msgstr "Erstelle einen neuen Essential Charakter"
 msgid "Create a new character"
 msgstr "Erstelle einen neuen Charakter"
 
-#: campaigns/templates/campaigns/sidebar/join.html:22
+#: campaigns/templates/campaigns/sidebar/join.html:20
 #, python-format
 msgid ""
 "\n"
@@ -2076,7 +2081,7 @@ msgstr "Gegnernamen"
 #: characters/templates/_main_nav.html:73
 #: characters/templates/characters/create_character_constructed.html:20
 #: plots/templates/plots/sidebar/select_foe.html:21
-#: portal/templates/portal/_searchable_object_card_list.html:13
+#: portal/templates/portal/_searchable_object_card_list.html:14
 #: worlds/templates/worlds/sidebar/links.html:15
 #: worlds/templates/worlds/sidebar/links.html:16
 msgid "Search"
@@ -2086,24 +2091,24 @@ msgstr "Suchen"
 msgid "No rolls yet."
 msgstr "Noch keine Würfe."
 
-#: campaigns/views.py:190
+#: campaigns/views.py:213
 msgid "Selected plot does not match the chosen world, epoch, or ruleset."
 msgstr ""
 "Das ausgewählte Abenteuer passt nicht zur gewählten Welt, Epoche oder zum "
 "Regelsatz."
 
-#: campaigns/views.py:220 plots/views.py:155
+#: campaigns/views.py:244 plots/views.py:280
 msgid "How to edit this plot"
 msgstr "So bearbeitest du dieses Abenteuer"
 
-#: campaigns/views.py:222 plots/views.py:157
+#: campaigns/views.py:246 plots/views.py:282
 msgid ""
 "Toggle the Edit plot switch, then use Add Element in the properties panel."
 msgstr ""
 "Aktiviere den Schalter „Abenteuer bearbeiten“ und nutze dann „Element "
 "hinzufügen“ im Eigenschaftenbereich."
 
-#: campaigns/views.py:267
+#: campaigns/views.py:343
 msgid ""
 "Campaign cloned. You are now viewing the duplicate. Everything but player "
 "characters is copied."
@@ -2111,9 +2116,30 @@ msgstr ""
 "Kampagne geklont. Du siehst jetzt den Klon. Alles bis auf Spielercharaktere "
 "wurde kopiert."
 
-#: campaigns/views.py:631
+#: campaigns/views.py:663
+#, fuzzy
+#| msgid "Add contact"
+msgid "Added to player contacts"
+msgstr "Kontakt hinzufügen"
+
+#: campaigns/views.py:831
 msgid "NPC assigned to this campaign."
 msgstr "Der Kampagne zugewiesene NSC."
+
+#: characters/admin.py:46
+#, fuzzy
+#| msgid "Character image"
+msgid "Character values"
+msgstr "Charakterbild"
+
+#: characters/admin.py:47 characters/templates/characters/_navigation.html:144
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:27
+msgid "Horror"
+msgstr "Horror"
+
+#: characters/admin.py:48 worlds/templates/worlds/wiki_page_edit.html:32
+msgid "Images"
+msgstr "Bilder"
 
 #: characters/feeds.py:27
 msgid "Phase Six latest additions"
@@ -2127,47 +2153,49 @@ msgstr "Neue Gegenstände, Schablonen und andere Dinge in Phase Six"
 msgid "Phase Six latest updates"
 msgstr "Phase Six letzte Aktualisierungen"
 
-#: characters/forms.py:64 characters/views.py:793
+#: characters/forms.py:74 characters/views.py:842
 #: essential_characters/forms.py:585 essential_characters/forms.py:687
 #: essential_characters/forms.py:698 forum/forms.py:6
-#: plots/templates/plots/fragments/properties.html:51
+#: plots/templates/plots/_plot_element.html:51
+#: plots/templates/plots/fragments/properties.html:47
 msgid "Name"
 msgstr "Name"
 
-#: characters/forms.py:66 characters/views.py:817
+#: characters/forms.py:76 characters/views.py:866
 msgid "Pronouns"
 msgstr "Pronomen"
 
-#: characters/forms.py:69
-#: characters/templates/characters/pdf/character_pdf.html:46
+#: characters/forms.py:79
+#: characters/templates/characters/pdf/character_pdf.html:154
 msgid "Lineage"
 msgstr "Abstammung"
 
-#: characters/forms.py:98 characters/views.py:800
+#: characters/forms.py:108 characters/views.py:849
 msgid "Size"
 msgstr "Größe"
 
-#: characters/forms.py:100 characters/views.py:826
+#: characters/forms.py:110 characters/views.py:875
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: characters/forms.py:104 plots/templates/plots/_plot_element.html:59
-#: plots/templates/plots/fragments/properties.html:72 rules/models.py:513
+#: characters/forms.py:114 plots/templates/plots/fragments/properties.html:68
+#: rules/models.py:513
 msgid "None"
 msgstr "Keine"
 
-#: characters/forms.py:105
+#: characters/forms.py:115
 msgid "Entity"
 msgstr "Gottheit"
 
-#: characters/forms.py:107 characters/forms.py:113
+#: characters/forms.py:117 characters/forms.py:123
 #: characters/templates/characters/fragments/pantheon.html:11
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:52
 #: characters/templates/characters/sidebar/grace.html:66
-#: characters/views.py:850
+#: characters/views.py:899
 msgid "Attitude"
 msgstr "Gesinnung"
 
-#: characters/forms.py:111
+#: characters/forms.py:121
 msgid "Starting Reputation"
 msgstr "Startreputation"
 
@@ -2193,6 +2221,7 @@ msgstr "Kontakt"
 
 #: characters/models.py:84
 #: characters/templates/characters/fragments/description.html:120
+#: characters/templates/characters/pdf/cards/story/story.html:36
 msgid "Contacts"
 msgstr "Kontakte"
 
@@ -2244,7 +2273,7 @@ msgstr "Währungstabelle"
 msgid "NPC Campaign"
 msgstr "Kampagne NPC"
 
-#: characters/models.py:207 plots/models.py:260
+#: characters/models.py:207 plots/models.py:273
 #: plots/templates/plots/fragments/properties.html:5
 msgid "Plot"
 msgstr "Abenteuer"
@@ -2257,7 +2286,7 @@ msgstr "Reputation"
 msgid "boost"
 msgstr "Boost"
 
-#: characters/models.py:218 worlds/models.py:424
+#: characters/models.py:218 worlds/models.py:435
 msgid "arcana"
 msgstr "Arkana"
 
@@ -2321,7 +2350,7 @@ msgid "base value"
 msgstr "Basiswert"
 
 #: characters/models.py:1481 rules/models.py:290 rules/models.py:723
-#: worlds/models.py:69 worlds/models.py:255
+#: worlds/models.py:74 worlds/models.py:266
 msgid "is active"
 msgstr "Ist aktiv"
 
@@ -2396,6 +2425,7 @@ msgstr "Rezept"
 #: characters/models.py:1901
 #: characters/templates/characters/_navigation.html:82
 #: characters/templates/characters/fragments/recipes.html:12
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:61
 msgid "Recipes"
 msgstr "Rezepte"
 
@@ -2410,8 +2440,9 @@ msgstr "Home"
 msgid "Worlds"
 msgstr "Welten"
 
-#: characters/templates/_main_nav.html:43 characters/templates/base.html:165
-#: phasesix/settings.py:378
+#: characters/templates/_main_nav.html:43 characters/templates/base.html:159
+#: magic/admin.py:56 magic/admin.py:75 phasesix/settings.py:378
+#: rules/admin.py:145
 msgid "Rules"
 msgstr "Regeln"
 
@@ -2419,7 +2450,7 @@ msgstr "Regeln"
 msgid "Forum"
 msgstr "Forum"
 
-#: characters/templates/_main_nav.html:113
+#: characters/templates/_main_nav.html:112
 msgid "Show profile"
 msgstr "Profil anzeigen"
 
@@ -2428,69 +2459,68 @@ msgstr "Profil anzeigen"
 msgid "Create character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/_main_nav.html:152
+#: characters/templates/_main_nav.html:153
 msgid "Character image"
 msgstr "Charakterbild"
 
-#: characters/templates/_main_nav.html:172
+#: characters/templates/_main_nav.html:173
 msgid "Campaign image"
 msgstr "Kampagnenbild"
 
-#: characters/templates/_main_nav.html:185
-#: worlds/templates/worlds/_navigation.html:61
+#: characters/templates/_main_nav.html:184
+msgid "Staff tools"
+msgstr ""
+
+#: characters/templates/_main_nav.html:191 characters/templates/base.html:76
+msgid "Adjust image focus"
+msgstr "Bildfokus ausrichten"
+
+#: characters/templates/_main_nav.html:198
+#: worlds/templates/worlds/_page_actions.html:64
 msgid "Admin"
 msgstr "Admin"
 
-#: characters/templates/_main_nav.html:191
+#: characters/templates/_main_nav.html:205
 msgid "Curators Desk"
 msgstr "Kuratorschreibtisch"
 
-#: characters/templates/_main_nav.html:197
-msgid "Plot editor"
-msgstr "Abenteuereditor"
-
-#: characters/templates/_main_nav.html:210
+#: characters/templates/_main_nav.html:220
 msgid "Logout"
 msgstr "Abmelden"
 
-#: characters/templates/_main_nav.html:218 templates/registration/login.html:4
+#: characters/templates/_main_nav.html:228 templates/registration/login.html:4
 #: templates/registration/login.html:7 templates/registration/login.html:22
 msgid "Login"
 msgstr "Anmelden"
 
-#: characters/templates/base.html:75 characters/templates/base.html:76
-#: characters/templates/base.html:78 characters/templates/base.html:84
-msgid "Adjust image focus"
-msgstr "Bildfokus ausrichten"
-
-#: characters/templates/base.html:85
+#: characters/templates/base.html:77
 #: modals_sidebars/templates/modals_sidebars/sidebar_right.html:5
 msgid "Close"
 msgstr "Schließen"
 
-#: characters/templates/base.html:88
+#: characters/templates/base.html:80
 msgid "Click the most important point in the image."
 msgstr "Klick auf den wichtigsten Punkt im Bild."
 
-#: characters/templates/base.html:90
+#: characters/templates/base.html:82
 msgid "Image focus preview"
 msgstr "Bildfokus Vorschau"
 
-#: characters/templates/base.html:127
+#: characters/templates/base.html:119
 msgid "Free online pen and paper rpg"
 msgstr "Freies online Pen'n'Paper Rollenspiel"
 
-#: characters/templates/base.html:135
+#: characters/templates/base.html:127
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:28
 msgid "Open image"
 msgstr "Bild öffnen"
 
-#: characters/templates/base.html:163
+#: characters/templates/base.html:157
 #: plots/templates/plots/sidebar/select_npc.html:62
 msgid "Create a character"
 msgstr "Erstelle einen Charakter"
 
-#: characters/templates/base.html:166
+#: characters/templates/base.html:160
 msgid "Privacy"
 msgstr "Privatsphäre"
 
@@ -2512,6 +2542,8 @@ msgstr "- keine Bonuswürfel -"
 #: magic/templates/magic/basespell_detail.html:55
 #: rulebook/templates/rulebook/pdf/appendix/spells.html:26
 #: rules/templates/rules/_foe_stat_block.html:16
+#: worlds/templates/worlds/_page_actions.html:31
+#: worlds/templates/worlds/wiki_page_edit.html:24
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -2531,12 +2563,12 @@ msgid "Minimum Roll"
 msgstr "Mindestwurf"
 
 #: characters/templates/characters/_navigation.html:33
+#: characters/templates/characters/pdf/cards/story/story.html:4
 #: essential_characters/forms.py:587 essential_characters/forms.py:700
 msgid "Description"
 msgstr "Beschreibung"
 
 #: characters/templates/characters/_navigation.html:45
-#: characters/templates/characters/_navigation.html:186
 #: curators_desk/templates/curators_desk/fragments/review_homebrew_table.html:9
 #: portal/templates/portal/sidebar/search_results.html:15
 msgid "Character"
@@ -2562,12 +2594,9 @@ msgstr "Magie"
 #: characters/templates/characters/_navigation.html:127
 #: characters/templates/characters/fragments/pantheon.html:8
 #: characters/templates/characters/fragments/pantheon.html:27
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:50
 msgid "Belief"
 msgstr "Glaube"
-
-#: characters/templates/characters/_navigation.html:144
-msgid "Horror"
-msgstr "Horror"
 
 #: characters/templates/characters/_navigation.html:160
 msgid "Background"
@@ -2575,6 +2604,7 @@ msgstr "Werdegang"
 
 #: characters/templates/characters/_navigation.html:172
 #: characters/templates/characters/fragments/combat.html:27
+#: characters/templates/characters/pdf/cards/story/supplement.html:25
 #: essential_characters/templates/essential_characters/essentialcharacter_detail.html:394
 #: essential_characters/views.py:593
 msgid "Notes"
@@ -2586,29 +2616,49 @@ msgstr "Notizen"
 msgid "Take a note"
 msgstr "Notiz anlegen"
 
-#: characters/templates/characters/_navigation.html:193
-msgid "Edit / Download"
-msgstr "Editieren / Herunterladen"
-
-#: characters/templates/characters/_navigation.html:198
-msgid "Download"
-msgstr "Herunterladen"
-
 #: characters/templates/characters/_protection_display.html:5
 #: characters/templates/characters/sidebar/protection.html:7
 #: characters/templates/characters/sidebar/protection.html:70
 msgid "Base protection"
 msgstr "Basisschutz"
 
-#: characters/templates/characters/_protection_display.html:16
+#: characters/templates/characters/_protection_display.html:19
 msgid "- no available protection -"
 msgstr "- kein verfügbarer Schutz -"
+
+#: characters/templates/characters/add_to_start_page.html:4
+#: characters/templates/characters/add_to_start_page.html:5
+#: characters/templates/characters/add_to_start_page.html:17
+#: characters/templates/characters/character_detail.html:39
+#, fuzzy
+#| msgid "Add to campaign"
+msgid "Add to start page"
+msgstr "Zu Kampagne hinzufügen"
+
+#: characters/templates/characters/add_to_start_page.html:11
+msgid ""
+"Choose the world where this character should appear on the start page. The "
+"character image will be processed to remove its background."
+msgstr ""
 
 #: characters/templates/characters/character_detail.html:13
 msgid "Plot NPC"
 msgstr "Abenteuer-NSC"
 
-#: characters/templates/characters/character_detail.html:58
+#: characters/templates/characters/character_detail.html:24
+#: rulebook/templates/rulebook/_navigation.html:11
+msgid "Download PDF"
+msgstr "PDF herunterladen"
+
+#: characters/templates/characters/character_detail.html:29
+#: characters/templates/characters/character_detail.html:32
+#: characters/templates/characters/sidebar/character.html:18
+#, fuzzy
+#| msgid "Edit Character"
+msgid "Edit character"
+msgstr "Editieren"
+
+#: characters/templates/characters/character_detail.html:88
 msgid ""
 "This character was created while not being logged in. It will be deleted by "
 "tomorrow."
@@ -2618,8 +2668,8 @@ msgstr ""
 
 #: characters/templates/characters/character_form.html:4
 #: characters/templates/characters/character_form.html:5
-#: characters/templates/characters/character_form.html:9
-#: characters/templates/characters/character_form.html:52
+#: characters/templates/characters/character_form.html:15
+#: characters/templates/characters/character_form.html:58
 #: characters/templates/characters/choose_character_ruleset.html:4
 #: characters/templates/characters/choose_character_ruleset.html:5
 #: characters/templates/characters/create_character.html:4
@@ -2634,16 +2684,21 @@ msgstr ""
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
-#: characters/templates/characters/character_form.html:6
+#: characters/templates/characters/character_form.html:8
+#, python-format
+msgid "Create a character for %(campaign_name)s."
+msgstr "Erstelle einen Charakter für %(campaign_name)s."
+
 #: characters/templates/characters/character_form.html:10
+#: characters/templates/characters/character_form.html:16
 msgid "Give your character a name and some more information."
 msgstr "Gib deinem Charakter einen Namen und einige weitere Informationen."
 
-#: characters/templates/characters/character_form.html:58
+#: characters/templates/characters/character_form.html:64
 msgid "Character information"
 msgstr "Charakterinformation"
 
-#: characters/templates/characters/character_form.html:60
+#: characters/templates/characters/character_form.html:66
 msgid ""
 "\n"
 "              Enter some background information about your character here, "
@@ -3172,6 +3227,7 @@ msgid "This character has no description yet."
 msgstr "Dieser Charakter hat noch keine Beschreibung."
 
 #: characters/templates/characters/fragments/description.html:60
+#: characters/templates/characters/pdf/cards/story/story.html:25
 #: phasesix/settings.py:420
 msgid "Languages"
 msgstr "Sprachen"
@@ -3209,6 +3265,7 @@ msgid "No contacts yet."
 msgstr "Noch keine Kontakte."
 
 #: characters/templates/characters/fragments/description.html:177
+#: characters/templates/characters/pdf/cards/story/supplement.html:5
 msgid "Pets"
 msgstr "Haustiere"
 
@@ -3375,6 +3432,7 @@ msgstr "Deine Gesinnung ist"
 
 #: characters/templates/characters/fragments/pantheon.html:30
 #: characters/templates/characters/includes/priest_action_cards.html:12
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:53
 #: characters/templates/characters/sidebar/grace.html:59
 #: characters/templates/characters/sidebar/priest_action.html:50
 msgid "Grace"
@@ -3569,20 +3627,20 @@ msgstr ""
 "angezeigt. Du kannst erlernte Zaubersprüche wirken und verändern.\n"
 "   "
 
-#: characters/templates/characters/includes/character_weapon_cards.html:60
+#: characters/templates/characters/includes/character_weapon_cards.html:75
 msgid "Add Weapons"
 msgstr "Waffen hinzufügen"
 
-#: characters/templates/characters/includes/character_weapon_cards.html:66
+#: characters/templates/characters/includes/character_weapon_cards.html:81
 msgid "No weapons."
 msgstr "Keine Waffen."
 
-#: characters/templates/characters/includes/character_weapon_cards.html:68
+#: characters/templates/characters/includes/character_weapon_cards.html:83
 msgid "Click to add a weapon"
 msgstr "Klicke, um eine Waffe hinzuzufügen"
 
 #: characters/templates/characters/includes/knowledge_table.html:7
-#: characters/templates/characters/pdf/cards/background/background.html:32
+#: characters/templates/characters/pdf/cards/background/background.html:36
 #: characters/templates/characters/sidebar/template.html:53
 #: rules/templates/rules/_modifier_widget.html:27
 msgid "Knowledge"
@@ -3629,7 +3687,7 @@ msgid "Quirk"
 msgstr "Eigenart"
 
 #: characters/templates/characters/modals/add_spell_template.html:32
-#: characters/templates/characters/pdf/cards/background/background.html:20
+#: characters/templates/characters/pdf/cards/background/background.html:24
 #: characters/templates/characters/sidebar/skill.html:31
 #: characters/templates/characters/sidebar/template.html:41
 #: rulebook/templates/rulebook/pdf/appendix/spell_templates.html:23
@@ -3661,7 +3719,7 @@ msgid "(equipped)"
 msgstr "(ausgerüstet)"
 
 #: characters/templates/characters/modals/contacts.html:10
-#: portal/templates/portal/_searchable_object_card_list.html:82
+#: portal/templates/portal/_searchable_object_card_list.html:83
 msgid "Create"
 msgstr "Erstellen"
 
@@ -3715,23 +3773,29 @@ msgstr "Wiederholungswürfe"
 msgid "Rest"
 msgstr "Rast"
 
-#: characters/templates/characters/pdf/cards/background/background.html:14
+#: characters/templates/characters/pdf/cards/background/background.html:18
 #: characters/templates/characters/sidebar/template.html:35
 #: rules/templates/rules/_modifier_widget.html:6
 msgid "Aspect"
 msgstr "Aspekt"
 
-#: characters/templates/characters/pdf/cards/background/background.html:26
+#: characters/templates/characters/pdf/cards/background/background.html:30
 #: characters/templates/characters/sidebar/template.html:47 rules/models.py:499
 #: rules/templates/rules/_modifier_widget.html:20
 msgid "Skill"
 msgstr "Fertigkeit"
 
-#: characters/templates/characters/pdf/cards/background/background.html:38
+#: characters/templates/characters/pdf/cards/background/background.html:42
 #: characters/templates/characters/sidebar/template.html:59
 #: rules/templates/rules/_modifier_widget.html:34
 msgid "Magic Origin"
 msgstr "Magieursprung"
+
+#: characters/templates/characters/pdf/cards/background/background.html:53
+#, fuzzy
+#| msgid "Choose your templates"
+msgid "No background templates."
+msgstr "Wähle deine Schablonen"
 
 #: characters/templates/characters/pdf/cards/combat/combat.html:132
 msgid ""
@@ -3795,6 +3859,31 @@ msgstr ""
 "Bonus verfällt wenn der Charakter getroffen wird.\n"
 "                                "
 
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:5
+#: rules/admin.py:266
+#, fuzzy
+#| msgid "body modifications"
+msgid "Body modifications"
+msgstr "Körpermodifikationen"
+
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:19
+#, fuzzy
+#| msgid "body modifications"
+msgid "No body modifications."
+msgstr "Körpermodifikationen"
+
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:42
+#, fuzzy
+#| msgid "Your quirks"
+msgid "No quirks."
+msgstr "Deine Eigenarten"
+
+#: characters/templates/characters/pdf/cards/extensions/extensions.html:66
+#, fuzzy
+#| msgid "recipes"
+msgid "No recipes."
+msgstr "Rezepte"
+
 #: characters/templates/characters/pdf/cards/gear/items.html:4
 msgid "Items on body"
 msgstr "Gegenstände am Körper"
@@ -3820,11 +3909,49 @@ msgstr "Spielwerte"
 msgid "Evasion"
 msgstr "Ausweichen"
 
-#: characters/templates/characters/pdf/character_pdf.html:55
+#: characters/templates/characters/pdf/cards/story/story.html:9
+msgid "No description yet."
+msgstr "Noch keine Beschreibung."
+
+#: characters/templates/characters/pdf/cards/story/story.html:15
+#: characters/templates/characters/sidebar/character.html:17
+#: portal/models.py:99
+msgid "Profile"
+msgstr "Profil"
+
+#: characters/templates/characters/pdf/cards/story/story.html:17
+#, fuzzy
+#| msgid "Birth date"
+msgid "Birthdate"
+msgstr "Geburtsdatum"
+
+#: characters/templates/characters/pdf/cards/story/story.html:18
+#: partypad/models.py:71
+msgid "Height"
+msgstr "Höhe"
+
+#: characters/templates/characters/pdf/cards/story/story.html:30
+#, fuzzy
+#| msgid "No languages yet."
+msgid "No languages."
+msgstr "Noch keine Sprachen."
+
+#: characters/templates/characters/pdf/cards/story/story.html:44
+#, fuzzy
+#| msgid "No contacts yet."
+msgid "No contacts."
+msgstr "Noch keine Kontakte."
+
+#: characters/templates/characters/pdf/cards/story/supplement.html:14
+#: characters/templates/characters/sidebar/wounds.html:47
+msgid "Status effects"
+msgstr "Statuseffekte"
+
+#: characters/templates/characters/pdf/character_pdf.html:163
 msgid "Occupation"
 msgstr "Beruf"
 
-#: characters/templates/characters/pdf/character_pdf.html:64
+#: characters/templates/characters/pdf/character_pdf.html:172
 msgid "Education"
 msgstr "Bildung"
 
@@ -3959,41 +4086,67 @@ msgstr "Manuell"
 msgid "Automatic"
 msgstr "Automatisch"
 
-#: characters/templates/characters/sidebar/character.html:19
-#: rulebook/templates/rulebook/_navigation.html:11
-msgid "Download PDF"
-msgstr "PDF herunterladen"
-
 #: characters/templates/characters/sidebar/character.html:25
+#: plots/templates/plots/_plot_element.html:97
+#, fuzzy
+#| msgid "shape change"
+msgid "Save changes"
+msgstr "Formänderung"
+
+#: characters/templates/characters/sidebar/character.html:32
+#, fuzzy
+#| msgid "entities"
+msgid "Utilities"
+msgstr "Gottheiten"
+
+#: characters/templates/characters/sidebar/character.html:33
+#, fuzzy
+#| msgid "Character options"
+msgid "Character copies"
+msgstr "Charakteroptionen"
+
+#: characters/templates/characters/sidebar/character.html:39
 msgid "Clone character"
 msgstr "Charakter klonen"
 
-#: characters/templates/characters/sidebar/character.html:31
+#: characters/templates/characters/sidebar/character.html:47
 msgid ""
 "This will modify the character and should only be used for NPCs. Continue?"
 msgstr ""
 "Dies wird den Charakter verändern und sollte nur für NSCs verwendet werden. "
 "Fortfahren?"
 
-#: characters/templates/characters/sidebar/character.html:38
+#: characters/templates/characters/sidebar/character.html:55
 msgid "Fill randomly"
 msgstr "Zufällig befüllen"
 
-#: characters/templates/characters/sidebar/character.html:44
-msgid "Cloned from:"
+#: characters/templates/characters/sidebar/character.html:63
+#, fuzzy
+#| msgid "Cloned from:"
+msgid "Cloned from"
 msgstr "Geklont von:"
 
-#: characters/templates/characters/sidebar/character.html:49
-msgid "Cloned characters:"
+#: characters/templates/characters/sidebar/character.html:67
+#, fuzzy
+#| msgid "Cloned characters:"
+msgid "Cloned characters"
 msgstr "Geklonte Charaktere:"
 
-#: characters/templates/characters/sidebar/character.html:82
+#: characters/templates/characters/sidebar/character.html:80
+#, fuzzy
+#| msgid "Danger"
+msgid "Danger zone"
+msgstr "Gefahr"
+
+#: characters/templates/characters/sidebar/character.html:81
+#: characters/templates/characters/sidebar/character.html:87
+#: characters/templates/characters/sidebar/character.html:90
 msgid "Delete character"
 msgstr "Charackter löschen"
 
-#: characters/templates/characters/sidebar/character.html:84
-msgid "Delete Character"
-msgstr "Charakter löschen"
+#: characters/templates/characters/sidebar/character.html:83
+msgid "This permanently removes the character and its associated data."
+msgstr ""
 
 #: characters/templates/characters/sidebar/combat.html:12
 msgid "Roll Evasion"
@@ -4558,10 +4711,6 @@ msgstr ""
 "Charakter dem Wurf einen Würfel hinzu. \n"
 "\t"
 
-#: characters/templates/characters/sidebar/wounds.html:47
-msgid "Status effects"
-msgstr "Statuseffekte"
-
 #: characters/templates/characters/sidebar/wounds.html:49
 msgid ""
 "\n"
@@ -4789,57 +4938,69 @@ msgstr ""
 "href=\"%(t_contact_url)s\">Kontaktseite</a>.\n"
 "      "
 
-#: characters/views.py:113
-msgid "Character cloned. You are now viewing the duplicate."
-msgstr "Charakter geklont. Du siehst nun die Kopie."
-
-#: characters/views.py:134
-msgid "Random fill failed. Please try again later."
+#: characters/views.py:137
+#, fuzzy
+#| msgid "Random fill failed. Please try again later."
+msgid "The start page image could not be created. Please try again later."
 msgstr "Zufällige Befüllung fehlgeschlagen. Bitte versuche es später erneut."
 
 #: characters/views.py:141
+#, fuzzy
+#| msgid "This character has no items yet."
+msgid "The character was added to the start page."
+msgstr "Dieser Charakter hat noch keine Gegenstände."
+
+#: characters/views.py:162
+msgid "Character cloned. You are now viewing the duplicate."
+msgstr "Charakter geklont. Du siehst nun die Kopie."
+
+#: characters/views.py:183
+msgid "Random fill failed. Please try again later."
+msgstr "Zufällige Befüllung fehlgeschlagen. Bitte versuche es später erneut."
+
+#: characters/views.py:190
 #, python-format
 msgid "Random fill complete. Added: %(summary)s"
 msgstr "Zufällige Befüllung abgeschlossen. Hinzugefügt: %(summary)s"
 
-#: characters/views.py:144
+#: characters/views.py:193
 msgid "Random fill complete. No changes were added."
 msgstr ""
 "Zufällige Befüllung abgeschlossen. Es wurden keine Änderungen hinzugefügt."
 
-#: characters/views.py:163
+#: characters/views.py:212
 msgid "Character deleted."
 msgstr "Charakter gelöscht."
 
-#: characters/views.py:286
+#: characters/views.py:335
 msgid "Rest wound roll"
 msgstr "Rastwundenwurf"
 
-#: characters/views.py:287
+#: characters/views.py:336
 msgid "Wound roll"
 msgstr "Wundenwurf"
 
-#: characters/views.py:302
+#: characters/views.py:351
 msgid "Rest arcana roll"
 msgstr "Rastarkanawurf"
 
-#: characters/views.py:303
+#: characters/views.py:352
 msgid "Arcana roll"
 msgstr "Arkanawurf"
 
-#: characters/views.py:317
+#: characters/views.py:366
 msgid "Rest resolve dread"
 msgstr "Grauen auflösen"
 
-#: characters/views.py:318
+#: characters/views.py:367
 msgid "Resolve dread roll"
 msgstr "Grauen auflösen Wurf"
 
-#: characters/views.py:794
+#: characters/views.py:843
 msgid "Choose a suitable name for your character."
 msgstr "Wähle einen passenden Namen für deinen Charakter."
 
-#: characters/views.py:819
+#: characters/views.py:868
 msgid ""
 "At several places in the interface, your character will be referred to using "
 "their pronouns. Choose the pronouns that best describe your character."
@@ -4847,11 +5008,11 @@ msgstr ""
 "An verschiedenen Stellen wird dein Charakter mit Pronomen angesprochen. "
 "Wähle die Pronomen, die am besten passen."
 
-#: characters/views.py:827
+#: characters/views.py:876
 msgid "Enter the birthdate of your character."
 msgstr "Gib das Geburtsdatum deines Charakters ein."
 
-#: characters/views.py:834
+#: characters/views.py:883
 msgid ""
 "Specify a starting capital for your character. The seed money is usually\n"
 "            defined by the game master and determines how much equipment the "
@@ -4864,7 +5025,7 @@ msgstr ""
 "Charakter zu\n"
 "      Beginn des Spiels haben kann."
 
-#: characters/views.py:852
+#: characters/views.py:901
 msgid ""
 "The attitude indicates the morality of the character. The value ranges\n"
 "            from 0 to 100, with an attitude of 0 corresponding to a deeply "
@@ -4881,7 +5042,7 @@ msgstr ""
 "Aktionen im Spiel verändert werden.\n"
 "     "
 
-#: characters/views.py:863
+#: characters/views.py:912
 msgid ""
 "The currency map specifies which currency units are available to the "
 "character.\n"
@@ -4891,7 +5052,7 @@ msgstr ""
 "Verfügung stehen. \n"
 "     Sie wird normalerweise von der Kampagne oder der Welt vorgegeben."
 
-#: characters/views.py:1450 characters/views.py:1457
+#: characters/views.py:1519 characters/views.py:1526
 msgid "Not possible."
 msgstr "Nicht möglich."
 
@@ -4902,10 +5063,6 @@ msgstr "Keine Deckung"
 #: curators_desk/forms.py:33
 msgid "Attack value"
 msgstr "Angriffswert"
-
-#: curators_desk/templates/curators_desk/_navigation.html:19
-msgid "Roll statistics"
-msgstr "Wurfstatistiken"
 
 #: curators_desk/templates/curators_desk/_navigation.html:32
 msgid "Template statistics"
@@ -5246,7 +5403,7 @@ msgstr "Kampagne"
 msgid "NPC campaign"
 msgstr "Kampagne NPC"
 
-#: essential_characters/models.py:132 plots/models.py:95
+#: essential_characters/models.py:132 plots/models.py:96
 msgid "plot"
 msgstr "Abenteuer"
 
@@ -5290,7 +5447,7 @@ msgstr "Erscheinung"
 msgid "gift"
 msgstr "Gabe"
 
-#: essential_characters/models.py:166 worlds/models.py:427
+#: essential_characters/models.py:166 worlds/models.py:438
 msgid "perception"
 msgstr "Wahrnehmung"
 
@@ -5374,7 +5531,7 @@ msgstr ""
 "Fertigkeiten müssen einen Rang 3, drei Rang 2 und alle übrigen Rang 1 "
 "beinhalten."
 
-#: essential_characters/models.py:363 worlds/models.py:193
+#: essential_characters/models.py:363 worlds/models.py:204
 msgid "character"
 msgstr "Charakter"
 
@@ -5829,16 +5986,16 @@ msgid "Text"
 msgstr "Text"
 
 #: forum/models.py:9 phasesix/settings.py:243 plots/forms.py:76
-#: portal/models.py:81 worlds/templates/worlds/wiki_page_edit.html:73
+#: portal/models.py:81 worlds/templates/worlds/wiki_page_edit.html:91
 msgid "German"
 msgstr "Deutsch"
 
 #: forum/models.py:10 phasesix/settings.py:244 plots/forms.py:75
-#: portal/models.py:80 worlds/templates/worlds/wiki_page_edit.html:76
+#: portal/models.py:80 worlds/templates/worlds/wiki_page_edit.html:94
 msgid "English"
 msgstr "Englisch"
 
-#: forum/models.py:40 plots/models.py:46 worlds/models.py:558
+#: forum/models.py:40 plots/models.py:46 worlds/models.py:569
 msgid "language"
 msgstr "Sprache"
 
@@ -5846,10 +6003,10 @@ msgstr "Sprache"
 msgid "is staff only"
 msgstr "Nur Mitarbeiter"
 
-#: forum/models.py:86
+#: forum/models.py:104
 #, python-format
-msgid "PhaseSix Forum: %(user)s answered to the thread %(thread)s"
-msgstr "PhaseSix Forum: %(user)s hat auf das Thema %(thread)s geantwortet"
+msgid "%(brand)s Forum: %(user)s answered to the thread %(thread)s"
+msgstr "%(brand)s Forum: %(user)s hat auf das Thema %(thread)s geantwortet"
 
 #: forum/templates/forum/_navigation.html:25
 #: forum/templates/forum/board_detail.html:37
@@ -5896,11 +6053,21 @@ msgstr ""
 "text-muted\">%(t_timesince)s</span>\n"
 "                        "
 
-#: forum/templates/forum/subscription_notify_mail.html:1
+#: forum/templates/forum/subscription_notify_mail.html:4
+#: forum/templates/forum/subscription_notify_mail.txt:1
 msgid "Hello,"
 msgstr "Hallo,"
 
-#: forum/templates/forum/subscription_notify_mail.html:2
+#: forum/templates/forum/subscription_notify_mail.html:6
+#, python-format
+msgid "%(user_t)s wrote a new post in this thread."
+msgstr "%(user_t)s hat einen neuen Beitrag in diesem Thema geschrieben."
+
+#: forum/templates/forum/subscription_notify_mail.html:8
+msgid "Open forum thread"
+msgstr "Forenthema öffnen"
+
+#: forum/templates/forum/subscription_notify_mail.txt:2
 #, python-format
 msgid ""
 "\n"
@@ -5912,13 +6079,18 @@ msgstr ""
 "den Link\n"
 "unter dem Text um auf den Beitrag zu antworten.\n"
 
-#: forum/templates/forum/subscription_notify_mail.html:13
+#: forum/templates/forum/subscription_notify_mail.txt:11
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Unsubscribe the threads or boards in the phase six forums to unsubscribe\n"
+#| "from this emails.\n"
+#| "\n"
+#| "Cheers\n"
 msgid ""
 "\n"
 "Unsubscribe the threads or boards in the phase six forums to unsubscribe\n"
 "from this emails.\n"
-"\n"
-"Cheers\n"
 msgstr ""
 "\n"
 "Entferne das Abonnement des Themas oder Forums in den Phase Six Foren\n"
@@ -6007,6 +6179,18 @@ msgstr "Eigenarten"
 msgid "Add Quirk"
 msgstr "Eigenart hinzufügen"
 
+#: magic/admin.py:55
+#, fuzzy
+#| msgid "Cast"
+msgid "Casting"
+msgstr "Zauber ausführen"
+
+#: magic/admin.py:57 rules/admin.py:155 rules/admin.py:278
+#, fuzzy
+#| msgid "Tirakan Essential character"
+msgid "Essential character"
+msgstr "Tirakan Essential Charakter"
+
 #: magic/models.py:24
 msgid "spell variant"
 msgstr "Zaubervariante"
@@ -6048,7 +6232,7 @@ msgid "spell origins"
 msgstr "Zauberursprünge"
 
 #: magic/models.py:107 magic/models.py:132 rules/models.py:25
-#: rules/models.py:820 worlds/models.py:429
+#: rules/models.py:820 worlds/models.py:440
 msgid "actions"
 msgstr "Aktionen"
 
@@ -6216,7 +6400,7 @@ msgstr "Götterkategorie"
 msgid "entity categories"
 msgstr "Götterkategorie"
 
-#: pantheon/models.py:58 worlds/models.py:225
+#: pantheon/models.py:58 worlds/models.py:236
 msgid "short name"
 msgstr "Kurzname"
 
@@ -6228,11 +6412,11 @@ msgstr "Ein optionaler Kurzname für den Standard Linktext."
 msgid "entities"
 msgstr "Gottheiten"
 
-#: pantheon/models.py:79 worlds/models.py:471
+#: pantheon/models.py:79 worlds/models.py:482
 msgid "Lesser"
 msgstr "Nieder"
 
-#: pantheon/models.py:80 worlds/models.py:472
+#: pantheon/models.py:80 worlds/models.py:483
 msgid "Higher"
 msgstr "Höher"
 
@@ -6295,10 +6479,6 @@ msgstr "Y Position"
 #: partypad/models.py:70
 msgid "Width"
 msgstr "Breite"
-
-#: partypad/models.py:71
-msgid "Height"
-msgstr "Höhe"
 
 #: partypad/models.py:72
 msgid "Rotation"
@@ -6376,13 +6556,33 @@ msgstr "Weltbücher"
 msgid "Wiki Pages"
 msgstr "Wikiseiten"
 
+#: plots/admin.py:36 worlds/admin.py:163
+#, fuzzy
+#| msgid "Contact"
+msgid "Content"
+msgstr "Kontakt"
+
 #: plots/forms.py:68
 msgid "Plot description"
 msgstr "Abenteuerbeschreibung"
 
-#: plots/forms.py:73 plots/templates/plots/fragments/properties.html:55
+#: plots/forms.py:73 plots/templates/plots/fragments/properties.html:51
 msgid "Language"
 msgstr "Sprache"
+
+#: plots/migrations/0021_plotelement_visibility.py:6 plots/models.py:268
+msgid "GM Only"
+msgstr "Nur SL"
+
+#: plots/migrations/0021_plotelement_visibility.py:6 plots/models.py:269
+#, fuzzy
+#| msgid "Player"
+msgid "GM and Players"
+msgstr "Spieler"
+
+#: plots/migrations/0021_plotelement_visibility.py:6 plots/models.py:270
+msgid "All"
+msgstr "Alle"
 
 #: plots/models.py:49
 msgid "abstract for players"
@@ -6392,105 +6592,134 @@ msgstr "Zusammenfassung für Spieler"
 msgid "gm description"
 msgstr "SL Beschreibung"
 
-#: plots/models.py:96
+#: plots/models.py:97
 msgid "plots"
 msgstr "Abenteuer"
 
-#: plots/models.py:110
+#: plots/models.py:111
 msgid "Plot and campaign rulesets must match."
 msgstr "Abenteuer und Kampagnenregelsatz müssen übereinstimmen."
 
-#: plots/models.py:268
+#: plots/models.py:281
 msgid "player summary"
 msgstr "Spielerzusammenfassung"
 
-#: plots/templates/plots/_plot_element.html:23
-msgid "Edit plot element"
-msgstr "Abenteuerelement editieren"
+#: plots/models.py:283
+#, fuzzy
+#| msgid "player summary"
+msgid "player summary visibility"
+msgstr "Spielerzusammenfassung"
 
-#: plots/templates/plots/_plot_element.html:27
-msgid "Edit summary"
-msgstr "Zusammenfassung editieren"
+#: plots/models.py:289
+#, fuzzy
+#| msgid "foe visibility"
+msgid "GM notes visibility"
+msgstr "Gegnersichtbarkeit"
 
-#: plots/templates/plots/_plot_element.html:32
-#: plots/templates/plots/fragments/properties.html:23
-msgid "Create plot element"
-msgstr "Abenteuerelement erstellen"
+#: plots/models.py:292
+#, fuzzy
+#| msgid "NPC Visibility"
+msgid "NPC visibility"
+msgstr "NSC Sichtbarkeit"
 
-#: plots/templates/plots/_plot_element.html:35
+#: plots/models.py:295
+#, fuzzy
+#| msgid "foe visibility"
+msgid "handouts visibility"
+msgstr "Gegnersichtbarkeit"
+
+#: plots/models.py:301
+#, fuzzy
+#| msgid "foe visibility"
+msgid "foes visibility"
+msgstr "Gegnersichtbarkeit"
+
+#: plots/models.py:304
+#, fuzzy
+#| msgid "foe visibility"
+msgid "locations visibility"
+msgstr "Gegnersichtbarkeit"
+
+#: plots/templates/plots/_plot_element.html:25
+#: plots/templates/plots/_plot_element.html:26
 msgid "Create element"
 msgstr "Element erstellen"
 
-#: plots/templates/plots/_plot_element.html:37
-msgid "Element"
-msgstr "Element"
-
-#: plots/templates/plots/_plot_element.html:42
+#: plots/templates/plots/_plot_element.html:32
 msgid "Delete this plot element? Children will be moved to its parent."
 msgstr ""
 "Dieses Handlungselement löschen? Unterelemente werden dem übergeordneten "
 "Element zugeordnet."
 
-#: plots/templates/plots/_plot_element.html:44
+#: plots/templates/plots/_plot_element.html:34
+#: plots/templates/plots/_plot_element.html:35
 msgid "Delete element"
 msgstr "Element löschen"
 
-#: plots/templates/plots/_plot_element.html:46
-#: plots/templates/plots/xhr_handout_modal.html:112
-#: plots/templates/plots/xhr_location_modal.html:112
-#: plots/templates/plots/xhr_plot_element_modal.html:29
-#: plots/templates/plots/xhr_plot_modal.html:42
-#: plots/templates/plots/xhr_plot_npc_modal.html:35
-msgid "Delete"
-msgstr "Löschen"
+#: plots/templates/plots/_plot_element.html:68
+#: plots/templates/plots/_plot_element.html:69
+#: plots/templates/plots/_plot_element.html:86
+#: plots/templates/plots/_plot_element.html:87
+msgid "Focus writing"
+msgstr ""
 
-#: plots/templates/plots/_plot_element.html:79
+#: plots/templates/plots/_plot_element.html:110
 msgid "Create handout"
 msgstr "Handout erstellen"
 
-#: plots/templates/plots/_plot_element.html:82
+#: plots/templates/plots/_plot_element.html:113
 msgid "Add handout"
 msgstr "Handout hinzufügen"
 
-#: plots/templates/plots/_plot_element.html:110
+#: plots/templates/plots/_plot_element.html:141
 msgid "No handouts yet."
 msgstr "Noch keine Handouts."
 
-#: plots/templates/plots/_plot_element.html:121
+#: plots/templates/plots/_plot_element.html:155
 msgid "Select NPC"
 msgstr "NSC wählen"
 
-#: plots/templates/plots/_plot_element.html:122
+#: plots/templates/plots/_plot_element.html:156
 msgid "Add npc"
 msgstr "NSC erstellen"
 
-#: plots/templates/plots/_plot_element.html:150
+#: plots/templates/plots/_plot_element.html:184
 msgid "No NPC assigned."
 msgstr "Kein NSC zugewiesen."
 
-#: plots/templates/plots/_plot_element.html:161
+#: plots/templates/plots/_plot_element.html:198
 msgid "Select foe"
 msgstr "Gegner wählen"
 
-#: plots/templates/plots/_plot_element.html:162
+#: plots/templates/plots/_plot_element.html:199
 msgid "Add foe"
 msgstr "Gegner hinzufügen"
 
-#: plots/templates/plots/_plot_element.html:183
+#: plots/templates/plots/_plot_element.html:220
 msgid "No foes assigned."
 msgstr "Keine Gegner zugewiesen."
 
-#: plots/templates/plots/_plot_element.html:193
+#: plots/templates/plots/_plot_element.html:233
 msgid "Create location"
 msgstr "Ort erstellen"
 
-#: plots/templates/plots/_plot_element.html:196
+#: plots/templates/plots/_plot_element.html:236
 msgid "Add location"
 msgstr "Ort hinzufügen"
 
-#: plots/templates/plots/_plot_element.html:224
+#: plots/templates/plots/_plot_element.html:264
 msgid "No locations assigned."
 msgstr "Keine Orte zugewiesen."
+
+#: plots/templates/plots/fragments/campaign_plot_view.html:16
+#: plots/templates/plots/includes/editor_layout.html:15
+msgid "Collapse all"
+msgstr "Alle einklappen"
+
+#: plots/templates/plots/fragments/campaign_plot_view.html:22
+#: plots/templates/plots/includes/editor_layout.html:21
+msgid "Expand all"
+msgstr "Alle ausklappen"
 
 #: plots/templates/plots/fragments/elements.html:7
 msgid "No plot elements yet. Add an element to get started."
@@ -6498,37 +6727,32 @@ msgstr "Noch keine Handlungselemente. Füge ein Element hinzu, um zu beginnen."
 
 #: plots/templates/plots/fragments/properties.html:13
 #: plots/templates/plots/fragments/properties.html:14
-#: plots/templates/plots/fragments/properties.html:16
+#: plots/templates/plots/fragments/properties.html:15
 msgid "Create from description"
 msgstr "Aus Beschreibung erstellen"
 
+#: plots/templates/plots/fragments/properties.html:23
 #: plots/templates/plots/fragments/properties.html:24
-#: plots/templates/plots/fragments/properties.html:26
 msgid "Add Element"
 msgstr "Element hinzufügen"
 
-#: plots/templates/plots/fragments/properties.html:33
-#: plots/templates/plots/fragments/properties.html:34
-#: plots/templates/plots/fragments/properties.html:36
-#: plots/templates/plots/includes/campaign_plot_editor.html:14
-msgid "Edit plot"
-msgstr "Abenteuer editieren"
-
-#: plots/templates/plots/fragments/properties.html:77
+#: plots/templates/plots/fragments/properties.html:73
 msgid "Player abstract"
 msgstr "Spielerzusammenfassung"
 
-#: plots/templates/plots/fragments/properties.html:81
+#: plots/templates/plots/fragments/properties.html:77
 msgid "GM Description"
 msgstr "SL Beschreibung"
 
-#: plots/templates/plots/plot_list.html:6
-msgid "Plots"
-msgstr "Abenteuer"
+#: plots/templates/plots/fragments/properties.html:80
+#, fuzzy
+#| msgid "Save Note"
+msgid "Save plot"
+msgstr "Notiz speichern"
 
-#: plots/templates/plots/plot_list.html:7
-msgid "Browse and manage plot trees for your campaigns."
-msgstr "Durchsuche und verwalte Handlungsbäume für deine Kampagnen."
+#: plots/templates/plots/includes/campaign_plot_editor.html:14
+msgid "Edit plot"
+msgstr "Abenteuer editieren"
 
 #: plots/templates/plots/sidebar/select_foe.html:41
 msgid "No foes available."
@@ -6570,10 +6794,11 @@ msgstr "Neu erstellen"
 msgid "Assign existing"
 msgstr "Bestehenden zuweisen"
 
-#: plots/templates/plots/xhr_plot_element_modal.html:27
-#: plots/templates/plots/xhr_plot_modal.html:40
-msgid "Delete this plot element?"
-msgstr "Dieses Abenteuerelement löschen?"
+#: plots/templates/plots/xhr_handout_modal.html:112
+#: plots/templates/plots/xhr_location_modal.html:112
+#: plots/templates/plots/xhr_plot_npc_modal.html:35
+msgid "Delete"
+msgstr "Löschen"
 
 #: plots/templates/plots/xhr_plot_from_description_modal.html:19
 msgid "Created"
@@ -6599,10 +6824,16 @@ msgid "Go to Character"
 msgstr "Gehe zum Charakter"
 
 #: plots/views.py:210
+#, fuzzy
+#| msgid "Create plot element"
+msgid "New plot element"
+msgstr "Abenteuerelement erstellen"
+
+#: plots/views.py:319
 msgid "Please provide a plot description."
 msgstr "Bitte gib eine Abenteuerbeschreibung an."
 
-#: plots/views.py:221
+#: plots/views.py:330
 msgid "Plot generation failed. Please try again."
 msgstr "Handlungsgenerierung fehlgeschlagen. Bitte versuche es erneut."
 
@@ -6617,6 +6848,28 @@ msgstr "Kurze oder keine Beschreibung"
 #: portal/admin.py:42
 msgid "Short or no short description"
 msgstr "Kurze oder keine Kurzeschreibung"
+
+#: portal/admin.py:77
+#, fuzzy
+#| msgid "Reference"
+msgid "Preferences"
+msgstr "Referenz"
+
+#: portal/admin.py:78
+msgid "Profile image"
+msgstr "Profilbild"
+
+#: portal/admin.py:79
+#, fuzzy
+#| msgid "backdrop image"
+msgid "Backdrop image"
+msgstr "Hintergrundbild"
+
+#: portal/admin.py:80
+#, fuzzy
+#| msgid "last wiki image copyright"
+msgid "Last wiki image"
+msgstr "Letztes Wikibild Copyright"
 
 #: portal/forms.py:23
 msgid "E-Mail"
@@ -6682,19 +6935,15 @@ msgstr "Spracheinstellung"
 msgid "may use AI"
 msgstr "Darf KI verwenden"
 
-#: portal/models.py:99
-msgid "Profile"
-msgstr "Profil"
-
 #: portal/models.py:100
 msgid "Profiles"
 msgstr "Profile"
 
-#: portal/templates/portal/_searchable_object_card_list.html:19
+#: portal/templates/portal/_searchable_object_card_list.html:20
 msgid "Categories"
 msgstr "Kategorien"
 
-#: portal/templates/portal/_searchable_object_card_list.html:29
+#: portal/templates/portal/_searchable_object_card_list.html:30
 msgid "Create Homebrew"
 msgstr "Homebrew erstellen"
 
@@ -6852,6 +7101,20 @@ msgstr ""
 msgid "Top rolls"
 msgstr "Toppwürfe"
 
+#: portal/views.py:181
+#, python-format
+msgid "You can request another email in %(seconds)s seconds."
+msgstr "Du kannst in %(seconds)s Sekunden eine weitere E-Mail anfordern."
+
+#: portal/views.py:204
+#: templates/django_registration/registration_complete.html:46
+msgid "A new activation email has been sent."
+msgstr "Eine neue Aktivierungs-E-Mail wurde versendet."
+
+#: portal/views.py:208
+msgid "Please wait before requesting another activation email."
+msgstr "Bitte warte, bevor du eine weitere Aktivierungs-E-Mail anforderst."
+
 #: potions/models.py:18
 msgid "recipe difficulty"
 msgstr "Rezeptschwierigkeit"
@@ -6896,6 +7159,12 @@ msgstr "Rezeptzutateneinheiten"
 msgid "unit"
 msgstr "Einheit"
 
+#: rulebook/admin.py:37
+#, fuzzy
+#| msgid "Download"
+msgid "Downloads"
+msgstr "Herunterladen"
+
 #: rulebook/appendixes.py:41 rules/templates/rules/templatecategory_list.html:7
 #: rules/templates/rules/templatecategory_list.html:12
 msgid "Character Templates"
@@ -6937,7 +7206,31 @@ msgstr "Anhang"
 msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 
-#: rules/admin.py:176
+#: rules/admin.py:54
+#, fuzzy
+#| msgid "world site configuration"
+msgid "World configuration"
+msgstr "Weltseitenkonfiguration"
+
+#: rules/admin.py:78
+#, fuzzy
+#| msgid "acceleration"
+msgid "Image generation"
+msgstr "Beschleunigung"
+
+#: rules/admin.py:111
+#, fuzzy
+#| msgid "vulnerability"
+msgid "Availability"
+msgstr "Verwundbarkeit"
+
+#: rules/admin.py:248
+#, fuzzy
+#| msgid "Characters and Campaigns"
+msgid "Character fundamentals"
+msgstr "Charaktere und Kampagnen"
+
+#: rules/admin.py:371
 msgid "Stats"
 msgstr "Werte"
 
@@ -6951,7 +7244,7 @@ msgstr "Optionaler Prompt-Text, der der KI-Bildgenerierung vorangestellt wird."
 msgid "image prompt prefix"
 msgstr "Bild-Prompt-Präfix"
 
-#: rules/models.py:20 rules/models.py:389 worlds/models.py:559
+#: rules/models.py:20 rules/models.py:389 worlds/models.py:570
 msgid "languages"
 msgstr "Sprachen"
 
@@ -6971,7 +7264,7 @@ msgstr "Zauberpunkte"
 msgid "rest minimum roll"
 msgstr "Rast Mindestwurf"
 
-#: rules/models.py:28 worlds/models.py:425
+#: rules/models.py:28 worlds/models.py:436
 msgid "protection"
 msgstr "Schutz"
 
@@ -7004,7 +7297,7 @@ msgid "aspect modifier"
 msgstr "Aspekt Modifikator"
 
 #: rules/models.py:200 rules/models.py:485 rules/models.py:892
-#: worlds/models.py:483
+#: worlds/models.py:494
 msgid "skill"
 msgstr "Fertigkeit"
 
@@ -7055,13 +7348,13 @@ msgstr ""
 msgid "Don't allow epoch languages if this is set."
 msgstr "Epochensprachen nicht erlauben, wenn dies gesetzt ist."
 
-#: rules/models.py:339 worlds/models.py:73
+#: rules/models.py:339 worlds/models.py:78
 msgid "extension"
 msgstr "Erweiterung"
 
 #: rules/models.py:340 vehicles/models.py:37 vehicles/models.py:97
 #: vehicles/models.py:154 vehicles/models.py:193 vehicles/models.py:313
-#: worlds/models.py:552
+#: worlds/models.py:563
 msgid "extensions"
 msgstr "Erweiterungen"
 
@@ -7281,19 +7574,19 @@ msgstr "Bewegung"
 msgid "strength"
 msgstr "Kraft"
 
-#: rules/models.py:823 worlds/models.py:435
+#: rules/models.py:823 worlds/models.py:446
 msgid "stress test succeeded stress"
 msgstr "Stresstest erfolgreich Stress"
 
-#: rules/models.py:826 worlds/models.py:438
+#: rules/models.py:826 worlds/models.py:449
 msgid "stress test failed stress"
 msgstr "Stresstest fehlgeschlagen Stress"
 
-#: rules/models.py:833 worlds/models.py:445
+#: rules/models.py:833 worlds/models.py:456
 msgid "resistances"
 msgstr "Widerstände"
 
-#: rules/models.py:839 worlds/models.py:451
+#: rules/models.py:839 worlds/models.py:462
 msgid "weaknesses"
 msgstr "Schwächen"
 
@@ -7305,7 +7598,7 @@ msgstr "Gegner"
 msgid "foes"
 msgstr "Gegner"
 
-#: rules/models.py:893 worlds/models.py:484
+#: rules/models.py:893 worlds/models.py:495
 msgid "effect"
 msgstr "Effekt"
 
@@ -7335,6 +7628,7 @@ msgstr "Durchsuche Charaktervorlagen und Startarchetypen."
 
 #: templates/django_registration/activation_complete.html:4
 #: templates/django_registration/activation_complete.html:7
+#: templates/django_registration/activation_complete.html:28
 msgid "Account activated"
 msgstr "Konto aktiviert"
 
@@ -7342,41 +7636,59 @@ msgstr "Konto aktiviert"
 msgid "Your account is now active."
 msgstr "Dein Konto ist jetzt aktiv."
 
-#: templates/django_registration/activation_complete.html:18
-#: templates/django_registration/registration_complete.html:18
-msgid "Thanks!"
-msgstr "Danke!"
-
-#: templates/django_registration/activation_complete.html:24
-msgid ""
-"\n"
-"                            Your account is now active.\n"
-"                        "
-msgstr ""
-"\n"
-"\t\t\tDein Konto ist jetzt aktiv.\n"
-"   "
-
 #: templates/django_registration/activation_complete.html:30
-#: templates/django_registration/activation_failed.html:31
-#: templates/django_registration/registration_complete.html:31
-msgid "Die"
-msgstr "Würfel"
+msgid ""
+"Your account is active. You can now return to the world and begin your "
+"character journey."
+msgstr "Dein Konto ist aktiv. Du kannst nun zur Welt zurückkehren und deine Charakterreise beginnen."
 
+#: templates/django_registration/activation_complete.html:34
+msgid "Explore the world"
+msgstr "Entdecke die Welt"
+
+#: templates/django_registration/activation_email_body.html:4
 #: templates/django_registration/activation_email_body.txt:1
 #: templates/registration/password_reset_email.html:2
+#: templates/registration/password_reset_email_html.html:4
 msgid "Hello"
 msgstr "Hallo"
 
+#: templates/django_registration/activation_email_body.html:5
+#: templates/django_registration/activation_email_subject.txt:1
+#, python-format
+msgid "Welcome to %(brand)s"
+msgstr "Willkommen bei %(brand)s"
+
+#: templates/django_registration/activation_email_body.html:6
+msgid "Activate your account to create characters and begin your adventures."
+msgstr ""
+"Aktiviere dein Konto, um Charaktere zu erstellen und deine Abenteuer zu "
+"beginnen.Aktiviere dein Konto, um Charaktere zu erstellen und deine "
+"Abenteuer zu beginnen."
+
+#: templates/django_registration/activation_email_body.html:7
+#: templates/django_registration/activation_form.html:4
+#: templates/django_registration/activation_form.html:7
+#: templates/django_registration/activation_form.html:21
+#: templates/django_registration/activation_form.html:27
+msgid "Activate account"
+msgstr "Konto aktivieren"
+
+#: templates/django_registration/activation_email_body.html:8
+#, python-format
+msgid "This link expires in %(t_days)s days."
+msgstr "Dieser Link läuft in %(t_days)s Tagen ab."
+
 #: templates/django_registration/activation_email_body.txt:2
+#, python-format
 msgid ""
 "\n"
-"welcome to Phase Six! To activate your account and create characters use the "
+"welcome to %(brand)s! To activate your account and create characters use the "
 "following link:\n"
 msgstr ""
 "\n"
-"willkommen bei Phase Six! Benutze den folgenden Link um dein Konto zu "
-"aktivieren:\n"
+"willkommen bei %(brand)s! Benutze den folgenden Link, um dein Konto zu "
+"aktivieren und Charaktere zu erstellen:\n"
 
 #: templates/django_registration/activation_email_body.txt:6
 #, python-format
@@ -7386,10 +7698,6 @@ msgid ""
 msgstr ""
 "\n"
 "Der Link wird in %(t_days)s Tagen ungültig.\n"
-
-#: templates/django_registration/activation_email_subject.txt:1
-msgid "Welcome to Phase Six"
-msgstr "Willkommen bei Phase Six"
 
 #: templates/django_registration/activation_failed.html:4
 #: templates/django_registration/activation_failed.html:7
@@ -7422,17 +7730,18 @@ msgstr ""
 "\t\t\tVersuch dich noch einmal zu registrieren\n"
 " "
 
-#: templates/django_registration/activation_form.html:4
-#: templates/django_registration/activation_form.html:7
-#: templates/django_registration/activation_form.html:17
-#: templates/django_registration/activation_form.html:23
-msgid "Activate account"
-msgstr "Konto aktivieren"
+#: templates/django_registration/activation_failed.html:31
+msgid "Die"
+msgstr "Würfel"
 
 #: templates/django_registration/activation_form.html:8
 #, python-format
 msgid "Activate your %(brand_name)s account to get started."
 msgstr "Aktiviere dein %(brand_name)s-Konto, um zu starten."
+
+#: templates/django_registration/activation_form.html:22
+msgid "Confirm your account to continue to your character."
+msgstr "Bestätige dein Konto, um mit deinem Charakter fortzufahren."
 
 #: templates/django_registration/registration_complete.html:4
 #: templates/django_registration/registration_complete.html:7
@@ -7447,19 +7756,47 @@ msgstr ""
 "Deine Registrierung ist fast abgeschlossen. Prüfe deinen Posteingang auf "
 "eine Aktivierungs-E-Mail."
 
-#: templates/django_registration/registration_complete.html:24
+#: templates/django_registration/registration_complete.html:28
+msgid "Thanks!"
+msgstr "Danke!"
+
+#: templates/django_registration/registration_complete.html:30
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                            Your registration is almost complete. Check "
+#| "your inbox for an activation mail and\n"
+#| "                            use the link inside to activate your "
+#| "account.\n"
+#| "                        "
 msgid ""
 "\n"
-"                            Your registration is almost complete. Check your "
-"inbox for an activation mail and\n"
-"                            use the link inside to activate your account.\n"
-"                        "
+"                Your registration is almost complete. Check your inbox for "
+"an activation mail and\n"
+"                use the link inside to activate your account.\n"
+"              "
 msgstr ""
 "\n"
 "\t\t\t\tDeine Registrierung ist fast abgeschlossen. Schau in deinem Postfach "
 "nach einer \n"
 "\t\t\t\tAktivierungsmail und benutze den Link darin um dein Konto zu "
 "aktivieren. "
+
+#: templates/django_registration/registration_complete.html:36
+msgid "Check your inbox"
+msgstr "Schau in deinen Posteingang"
+
+#: templates/django_registration/registration_complete.html:37
+msgid "Open the activation link"
+msgstr "Öffne den Aktivierungslink"
+
+#: templates/django_registration/registration_complete.html:38
+msgid "Your character journey can begin."
+msgstr "Deine Charakterreise kann beginnen."
+
+#: templates/django_registration/registration_complete.html:52
+msgid "Resend activation email"
+msgstr "Aktivierungs-E-Mail erneut senden"
 
 #: templates/django_registration/registration_form.html:4
 #: templates/django_registration/registration_form.html:5
@@ -7493,7 +7830,7 @@ msgstr ""
 "      deine EMail Adresse an um ein Konto anzulegen.\n"
 "     "
 
-#: templates/django_registration/registration_form.html:42
+#: templates/django_registration/registration_form.html:43
 msgid "Register"
 msgstr "Registrieren"
 
@@ -7591,18 +7928,28 @@ msgstr ""
 msgid "Cheers"
 msgstr "Cheers"
 
-#: templates/registration/password_reset_form.html:7
-#: templates/registration/password_reset_form.html:11
-msgid "Enter your email address to reset your password."
-msgstr "Gib deine E-Mail Adresse ein, um dein Passwort zurückzusetzen."
+#: templates/registration/password_reset_email_html.html:5
+#: templates/registration/password_reset_subject.txt:1
+msgid "Password Reset"
+msgstr "Passwort zurücksetzen"
 
+#: templates/registration/password_reset_email_html.html:6
+msgid ""
+"Someone requested a password reset for your account. If this was not you, "
+"you can ignore this email."
+msgstr ""
+"Jemand hat eine Zurücksetzung des Passworts für dein Konto angefordert. Wenn "
+"du das nicht warst, kannst du diese E-Mail ignorieren."
+
+#: templates/registration/password_reset_email_html.html:7
 #: templates/registration/password_reset_form.html:21
 msgid "Reset password"
 msgstr "Passwort zurücksetzen"
 
-#: templates/registration/password_reset_subject.txt:1
-msgid "Password Reset"
-msgstr "Passwort zurücksetzen"
+#: templates/registration/password_reset_form.html:7
+#: templates/registration/password_reset_form.html:11
+msgid "Enter your email address to reset your password."
+msgstr "Gib deine E-Mail Adresse ein, um dein Passwort zurückzusetzen."
 
 #: vehicles/models.py:29
 msgid "is flying"
@@ -7988,6 +8335,22 @@ msgstr "Aktiver Fahrzeugstatuseffekt"
 msgid "active vehicle status effects"
 msgstr "Aktive Fahrzeugstatuseffekte"
 
+#: worlds/admin.py:45
+#, fuzzy
+#| msgid "Brand name"
+msgid "Brand"
+msgstr "Markenname"
+
+#: worlds/admin.py:57
+#, fuzzy
+#| msgid "Description"
+msgid "Descriptions"
+msgstr "Beschreibung"
+
+#: worlds/admin.py:67
+msgid "Domains and units"
+msgstr ""
+
 #: worlds/context_processors.py:17
 msgid ""
 "Phase Six is a simple, adaptable set of rules for roleplaying adventures, "
@@ -8001,203 +8364,209 @@ msgstr ""
 "etwas Papier. Du kannst damit beginnen, die Regeln zu erforschen oder deinen "
 "eigenen Charakter zu erschaffen."
 
-#: worlds/models.py:43
+#: worlds/models.py:48
 msgid "dns domain name"
 msgstr "DNS Domainname"
 
-#: worlds/models.py:48
+#: worlds/models.py:53
 msgid "This world is set as default if the given dns domain name is requested"
 msgstr ""
 "Diese Welt ist als Standard eingestellt, wenn der angegebene Domainname "
 "aufgerufen wird"
 
-#: worlds/models.py:52
+#: worlds/models.py:57
 msgid "session cookie domain"
 msgstr "Sessioncookie Domain"
 
-#: worlds/models.py:57
+#: worlds/models.py:62
 msgid "Brand name"
 msgstr "Markenname"
 
-#: worlds/models.py:59
+#: worlds/models.py:64
 msgid "Brand claim"
 msgstr "Markenslogan"
 
-#: worlds/models.py:62
+#: worlds/models.py:67
 msgid "Brand Logo"
 msgstr "Markenlogo"
 
-#: worlds/models.py:65
+#: worlds/models.py:70
 msgid "description 1"
 msgstr "Beschreibung 1"
 
-#: worlds/models.py:66
+#: worlds/models.py:71
 msgid "description 2"
 msgstr "Beschreibung 2"
 
-#: worlds/models.py:67
+#: worlds/models.py:72
 msgid "description 3"
 msgstr "Beschreibung 3"
 
-#: worlds/models.py:70
+#: worlds/models.py:75
 msgid "is default"
 msgstr "Ist Standard"
 
-#: worlds/models.py:75
+#: worlds/models.py:80
 msgid "The corresponding world extension, which is added to the characters."
 msgstr ""
 "Die zugehörige Welterweiterung, welche zu den Charakteren hinzugefügt wird."
 
-#: worlds/models.py:84
+#: worlds/models.py:89
 msgid "show in worlds overview"
 msgstr "In der Weltübersicht anzeigen"
 
-#: worlds/models.py:88
+#: worlds/models.py:93
 msgid "Name for centimeter"
 msgstr "Name für Zentimeter"
 
-#: worlds/models.py:90
+#: worlds/models.py:95
 msgid "Name for kilogram"
 msgstr "Name für Kilogramm"
 
-#: worlds/models.py:93
+#: worlds/models.py:98
 msgid "SCSS File"
 msgstr "SCSS Datei"
 
-#: worlds/models.py:113 worlds/models.py:234
+#: worlds/models.py:104
+#, fuzzy
+#| msgid "Your background"
+msgid "PDF background"
+msgstr "Dein Werdegang"
+
+#: worlds/models.py:124 worlds/models.py:245
 msgid "world"
 msgstr "Welt"
 
-#: worlds/models.py:114
+#: worlds/models.py:125
 msgid "worlds"
 msgstr "Welten"
 
-#: worlds/models.py:197
+#: worlds/models.py:208
 msgid "world lead image"
 msgstr "Weltseitenbild"
 
-#: worlds/models.py:198
+#: worlds/models.py:209
 msgid "world lead images"
 msgstr "Weltseitenbilder"
 
-#: worlds/models.py:226
+#: worlds/models.py:237
 msgid "An optional short name for the default link text."
 msgstr "Ein optionaler Kurzname für den Standard Linktext."
 
-#: worlds/models.py:235
+#: worlds/models.py:246
 msgid "The world this page belongs to."
 msgstr "Die Welt, zu der diese Seite gehört."
 
-#: worlds/models.py:241
+#: worlds/models.py:252
 msgid "parent"
 msgstr "Übergeordnete Seite"
 
-#: worlds/models.py:242
+#: worlds/models.py:253
 msgid "The parent wiki page."
 msgstr "Die übergeordnete Wiki Seite."
 
-#: worlds/models.py:250
+#: worlds/models.py:261
 msgid "The wiki page text. This may contain Wiki links."
 msgstr "Der Wikiseitentext. Dieser darf Wiki Links enthalten."
 
-#: worlds/models.py:261 worlds/models.py:345 worlds/models.py:414
-#: worlds/models.py:477 worlds/models.py:503
+#: worlds/models.py:272 worlds/models.py:356 worlds/models.py:425
+#: worlds/models.py:488 worlds/models.py:514
 msgid "wiki page"
 msgstr "Wikiseite"
 
-#: worlds/models.py:262
+#: worlds/models.py:273
 msgid "wiki pages"
 msgstr "Wikiseiten"
 
-#: worlds/models.py:346
+#: worlds/models.py:357
 msgid "The wiki page the image belongs to."
 msgstr "Die Wikiseite, zu der das Bild gehört."
 
-#: worlds/models.py:358
+#: worlds/models.py:369
 msgid "caption"
 msgstr "Bezeichnung"
 
-#: worlds/models.py:362
+#: worlds/models.py:373
 msgid "wiki page image"
 msgstr "Wikiseitenbild"
 
-#: worlds/models.py:363
+#: worlds/models.py:374
 msgid "wiki page images"
 msgstr "Wikiseitenbilder"
 
-#: worlds/models.py:391
+#: worlds/models.py:402
 msgid "wiki page foe type"
 msgstr "Wikiseiten Gegnertyp"
 
-#: worlds/models.py:392
+#: worlds/models.py:403
 msgid "wiki page foe types"
 msgstr "Wikiseiten Gegnertypen"
 
-#: worlds/models.py:403
+#: worlds/models.py:414
 msgid "wiki page foe resistance or weakness"
 msgstr "Wikiseiten Gegner Widerstand oder Schwäche"
 
-#: worlds/models.py:404
+#: worlds/models.py:415
 msgid "wiki page foe resistances or weaknesses"
 msgstr "Wikiseiten Gegner Widerstände oder Schwächen"
 
-#: worlds/models.py:415
+#: worlds/models.py:426
 msgid "The wiki page the values belong to."
 msgstr "Die Wikiseite, zu der die Spielwerte gehört."
 
-#: worlds/models.py:430
+#: worlds/models.py:441
 msgid "quickness"
 msgstr "Schnelligkeit"
 
-#: worlds/models.py:431
+#: worlds/models.py:442
 msgid "walking range"
 msgstr "Bewegungsreichweite"
 
-#: worlds/models.py:455 worlds/models.py:456
+#: worlds/models.py:466 worlds/models.py:467
 msgid "wiki page game values"
 msgstr "Wikiseiten Spielwerte"
 
-#: worlds/models.py:478
+#: worlds/models.py:489
 msgid "The wiki page the values belongs to."
 msgstr "Die Wikiseite, zu der die Spielwerte gehört."
 
-#: worlds/models.py:486
+#: worlds/models.py:497
 msgid "entity work type"
 msgstr "Entitätswirkenstyp"
 
-#: worlds/models.py:487
+#: worlds/models.py:498
 msgid "Leave this empty if the Wikipage doesn't describe an entity."
 msgstr "Lass dieses leer wenn die Wikiseite kein Wesen beschreibt."
 
-#: worlds/models.py:496
+#: worlds/models.py:507
 msgid "wiki page game action"
 msgstr "Wikiseiten Spielaktion"
 
-#: worlds/models.py:497
+#: worlds/models.py:508
 msgid "wiki page game actions"
 msgstr "Wikiseiten Spieaktionen"
 
-#: worlds/models.py:504
+#: worlds/models.py:515
 msgid "The wiki page the embedding belongs to."
 msgstr "Die Wikiseite, zu der das Bild gehört."
 
-#: worlds/models.py:521
+#: worlds/models.py:532
 msgid "language group"
 msgstr "Sprachgruppe"
 
-#: worlds/models.py:522
+#: worlds/models.py:533
 msgid "language groups"
 msgstr "Sprachgruppen"
 
-#: worlds/models.py:539
+#: worlds/models.py:550
 msgid "country name"
 msgstr "Landesname"
 
-#: worlds/models.py:540
+#: worlds/models.py:551
 msgid "amount of people speaking"
 msgstr "Anzahl Sprechende"
 
-#: worlds/models.py:546
+#: worlds/models.py:557
 msgid "group"
 msgstr "Gruppe"
 
@@ -8227,26 +8596,26 @@ msgstr ""
 "        Ursprung: %(t_country)s\n"
 "      "
 
-#: worlds/templates/worlds/_navigation.html:33
-#: worlds/templates/worlds/_navigation.html:40
+#: worlds/templates/worlds/_page_actions.html:12
+#: worlds/templates/worlds/_page_actions.html:48
 msgid "Create Wiki Page"
 msgstr "Wikiseite erstellen"
 
-#: worlds/templates/worlds/_navigation.html:34
+#: worlds/templates/worlds/_page_actions.html:15
 #: worlds/templates/worlds/modals/create_wiki_page.html:21
 msgid "Create Page"
 msgstr "Seite erstellen"
 
-#: worlds/templates/worlds/_navigation.html:41
-msgid "Create Subpage"
-msgstr "Unterseite erstellen"
-
-#: worlds/templates/worlds/_navigation.html:47
-#: worlds/templates/worlds/_navigation.html:49
-#: worlds/templates/worlds/_navigation.html:55
-#: worlds/templates/worlds/_navigation.html:57
+#: worlds/templates/worlds/_page_actions.html:39
+#: worlds/templates/worlds/_page_actions.html:41
+#: worlds/templates/worlds/_page_actions.html:57
+#: worlds/templates/worlds/_page_actions.html:59
 msgid "Sort Subpages"
 msgstr "Unterseiten sortieren"
+
+#: worlds/templates/worlds/_page_actions.html:51
+msgid "Create Subpage"
+msgstr "Unterseite erstellen"
 
 #: worlds/templates/worlds/sidebar/_search_links.html:7
 #: worlds/templates/worlds/sidebar/images.html:99
@@ -8300,54 +8669,48 @@ msgstr ""
 "Sortiere Unterseiten durch ziehen. Sie werden automatisch gespeichert.\n"
 " "
 
-#: worlds/templates/worlds/wiki_page_detail.html:60
+#: worlds/templates/worlds/wiki_page_detail.html:64
 msgid "Game Values"
 msgstr "Spielwerte"
 
-#: worlds/templates/worlds/wiki_page_detail.html:98
+#: worlds/templates/worlds/wiki_page_detail.html:102
 msgid "Character Sheet"
 msgstr "Charakterbogen"
+
+#: worlds/templates/worlds/wiki_page_edit.html:6
+#, fuzzy
+#| msgid "Edit pet"
+msgid "Edit page"
+msgstr "Haustier editieren"
 
 #: worlds/templates/worlds/wiki_page_edit.html:30
 msgid "Page images"
 msgstr "Seitenbilder"
 
-#: worlds/templates/worlds/wiki_page_edit.html:32
-msgid "Images"
-msgstr "Bilder"
-
 #: worlds/templates/worlds/wiki_page_edit.html:37
+#: worlds/templates/worlds/wiki_page_edit.html:39
 msgid "Insert Link"
 msgstr "Link einfügen"
 
-#: worlds/templates/worlds/wiki_page_edit.html:39
-msgid "Links"
-msgstr "Links"
-
-#: worlds/templates/worlds/wiki_page_edit.html:48
+#: worlds/templates/worlds/wiki_page_edit.html:43
 msgid ""
 "Automatically create links? This will change the text in both languages."
 msgstr ""
 "Links automatisch erzeugen? Das wird die Texte in beiden Sprachen ändern."
 
-#: worlds/templates/worlds/wiki_page_edit.html:49
+#: worlds/templates/worlds/wiki_page_edit.html:44
 msgid "Creating links.."
 msgstr "Erzeuge Links.."
 
-#: worlds/templates/worlds/wiki_page_edit.html:51
+#: worlds/templates/worlds/wiki_page_edit.html:48
 msgid "Create Links automatically"
 msgstr "Links automatisch erzeugen"
 
-#: worlds/templates/worlds/wiki_page_edit.html:54
-#: worlds/templates/worlds/wiki_page_edit.html:59
-msgid "Copied"
-msgstr "Kopiert"
-
-#: worlds/templates/worlds/wiki_page_edit.html:56
+#: worlds/templates/worlds/wiki_page_edit.html:55
 msgid "Copy german text without links"
 msgstr "Kopiere deutschen Text ohne Links"
 
-#: worlds/templates/worlds/wiki_page_edit.html:61
+#: worlds/templates/worlds/wiki_page_edit.html:62
 msgid "Copy english text without links"
 msgstr "Kopiere englischen Text ohne Links"
 
@@ -8363,11 +8726,84 @@ msgstr "Keine Welten verfügbar."
 msgid "You do not have permission to edit this world."
 msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
+#~ msgid ""
+#~ "\n"
+#~ "                            Your account is now active.\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t\tDein Konto ist jetzt aktiv.\n"
+#~ "   "
+
+#~ msgid "npc visibility"
+#~ msgstr "NSC Sichtbarkeit"
+
+#~ msgid "character visibility"
+#~ msgstr "Charaktersichtbarkeit"
+
+#~ msgid ""
+#~ "You have been invited to join this campaign. Create a new character to "
+#~ "join the campaign."
+#~ msgstr ""
+#~ "Du wurdest eingeladen, dieser Kampagne beizutreten. Erstelle einen neuen "
+#~ "Charakter, um beizutreten."
+
+#~ msgid "Visibility"
+#~ msgstr "Sichtbarkeit"
+
+#~ msgid "Character Visibility"
+#~ msgstr "Charaktersichtbarkeit"
+
+#~ msgid "Who can see player characters"
+#~ msgstr "Wer kann Spielercharaktere sehen"
+
+#~ msgid "Who can see non-player characters"
+#~ msgstr "Wer kann NPC sehen"
+
+#~ msgid "Foe Visibility"
+#~ msgstr "Gegnersichtbarkeit"
+
+#~ msgid "Who can see enemies and opponents"
+#~ msgstr "Wer kann Gegner sehen"
+
+#~ msgid "Game Log Visibility"
+#~ msgstr "Spielprotokollsichtbarkeit"
+
+#~ msgid "Who can access the game history"
+#~ msgstr "Wer kann auf das Spielprotokoll zugreifen"
+
+#~ msgid "Plot editor"
+#~ msgstr "Abenteuereditor"
+
+#~ msgid "Edit / Download"
+#~ msgstr "Editieren / Herunterladen"
+
+#~ msgid "Delete Character"
+#~ msgstr "Charakter löschen"
+
+#~ msgid "Edit plot element"
+#~ msgstr "Abenteuerelement editieren"
+
+#~ msgid "Edit summary"
+#~ msgstr "Zusammenfassung editieren"
+
+#~ msgid "Element"
+#~ msgstr "Element"
+
+#~ msgid "Plots"
+#~ msgstr "Abenteuer"
+
+#~ msgid "Browse and manage plot trees for your campaigns."
+#~ msgstr "Durchsuche und verwalte Handlungsbäume für deine Kampagnen."
+
+#~ msgid "Delete this plot element?"
+#~ msgstr "Dieses Abenteuerelement löschen?"
+
+#~ msgid "Links"
+#~ msgstr "Links"
+
 #~ msgid "Faith"
 #~ msgstr "Glaube"
-
-#~ msgid "Profile image"
-#~ msgstr "Profilbild"
 
 #~ msgid "Dramatis Personae"
 #~ msgstr "Dramatis Personae"
@@ -8408,12 +8844,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #~ msgid "Drag and drop elements to reorder."
 #~ msgstr "Ziehe die Elemente um sie zu sortieren."
 
-#~ msgid "Roll Dice"
-#~ msgstr "Würfeln"
-
-#~ msgid "Edit Character"
-#~ msgstr "Editieren"
-
 #~ msgid "*Quickness*d6"
 #~ msgstr "Schnelligkeit w6"
 
@@ -8438,9 +8868,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid "Upload Rulebook"
 #~ msgstr "Regelbuch hochladen"
-
-#~ msgid "world site configuration"
-#~ msgstr "Weltseitenkonfiguration"
 
 #~ msgid "world site configurations"
 #~ msgstr "Weltseitenkonfigurationen"
@@ -8679,9 +9106,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #~ msgid "is"
 #~ msgstr "ist"
 
-#~ msgid "No description yet."
-#~ msgstr "Noch keine Beschreibung."
-
 #~ msgid "Click to edit"
 #~ msgstr "Zum Bearbeiten klicken"
 
@@ -8701,9 +9125,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid "Select Template for Reputation?"
 #~ msgstr "Schablone für Reputation auswählen?"
-
-#~ msgid "Add to campaign"
-#~ msgstr "Zu Kampagne hinzufügen"
 
 #~ msgid "World image"
 #~ msgstr "Weltbild"
@@ -9190,9 +9611,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #~ msgid "New Character"
 #~ msgstr "Neuer Charakter"
 
-#~ msgid "Choose your templates"
-#~ msgstr "Wähle deine Schablonen"
-
 #~ msgid "A free, flexible role playing game."
 #~ msgstr "Ein freies, flexibles Rollenspiel."
 
@@ -9255,9 +9673,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid "Join"
 #~ msgstr "Beitreten"
-
-#~ msgid "No characters in your campaign"
-#~ msgstr "Keine Charaktere in deiner Kampagne"
 
 #~ msgid "Send the invite link to your players to invite them."
 #~ msgstr "Sende den Einladungslink an deine Spieler um sie einzuladen."
@@ -9680,9 +10095,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 #~ msgid "This character has no amor yet."
 #~ msgstr "Dieser Charakter hat noch keine Rüstung."
 
-#~ msgid "This character has no items yet."
-#~ msgstr "Dieser Charakter hat noch keine Gegenstände."
-
 #~ msgid "Mind Skills"
 #~ msgstr "Geistige Fertigkeiten"
 
@@ -9694,9 +10106,6 @@ msgstr "Du hast nicht die Berechtigung, diese Welt zu editieren."
 
 #~ msgid "Rolls"
 #~ msgstr "Würfe"
-
-#~ msgid "Reference"
-#~ msgstr "Referenz"
 
 #~ msgid "Construct Character"
 #~ msgstr "Charakter konstruieren"
