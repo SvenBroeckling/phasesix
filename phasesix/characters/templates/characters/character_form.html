@@ -51,17 +51,19 @@
           <h2>{% trans "Starting resources" %}</h2>
           <div class="character-details-grid">
             <div>{% bootstrap_field form.currency_map %}</div>
-            <div>{% bootstrap_field form.seed_money %}</div>
+            <div{% if form.currency_map.is_hidden %} class="character-details-grid-full"{% endif %}>{% bootstrap_field form.seed_money %}</div>
           </div>
         </section>
 
-        <section class="character-details-section character-details-section-optional">
-          <h2>{% trans "Optional details" %}</h2>
-          <div class="character-details-grid character-details-grid-identity">
-            <div>{% bootstrap_field form.entity %}</div>
-            <div>{% bootstrap_field form.attitude %}</div>
-          </div>
-        </section>
+        {% if not form.entity.is_hidden or not form.attitude.is_hidden %}
+          <section class="character-details-section character-details-section-optional">
+            <h2>{% trans "Optional details" %}</h2>
+            <div class="character-details-grid character-details-grid-identity">
+              <div>{% bootstrap_field form.entity %}</div>
+              <div>{% bootstrap_field form.attitude %}</div>
+            </div>
+          </section>
+        {% endif %}
 
         <div class="character-details-submit">
           <button type="submit" class="btn btn-primary">{% trans 'Create Character' %}<i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></button>
