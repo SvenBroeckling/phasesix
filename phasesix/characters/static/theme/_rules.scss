@@ -21,6 +21,88 @@
   border-left: 2px solid $gray-500;
 }
 
+/* Foe attributes */
+
+.foe-attributes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.24);
+  background: rgba(var(--bs-body-bg-rgb), 0.28);
+}
+
+.foe-attribute {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 0.6rem;
+  align-items: center;
+  min-height: 4.5rem;
+  padding: 0.75rem 0.8rem 0.7rem;
+  border-right: 1px solid rgba(var(--bs-primary-rgb), 0.18);
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), 0.18);
+  background: linear-gradient(135deg, rgba(var(--bs-primary-rgb), 0.08), transparent 72%);
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  dt {
+    display: flex;
+    grid-column: 1 / -1;
+    gap: 0.4rem;
+    align-items: center;
+    margin: 0;
+    color: var(--bs-secondary-color);
+    font-size: 0.67rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  dt i {
+    color: var(--foe-attribute-color, var(--bs-primary));
+    font-size: 1rem;
+  }
+
+  dd {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--bs-emphasis-color);
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+}
+
+.foe-attribute-strength {
+  --foe-attribute-color: var(--bs-primary);
+}
+
+.foe-attribute-dexterity {
+  --foe-attribute-color: var(--bs-success);
+}
+
+.foe-attribute-mind {
+  --foe-attribute-color: var(--bs-info);
+}
+
+.foe-attribute-stress {
+  --foe-attribute-color: var(--bs-warning);
+}
+
+@media (max-width: 575px) {
+  .foe-attributes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .foe-attribute:nth-child(2n) {
+    border-right: 0;
+  }
+}
+
 /* Bestiary cards */
 
 .foe-card {

@@ -26,27 +26,27 @@
     </p>
   {% endif %}
 
-  <div class="d-flex justify-content-start mb-3 gap-3">
-    <div>
-      <span class="badge bg-primary me-1">{% trans "Strength" %}</span>
-      <span class="fw-bold">{{ foe.strength }}</span>
+  <dl class="foe-attributes mb-3">
+    <div class="foe-attribute foe-attribute-strength">
+      <dt><i class="gi gi-lorc-muscle-up" aria-hidden="true"></i>{% trans "Strength" %}</dt>
+      <dd>{{ foe.strength }}</dd>
     </div>
 
-    <div>
-      <span class="badge bg-success me-1">{% trans "Dexterity" %}</span>
-      <span class="fw-bold">{{ foe.dexterity }}</span>
+    <div class="foe-attribute foe-attribute-dexterity">
+      <dt><i class="gi gi-lorc-feather" aria-hidden="true"></i>{% trans "Dexterity" %}</dt>
+      <dd>{{ foe.dexterity }}</dd>
     </div>
 
-    <div>
-      <span class="badge bg-info me-1">{% trans "Mind" %}</span>
-      <span class="fw-bold">{{ foe.mind }}</span>
+    <div class="foe-attribute foe-attribute-mind">
+      <dt><i class="gi gi-lorc-brain" aria-hidden="true"></i>{% trans "Mind" %}</dt>
+      <dd>{{ foe.mind }}</dd>
     </div>
 
     {% if foe.stress_test_succeeded_stress > 0 or foe.stress_test_failed_stress > 0 %}
-      <div>
-        <span class="badge bg-secondary">{% trans "Stress" %}</span>
-        <span class="fw-bold">{{ foe.stress_test_succeeded_stress }}/{{ foe.stress_test_failed_stress }}</span>
+      <div class="foe-attribute foe-attribute-stress">
+        <dt><i class="gi gi-lorc-brain-freeze" aria-hidden="true"></i>{% trans "Stress" %}</dt>
+        <dd>{{ foe.stress_test_succeeded_stress }} / {{ foe.stress_test_failed_stress }}</dd>
       </div>
     {% endif %}
-  </div>
+  </dl>
 </div>
